@@ -39,7 +39,7 @@ type V1Hyperband struct {
 	Container V1Container `json:"container,omitempty"`
 
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-	EarlyStopping []interface{} `json:"early_stopping"`
+	EarlyStopping []interface{} `json:"earlyStopping"`
 
 	// Eta
 	Eta int32 `json:"eta,omitempty"`
@@ -48,7 +48,7 @@ type V1Hyperband struct {
 	Kind *string `json:"kind,omitempty"`
 
 	// Maximim number of iteration to produce new observations
-	MaxIterations int32 `json:"max_iterations,omitempty"`
+	MaxIterations int32 `json:"maxIterations,omitempty"`
 
 	// Metric to optimize during the iterations
 	Metric *V1OptimizationMetric `json:"metric,omitempty"`

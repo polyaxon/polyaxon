@@ -3,6 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**users** | **list[str]** |  | [optional] 
 **teams** | **list[str]** |  | [optional] 
 **projects** | **list[str]** |  | [optional] 
 

@@ -34,13 +34,13 @@ message Dask {
     int32 scale = 3;
 
     // Adaptive config min workers
-    int32 adapt_min = 4;
+    int32 adaptMin = 4;
 
     // Adaptive config max workers
-    int32 adapt_max = 5;
+    int32 adaptMax = 5;
 
     // Adaptive config interval
-    string adapt_interval = 6;
+    string adaptInterval = 6;
 
     // Optional environment section
     Environment environment = 7;

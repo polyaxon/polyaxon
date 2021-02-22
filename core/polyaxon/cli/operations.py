@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import os
 import sys
 
 import click
@@ -27,6 +27,7 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.options import OPTIONS_PROJECT, OPTIONS_RUN_UID
 from polyaxon.client import RunClient
 from polyaxon.client.run import get_run_logs
+from polyaxon.containers import contexts as container_contexts
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import (
     PolyaxonClientException,
@@ -35,7 +36,6 @@ from polyaxon.exceptions import (
 )
 from polyaxon.lifecycle import LifeCycle, V1Statuses
 from polyaxon.logger import clean_outputs
-from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.metadata.keys import META_REWRITE_PATH
 from polyaxon.polyaxonfile import OperationSpecification
@@ -157,9 +157,23 @@ def ops(ctx, project, uid):
 @click.option("--limit", "-l", type=int, help="To limit the list of runs.")
 @click.option("--offset", "-off", type=int, help="To offset the list of runs.")
 @click.option("--columns", "-c", type=str, help="The columns to show.")
+@click.option(
+    "--offline",
+    is_flag=True,
+    default=False,
+    help="To list offline runs if they exists.",
+)
+@click.option(
+    "--offline-path",
+    type=click.Path(exists=False),
+    help="Optional path to use to where offline runs are persisted, "
+    "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
+)
 @click.pass_context
 @clean_outputs
-def ls(ctx, project, io, to_csv, query, sort, limit, offset, columns):
+def ls(
+    ctx, project, io, to_csv, query, sort, limit, offset, columns, offline, offline_path
+):
     """List runs for this project.
 
     Uses /docs/core/cli/#caching
@@ -195,32 +209,53 @@ def ls(ctx, project, io, to_csv, query, sort, limit, offset, columns):
     \b
     $ polyaxon ops ls -q "kind: service"
     """
-    owner, project_name = get_project_or_local(
-        project or ctx.obj.get("project"), is_cli=True
-    )
-
-    try:
-        polyaxon_client = RunClient(owner=owner, project=project_name)
-        response = polyaxon_client.list(
-            limit=limit, offset=offset, query=query, sort=sort
-        )
-    except (ApiException, HTTPError) as e:
-        handle_cli_error(
-            e, message="Could not get runs for project `{}`.".format(project_name)
-        )
-        sys.exit(1)
-
-    meta = get_meta_response(response)
-    if meta:
-        Printer.print_header("Runs for project `{}/{}`.".format(owner, project_name))
-        Printer.print_header("Navigation:")
-        dict_tabulate(meta)
+    if offline:
+        offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
+        offline_path_format = "{}/{{}}/run_data.json".format(offline_path)
+        if not os.path.exists(offline_path) or not os.path.isdir(offline_path):
+            Printer.print_error(
+                f"Could not list offline runs, the path `{offline_path}` "
+                f"does not exist or is not a directory."
+            )
+            sys.exit(1)
+        results = []
+        for uid in os.listdir(offline_path):
+            run_path = offline_path_format.format(uid)
+            if os.path.exists(run_path):
+                results.append(RunConfigManager.read_from_path(run_path))
+            else:
+                Printer.print_warning(f"Skipping run {uid}, offline data not found.")
     else:
-        Printer.print_header(
-            "No runs found for project `{}/{}`.".format(owner, project_name)
+        owner, project_name = get_project_or_local(
+            project or ctx.obj.get("project"), is_cli=True
         )
 
-    objects = [Printer.add_status_color(o.to_dict()) for o in response.results]
+        try:
+            polyaxon_client = RunClient(owner=owner, project=project_name)
+            response = polyaxon_client.list(
+                limit=limit, offset=offset, query=query, sort=sort
+            )
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e, message="Could not get runs for project `{}`.".format(project_name)
+            )
+            sys.exit(1)
+
+        meta = get_meta_response(response)
+        if meta:
+            Printer.print_header(
+                "Runs for project `{}/{}`.".format(owner, project_name)
+            )
+            Printer.print_header("Navigation:")
+            dict_tabulate(meta)
+        else:
+            Printer.print_header(
+                "No runs found for project `{}/{}`.".format(owner, project_name)
+            )
+
+        results = response.results
+
+    objects = [Printer.add_status_color(o.to_dict()) for o in results]
     columns = validate_tags(columns)
     if io:
         objects, prefixed_columns = flatten_keys(
@@ -273,9 +308,21 @@ def ls(ctx, project, io, to_csv, query, sort, limit, offset, columns):
 @ops.command()
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
+@click.option(
+    "--offline",
+    is_flag=True,
+    default=False,
+    help="To list offline runs if they exists.",
+)
+@click.option(
+    "--offline-path",
+    type=click.Path(exists=False),
+    help="Optional path to use to where offline runs are persisted, "
+    "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
+)
 @click.pass_context
 @clean_outputs
-def get(ctx, project, uid):
+def get(ctx, project, uid, offline, offline_path):
     """Get run.
 
     Uses /docs/core/cli/#caching
@@ -295,36 +342,50 @@ def get(ctx, project, uid):
     $ polyaxon ops get -p alain/cats-vs-dogs --uid=8aac02e3a62a4f0aaa257c59da5eab80
     """
 
-    owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"),
-        uid or ctx.obj.get("run_uuid"),
-        is_cli=True,
-    )
+    uid = uid or ctx.obj.get("run_uuid")
 
-    try:
-        polyaxon_client = RunClient(
-            owner=owner, project=project_name, run_uuid=run_uuid
+    if offline:
+        offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
+        offline_path = "{}/{}/run_data.json".format(offline_path, uid)
+        if not os.path.exists(offline_path):
+            Printer.print_error(
+                f"Could not get offline run, the path `{offline_path}` "
+                f"does not exist."
+            )
+            sys.exit(1)
+        run_data = RunConfigManager.read_from_path(offline_path)
+    else:
+        owner, project_name, run_uuid = get_project_run_or_local(
+            project or ctx.obj.get("project"),
+            uid,
+            is_cli=True,
         )
-        polyaxon_client.refresh_data()
-        config = polyaxon_client.client.sanitize_for_serialization(
-            polyaxon_client.run_data
-        )
-        cache.cache(
-            config_manager=RunConfigManager,
-            config=config,
-            owner=owner,
-            project=project_name,
-        )
-    except (ApiException, HTTPError) as e:
-        handle_cli_error(
-            e,
-            message="Could not load run `{}/{}/{}` info.".format(
-                owner, project_name, run_uuid
-            ),
-        )
-        sys.exit(1)
 
-    get_run_details(polyaxon_client.run_data)
+        try:
+            polyaxon_client = RunClient(
+                owner=owner, project=project_name, run_uuid=run_uuid
+            )
+            polyaxon_client.refresh_data()
+            config = polyaxon_client.client.sanitize_for_serialization(
+                polyaxon_client.run_data
+            )
+            cache.cache(
+                config_manager=RunConfigManager,
+                config=config,
+                owner=owner,
+                project=project_name,
+            )
+            run_data = polyaxon_client.run_data
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e,
+                message="Could not load run `{}/{}/{}` info.".format(
+                    owner, project_name, run_uuid
+                ),
+            )
+            sys.exit(1)
+
+    get_run_details(run_data)
 
 
 @ops.command()
@@ -931,9 +992,11 @@ def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
                 filepath=path_from, path=path_to or "", overwrite=True
             )
         else:
-            files = IgnoreConfigManager.get_unignored_filepaths(path_from)
-            response = client.upload_artifacts(
-                files=files, path=path_to or "", overwrite=True, relative_to=path_from
+            response = client.upload_artifacts_dir(
+                dirpath=path_from,
+                path=path_to or "",
+                overwrite=True,
+                relative_to=path_from,
             )
     except (
         ApiException,
@@ -951,7 +1014,9 @@ def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
         Printer.print_success("Artifacts uploaded.")
     else:
         if sync_failure:
-            client.log_failed(message="Operation failed uploading artifacts.")
+            client.log_failed(
+                reason="OperationCli", message="Operation failed uploading artifacts."
+            )
         Printer.print_error(
             "Error uploading artifacts. "
             "Status: {}. Error: {}.".format(response.status_code, response.content),
@@ -1080,3 +1145,97 @@ def service(ctx, project, uid, yes, external, url):
         click.launch(external_run_url)
         sys.exit(0)
     click.launch(run_url)
+
+
+@ops.command()
+@click.option(
+    "--uid",
+    "-uid",
+    help="To single a single offline run using a its uuid.",
+)
+@click.option(
+    "--all-runs",
+    "-a",
+    is_flag=True,
+    default=False,
+    help="To sync all runs.",
+)
+@click.option(
+    "--no-artifacts",
+    is_flag=True,
+    default=False,
+    help="To disable uploading artifacts.",
+)
+@click.option(
+    "--clean",
+    "-c",
+    is_flag=True,
+    default=False,
+    help="To clean the run(s) local data after syncing.",
+)
+@click.option(
+    "--offline-path",
+    type=click.Path(exists=False),
+    help="Optional path to use to where offline runs are persisted, "
+    "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
+)
+@clean_outputs
+def sync(uid, all_runs, no_artifacts, clean, offline_path):
+    """Syncs multiple offline runs or a single offline run if a uuid is passed.
+
+    Uses /docs/core/cli/#caching
+
+    Examples:
+
+    \b
+    $ polyaxon ops sync -a --clean
+
+    \b
+    $ polyaxon ops sync -uid=8aac02e3a62a4f0aaa257c59da5eab80 --clean
+
+    """
+    offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
+    offline_path_format = "{}/{{}}".format(offline_path)
+
+    def _sync(run_uuid: str):
+        Printer.print_header(f"Syncing offline run {uid} ...")
+        client = RunClient(run_uuid=run_uuid, is_offline=True)
+        try:
+            client.sync_offline_run(
+                load_offline_run=True,
+                artifacts_path=offline_path_format.format(run_uuid),
+                upload_artifacts=not no_artifacts,
+                clean=clean,
+            )
+        except (
+            ApiException,
+            HTTPError,
+            PolyaxonHTTPError,
+            PolyaxonShouldExitError,
+            PolyaxonClientException,
+        ) as e:
+            handle_cli_error(
+                e, message="Could not sync offline run `{}`.".format(run_uuid)
+            )
+            sys.exit(1)
+
+    if all_runs:
+        if (
+            not os.path.exists(offline_path)
+            or not os.path.isdir(offline_path)
+            or not os.listdir(offline_path)
+        ):
+            Printer.print_error(
+                f"Could not sync offline runs, the path `{offline_path}` "
+                f"does not exist, is not a directory, or is empty."
+            )
+            sys.exit(1)
+        for uid in os.listdir(offline_path):
+            _sync(uid)
+    elif uid:
+        _sync(uid)
+    else:
+        Printer.print_error(
+            f"Please provide a run uuid or pass the flag `-a/--all` to sync runs."
+        )
+        sys.exit(1)

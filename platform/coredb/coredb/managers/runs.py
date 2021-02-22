@@ -65,7 +65,9 @@ def resume_run(
     content: str = None,
     readme: str = None,
     tags: List[str] = None,
+    supported_kinds: Set[str] = None,
     message=None,
+    **kwargs,
 ) -> BaseRun:
     op_spec = V1Operation.read(run.raw_content)
     compiled_operation, instance = operations.init_run(
@@ -77,6 +79,8 @@ def resume_run(
         op_spec=op_spec,
         tags=tags or run.tags,
         override=content,
+        supported_kinds=supported_kinds,
+        **kwargs,
     )
 
     run.user_id = instance.user_id

@@ -35,13 +35,13 @@ type V1GridSearch struct {
 	Concurrency int32 `json:"concurrency,omitempty"`
 
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-	EarlyStopping []interface{} `json:"early_stopping"`
+	EarlyStopping []interface{} `json:"earlyStopping"`
 
 	// Kind of matrix, should be equal to "grid"
 	Kind *string `json:"kind,omitempty"`
 
 	// Number of runs to generate and search
-	NumRuns int32 `json:"num_runs,omitempty"`
+	NumRuns int32 `json:"numRuns,omitempty"`
 
 	// Hyperparams/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`

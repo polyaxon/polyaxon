@@ -45,7 +45,7 @@ class CompiledOperationSpecification(BaseSpecification):
             k: ParamSpec(
                 name=k,
                 param=V1Param(value=v),
-                iotype=types.ANY,
+                type=types.ANY,
                 is_flag=False,
                 is_list=None,
                 is_context=is_context,

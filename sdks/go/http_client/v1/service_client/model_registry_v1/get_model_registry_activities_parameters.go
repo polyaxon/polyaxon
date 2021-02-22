@@ -82,6 +82,12 @@ type GetModelRegistryActivitiesParams struct {
 	*/
 	Limit *int32
 
+	/* Mode.
+
+	   Mode the search.
+	*/
+	Mode *string
+
 	/* Name.
 
 	   Entity managing the resource
@@ -178,6 +184,17 @@ func (o *GetModelRegistryActivitiesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithMode adds the mode to the get model registry activities params
+func (o *GetModelRegistryActivitiesParams) WithMode(mode *string) *GetModelRegistryActivitiesParams {
+	o.SetMode(mode)
+	return o
+}
+
+// SetMode adds the mode to the get model registry activities params
+func (o *GetModelRegistryActivitiesParams) SetMode(mode *string) {
+	o.Mode = mode
+}
+
 // WithName adds the name to the get model registry activities params
 func (o *GetModelRegistryActivitiesParams) WithName(name string) *GetModelRegistryActivitiesParams {
 	o.SetName(name)
@@ -253,6 +270,23 @@ func (o *GetModelRegistryActivitiesParams) WriteToRequest(r runtime.ClientReques
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Mode != nil {
+
+		// query param mode
+		var qrMode string
+
+		if o.Mode != nil {
+			qrMode = *o.Mode
+		}
+		qMode := qrMode
+		if qMode != "" {
+
+			if err := r.SetQueryParam("mode", qMode); err != nil {
 				return err
 			}
 		}

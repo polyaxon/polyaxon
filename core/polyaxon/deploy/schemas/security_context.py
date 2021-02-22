@@ -17,6 +17,7 @@
 from marshmallow import ValidationError, fields, validates_schema
 
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.utils.signal_decorators import check_partial
 
 
 def validate_security_context(user, group):
@@ -36,6 +37,7 @@ class SecurityContextSchema(BaseCamelSchema):
         return SecurityContextConfig
 
     @validates_schema
+    @check_partial
     def validate_security_context(self, data, **kwargs):
         validate_security_context(data.get("user"), data.get("group"))
 

@@ -41,6 +41,7 @@ class TestInit(BaseTestCase):
                         },
                     },
                     {"connection": "repo3", "git": {"revision": "foo"}},
+                    {"file": {"filename": "test", "content": "test"}},
                 ],
             },
         }
@@ -91,6 +92,16 @@ class TestInit(BaseTestCase):
                 "filename": "dockerfile",
                 "workdir": "",
                 "shell": "sh",
+            }
+        }
+        config = V1Init.from_dict(config_dict)
+        assert config.to_light_dict() == config_dict
+
+        config_dict = {
+            "file": {
+                "filename": "dockerfile",
+                "content": "test",
+                "chmod": "+x",
             }
         }
         config = V1Init.from_dict(config_dict)

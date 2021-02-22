@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**bucket_connection** | [**V1BucketConnection**](V1BucketConnection.md) |  | [optional] 
-**host_path_connection** | [**V1HostPathConnection**](V1HostPathConnection.md) |  | [optional] 
-**claim_connection** | [**V1ClaimConnection**](V1ClaimConnection.md) |  | [optional] 
-**host_connection** | [**V1HostConnection**](V1HostConnection.md) |  | [optional] 
-**git_connection** | [**V1GitConnection**](V1GitConnection.md) |  | [optional] 
+**bucketConnection** | [**V1BucketConnection**](V1BucketConnection.md) |  | [optional] 
+**hostPathConnection** | [**V1HostPathConnection**](V1HostPathConnection.md) |  | [optional] 
+**claimConnection** | [**V1ClaimConnection**](V1ClaimConnection.md) |  | [optional] 
+**hostConnection** | [**V1HostConnection**](V1HostConnection.md) |  | [optional] 
+**gitConnection** | [**V1GitConnection**](V1GitConnection.md) |  | [optional] 
 
 

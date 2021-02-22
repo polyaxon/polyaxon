@@ -21,7 +21,7 @@ package v1;
 // Termination specification, it defines how to handle failures, job runtime, and cleanup policy.
 message Termination {
     // Max retries for a specific run
-    int32 max_retries = 1;
+    int32 maxRetries = 1;
 
     // A TTL definition
     int32 ttl = 2;

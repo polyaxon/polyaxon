@@ -13,8 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from polyaxon.client.decorators.can_log_event import can_log_events
-from polyaxon.client.decorators.can_log_outputs import can_log_outputs
+
+from polyaxon.client.decorators.client_handler import client_handler
 from polyaxon.client.decorators.is_managed import ensure_is_managed
-from polyaxon.client.decorators.no_op import check_no_op
-from polyaxon.client.decorators.offline import check_offline

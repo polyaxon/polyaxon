@@ -18,6 +18,7 @@ from polyaxon.schemas.types.artifacts import ArtifactsTypeSchema, V1ArtifactsTyp
 from polyaxon.schemas.types.auth import AuthTypeSchema, V1AuthType
 from polyaxon.schemas.types.connections import ConnectionTypeSchema, V1ConnectionType
 from polyaxon.schemas.types.dockerfile import DockerfileTypeSchema, V1DockerfileType
+from polyaxon.schemas.types.file import FileTypeSchema, V1FileType
 from polyaxon.schemas.types.gcs import GcsTypeSchema, V1GcsType
 from polyaxon.schemas.types.git import GitTypeSchema, V1GitType
 from polyaxon.schemas.types.k8s_resources import (

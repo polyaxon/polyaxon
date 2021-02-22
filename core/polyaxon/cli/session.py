@@ -58,14 +58,21 @@ def get_server_installation(polyaxon_client=None):
         )
 
 
-def get_compatibility(key: str, service: str, version: str, is_cli: bool = True):
+def get_compatibility(
+    key: str,
+    service: str,
+    version: str,
+    is_cli: bool = True,
+    set_config: bool = True,
+):
     if not key:
         installation = CliConfigManager.get_value("installation") or {}
         key = installation.get("key") or uuid.uuid4().hex
     try:
         version = clean_version_for_compatibility(version)
     except Exception as e:
-        CliConfigManager.reset(last_check=now())
+        if set_config:
+            CliConfigManager.reset(last_check=now())
         if is_cli:
             handle_cli_error(
                 e,
@@ -82,20 +89,23 @@ def get_compatibility(key: str, service: str, version: str, is_cli: bool = True)
     except ApiException as e:
         if e.status == 403 and is_cli:
             session_expired()
-        CliConfigManager.reset(last_check=now())
+        if set_config:
+            CliConfigManager.reset(last_check=now())
         if is_cli:
             handle_cli_error(
                 e,
                 message="Could not reach the compatibility API.",
             )
     except HTTPError:
-        CliConfigManager.reset(last_check=now())
+        if set_config:
+            CliConfigManager.reset(last_check=now())
         if is_cli:
             Printer.print_error(
                 "Could not connect to remote server to fetch compatibility versions.",
             )
     except Exception as e:
-        CliConfigManager.reset(last_check=now())
+        if set_config:
+            CliConfigManager.reset(last_check=now())
         if is_cli:
             Printer.print_error(
                 "Unexpected error %s, "

@@ -33,7 +33,7 @@ import (
 type V1K8sResourceType struct {
 
 	// Option if the config resource is requested
-	IsRequested bool `json:"is_requested,omitempty"`
+	IsRequested bool `json:"isRequested,omitempty"`
 
 	// Name of the resource
 	Name string `json:"name,omitempty"`

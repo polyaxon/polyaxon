@@ -26,6 +26,7 @@ from marshmallow.exceptions import ValidationError
 
 from polyaxon import types
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig, BaseOneOfSchema
+from polyaxon.utils.signal_decorators import check_partial
 
 try:
     import numpy as np
@@ -222,12 +223,12 @@ def validate_matrix(values):
 class BaseHpParamConfig(BaseConfig):
     @staticmethod
     def validate_io(io: "V1IO"):  # noqa
-        if io.iotype not in [types.INT, types.FLOAT]:
+        if io.type not in [types.INT, types.FLOAT]:
             raise ValidationError(
                 "Param `{}` has a an input type `{}` "
                 "and it does not correspond to hyper-param type `int or float`.".format(
                     io.name,
-                    io.iotype,
+                    io.type,
                 )
             )
         return True
@@ -305,6 +306,7 @@ class HpPChoiceSchema(BaseCamelSchema):
         return V1HpPChoice
 
     @validates_schema
+    @check_partial
     def validate_pchoice(self, data, **kwargs):
         if data.get("value"):
             validate_pchoice(values=[v[1] for v in data["value"] if v])

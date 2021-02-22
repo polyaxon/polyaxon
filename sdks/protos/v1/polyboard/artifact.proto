@@ -153,7 +153,7 @@ message ListRunArtifactsResponse {
 }
 
 
-// Request data to create ryb artifacts
+// Request data to create run artifacts
 message RunArtifactsRequest {
     // Owner of the namespace
     string owner = 1;

@@ -62,7 +62,7 @@ message MPIJob {
     CleanPodPolicy cleanPodPolicy = 3;
 
     // Optional slots per worker
-    int32 slots_per_worker = 4;
+    int32 slotsPerWorker = 4;
 
     // Optional launcher replica definition
     KFReplica launcher = 5;

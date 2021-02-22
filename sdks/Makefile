@@ -143,6 +143,8 @@ clean:
 	mkdir java/$(PB_CLIENT)/$(VERSION)
 	rm -rf swagger/$(VERSION)
 	mkdir swagger/$(VERSION)
+	rm -rf jsonschema/$(VERSION)
+	mkdir jsonschema/$(VERSION)
 	rm -rf openapi-html/$(VERSION)
 	mkdir openapi-html/$(VERSION)
 
@@ -173,7 +175,12 @@ prepare: clean \
 	compile-swagger \
 	swagger-concat
 
-all: prepare
-
 compile-pb: compile-go \
 	compile-python
+
+jsonschema-generate: hack/jsonschema/main.go
+	go run ./hack/jsonschema
+	rm jsonschema/$(VERSION)/polyaxon_sdk.swagger.json
+
+all: prepare \
+    jsonschema-generate

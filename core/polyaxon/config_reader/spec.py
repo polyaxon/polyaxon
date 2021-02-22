@@ -251,7 +251,7 @@ def _read_from_python(f_path, f_module):
 
 def _read_from_file(f_path, file_type):
     _, ext = os.path.splitext(f_path)
-    if ext in (".yml", ".yaml") or file_type in (".yml", ".yaml"):
+    if ext in (".yml", ".yaml") or file_type in (None, ".yml", ".yaml"):
         return _read_from_yml(f_path)
     elif ext == ".json" or file_type == ".json":
         return _read_from_json(f_path)

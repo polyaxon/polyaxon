@@ -109,7 +109,7 @@ class BaseSpecification(Sections):
         return data[cls.KIND]
 
     @classmethod
-    def read(cls, values):
+    def read(cls, values, partial: bool = False):
         if isinstance(values, cls.CONFIG):
             return values
 
@@ -118,7 +118,7 @@ class BaseSpecification(Sections):
             values = ConfigSpec.read_from([{Sections.KIND: cls._SPEC_KIND}] + values)
         cls.check_data(values)
         try:
-            config = cls.CONFIG.from_dict(copy.deepcopy(values))
+            config = cls.CONFIG.from_dict(copy.deepcopy(values), partial=partial)
         except TypeError as e:
             raise ValidationError(
                 "Received a non valid config `{}`: `{}`".format(cls._SPEC_KIND, e)

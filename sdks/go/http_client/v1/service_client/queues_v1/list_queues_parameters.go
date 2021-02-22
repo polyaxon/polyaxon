@@ -82,6 +82,12 @@ type ListQueuesParams struct {
 	*/
 	Limit *int32
 
+	/* Mode.
+
+	   Mode the search.
+	*/
+	Mode *string
+
 	/* Name.
 
 	   Entity managing the resource
@@ -178,6 +184,17 @@ func (o *ListQueuesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithMode adds the mode to the list queues params
+func (o *ListQueuesParams) WithMode(mode *string) *ListQueuesParams {
+	o.SetMode(mode)
+	return o
+}
+
+// SetMode adds the mode to the list queues params
+func (o *ListQueuesParams) SetMode(mode *string) {
+	o.Mode = mode
+}
+
 // WithName adds the name to the list queues params
 func (o *ListQueuesParams) WithName(name string) *ListQueuesParams {
 	o.SetName(name)
@@ -253,6 +270,23 @@ func (o *ListQueuesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Mode != nil {
+
+		// query param mode
+		var qrMode string
+
+		if o.Mode != nil {
+			qrMode = *o.Mode
+		}
+		qMode := qrMode
+		if qMode != "" {
+
+			if err := r.SetQueryParam("mode", qMode); err != nil {
 				return err
 			}
 		}

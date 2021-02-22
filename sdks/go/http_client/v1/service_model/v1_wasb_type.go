@@ -38,7 +38,7 @@ type V1WasbType struct {
 	Path bool `json:"path,omitempty"`
 
 	// Optional storage_account
-	StorageAccount string `json:"storage_account,omitempty"`
+	StorageAccount string `json:"storageAccount,omitempty"`
 }
 
 // Validate validates this v1 wasb type

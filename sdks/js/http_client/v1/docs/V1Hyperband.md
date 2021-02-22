@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  | [optional] [default to &#39;hyperband&#39;]
 **params** | **{String: Object}** |  | [optional] 
-**max_iterations** | **Number** |  | [optional] 
+**maxIterations** | **Number** |  | [optional] 
 **eta** | **Number** |  | [optional] 
 **resource** | [**V1OptimizationResource**](V1OptimizationResource.md) |  | [optional] 
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 
@@ -14,6 +14,6 @@ Name | Type | Description | Notes
 **seed** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
 **container** | [**Object**](.md) |  | [optional] 
-**early_stopping** | **[Object]** |  | [optional] 
+**earlyStopping** | **[Object]** |  | [optional] 
 
 

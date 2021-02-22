@@ -20,7 +20,6 @@ import uuid
 
 from collections.abc import Mapping
 from datetime import date, datetime
-from distutils.util import strtobool  # pylint:disable=import-error
 from json import JSONDecodeError
 from typing import Dict, Union
 from urllib.parse import urlparse
@@ -35,6 +34,7 @@ from polyaxon.schemas.types import (
     V1ArtifactsType,
     V1AuthType,
     V1DockerfileType,
+    V1FileType,
     V1GcsType,
     V1GitType,
     V1S3Type,
@@ -42,6 +42,7 @@ from polyaxon.schemas.types import (
     V1WasbType,
 )
 from polyaxon.schemas.types.event import V1EventType
+from polyaxon.utils.bool_utils import strtobool
 
 
 def get_int(key, value, is_list=False, is_optional=False, default=None, options=None):
@@ -692,6 +693,54 @@ def get_dockerfile_init(
     )
 
 
+def get_file_init(
+    key, value, is_list=False, is_optional=False, default=None, options=None
+):
+    """
+    Get the value corresponding to the key and converts
+    it to `V1FileType`/`list(V1FileType)`.
+
+    Args:
+        key: the dict key.
+        value: the value to parse.
+        is_list: If this is one element or a list of elements.
+        is_optional: To raise an error if key was not found.
+        default: default value if is_optional is True.
+        options: list/tuple if provided, the value must be one of these values.
+
+    Returns:
+        `date`: value corresponding to the key.
+    """
+
+    def convert_to_file_init(x):
+        if not isinstance(x, Mapping):
+            x = convert_to_dict(x, key)
+        return V1FileType.from_dict(x)
+
+    if is_list:
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=V1FileType,
+            type_convert=convert_to_file_init,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+            base_types=(str, Mapping),
+        )
+
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=V1FileType,
+        type_convert=convert_to_file_init,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+        base_types=(str, Mapping),
+    )
+
+
 def get_image_init(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
@@ -1189,6 +1238,7 @@ TYPE_MAPPING = {
     types.DATE: get_date,
     types.DATETIME: get_datetime,
     types.UUID: get_uuid,
+    types.FILE: get_file_init,
     types.DOCKERFILE: get_dockerfile_init,
     types.GIT: get_git_init,
     types.IMAGE: get_image_init,

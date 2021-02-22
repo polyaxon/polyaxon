@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**volume_claim** | **String** |  | [optional] 
-**mount_path** | **String** |  | [optional] 
-**read_only** | **Boolean** |  | [optional] 
+**volumeClaim** | **String** |  | [optional] 
+**mountPath** | **String** |  | [optional] 
+**readOnly** | **Boolean** |  | [optional] 
 **kind** | [**Object**](.md) |  | [optional] 
 
 

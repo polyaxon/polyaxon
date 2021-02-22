@@ -45,6 +45,14 @@ def get_module_path():
         return "not found"
 
 
+def get_user():
+    try:
+        return getpass.getuser()
+    except Exception as e:
+        logger.debug("Could not detect installed packages, %s", e)
+        return "unknown"
+
+
 def get_run_env():
     import pkg_resources
 
@@ -62,11 +70,6 @@ def get_run_env():
         version = pkg_resources.get_distribution("polyaxon").version
     except pkg_resources.DistributionNotFound:
         version = ""
-    try:
-        user = getpass.getuser()
-    except Exception as e:
-        logger.debug("Could not detect installed packages, %s", e)
-        user = "unknown"
     return {
         "pid": os.getpid(),
         "hostname": socket.gethostname(),
@@ -74,7 +77,7 @@ def get_run_env():
         "system": platform.system(),
         "python_version_verbose": sys.version,
         "python_version": platform.python_version(),
-        "user": user,
+        "user": get_user(),
         "client_version": version,
         "sys.argv": sys.argv,
         "is_notebook": is_notebook(),

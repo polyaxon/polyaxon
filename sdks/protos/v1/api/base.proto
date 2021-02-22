@@ -228,11 +228,14 @@ message OwnerEntityResourceListRequestByName {
     // Limit size
     int32 limit = 4;
 
-     // Sort to order the search
+    // Sort to order the search
     string sort = 5;
 
-     // Query filter the search
+    // Query filter the search
     string query = 6;
+
+    // Mode the search
+    string mode = 7;
 }
 
 // Request stats with owner/entity namespace

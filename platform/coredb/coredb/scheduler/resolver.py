@@ -79,6 +79,11 @@ def resolve(run: BaseRun, compiled_at: datetime = None, resolver_cls=None):
     except (
         AccessNotAuthorized,
         AccessNotFound,
+    ) as e:
+        raise PolyaxonCompilerError("Access Error: %s" % e) from e
+    except (
+        AccessNotAuthorized,
+        AccessNotFound,
         MarshmallowValidationError,
         PolyaxonSchemaError,
         ValidationError,

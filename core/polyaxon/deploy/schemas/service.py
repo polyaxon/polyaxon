@@ -149,6 +149,7 @@ class HelperServiceConfig(Service):
 class AgentServiceSchema(ServiceSchema):
     instance = fields.String(allow_none=True)
     token = fields.String(allow_none=True)
+    is_replica = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -157,7 +158,7 @@ class AgentServiceSchema(ServiceSchema):
 
 class AgentServiceConfig(Service):
     SCHEMA = AgentServiceSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["instance", "token"]
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["instance", "token", "isReplica"]
 
     def __init__(
         self,
@@ -170,6 +171,7 @@ class AgentServiceConfig(Service):
         resources=None,
         instance=None,
         token=None,
+        is_replica=None,
     ):
         super().__init__(
             enabled=enabled,
@@ -182,6 +184,7 @@ class AgentServiceConfig(Service):
         )
         self.instance = instance
         self.token = token
+        self.is_replica = is_replica
 
 
 class OperatorServiceSchema(ServiceSchema):

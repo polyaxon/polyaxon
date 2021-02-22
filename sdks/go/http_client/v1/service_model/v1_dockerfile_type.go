@@ -47,7 +47,7 @@ type V1DockerfileType struct {
 	Image string `json:"image,omitempty"`
 
 	// An optional string defining a language, e.g. en_US.UTF-8
-	LangEnv string `json:"lang_env,omitempty"`
+	LangEnv string `json:"langEnv,omitempty"`
 
 	// An optional list of tuples for exporting paths, translate to a PATH statements
 	Path map[string]string `json:"path,omitempty"`
@@ -65,7 +65,7 @@ type V1DockerfileType struct {
 	Workdir string `json:"workdir,omitempty"`
 
 	// An optional workdir path
-	WorkdirPath string `json:"workdir_path,omitempty"`
+	WorkdirPath string `json:"workdirPath,omitempty"`
 }
 
 // Validate validates this v1 dockerfile type

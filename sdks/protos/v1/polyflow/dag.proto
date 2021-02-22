@@ -40,7 +40,7 @@ message Dag {
     int32 concurrency = 5;
 
     // Optional component tags
-    repeated google.protobuf.Struct early_stopping = 6;
+    repeated google.protobuf.Struct earlyStopping = 6;
 
     // Optional environment section
     Environment environment = 7;

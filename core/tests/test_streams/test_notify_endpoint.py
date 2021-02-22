@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import pytest
+
 from asyncio import Future
 from mock import patch
 
@@ -28,6 +30,7 @@ from tests.test_streams.base import get_streams_client, set_store
 from tests.utils import BaseTestCase
 
 
+@pytest.mark.streams_mark
 class TestNotifyEndpoints(BaseTestCase):
     def setUp(self):
         super().setUp()

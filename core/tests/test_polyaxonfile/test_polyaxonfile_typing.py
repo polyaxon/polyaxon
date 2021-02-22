@@ -419,7 +419,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
                     name="model_path",
                     value="model_path",
                     is_optional=True,
-                    iotype="path",
+                    type="path",
                 )
             },
         )
@@ -449,7 +449,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
                     name="model_path",
                     value="model_path",
                     is_optional=True,
-                    iotype="path",
+                    type="path",
                 )
             },
         )

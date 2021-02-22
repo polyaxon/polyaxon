@@ -33,19 +33,19 @@ import (
 type V1TruncationStoppingPolicy struct {
 
 	// Interval/Frequency for applying the policy.
-	EvaluationInterval int32 `json:"evaluation_interval,omitempty"`
+	EvaluationInterval int32 `json:"evaluationInterval,omitempty"`
 
 	// Flag to include or not the succeeded runs in the calculation
-	IncludeSucceeded bool `json:"include_succeeded,omitempty"`
+	IncludeSucceeded bool `json:"includeSucceeded,omitempty"`
 
 	// Kind of this stopping policy, should be equal to "truncation"
 	Kind *string `json:"kind,omitempty"`
 
 	// Min interval (e.g steps) before starting the process
-	MinInterval int32 `json:"min_interval,omitempty"`
+	MinInterval int32 `json:"minInterval,omitempty"`
 
 	// Min samples runs succeeded before starting the process
-	MinSamples int32 `json:"min_samples,omitempty"`
+	MinSamples int32 `json:"minSamples,omitempty"`
 
 	// The percentage of runs to stop, at each evaluation interval.
 	// e.g. 1 - 99.

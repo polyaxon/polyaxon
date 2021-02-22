@@ -25,12 +25,17 @@ from polyaxon.exceptions import PolyaxonDateTimeFormatterException
 epoch = datetime(1970, 1, 1, tzinfo=pytz.utc)
 
 
+def parse_datetime(value):
+    if isinstance(value, str):
+        return dt_parser.parse(value)
+    return value
+
+
 def to_timestamp(value):
     """
     Convert a time zone aware datetime to a POSIX timestamp (with fractional component.)
     """
-    if isinstance(value, str):
-        value = dt_parser.parse(value)
+    value = parse_datetime(value)
     return (value - epoch).total_seconds()
 
 
@@ -49,6 +54,8 @@ def path_last_modified(filepath: str) -> datetime:
 
 
 def file_modified_since(filepath: str, last_time: datetime) -> bool:
+    if not last_time:
+        return True
     return path_last_modified(filepath) > last_time
 
 

@@ -107,6 +107,10 @@ func getOrUpdateOperationCondition(currentCond *OperationCondition, conditionTyp
 
 	// Do nothing if condition doesn't change
 	if currentCond != nil && currentCond.Type == newCond.Type && currentCond.Status == newCond.Status && currentCond.Reason == newCond.Reason {
+		// Always update final states
+		if currentCond.Type == OperationSucceeded || currentCond.Type == OperationFailed || currentCond.Type == OperationStopped {
+			return &newCond, true
+		}
 		return &newCond, false
 	}
 

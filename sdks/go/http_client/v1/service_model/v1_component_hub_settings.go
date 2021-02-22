@@ -33,6 +33,9 @@ type V1ComponentHubSettings struct {
 
 	// Authorized teams
 	Teams []string `json:"teams"`
+
+	// Authorized users
+	Users []string `json:"users"`
 }
 
 // Validate validates this v1 component hub settings

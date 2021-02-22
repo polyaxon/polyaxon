@@ -17,19 +17,16 @@ metadata:
     app.kubernetes.io/component: {{ template "roles.worker" . }}
     app.kubernetes.io/managed-by: "helm"
 spec:
-  additionalPrinterColumns:
-  - JSONPath: .status.conditions[-1:].type
-    name: State
-    type: string
-  - JSONPath: .metadata.creationTimestamp
-    name: Age
-    type: date
   group: kubeflow.org
+  scope: Namespaced
   names:
     kind: TFJob
-    plural: tfjobs
     singular: tfjob
-  scope: Namespaced
+    plural: tfjobs
+  versions:
+  - name: v1
+    served: true
+    storage: true
   subresources:
     status: {}
   validation:
@@ -39,24 +36,27 @@ spec:
           properties:
             tfReplicaSpecs:
               properties:
-                Chief:
-                  properties:
-                    replicas:
-                      maximum: 1
-                      minimum: 1
-                      type: integer
-                PS:
-                  properties:
-                    replicas:
-                      minimum: 1
-                      type: integer
+                # The validation works when the configuration contains
+                # `Worker`, `PS` , `Chief` or `Evaluator`. Otherwise it will not be validated.
                 Worker:
                   properties:
                     replicas:
-                      minimum: 1
                       type: integer
-  versions:
-  - name: v1
-    served: true
-    storage: true
+                      minimum: 1
+                PS:
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 1
+                Chief:
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 1
+                      maximum: 1
+                Evaluator:
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 0
 {{- end }}

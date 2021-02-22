@@ -31,7 +31,7 @@ message Hook {
     Statuses trigger = 2;
 
     // Component name to use
-    string hub_ref = 3;
+    string hubRef = 3;
 
     // An optional template containing conditions to check before starting the run
     string conditions = 4;

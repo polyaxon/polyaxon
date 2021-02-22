@@ -17,6 +17,7 @@
 import pytest
 
 from coredb.api.project_resources.serializers import (
+    OfflineRunSerializer,
     OperationCreateSerializer,
     RunSerializer,
 )
@@ -119,6 +120,50 @@ class TestOperationCreateSerializer(BaseTestRunSerializer):
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop("uuid") == obj1.uuid.hex
+
+        for k, v in data.items():
+            assert getattr(obj1, k) == v
+
+
+@pytest.mark.projects_resources_mark
+class TestOfflineRunSerializer(BaseTestRunSerializer):
+    serializer_class = OfflineRunSerializer
+    model_class = Run
+    factory_class = RunFactory
+    expected_keys = {
+        "uuid",
+        "name",
+        "description",
+        "tags",
+        "created_at",
+        "updated_at",
+        "started_at",
+        "finished_at",
+        "wait_time",
+        "duration",
+        "kind",
+        "runtime",
+        "meta_info",
+        "status",
+        "status_conditions",
+        "is_managed",
+        "inputs",
+        "outputs",
+    }
+    query = Run.objects
+
+    def create_one(self):
+        return self.factory_class(project=self.project)
+
+    def test_serialize_one(self):
+        obj1 = self.create_one()
+
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop("uuid") == obj1.uuid.hex
+        assert data.pop("created_at") is not None
+        assert data.pop("updated_at") is not None
 
         for k, v in data.items():
             assert getattr(obj1, k) == v

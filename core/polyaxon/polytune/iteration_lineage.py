@@ -74,7 +74,7 @@ def get_iteration_definition(
         exp = "Polyaxon tuner failed fetching iteration definition: {}\n{}".format(
             repr(e), traceback.format_exc()
         )
-        client.log_failed(message="PolyaxonTunerFailed", traceback=exp)
+        client.log_failed(reason="PolyaxonTunerIteration", message=exp)
         logger.warning(e)
 
 
@@ -82,7 +82,7 @@ def handle_iteration_failure(client: RunClient, exp: Exception):
     exp = "Polyaxon tuner failed creating suggestions : {}\n{}".format(
         repr(exp), traceback.format_exc()
     )
-    client.log_failed(message="PolyaxonTunerCreatingSuggestions", traceback=exp)
+    client.log_failed(reason="PolyaxonTunerSuggestions", message=exp)
 
 
 def handle_iteration(
@@ -117,8 +117,8 @@ def handle_iteration(
     try:
         handler()
     except Exception as e:
-        exp = "Polyaxon tuner failed fetching iteration definition: {}\n{}".format(
+        exp = "Polyaxon tuner failed logging iteration definition: {}\n{}".format(
             repr(e), traceback.format_exc()
         )
-        client.log_failed(message="PolyaxonTunerFailed", traceback=exp)
+        client.log_failed(reason="PolyaxonTunerIteration", message=exp)
         logger.warning(e)

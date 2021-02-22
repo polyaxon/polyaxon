@@ -37,23 +37,26 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateProjectDashboard(params *CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectDashboardOK, *CreateProjectDashboardNoContent, error)
+	CreateProjectDashboard(params *CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectDashboardOK, *CreateProjectDashboardNoContent, error)
 
-	DeleteProjectDashboard(params *DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectDashboardOK, *DeleteProjectDashboardNoContent, error)
+	DeleteProjectDashboard(params *DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectDashboardOK, *DeleteProjectDashboardNoContent, error)
 
-	GetProjectDashboard(params *GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectDashboardOK, *GetProjectDashboardNoContent, error)
+	GetProjectDashboard(params *GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectDashboardOK, *GetProjectDashboardNoContent, error)
 
-	ListProjectDashboardNames(params *ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardNamesOK, *ListProjectDashboardNamesNoContent, error)
+	ListProjectDashboardNames(params *ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectDashboardNamesOK, *ListProjectDashboardNamesNoContent, error)
 
-	ListProjectDashboards(params *ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardsOK, *ListProjectDashboardsNoContent, error)
+	ListProjectDashboards(params *ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectDashboardsOK, *ListProjectDashboardsNoContent, error)
 
-	PatchProjectDashboard(params *PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectDashboardOK, *PatchProjectDashboardNoContent, error)
+	PatchProjectDashboard(params *PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProjectDashboardOK, *PatchProjectDashboardNoContent, error)
 
-	PromoteProjectDashboard(params *PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectDashboardOK, *PromoteProjectDashboardNoContent, error)
+	PromoteProjectDashboard(params *PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PromoteProjectDashboardOK, *PromoteProjectDashboardNoContent, error)
 
-	UpdateProjectDashboard(params *UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectDashboardOK, *UpdateProjectDashboardNoContent, error)
+	UpdateProjectDashboard(params *UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProjectDashboardOK, *UpdateProjectDashboardNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -61,13 +64,12 @@ type ClientService interface {
 /*
   CreateProjectDashboard creates project dashboard
 */
-func (a *Client) CreateProjectDashboard(params *CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectDashboardOK, *CreateProjectDashboardNoContent, error) {
+func (a *Client) CreateProjectDashboard(params *CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectDashboardOK, *CreateProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateProjectDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateProjectDashboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards",
@@ -79,7 +81,12 @@ func (a *Client) CreateProjectDashboard(params *CreateProjectDashboardParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -97,13 +104,12 @@ func (a *Client) CreateProjectDashboard(params *CreateProjectDashboardParams, au
 /*
   DeleteProjectDashboard deletes project dashboard
 */
-func (a *Client) DeleteProjectDashboard(params *DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectDashboardOK, *DeleteProjectDashboardNoContent, error) {
+func (a *Client) DeleteProjectDashboard(params *DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectDashboardOK, *DeleteProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteProjectDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteProjectDashboard",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{entity}/dashboards/{uuid}",
@@ -115,7 +121,12 @@ func (a *Client) DeleteProjectDashboard(params *DeleteProjectDashboardParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -133,13 +144,12 @@ func (a *Client) DeleteProjectDashboard(params *DeleteProjectDashboardParams, au
 /*
   GetProjectDashboard gets project dashboard
 */
-func (a *Client) GetProjectDashboard(params *GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectDashboardOK, *GetProjectDashboardNoContent, error) {
+func (a *Client) GetProjectDashboard(params *GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectDashboardOK, *GetProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetProjectDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetProjectDashboard",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/dashboards/{uuid}",
@@ -151,7 +161,12 @@ func (a *Client) GetProjectDashboard(params *GetProjectDashboardParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -169,13 +184,12 @@ func (a *Client) GetProjectDashboard(params *GetProjectDashboardParams, authInfo
 /*
   ListProjectDashboardNames lists project dashboard
 */
-func (a *Client) ListProjectDashboardNames(params *ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardNamesOK, *ListProjectDashboardNamesNoContent, error) {
+func (a *Client) ListProjectDashboardNames(params *ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectDashboardNamesOK, *ListProjectDashboardNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListProjectDashboardNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListProjectDashboardNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/dashboards/names",
@@ -187,7 +201,12 @@ func (a *Client) ListProjectDashboardNames(params *ListProjectDashboardNamesPara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -205,13 +224,12 @@ func (a *Client) ListProjectDashboardNames(params *ListProjectDashboardNamesPara
 /*
   ListProjectDashboards lists project dashboards
 */
-func (a *Client) ListProjectDashboards(params *ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardsOK, *ListProjectDashboardsNoContent, error) {
+func (a *Client) ListProjectDashboards(params *ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectDashboardsOK, *ListProjectDashboardsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListProjectDashboardsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListProjectDashboards",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/dashboards",
@@ -223,7 +241,12 @@ func (a *Client) ListProjectDashboards(params *ListProjectDashboardsParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -241,13 +264,12 @@ func (a *Client) ListProjectDashboards(params *ListProjectDashboardsParams, auth
 /*
   PatchProjectDashboard patches project dashboard
 */
-func (a *Client) PatchProjectDashboard(params *PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectDashboardOK, *PatchProjectDashboardNoContent, error) {
+func (a *Client) PatchProjectDashboard(params *PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProjectDashboardOK, *PatchProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchProjectDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchProjectDashboard",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}",
@@ -259,7 +281,12 @@ func (a *Client) PatchProjectDashboard(params *PatchProjectDashboardParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -277,13 +304,12 @@ func (a *Client) PatchProjectDashboard(params *PatchProjectDashboardParams, auth
 /*
   PromoteProjectDashboard promotes project dashboard
 */
-func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectDashboardOK, *PromoteProjectDashboardNoContent, error) {
+func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PromoteProjectDashboardOK, *PromoteProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPromoteProjectDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PromoteProjectDashboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/dashboards/{uuid}/promote",
@@ -295,7 +321,12 @@ func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -313,13 +344,12 @@ func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, 
 /*
   UpdateProjectDashboard updates project dashboard
 */
-func (a *Client) UpdateProjectDashboard(params *UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectDashboardOK, *UpdateProjectDashboardNoContent, error) {
+func (a *Client) UpdateProjectDashboard(params *UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProjectDashboardOK, *UpdateProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateProjectDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateProjectDashboard",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}",
@@ -331,7 +361,12 @@ func (a *Client) UpdateProjectDashboard(params *UpdateProjectDashboardParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

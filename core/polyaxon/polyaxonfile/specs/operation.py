@@ -141,7 +141,7 @@ class OperationSpecification(BaseSpecification):
         return config.patch(patch_compiled, strategy=preset.patch_strategy)
 
     @classmethod
-    def read(cls, values, is_preset: bool = False):
+    def read(cls, values, partial: bool = False, is_preset: bool = False):
         if is_preset:
             if isinstance(values, cls.CONFIG):
                 values.is_preset = True
@@ -152,4 +152,4 @@ class OperationSpecification(BaseSpecification):
                 values = to_list(values)
                 values = [{cls.IS_PRESET: True}] + values
 
-        return super().read(values)
+        return super().read(values, partial=partial or is_preset)

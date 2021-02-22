@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/bookmark | Bookmark run
 [**bookmarkRuns**](RunsV1Api.md#bookmarkRuns) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
 [**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
-[**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy | Restart run with copy
+[**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/copy | Restart run with copy
 [**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts | Create bulk run artifacts lineage
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
@@ -49,13 +49,14 @@ Method | HTTP request | Description
 [**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{name}/runs | List runs
 [**notifyRunStatus**](RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-[**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart | Restart run
+[**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/restart | Restart run
 [**restoreRun**](RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/restore | Restore run
-[**resumeRun**](RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume | Resume run
+[**resumeRun**](RunsV1Api.md#resumeRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/resume | Resume run
 [**startRunTensorboard**](RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start | Start run tensorboard
 [**stopRun**](RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/stop | Stop run
 [**stopRunTensorboard**](RunsV1Api.md#stopRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 [**stopRuns**](RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
+[**syncRun**](RunsV1Api.md#syncRun) | **POST** /api/v1/{owner}/{project}/runs/sync | Sync offline run
 [**tagRuns**](RunsV1Api.md#tagRuns) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
 [**unbookmarkRun**](RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark | Unbookmark run
 [**updateRun**](RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
@@ -388,7 +389,7 @@ null (empty response body)
 
 ## copyRun
 
-> V1Run copyRun(entity_owner, entity_entity, entity_uuid, body)
+> V1Run copyRun(owner, project, run_uuid, body)
 
 Restart run with copy
 
@@ -404,11 +405,11 @@ ApiKey.apiKey = 'YOUR API KEY';
 //ApiKey.apiKeyPrefix = 'Token';
 
 let apiInstance = new PolyaxonSdk.RunsV1Api();
-let entity_owner = "entity_owner_example"; // String | Owner of the namespace
-let entity_entity = "entity_entity_example"; // String | Entity: project name, hub name, registry name, ...
-let entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the sub-entity
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let run_uuid = "run_uuid_example"; // String | UUID
 let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
-apiInstance.copyRun(entity_owner, entity_entity, entity_uuid, body, (error, data, response) => {
+apiInstance.copyRun(owner, project, run_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -422,9 +423,9 @@ apiInstance.copyRun(entity_owner, entity_entity, entity_uuid, body, (error, data
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entity_owner** | **String**| Owner of the namespace | 
- **entity_entity** | **String**| Entity: project name, hub name, registry name, ... | 
- **entity_uuid** | **String**| Uuid identifier of the sub-entity | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **run_uuid** | **String**| UUID | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -2070,7 +2071,8 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search.
+  'query': "query_example", // String | Query filter the search.
+  'mode': "mode_example" // String | Mode the search.
 };
 apiInstance.getRunsArtifactsLineage(owner, name, opts, (error, data, response) => {
   if (error) {
@@ -2092,6 +2094,7 @@ Name | Type | Description  | Notes
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
+ **mode** | **String**| Mode the search. | [optional] 
 
 ### Return type
 
@@ -2408,7 +2411,8 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search.
+  'query': "query_example", // String | Query filter the search.
+  'mode': "mode_example" // String | Mode the search.
 };
 apiInstance.listRuns(owner, name, opts, (error, data, response) => {
   if (error) {
@@ -2430,6 +2434,7 @@ Name | Type | Description  | Notes
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
+ **mode** | **String**| Mode the search. | [optional] 
 
 ### Return type
 
@@ -2559,7 +2564,7 @@ Name | Type | Description  | Notes
 
 ## restartRun
 
-> V1Run restartRun(entity_owner, entity_entity, entity_uuid, body)
+> V1Run restartRun(owner, project, run_uuid, body)
 
 Restart run
 
@@ -2575,11 +2580,11 @@ ApiKey.apiKey = 'YOUR API KEY';
 //ApiKey.apiKeyPrefix = 'Token';
 
 let apiInstance = new PolyaxonSdk.RunsV1Api();
-let entity_owner = "entity_owner_example"; // String | Owner of the namespace
-let entity_entity = "entity_entity_example"; // String | Entity: project name, hub name, registry name, ...
-let entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the sub-entity
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let run_uuid = "run_uuid_example"; // String | UUID
 let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
-apiInstance.restartRun(entity_owner, entity_entity, entity_uuid, body, (error, data, response) => {
+apiInstance.restartRun(owner, project, run_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -2593,9 +2598,9 @@ apiInstance.restartRun(entity_owner, entity_entity, entity_uuid, body, (error, d
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entity_owner** | **String**| Owner of the namespace | 
- **entity_entity** | **String**| Entity: project name, hub name, registry name, ... | 
- **entity_uuid** | **String**| Uuid identifier of the sub-entity | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **run_uuid** | **String**| UUID | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -2667,7 +2672,7 @@ null (empty response body)
 
 ## resumeRun
 
-> V1Run resumeRun(entity_owner, entity_entity, entity_uuid, body)
+> V1Run resumeRun(owner, project, run_uuid, body)
 
 Resume run
 
@@ -2683,11 +2688,11 @@ ApiKey.apiKey = 'YOUR API KEY';
 //ApiKey.apiKeyPrefix = 'Token';
 
 let apiInstance = new PolyaxonSdk.RunsV1Api();
-let entity_owner = "entity_owner_example"; // String | Owner of the namespace
-let entity_entity = "entity_entity_example"; // String | Entity: project name, hub name, registry name, ...
-let entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the sub-entity
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let run_uuid = "run_uuid_example"; // String | UUID
 let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
-apiInstance.resumeRun(entity_owner, entity_entity, entity_uuid, body, (error, data, response) => {
+apiInstance.resumeRun(owner, project, run_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -2701,9 +2706,9 @@ apiInstance.resumeRun(entity_owner, entity_entity, entity_uuid, body, (error, da
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entity_owner** | **String**| Owner of the namespace | 
- **entity_entity** | **String**| Entity: project name, hub name, registry name, ... | 
- **entity_uuid** | **String**| Uuid identifier of the sub-entity | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **run_uuid** | **String**| UUID | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -2919,6 +2924,59 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
  **body** | [**V1Uuids**](V1Uuids.md)| Uuids of the entities | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## syncRun
+
+> syncRun(owner, project, body)
+
+Sync offline run
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
+apiInstance.syncRun(owner, project, body, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
 

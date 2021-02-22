@@ -16,8 +16,6 @@
 import os
 import pytest
 
-from dateutil import parser as dt_parser
-
 from polyaxon.polyboard.events import (
     V1Event,
     V1EventArtifact,
@@ -34,6 +32,7 @@ from polyaxon.polyboard.events.schemas import (
     V1EventDataframe,
     V1EventVideo,
 )
+from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.tz_utils import now
 from tests.utils import BaseTestCase
 
@@ -42,7 +41,7 @@ from tests.utils import BaseTestCase
 class TestBaseEvent(BaseTestCase):
     def test_has_timestamp(self):
         parsed = V1Event.make(timestamp="2018-12-11 10:24:57 UTC")
-        expected = V1Event(timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"))
+        expected = V1Event(timestamp=parse_datetime("2018-12-11 10:24:57 UTC"))
         assert parsed == expected
 
     def test_has_no_timestamp(self):
@@ -55,13 +54,13 @@ class TestBaseEvent(BaseTestCase):
 
     def test_log_line_has_datetime(self):
         parsed = V1Event.make(timestamp="2018-12-11 10:24:57", step=12)
-        expected = V1Event(timestamp=dt_parser.parse("2018-12-11 10:24:57"), step=12)
+        expected = V1Event(timestamp=parse_datetime("2018-12-11 10:24:57"), step=12)
         assert parsed == expected
 
     def test_log_line_has_iso_datetime(self):
         parsed = V1Event.make(timestamp="2018-12-11T08:49:07.163495183Z", step=12)
         expected = V1Event(
-            timestamp=dt_parser.parse("2018-12-11T08:49:07.163495+00:00"), step=12
+            timestamp=parse_datetime("2018-12-11T08:49:07.163495+00:00"), step=12
         )
         assert parsed == expected
 
@@ -73,17 +72,17 @@ class TestEventsV1(BaseTestCase):
             kind="metric",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     metric=0.1,
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     metric=0.112,
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     metric=0.1,
                     step=14,
                 ),
@@ -95,13 +94,13 @@ class TestEventsV1(BaseTestCase):
     def test_metrics_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"), metric=0.1, step=12
+                timestamp=parse_datetime("2018-12-11 10:24:57"), metric=0.1, step=12
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"), metric=0.2, step=13
+                timestamp=parse_datetime("2018-12-11 10:25:57"), metric=0.2, step=13
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"), metric=0.3, step=14
+                timestamp=parse_datetime("2018-12-11 10:26:57"), metric=0.3, step=14
             ),
         ]
         events = V1Events.read(
@@ -120,17 +119,17 @@ class TestEventsV1(BaseTestCase):
             kind="metric",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     image=V1EventImage(height=1, width=1, colorspace=1, path="path"),
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     image=V1EventImage(height=10, width=1, colorspace=0, path="path"),
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     image=V1EventImage(height=1, width=10, colorspace=2, path="path"),
                     step=14,
                 ),
@@ -142,17 +141,17 @@ class TestEventsV1(BaseTestCase):
     def test_images_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 image=V1EventImage(path="test"),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 image=V1EventImage(height=1, width=1),
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 image=V1EventImage(height=10, width=10, colorspace=2),
                 step=14,
             ),
@@ -173,17 +172,17 @@ class TestEventsV1(BaseTestCase):
             kind="histogram",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     histogram=V1EventHistogram(values=[10], counts=[1]),
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     histogram=V1EventHistogram(values=[10], counts=[1]),
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     histogram=V1EventHistogram(values=[10], counts=[1]),
                     step=14,
                 ),
@@ -195,17 +194,17 @@ class TestEventsV1(BaseTestCase):
     def test_histograms_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 histogram=V1EventHistogram(values=[10], counts=[1]),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 histogram=V1EventHistogram(values=[10, 1, 1], counts=[1, 1, 1]),
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 histogram=V1EventHistogram(
                     values=[10, 112, 12, 1], counts=[12, 1, 1, 1]
                 ),
@@ -230,17 +229,17 @@ class TestEventsV1(BaseTestCase):
             kind="video",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     video=V1EventVideo(height=1, width=1, colorspace=1, path="path"),
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     video=V1EventVideo(height=10, width=1, colorspace=0, path="path"),
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     video=V1EventVideo(height=1, width=10, colorspace=2, path="path"),
                     step=14,
                 ),
@@ -252,17 +251,17 @@ class TestEventsV1(BaseTestCase):
     def test_videos_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 video=V1EventVideo(path="test", content_type="mp4"),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 video=V1EventVideo(height=1, width=1),
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 video=V1EventVideo(height=10, width=10, colorspace=2),
                 step=14,
             ),
@@ -283,21 +282,21 @@ class TestEventsV1(BaseTestCase):
             kind="audio",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     audio=V1EventAudio(
                         sample_rate=1.1, num_channels=2, length_frames=2, path="test"
                     ),
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     audio=V1EventAudio(
                         sample_rate=1.1, num_channels=2, length_frames=2, path="test"
                     ),
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     audio=V1EventAudio(
                         sample_rate=1.12, num_channels=22, length_frames=22, path="test"
                     ),
@@ -311,14 +310,14 @@ class TestEventsV1(BaseTestCase):
     def test_audios_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 audio=V1EventAudio(
                     sample_rate=1.1, num_channels=2, length_frames=2, path="test"
                 ),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 audio=V1EventAudio(
                     sample_rate=1.11,
                     num_channels=22,
@@ -329,7 +328,7 @@ class TestEventsV1(BaseTestCase):
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 audio=V1EventAudio(path="testwave", content_type="wav"),
                 step=14,
             ),
@@ -350,17 +349,17 @@ class TestEventsV1(BaseTestCase):
             kind="html",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     html="<div>1</div>",
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     html="<div>2</div>",
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     html="<div>3</div>",
                     step=14,
                 ),
@@ -372,17 +371,17 @@ class TestEventsV1(BaseTestCase):
     def test_htmls_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 html="<div>1</div>",
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 html="<div>2</div>",
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 html="<div>3</div>",
                 step=14,
             ),
@@ -403,17 +402,17 @@ class TestEventsV1(BaseTestCase):
             kind="chart",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     chart=V1EventChart(kind="plotly", figure={"foo": "bar"}),
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     chart=V1EventChart(kind="vega", figure={"foo": "bar"}),
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     chart=V1EventChart(kind="bokeh", figure={"foo": "bar"}),
                     step=14,
                 ),
@@ -425,17 +424,17 @@ class TestEventsV1(BaseTestCase):
     def test_charts_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 chart=V1EventChart(kind="plotly", figure={"foo": "bar"}),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 chart=V1EventChart(kind="vega", figure={"foo2": "bar2"}),
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 chart=V1EventChart(kind="bokeh", figure={"foo3": "bar3"}),
                 step=14,
             ),
@@ -456,7 +455,7 @@ class TestEventsV1(BaseTestCase):
             kind="curve",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     curve=V1EventCurve(
                         kind="roc",
                         x=[1.1, 3.1, 5.1],
@@ -466,7 +465,7 @@ class TestEventsV1(BaseTestCase):
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     curve=V1EventCurve(
                         kind="pr",
                         x=[1.1, 3.1, 5.1],
@@ -476,7 +475,7 @@ class TestEventsV1(BaseTestCase):
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     curve=V1EventCurve(
                         kind="custom",
                         x=[1.1, 3.1, 5.1],
@@ -493,21 +492,21 @@ class TestEventsV1(BaseTestCase):
     def test_curves_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 curve=V1EventCurve(
                     kind="roc", x=[1.1, 3.1, 5.1], y=[0.1, 0.3, 0.4], annotation="0.1"
                 ),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 curve=V1EventCurve(
                     kind="pr", x=[1.1, 3.1, 5.1], y=[0.1, 0.3, 0.4], annotation="0.21"
                 ),
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 curve=V1EventCurve(
                     kind="custom",
                     x=[1.1, 3.1, 5.1],
@@ -533,17 +532,17 @@ class TestEventsV1(BaseTestCase):
             kind="artifact",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     artifact=V1EventArtifact(kind="dataframe", path="path"),
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     artifact=V1EventArtifact(kind="tsv", path="path"),
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     artifact=V1EventArtifact(kind="csv", path="path"),
                     step=14,
                 ),
@@ -555,17 +554,17 @@ class TestEventsV1(BaseTestCase):
     def test_artifacts_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 artifact=V1EventArtifact(kind="dataframe", path="path1"),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 artifact=V1EventArtifact(kind="tsv", path="path2"),
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 artifact=V1EventArtifact(kind="csv", path="path3"),
                 step=14,
             ),
@@ -588,17 +587,17 @@ class TestEventsV1(BaseTestCase):
             kind="model",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     model=V1EventModel(framework="tensorflow", path="path"),
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     model=V1EventModel(framework="pytorch", path="path"),
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     model=V1EventModel(framework="onnx", path="path"),
                     step=14,
                 ),
@@ -610,17 +609,17 @@ class TestEventsV1(BaseTestCase):
     def test_models_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 model=V1EventModel(framework="tensorflow", path="path1"),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 model=V1EventModel(framework="pytorch", path="path2"),
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 model=V1EventModel(framework="onnx", path="path3"),
                 step=14,
             ),
@@ -646,7 +645,7 @@ class TestEventsV1(BaseTestCase):
         assert events.name == "foo"
         assert len(events.df.values) == 1
         event = V1Event(
-            timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+            timestamp=parse_datetime("2018-12-11 10:24:57"),
             model=V1EventModel(framework="tensorflow", path="path1"),
         )
         events.get_event_at(0).to_dict()
@@ -658,17 +657,17 @@ class TestEventsV1(BaseTestCase):
             kind="dataframe",
             events=[
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
                     dataframe=V1EventDataframe(path="path", content_type="parquet"),
                     step=12,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
                     dataframe=V1EventDataframe(path="path", content_type="pickle"),
                     step=13,
                 ),
                 V1Event(
-                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
                     dataframe=V1EventDataframe(path="path"),
                     step=14,
                 ),
@@ -680,17 +679,17 @@ class TestEventsV1(BaseTestCase):
     def test_dataframes_read_yaml(self):
         values = [
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
                 dataframe=V1EventDataframe(path="path1", content_type="parquet"),
                 step=12,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
                 dataframe=V1EventDataframe(path="path2", content_type="pickle"),
                 step=13,
             ),
             V1Event(
-                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
                 dataframe=V1EventDataframe(path="path3"),
                 step=14,
             ),

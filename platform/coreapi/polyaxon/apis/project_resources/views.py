@@ -18,6 +18,7 @@ from coredb.api.artifacts import queries as runs_artifacts_queries
 from coredb.api.artifacts.serializers import RunArtifactLightSerializer
 from coredb.api.project_resources import methods
 from coredb.api.project_resources.serializers import (
+    OfflineRunSerializer,
     OperationCreateSerializer,
     RunSerializer,
 )
@@ -73,6 +74,14 @@ class ProjectRunsListView(ProjectResourceListEndpoint, ListEndpoint, CreateEndpo
         "GET": RunSerializer,
         "POST": OperationCreateSerializer,
     }
+
+    def perform_create(self, serializer):
+        serializer.save(project=self.project)
+
+
+class ProjectRunsSyncView(ProjectResourceListEndpoint, CreateEndpoint):
+    queryset = Run.all.all()
+    serializer_class = OfflineRunSerializer
 
     def perform_create(self, serializer):
         serializer.save(project=self.project)

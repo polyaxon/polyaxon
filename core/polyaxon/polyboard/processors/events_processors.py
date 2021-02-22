@@ -15,7 +15,9 @@
 # limitations under the License.
 import io
 import os
+import re
 import shutil
+import unicodedata
 
 from typing import Dict, List
 
@@ -785,3 +787,17 @@ def metrics_dict_to_list(metrics: Dict) -> List:
             )
         )
     return results
+
+
+def to_fqn_event(name: str) -> str:
+    if not name:
+        raise ValueError("A name is required to process events.")
+
+    value = str(name)
+    value = (
+        unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    )
+    value = re.sub(r"[^\w\\\/\.\s-]", "", value).strip()
+    value = re.sub(r"[\\\/]+", "__", value)
+    value = re.sub(r"[-\.\s]+", "-", value)
+    return value

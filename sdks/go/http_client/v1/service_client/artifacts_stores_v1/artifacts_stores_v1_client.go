@@ -39,9 +39,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	UploadArtifact(params *UploadArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadArtifactOK, *UploadArtifactNoContent, error)
+	UploadArtifact(params *UploadArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadArtifactOK, *UploadArtifactNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -49,13 +52,12 @@ type ClientService interface {
 /*
   UploadArtifact uploads artifact to a store
 */
-func (a *Client) UploadArtifact(params *UploadArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadArtifactOK, *UploadArtifactNoContent, error) {
+func (a *Client) UploadArtifact(params *UploadArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadArtifactOK, *UploadArtifactNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUploadArtifactParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UploadArtifact",
 		Method:             "POST",
 		PathPattern:        "/api/v1/catalogs/{owner}/artifacts/{uuid}/upload",
@@ -67,7 +69,12 @@ func (a *Client) UploadArtifact(params *UploadArtifactParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

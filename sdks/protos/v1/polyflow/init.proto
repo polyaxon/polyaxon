@@ -21,6 +21,7 @@ package v1;
 import "v1/polyflow/k8s.proto";
 import "v1/polyflow/connection.proto";
 import "v1/types/dockerfile.proto";
+import "v1/types/file.proto";
 import "v1/types/git.proto";
 import "v1/types/artifacts.proto";
 
@@ -35,12 +36,15 @@ message Init {
     // Schema of the dockerfile to init
     DockerfileType dockerfile = 3;
 
+    // File intializer
+    FileType file = 4;
+
     // Optional, connection to use with this initializer
-    string connection = 4;
+    string connection = 5;
 
     // Optional context path, the path to mount to main the container
-    string path = 5;
+    string path = 6;
 
     // Container to override
-    Container container = 6;
+    Container container = 7;
 }

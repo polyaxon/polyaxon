@@ -400,7 +400,7 @@ Name | Type | Description  | Notes
 
 <a name="listQueueNames"></a>
 # **listQueueNames**
-> V1ListQueuesResponse listQueueNames(owner, name, offset, limit, sort, query)
+> V1ListQueuesResponse listQueueNames(owner, name, offset, limit, sort, query, mode)
 
 List queues names
 
@@ -432,8 +432,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListQueuesResponse result = apiInstance.listQueueNames(owner, name, offset, limit, sort, query);
+      V1ListQueuesResponse result = apiInstance.listQueueNames(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#listQueueNames");
@@ -456,6 +457,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -481,7 +483,7 @@ Name | Type | Description  | Notes
 
 <a name="listQueues"></a>
 # **listQueues**
-> V1ListQueuesResponse listQueues(owner, name, offset, limit, sort, query)
+> V1ListQueuesResponse listQueues(owner, name, offset, limit, sort, query, mode)
 
 List queues
 
@@ -513,8 +515,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListQueuesResponse result = apiInstance.listQueues(owner, name, offset, limit, sort, query);
+      V1ListQueuesResponse result = apiInstance.listQueues(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#listQueues");
@@ -537,6 +540,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 

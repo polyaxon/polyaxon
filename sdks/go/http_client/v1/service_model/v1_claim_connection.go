@@ -35,13 +35,13 @@ type V1ClaimConnection struct {
 	Kind interface{} `json:"kind,omitempty"`
 
 	// Mount path
-	MountPath string `json:"mount_path,omitempty"`
+	MountPath string `json:"mountPath,omitempty"`
 
 	// Read Only
-	ReadOnly bool `json:"read_only,omitempty"`
+	ReadOnly bool `json:"readOnly,omitempty"`
 
 	// Claim name
-	VolumeClaim string `json:"volume_claim,omitempty"`
+	VolumeClaim string `json:"volumeClaim,omitempty"`
 }
 
 // Validate validates this v1 claim connection

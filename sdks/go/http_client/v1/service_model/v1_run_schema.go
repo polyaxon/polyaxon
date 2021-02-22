@@ -45,10 +45,10 @@ type V1RunSchema struct {
 	Job *V1Job `json:"job,omitempty"`
 
 	// mpi job
-	MpiJob *V1MPIJob `json:"mpi_job,omitempty"`
+	MpiJob *V1MPIJob `json:"mpiJob,omitempty"`
 
 	// pytorch job
-	PytorchJob *V1PytorchJob `json:"pytorch_job,omitempty"`
+	PytorchJob *V1PytorchJob `json:"pytorchJob,omitempty"`
 
 	// ruy
 	Ruy *V1Ray `json:"ruy,omitempty"`
@@ -60,7 +60,7 @@ type V1RunSchema struct {
 	Spark *V1Spark `json:"spark,omitempty"`
 
 	// tf job
-	TfJob *V1TFJob `json:"tf_job,omitempty"`
+	TfJob *V1TFJob `json:"tfJob,omitempty"`
 }
 
 // Validate validates this v1 run schema
@@ -189,7 +189,7 @@ func (m *V1RunSchema) validateMpiJob(formats strfmt.Registry) error {
 	if m.MpiJob != nil {
 		if err := m.MpiJob.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("mpi_job")
+				return ve.ValidateName("mpiJob")
 			}
 			return err
 		}
@@ -206,7 +206,7 @@ func (m *V1RunSchema) validatePytorchJob(formats strfmt.Registry) error {
 	if m.PytorchJob != nil {
 		if err := m.PytorchJob.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("pytorch_job")
+				return ve.ValidateName("pytorchJob")
 			}
 			return err
 		}
@@ -274,7 +274,7 @@ func (m *V1RunSchema) validateTfJob(formats strfmt.Registry) error {
 	if m.TfJob != nil {
 		if err := m.TfJob.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("tf_job")
+				return ve.ValidateName("tfJob")
 			}
 			return err
 		}
@@ -394,7 +394,7 @@ func (m *V1RunSchema) contextValidateMpiJob(ctx context.Context, formats strfmt.
 	if m.MpiJob != nil {
 		if err := m.MpiJob.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("mpi_job")
+				return ve.ValidateName("mpiJob")
 			}
 			return err
 		}
@@ -408,7 +408,7 @@ func (m *V1RunSchema) contextValidatePytorchJob(ctx context.Context, formats str
 	if m.PytorchJob != nil {
 		if err := m.PytorchJob.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("pytorch_job")
+				return ve.ValidateName("pytorchJob")
 			}
 			return err
 		}
@@ -464,7 +464,7 @@ func (m *V1RunSchema) contextValidateTfJob(ctx context.Context, formats strfmt.R
 	if m.TfJob != nil {
 		if err := m.TfJob.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("tf_job")
+				return ve.ValidateName("tfJob")
 			}
 			return err
 		}

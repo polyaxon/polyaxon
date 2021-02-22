@@ -621,7 +621,7 @@ Name | Type | Description  | Notes
 
 <a name="getComponentHubActivities"></a>
 # **getComponentHubActivities**
-> V1ListActivitiesResponse getComponentHubActivities(owner, name, offset, limit, sort, query)
+> V1ListActivitiesResponse getComponentHubActivities(owner, name, offset, limit, sort, query, mode)
 
 Get hub activities
 
@@ -653,8 +653,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListActivitiesResponse result = apiInstance.getComponentHubActivities(owner, name, offset, limit, sort, query);
+      V1ListActivitiesResponse result = apiInstance.getComponentHubActivities(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#getComponentHubActivities");
@@ -677,6 +678,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -1083,7 +1085,7 @@ Name | Type | Description  | Notes
 
 <a name="listComponentVersionNames"></a>
 # **listComponentVersionNames**
-> V1ListComponentVersionsResponse listComponentVersionNames(owner, name, offset, limit, sort, query)
+> V1ListComponentVersionsResponse listComponentVersionNames(owner, name, offset, limit, sort, query, mode)
 
 List component version names
 
@@ -1115,8 +1117,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListComponentVersionsResponse result = apiInstance.listComponentVersionNames(owner, name, offset, limit, sort, query);
+      V1ListComponentVersionsResponse result = apiInstance.listComponentVersionNames(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#listComponentVersionNames");
@@ -1139,6 +1142,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -1164,7 +1168,7 @@ Name | Type | Description  | Notes
 
 <a name="listComponentVersions"></a>
 # **listComponentVersions**
-> V1ListComponentVersionsResponse listComponentVersions(owner, name, offset, limit, sort, query)
+> V1ListComponentVersionsResponse listComponentVersions(owner, name, offset, limit, sort, query, mode)
 
 List component versions
 
@@ -1196,8 +1200,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListComponentVersionsResponse result = apiInstance.listComponentVersions(owner, name, offset, limit, sort, query);
+      V1ListComponentVersionsResponse result = apiInstance.listComponentVersions(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#listComponentVersions");
@@ -1220,6 +1225,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 

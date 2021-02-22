@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **run** | **String** |  |  [optional]
 **runInfo** | [**Object**](.md) |  |  [optional]
 **metadata** | **String** |  |  [optional]
+**role** | **String** |  |  [optional]
 
 
 

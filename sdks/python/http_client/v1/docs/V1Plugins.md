@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **auto_resume** | **bool** |  | [optional] 
 **log_level** | **str** |  | [optional] 
 **external_host** | **bool** |  | [optional] 
+**sidecar** | [**V1PolyaxonSidecarContainer**](V1PolyaxonSidecarContainer.md) |  | [optional] 
 **notifications** | [**list[V1Notification]**](V1Notification.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

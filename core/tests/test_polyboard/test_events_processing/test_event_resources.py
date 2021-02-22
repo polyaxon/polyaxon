@@ -20,7 +20,7 @@ from polyaxon.polyboard.processors.events_processors import metrics_dict_to_list
 from tests.utils import BaseTestCase
 
 
-@pytest.mark.tracking_mark
+@pytest.mark.polyboard_mark
 class TestEventWriter(BaseTestCase):
     def test_gpu_resources_to_metrics(self):
         resources = {

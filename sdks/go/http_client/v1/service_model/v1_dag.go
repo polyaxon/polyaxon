@@ -43,7 +43,7 @@ type V1Dag struct {
 	Connections []string `json:"connections"`
 
 	// Optional component tags
-	EarlyStopping []interface{} `json:"early_stopping"`
+	EarlyStopping []interface{} `json:"earlyStopping"`
 
 	// Optional environment section
 	Environment *V1Environment `json:"environment,omitempty"`

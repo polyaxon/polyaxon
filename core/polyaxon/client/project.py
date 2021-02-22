@@ -17,9 +17,8 @@ from typing import Dict, Union
 
 import polyaxon_sdk
 
-from polyaxon import settings
 from polyaxon.client.client import PolyaxonClient
-from polyaxon.client.decorators import check_no_op, check_offline
+from polyaxon.client.decorators import client_handler
 from polyaxon.constants import DEFAULT
 from polyaxon.env_vars.getters import get_entity_full_name, get_entity_info
 from polyaxon.exceptions import PolyaxonClientException
@@ -58,7 +57,7 @@ class ProjectClient:
             resolve an owner from the environment.
     """
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def __init__(
         self,
         owner: str = None,
@@ -73,13 +72,17 @@ class ProjectClient:
         if not owner:
             raise PolyaxonClientException("Please provide a valid owner.")
 
-        self.client = client
-        if not (self.client or settings.CLIENT_CONFIG.is_offline):
-            self.client = PolyaxonClient()
-
+        self._client = client
         self._owner = owner or DEFAULT
         self._project = project
         self._project_data = polyaxon_sdk.V1Project()
+
+    @property
+    def client(self):
+        if self._client:
+            return self._client
+        self._client = PolyaxonClient()
+        return self._client
 
     @property
     def owner(self):
@@ -93,8 +96,7 @@ class ProjectClient:
     def project_data(self):
         return self._project_data
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def refresh_data(self):
         """Fetches the project data from the api."""
         self._project_data = self.client.projects_v1.get_project(
@@ -103,8 +105,7 @@ class ProjectClient:
         if self._project_data.owner is None:
             self._project_data.owner = self.owner
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def create(self, data: Union[Dict, polyaxon_sdk.V1Project]):
         """Creates a new project based on the data passed.
 
@@ -121,8 +122,7 @@ class ProjectClient:
         self._project = self._project_data.name
         return self._project_data
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def list(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ):
@@ -144,14 +144,12 @@ class ProjectClient:
         params = get_query_params(limit=limit, offset=offset, query=query, sort=sort)
         return self.client.projects_v1.list_projects(self.owner, **params)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def delete(self):
         """Deletes project based on the current owner and project."""
         return self.client.projects_v1.delete_project(self.owner, self.project)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def update(self, data: Union[Dict, polyaxon_sdk.V1Project]):
         """Updates a project based on the data passed.
 

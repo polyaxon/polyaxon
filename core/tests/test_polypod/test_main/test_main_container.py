@@ -303,7 +303,7 @@ class TestMainContainer(BaseTestCase):
         assert container.command is None
         assert container.args is None
         assert container.ports == []
-        assert len(container.env) == 2
+        assert len(container.env) == 2 + 1  # One from the artifacts store name env var
         assert container.env_from == []
         assert container.resources is None
         assert len(container.volume_mounts) == 1
@@ -337,7 +337,7 @@ class TestMainContainer(BaseTestCase):
         assert container.command is None
         assert container.args is None
         assert container.ports == []
-        assert len(container.env) == 2
+        assert len(container.env) == 2 + 1  # One from the artifacts store name env var
         assert container.env_from == []
         assert container.resources is None
         assert len(container.volume_mounts) == 1  # mount context
@@ -373,7 +373,7 @@ class TestMainContainer(BaseTestCase):
         assert container.command is None
         assert container.args is None
         assert container.ports == []
-        assert len(container.env) == 2
+        assert len(container.env) == 2 + 1  # One from the artifacts store name env var
         assert container.env_from == []
         assert container.resources is None
         # The mount resource1 is not requested
@@ -407,7 +407,7 @@ class TestMainContainer(BaseTestCase):
         assert container.command is None
         assert container.args is None
         assert container.ports == []
-        assert len(container.env) == 2
+        assert len(container.env) == 2 + 1  # One from the artifacts store name env var
         assert container.env_from == []
         assert container.resources is None
         # The mount resource2 is requested
@@ -441,7 +441,7 @@ class TestMainContainer(BaseTestCase):
         assert container.command is None
         assert container.args is None
         assert container.ports == []
-        assert len(container.env) == 1
+        assert len(container.env) == 1 + 1  # One from the artifacts store name env var
         assert container.env_from == []
         assert container.resources is None
         assert len(container.volume_mounts) == 1  # outputs context
@@ -474,7 +474,8 @@ class TestMainContainer(BaseTestCase):
         assert container.command is None
         assert container.args is None
         assert container.ports == []
-        assert len(container.env) == 2 + 2  # 2 + 2 env vars from the secret mount
+        # 2 + 2 env vars from the secret mount + 1 from the artifacts store name env var
+        assert len(container.env) == 2 + 2 + 1
         assert container.env_from == []
         assert container.resources is None
         assert len(container.volume_mounts) == 1
@@ -531,6 +532,7 @@ class TestMainContainer(BaseTestCase):
             auto_resume=True,
             sync_statuses=True,
             external_host=False,
+            sidecar=None,
         )
 
         volume_mounts = get_mounts(

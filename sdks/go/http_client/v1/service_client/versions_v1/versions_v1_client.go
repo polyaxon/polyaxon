@@ -37,13 +37,16 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GetCompatibility(params *GetCompatibilityParams, authInfo runtime.ClientAuthInfoWriter) (*GetCompatibilityOK, *GetCompatibilityNoContent, error)
+	GetCompatibility(params *GetCompatibilityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCompatibilityOK, *GetCompatibilityNoContent, error)
 
-	GetInstallation(params *GetInstallationParams, authInfo runtime.ClientAuthInfoWriter) (*GetInstallationOK, *GetInstallationNoContent, error)
+	GetInstallation(params *GetInstallationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInstallationOK, *GetInstallationNoContent, error)
 
-	GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error)
+	GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLogHandlerOK, *GetLogHandlerNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -51,13 +54,12 @@ type ClientService interface {
 /*
   GetCompatibility gets compatibility versions
 */
-func (a *Client) GetCompatibility(params *GetCompatibilityParams, authInfo runtime.ClientAuthInfoWriter) (*GetCompatibilityOK, *GetCompatibilityNoContent, error) {
+func (a *Client) GetCompatibility(params *GetCompatibilityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCompatibilityOK, *GetCompatibilityNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetCompatibilityParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetCompatibility",
 		Method:             "GET",
 		PathPattern:        "/api/v1/compatibility/{uuid}/{version}/{service}",
@@ -69,7 +71,12 @@ func (a *Client) GetCompatibility(params *GetCompatibilityParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -87,13 +94,12 @@ func (a *Client) GetCompatibility(params *GetCompatibilityParams, authInfo runti
 /*
   GetInstallation gets installation versions
 */
-func (a *Client) GetInstallation(params *GetInstallationParams, authInfo runtime.ClientAuthInfoWriter) (*GetInstallationOK, *GetInstallationNoContent, error) {
+func (a *Client) GetInstallation(params *GetInstallationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInstallationOK, *GetInstallationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetInstallationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetInstallation",
 		Method:             "GET",
 		PathPattern:        "/api/v1/installation",
@@ -105,7 +111,12 @@ func (a *Client) GetInstallation(params *GetInstallationParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -123,13 +134,12 @@ func (a *Client) GetInstallation(params *GetInstallationParams, authInfo runtime
 /*
   GetLogHandler gets log handler versions
 */
-func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error) {
+func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLogHandlerOK, *GetLogHandlerNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetLogHandlerParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetLogHandler",
 		Method:             "GET",
 		PathPattern:        "/api/v1/log_handler",
@@ -141,7 +151,12 @@ func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

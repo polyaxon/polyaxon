@@ -39,7 +39,7 @@ type V1Spark struct {
 	Connections []string `json:"connections"`
 
 	// Mode is the deployment mode of the Spark application.
-	DeployMode *SparkDeployMode `json:"deploy_mode,omitempty"`
+	DeployMode *SparkDeployMode `json:"deployMode,omitempty"`
 
 	// Optional spark driver definition
 	Driver *V1SparkReplica `json:"driver,omitempty"`
@@ -50,36 +50,36 @@ type V1Spark struct {
 	// HadoopConf carries user-specified Hadoop configuration properties as they would use the  the "--conf" option
 	// in spark-submit.  The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
 	// configuration properties.
-	HadoopConf map[string]string `json:"hadoop_conf,omitempty"`
+	HadoopConf map[string]string `json:"hadoopConf,omitempty"`
 
 	// HadoopConfigMap carries the name of the ConfigMap containing Hadoop configuration files such as core-site.xml.
 	// The controller will add environment variable HADOOP_CONF_DIR to the path where the ConfigMap is mounted to.
-	HadoopConfigMap string `json:"hadoop_config_map,omitempty"`
+	HadoopConfigMap string `json:"hadoopConfigMap,omitempty"`
 
 	// Kind of runtime, should be equal to "spark"
 	Kind *string `json:"kind,omitempty"`
 
 	// MainFile is the path to a bundled JAR, Python, or R file of the application.
-	MainApplicationFile string `json:"main_application_file,omitempty"`
+	MainApplicationFile string `json:"mainApplicationFile,omitempty"`
 
 	// MainClass is the fully-qualified main class of the Spark application.
 	// This only applies to Java/Scala Spark applications.
-	MainClass string `json:"main_class,omitempty"`
+	MainClass string `json:"mainClass,omitempty"`
 
 	// Spark version is the version of Spark the application uses.
-	PythonVersion string `json:"python_version,omitempty"`
+	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// HadoopConf carries user-specified Hadoop configuration properties as they would use the  the "--conf" option
 	// in spark-submit.  The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
 	// configuration properties.
-	SparkConf map[string]string `json:"spark_conf,omitempty"`
+	SparkConf map[string]string `json:"sparkConf,omitempty"`
 
 	// SparkConfigMap carries the name of the ConfigMap containing Spark configuration files such as log4j.properties.
 	// The controller will add environment variable SPARK_CONF_DIR to the path where the ConfigMap is mounted to.
-	SparkConfigMap string `json:"spark_config_map,omitempty"`
+	SparkConfigMap string `json:"sparkConfigMap,omitempty"`
 
 	// Spark version is the version of Spark the application uses.
-	SparkVersion string `json:"spark_version,omitempty"`
+	SparkVersion string `json:"sparkVersion,omitempty"`
 
 	// Type tells the type of the Spark application.
 	Type *V1SparkType `json:"type,omitempty"`
@@ -122,7 +122,7 @@ func (m *V1Spark) validateDeployMode(formats strfmt.Registry) error {
 	if m.DeployMode != nil {
 		if err := m.DeployMode.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deploy_mode")
+				return ve.ValidateName("deployMode")
 			}
 			return err
 		}
@@ -213,7 +213,7 @@ func (m *V1Spark) contextValidateDeployMode(ctx context.Context, formats strfmt.
 	if m.DeployMode != nil {
 		if err := m.DeployMode.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deploy_mode")
+				return ve.ValidateName("deployMode")
 			}
 			return err
 		}

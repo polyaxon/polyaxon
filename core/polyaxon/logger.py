@@ -15,9 +15,12 @@
 # limitations under the License.
 
 import logging
+import os
 import sys
 
 from functools import wraps
+
+from polyaxon.env_vars.keys import POLYAXON_KEYS_DEBUG, POLYAXON_KEYS_LOG_LEVEL
 
 try:
     from StringIO import StringIO
@@ -33,18 +36,26 @@ def configure_logger(verbose):
     from polyaxon import settings
     from polyaxon.plugins.sentry import set_raven_client
 
-    if verbose or settings.CLIENT_CONFIG.debug:
+    if (
+        verbose
+        or settings.CLIENT_CONFIG.debug
+        or os.environ.get(POLYAXON_KEYS_DEBUG, False)
+    ):
         log_level = logging.DEBUG
         settings.CLIENT_CONFIG.debug = True
     else:
         if not settings.CLIENT_CONFIG.disable_errors_reporting:
             set_raven_client()
-        log_level = logging.INFO
+        log_level = (
+            logging.DEBUG
+            if os.environ.get(POLYAXON_KEYS_LOG_LEVEL) in ["debug", "DEBUG"]
+            else logging.INFO
+        )
         if settings.CLIENT_CONFIG.log_level:
             try:
                 log_level = logging.getLevelName(settings.CLIENT_CONFIG.log_level)
             except:  # noqa
-                log_level = logging.INFO
+                pass
     logging.basicConfig(format="%(message)s", level=log_level, stream=sys.stdout)
 
 

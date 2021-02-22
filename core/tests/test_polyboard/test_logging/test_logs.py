@@ -15,9 +15,8 @@
 # limitations under the License.
 import pytest
 
-from dateutil import parser as dt_parser
-
 from polyaxon.polyboard.logging.schemas import V1Log, V1Logs
+from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.tz_utils import now
 from tests.utils import BaseTestCase
 
@@ -34,7 +33,7 @@ class TestLogV1(BaseTestCase):
         )
         expected = V1Log(
             value="foo",
-            timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+            timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
             node="node1",
             pod="pod1",
             container="container1",
@@ -66,7 +65,7 @@ class TestLogV1(BaseTestCase):
         )
         expected = V1Log(
             value="foo",
-            timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+            timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
             node="node1",
             pod="pod1",
             container="container1",
@@ -82,12 +81,25 @@ class TestLogV1(BaseTestCase):
         )
         expected = V1Log(
             value="foo",
-            timestamp=dt_parser.parse("2018-12-11T08:49:07.163495+00:00"),
+            timestamp=parse_datetime("2018-12-11T08:49:07.163495+00:00"),
             node="node1",
             pod="pod1",
             container="container1",
         )
         assert parsed == expected
+
+    def test_to_csv(self):
+        log_line = V1Log(
+            value="foo",
+            timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
+            node="node1",
+            pod="pod1",
+            container="container1",
+        )
+
+        assert log_line.to_csv() == '{}|node1|pod1|container1|"foo"'.format(
+            log_line.timestamp
+        )
 
 
 class TestLogsV1(BaseTestCase):
@@ -97,21 +109,21 @@ class TestLogsV1(BaseTestCase):
             logs=[
                 V1Log(
                     value="foo",
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                     node="node1",
                     pod="pod1",
                     container="container1",
                 ),
                 V1Log(
                     value="foo",
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                     node="node1",
                     pod="pod1",
                     container="container1",
                 ),
                 V1Log(
                     value="foo",
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                     node="node1",
                     pod="pod1",
                     container="container1",
@@ -130,21 +142,21 @@ class TestLogsV1(BaseTestCase):
             logs=[
                 V1Log(
                     value="foo",
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                     node="node1",
                     pod="pod1",
                     container="container1",
                 ),
                 V1Log(
                     value="foo",
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                     node="node1",
                     pod="pod1",
                     container="container1",
                 ),
                 V1Log(
                     value="foo",
-                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                     node="node1",
                     pod="pod1",
                     container="container1",
@@ -159,21 +171,21 @@ class TestLogsV1(BaseTestCase):
         logs = [
             V1Log(
                 value="foo1",
-                timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                 node="node1",
                 pod="pod1",
                 container="container1",
             ),
             V1Log(
                 value="foo2",
-                timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                 node="node1",
                 pod="pod1",
                 container="container1",
             ),
             V1Log(
                 value="foo3",
-                timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
                 node="node1",
                 pod="pod1",
                 container="container1",
@@ -187,3 +199,41 @@ class TestLogsV1(BaseTestCase):
 
         # 2 chunk
         assert [i.value for i in chunks[1].logs] == ["foo3"]
+
+    def test_logs_csv_header(self):
+        assert V1Logs.get_csv_header() == "timestamp|node|pod|container|value"
+
+    def test_logs_to_csv(self):
+        logs = V1Logs(
+            last_file=1000,
+            logs=[
+                V1Log(
+                    value="foo",
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
+                    node="node1",
+                    pod="pod1",
+                    container="container1",
+                ),
+                V1Log(
+                    value="foo",
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
+                    node="node1",
+                    pod="pod1",
+                    container="container1",
+                ),
+                V1Log(
+                    value="foo",
+                    timestamp=parse_datetime("2018-12-11 10:24:57 UTC"),
+                    node="node1",
+                    pod="pod1",
+                    container="container1",
+                ),
+            ],
+        )
+        assert logs.to_csv() == "".join(
+            [
+                "\n{}".format(logs.logs[0].to_csv()),
+                "\n{}".format(logs.logs[1].to_csv()),
+                "\n{}".format(logs.logs[2].to_csv()),
+            ]
+        )

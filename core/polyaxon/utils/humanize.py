@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.tz_utils import now
 
 
@@ -21,6 +22,8 @@ def humanize_timesince(start_time):  # pylint:disable=too-many-return-statements
     """Creates a string representation of time since the given `start_time`."""
     if not start_time:
         return start_time
+
+    start_time = parse_datetime(start_time)
 
     delta = now() - start_time
 

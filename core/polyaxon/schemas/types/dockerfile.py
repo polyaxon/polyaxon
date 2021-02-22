@@ -22,6 +22,7 @@ from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.docker_image import validate_image
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.types.base import BaseTypeConfig
+from polyaxon.utils.signal_decorators import check_partial
 
 POLYAXON_DOCKERFILE_NAME = "Dockerfile"
 POLYAXON_DOCKER_WORKDIR = "/code"
@@ -47,6 +48,7 @@ class DockerfileTypeSchema(BaseCamelSchema):
         return V1DockerfileType
 
     @validates_schema
+    @check_partial
     def validate_dockerfile(self, data, **kwargs):
         validate_image(data.get("image"))
 
@@ -74,6 +76,8 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
 
     ### YAML usage
 
+    ### Usage in IO and params definition
+
     The inputs definition
 
     ```yaml
@@ -93,7 +97,25 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
     >>>       env: {'KEY1': 'en_US.UTF-8', 'KEY2':2}
     ```
 
+    ### Usage in initializers
+
+    ```yaml
+     ```yaml
+    >>> version:  1.1
+    >>> kind: component
+    >>> run:
+    >>>   kind: job
+    >>>   init:
+    >>>   - dockerfile:
+    >>>       image: test
+    >>>       run: ["pip install package1"]
+    >>>       env: {'KEY1': 'en_US.UTF-8', 'KEY2':2}
+    >>>     ...
+    ```
+
     ### Python usage
+
+    ### Usage in IO and params definition
 
     The inputs definition
 
@@ -104,7 +126,7 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="test1",
-    >>>         iotype=types.DOCKERFILE,
+    >>>         type=types.DOCKERFILE,
     >>>     ),
     >>> ]
     ```
@@ -126,6 +148,28 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
     >>> }
     ```
 
+    ### Usage in initializers
+
+    ```python
+    >>> from polyaxon.polyflow import V1Component, V1Init, V1Job
+    >>> from polyaxon.schemas.types import V1DockerfileType
+    >>> from polyaxon.k8s import k8s_schemas
+    >>> component = V1Component(
+    >>>     run=V1Job(
+    >>>        init=[
+    >>>             V1Init(
+    >>>                 dockerfile=V1DockerfileType(
+    >>>                     image="test",
+    >>>                     run=["pip install package1"],
+    >>>                     env={'KEY1': 'en_US.UTF-8', 'KEY2':2},
+    >>>                 )
+    >>>             ),
+    >>>        ],
+    >>>        container=k8s_schemas.V1Container(...)
+    >>>     )
+    >>> )
+    ```
+
     ### Fields
       * image: the base image to use, is will exposed as `FROM` command in the dockerfile.
       * env: environment variables dictionary that will be exposed as `ENV` sections.
@@ -135,6 +179,8 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
       * langEnv: if passed it will expose these environment variable: ENV LC_ALL, LANG, LANGUAGE
       * uid and gid: will create a new user based on these 2 values.
       * filename: an optional name for your dockerfile, default is Dockerfile.
+        **N.B.** this is not a path, if you need to generate the dockerfile on a custom path,
+        you will need to set the path key on the init container definition.
       * workdir: the WORKDIR for your dockerfile, default is `/code`
       * workdirPath: the local workdir to copy to the docker container.
       * shell: shell type environment variable, default `/bin/bash`.

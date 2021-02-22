@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
-**iotype** | **String** |  |  [optional]
+**type** | **String** |  |  [optional]
 **value** | [**Object**](.md) |  |  [optional]
 **isOptional** | **Boolean** |  |  [optional]
 **isList** | **Boolean** |  |  [optional]

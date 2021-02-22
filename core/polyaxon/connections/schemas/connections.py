@@ -149,8 +149,10 @@ class V1CustomConnection(BaseConfig):
             self.__setattr__(k, v)
 
     @classmethod
-    def from_dict(cls, value, unknown=None):
-        return super().from_dict(value=value, unknown=cls.UNKNOWN_BEHAVIOUR)
+    def from_dict(cls, value, unknown=None, partial: bool = False):
+        return super().from_dict(
+            value=value, unknown=cls.UNKNOWN_BEHAVIOUR, partial=partial
+        )
 
     def __eq__(self, other):
         """Returns true if both objects are equal"""

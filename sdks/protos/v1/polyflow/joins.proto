@@ -27,10 +27,10 @@ message JoinParam {
   string connection = 2;
 
   // A flag to signal to Polyaxon that this param must be tranformed to an init container
-  bool to_init = 3;
+  bool toInit = 3;
 
   // A flag to signal to Polyaxon that this param should not be validated against io
-  bool context_only = 4;
+  bool contextOnly = 4;
 }
 
 // Join specification

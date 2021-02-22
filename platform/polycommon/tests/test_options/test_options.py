@@ -36,4 +36,7 @@ class TestOptions(TestCase):
 
     def test_options_scheduler(self):
         assert scheduler.SchedulerCountdown.get_namespace() is None
-        assert scheduler.SchedulerCountdown.get_key_subject() == "SCHEDULER_GLOBAL_COUNTDOWN"
+        assert (
+            scheduler.SchedulerCountdown.get_key_subject()
+            == "SCHEDULER_GLOBAL_COUNTDOWN"
+        )

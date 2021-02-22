@@ -21,7 +21,9 @@ package service_model
 
 import (
 	"context"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -51,15 +53,78 @@ type V1ProjectSettings struct {
 
 	// Authorized teams
 	Teams []string `json:"teams"`
+
+	// Authorized users
+	UserAccesses []*V1ProjectUserAccess `json:"user_accesses"`
 }
 
 // Validate validates this v1 project settings
 func (m *V1ProjectSettings) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateUserAccesses(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this v1 project settings based on context it is used
+func (m *V1ProjectSettings) validateUserAccesses(formats strfmt.Registry) error {
+	if swag.IsZero(m.UserAccesses) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.UserAccesses); i++ {
+		if swag.IsZero(m.UserAccesses[i]) { // not required
+			continue
+		}
+
+		if m.UserAccesses[i] != nil {
+			if err := m.UserAccesses[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("user_accesses" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 project settings based on the context it is used
 func (m *V1ProjectSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateUserAccesses(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1ProjectSettings) contextValidateUserAccesses(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.UserAccesses); i++ {
+
+		if m.UserAccesses[i] != nil {
+			if err := m.UserAccesses[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("user_accesses" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

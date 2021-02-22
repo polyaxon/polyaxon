@@ -37,21 +37,24 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateDashboard(params *CreateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateDashboardOK, *CreateDashboardNoContent, error)
+	CreateDashboard(params *CreateDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDashboardOK, *CreateDashboardNoContent, error)
 
-	DeleteDashboard(params *DeleteDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteDashboardOK, *DeleteDashboardNoContent, error)
+	DeleteDashboard(params *DeleteDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteDashboardOK, *DeleteDashboardNoContent, error)
 
-	GetDashboard(params *GetDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetDashboardOK, *GetDashboardNoContent, error)
+	GetDashboard(params *GetDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDashboardOK, *GetDashboardNoContent, error)
 
-	ListDashboardNames(params *ListDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListDashboardNamesOK, *ListDashboardNamesNoContent, error)
+	ListDashboardNames(params *ListDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDashboardNamesOK, *ListDashboardNamesNoContent, error)
 
-	ListDashboards(params *ListDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListDashboardsOK, *ListDashboardsNoContent, error)
+	ListDashboards(params *ListDashboardsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDashboardsOK, *ListDashboardsNoContent, error)
 
-	PatchDashboard(params *PatchDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchDashboardOK, *PatchDashboardNoContent, error)
+	PatchDashboard(params *PatchDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchDashboardOK, *PatchDashboardNoContent, error)
 
-	UpdateDashboard(params *UpdateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateDashboardOK, *UpdateDashboardNoContent, error)
+	UpdateDashboard(params *UpdateDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDashboardOK, *UpdateDashboardNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -59,13 +62,12 @@ type ClientService interface {
 /*
   CreateDashboard creates dashboard
 */
-func (a *Client) CreateDashboard(params *CreateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateDashboardOK, *CreateDashboardNoContent, error) {
+func (a *Client) CreateDashboard(params *CreateDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDashboardOK, *CreateDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateDashboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards",
@@ -77,7 +79,12 @@ func (a *Client) CreateDashboard(params *CreateDashboardParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -95,13 +102,12 @@ func (a *Client) CreateDashboard(params *CreateDashboardParams, authInfo runtime
 /*
   DeleteDashboard deletes dashboard
 */
-func (a *Client) DeleteDashboard(params *DeleteDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteDashboardOK, *DeleteDashboardNoContent, error) {
+func (a *Client) DeleteDashboard(params *DeleteDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteDashboardOK, *DeleteDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteDashboard",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/{uuid}",
@@ -113,7 +119,12 @@ func (a *Client) DeleteDashboard(params *DeleteDashboardParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -131,13 +142,12 @@ func (a *Client) DeleteDashboard(params *DeleteDashboardParams, authInfo runtime
 /*
   GetDashboard gets dashboard
 */
-func (a *Client) GetDashboard(params *GetDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetDashboardOK, *GetDashboardNoContent, error) {
+func (a *Client) GetDashboard(params *GetDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDashboardOK, *GetDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetDashboard",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/{uuid}",
@@ -149,7 +159,12 @@ func (a *Client) GetDashboard(params *GetDashboardParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -167,13 +182,12 @@ func (a *Client) GetDashboard(params *GetDashboardParams, authInfo runtime.Clien
 /*
   ListDashboardNames lists dashboard names
 */
-func (a *Client) ListDashboardNames(params *ListDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListDashboardNamesOK, *ListDashboardNamesNoContent, error) {
+func (a *Client) ListDashboardNames(params *ListDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDashboardNamesOK, *ListDashboardNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListDashboardNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListDashboardNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/names",
@@ -185,7 +199,12 @@ func (a *Client) ListDashboardNames(params *ListDashboardNamesParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -203,13 +222,12 @@ func (a *Client) ListDashboardNames(params *ListDashboardNamesParams, authInfo r
 /*
   ListDashboards lists dashboards
 */
-func (a *Client) ListDashboards(params *ListDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListDashboardsOK, *ListDashboardsNoContent, error) {
+func (a *Client) ListDashboards(params *ListDashboardsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDashboardsOK, *ListDashboardsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListDashboardsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListDashboards",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards",
@@ -221,7 +239,12 @@ func (a *Client) ListDashboards(params *ListDashboardsParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -239,13 +262,12 @@ func (a *Client) ListDashboards(params *ListDashboardsParams, authInfo runtime.C
 /*
   PatchDashboard patches dashboard
 */
-func (a *Client) PatchDashboard(params *PatchDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchDashboardOK, *PatchDashboardNoContent, error) {
+func (a *Client) PatchDashboard(params *PatchDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchDashboardOK, *PatchDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchDashboard",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/{dashboard.uuid}",
@@ -257,7 +279,12 @@ func (a *Client) PatchDashboard(params *PatchDashboardParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -275,13 +302,12 @@ func (a *Client) PatchDashboard(params *PatchDashboardParams, authInfo runtime.C
 /*
   UpdateDashboard updates dashboard
 */
-func (a *Client) UpdateDashboard(params *UpdateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateDashboardOK, *UpdateDashboardNoContent, error) {
+func (a *Client) UpdateDashboard(params *UpdateDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDashboardOK, *UpdateDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateDashboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateDashboard",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/{dashboard.uuid}",
@@ -293,7 +319,12 @@ func (a *Client) UpdateDashboard(params *UpdateDashboardParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

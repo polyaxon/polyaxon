@@ -13,5 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from polycommon.apis.regex import INSTALLATION_PATTERN, NAME_PATTERN, VERSION_PATTERN
 
 URLS_VERSIONS_INSTALLED = r"^installation/?$"
+URLS_VERSIONS_LOG_HANDLER = r"^log_handler/?$"
+URLS_VERSIONS_COMPATIBILITY = r"^compatibility/{}/{}/{}/?$".format(
+    INSTALLATION_PATTERN, VERSION_PATTERN, NAME_PATTERN
+)

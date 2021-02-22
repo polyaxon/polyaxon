@@ -116,7 +116,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             config_read.return_value = V1Component(
                 kind="component",
                 version=" 1.1",
-                inputs=[V1IO(name="str-input", iotype="str")],
+                inputs=[V1IO(name="str-input", type="str")],
                 run=V1Job(container=V1Container(name="test")),
             ).to_dict()
             collect_dag_components(run_config.run)

@@ -87,6 +87,7 @@ def get_main_container(
         contexts=contexts,
         log_level=log_level,
         kv_env_vars=kv_env_vars,
+        artifacts_store_name=artifacts_store.name if artifacts_store else None,
         connections=requested_connections,
         secrets=requested_secrets,
         config_maps=requested_config_maps,

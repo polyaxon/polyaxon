@@ -15,13 +15,12 @@
 # limitations under the License.
 import pytest
 
-from dateutil import parser as dt_parser
-
 from polyaxon.polyboard.logging.parser import (
     DATETIME_REGEX,
     ISO_DATETIME_REGEX,
     timestamp_search_regex,
 )
+from polyaxon.utils.date_utils import parse_datetime
 from tests.utils import BaseTestCase
 
 
@@ -30,14 +29,14 @@ class TestLoggingUtils(BaseTestCase):
     def test_has_timestamp(self):
         log_line = "2018-12-11 10:24:57 UTC"
         log_value, ts = timestamp_search_regex(DATETIME_REGEX, log_line)
-        assert ts == dt_parser.parse("2018-12-11 10:24:57 UTC")
+        assert ts == parse_datetime("2018-12-11 10:24:57 UTC")
         assert log_value == ""
 
     def test_log_line_has_datetime(self):
         log_line = "2018-12-11 10:24:57 UTC foo"
         log_value, ts = timestamp_search_regex(DATETIME_REGEX, log_line)
 
-        assert ts == dt_parser.parse("2018-12-11 10:24:57 UTC")
+        assert ts == parse_datetime("2018-12-11 10:24:57 UTC")
         assert log_value == "foo"
 
     def test_log_line_has_iso_datetime(self):
@@ -45,5 +44,5 @@ class TestLoggingUtils(BaseTestCase):
 
         log_value, ts = timestamp_search_regex(ISO_DATETIME_REGEX, log_line)
 
-        assert ts == dt_parser.parse("2018-12-11T08:49:07.163495183Z")
+        assert ts == parse_datetime("2018-12-11T08:49:07.163495183Z")
         assert log_value == "foo"

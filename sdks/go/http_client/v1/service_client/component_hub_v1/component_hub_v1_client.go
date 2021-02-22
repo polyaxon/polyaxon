@@ -37,55 +37,58 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ArchiveComponentHub(params *ArchiveComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveComponentHubOK, *ArchiveComponentHubNoContent, error)
+	ArchiveComponentHub(params *ArchiveComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveComponentHubOK, *ArchiveComponentHubNoContent, error)
 
-	BookmarkComponentHub(params *BookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkComponentHubOK, *BookmarkComponentHubNoContent, error)
+	BookmarkComponentHub(params *BookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkComponentHubOK, *BookmarkComponentHubNoContent, error)
 
-	CreateComponentHub(params *CreateComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentHubOK, *CreateComponentHubNoContent, error)
+	CreateComponentHub(params *CreateComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateComponentHubOK, *CreateComponentHubNoContent, error)
 
-	CreateComponentVersion(params *CreateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentVersionOK, *CreateComponentVersionNoContent, error)
+	CreateComponentVersion(params *CreateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateComponentVersionOK, *CreateComponentVersionNoContent, error)
 
-	CreateComponentVersionStage(params *CreateComponentVersionStageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentVersionStageOK, *CreateComponentVersionStageNoContent, error)
+	CreateComponentVersionStage(params *CreateComponentVersionStageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateComponentVersionStageOK, *CreateComponentVersionStageNoContent, error)
 
-	DeleteComponentHub(params *DeleteComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteComponentHubOK, *DeleteComponentHubNoContent, error)
+	DeleteComponentHub(params *DeleteComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteComponentHubOK, *DeleteComponentHubNoContent, error)
 
-	DeleteComponentVersion(params *DeleteComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteComponentVersionOK, *DeleteComponentVersionNoContent, error)
+	DeleteComponentVersion(params *DeleteComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteComponentVersionOK, *DeleteComponentVersionNoContent, error)
 
-	GetComponentHub(params *GetComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubOK, *GetComponentHubNoContent, error)
+	GetComponentHub(params *GetComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentHubOK, *GetComponentHubNoContent, error)
 
-	GetComponentHubActivities(params *GetComponentHubActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubActivitiesOK, *GetComponentHubActivitiesNoContent, error)
+	GetComponentHubActivities(params *GetComponentHubActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentHubActivitiesOK, *GetComponentHubActivitiesNoContent, error)
 
-	GetComponentHubSettings(params *GetComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubSettingsOK, *GetComponentHubSettingsNoContent, error)
+	GetComponentHubSettings(params *GetComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentHubSettingsOK, *GetComponentHubSettingsNoContent, error)
 
-	GetComponentVersion(params *GetComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionOK, *GetComponentVersionNoContent, error)
+	GetComponentVersion(params *GetComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentVersionOK, *GetComponentVersionNoContent, error)
 
-	GetComponentVersionStages(params *GetComponentVersionStagesParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionStagesOK, *GetComponentVersionStagesNoContent, error)
+	GetComponentVersionStages(params *GetComponentVersionStagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentVersionStagesOK, *GetComponentVersionStagesNoContent, error)
 
-	ListComponentHubNames(params *ListComponentHubNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentHubNamesOK, *ListComponentHubNamesNoContent, error)
+	ListComponentHubNames(params *ListComponentHubNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListComponentHubNamesOK, *ListComponentHubNamesNoContent, error)
 
-	ListComponentHubs(params *ListComponentHubsParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentHubsOK, *ListComponentHubsNoContent, error)
+	ListComponentHubs(params *ListComponentHubsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListComponentHubsOK, *ListComponentHubsNoContent, error)
 
-	ListComponentVersionNames(params *ListComponentVersionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentVersionNamesOK, *ListComponentVersionNamesNoContent, error)
+	ListComponentVersionNames(params *ListComponentVersionNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListComponentVersionNamesOK, *ListComponentVersionNamesNoContent, error)
 
-	ListComponentVersions(params *ListComponentVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentVersionsOK, *ListComponentVersionsNoContent, error)
+	ListComponentVersions(params *ListComponentVersionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListComponentVersionsOK, *ListComponentVersionsNoContent, error)
 
-	PatchComponentHub(params *PatchComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentHubOK, *PatchComponentHubNoContent, error)
+	PatchComponentHub(params *PatchComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchComponentHubOK, *PatchComponentHubNoContent, error)
 
-	PatchComponentHubSettings(params *PatchComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentHubSettingsOK, *PatchComponentHubSettingsNoContent, error)
+	PatchComponentHubSettings(params *PatchComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchComponentHubSettingsOK, *PatchComponentHubSettingsNoContent, error)
 
-	PatchComponentVersion(params *PatchComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentVersionOK, *PatchComponentVersionNoContent, error)
+	PatchComponentVersion(params *PatchComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchComponentVersionOK, *PatchComponentVersionNoContent, error)
 
-	RestoreComponentHub(params *RestoreComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreComponentHubOK, *RestoreComponentHubNoContent, error)
+	RestoreComponentHub(params *RestoreComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreComponentHubOK, *RestoreComponentHubNoContent, error)
 
-	UnbookmarkComponentHub(params *UnbookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkComponentHubOK, *UnbookmarkComponentHubNoContent, error)
+	UnbookmarkComponentHub(params *UnbookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkComponentHubOK, *UnbookmarkComponentHubNoContent, error)
 
-	UpdateComponentHub(params *UpdateComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentHubOK, *UpdateComponentHubNoContent, error)
+	UpdateComponentHub(params *UpdateComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateComponentHubOK, *UpdateComponentHubNoContent, error)
 
-	UpdateComponentHubSettings(params *UpdateComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentHubSettingsOK, *UpdateComponentHubSettingsNoContent, error)
+	UpdateComponentHubSettings(params *UpdateComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateComponentHubSettingsOK, *UpdateComponentHubSettingsNoContent, error)
 
-	UpdateComponentVersion(params *UpdateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentVersionOK, *UpdateComponentVersionNoContent, error)
+	UpdateComponentVersion(params *UpdateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateComponentVersionOK, *UpdateComponentVersionNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -93,13 +96,12 @@ type ClientService interface {
 /*
   ArchiveComponentHub archives hub component
 */
-func (a *Client) ArchiveComponentHub(params *ArchiveComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveComponentHubOK, *ArchiveComponentHubNoContent, error) {
+func (a *Client) ArchiveComponentHub(params *ArchiveComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveComponentHubOK, *ArchiveComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewArchiveComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ArchiveComponentHub",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/hub/{name}/archive",
@@ -111,7 +113,12 @@ func (a *Client) ArchiveComponentHub(params *ArchiveComponentHubParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -129,13 +136,12 @@ func (a *Client) ArchiveComponentHub(params *ArchiveComponentHubParams, authInfo
 /*
   BookmarkComponentHub bookmarks component hub
 */
-func (a *Client) BookmarkComponentHub(params *BookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkComponentHubOK, *BookmarkComponentHubNoContent, error) {
+func (a *Client) BookmarkComponentHub(params *BookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkComponentHubOK, *BookmarkComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "BookmarkComponentHub",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/hub/{name}/bookmark",
@@ -147,7 +153,12 @@ func (a *Client) BookmarkComponentHub(params *BookmarkComponentHubParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -165,13 +176,12 @@ func (a *Client) BookmarkComponentHub(params *BookmarkComponentHubParams, authIn
 /*
   CreateComponentHub creates hub component
 */
-func (a *Client) CreateComponentHub(params *CreateComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentHubOK, *CreateComponentHubNoContent, error) {
+func (a *Client) CreateComponentHub(params *CreateComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateComponentHubOK, *CreateComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateComponentHub",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/hub/create",
@@ -183,7 +193,12 @@ func (a *Client) CreateComponentHub(params *CreateComponentHubParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -201,13 +216,12 @@ func (a *Client) CreateComponentHub(params *CreateComponentHubParams, authInfo r
 /*
   CreateComponentVersion creates component version
 */
-func (a *Client) CreateComponentVersion(params *CreateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentVersionOK, *CreateComponentVersionNoContent, error) {
+func (a *Client) CreateComponentVersion(params *CreateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateComponentVersionOK, *CreateComponentVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateComponentVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateComponentVersion",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/hub/{component}/versions",
@@ -219,7 +233,12 @@ func (a *Client) CreateComponentVersion(params *CreateComponentVersionParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -237,13 +256,12 @@ func (a *Client) CreateComponentVersion(params *CreateComponentVersionParams, au
 /*
   CreateComponentVersionStage creates new component version stage
 */
-func (a *Client) CreateComponentVersionStage(params *CreateComponentVersionStageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentVersionStageOK, *CreateComponentVersionStageNoContent, error) {
+func (a *Client) CreateComponentVersionStage(params *CreateComponentVersionStageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateComponentVersionStageOK, *CreateComponentVersionStageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateComponentVersionStageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateComponentVersionStage",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/hub/{entity}/versions/{name}/stages",
@@ -255,7 +273,12 @@ func (a *Client) CreateComponentVersionStage(params *CreateComponentVersionStage
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -273,13 +296,12 @@ func (a *Client) CreateComponentVersionStage(params *CreateComponentVersionStage
 /*
   DeleteComponentHub deletes hub component
 */
-func (a *Client) DeleteComponentHub(params *DeleteComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteComponentHubOK, *DeleteComponentHubNoContent, error) {
+func (a *Client) DeleteComponentHub(params *DeleteComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteComponentHubOK, *DeleteComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteComponentHub",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/hub/{name}",
@@ -291,7 +313,12 @@ func (a *Client) DeleteComponentHub(params *DeleteComponentHubParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -309,13 +336,12 @@ func (a *Client) DeleteComponentHub(params *DeleteComponentHubParams, authInfo r
 /*
   DeleteComponentVersion deletes component version
 */
-func (a *Client) DeleteComponentVersion(params *DeleteComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteComponentVersionOK, *DeleteComponentVersionNoContent, error) {
+func (a *Client) DeleteComponentVersion(params *DeleteComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteComponentVersionOK, *DeleteComponentVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteComponentVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteComponentVersion",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/hub/{entity}/versions/{name}",
@@ -327,7 +353,12 @@ func (a *Client) DeleteComponentVersion(params *DeleteComponentVersionParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -345,13 +376,12 @@ func (a *Client) DeleteComponentVersion(params *DeleteComponentVersionParams, au
 /*
   GetComponentHub gets hub component
 */
-func (a *Client) GetComponentHub(params *GetComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubOK, *GetComponentHubNoContent, error) {
+func (a *Client) GetComponentHub(params *GetComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentHubOK, *GetComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetComponentHub",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/{name}",
@@ -363,7 +393,12 @@ func (a *Client) GetComponentHub(params *GetComponentHubParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -381,13 +416,12 @@ func (a *Client) GetComponentHub(params *GetComponentHubParams, authInfo runtime
 /*
   GetComponentHubActivities gets hub activities
 */
-func (a *Client) GetComponentHubActivities(params *GetComponentHubActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubActivitiesOK, *GetComponentHubActivitiesNoContent, error) {
+func (a *Client) GetComponentHubActivities(params *GetComponentHubActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentHubActivitiesOK, *GetComponentHubActivitiesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetComponentHubActivitiesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetComponentHubActivities",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/{name}/activities",
@@ -399,7 +433,12 @@ func (a *Client) GetComponentHubActivities(params *GetComponentHubActivitiesPara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -417,13 +456,12 @@ func (a *Client) GetComponentHubActivities(params *GetComponentHubActivitiesPara
 /*
   GetComponentHubSettings gets hub component settings
 */
-func (a *Client) GetComponentHubSettings(params *GetComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubSettingsOK, *GetComponentHubSettingsNoContent, error) {
+func (a *Client) GetComponentHubSettings(params *GetComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentHubSettingsOK, *GetComponentHubSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetComponentHubSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetComponentHubSettings",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/{name}/settings",
@@ -435,7 +473,12 @@ func (a *Client) GetComponentHubSettings(params *GetComponentHubSettingsParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -453,13 +496,12 @@ func (a *Client) GetComponentHubSettings(params *GetComponentHubSettingsParams, 
 /*
   GetComponentVersion gets component version
 */
-func (a *Client) GetComponentVersion(params *GetComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionOK, *GetComponentVersionNoContent, error) {
+func (a *Client) GetComponentVersion(params *GetComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentVersionOK, *GetComponentVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetComponentVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetComponentVersion",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/{entity}/versions/{name}",
@@ -471,7 +513,12 @@ func (a *Client) GetComponentVersion(params *GetComponentVersionParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -489,13 +536,12 @@ func (a *Client) GetComponentVersion(params *GetComponentVersionParams, authInfo
 /*
   GetComponentVersionStages gets component version stages
 */
-func (a *Client) GetComponentVersionStages(params *GetComponentVersionStagesParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionStagesOK, *GetComponentVersionStagesNoContent, error) {
+func (a *Client) GetComponentVersionStages(params *GetComponentVersionStagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetComponentVersionStagesOK, *GetComponentVersionStagesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetComponentVersionStagesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetComponentVersionStages",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/{entity}/versions/{name}/stages",
@@ -507,7 +553,12 @@ func (a *Client) GetComponentVersionStages(params *GetComponentVersionStagesPara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -525,13 +576,12 @@ func (a *Client) GetComponentVersionStages(params *GetComponentVersionStagesPara
 /*
   ListComponentHubNames lists hub component names
 */
-func (a *Client) ListComponentHubNames(params *ListComponentHubNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentHubNamesOK, *ListComponentHubNamesNoContent, error) {
+func (a *Client) ListComponentHubNames(params *ListComponentHubNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListComponentHubNamesOK, *ListComponentHubNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListComponentHubNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListComponentHubNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/names",
@@ -543,7 +593,12 @@ func (a *Client) ListComponentHubNames(params *ListComponentHubNamesParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -561,13 +616,12 @@ func (a *Client) ListComponentHubNames(params *ListComponentHubNamesParams, auth
 /*
   ListComponentHubs lists hub components
 */
-func (a *Client) ListComponentHubs(params *ListComponentHubsParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentHubsOK, *ListComponentHubsNoContent, error) {
+func (a *Client) ListComponentHubs(params *ListComponentHubsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListComponentHubsOK, *ListComponentHubsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListComponentHubsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListComponentHubs",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/list",
@@ -579,7 +633,12 @@ func (a *Client) ListComponentHubs(params *ListComponentHubsParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -597,13 +656,12 @@ func (a *Client) ListComponentHubs(params *ListComponentHubsParams, authInfo run
 /*
   ListComponentVersionNames lists component version names
 */
-func (a *Client) ListComponentVersionNames(params *ListComponentVersionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentVersionNamesOK, *ListComponentVersionNamesNoContent, error) {
+func (a *Client) ListComponentVersionNames(params *ListComponentVersionNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListComponentVersionNamesOK, *ListComponentVersionNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListComponentVersionNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListComponentVersionNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/{name}/versions/names",
@@ -615,7 +673,12 @@ func (a *Client) ListComponentVersionNames(params *ListComponentVersionNamesPara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -633,13 +696,12 @@ func (a *Client) ListComponentVersionNames(params *ListComponentVersionNamesPara
 /*
   ListComponentVersions lists component versions
 */
-func (a *Client) ListComponentVersions(params *ListComponentVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentVersionsOK, *ListComponentVersionsNoContent, error) {
+func (a *Client) ListComponentVersions(params *ListComponentVersionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListComponentVersionsOK, *ListComponentVersionsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListComponentVersionsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListComponentVersions",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/hub/{name}/versions",
@@ -651,7 +713,12 @@ func (a *Client) ListComponentVersions(params *ListComponentVersionsParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -669,13 +736,12 @@ func (a *Client) ListComponentVersions(params *ListComponentVersionsParams, auth
 /*
   PatchComponentHub patches hub component
 */
-func (a *Client) PatchComponentHub(params *PatchComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentHubOK, *PatchComponentHubNoContent, error) {
+func (a *Client) PatchComponentHub(params *PatchComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchComponentHubOK, *PatchComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchComponentHub",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/hub/{component.name}",
@@ -687,7 +753,12 @@ func (a *Client) PatchComponentHub(params *PatchComponentHubParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -705,13 +776,12 @@ func (a *Client) PatchComponentHub(params *PatchComponentHubParams, authInfo run
 /*
   PatchComponentHubSettings patches hub component settings
 */
-func (a *Client) PatchComponentHubSettings(params *PatchComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentHubSettingsOK, *PatchComponentHubSettingsNoContent, error) {
+func (a *Client) PatchComponentHubSettings(params *PatchComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchComponentHubSettingsOK, *PatchComponentHubSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchComponentHubSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchComponentHubSettings",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/hub/{component}/settings",
@@ -723,7 +793,12 @@ func (a *Client) PatchComponentHubSettings(params *PatchComponentHubSettingsPara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -741,13 +816,12 @@ func (a *Client) PatchComponentHubSettings(params *PatchComponentHubSettingsPara
 /*
   PatchComponentVersion patches component version
 */
-func (a *Client) PatchComponentVersion(params *PatchComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentVersionOK, *PatchComponentVersionNoContent, error) {
+func (a *Client) PatchComponentVersion(params *PatchComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchComponentVersionOK, *PatchComponentVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchComponentVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchComponentVersion",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/hub/{component}/versions/{version.name}",
@@ -759,7 +833,12 @@ func (a *Client) PatchComponentVersion(params *PatchComponentVersionParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -777,13 +856,12 @@ func (a *Client) PatchComponentVersion(params *PatchComponentVersionParams, auth
 /*
   RestoreComponentHub restores hub component
 */
-func (a *Client) RestoreComponentHub(params *RestoreComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreComponentHubOK, *RestoreComponentHubNoContent, error) {
+func (a *Client) RestoreComponentHub(params *RestoreComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreComponentHubOK, *RestoreComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestoreComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "RestoreComponentHub",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/hub/{name}/restore",
@@ -795,7 +873,12 @@ func (a *Client) RestoreComponentHub(params *RestoreComponentHubParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -813,13 +896,12 @@ func (a *Client) RestoreComponentHub(params *RestoreComponentHubParams, authInfo
 /*
   UnbookmarkComponentHub unbookmarks component hub
 */
-func (a *Client) UnbookmarkComponentHub(params *UnbookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkComponentHubOK, *UnbookmarkComponentHubNoContent, error) {
+func (a *Client) UnbookmarkComponentHub(params *UnbookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkComponentHubOK, *UnbookmarkComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUnbookmarkComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UnbookmarkComponentHub",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/hub/{name}/unbookmark",
@@ -831,7 +913,12 @@ func (a *Client) UnbookmarkComponentHub(params *UnbookmarkComponentHubParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -849,13 +936,12 @@ func (a *Client) UnbookmarkComponentHub(params *UnbookmarkComponentHubParams, au
 /*
   UpdateComponentHub updates hub component
 */
-func (a *Client) UpdateComponentHub(params *UpdateComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentHubOK, *UpdateComponentHubNoContent, error) {
+func (a *Client) UpdateComponentHub(params *UpdateComponentHubParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateComponentHubOK, *UpdateComponentHubNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateComponentHubParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateComponentHub",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/hub/{component.name}",
@@ -867,7 +953,12 @@ func (a *Client) UpdateComponentHub(params *UpdateComponentHubParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -885,13 +976,12 @@ func (a *Client) UpdateComponentHub(params *UpdateComponentHubParams, authInfo r
 /*
   UpdateComponentHubSettings updates hub component settings
 */
-func (a *Client) UpdateComponentHubSettings(params *UpdateComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentHubSettingsOK, *UpdateComponentHubSettingsNoContent, error) {
+func (a *Client) UpdateComponentHubSettings(params *UpdateComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateComponentHubSettingsOK, *UpdateComponentHubSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateComponentHubSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateComponentHubSettings",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/hub/{component}/settings",
@@ -903,7 +993,12 @@ func (a *Client) UpdateComponentHubSettings(params *UpdateComponentHubSettingsPa
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -921,13 +1016,12 @@ func (a *Client) UpdateComponentHubSettings(params *UpdateComponentHubSettingsPa
 /*
   UpdateComponentVersion updates component version
 */
-func (a *Client) UpdateComponentVersion(params *UpdateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentVersionOK, *UpdateComponentVersionNoContent, error) {
+func (a *Client) UpdateComponentVersion(params *UpdateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateComponentVersionOK, *UpdateComponentVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateComponentVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateComponentVersion",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/hub/{component}/versions/{version.name}",
@@ -939,7 +1033,12 @@ func (a *Client) UpdateComponentVersion(params *UpdateComponentVersionParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

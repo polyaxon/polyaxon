@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**bookmark_run**](RunsV1Api.md#bookmark_run) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/bookmark | Bookmark run
 [**bookmark_runs**](RunsV1Api.md#bookmark_runs) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
 [**collect_run_logs**](RunsV1Api.md#collect_run_logs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
-[**copy_run**](RunsV1Api.md#copy_run) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy | Restart run with copy
+[**copy_run**](RunsV1Api.md#copy_run) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/copy | Restart run with copy
 [**create_run**](RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**create_run_artifacts_lineage**](RunsV1Api.md#create_run_artifacts_lineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts | Create bulk run artifacts lineage
 [**create_run_status**](RunsV1Api.md#create_run_status) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
@@ -48,13 +48,14 @@ Method | HTTP request | Description
 [**list_runs**](RunsV1Api.md#list_runs) | **GET** /api/v1/{owner}/{name}/runs | List runs
 [**notify_run_status**](RunsV1Api.md#notify_run_status) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patch_run**](RunsV1Api.md#patch_run) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-[**restart_run**](RunsV1Api.md#restart_run) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart | Restart run
+[**restart_run**](RunsV1Api.md#restart_run) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/restart | Restart run
 [**restore_run**](RunsV1Api.md#restore_run) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/restore | Restore run
-[**resume_run**](RunsV1Api.md#resume_run) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume | Resume run
+[**resume_run**](RunsV1Api.md#resume_run) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/resume | Resume run
 [**start_run_tensorboard**](RunsV1Api.md#start_run_tensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start | Start run tensorboard
 [**stop_run**](RunsV1Api.md#stop_run) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/stop | Stop run
 [**stop_run_tensorboard**](RunsV1Api.md#stop_run_tensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 [**stop_runs**](RunsV1Api.md#stop_runs) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
+[**sync_run**](RunsV1Api.md#sync_run) | **POST** /api/v1/{owner}/{project}/runs/sync | Sync offline run
 [**tag_runs**](RunsV1Api.md#tag_runs) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
 [**unbookmark_run**](RunsV1Api.md#unbookmark_run) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark | Unbookmark run
 [**update_run**](RunsV1Api.md#update_run) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
@@ -559,7 +560,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **copy_run**
-> V1Run copy_run(entity_owner, entity_entity, entity_uuid, body)
+> V1Run copy_run(owner, project, run_uuid, body)
 
 Restart run with copy
 
@@ -597,14 +598,14 @@ configuration = polyaxon_sdk.Configuration(
 with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.RunsV1Api(api_client)
-    entity_owner = 'entity_owner_example' # str | Owner of the namespace
-entity_entity = 'entity_entity_example' # str | Entity: project name, hub name, registry name, ...
-entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the sub-entity
+    owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the run will be assigned
+run_uuid = 'run_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
     try:
         # Restart run with copy
-        api_response = api_instance.copy_run(entity_owner, entity_entity, entity_uuid, body)
+        api_response = api_instance.copy_run(owner, project, run_uuid, body)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->copy_run: %s\n" % e)
@@ -614,9 +615,9 @@ body = polyaxon_sdk.V1Run() # V1Run | Run object
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entity_owner** | **str**| Owner of the namespace | 
- **entity_entity** | **str**| Entity: project name, hub name, registry name, ... | 
- **entity_uuid** | **str**| Uuid identifier of the sub-entity | 
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the run will be assigned | 
+ **run_uuid** | **str**| UUID | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -3015,7 +3016,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_runs_artifacts_lineage**
-> V1ListRunArtifactsResponse get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunArtifactsResponse get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
 
 Get runs artifacts lineage
 
@@ -3059,10 +3060,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+mode = 'mode_example' # str | Mode the search. (optional)
 
     try:
         # Get runs artifacts lineage
-        api_response = api_instance.get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_runs_artifacts_lineage: %s\n" % e)
@@ -3078,6 +3080,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **mode** | **str**| Mode the search. | [optional] 
 
 ### Return type
 
@@ -3525,7 +3528,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runs**
-> V1ListRunsResponse list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunsResponse list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
 
 List runs
 
@@ -3569,10 +3572,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+mode = 'mode_example' # str | Mode the search. (optional)
 
     try:
         # List runs
-        api_response = api_instance.list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->list_runs: %s\n" % e)
@@ -3588,6 +3592,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **mode** | **str**| Mode the search. | [optional] 
 
 ### Return type
 
@@ -3785,7 +3790,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **restart_run**
-> V1Run restart_run(entity_owner, entity_entity, entity_uuid, body)
+> V1Run restart_run(owner, project, run_uuid, body)
 
 Restart run
 
@@ -3823,14 +3828,14 @@ configuration = polyaxon_sdk.Configuration(
 with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.RunsV1Api(api_client)
-    entity_owner = 'entity_owner_example' # str | Owner of the namespace
-entity_entity = 'entity_entity_example' # str | Entity: project name, hub name, registry name, ...
-entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the sub-entity
+    owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the run will be assigned
+run_uuid = 'run_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
     try:
         # Restart run
-        api_response = api_instance.restart_run(entity_owner, entity_entity, entity_uuid, body)
+        api_response = api_instance.restart_run(owner, project, run_uuid, body)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->restart_run: %s\n" % e)
@@ -3840,9 +3845,9 @@ body = polyaxon_sdk.V1Run() # V1Run | Run object
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entity_owner** | **str**| Owner of the namespace | 
- **entity_entity** | **str**| Entity: project name, hub name, registry name, ... | 
- **entity_uuid** | **str**| Uuid identifier of the sub-entity | 
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the run will be assigned | 
+ **run_uuid** | **str**| UUID | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -3952,7 +3957,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **resume_run**
-> V1Run resume_run(entity_owner, entity_entity, entity_uuid, body)
+> V1Run resume_run(owner, project, run_uuid, body)
 
 Resume run
 
@@ -3990,14 +3995,14 @@ configuration = polyaxon_sdk.Configuration(
 with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.RunsV1Api(api_client)
-    entity_owner = 'entity_owner_example' # str | Owner of the namespace
-entity_entity = 'entity_entity_example' # str | Entity: project name, hub name, registry name, ...
-entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the sub-entity
+    owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the run will be assigned
+run_uuid = 'run_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
     try:
         # Resume run
-        api_response = api_instance.resume_run(entity_owner, entity_entity, entity_uuid, body)
+        api_response = api_instance.resume_run(owner, project, run_uuid, body)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->resume_run: %s\n" % e)
@@ -4007,9 +4012,9 @@ body = polyaxon_sdk.V1Run() # V1Run | Run object
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entity_owner** | **str**| Owner of the namespace | 
- **entity_entity** | **str**| Entity: project name, hub name, registry name, ... | 
- **entity_uuid** | **str**| Uuid identifier of the sub-entity | 
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the run will be assigned | 
+ **run_uuid** | **str**| UUID | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -4341,6 +4346,88 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project under namesapce | 
  **body** | [**V1Uuids**](V1Uuids.md)| Uuids of the entities | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **sync_run**
+> sync_run(owner, project, body)
+
+Sync offline run
+
+### Example
+
+* Api Key Authentication (ApiKey):
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the run will be assigned
+body = polyaxon_sdk.V1Run() # V1Run | Run object
+
+    try:
+        # Sync offline run
+        api_instance.sync_run(owner, project, body)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->sync_run: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the run will be assigned | 
+ **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
 

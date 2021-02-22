@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/bookmark | Bookmark run
 [**bookmarkRuns**](RunsV1Api.md#bookmarkRuns) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
 [**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
-[**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy | Restart run with copy
+[**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/copy | Restart run with copy
 [**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts | Create bulk run artifacts lineage
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
@@ -48,13 +48,14 @@ Method | HTTP request | Description
 [**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{name}/runs | List runs
 [**notifyRunStatus**](RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-[**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart | Restart run
+[**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/restart | Restart run
 [**restoreRun**](RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/restore | Restore run
-[**resumeRun**](RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume | Resume run
+[**resumeRun**](RunsV1Api.md#resumeRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/resume | Resume run
 [**startRunTensorboard**](RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start | Start run tensorboard
 [**stopRun**](RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/stop | Stop run
 [**stopRunTensorboard**](RunsV1Api.md#stopRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 [**stopRuns**](RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
+[**syncRun**](RunsV1Api.md#syncRun) | **POST** /api/v1/{owner}/{project}/runs/sync | Sync offline run
 [**tagRuns**](RunsV1Api.md#tagRuns) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
 [**unbookmarkRun**](RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark | Unbookmark run
 [**updateRun**](RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
@@ -512,7 +513,7 @@ null (empty response body)
 
 <a name="copyRun"></a>
 # **copyRun**
-> V1Run copyRun(entityOwner, entityEntity, entityUuid, body)
+> V1Run copyRun(owner, project, runUuid, body)
 
 Restart run with copy
 
@@ -538,12 +539,12 @@ public class Example {
     //ApiKey.setApiKeyPrefix("Token");
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
-    String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-    String entityEntity = "entityEntity_example"; // String | Entity: project name, hub name, registry name, ...
-    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the sub-entity
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String runUuid = "runUuid_example"; // String | UUID
     V1Run body = new V1Run(); // V1Run | Run object
     try {
-      V1Run result = apiInstance.copyRun(entityOwner, entityEntity, entityUuid, body);
+      V1Run result = apiInstance.copyRun(owner, project, runUuid, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#copyRun");
@@ -560,9 +561,9 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entityOwner** | **String**| Owner of the namespace |
- **entityEntity** | **String**| Entity: project name, hub name, registry name, ... |
- **entityUuid** | **String**| Uuid identifier of the sub-entity |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **runUuid** | **String**| UUID |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -2744,7 +2745,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunsArtifactsLineage"></a>
 # **getRunsArtifactsLineage**
-> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, name, offset, limit, sort, query)
+> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode)
 
 Get runs artifacts lineage
 
@@ -2776,8 +2777,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query);
+      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunsArtifactsLineage");
@@ -2800,6 +2802,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -3206,7 +3209,7 @@ Name | Type | Description  | Notes
 
 <a name="listRuns"></a>
 # **listRuns**
-> V1ListRunsResponse listRuns(owner, name, offset, limit, sort, query)
+> V1ListRunsResponse listRuns(owner, name, offset, limit, sort, query, mode)
 
 List runs
 
@@ -3238,8 +3241,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query);
+      V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#listRuns");
@@ -3262,6 +3266,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -3442,7 +3447,7 @@ Name | Type | Description  | Notes
 
 <a name="restartRun"></a>
 # **restartRun**
-> V1Run restartRun(entityOwner, entityEntity, entityUuid, body)
+> V1Run restartRun(owner, project, runUuid, body)
 
 Restart run
 
@@ -3468,12 +3473,12 @@ public class Example {
     //ApiKey.setApiKeyPrefix("Token");
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
-    String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-    String entityEntity = "entityEntity_example"; // String | Entity: project name, hub name, registry name, ...
-    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the sub-entity
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String runUuid = "runUuid_example"; // String | UUID
     V1Run body = new V1Run(); // V1Run | Run object
     try {
-      V1Run result = apiInstance.restartRun(entityOwner, entityEntity, entityUuid, body);
+      V1Run result = apiInstance.restartRun(owner, project, runUuid, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#restartRun");
@@ -3490,9 +3495,9 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entityOwner** | **String**| Owner of the namespace |
- **entityEntity** | **String**| Entity: project name, hub name, registry name, ... |
- **entityUuid** | **String**| Uuid identifier of the sub-entity |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **runUuid** | **String**| UUID |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -3593,7 +3598,7 @@ null (empty response body)
 
 <a name="resumeRun"></a>
 # **resumeRun**
-> V1Run resumeRun(entityOwner, entityEntity, entityUuid, body)
+> V1Run resumeRun(owner, project, runUuid, body)
 
 Resume run
 
@@ -3619,12 +3624,12 @@ public class Example {
     //ApiKey.setApiKeyPrefix("Token");
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
-    String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-    String entityEntity = "entityEntity_example"; // String | Entity: project name, hub name, registry name, ...
-    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the sub-entity
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String runUuid = "runUuid_example"; // String | UUID
     V1Run body = new V1Run(); // V1Run | Run object
     try {
-      V1Run result = apiInstance.resumeRun(entityOwner, entityEntity, entityUuid, body);
+      V1Run result = apiInstance.resumeRun(owner, project, runUuid, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#resumeRun");
@@ -3641,9 +3646,9 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entityOwner** | **String**| Owner of the namespace |
- **entityEntity** | **String**| Entity: project name, hub name, registry name, ... |
- **entityUuid** | **String**| Uuid identifier of the sub-entity |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **runUuid** | **String**| UUID |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -3943,6 +3948,80 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
  **body** | [**V1Uuids**](V1Uuids.md)| Uuids of the entities |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+<a name="syncRun"></a>
+# **syncRun**
+> syncRun(owner, project, body)
+
+Sync offline run
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    V1Run body = new V1Run(); // V1Run | Run object
+    try {
+      apiInstance.syncRun(owner, project, body);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#syncRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
 

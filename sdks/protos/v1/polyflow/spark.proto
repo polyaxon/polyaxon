@@ -64,10 +64,10 @@ message Spark {
     Type type = 4;
 
     // Spark version is the version of Spark the application uses.
-    string spark_version = 5;
+    string sparkVersion = 5;
 
     // Spark version is the version of Spark the application uses.
-    string python_version = 6;
+    string pythonVersion = 6;
 
 
     enum DeployMode {
@@ -76,14 +76,14 @@ message Spark {
         in_cluster_client = 2;
     }
     // Mode is the deployment mode of the Spark application.
-    DeployMode deploy_mode = 7;
+    DeployMode deployMode = 7;
 
     // MainClass is the fully-qualified main class of the Spark application.
     // This only applies to Java/Scala Spark applications.
-    string main_class = 8;
+    string mainClass = 8;
 
     // MainFile is the path to a bundled JAR, Python, or R file of the application.
-    string main_application_file = 9;
+    string mainApplicationFile = 9;
 
     // Arguments is a list of arguments to be passed to the application.
     repeated string arguments = 10;
@@ -91,20 +91,20 @@ message Spark {
     // HadoopConf carries user-specified Hadoop configuration properties as they would use the  the "--conf" option
     // in spark-submit.  The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
     // configuration properties.
-    map<string, string> hadoop_conf = 11;
+    map<string, string> hadoopConf = 11;
 
     // HadoopConf carries user-specified Hadoop configuration properties as they would use the  the "--conf" option
 	  // in spark-submit.  The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
 	  // configuration properties.
-    map<string, string> spark_conf = 12;
+    map<string, string> sparkConf = 12;
 
     // SparkConfigMap carries the name of the ConfigMap containing Spark configuration files such as log4j.properties.
 	  // The controller will add environment variable SPARK_CONF_DIR to the path where the ConfigMap is mounted to.
-    string spark_config_map = 13;
+    string sparkConfigMap = 13;
 
 	  // HadoopConfigMap carries the name of the ConfigMap containing Hadoop configuration files such as core-site.xml.
 	  // The controller will add environment variable HADOOP_CONF_DIR to the path where the ConfigMap is mounted to.
-	  string hadoop_config_map = 14;
+	  string hadoopConfigMap = 14;
 
     // Optional spark executor definition
     SparkReplica executor = 15;

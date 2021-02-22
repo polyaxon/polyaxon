@@ -23,9 +23,9 @@ import "google/protobuf/struct.proto";
 // K8S resource schema validation
 message K8sResourceSchema {
     string name = 1;
-    string mount_path = 2;
+    string mountPath = 2;
     repeated string items = 3;
-    int32 default_mode = 4;
+    int32 defaultMode = 4;
 }
 
 // K8S resource specification
@@ -37,5 +37,5 @@ message K8sResourceType {
     K8sResourceSchema schema = 2;
 
     // Option if the config resource is requested
-    bool is_requested = 3;
+    bool isRequested = 3;
 }

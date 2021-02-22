@@ -22,15 +22,10 @@ from typing import List, Optional
 from polyaxon import settings
 from polyaxon.connections.getter import get_connection_from_type
 from polyaxon.connections.reader import get_connection_type
-from polyaxon.env_vars.keys import POLYAXON_KEYS_ARTIFACTS_STORE_NAME
+from polyaxon.env_vars.getters import get_artifacts_store_name
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.path_utils import create_tarfile, get_files_in_path, get_path
-
-
-def get_artifacts_store_name():
-    """Get the artifacts store name"""
-    return os.getenv(POLYAXON_KEYS_ARTIFACTS_STORE_NAME)
 
 
 def get_artifacts_connection() -> Optional[V1ConnectionType]:

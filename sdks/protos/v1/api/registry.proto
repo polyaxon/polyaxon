@@ -104,6 +104,8 @@ message ModelVersion {
   // Model spec metadata
   string metadata = 12;
 
+  // Current user's role in this (org/teams)/model/version
+  string role = 13;
 }
 
  // Request data to create/update model registries
@@ -161,11 +163,14 @@ message ListModelVersionsResponse {
 
 // Model registry Settings specification
 message ModelRegistrySettings {
+  // Authorized users
+  repeated string users = 1;
+
   // Authorized teams
-  repeated string teams = 1;
+  repeated string teams = 2;
 
   // Authorized projects
-  repeated string projects = 2;
+  repeated string projects = 3;
 }
 
 // Request data to update model registry settings

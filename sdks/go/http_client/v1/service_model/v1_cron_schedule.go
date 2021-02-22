@@ -37,21 +37,21 @@ type V1CronSchedule struct {
 	Cron string `json:"cron,omitempty"`
 
 	// A flag to set a dependency on past executions
-	DependsOnPast bool `json:"depends_on_past,omitempty"`
+	DependsOnPast bool `json:"dependsOnPast,omitempty"`
 
 	// Whan to end this cron schedule
 	// Format: date-time
-	EndAt strfmt.DateTime `json:"end_at,omitempty"`
+	EndAt strfmt.DateTime `json:"endAt,omitempty"`
 
 	// Kind of schedule, should be equal to "cron"
 	Kind *string `json:"kind,omitempty"`
 
 	// Limit to stop executing this schedule
-	MaxRuns int32 `json:"max_runs,omitempty"`
+	MaxRuns int32 `json:"maxRuns,omitempty"`
 
 	// Whan to start this cron schedule
 	// Format: date-time
-	StartAt strfmt.DateTime `json:"start_at,omitempty"`
+	StartAt strfmt.DateTime `json:"startAt,omitempty"`
 }
 
 // Validate validates this v1 cron schedule
@@ -77,7 +77,7 @@ func (m *V1CronSchedule) validateEndAt(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.FormatOf("end_at", "body", "date-time", m.EndAt.String(), formats); err != nil {
+	if err := validate.FormatOf("endAt", "body", "date-time", m.EndAt.String(), formats); err != nil {
 		return err
 	}
 
@@ -89,7 +89,7 @@ func (m *V1CronSchedule) validateStartAt(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.FormatOf("start_at", "body", "date-time", m.StartAt.String(), formats); err != nil {
+	if err := validate.FormatOf("startAt", "body", "date-time", m.StartAt.String(), formats); err != nil {
 		return err
 	}
 

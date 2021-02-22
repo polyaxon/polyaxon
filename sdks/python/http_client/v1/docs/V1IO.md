@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
-**iotype** | **str** |  | [optional] 
+**type** | **str** |  | [optional] 
 **value** | [**object**](.md) |  | [optional] 
 **is_optional** | **bool** |  | [optional] 
 **is_list** | **bool** |  | [optional] 

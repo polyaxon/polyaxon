@@ -37,55 +37,58 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationOK, *CreateOrganizationNoContent, error)
+	CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationOK, *CreateOrganizationNoContent, error)
 
-	CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error)
+	CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error)
 
-	DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error)
+	DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error)
 
-	DeleteOrganizationInvitation(params *DeleteOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationInvitationOK, *DeleteOrganizationInvitationNoContent, error)
+	DeleteOrganizationInvitation(params *DeleteOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationInvitationOK, *DeleteOrganizationInvitationNoContent, error)
 
-	DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error)
+	DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error)
 
-	GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationOK, *GetOrganizationNoContent, error)
+	GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationOK, *GetOrganizationNoContent, error)
 
-	GetOrganizationActivities(params *GetOrganizationActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationActivitiesOK, *GetOrganizationActivitiesNoContent, error)
+	GetOrganizationActivities(params *GetOrganizationActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationActivitiesOK, *GetOrganizationActivitiesNoContent, error)
 
-	GetOrganizationInvitation(params *GetOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationInvitationOK, *GetOrganizationInvitationNoContent, error)
+	GetOrganizationInvitation(params *GetOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInvitationOK, *GetOrganizationInvitationNoContent, error)
 
-	GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error)
+	GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error)
 
-	GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error)
+	GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error)
 
-	GetOrganizationStats(params *GetOrganizationStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationStatsOK, *GetOrganizationStatsNoContent, error)
+	GetOrganizationStats(params *GetOrganizationStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationStatsOK, *GetOrganizationStatsNoContent, error)
 
-	ListOrganizationMemberNames(params *ListOrganizationMemberNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMemberNamesOK, *ListOrganizationMemberNamesNoContent, error)
+	ListOrganizationMemberNames(params *ListOrganizationMemberNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationMemberNamesOK, *ListOrganizationMemberNamesNoContent, error)
 
-	ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error)
+	ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error)
 
-	ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error)
+	ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error)
 
-	ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationsOK, *ListOrganizationsNoContent, error)
+	ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationsOK, *ListOrganizationsNoContent, error)
 
-	OrganizationPlan(params *OrganizationPlanParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationPlanOK, *OrganizationPlanNoContent, error)
+	OrganizationPlan(params *OrganizationPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*OrganizationPlanOK, *OrganizationPlanNoContent, error)
 
-	PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationOK, *PatchOrganizationNoContent, error)
+	PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationOK, *PatchOrganizationNoContent, error)
 
-	PatchOrganizationInvitation(params *PatchOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationInvitationOK, *PatchOrganizationInvitationNoContent, error)
+	PatchOrganizationInvitation(params *PatchOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationInvitationOK, *PatchOrganizationInvitationNoContent, error)
 
-	PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error)
+	PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error)
 
-	PatchOrganizationSettings(params *PatchOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationSettingsOK, *PatchOrganizationSettingsNoContent, error)
+	PatchOrganizationSettings(params *PatchOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationSettingsOK, *PatchOrganizationSettingsNoContent, error)
 
-	UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error)
+	UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error)
 
-	UpdateOrganizationInvitation(params *UpdateOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationInvitationOK, *UpdateOrganizationInvitationNoContent, error)
+	UpdateOrganizationInvitation(params *UpdateOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationInvitationOK, *UpdateOrganizationInvitationNoContent, error)
 
-	UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error)
+	UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error)
 
-	UpdateOrganizationSettings(params *UpdateOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationSettingsOK, *UpdateOrganizationSettingsNoContent, error)
+	UpdateOrganizationSettings(params *UpdateOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSettingsOK, *UpdateOrganizationSettingsNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -93,13 +96,12 @@ type ClientService interface {
 /*
   CreateOrganization creates organization
 */
-func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationOK, *CreateOrganizationNoContent, error) {
+func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationOK, *CreateOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateOrganizationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateOrganization",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/create",
@@ -111,7 +113,12 @@ func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -129,13 +136,12 @@ func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo r
 /*
   CreateOrganizationMember creates organization member
 */
-func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error) {
+func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateOrganizationMemberParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateOrganizationMember",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/members",
@@ -147,7 +153,12 @@ func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -165,13 +176,12 @@ func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams
 /*
   DeleteOrganization deletes organization
 */
-func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error) {
+func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteOrganizationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteOrganization",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}",
@@ -183,7 +193,12 @@ func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -201,13 +216,12 @@ func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo r
 /*
   DeleteOrganizationInvitation deletes organization invitation details
 */
-func (a *Client) DeleteOrganizationInvitation(params *DeleteOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationInvitationOK, *DeleteOrganizationInvitationNoContent, error) {
+func (a *Client) DeleteOrganizationInvitation(params *DeleteOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationInvitationOK, *DeleteOrganizationInvitationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteOrganizationInvitationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteOrganizationInvitation",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/invitations",
@@ -219,7 +233,12 @@ func (a *Client) DeleteOrganizationInvitation(params *DeleteOrganizationInvitati
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -237,13 +256,12 @@ func (a *Client) DeleteOrganizationInvitation(params *DeleteOrganizationInvitati
 /*
   DeleteOrganizationMember deletes organization member details
 */
-func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error) {
+func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteOrganizationMemberParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteOrganizationMember",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/members/{name}",
@@ -255,7 +273,12 @@ func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -273,13 +296,12 @@ func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams
 /*
   GetOrganization gets organization
 */
-func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationOK, *GetOrganizationNoContent, error) {
+func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationOK, *GetOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetOrganizationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetOrganization",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}",
@@ -291,7 +313,12 @@ func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -309,13 +336,12 @@ func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime
 /*
   GetOrganizationActivities gets organization activities
 */
-func (a *Client) GetOrganizationActivities(params *GetOrganizationActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationActivitiesOK, *GetOrganizationActivitiesNoContent, error) {
+func (a *Client) GetOrganizationActivities(params *GetOrganizationActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationActivitiesOK, *GetOrganizationActivitiesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetOrganizationActivitiesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetOrganizationActivities",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/activities",
@@ -327,7 +353,12 @@ func (a *Client) GetOrganizationActivities(params *GetOrganizationActivitiesPara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -345,13 +376,12 @@ func (a *Client) GetOrganizationActivities(params *GetOrganizationActivitiesPara
 /*
   GetOrganizationInvitation gets organization invitation details
 */
-func (a *Client) GetOrganizationInvitation(params *GetOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationInvitationOK, *GetOrganizationInvitationNoContent, error) {
+func (a *Client) GetOrganizationInvitation(params *GetOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInvitationOK, *GetOrganizationInvitationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetOrganizationInvitationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetOrganizationInvitation",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/invitations",
@@ -363,7 +393,12 @@ func (a *Client) GetOrganizationInvitation(params *GetOrganizationInvitationPara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -381,13 +416,12 @@ func (a *Client) GetOrganizationInvitation(params *GetOrganizationInvitationPara
 /*
   GetOrganizationMember gets organization member details
 */
-func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error) {
+func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetOrganizationMemberParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetOrganizationMember",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/members/{name}",
@@ -399,7 +433,12 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -417,13 +456,12 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 /*
   GetOrganizationSettings gets organization settings
 */
-func (a *Client) GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error) {
+func (a *Client) GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetOrganizationSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetOrganizationSettings",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/settings",
@@ -435,7 +473,12 @@ func (a *Client) GetOrganizationSettings(params *GetOrganizationSettingsParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -453,13 +496,12 @@ func (a *Client) GetOrganizationSettings(params *GetOrganizationSettingsParams, 
 /*
   GetOrganizationStats gets organization stats
 */
-func (a *Client) GetOrganizationStats(params *GetOrganizationStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationStatsOK, *GetOrganizationStatsNoContent, error) {
+func (a *Client) GetOrganizationStats(params *GetOrganizationStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationStatsOK, *GetOrganizationStatsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetOrganizationStatsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetOrganizationStats",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/stats",
@@ -471,7 +513,12 @@ func (a *Client) GetOrganizationStats(params *GetOrganizationStatsParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -489,13 +536,12 @@ func (a *Client) GetOrganizationStats(params *GetOrganizationStatsParams, authIn
 /*
   ListOrganizationMemberNames gets organization member names
 */
-func (a *Client) ListOrganizationMemberNames(params *ListOrganizationMemberNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMemberNamesOK, *ListOrganizationMemberNamesNoContent, error) {
+func (a *Client) ListOrganizationMemberNames(params *ListOrganizationMemberNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationMemberNamesOK, *ListOrganizationMemberNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListOrganizationMemberNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListOrganizationMemberNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/members/names",
@@ -507,7 +553,12 @@ func (a *Client) ListOrganizationMemberNames(params *ListOrganizationMemberNames
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -525,13 +576,12 @@ func (a *Client) ListOrganizationMemberNames(params *ListOrganizationMemberNames
 /*
   ListOrganizationMembers gets organization members
 */
-func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error) {
+func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListOrganizationMembersParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListOrganizationMembers",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/members",
@@ -543,7 +593,12 @@ func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -561,13 +616,12 @@ func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, 
 /*
   ListOrganizationNames lists organizations names
 */
-func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error) {
+func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListOrganizationNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListOrganizationNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/names",
@@ -579,7 +633,12 @@ func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -597,13 +656,12 @@ func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, auth
 /*
   ListOrganizations lists organizations
 */
-func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationsOK, *ListOrganizationsNoContent, error) {
+func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationsOK, *ListOrganizationsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListOrganizationsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListOrganizations",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/list",
@@ -615,7 +673,12 @@ func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -633,13 +696,12 @@ func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo run
 /*
   OrganizationPlan organizations plan
 */
-func (a *Client) OrganizationPlan(params *OrganizationPlanParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationPlanOK, *OrganizationPlanNoContent, error) {
+func (a *Client) OrganizationPlan(params *OrganizationPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*OrganizationPlanOK, *OrganizationPlanNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewOrganizationPlanParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "OrganizationPlan",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/plan",
@@ -651,7 +713,12 @@ func (a *Client) OrganizationPlan(params *OrganizationPlanParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -669,13 +736,12 @@ func (a *Client) OrganizationPlan(params *OrganizationPlanParams, authInfo runti
 /*
   PatchOrganization patches organization
 */
-func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationOK, *PatchOrganizationNoContent, error) {
+func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationOK, *PatchOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchOrganizationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchOrganization",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}",
@@ -687,7 +753,12 @@ func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -705,13 +776,12 @@ func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo run
 /*
   PatchOrganizationInvitation patches organization invitation
 */
-func (a *Client) PatchOrganizationInvitation(params *PatchOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationInvitationOK, *PatchOrganizationInvitationNoContent, error) {
+func (a *Client) PatchOrganizationInvitation(params *PatchOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationInvitationOK, *PatchOrganizationInvitationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchOrganizationInvitationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchOrganizationInvitation",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/invitations",
@@ -723,7 +793,12 @@ func (a *Client) PatchOrganizationInvitation(params *PatchOrganizationInvitation
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -741,13 +816,12 @@ func (a *Client) PatchOrganizationInvitation(params *PatchOrganizationInvitation
 /*
   PatchOrganizationMember patches organization member
 */
-func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error) {
+func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchOrganizationMemberParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchOrganizationMember",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/members/{member.user}",
@@ -759,7 +833,12 @@ func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -777,13 +856,12 @@ func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, 
 /*
   PatchOrganizationSettings patches oranization settings
 */
-func (a *Client) PatchOrganizationSettings(params *PatchOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationSettingsOK, *PatchOrganizationSettingsNoContent, error) {
+func (a *Client) PatchOrganizationSettings(params *PatchOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationSettingsOK, *PatchOrganizationSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchOrganizationSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchOrganizationSettings",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/settings",
@@ -795,7 +873,12 @@ func (a *Client) PatchOrganizationSettings(params *PatchOrganizationSettingsPara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -813,13 +896,12 @@ func (a *Client) PatchOrganizationSettings(params *PatchOrganizationSettingsPara
 /*
   UpdateOrganization updates organization
 */
-func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error) {
+func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateOrganizationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateOrganization",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}",
@@ -831,7 +913,12 @@ func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -849,13 +936,12 @@ func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo r
 /*
   UpdateOrganizationInvitation updates organization invitation
 */
-func (a *Client) UpdateOrganizationInvitation(params *UpdateOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationInvitationOK, *UpdateOrganizationInvitationNoContent, error) {
+func (a *Client) UpdateOrganizationInvitation(params *UpdateOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationInvitationOK, *UpdateOrganizationInvitationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateOrganizationInvitationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateOrganizationInvitation",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/invitations",
@@ -867,7 +953,12 @@ func (a *Client) UpdateOrganizationInvitation(params *UpdateOrganizationInvitati
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -885,13 +976,12 @@ func (a *Client) UpdateOrganizationInvitation(params *UpdateOrganizationInvitati
 /*
   UpdateOrganizationMember updates organization member
 */
-func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error) {
+func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateOrganizationMemberParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateOrganizationMember",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/members/{member.user}",
@@ -903,7 +993,12 @@ func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -921,13 +1016,12 @@ func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams
 /*
   UpdateOrganizationSettings updates organization settings
 */
-func (a *Client) UpdateOrganizationSettings(params *UpdateOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationSettingsOK, *UpdateOrganizationSettingsNoContent, error) {
+func (a *Client) UpdateOrganizationSettings(params *UpdateOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSettingsOK, *UpdateOrganizationSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateOrganizationSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateOrganizationSettings",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/settings",
@@ -939,7 +1033,12 @@ func (a *Client) UpdateOrganizationSettings(params *UpdateOrganizationSettingsPa
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -37,21 +37,24 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateSearch(params *CreateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateSearchOK, *CreateSearchNoContent, error)
+	CreateSearch(params *CreateSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateSearchOK, *CreateSearchNoContent, error)
 
-	DeleteSearch(params *DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteSearchOK, *DeleteSearchNoContent, error)
+	DeleteSearch(params *DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteSearchOK, *DeleteSearchNoContent, error)
 
-	GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetSearchOK, *GetSearchNoContent, error)
+	GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSearchOK, *GetSearchNoContent, error)
 
-	ListSearchNames(params *ListSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchNamesOK, *ListSearchNamesNoContent, error)
+	ListSearchNames(params *ListSearchNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListSearchNamesOK, *ListSearchNamesNoContent, error)
 
-	ListSearches(params *ListSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchesOK, *ListSearchesNoContent, error)
+	ListSearches(params *ListSearchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListSearchesOK, *ListSearchesNoContent, error)
 
-	PatchSearch(params *PatchSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchSearchOK, *PatchSearchNoContent, error)
+	PatchSearch(params *PatchSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchSearchOK, *PatchSearchNoContent, error)
 
-	UpdateSearch(params *UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateSearchOK, *UpdateSearchNoContent, error)
+	UpdateSearch(params *UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSearchOK, *UpdateSearchNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -59,13 +62,12 @@ type ClientService interface {
 /*
   CreateSearch creates search
 */
-func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateSearchOK, *CreateSearchNoContent, error) {
+func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateSearchOK, *CreateSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateSearch",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/searches",
@@ -77,7 +79,12 @@ func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -95,13 +102,12 @@ func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.Clien
 /*
   DeleteSearch deletes search
 */
-func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteSearchOK, *DeleteSearchNoContent, error) {
+func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteSearchOK, *DeleteSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteSearch",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/{uuid}",
@@ -113,7 +119,12 @@ func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -131,13 +142,12 @@ func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.Clien
 /*
   GetSearch gets search
 */
-func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetSearchOK, *GetSearchNoContent, error) {
+func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSearchOK, *GetSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetSearch",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/{uuid}",
@@ -149,7 +159,12 @@ func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -167,13 +182,12 @@ func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthI
 /*
   ListSearchNames lists search names
 */
-func (a *Client) ListSearchNames(params *ListSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchNamesOK, *ListSearchNamesNoContent, error) {
+func (a *Client) ListSearchNames(params *ListSearchNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListSearchNamesOK, *ListSearchNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListSearchNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListSearchNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/names",
@@ -185,7 +199,12 @@ func (a *Client) ListSearchNames(params *ListSearchNamesParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -203,13 +222,12 @@ func (a *Client) ListSearchNames(params *ListSearchNamesParams, authInfo runtime
 /*
   ListSearches lists searches
 */
-func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchesOK, *ListSearchesNoContent, error) {
+func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListSearchesOK, *ListSearchesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListSearchesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListSearches",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/searches",
@@ -221,7 +239,12 @@ func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -239,13 +262,12 @@ func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.Clien
 /*
   PatchSearch patches search
 */
-func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchSearchOK, *PatchSearchNoContent, error) {
+func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchSearchOK, *PatchSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchSearch",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/{search.uuid}",
@@ -257,7 +279,12 @@ func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -275,13 +302,12 @@ func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientA
 /*
   UpdateSearch updates search
 */
-func (a *Client) UpdateSearch(params *UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateSearchOK, *UpdateSearchNoContent, error) {
+func (a *Client) UpdateSearch(params *UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSearchOK, *UpdateSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateSearch",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/{search.uuid}",
@@ -293,7 +319,12 @@ func (a *Client) UpdateSearch(params *UpdateSearchParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

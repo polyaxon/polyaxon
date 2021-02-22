@@ -35,10 +35,13 @@ spec:
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        command: ["/opt/mpi-operator.v1"]
         args: [
           "-alsologtostderr",
           "--kubectl-delivery-image",
           "{{ .Values.kubectlDelivery.image }}:{{ .Values.kubectlDelivery.imageTag }}",
+          "--namespace",
+          "{{ .Release.Namespace }}",
           "--lock-namespace",
           "{{ .Release.Namespace }}"
         ]

@@ -31,25 +31,25 @@ message BucketConnection {
 // Host path connection schema validation specification
 message HostPathConnection {
     // host path
-    string host_path = 1;
+    string hostPath = 1;
 
     // Mount path
-    string mount_path = 2;
+    string mountPath = 2;
 
     // Read Only
-    bool read_only = 3;
+    bool readOnly = 3;
 }
 
 // Claim connection schema validation specification
 message ClaimConnection {
     // Claim name
-    string volume_claim = 1;
+    string volumeClaim = 1;
 
     // Mount path
-    string mount_path = 2;
+    string mountPath = 2;
 
     // Read Only
-    bool read_only = 3;
+    bool readOnly = 3;
 }
 
 // Host connection schema validation connection
@@ -93,16 +93,16 @@ message ConnectionType {
     K8sResourceSchema secret = 6;
 
     // ConfigMap resource schema
-    K8sResourceSchema config_map = 7;
+    K8sResourceSchema configMap = 7;
 }
 
 message ConnectionSchema {
     oneof connection {
-        BucketConnection bucket_connection = 1;
-        HostPathConnection host_path_connection = 2;
-        ClaimConnection claim_connection = 3;
-        HostConnection host_connection = 4;
-        GitConnection git_connection = 5;
+        BucketConnection bucketConnection = 1;
+        HostPathConnection hostPathConnection = 2;
+        ClaimConnection claimConnection = 3;
+        HostConnection hostConnection = 4;
+        GitConnection gitConnection = 5;
     }
 }
 

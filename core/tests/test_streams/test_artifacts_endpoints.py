@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import pytest
 
 from polyaxon import settings
 from polyaxon.streams.app.main import STREAMS_URL
@@ -22,6 +23,7 @@ from tests.test_streams.base import create_tmp_files, get_streams_client, set_st
 from tests.utils import BaseTestCase
 
 
+@pytest.mark.streams_mark
 class TestArtifactsEndpoints(BaseTestCase):
     def setUp(self):
         super().setUp()

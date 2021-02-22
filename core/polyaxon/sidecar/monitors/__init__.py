@@ -16,4 +16,3 @@
 
 from polyaxon.sidecar.monitors.artifacts import sync_artifacts
 from polyaxon.sidecar.monitors.logs import sync_logs
-from polyaxon.sidecar.monitors.summaries import sync_summaries

@@ -77,6 +77,12 @@ class TestV1IOs(BaseTestCase):
         config = V1IO.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
+    def test_iotype_backwards_compatibility(self):
+        config1 = V1IO(name="test", iotype=types.BOOL)
+        config2 = V1IO(name="test", type=types.BOOL)
+        assert config1 == config2
+        assert config1.to_dict() == config2.to_dict()
+
     def test_io_config_types(self):
         config_dict = {"name": "input1", "description": "some text", "type": types.INT}
         config = V1IO.from_dict(config_dict)
@@ -232,7 +238,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.INT,
+            type=types.INT,
             param=param,
             is_flag=False,
             is_list=False,
@@ -251,7 +257,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.INT,
+            type=types.INT,
             param=param,
             is_flag=False,
             is_list=False,
@@ -269,7 +275,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.STR,
+            type=types.STR,
             param=param,
             is_flag=False,
             is_list=False,
@@ -288,7 +294,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=True,
             is_list=False,
@@ -306,7 +312,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=True,
             is_list=False,
@@ -347,7 +353,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=True,
             is_list=False,
@@ -365,7 +371,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=True,
             is_list=False,
@@ -383,7 +389,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=True,
             is_list=False,
@@ -415,7 +421,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=True,
             is_list=False,
@@ -434,7 +440,7 @@ class TestV1IOs(BaseTestCase):
             arg_format=None,
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=True,
             is_list=False,
@@ -453,7 +459,7 @@ class TestV1IOs(BaseTestCase):
             arg_format="--sdf={{ foo }}",
         ) == ParamSpec(
             name="foo",
-            iotype=types.STR,
+            type=types.STR,
             param=param,
             is_flag=False,
             is_list=False,
@@ -463,7 +469,7 @@ class TestV1IOs(BaseTestCase):
         assert (
             ParamSpec(
                 name="foo",
-                iotype=types.STR,
+                type=types.STR,
                 param=param,
                 is_flag=False,
                 is_list=False,
@@ -484,7 +490,7 @@ class TestV1IOs(BaseTestCase):
             arg_format="--sdf={{ foo }}",
         ) == ParamSpec(
             name="foo",
-            iotype=types.STR,
+            type=types.STR,
             param=param,
             is_flag=False,
             is_list=False,
@@ -494,7 +500,7 @@ class TestV1IOs(BaseTestCase):
         assert (
             ParamSpec(
                 name="foo",
-                iotype=types.STR,
+                type=types.STR,
                 param=param,
                 is_flag=False,
                 is_list=False,
@@ -515,7 +521,7 @@ class TestV1IOs(BaseTestCase):
             arg_format="--sdf={{ foo }}",
         ) == ParamSpec(
             name="foo",
-            iotype=types.INT,
+            type=types.INT,
             param=param,
             is_flag=False,
             is_list=False,
@@ -525,7 +531,7 @@ class TestV1IOs(BaseTestCase):
         assert (
             ParamSpec(
                 name="foo",
-                iotype=types.INT,
+                type=types.INT,
                 param=param,
                 is_flag=False,
                 is_list=False,
@@ -546,7 +552,7 @@ class TestV1IOs(BaseTestCase):
             arg_format="{{'true-var' if foo else 'false-var'}}",
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=False,
             is_list=False,
@@ -556,7 +562,7 @@ class TestV1IOs(BaseTestCase):
         assert (
             ParamSpec(
                 name="foo",
-                iotype=types.BOOL,
+                type=types.BOOL,
                 param=param,
                 is_flag=False,
                 is_list=False,
@@ -576,7 +582,7 @@ class TestV1IOs(BaseTestCase):
             arg_format="{{'true-var' if foo else 'false-var'}}",
         ) == ParamSpec(
             name="foo",
-            iotype=types.BOOL,
+            type=types.BOOL,
             param=param,
             is_flag=False,
             is_list=False,
@@ -586,7 +592,7 @@ class TestV1IOs(BaseTestCase):
         assert (
             ParamSpec(
                 name="foo",
-                iotype=types.BOOL,
+                type=types.BOOL,
                 param=param,
                 is_flag=False,
                 is_list=False,
@@ -607,7 +613,7 @@ class TestV1IOs(BaseTestCase):
             arg_format="{{foo}}",
         ) == ParamSpec(
             name="foo",
-            iotype=types.STR,
+            type=types.STR,
             param=param,
             is_flag=True,
             is_list=False,
@@ -618,7 +624,7 @@ class TestV1IOs(BaseTestCase):
             str(
                 ParamSpec(
                     name="foo",
-                    iotype=types.STR,
+                    type=types.STR,
                     param=param,
                     is_flag=True,
                     is_list=False,
@@ -640,7 +646,7 @@ class TestV1IOs(BaseTestCase):
             arg_format="{{foo}}",
         ) == ParamSpec(
             name="foo",
-            iotype=types.STR,
+            type=types.STR,
             param=param,
             is_flag=True,
             is_list=False,
@@ -651,7 +657,7 @@ class TestV1IOs(BaseTestCase):
             str(
                 ParamSpec(
                     name="foo",
-                    iotype=types.STR,
+                    type=types.STR,
                     param=param,
                     is_flag=True,
                     is_list=False,
@@ -673,7 +679,7 @@ class TestV1IOs(BaseTestCase):
             arg_format="{{foo}}",
         ) == ParamSpec(
             name="foo",
-            iotype=types.STR,
+            type=types.STR,
             param=param,
             is_flag=False,
             is_list=False,
@@ -683,7 +689,7 @@ class TestV1IOs(BaseTestCase):
         assert (
             ParamSpec(
                 name="foo",
-                iotype=types.STR,
+                type=types.STR,
                 param=param,
                 is_flag=False,
                 is_list=False,
@@ -696,7 +702,7 @@ class TestV1IOs(BaseTestCase):
             str(
                 ParamSpec(
                     name="foo",
-                    iotype=types.STR,
+                    type=types.STR,
                     param=param,
                     is_flag=False,
                     is_list=False,

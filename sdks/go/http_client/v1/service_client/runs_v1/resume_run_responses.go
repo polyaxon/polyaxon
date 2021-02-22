@@ -87,7 +87,7 @@ type ResumeRunOK struct {
 }
 
 func (o *ResumeRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume][%d] resumeRunOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{run.uuid}/resume][%d] resumeRunOK  %+v", 200, o.Payload)
 }
 func (o *ResumeRunOK) GetPayload() *service_model.V1Run {
 	return o.Payload
@@ -119,7 +119,7 @@ type ResumeRunNoContent struct {
 }
 
 func (o *ResumeRunNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume][%d] resumeRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{run.uuid}/resume][%d] resumeRunNoContent  %+v", 204, o.Payload)
 }
 func (o *ResumeRunNoContent) GetPayload() interface{} {
 	return o.Payload
@@ -149,7 +149,7 @@ type ResumeRunForbidden struct {
 }
 
 func (o *ResumeRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume][%d] resumeRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{run.uuid}/resume][%d] resumeRunForbidden  %+v", 403, o.Payload)
 }
 func (o *ResumeRunForbidden) GetPayload() interface{} {
 	return o.Payload
@@ -179,7 +179,7 @@ type ResumeRunNotFound struct {
 }
 
 func (o *ResumeRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume][%d] resumeRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{run.uuid}/resume][%d] resumeRunNotFound  %+v", 404, o.Payload)
 }
 func (o *ResumeRunNotFound) GetPayload() interface{} {
 	return o.Payload
@@ -218,7 +218,7 @@ func (o *ResumeRunDefault) Code() int {
 }
 
 func (o *ResumeRunDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume][%d] ResumeRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{run.uuid}/resume][%d] ResumeRun default  %+v", o._statusCode, o.Payload)
 }
 func (o *ResumeRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload

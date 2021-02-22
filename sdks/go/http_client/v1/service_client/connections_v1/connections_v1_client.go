@@ -37,21 +37,24 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateConnection(params *CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateConnectionOK, *CreateConnectionNoContent, error)
+	CreateConnection(params *CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateConnectionOK, *CreateConnectionNoContent, error)
 
-	DeleteConnection(params *DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteConnectionOK, *DeleteConnectionNoContent, error)
+	DeleteConnection(params *DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteConnectionOK, *DeleteConnectionNoContent, error)
 
-	GetConnection(params *GetConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*GetConnectionOK, *GetConnectionNoContent, error)
+	GetConnection(params *GetConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetConnectionOK, *GetConnectionNoContent, error)
 
-	ListConnectionNames(params *ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionNamesOK, *ListConnectionNamesNoContent, error)
+	ListConnectionNames(params *ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListConnectionNamesOK, *ListConnectionNamesNoContent, error)
 
-	ListConnections(params *ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionsOK, *ListConnectionsNoContent, error)
+	ListConnections(params *ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListConnectionsOK, *ListConnectionsNoContent, error)
 
-	PatchConnection(params *PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchConnectionOK, *PatchConnectionNoContent, error)
+	PatchConnection(params *PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchConnectionOK, *PatchConnectionNoContent, error)
 
-	UpdateConnection(params *UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateConnectionOK, *UpdateConnectionNoContent, error)
+	UpdateConnection(params *UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateConnectionOK, *UpdateConnectionNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -59,13 +62,12 @@ type ClientService interface {
 /*
   CreateConnection creates connection
 */
-func (a *Client) CreateConnection(params *CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateConnectionOK, *CreateConnectionNoContent, error) {
+func (a *Client) CreateConnection(params *CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateConnectionOK, *CreateConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateConnectionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateConnection",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/connections",
@@ -77,7 +79,12 @@ func (a *Client) CreateConnection(params *CreateConnectionParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -95,13 +102,12 @@ func (a *Client) CreateConnection(params *CreateConnectionParams, authInfo runti
 /*
   DeleteConnection deletes connection
 */
-func (a *Client) DeleteConnection(params *DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteConnectionOK, *DeleteConnectionNoContent, error) {
+func (a *Client) DeleteConnection(params *DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteConnectionOK, *DeleteConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteConnectionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteConnection",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/{uuid}",
@@ -113,7 +119,12 @@ func (a *Client) DeleteConnection(params *DeleteConnectionParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -131,13 +142,12 @@ func (a *Client) DeleteConnection(params *DeleteConnectionParams, authInfo runti
 /*
   GetConnection gets connection
 */
-func (a *Client) GetConnection(params *GetConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*GetConnectionOK, *GetConnectionNoContent, error) {
+func (a *Client) GetConnection(params *GetConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetConnectionOK, *GetConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetConnectionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetConnection",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/{uuid}",
@@ -149,7 +159,12 @@ func (a *Client) GetConnection(params *GetConnectionParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -167,13 +182,12 @@ func (a *Client) GetConnection(params *GetConnectionParams, authInfo runtime.Cli
 /*
   ListConnectionNames lists connections names
 */
-func (a *Client) ListConnectionNames(params *ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionNamesOK, *ListConnectionNamesNoContent, error) {
+func (a *Client) ListConnectionNames(params *ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListConnectionNamesOK, *ListConnectionNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListConnectionNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListConnectionNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/names",
@@ -185,7 +199,12 @@ func (a *Client) ListConnectionNames(params *ListConnectionNamesParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -203,13 +222,12 @@ func (a *Client) ListConnectionNames(params *ListConnectionNamesParams, authInfo
 /*
   ListConnections lists connections
 */
-func (a *Client) ListConnections(params *ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionsOK, *ListConnectionsNoContent, error) {
+func (a *Client) ListConnections(params *ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListConnectionsOK, *ListConnectionsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListConnectionsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListConnections",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/connections",
@@ -221,7 +239,12 @@ func (a *Client) ListConnections(params *ListConnectionsParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -239,13 +262,12 @@ func (a *Client) ListConnections(params *ListConnectionsParams, authInfo runtime
 /*
   PatchConnection patches connection
 */
-func (a *Client) PatchConnection(params *PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchConnectionOK, *PatchConnectionNoContent, error) {
+func (a *Client) PatchConnection(params *PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchConnectionOK, *PatchConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchConnectionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchConnection",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/{connection.uuid}",
@@ -257,7 +279,12 @@ func (a *Client) PatchConnection(params *PatchConnectionParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -275,13 +302,12 @@ func (a *Client) PatchConnection(params *PatchConnectionParams, authInfo runtime
 /*
   UpdateConnection updates connection
 */
-func (a *Client) UpdateConnection(params *UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateConnectionOK, *UpdateConnectionNoContent, error) {
+func (a *Client) UpdateConnection(params *UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateConnectionOK, *UpdateConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateConnectionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateConnection",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/{connection.uuid}",
@@ -293,7 +319,12 @@ func (a *Client) UpdateConnection(params *UpdateConnectionParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

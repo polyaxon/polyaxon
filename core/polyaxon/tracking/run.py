@@ -19,6 +19,7 @@ import os
 import sys
 import time
 
+from datetime import datetime
 from typing import Dict, List
 
 import polyaxon_sdk
@@ -26,26 +27,29 @@ import ujson
 
 from polyaxon import settings
 from polyaxon.client import RunClient
-from polyaxon.client.decorators import (
-    can_log_events,
-    can_log_outputs,
-    check_no_op,
-    check_offline,
-)
+from polyaxon.client.decorators import client_handler
 from polyaxon.constants import UNKNOWN
 from polyaxon.containers import contexts as container_contexts
+from polyaxon.containers.contexts import CONTEXTS_EVENTS_SUBPATH_FORMAT
 from polyaxon.env_vars.getters import (
-    get_collect_artifact,
+    get_collect_artifacts,
     get_collect_resources,
     get_log_level,
 )
+from polyaxon.lifecycle import LifeCycle
 from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.events import LoggedEventSpec, V1Event, get_asset_path
+from polyaxon.polyboard.logging import V1Log, V1Logs
 from polyaxon.polyboard.processors import events_processors
+from polyaxon.polyboard.processors.logs_processor import setup_logging
 from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
 from polyaxon.utils.env import get_run_env
-from polyaxon.utils.path_utils import get_base_filename, get_path_extension
+from polyaxon.utils.path_utils import (
+    check_or_create_path,
+    get_base_filename,
+    get_path_extension,
+)
 
 TEMP_RUN_ARTIFACTS = "/tmp/.plxartifacts"
 
@@ -86,13 +90,33 @@ class Run(RunClient):
         track_env: bool, optional, default True, to track information about the environment.
         refresh_data: bool, optional, default False, to refresh the run data at instantiation.
         artifacts_path: str, optional, for in-cluster runs it will be set automatically.
+        collect_artifacts: bool, optional,
+            similar to the env var flag `POLYAXON_COLLECT_ARTIFACTS`, this env var is `True`
+            by default for managed runs and is controlled by the plugins section.
+        collect_resources: bool, optional,
+            similar to the env var flag `POLYAXON_COLLECT_RESOURCES`, this env var is `True`
+            by default for managed runs and is controlled by the plugins section.
+        is_offline: bool, optional,
+            To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+        is_new: bool, optional,
+                Force the creation of a new run instead of trying to discover a cached run or
+                refreshing an instance from the env var
+        name: str, optional,
+            When `is_new` or `is_offline` is set to true, a new instance is created and
+                you can initialize that new run with a name.
+        description: str, optional,
+                When `is_new` or `is_offline` is set to true, a new instance is created and
+                you can initialize that new run with a description.
+        tags: str or List[str], optional,
+                When `is_new` or `is_offline` is set to true, a new instance is created and
+                you can initialize that new run with tags.
 
     Raises:
         PolyaxonClientException: If no owner and/or project are passed and Polyaxon cannot
             resolve the values from the environment.
     """
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def __init__(
         self,
         owner: str = None,
@@ -101,57 +125,89 @@ class Run(RunClient):
         client: RunClient = None,
         track_code: bool = True,
         track_env: bool = True,
+        track_logs: bool = True,
         refresh_data: bool = False,
         artifacts_path: str = None,
+        collect_artifacts: bool = None,
+        collect_resources: bool = None,
+        is_offline: bool = None,
+        is_new: bool = None,
+        name: str = None,
+        description: str = None,
+        tags: List[str] = None,
     ):
         super().__init__(
             owner=owner,
             project=project,
             run_uuid=run_uuid,
             client=client,
+            is_offline=is_offline,
         )
-        self.track_code = track_code
-        self.track_env = track_env
-        self._has_model = False
-        self._has_events = False
-        self._has_metrics = False
-        self._has_tensorboard = False
+        track_logs = track_logs if track_logs is not None else self._is_offline
+        self._logs_history = V1Logs(logs=[])
         self._artifacts_path = None
         self._outputs_path = None
         self._event_logger = None
         self._resource_logger = None
-        self._results = {}
+        self._exit_handler = None
 
-        if (settings.CLIENT_CONFIG.is_managed and self.run_uuid) or artifacts_path:
-            self.set_artifacts_path(artifacts_path)
+        if is_new or self._is_offline:
+            super().create(name=name, description=description, tags=tags)
 
         if (
-            self._artifacts_path
-            and settings.CLIENT_CONFIG.is_managed
-            and get_collect_artifact()
+            not is_new
+            and self._run_uuid
+            and (refresh_data or settings.CLIENT_CONFIG.is_managed)
         ):
-            self.set_run_event_logger()
-            if get_collect_resources():
-                self.set_run_resource_logger()
+            self.refresh_data()
+
+        self._init_artifacts_tracking(
+            artifacts_path=artifacts_path,
+            collect_artifacts=collect_artifacts,
+            collect_resources=collect_resources,
+            is_new=is_new,
+        )
+
+        # Track run env
+        if self._artifacts_path and track_env:
+            self.log_env()
+
+        # Track code
+        if is_new and track_code:
+            self.log_code_ref()
+
+        if is_new and self._artifacts_path and track_logs:
+            setup_logging(add_logs=self._add_logs)
+
+        self._set_exit_handler(is_new=is_new)
+
+    def _init_artifacts_tracking(
+        self,
+        artifacts_path: str = None,
+        collect_artifacts: bool = None,
+        collect_resources: bool = None,
+        is_new: bool = None,
+    ):
+        if (settings.CLIENT_CONFIG.is_managed and self.run_uuid) or artifacts_path:
+            self.set_artifacts_path(artifacts_path, is_related=is_new)
+        if not self._artifacts_path and self._is_offline:
+            self.set_artifacts_path(artifacts_path)
 
         # no artifacts path is set, we use the temp path
         if not self._artifacts_path:
-            self._artifacts_path = TEMP_RUN_ARTIFACTS
-            self._outputs_path = TEMP_RUN_ARTIFACTS
+            self._artifacts_path = container_contexts.CONTEXT_ARTIFACTS_FORMAT.format(
+                self.run_uuid
+            )
+            self._outputs_path = (
+                container_contexts.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
+                    self._artifacts_path
+                )
+            )
 
-        self._run = polyaxon_sdk.V1Run()
-        if settings.CLIENT_CONFIG.is_offline:
-            return
-
-        if self._run_uuid and (refresh_data or settings.CLIENT_CONFIG.is_managed):
-            self.refresh_data()
-
-        # Track run env
-        if settings.CLIENT_CONFIG.is_managed and self.track_env:
-            self.log_env()
-
-        if settings.CLIENT_CONFIG.is_managed:
-            self._register_wait()
+        if self._artifacts_path and get_collect_artifacts(collect_artifacts):
+            self.set_run_event_logger()
+            if get_collect_resources(collect_resources):
+                self.set_run_resource_logger()
 
     def _add_event(self, event: LoggedEventSpec):
         if self._event_logger:
@@ -171,7 +227,37 @@ class Run(RunClient):
                 "the event logger was not configured properly".format(len(events))
             )
 
-    @check_no_op
+    def _persist_logs_history(self):
+        if self._logs_history.logs and len(self._logs_history.logs) > 0:
+            logs_path = os.path.join(
+                self._artifacts_path,
+                "plxlogs",
+                "{}.plx".format(
+                    datetime.timestamp(self._logs_history.logs[-1].timestamp)
+                ),
+            )
+            check_or_create_path(logs_path, is_dir=False)
+            with open(logs_path, "w") as logs_file:
+                logs_file.write(
+                    "{}\n{}".format(
+                        self._logs_history.get_csv_header(), self._logs_history.to_csv()
+                    )
+                )
+
+    def _add_logs(self, log: V1Log):
+        self._logs_history.logs.append(log)
+        if V1Logs.should_chunk(self._logs_history.logs):
+            self._persist_logs_history()
+            # Reset
+            self._logs_history = V1Logs(logs=[])
+
+    def create(self, **kwargs):
+        raise NotImplementedError(
+            "The tracking `Run` subclass does not allow to call "
+            "`create` method manually, please create a new instance of `Run` with `is_new=True`"
+        )
+
+    @client_handler(check_no_op=True)
     def get_artifacts_path(self):
         """Returns the current artifacts path configured for this instance.
         Returns:
@@ -179,7 +265,7 @@ class Run(RunClient):
         """
         return self._artifacts_path
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_outputs_path(self):
         """Returns the current outputs path configured for this instance.
         Returns:
@@ -187,14 +273,7 @@ class Run(RunClient):
         """
         return self._outputs_path
 
-    @check_no_op
-    def get_model_path(self, rel_path: str = "model"):
-        """Do not use"""
-        return "/tmp/{}".format(rel_path)
-
-    @check_no_op
-    @check_offline
-    @can_log_outputs
+    @client_handler(check_no_op=True, can_log_outputs=True)
     def get_tensorboard_path(self, rel_path: str = "tensorboard"):
         """Returns a tensorboard path for this run relative to the outputs path.
 
@@ -207,13 +286,11 @@ class Run(RunClient):
         path = self._outputs_path
         if rel_path:
             path = os.path.join(path, rel_path)
-        if not self._has_tensorboard:
-            self.log_tensorboard_ref(path)
-            self._has_tensorboard = True
+        self.log_tensorboard_ref(path)
         return path
 
-    @check_no_op
-    def set_artifacts_path(self, artifacts_path: str = None):
+    @client_handler(check_no_op=True)
+    def set_artifacts_path(self, artifacts_path: str = None, is_related: bool = False):
         """Sets an artifacts_path.
         Be careful, this method is called automatically
         when a job is running in-cluster and follows some flags that Polyaxon sets. Polyaxon
@@ -221,18 +298,33 @@ class Run(RunClient):
 
         Args:
             artifacts_path: str, optional
+            is_related: bool, optional,
+                To create multiple runs in-cluster in a notebook or a vscode session.
         """
-        _artifacts_path = (
-            artifacts_path
-            or container_contexts.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid)
-        )
+        if artifacts_path:
+            _artifacts_path = artifacts_path
+        elif self._is_offline:
+            _artifacts_path = container_contexts.CONTEXT_OFFLINE_FORMAT.format(
+                self.run_uuid
+            )
+        elif is_related:
+            _artifacts_path = (
+                container_contexts.CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT.format(
+                    self.run_uuid
+                )
+            )
+        else:
+            _artifacts_path = container_contexts.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(
+                self.run_uuid
+            )
+
         _outputs_path = container_contexts.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
             _artifacts_path
         )
         self._artifacts_path = _artifacts_path
         self._outputs_path = _outputs_path
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def set_run_event_logger(self):
         """Sets an event logger.
         Be careful, this method is called automatically
@@ -241,7 +333,7 @@ class Run(RunClient):
         """
         self._event_logger = EventFileWriter(run_path=self._artifacts_path)
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def set_run_resource_logger(self):
         """Sets an resources logger.
 
@@ -251,43 +343,30 @@ class Run(RunClient):
         """
         self._resource_logger = ResourceFileWriter(run_path=self._artifacts_path)
 
-    def _post_create(self):
-        if self._artifacts_path:
-            self.set_run_event_logger()
-
-        if self.track_code:
-            self.log_code_ref()
-        if self.track_env:
-            self.log_env()
-
-        if not settings.CLIENT_CONFIG.is_managed:
+    def _set_exit_handler(self, is_new: bool = False):
+        if self._is_offline or is_new:
             self._start()
-        else:
-            self._register_wait()
+        elif settings.CLIENT_CONFIG.is_managed:
+            self._register_exit_handler(self._wait)
 
     def _log_has_events(self):
-        if not self._has_events:
-            self._has_events = True
+        if not self._has_meta_key("has_events"):
             self.log_meta(has_events=True)
 
     def _log_has_metrics(self):
         data = {}
-        if not self._has_metrics:
+        if not self._has_meta_key("has_metrics"):
             data["has_metrics"] = True
-        if not self._has_events:
+        if not self._has_meta_key("has_events"):
             data["has_events"] = True
         if data:
-            self._has_metrics = True
             self.log_meta(**data)
 
     def _log_has_model(self):
-        if not self._has_model:
-            self._has_model = True
+        if not self._has_meta_key("has_model"):
             self.log_meta(has_model=True)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_metric(self, name: str, value: float, step: int = None, timestamp=None):
         """Logs a metric datapoint.
 
@@ -305,6 +384,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_metrics()
 
         events = []
@@ -322,9 +402,7 @@ class Run(RunClient):
             self._add_events(events)
             self._results[name] = event_value
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_metrics(self, step=None, timestamp=None, **metrics):
         """Logs multiple metrics.
 
@@ -345,12 +423,13 @@ class Run(RunClient):
 
         events = []
         for metric in metrics:
+            metric_name = events_processors.to_fqn_event(metric)
             event_value = events_processors.metric(metrics[metric])
             if event_value == UNKNOWN:
                 continue
             events.append(
                 LoggedEventSpec(
-                    name=metric,
+                    name=metric_name,
                     kind=V1ArtifactKind.METRIC,
                     event=V1Event.make(
                         timestamp=timestamp, step=step, metric=event_value
@@ -360,9 +439,7 @@ class Run(RunClient):
         if events:
             self._add_events(events)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_roc_auc_curve(self, name, fpr, tpr, auc=None, step=None, timestamp=None):
         """Logs ROC/AUC curve. This method expects an already processed values.
 
@@ -377,6 +454,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         event_value = events_processors.roc_auc_curve(
@@ -391,9 +469,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_sklearn_roc_auc_curve(
         self, name, y_preds, y_targets, step=None, timestamp=None
     ):
@@ -410,6 +486,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         event_value = events_processors.sklearn_roc_auc_curve(
@@ -423,9 +500,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_pr_curve(
         self, name, precision, recall, average_precision=None, step=None, timestamp=None
     ):
@@ -442,6 +517,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         event_value = events_processors.pr_curve(
@@ -456,9 +532,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_sklearn_pr_curve(self, name, y_preds, y_targets, step=None, timestamp=None):
         """Calculates and logs PR curve using sklearn.
 
@@ -473,6 +547,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         event_value = events_processors.sklearn_pr_curve(
@@ -486,9 +561,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_curve(self, name, x, y, annotation=None, step=None, timestamp=None):
         """Logs a custom curve.
 
@@ -504,6 +577,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         event_value = events_processors.curve(
@@ -518,9 +592,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_image(
         self, data, name=None, step=None, timestamp=None, rescale=1, dataformats="CHW"
     ):
@@ -549,6 +621,7 @@ class Run(RunClient):
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "image"
+        name = events_processors.to_fqn_event(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -589,9 +662,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_image_with_boxes(
         self,
         tensor_image,
@@ -625,6 +696,7 @@ class Run(RunClient):
         self._log_has_events()
 
         name = name or "figure"
+        name = events_processors.to_fqn_event(name)
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
             kind=V1ArtifactKind.IMAGE,
@@ -649,9 +721,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_mpl_image(self, data, name=None, close=True, step=None, timestamp=None):
         """Logs a matplotlib image.
 
@@ -667,6 +737,7 @@ class Run(RunClient):
             timestamp: datetime, optional
         """
         name = name or "figure"
+        name = events_processors.to_fqn_event(name)
         if isinstance(data, list):
             event_value = events_processors.figures_to_images(figures=data, close=close)
 
@@ -690,9 +761,7 @@ class Run(RunClient):
                 dataformats="CHW",
             )
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_video(
         self, data, name=None, fps=4, step=None, timestamp=None, content_type=None
     ):
@@ -700,7 +769,10 @@ class Run(RunClient):
 
         ```python
         >>> log_video("path/to/my_video1"),
-        >>> log_video(name="my_vide2", data=np.arange(np.prod((4, 3, 1, 8, 8)), dtype=float).reshape((4, 3, 1, 8, 8)))  # noqa
+        >>> log_video(
+        >>>     name="my_vide2",
+        >>>     data=np.arange(np.prod((4, 3, 1, 8, 8)), dtype=float).reshape((4, 3, 1, 8, 8))
+        >>> )
         ```
 
         Args:
@@ -720,6 +792,7 @@ class Run(RunClient):
             content_type = get_path_extension(filepath=data) or content_type
         else:
             name = name or "video"
+        name = events_processors.to_fqn_event(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -755,9 +828,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_audio(
         self,
         data,
@@ -791,6 +862,7 @@ class Run(RunClient):
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "audio"
+        name = events_processors.to_fqn_event(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -826,9 +898,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_text(self, name, text, step=None, timestamp=None):
         """Logs a text.
 
@@ -842,6 +912,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         logged_event = LoggedEventSpec(
@@ -851,9 +922,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_html(self, name, html, step=None, timestamp=None):
         """Logs an html.
 
@@ -867,6 +936,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         logged_event = LoggedEventSpec(
@@ -876,9 +946,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_np_histogram(self, name, values, counts, step=None, timestamp=None):
         """Logs a numpy histogram.
 
@@ -894,6 +962,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         event_value = events_processors.np_histogram(values=values, counts=counts)
@@ -908,16 +977,19 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_histogram(
         self, name, values, bins, max_bins=None, step=None, timestamp=None
     ):
         """Logs a histogram.
 
         ```python
-        >>> log_histogram(name="histo", values=np.arange(np.prod((1024,)), dtype=float).reshape((1024,)), bins="auto", step=1)  # noqa
+        >>> log_histogram(
+        >>>     name="histo",
+        >>>     values=np.arange(np.prod((1024,)), dtype=float).reshape((1024,)),
+        >>>     bins="auto",
+        >>>     step=1
+        >>> )
         ```
 
         Args:
@@ -928,6 +1000,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         event_value = events_processors.histogram(
@@ -944,13 +1017,19 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_model(
         self, path, name=None, framework=None, spec=None, step=None, timestamp=None
     ):
         """Logs a model.
+
+        > **Note 1**: This method does two things:
+          * It moves the mode under the assets directory
+          * It creates an event file and
+          * It creates a lineage reference to the event file
+
+        > **Note 2**: If you need to have more control over where the model should be saved and
+        only record a lineage information of that path you can use `log_model_ref`.
 
         Args:
             path: str, path to the model to log
@@ -963,6 +1042,7 @@ class Run(RunClient):
         self._log_has_model()
 
         name = name or get_base_filename(path)
+        name = events_processors.to_fqn_event(name)
         ext = None
         if os.path.isfile(path):
             ext = get_path_extension(filepath=path)
@@ -989,9 +1069,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_dataframe(
         self, path, name=None, content_type=None, step=None, timestamp=None
     ):
@@ -1007,6 +1085,7 @@ class Run(RunClient):
         self._log_has_events()
 
         name = name or get_base_filename(path)
+        name = events_processors.to_fqn_event(name)
         ext = get_path_extension(filepath=path)
 
         asset_path = get_asset_path(
@@ -1030,9 +1109,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_artifact(
         self, path, name=None, artifact_kind=None, step=None, timestamp=None
     ):
@@ -1048,6 +1125,7 @@ class Run(RunClient):
         self._log_has_events()
 
         name = name or get_base_filename(path)
+        name = events_processors.to_fqn_event(name)
         ext = get_path_extension(filepath=path)
         artifact_kind = artifact_kind or V1ArtifactKind.FILE
 
@@ -1073,9 +1151,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_plotly_chart(self, name, figure, step=None, timestamp=None):
         """Logs a plotly chart/figure.
 
@@ -1085,6 +1161,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         chart = events_processors.plotly_chart(figure=figure)
@@ -1095,9 +1172,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_bokeh_chart(self, name, figure, step=None, timestamp=None):
         """Logs a bokeh chart/figure.
 
@@ -1107,6 +1182,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         chart = events_processors.bokeh_chart(figure=figure)
@@ -1117,9 +1193,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_altair_chart(self, name, figure, step=None, timestamp=None):
         """Logs a vega/altair chart/figure.
 
@@ -1129,6 +1203,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         chart = events_processors.altair_chart(figure=figure)
@@ -1139,9 +1214,7 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
-    @check_offline
-    @can_log_events
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_mpl_plotly_chart(self, name, figure, step=None, timestamp=None):
         """Logs a matplotlib figure to plotly figure.
 
@@ -1151,6 +1224,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
+        name = events_processors.to_fqn_event(name)
         self._log_has_events()
 
         chart = events_processors.mpl_plotly_chart(figure=figure)
@@ -1161,48 +1235,68 @@ class Run(RunClient):
         )
         self._add_event(logged_event)
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_log_level(self):
         return get_log_level()
 
-    @check_no_op
-    @check_offline
-    def _register_wait(self):
-        atexit.register(self._wait)
+    def end(self):
+        """Manually end a run and collect artifacts."""
+        atexit.unregister(self._exit_handler)
+        self._exit_handler()
 
-    @check_no_op
-    @check_offline
+    def _register_exit_handler(self, func):
+        self._exit_handler = func
+        atexit.register(func)
+
     def _start(self):
-        self.start()
-        atexit.register(self._end)
+        if self._is_offline:
+            self.load_offline_run(artifacts_path=self._artifacts_path, run_client=self)
+            if self.run_data.status:
+                logger.info(f"An offline run was found: {self._artifacts_path}")
+            else:
+                self.log_status(
+                    polyaxon_sdk.V1Statuses.CREATED,
+                    reason="OfflineOperation",
+                    message="Operation is starting",
+                )
+                logger.info(f"A new offline run started: {self._artifacts_path}")
+        if LifeCycle.is_pending(self.status):
+            self.start()
+        self._register_exit_handler(self._end)
 
         def excepthook(exception, value, tb):
-            self.log_failed(message="Type: {}, Value: {}".format(exception, value))
+            self.log_failed(
+                reason="ExitHandler",
+                message="An exception was raised during the run. "
+                "Type: {}, Value: {}".format(exception, value),
+            )
             # Resume normal work
             sys.__excepthook__(exception, value, tb)
 
         sys.excepthook = excepthook
 
-    @check_no_op
-    @check_offline
     def _end(self):
         self.log_succeeded()
-        self._wait()
+        self._persist_logs_history()
+        self._wait(sync_artifacts=True)
+        if self._is_offline:
+            self.persist_offline_run(artifacts_path=self._artifacts_path)
 
-    @check_no_op
-    @check_offline
-    def _wait(self):
+    def _wait(self, sync_artifacts: bool = False):
         if self._event_logger:
             self._event_logger.close()
         if self._resource_logger:
             self._resource_logger.close()
         if self._results:
             self.log_outputs(**self._results)
+        if sync_artifacts:
+            self.sync_events_summaries(
+                last_check=None,
+                events_path=CONTEXTS_EVENTS_SUBPATH_FORMAT.format(self._artifacts_path),
+            )
         time.sleep(settings.CLIENT_CONFIG.tracking_timeout)
 
-    @check_no_op
-    @check_offline
-    @can_log_outputs
+    @client_handler(check_no_op=True, can_log_outputs=True)
     def log_env(self, rel_path: str = None, content: Dict = None):
         """Logs information about the environment.
 
@@ -1230,7 +1324,7 @@ class Run(RunClient):
         artifact_run = V1RunArtifact(
             name="env",
             kind=V1ArtifactKind.ENV,
-            path=self.get_rel_asset_path(path=path),
+            path=self.get_rel_asset_path(path=path, is_offline=self._is_offline),
             summary={"path": path},
             is_input=False,
         )

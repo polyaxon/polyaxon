@@ -230,15 +230,6 @@ message RunBodyRequest{
     Run run = 3;
 }
 
-// Request data to update run
-message EntityRunBodyRequest{
-    // Entity Run
-    OwnerSubEntityResourceRequestByUid entity = 1;
-
-    // Run object
-    Run run = 2;
-}
-
  // Contains list runs
  message ListRunsResponse{
     // Count of the entities

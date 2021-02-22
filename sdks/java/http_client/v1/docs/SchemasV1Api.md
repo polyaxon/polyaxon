@@ -5,14 +5,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | Get random
+[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | NoOp
 
 
 <a name="noOp"></a>
 # **noOp**
 > V1Schemas noOp()
 
-Get random
+NoOp
 
 ### Example
 ```java

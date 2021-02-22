@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **container** | **String** |  | [optional] 
-**storage_account** | **String** |  | [optional] 
+**storageAccount** | **String** |  | [optional] 
 **path** | **Boolean** |  | [optional] 
 
 

@@ -36,6 +36,9 @@ type V1ModelRegistrySettings struct {
 
 	// Authorized teams
 	Teams []string `json:"teams"`
+
+	// Authorized users
+	Users []string `json:"users"`
 }
 
 // Validate validates this v1 model registry settings

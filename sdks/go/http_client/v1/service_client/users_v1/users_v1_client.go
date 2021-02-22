@@ -37,25 +37,28 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateToken(params *CreateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTokenOK, *CreateTokenNoContent, error)
+	CreateToken(params *CreateTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateTokenOK, *CreateTokenNoContent, error)
 
-	DeleteToken(params *DeleteTokenParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTokenOK, *DeleteTokenNoContent, error)
+	DeleteToken(params *DeleteTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteTokenOK, *DeleteTokenNoContent, error)
 
-	GetToken(params *GetTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetTokenOK, *GetTokenNoContent, error)
+	GetToken(params *GetTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTokenOK, *GetTokenNoContent, error)
 
-	GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, *GetUserNoContent, error)
+	GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserOK, *GetUserNoContent, error)
 
-	ListTokens(params *ListTokensParams, authInfo runtime.ClientAuthInfoWriter) (*ListTokensOK, *ListTokensNoContent, error)
+	ListTokens(params *ListTokensParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListTokensOK, *ListTokensNoContent, error)
 
-	PatchToken(params *PatchTokenParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTokenOK, *PatchTokenNoContent, error)
+	PatchToken(params *PatchTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchTokenOK, *PatchTokenNoContent, error)
 
-	PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthInfoWriter) (*PatchUserOK, *PatchUserNoContent, error)
+	PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchUserOK, *PatchUserNoContent, error)
 
-	UpdateToken(params *UpdateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTokenOK, *UpdateTokenNoContent, error)
+	UpdateToken(params *UpdateTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTokenOK, *UpdateTokenNoContent, error)
 
-	UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateUserOK, *UpdateUserNoContent, error)
+	UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserOK, *UpdateUserNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -63,13 +66,12 @@ type ClientService interface {
 /*
   CreateToken creates token
 */
-func (a *Client) CreateToken(params *CreateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTokenOK, *CreateTokenNoContent, error) {
+func (a *Client) CreateToken(params *CreateTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateTokenOK, *CreateTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateToken",
 		Method:             "POST",
 		PathPattern:        "/api/v1/users/tokens",
@@ -81,7 +83,12 @@ func (a *Client) CreateToken(params *CreateTokenParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -99,13 +106,12 @@ func (a *Client) CreateToken(params *CreateTokenParams, authInfo runtime.ClientA
 /*
   DeleteToken deletes token
 */
-func (a *Client) DeleteToken(params *DeleteTokenParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTokenOK, *DeleteTokenNoContent, error) {
+func (a *Client) DeleteToken(params *DeleteTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteTokenOK, *DeleteTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteToken",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/users/tokens/{uuid}",
@@ -117,7 +123,12 @@ func (a *Client) DeleteToken(params *DeleteTokenParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -135,13 +146,12 @@ func (a *Client) DeleteToken(params *DeleteTokenParams, authInfo runtime.ClientA
 /*
   GetToken gets token
 */
-func (a *Client) GetToken(params *GetTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetTokenOK, *GetTokenNoContent, error) {
+func (a *Client) GetToken(params *GetTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTokenOK, *GetTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetToken",
 		Method:             "GET",
 		PathPattern:        "/api/v1/users/tokens/{uuid}",
@@ -153,7 +163,12 @@ func (a *Client) GetToken(params *GetTokenParams, authInfo runtime.ClientAuthInf
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -171,13 +186,12 @@ func (a *Client) GetToken(params *GetTokenParams, authInfo runtime.ClientAuthInf
 /*
   GetUser gets current user
 */
-func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, *GetUserNoContent, error) {
+func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserOK, *GetUserNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetUserParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetUser",
 		Method:             "GET",
 		PathPattern:        "/api/v1/users",
@@ -189,7 +203,12 @@ func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoW
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -207,13 +226,12 @@ func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoW
 /*
   ListTokens lists tokens
 */
-func (a *Client) ListTokens(params *ListTokensParams, authInfo runtime.ClientAuthInfoWriter) (*ListTokensOK, *ListTokensNoContent, error) {
+func (a *Client) ListTokens(params *ListTokensParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListTokensOK, *ListTokensNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListTokensParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListTokens",
 		Method:             "GET",
 		PathPattern:        "/api/v1/users/tokens",
@@ -225,7 +243,12 @@ func (a *Client) ListTokens(params *ListTokensParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -243,13 +266,12 @@ func (a *Client) ListTokens(params *ListTokensParams, authInfo runtime.ClientAut
 /*
   PatchToken patches token
 */
-func (a *Client) PatchToken(params *PatchTokenParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTokenOK, *PatchTokenNoContent, error) {
+func (a *Client) PatchToken(params *PatchTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchTokenOK, *PatchTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchToken",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/users/tokens/{token.uuid}",
@@ -261,7 +283,12 @@ func (a *Client) PatchToken(params *PatchTokenParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -279,13 +306,12 @@ func (a *Client) PatchToken(params *PatchTokenParams, authInfo runtime.ClientAut
 /*
   PatchUser patches current user
 */
-func (a *Client) PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthInfoWriter) (*PatchUserOK, *PatchUserNoContent, error) {
+func (a *Client) PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchUserOK, *PatchUserNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchUserParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchUser",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/users",
@@ -297,7 +323,12 @@ func (a *Client) PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -315,13 +346,12 @@ func (a *Client) PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthI
 /*
   UpdateToken updates token
 */
-func (a *Client) UpdateToken(params *UpdateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTokenOK, *UpdateTokenNoContent, error) {
+func (a *Client) UpdateToken(params *UpdateTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTokenOK, *UpdateTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateToken",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/users/tokens/{token.uuid}",
@@ -333,7 +363,12 @@ func (a *Client) UpdateToken(params *UpdateTokenParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -351,13 +386,12 @@ func (a *Client) UpdateToken(params *UpdateTokenParams, authInfo runtime.ClientA
 /*
   UpdateUser updates current user
 */
-func (a *Client) UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateUserOK, *UpdateUserNoContent, error) {
+func (a *Client) UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserOK, *UpdateUserNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateUserParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateUser",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/users",
@@ -369,7 +403,12 @@ func (a *Client) UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

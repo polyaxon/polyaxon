@@ -41,17 +41,17 @@ type V1Hyperopt struct {
 	// Container to override
 	Container V1Container `json:"container,omitempty"`
 
-	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-	EarlyStopping []interface{} `json:"early_stopping"`
+	// A list of Early stopping objects, accepts both metric and failure early stopping mechanisms
+	EarlyStopping []interface{} `json:"earlyStopping"`
 
 	// Kind of matrix, should be equal to "hyperopt"
 	Kind *string `json:"kind,omitempty"`
 
-	// Maximim number of iteration to produce new observations
-	MaxIterations int32 `json:"max_iterations,omitempty"`
+	// Maximum number of iteration to produce new observations
+	MaxIterations int32 `json:"maxIterations,omitempty"`
 
 	// Number of runs to generate and search
-	NumRuns int32 `json:"num_runs,omitempty"`
+	NumRuns int32 `json:"numRuns,omitempty"`
 
 	// Hyperparams/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`

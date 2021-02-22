@@ -33,19 +33,19 @@ import (
 type V1ConnectionSchema struct {
 
 	// bucket connection
-	BucketConnection *V1BucketConnection `json:"bucket_connection,omitempty"`
+	BucketConnection *V1BucketConnection `json:"bucketConnection,omitempty"`
 
 	// claim connection
-	ClaimConnection *V1ClaimConnection `json:"claim_connection,omitempty"`
+	ClaimConnection *V1ClaimConnection `json:"claimConnection,omitempty"`
 
 	// git connection
-	GitConnection *V1GitConnection `json:"git_connection,omitempty"`
+	GitConnection *V1GitConnection `json:"gitConnection,omitempty"`
 
 	// host connection
-	HostConnection *V1HostConnection `json:"host_connection,omitempty"`
+	HostConnection *V1HostConnection `json:"hostConnection,omitempty"`
 
 	// host path connection
-	HostPathConnection *V1HostPathConnection `json:"host_path_connection,omitempty"`
+	HostPathConnection *V1HostPathConnection `json:"hostPathConnection,omitempty"`
 }
 
 // Validate validates this v1 connection schema
@@ -86,7 +86,7 @@ func (m *V1ConnectionSchema) validateBucketConnection(formats strfmt.Registry) e
 	if m.BucketConnection != nil {
 		if err := m.BucketConnection.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("bucket_connection")
+				return ve.ValidateName("bucketConnection")
 			}
 			return err
 		}
@@ -103,7 +103,7 @@ func (m *V1ConnectionSchema) validateClaimConnection(formats strfmt.Registry) er
 	if m.ClaimConnection != nil {
 		if err := m.ClaimConnection.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("claim_connection")
+				return ve.ValidateName("claimConnection")
 			}
 			return err
 		}
@@ -120,7 +120,7 @@ func (m *V1ConnectionSchema) validateGitConnection(formats strfmt.Registry) erro
 	if m.GitConnection != nil {
 		if err := m.GitConnection.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("git_connection")
+				return ve.ValidateName("gitConnection")
 			}
 			return err
 		}
@@ -137,7 +137,7 @@ func (m *V1ConnectionSchema) validateHostConnection(formats strfmt.Registry) err
 	if m.HostConnection != nil {
 		if err := m.HostConnection.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("host_connection")
+				return ve.ValidateName("hostConnection")
 			}
 			return err
 		}
@@ -154,7 +154,7 @@ func (m *V1ConnectionSchema) validateHostPathConnection(formats strfmt.Registry)
 	if m.HostPathConnection != nil {
 		if err := m.HostPathConnection.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("host_path_connection")
+				return ve.ValidateName("hostPathConnection")
 			}
 			return err
 		}
@@ -198,7 +198,7 @@ func (m *V1ConnectionSchema) contextValidateBucketConnection(ctx context.Context
 	if m.BucketConnection != nil {
 		if err := m.BucketConnection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("bucket_connection")
+				return ve.ValidateName("bucketConnection")
 			}
 			return err
 		}
@@ -212,7 +212,7 @@ func (m *V1ConnectionSchema) contextValidateClaimConnection(ctx context.Context,
 	if m.ClaimConnection != nil {
 		if err := m.ClaimConnection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("claim_connection")
+				return ve.ValidateName("claimConnection")
 			}
 			return err
 		}
@@ -226,7 +226,7 @@ func (m *V1ConnectionSchema) contextValidateGitConnection(ctx context.Context, f
 	if m.GitConnection != nil {
 		if err := m.GitConnection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("git_connection")
+				return ve.ValidateName("gitConnection")
 			}
 			return err
 		}
@@ -240,7 +240,7 @@ func (m *V1ConnectionSchema) contextValidateHostConnection(ctx context.Context, 
 	if m.HostConnection != nil {
 		if err := m.HostConnection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("host_connection")
+				return ve.ValidateName("hostConnection")
 			}
 			return err
 		}
@@ -254,7 +254,7 @@ func (m *V1ConnectionSchema) contextValidateHostPathConnection(ctx context.Conte
 	if m.HostPathConnection != nil {
 		if err := m.HostPathConnection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("host_path_connection")
+				return ve.ValidateName("hostPathConnection")
 			}
 			return err
 		}

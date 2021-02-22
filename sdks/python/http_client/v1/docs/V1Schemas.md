@@ -3,7 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**operation_cond** | [**V1OperationCond**](V1OperationCond.md) |  | [optional] 
 **early_stopping** | [**V1EarlyStopping**](V1EarlyStopping.md) |  | [optional] 
 **matrix** | [**V1Matrix**](V1Matrix.md) |  | [optional] 
 **run** | [**V1RunSchema**](V1RunSchema.md) |  | [optional] 
@@ -20,9 +19,7 @@ Name | Type | Description | Notes
 **wasb** | [**V1WasbType**](V1WasbType.md) |  | [optional] 
 **gcs** | [**V1GcsType**](V1GcsType.md) |  | [optional] 
 **s3** | [**V1S3Type**](V1S3Type.md) |  | [optional] 
-**autg** | [**V1AuthType**](V1AuthType.md) |  | [optional] 
-**dockerfile** | [**V1DockerfileType**](V1DockerfileType.md) |  | [optional] 
-**git** | [**V1GitType**](V1GitType.md) |  | [optional] 
+**auth** | [**V1AuthType**](V1AuthType.md) |  | [optional] 
 **uri** | [**V1UriType**](V1UriType.md) |  | [optional] 
 **k8s_resource** | [**V1K8sResourceType**](V1K8sResourceType.md) |  | [optional] 
 **connection** | [**V1ConnectionType**](V1ConnectionType.md) |  | [optional] 

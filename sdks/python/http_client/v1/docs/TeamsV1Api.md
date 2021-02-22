@@ -511,7 +511,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_team_members**
-> V1ListTeamMembersResponse list_team_members(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListTeamMembersResponse list_team_members(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
 
 Get team members
 
@@ -555,10 +555,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+mode = 'mode_example' # str | Mode the search. (optional)
 
     try:
         # Get team members
-        api_response = api_instance.list_team_members(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_team_members(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TeamsV1Api->list_team_members: %s\n" % e)
@@ -574,6 +575,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **mode** | **str**| Mode the search. | [optional] 
 
 ### Return type
 

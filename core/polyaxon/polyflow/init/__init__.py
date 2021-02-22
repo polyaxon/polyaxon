@@ -25,14 +25,17 @@ from polyaxon.schemas.fields.swagger import SwaggerField
 from polyaxon.schemas.types import (
     ArtifactsTypeSchema,
     DockerfileTypeSchema,
+    FileTypeSchema,
     GitTypeSchema,
 )
+from polyaxon.utils.signal_decorators import check_partial
 
 
 class InitSchema(BaseCamelSchema):
     artifacts = fields.Nested(ArtifactsTypeSchema, allow_none=True)
     git = fields.Nested(GitTypeSchema, allow_none=True)
     dockerfile = fields.Nested(DockerfileTypeSchema, allow_none=True)
+    file = fields.Nested(FileTypeSchema, allow_none=True)
     connection = fields.Str(allow_none=True)
     path = fields.Str(allow_none=True)
     container = SwaggerField(
@@ -46,10 +49,12 @@ class InitSchema(BaseCamelSchema):
         return V1Init
 
     @validates_schema
+    @check_partial
     def validate_init(self, data, **kwargs):
         artifacts = data.get("artifacts")
         git = data.get("git")
         dockerfile = data.get("dockerfile")
+        file = data.get("file")
         connection = data.get("connection")
         schemas = 0
         if artifacts:
@@ -58,8 +63,12 @@ class InitSchema(BaseCamelSchema):
             schemas += 1
         if dockerfile:
             schemas += 1
+        if file:
+            schemas += 1
         if schemas > 1:
-            raise ValidationError("One of artifacts, git, or dockerfile can be set")
+            raise ValidationError(
+                "One of artifacts, git, file, or dockerfile can be set"
+            )
 
         if not connection and git and not git.url:
             raise ValidationError(
@@ -86,6 +95,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
         artifacts: [V1ArtifactsType](/docs/core/specification/types/#v1artifactstype), optional
         git: [V1GitType](/docs/core/specification/types/#v1gittype), optional
         dockerfile: [V1DockerfileType](/docs/core/specification/types/#v1dockerfiletype), optional
+        file: [V1FileType](/docs/core/specification/types/#v1Filetype), optional
         connection: str, optional
         path: str, optional
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/), optional
@@ -125,6 +135,11 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     >>>       image: test
     >>>       run: ["pip install package1"]
     >>>       env: {'KEY1': 'en_US.UTF-8', 'KEY2':2}
+    >>>   - file:
+    >>>       name: script.sh
+    >>>       chmod: "+x"
+    >>>       content: |
+    >>>         echo test
     >>>   - container:
     >>>       name: myapp-container
     >>>       image: busybox:1.28
@@ -176,6 +191,13 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     >>>                 )
     >>>             ),
     >>>             V1Init(
+    >>>                 dockerfile=V1FileType(
+    >>>                     name="test.sh",
+    >>>                     content="echo test",
+    >>>                     chmod="+x",
+    >>>                 )
+    >>>             ),
+    >>>             V1Init(
     >>>                 container=k8s_schemas.V1Container(
     >>>                     name="myapp-container",
     >>>                     image="busybox:1.28",
@@ -211,10 +233,13 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
         "artifacts",
         "git",
         "dockerfile",
+        "file",
         "connection",
         "path",
         "container",
     ]
 
     def has_connection(self):
-        return any([self.connection, self.git, self.dockerfile, self.artifacts])
+        return any(
+            [self.connection, self.git, self.dockerfile, self.file, self.artifacts]
+        )

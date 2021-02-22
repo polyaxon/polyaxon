@@ -37,17 +37,20 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ChangePassword(params *ChangePasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ChangePasswordOK, *ChangePasswordNoContent, error)
+	ChangePassword(params *ChangePasswordParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ChangePasswordOK, *ChangePasswordNoContent, error)
 
-	Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter) (*LoginOK, *LoginNoContent, error)
+	Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LoginOK, *LoginNoContent, error)
 
-	ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordOK, *ResetPasswordNoContent, error)
+	ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResetPasswordOK, *ResetPasswordNoContent, error)
 
-	ResetPasswordConfirm(params *ResetPasswordConfirmParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordConfirmOK, *ResetPasswordConfirmNoContent, error)
+	ResetPasswordConfirm(params *ResetPasswordConfirmParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResetPasswordConfirmOK, *ResetPasswordConfirmNoContent, error)
 
-	Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter) (*SignupOK, *SignupNoContent, error)
+	Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SignupOK, *SignupNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -55,13 +58,12 @@ type ClientService interface {
 /*
   ChangePassword changes password
 */
-func (a *Client) ChangePassword(params *ChangePasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ChangePasswordOK, *ChangePasswordNoContent, error) {
+func (a *Client) ChangePassword(params *ChangePasswordParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ChangePasswordOK, *ChangePasswordNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewChangePasswordParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ChangePassword",
 		Method:             "POST",
 		PathPattern:        "/api/v1/auth/change-password",
@@ -73,7 +75,12 @@ func (a *Client) ChangePassword(params *ChangePasswordParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -91,13 +98,12 @@ func (a *Client) ChangePassword(params *ChangePasswordParams, authInfo runtime.C
 /*
   Login logins
 */
-func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter) (*LoginOK, *LoginNoContent, error) {
+func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LoginOK, *LoginNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLoginParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "Login",
 		Method:             "POST",
 		PathPattern:        "/api/v1/auth/token",
@@ -109,7 +115,12 @@ func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWrite
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -127,13 +138,12 @@ func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWrite
 /*
   ResetPassword resets password
 */
-func (a *Client) ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordOK, *ResetPasswordNoContent, error) {
+func (a *Client) ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResetPasswordOK, *ResetPasswordNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewResetPasswordParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ResetPassword",
 		Method:             "POST",
 		PathPattern:        "/api/v1/auth/reset-password",
@@ -145,7 +155,12 @@ func (a *Client) ResetPassword(params *ResetPasswordParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -163,13 +178,12 @@ func (a *Client) ResetPassword(params *ResetPasswordParams, authInfo runtime.Cli
 /*
   ResetPasswordConfirm resets password confirm
 */
-func (a *Client) ResetPasswordConfirm(params *ResetPasswordConfirmParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordConfirmOK, *ResetPasswordConfirmNoContent, error) {
+func (a *Client) ResetPasswordConfirm(params *ResetPasswordConfirmParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResetPasswordConfirmOK, *ResetPasswordConfirmNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewResetPasswordConfirmParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ResetPasswordConfirm",
 		Method:             "POST",
 		PathPattern:        "/api/v1/auth/reset-password-confirm",
@@ -181,7 +195,12 @@ func (a *Client) ResetPasswordConfirm(params *ResetPasswordConfirmParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -199,13 +218,12 @@ func (a *Client) ResetPasswordConfirm(params *ResetPasswordConfirmParams, authIn
 /*
   Signup signups
 */
-func (a *Client) Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter) (*SignupOK, *SignupNoContent, error) {
+func (a *Client) Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SignupOK, *SignupNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSignupParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "Signup",
 		Method:             "POST",
 		PathPattern:        "/api/v1/auth/signup",
@@ -217,7 +235,12 @@ func (a *Client) Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWri
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -33,7 +33,7 @@ import (
 type V1ConnectionType struct {
 
 	// ConfigMap resource schema
-	ConfigMap *V1K8sResourceSchema `json:"config_map,omitempty"`
+	ConfigMap *V1K8sResourceSchema `json:"configMap,omitempty"`
 
 	// Optional connection description
 	Description string `json:"description,omitempty"`
@@ -84,7 +84,7 @@ func (m *V1ConnectionType) validateConfigMap(formats strfmt.Registry) error {
 	if m.ConfigMap != nil {
 		if err := m.ConfigMap.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("config_map")
+				return ve.ValidateName("configMap")
 			}
 			return err
 		}
@@ -154,7 +154,7 @@ func (m *V1ConnectionType) contextValidateConfigMap(ctx context.Context, formats
 	if m.ConfigMap != nil {
 		if err := m.ConfigMap.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("config_map")
+				return ve.ValidateName("configMap")
 			}
 			return err
 		}

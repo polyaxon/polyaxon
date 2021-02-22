@@ -36,7 +36,7 @@ message DockerfileType {
     repeated string run = 5;
 
     // An optional string defining a language, e.g. en_US.UTF-8
-    string lang_env = 6;
+    string langEnv = 6;
 
     // A uid to use when creating the docker image
     int32 uid = 7;
@@ -51,7 +51,7 @@ message DockerfileType {
     string workdir = 10;
 
     // An optional workdir path
-    string workdir_path = 11;
+    string workdirPath = 11;
 
     // An optional shell type, defaults to "/bin/bash"
     string shell = 12;

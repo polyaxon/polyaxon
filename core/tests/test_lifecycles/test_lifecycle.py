@@ -14,7 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from polyaxon.lifecycle import LifeCycle, V1Statuses
+from polyaxon.utils.tz_utils import now
 from tests.utils import BaseTestCase
+
+
+class Entity:
+    def __init__(self):
+        self.created_at = now()
+        self.started_at = None
+        self.finished_at = None
+        self.status = None
+        self.wait_time = None
+        self.duration = None
 
 
 class TestStatusesTransition(BaseTestCase):
@@ -177,3 +188,54 @@ class TestStatusesTransition(BaseTestCase):
                 assert LifeCycle.skipped(status) is True
             else:
                 assert LifeCycle.skipped(status) is False
+
+    def test_start_at(self):
+        entity = Entity()
+        assert entity.started_at is None
+        LifeCycle.set_started_at(entity)
+        assert entity.started_at is None
+
+        entity.status = V1Statuses.STARTING
+        LifeCycle.set_started_at(entity)
+        assert entity.started_at is not None
+
+        started_at = entity.started_at
+        entity.status = V1Statuses.RUNNING
+        assert entity.started_at == started_at
+
+        entity.started_at = None
+        LifeCycle.set_started_at(entity)
+        assert entity.started_at >= started_at
+
+        entity.started_at = None
+        entity.status = V1Statuses.WARNING
+        LifeCycle.set_started_at(entity)
+        assert entity.started_at is None
+
+    def test_finished_at(self):
+        entity = Entity()
+        assert entity.finished_at is None
+        LifeCycle.set_finished_at(entity)
+        assert entity.finished_at is None
+
+        entity.status = V1Statuses.STARTING
+        LifeCycle.set_finished_at(entity)
+        assert entity.finished_at is None
+
+        entity.status = V1Statuses.RUNNING
+        LifeCycle.set_finished_at(entity)
+        assert entity.finished_at is None
+
+        entity.status = V1Statuses.SUCCEEDED
+        LifeCycle.set_finished_at(entity)
+        assert entity.finished_at is not None
+
+        finished_at = entity.finished_at
+
+        entity.status = V1Statuses.FAILED
+        LifeCycle.set_finished_at(entity)
+        assert entity.finished_at == finished_at  # No changes
+
+        entity.finished_at = None
+        LifeCycle.set_finished_at(entity)
+        assert entity.finished_at >= finished_at

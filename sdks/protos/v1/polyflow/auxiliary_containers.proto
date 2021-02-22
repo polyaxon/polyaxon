@@ -23,18 +23,18 @@ import "v1/polyflow/k8s.proto";
 // Polyaxon sidecar specification
 message PolyaxonSidecarContainer {
     string image = 1;
-    string image_tag = 2;
-    string image_pull_policy = 3;
-    int32 sleep_interval = 4;
-    int32 sync_interval = 5;
-    bool monitor_logs = 6;
+    string imageTag = 2;
+    string imagePullPolicy = 3;
+    int32 sleepInterval = 4;
+    int32 syncInterval = 5;
+    bool monitorLogs = 6;
     ResourceRequirements resources = 7;
 }
 
 // Polyaxon init specification
 message PolyaxonInitContainer {
     string image = 1;
-    string image_tag = 2;
-    string image_pull_policy = 3;
+    string imageTag = 2;
+    string imagePullPolicy = 3;
     ResourceRequirements resources = 4;
 }

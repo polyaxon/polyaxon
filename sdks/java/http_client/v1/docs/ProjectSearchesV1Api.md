@@ -241,7 +241,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectSearchNames"></a>
 # **listProjectSearchNames**
-> V1ListSearchesResponse listProjectSearchNames(owner, name, offset, limit, sort, query)
+> V1ListSearchesResponse listProjectSearchNames(owner, name, offset, limit, sort, query, mode)
 
 List project search names
 
@@ -273,8 +273,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListSearchesResponse result = apiInstance.listProjectSearchNames(owner, name, offset, limit, sort, query);
+      V1ListSearchesResponse result = apiInstance.listProjectSearchNames(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectSearchesV1Api#listProjectSearchNames");
@@ -297,6 +298,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -322,7 +324,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectSearches"></a>
 # **listProjectSearches**
-> V1ListSearchesResponse listProjectSearches(owner, name, offset, limit, sort, query)
+> V1ListSearchesResponse listProjectSearches(owner, name, offset, limit, sort, query, mode)
 
 List project searches
 
@@ -354,8 +356,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListSearchesResponse result = apiInstance.listProjectSearches(owner, name, offset, limit, sort, query);
+      V1ListSearchesResponse result = apiInstance.listProjectSearches(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectSearchesV1Api#listProjectSearches");
@@ -378,6 +381,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 

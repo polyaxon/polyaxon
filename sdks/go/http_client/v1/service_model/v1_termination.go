@@ -32,7 +32,7 @@ import (
 type V1Termination struct {
 
 	// Max retries for a specific run
-	MaxRetries int32 `json:"max_retries,omitempty"`
+	MaxRetries int32 `json:"maxRetries,omitempty"`
 
 	// A timeout in seconds
 	Timeout int32 `json:"timeout,omitempty"`

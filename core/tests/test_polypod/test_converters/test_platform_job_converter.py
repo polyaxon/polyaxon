@@ -23,6 +23,7 @@ from polyaxon.connections.schemas import (
     V1K8sResourceSchema,
 )
 from polyaxon.k8s import k8s_schemas
+from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1Init, V1Plugins
 from polyaxon.polypod.common.mounts import get_mounts
 from polyaxon.polypod.compiler.converters import PlatformJobConverter
@@ -38,6 +39,7 @@ from polyaxon.schemas.types import (
     V1ArtifactsType,
     V1ConnectionType,
     V1DockerfileType,
+    V1FileType,
     V1K8sResourceType,
 )
 from polyaxon.services.headers import PolyaxonServices
@@ -109,7 +111,7 @@ class TestJobConverter(BaseTestCase):
         )
         assert containers == []
 
-    def test_get_init_containers_with_claim_outputs(self):
+    def test_get_init_containers_with_claim_outputs(self):  # TODO
         store = V1ConnectionType(
             name="test_claim",
             kind=V1ConnectionKind.VOLUME_CLAIM,
@@ -301,6 +303,46 @@ class TestJobConverter(BaseTestCase):
             ),
             get_dockerfile_init_container(
                 dockerfile_args=dockerfile_args2,
+                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                env=self.converter.get_init_service_env_vars(),
+                mount_path="/test",
+                contexts=None,
+                run_path=self.converter.run_path,
+                run_instance=self.converter.run_instance,
+            ),
+        ]
+
+        self.assert_containers(expected_containers, containers)
+
+    def test_get_init_containers_with_files(self):
+        file_args1 = V1FileType(filename="test.sh", content="test", chmod="+x")
+        file_args2 = V1FileType(
+            filename="test.csv",
+            content="csv",
+            kind=V1ArtifactKind.CSV,
+        )
+        containers = self.converter.get_init_containers(
+            contexts=None,
+            artifacts_store=None,
+            init_connections=[
+                V1Init(dockerfile=file_args1),
+                V1Init(dockerfile=file_args2, path="/test"),
+            ],
+            init_containers=[],
+            connection_by_names={},
+            polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+        )
+        expected_containers = [
+            get_dockerfile_init_container(
+                dockerfile_args=file_args1,
+                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                env=self.converter.get_init_service_env_vars(),
+                contexts=None,
+                run_path=self.converter.run_path,
+                run_instance=self.converter.run_instance,
+            ),
+            get_dockerfile_init_container(
+                dockerfile_args=file_args2,
                 polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
                 env=self.converter.get_init_service_env_vars(),
                 mount_path="/test",

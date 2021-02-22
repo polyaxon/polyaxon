@@ -31,7 +31,8 @@ class PluginsContextsSpec(
         "collect_resources "
         "auto_resume "
         "sync_statuses "
-        "external_host",
+        "external_host "
+        "sidecar",
     )
 ):
     @classmethod
@@ -47,6 +48,7 @@ class PluginsContextsSpec(
         auto_resume = True
         sync_statuses = True
         external_host = False
+        sidecar = None
         if config:
             if config.collect_logs is not None:
                 collect_logs = config.collect_logs
@@ -66,6 +68,8 @@ class PluginsContextsSpec(
                 docker = config.docker
             if config.shm is not None:
                 shm = config.shm
+            if config.sidecar is not None:
+                sidecar = config.sidecar
         if settings.CLIENT_CONFIG.no_api:
             auth = False
             collect_logs = False
@@ -82,4 +86,5 @@ class PluginsContextsSpec(
             auto_resume=auto_resume,
             sync_statuses=sync_statuses,
             external_host=external_host,
+            sidecar=sidecar,
         )

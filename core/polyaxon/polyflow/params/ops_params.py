@@ -108,7 +108,7 @@ def validate_params(
             param_value = params[inp.name]
             param_spec = param_value.get_spec(
                 name=inp.name,
-                iotype=inp.iotype,
+                iotype=inp.type,
                 is_flag=inp.is_flag,
                 is_list=inp.is_list,
                 is_context=False,
@@ -141,7 +141,7 @@ def validate_params(
                     param=V1Param(
                         value=inp.value, connection=inp.connection, to_init=inp.to_init
                     ),
-                    iotype=inp.iotype,
+                    type=inp.type,
                     is_flag=inp.is_flag,
                     is_list=inp.is_list,
                     is_context=False,
@@ -154,7 +154,7 @@ def validate_params(
             param_value = params[out.name]
             param_spec = param_value.get_spec(
                 name=out.name,
-                iotype=out.iotype,
+                iotype=out.type,
                 is_flag=out.is_flag,
                 is_list=out.is_list,
                 is_context=False,
@@ -181,7 +181,7 @@ def validate_params(
                     param=V1Param(
                         value=out.value, connection=out.connection, to_init=out.to_init
                     ),
-                    iotype=out.iotype,
+                    type=out.type,
                     is_flag=out.is_flag,
                     is_list=out.is_list,
                     is_context=False,
@@ -220,7 +220,7 @@ def validate_params(
                         connection=context_io.connection,
                         to_init=context_io.to_init,
                     ),
-                    iotype=None,
+                    type=None,
                     is_flag=None,
                     is_list=None,
                     is_context=True,

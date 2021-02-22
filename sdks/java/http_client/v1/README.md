@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.5.4
+- API version: 1.6.0
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.5.4</version>
+  <version>1.6.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.5.4"
+compile "org.openapitools:openapi-java-client:1.6.0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.5.4.jar`
+* `target/openapi-java-client-1.6.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -280,7 +280,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**bookmarkRun**](docs/RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/bookmark | Bookmark run
 *RunsV1Api* | [**bookmarkRuns**](docs/RunsV1Api.md#bookmarkRuns) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
 *RunsV1Api* | [**collectRunLogs**](docs/RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
-*RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy | Restart run with copy
+*RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/copy | Restart run with copy
 *RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 *RunsV1Api* | [**createRunArtifactsLineage**](docs/RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts | Create bulk run artifacts lineage
 *RunsV1Api* | [**createRunStatus**](docs/RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
@@ -317,19 +317,20 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{name}/runs | List runs
 *RunsV1Api* | [**notifyRunStatus**](docs/RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 *RunsV1Api* | [**patchRun**](docs/RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-*RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart | Restart run
+*RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/restart | Restart run
 *RunsV1Api* | [**restoreRun**](docs/RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/restore | Restore run
-*RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume | Resume run
+*RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/resume | Resume run
 *RunsV1Api* | [**startRunTensorboard**](docs/RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start | Start run tensorboard
 *RunsV1Api* | [**stopRun**](docs/RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/stop | Stop run
 *RunsV1Api* | [**stopRunTensorboard**](docs/RunsV1Api.md#stopRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 *RunsV1Api* | [**stopRuns**](docs/RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
+*RunsV1Api* | [**syncRun**](docs/RunsV1Api.md#syncRun) | **POST** /api/v1/{owner}/{project}/runs/sync | Sync offline run
 *RunsV1Api* | [**tagRuns**](docs/RunsV1Api.md#tagRuns) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
 *RunsV1Api* | [**unbookmarkRun**](docs/RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark | Unbookmark run
 *RunsV1Api* | [**updateRun**](docs/RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *RunsV1Api* | [**uploadRunArtifact**](docs/RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
 *RunsV1Api* | [**uploadRunLogs**](docs/RunsV1Api.md#uploadRunLogs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
-*SchemasV1Api* | [**noOp**](docs/SchemasV1Api.md#noOp) | **GET** /schemas | Get random
+*SchemasV1Api* | [**noOp**](docs/SchemasV1Api.md#noOp) | **GET** /schemas | NoOp
 *SearchesV1Api* | [**createSearch**](docs/SearchesV1Api.md#createSearch) | **POST** /api/v1/orgs/{owner}/searches | Create search
 *SearchesV1Api* | [**deleteSearch**](docs/SearchesV1Api.md#deleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
 *SearchesV1Api* | [**getSearch**](docs/SearchesV1Api.md#getSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
@@ -432,6 +433,7 @@ Class | Method | HTTP request | Description
  - [V1EventVideo](docs/V1EventVideo.md)
  - [V1EventsResponse](docs/V1EventsResponse.md)
  - [V1FailureEarlyStopping](docs/V1FailureEarlyStopping.md)
+ - [V1FileType](docs/V1FileType.md)
  - [V1Flink](docs/V1Flink.md)
  - [V1GcsType](docs/V1GcsType.md)
  - [V1GitConnection](docs/V1GitConnection.md)
@@ -463,7 +465,6 @@ Class | Method | HTTP request | Description
  - [V1Init](docs/V1Init.md)
  - [V1Installation](docs/V1Installation.md)
  - [V1IntervalSchedule](docs/V1IntervalSchedule.md)
- - [V1IoCond](docs/V1IoCond.md)
  - [V1Iterative](docs/V1Iterative.md)
  - [V1Job](docs/V1Job.md)
  - [V1Join](docs/V1Join.md)
@@ -508,7 +509,6 @@ Class | Method | HTTP request | Description
  - [V1Notification](docs/V1Notification.md)
  - [V1Operation](docs/V1Operation.md)
  - [V1OperationBody](docs/V1OperationBody.md)
- - [V1OperationCond](docs/V1OperationCond.md)
  - [V1Optimization](docs/V1Optimization.md)
  - [V1OptimizationMetric](docs/V1OptimizationMetric.md)
  - [V1OptimizationResource](docs/V1OptimizationResource.md)
@@ -527,6 +527,7 @@ Class | Method | HTTP request | Description
  - [V1Preset](docs/V1Preset.md)
  - [V1Project](docs/V1Project.md)
  - [V1ProjectSettings](docs/V1ProjectSettings.md)
+ - [V1ProjectUserAccess](docs/V1ProjectUserAccess.md)
  - [V1PytorchJob](docs/V1PytorchJob.md)
  - [V1Queue](docs/V1Queue.md)
  - [V1RandomSearch](docs/V1RandomSearch.md)
@@ -558,7 +559,6 @@ Class | Method | HTTP request | Description
  - [V1StageCondition](docs/V1StageCondition.md)
  - [V1Stages](docs/V1Stages.md)
  - [V1Status](docs/V1Status.md)
- - [V1StatusCond](docs/V1StatusCond.md)
  - [V1StatusCondition](docs/V1StatusCondition.md)
  - [V1Statuses](docs/V1Statuses.md)
  - [V1TFJob](docs/V1TFJob.md)

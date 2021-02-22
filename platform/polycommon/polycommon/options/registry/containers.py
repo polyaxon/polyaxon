@@ -22,15 +22,9 @@ from polyaxon.auxiliaries import (
     get_default_sidecar_container,
 )
 from polycommon.options import option_namespaces, option_subjects
-from polycommon.options.option import (
-    Option,
-    OptionScope,
-    OptionStores,
-)
+from polycommon.options.option import Option, OptionScope, OptionStores
 
-INIT_CONTAINER = "{}_{}".format(
-    option_namespaces.INIT, option_subjects.CONTAINER
-)
+INIT_CONTAINER = "{}_{}".format(option_namespaces.INIT, option_subjects.CONTAINER)
 
 SIDECAR_CONTAINER = "{}_{}".format(
     option_namespaces.SIDECARS, option_subjects.CONTAINER

@@ -44,6 +44,9 @@ type V1Init struct {
 	// Schema of the dockerfile to init
 	Dockerfile *V1DockerfileType `json:"dockerfile,omitempty"`
 
+	// File intializer
+	File *V1FileType `json:"file,omitempty"`
+
 	// Override for git connections
 	Git *V1GitType `json:"git,omitempty"`
 
@@ -60,6 +63,10 @@ func (m *V1Init) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDockerfile(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateFile(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -107,6 +114,23 @@ func (m *V1Init) validateDockerfile(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Init) validateFile(formats strfmt.Registry) error {
+	if swag.IsZero(m.File) { // not required
+		return nil
+	}
+
+	if m.File != nil {
+		if err := m.File.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("file")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Init) validateGit(formats strfmt.Registry) error {
 	if swag.IsZero(m.Git) { // not required
 		return nil
@@ -133,6 +157,10 @@ func (m *V1Init) ContextValidate(ctx context.Context, formats strfmt.Registry) e
 	}
 
 	if err := m.contextValidateDockerfile(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateFile(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -166,6 +194,20 @@ func (m *V1Init) contextValidateDockerfile(ctx context.Context, formats strfmt.R
 		if err := m.Dockerfile.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dockerfile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Init) contextValidateFile(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.File != nil {
+		if err := m.File.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("file")
 			}
 			return err
 		}

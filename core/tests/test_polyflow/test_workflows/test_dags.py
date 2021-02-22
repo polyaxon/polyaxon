@@ -2724,7 +2724,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         if op_upstream_by_names["B"][0].name == "input1":
             assert op_upstream_by_names["B"][0] == ops_params.ParamSpec(
                 name="input1",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="ops.B", value="outputs.output1"),
                 is_flag=None,
                 is_list=None,
@@ -2733,7 +2733,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             )
             assert op_upstream_by_names["B"][1] == ops_params.ParamSpec(
                 name="input2",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="ops.B", value="outputs.output2"),
                 is_flag=None,
                 is_list=None,
@@ -2744,7 +2744,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         else:
             assert op_upstream_by_names["B"][1] == ops_params.ParamSpec(
                 name="input1",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="ops.B", value="outputs.output1"),
                 is_flag=None,
                 is_list=None,
@@ -2753,7 +2753,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             )
             assert op_upstream_by_names["B"][0] == ops_params.ParamSpec(
                 name="input2",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="ops.B", value="outputs.output2"),
                 is_flag=None,
                 is_list=None,
@@ -2776,7 +2776,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert run_upstream_by_names["64332180bfce46eba80a65caf73c5396"] == [
             ops_params.ParamSpec(
                 name="input3",
-                iotype=None,
+                type=None,
                 param=V1Param(
                     ref="runs.64332180bfce46eba80a65caf73c5396", value="outputs.foo"
                 ),
@@ -2952,7 +2952,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         if op_upstream_by_names["A"][0].name == "input1":
             assert op_upstream_by_names["A"][0] == ops_params.ParamSpec(
                 name="input1",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="ops.A", value="inputs.input4"),
                 is_flag=None,
                 is_list=None,
@@ -2961,7 +2961,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             )
             assert op_upstream_by_names["A"][1] == ops_params.ParamSpec(
                 name="input2",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="ops.A", value="outputs.output1"),
                 is_flag=None,
                 is_list=None,
@@ -2972,7 +2972,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         else:
             assert op_upstream_by_names["A"][1] == ops_params.ParamSpec(
                 name="input1",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="ops.A", value="inputs.input4"),
                 is_flag=None,
                 is_list=None,
@@ -2981,7 +2981,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             )
             assert op_upstream_by_names["A"][0] == ops_params.ParamSpec(
                 name="input2",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="ops.A", value="outputs.output1"),
                 is_flag=None,
                 is_list=None,
@@ -2995,7 +2995,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             "A": [
                 ops_params.ParamSpec(
                     name="input3",
-                    iotype=None,
+                    type=None,
                     param=V1Param(ref="ops.A", value="globals.status"),
                     is_flag=None,
                     is_list=None,
@@ -3006,7 +3006,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             "B": [
                 ops_params.ParamSpec(
                     name="input2",
-                    iotype=None,
+                    type=None,
                     param=V1Param(ref="ops.B", value="outputs.output1"),
                     is_flag=None,
                     is_list=None,
@@ -3015,7 +3015,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                 ),
                 ops_params.ParamSpec(
                     name="input4",
-                    iotype=None,
+                    type=None,
                     param=V1Param(ref="ops.B", value="inputs"),
                     is_flag=None,
                     is_list=None,
@@ -3032,7 +3032,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert run_upstream_by_names["64332180bfce46eba80a65caf73c5396"] == [
             ops_params.ParamSpec(
                 name="input3",
-                iotype=None,
+                type=None,
                 param=V1Param(
                     ref="runs.64332180bfce46eba80a65caf73c5396", value="outputs.foo"
                 ),
@@ -3070,7 +3070,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert pipeline_by_names["_"] == [
             ops_params.ParamSpec(
                 name="input1",
-                iotype=None,
+                type=None,
                 param=V1Param(ref="dag", value="inputs.input_pipe"),
                 is_flag=None,
                 is_list=None,

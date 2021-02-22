@@ -18,7 +18,7 @@ syntax = "proto3";
 
 package v1;
 
-// Uri type specification
+// Auth type specification
 message AuthType {
     // Optional user
     string user = 1;

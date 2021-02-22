@@ -28,6 +28,7 @@ from polyaxon.polyflow.optimization import OptimizationMetricSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.fields.swagger import SwaggerField
+from polyaxon.utils.signal_decorators import check_partial
 
 
 class AcquisitionFunctions:
@@ -136,6 +137,7 @@ class UtilityFunctionSchema(BaseCamelSchema):
         return UtilityFunctionConfig
 
     @validates_schema
+    @check_partial
     def validate_utility_function(self, data, **kwargs):
         validate_utility_function(
             acquisition_function=data.get("acquisition_function"),
@@ -207,6 +209,7 @@ class BayesSchema(BaseCamelSchema):
         return V1Bayes
 
     @validates_schema
+    @check_partial
     def validate_matrix(self, data, **kwargs):
         """Validates matrix data and creates the config objects"""
         validate_matrix(data.get("params"))

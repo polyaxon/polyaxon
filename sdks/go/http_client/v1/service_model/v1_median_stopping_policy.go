@@ -34,16 +34,16 @@ import (
 type V1MedianStoppingPolicy struct {
 
 	// Interval/Frequency for applying the policy.
-	EvaluationInterval int32 `json:"evaluation_interval,omitempty"`
+	EvaluationInterval int32 `json:"evaluationInterval,omitempty"`
 
 	// Kind of this stopping policy, should be equal to "median"
 	Kind *string `json:"kind,omitempty"`
 
 	// Min interval (e.g steps) before starting the process
-	MinInterval int32 `json:"min_interval,omitempty"`
+	MinInterval int32 `json:"minInterval,omitempty"`
 
 	// Min samples runs succeeded before starting the process
-	MinSamples int32 `json:"min_samples,omitempty"`
+	MinSamples int32 `json:"minSamples,omitempty"`
 }
 
 // Validate validates this v1 median stopping policy

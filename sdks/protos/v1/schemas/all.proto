@@ -18,7 +18,6 @@ syntax = "proto3";
 
 package v1;
 
-import "v1/polyflow/condition.proto";
 import "v1/polyflow/early_stopping.proto";
 import "v1/polyflow/hp_params.proto";
 import "v1/polyflow/mounts.proto";
@@ -32,40 +31,35 @@ import "v1/polyflow/connection.proto";
 import "v1/polyflow/k8s_resource.proto";
 import "v1/types/artifacts.proto";
 import "v1/types/auth.proto";
-import "v1/types/dockerfile.proto";
-import "v1/types/git.proto";
 import "v1/types/uri.proto";
 import "v1/types/event.proto";
 import "v1/polyboard/event.proto";
 import "v1/polyflow/operation.proto";
 
 message Schemas {
-    OperationCond operation_cond = 1;
-    EarlyStopping early_stopping = 2;
-    Matrix matrix = 3;
-    RunSchema run = 4;
-    Operation operation = 5;
-    CompiledOperation compiled_operation = 7;
+    EarlyStopping earlyStopping = 1;
+    Matrix matrix = 2;
+    RunSchema run = 3;
+    Operation operation = 4;
+    CompiledOperation compiledOperation = 7;
     Schedule schedule = 8;
-    ConnectionSchema connection_schema = 9;
-    HpParams hp_params = 10;
+    ConnectionSchema connectionSchema = 9;
+    HpParams hpParams = 10;
     Reference reference = 11;
-    ArtifactsMount artifacts_mount = 12;
-    PolyaxonSidecarContainer polyaxon_sidecar_container = 13;
-    PolyaxonInitContainer polyaxon_init_container = 14;
+    ArtifactsMount artifactsMount = 12;
+    PolyaxonSidecarContainer polyaxonSidecarContainer = 13;
+    PolyaxonInitContainer polyaxonInitContainer = 14;
 
     ArtifactsType artifacs = 15;
     WasbType wasb = 16;
     GcsType gcs = 17;
     S3Type s3 = 18;
-    AuthType autg = 19;
-    DockerfileType dockerfile = 20;
-    GitType git = 21;
+    AuthType auth = 19;
     UriType uri = 22;
-    K8sResourceType k8s_resource = 23;
+    K8sResourceType k8sResource = 23;
     ConnectionType connection = 24;
-    EventType event_type = 26;
-    MatrixKind matrix_kind = 27;
-    ScheduleKind schedule_kind = 28;
+    EventType eventType = 26;
+    MatrixKind matrixKind = 27;
+    ScheduleKind scheduleKind = 28;
     Event event = 29;
 }

@@ -31,7 +31,7 @@ message Environment {
     // Optional NodeSelector is a selector which must be true for the pod to fit on a node.
     // Selector which must match a node's labels for the pod to be scheduled on that node.
     // More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-    map<string, string> node_selector = 3;
+    map<string, string> nodeSelector = 3;
 
     // Optional Affinity sets the scheduling constraints.
     Affinity affinity = 4;
@@ -42,28 +42,28 @@ message Environment {
     // Optional NodeName is a request to schedule this pod onto a specific node. If it is non-empty,
     // the scheduler simply schedules this pod onto that node, assuming that it fits resource
     // requirements.
-    string node_name = 6;
+    string nodeName = 6;
 
     // Optional service account name to use for this run
-    string service_account_name = 7;
+    string serviceAccountName = 7;
 
     // Optional HostAliases is an optional list of hosts and IPs that will be injected into the pod spec.
-    repeated HostAlias host_aliases = 8;
+    repeated HostAlias hostAliases = 8;
 
     // PodSecurityContext holds pod-level security attributes and common container settings.
     // Some fields are also present in container.securityContext.  Field values of
     // container.securityContext take precedence over field values of PodSecurityContext.
-    PodSecurityContext security_context = 9;
+    PodSecurityContext securityContext = 9;
 
     // Optional image pull secrets to use for this run
     // ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images
     // in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets
     // can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet.
     // More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
-    repeated string image_pull_secrets = 10;
+    repeated string imagePullSecrets = 10;
 
     // Host networking requested for this workflow pod. Default to false.
-    bool host_network = 11;
+    bool hostNetwork = 11;
 
     // Use the host's pid namespace. Default to false.
     string hostPID = 12;
@@ -74,17 +74,17 @@ message Environment {
     // DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.
     // To have DNS options set along with hostNetwork, you have to specify DNS policy
     // explicitly to 'ClusterFirstWithHostNet'.
-    string dns_policy = 13;
+    string dnsPolicy = 13;
 
     // PodDNSConfig defines the DNS parameters of a pod in addition to
     // those generated from DNSPolicy.
-    PodDNSConfig dns_config = 14;
+    PodDNSConfig dnsConfig = 14;
 
     // If specified, the pod will be dispatched by specified scheduler.
     // Or it will be dispatched by workflow scope scheduler if specified.
     // If neither specified, the pod will be dispatched by default scheduler.
     // +optional
-    string scheduler_name = 15;
+    string schedulerName = 15;
 
     // If specified, indicates the pod's priority. "system-node-critical" and
     // "system-cluster-critical" are two special keywords which indicate the
@@ -92,7 +92,7 @@ message Environment {
     // name must be defined by creating a PriorityClass object with that name.
     // If not specified, the pod priority will be default or zero if there is no
     // default.
-     string priority_class_name = 16;
+     string priorityClassName = 16;
 
      // The priority value. Various system components use this field to find the
      // priority of the pod. When Priority Admission Controller is enabled, it
@@ -102,5 +102,5 @@ message Environment {
      int32 priority = 17;
 
      // A valid restart policy
-    string restart_policy = 18;
+    string restartPolicy = 18;
 }

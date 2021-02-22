@@ -32,8 +32,11 @@ from plotly import figure_factory
 from polyaxon import settings
 from polyaxon.constants import DEFAULT, PLATFORM_DIST_CE
 from polyaxon.containers.contexts import (
+    CONTEXT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
+    CONTEXT_OFFLINE_FORMAT,
+    CONTEXTS_OUTPUTS_SUBPATH_FORMAT,
 )
 from polyaxon.env_vars import getters
 from polyaxon.env_vars.getters import get_run_info
@@ -47,7 +50,7 @@ from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events, get_asset_path, get_event_path
 from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
-from polyaxon.tracking.run import TEMP_RUN_ARTIFACTS, Run
+from polyaxon.tracking.run import Run
 from polyaxon.utils.path_utils import create_path
 from tests.utils import TestEnvVarsCase, tensor_np
 
@@ -62,16 +65,16 @@ class TestRunTracking(TestEnvVarsCase):
     def test_get_collect_artifacts_return_false_out_cluster(self):
         settings.CLIENT_CONFIG.is_managed = False
         os.environ[POLYAXON_KEYS_COLLECT_ARTIFACTS] = "false"
-        assert getters.get_collect_artifact() is False
+        assert getters.get_collect_artifacts() is False
 
     def test_empty_collect_artifacts_path(self):
         settings.CLIENT_CONFIG.is_managed = True
-        assert getters.get_collect_artifact() is False
+        assert getters.get_collect_artifacts() is False
 
     def test_valid_artifacts_path(self):
         settings.CLIENT_CONFIG.is_managed = True
         self.check_valid_value(
-            POLYAXON_KEYS_COLLECT_ARTIFACTS, getters.get_collect_artifact, "true", True
+            POLYAXON_KEYS_COLLECT_ARTIFACTS, getters.get_collect_artifacts, "true", True
         )
 
     def test_get_collect_resources_return_false_out_cluster(self):
@@ -136,6 +139,7 @@ class TestRunTracking(TestEnvVarsCase):
     def test_run_init(self, expanduser):
         expanduser.return_value = tempfile.mkdtemp()
         settings.CLIENT_CONFIG.is_managed = False
+        settings.CLIENT_CONFIG.is_offline = False
         with self.assertRaises(PolyaxonClientException):
             Run()
 
@@ -144,19 +148,29 @@ class TestRunTracking(TestEnvVarsCase):
             Run(project="test")
 
         # Uses default as owner in CE
+        settings.CLIENT_CONFIG.is_offline = True
         settings.CLI_CONFIG.installation = {"dist": PLATFORM_DIST_CE}
-        run = Run(project="test")
+        with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
+            run = Run(project="test", track_code=False, track_env=False)
+        assert exit_mock.call_count == 1
         assert run.owner == DEFAULT
 
-        run = Run(owner="owner-test", project="test")
+        with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
+            run = Run(
+                owner="owner-test", project="test", track_code=False, track_env=False
+            )
+        assert exit_mock.call_count == 1
         assert run.owner == "owner-test"
         assert run.project == "test"
 
-        run = Run(project="owner-test.test")
+        with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
+            run = Run(project="owner-test.test")
+        assert exit_mock.call_count == 1
         assert run.owner == "owner-test"
         assert run.project == "test"
 
         settings.CLIENT_CONFIG.is_managed = True
+        settings.CLIENT_CONFIG.is_offline = False
         with self.assertRaises(PolyaxonClientException):
             Run()
 
@@ -166,6 +180,7 @@ class TestRunTracking(TestEnvVarsCase):
             Run(project="test")
 
         # Uses default as owner in CE
+        settings.CLIENT_CONFIG.is_offline = True
         settings.CLI_CONFIG.installation = {"dist": PLATFORM_DIST_CE}
         run = Run(project="test")
         assert run.owner == DEFAULT
@@ -188,16 +203,38 @@ class TestRunTracking(TestEnvVarsCase):
 
     def test_event_logger_from_non_managed_run(self):
         settings.CLIENT_CONFIG.is_managed = False
+        settings.CLIENT_CONFIG.is_offline = False
 
-        run = Run(project="owner-test.test")
-        assert run.get_artifacts_path() == TEMP_RUN_ARTIFACTS
-        assert run.get_outputs_path() == TEMP_RUN_ARTIFACTS
+        with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
+            run = Run(
+                project="owner-test.test",
+                track_code=False,
+                track_env=False,
+                collect_artifacts=False,
+            )
+        assert exit_mock.call_count == 1
+        artifacts_context = CONTEXT_ARTIFACTS_FORMAT.format(run.run_uuid)
+        assert run.get_artifacts_path() == artifacts_context
+        assert run.get_outputs_path() == CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
+            artifacts_context
+        )
         assert run._event_logger is None
 
         # Add run id
-        run = Run(project="owner-test.test", run_uuid="uuid")
-        assert run.get_artifacts_path() == TEMP_RUN_ARTIFACTS
-        assert run.get_outputs_path() == TEMP_RUN_ARTIFACTS
+        with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
+            run = Run(
+                project="owner-test.test",
+                run_uuid="uuid",
+                track_code=False,
+                track_env=False,
+                collect_artifacts=False,
+            )
+        assert exit_mock.call_count == 1
+        artifacts_context = CONTEXT_ARTIFACTS_FORMAT.format(run.run_uuid)
+        assert run.get_artifacts_path() == artifacts_context
+        assert run.get_outputs_path() == CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
+            artifacts_context
+        )
         assert run._event_logger is None
 
         run.set_artifacts_path()
@@ -212,10 +249,16 @@ class TestRunTracking(TestEnvVarsCase):
             run.set_run_resource_logger()
         assert mock_call.call_count == 1
 
+        # Set collect flag
+        os.environ[POLYAXON_KEYS_COLLECT_ARTIFACTS] = "true"
+        os.environ[POLYAXON_KEYS_COLLECT_RESOURCES] = "true"
         settings.CLIENT_CONFIG.is_managed = True
         with patch("polyaxon.tracking.run.EventFileWriter") as event_call:
             with patch("polyaxon.tracking.run.ResourceFileWriter") as resource_call:
-                run = Run(project="owner-test.test", run_uuid="uuid")
+                with patch("polyaxon.tracking.run.Run.refresh_data") as refresh_call:
+                    run = Run(project="owner-test.test", run_uuid="uuid")
+
+        assert refresh_call.call_count == 1
         assert event_call.call_count == 1
         assert resource_call.call_count == 1
         assert run.get_artifacts_path() == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uuid")
@@ -224,9 +267,14 @@ class TestRunTracking(TestEnvVarsCase):
     def test_event_logger_from_a_managed_run(self):
         # Set managed flag
         settings.CLIENT_CONFIG.is_managed = True
+        settings.CLIENT_CONFIG.is_offline = False
         os.environ[POLYAXON_KEYS_RUN_INSTANCE] = "user.project_bar.runs.uid"
+        os.environ[POLYAXON_KEYS_COLLECT_ARTIFACTS] = "false"
+        os.environ[POLYAXON_KEYS_COLLECT_RESOURCES] = "false"
 
-        run = Run()
+        with patch("polyaxon.tracking.run.Run.refresh_data") as refresh_call:
+            run = Run()
+        assert refresh_call.call_count == 1
         assert run.get_artifacts_path() == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uid")
         assert run.get_outputs_path() == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uid")
         assert run._event_logger is None
@@ -240,9 +288,11 @@ class TestRunTracking(TestEnvVarsCase):
             with patch(
                 "polyaxon.tracking.run.Run.set_run_resource_logger"
             ) as resource_call:
-                Run(project="test.test", run_uuid="uuid")
+                with patch("polyaxon.tracking.run.Run.refresh_data") as refresh_call:
+                    Run(project="test.test", run_uuid="uuid")
         assert event_call.call_count == 1
         assert resource_call.call_count == 1
+        assert refresh_call.call_count == 1
 
         # Set run info
         os.environ[POLYAXON_KEYS_RUN_INSTANCE] = "user.project_bar.runs.uid"
@@ -251,7 +301,41 @@ class TestRunTracking(TestEnvVarsCase):
             with patch(
                 "polyaxon.tracking.run.Run.set_run_resource_logger"
             ) as resource_call:
-                Run()
+                with patch("polyaxon.tracking.run.Run.refresh_data") as refresh_call:
+                    Run()
+        assert event_call.call_count == 1
+        assert resource_call.call_count == 1
+        assert refresh_call.call_count == 1
+
+    def test_event_logger_from_an_offline_run(self):
+        # Set managed flag
+        settings.CLIENT_CONFIG.is_managed = False
+        settings.CLIENT_CONFIG.is_offline = True
+        os.environ[POLYAXON_KEYS_COLLECT_ARTIFACTS] = "false"
+        os.environ[POLYAXON_KEYS_COLLECT_RESOURCES] = "false"
+
+        with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
+            run = Run(project="test.test", run_uuid="uid")
+        assert exit_mock.call_count == 1
+        artifacts_path = CONTEXT_OFFLINE_FORMAT.format("uid")
+        assert run.get_artifacts_path() == artifacts_path
+        assert run.get_outputs_path() == CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
+            artifacts_path
+        )
+        assert run._event_logger is None
+
+        # Set collect flag
+        os.environ[POLYAXON_KEYS_COLLECT_ARTIFACTS] = "true"
+        os.environ[POLYAXON_KEYS_COLLECT_RESOURCES] = "true"
+
+        # Add run id
+        with patch("polyaxon.tracking.run.Run.set_run_event_logger") as event_call:
+            with patch(
+                "polyaxon.tracking.run.Run.set_run_resource_logger"
+            ) as resource_call:
+                with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
+                    Run(project="test.test", run_uuid="uid")
+        assert exit_mock.call_count == 1
         assert event_call.call_count == 1
         assert resource_call.call_count == 1
 
@@ -264,8 +348,9 @@ class TestRunLogging(TestEnvVarsCase):
         settings.CLIENT_CONFIG.is_managed = False
         os.environ[POLYAXON_KEYS_COLLECT_ARTIFACTS] = "false"
         os.environ[POLYAXON_KEYS_COLLECT_RESOURCES] = "false"
-        with patch("polyaxon.tracking.run.Run.refresh_data") as _:
-            self.run = Run(project="owner.project")
+        with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
+            self.run = Run(project="owner.project", track_env=False, track_code=False)
+        assert exit_mock.call_count == 1
         self.event_logger = EventFileWriter(run_path=self.run_path)
         self.resource_logger = ResourceFileWriter(run_path=self.run_path)
         self.run._artifacts_path = self.run_path

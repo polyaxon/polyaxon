@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **value** | [**Object**](.md) |  | [optional] 
 **ref** | **String** |  | [optional] 
 **connection** | **String** |  | [optional] 
-**to_init** | **Boolean** |  | [optional] 
-**context_only** | **Boolean** |  | [optional] 
+**toInit** | **Boolean** |  | [optional] 
+**contextOnly** | **Boolean** |  | [optional] 
 
 

@@ -70,11 +70,11 @@ class V1AuthType(BaseTypeConfig, polyaxon_sdk.V1AuthType):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="test1",
-    >>>         iotype=types.AUTH,
+    >>>         type=types.AUTH,
     >>>     ),
     >>>     V1IO(
     >>>         name="test2",
-    >>>         iotype=types.AUTH,
+    >>>         type=types.AUTH,
     >>>     ),
     >>> ]
     ```

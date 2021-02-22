@@ -60,6 +60,10 @@ async def read_logs_file(logs_path) -> List[V1Log]:
     async with aiofiles.open(logs_path, mode="r") as f:
         contents = await f.read()
         if contents:
+            # Version handling
+            if ".plx" in logs_path:
+                return V1Logs.read_csv(contents).logs
+            # Legacy logs
             logs = V1Logs.read(contents)
             return logs.logs
 

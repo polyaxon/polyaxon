@@ -30,13 +30,13 @@ message MedianStoppingPolicy {
     string kind = 1;
 
     // Interval/Frequency for applying the policy.
-    int32 evaluation_interval = 2;
+    int32 evaluationInterval = 2;
 
     // Min interval (e.g steps) before starting the process
-    int32 min_interval = 3;
+    int32 minInterval = 3;
 
     // Min samples runs succeeded before starting the process
-    int32 min_samples = 4;
+    int32 minSamples = 4;
 }
 
 // Early stopping with diff factor stopping, this policy computes checks runs against the best run
@@ -49,13 +49,13 @@ message DiffStoppingPolicy {
     float percent = 2;
 
     // Interval/Frequency for applying the policy.
-    int32 evaluation_interval = 3;
+    int32 evaluationInterval = 3;
 
     // Min interval (e.g steps) before starting the process
-    int32 min_interval = 4;
+    int32 minInterval = 4;
 
     // Min samples runs succeeded before starting the process
-    int32 min_samples = 5;
+    int32 minSamples = 5;
 
 }
 
@@ -70,16 +70,16 @@ message TruncationStoppingPolicy {
     int32 percent = 2;
 
     // Interval/Frequency for applying the policy.
-    int32 evaluation_interval = 3;
+    int32 evaluationInterval = 3;
 
     // Min interval (e.g steps) before starting the process
-    int32 min_interval = 4;
+    int32 minInterval = 4;
 
     // Min samples runs succeeded before starting the process
-    int32 min_samples = 5;
+    int32 minSamples = 5;
 
     // Flag to include or not the succeeded runs in the calculation
-    bool include_succeeded = 6;
+    bool includeSucceeded = 6;
 }
 
 // MetricEarlyStoppingSchema specification
@@ -119,7 +119,7 @@ message FailureEarlyStopping {
 
 // All Schemas message
 message EarlyStopping {
-    oneof early_stopping {
+    oneof earlyStopping {
         MedianStoppingPolicy median = 1;
         DiffStoppingPolicy diff = 2;
         TruncationStoppingPolicy truncation = 3;

@@ -42,7 +42,7 @@ type V1MPIJob struct {
 	Launcher *V1KFReplica `json:"launcher,omitempty"`
 
 	// Optional slots per worker
-	SlotsPerWorker int32 `json:"slots_per_worker,omitempty"`
+	SlotsPerWorker int32 `json:"slotsPerWorker,omitempty"`
 
 	// Optional worker replica definition
 	Worker *V1KFReplica `json:"worker,omitempty"`

@@ -70,11 +70,11 @@ class V1GcsType(BaseTypeConfig, polyaxon_sdk.V1GcsType):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="test1",
-    >>>         iotype=types.GCS,
+    >>>         type=types.GCS,
     >>>     ),
     >>>     V1IO(
     >>>         name="test2",
-    >>>         iotype=types.GCS,
+    >>>         type=types.GCS,
     >>>     ),
     >>> ]
     ```

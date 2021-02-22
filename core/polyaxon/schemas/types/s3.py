@@ -70,11 +70,11 @@ class V1S3Type(BaseTypeConfig, polyaxon_sdk.V1S3Type):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="test1",
-    >>>         iotype=types.S3,
+    >>>         type=types.S3,
     >>>     ),
     >>>     V1IO(
     >>>         name="test2",
-    >>>         iotype=types.S3,
+    >>>         type=types.S3,
     >>>     ),
     >>> ]
     ```

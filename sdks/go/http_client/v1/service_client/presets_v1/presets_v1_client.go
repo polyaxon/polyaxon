@@ -37,21 +37,24 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreatePreset(params *CreatePresetParams, authInfo runtime.ClientAuthInfoWriter) (*CreatePresetOK, *CreatePresetNoContent, error)
+	CreatePreset(params *CreatePresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreatePresetOK, *CreatePresetNoContent, error)
 
-	DeletePreset(params *DeletePresetParams, authInfo runtime.ClientAuthInfoWriter) (*DeletePresetOK, *DeletePresetNoContent, error)
+	DeletePreset(params *DeletePresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeletePresetOK, *DeletePresetNoContent, error)
 
-	GetPreset(params *GetPresetParams, authInfo runtime.ClientAuthInfoWriter) (*GetPresetOK, *GetPresetNoContent, error)
+	GetPreset(params *GetPresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPresetOK, *GetPresetNoContent, error)
 
-	ListPresetNames(params *ListPresetNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListPresetNamesOK, *ListPresetNamesNoContent, error)
+	ListPresetNames(params *ListPresetNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListPresetNamesOK, *ListPresetNamesNoContent, error)
 
-	ListPresets(params *ListPresetsParams, authInfo runtime.ClientAuthInfoWriter) (*ListPresetsOK, *ListPresetsNoContent, error)
+	ListPresets(params *ListPresetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListPresetsOK, *ListPresetsNoContent, error)
 
-	PatchPreset(params *PatchPresetParams, authInfo runtime.ClientAuthInfoWriter) (*PatchPresetOK, *PatchPresetNoContent, error)
+	PatchPreset(params *PatchPresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchPresetOK, *PatchPresetNoContent, error)
 
-	UpdatePreset(params *UpdatePresetParams, authInfo runtime.ClientAuthInfoWriter) (*UpdatePresetOK, *UpdatePresetNoContent, error)
+	UpdatePreset(params *UpdatePresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdatePresetOK, *UpdatePresetNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -59,13 +62,12 @@ type ClientService interface {
 /*
   CreatePreset creates scheduling presets
 */
-func (a *Client) CreatePreset(params *CreatePresetParams, authInfo runtime.ClientAuthInfoWriter) (*CreatePresetOK, *CreatePresetNoContent, error) {
+func (a *Client) CreatePreset(params *CreatePresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreatePresetOK, *CreatePresetNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreatePresetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreatePreset",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/presets",
@@ -77,7 +79,12 @@ func (a *Client) CreatePreset(params *CreatePresetParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -95,13 +102,12 @@ func (a *Client) CreatePreset(params *CreatePresetParams, authInfo runtime.Clien
 /*
   DeletePreset deletes scheduling preset
 */
-func (a *Client) DeletePreset(params *DeletePresetParams, authInfo runtime.ClientAuthInfoWriter) (*DeletePresetOK, *DeletePresetNoContent, error) {
+func (a *Client) DeletePreset(params *DeletePresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeletePresetOK, *DeletePresetNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeletePresetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeletePreset",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/presets/{uuid}",
@@ -113,7 +119,12 @@ func (a *Client) DeletePreset(params *DeletePresetParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -131,13 +142,12 @@ func (a *Client) DeletePreset(params *DeletePresetParams, authInfo runtime.Clien
 /*
   GetPreset gets scheduling preset
 */
-func (a *Client) GetPreset(params *GetPresetParams, authInfo runtime.ClientAuthInfoWriter) (*GetPresetOK, *GetPresetNoContent, error) {
+func (a *Client) GetPreset(params *GetPresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPresetOK, *GetPresetNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetPresetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetPreset",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/presets/{uuid}",
@@ -149,7 +159,12 @@ func (a *Client) GetPreset(params *GetPresetParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -167,13 +182,12 @@ func (a *Client) GetPreset(params *GetPresetParams, authInfo runtime.ClientAuthI
 /*
   ListPresetNames lists scheduling presets names
 */
-func (a *Client) ListPresetNames(params *ListPresetNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListPresetNamesOK, *ListPresetNamesNoContent, error) {
+func (a *Client) ListPresetNames(params *ListPresetNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListPresetNamesOK, *ListPresetNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListPresetNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListPresetNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/presets/names",
@@ -185,7 +199,12 @@ func (a *Client) ListPresetNames(params *ListPresetNamesParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -203,13 +222,12 @@ func (a *Client) ListPresetNames(params *ListPresetNamesParams, authInfo runtime
 /*
   ListPresets lists scheduling presets
 */
-func (a *Client) ListPresets(params *ListPresetsParams, authInfo runtime.ClientAuthInfoWriter) (*ListPresetsOK, *ListPresetsNoContent, error) {
+func (a *Client) ListPresets(params *ListPresetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListPresetsOK, *ListPresetsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListPresetsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListPresets",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/presets",
@@ -221,7 +239,12 @@ func (a *Client) ListPresets(params *ListPresetsParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -239,13 +262,12 @@ func (a *Client) ListPresets(params *ListPresetsParams, authInfo runtime.ClientA
 /*
   PatchPreset patches scheduling preset
 */
-func (a *Client) PatchPreset(params *PatchPresetParams, authInfo runtime.ClientAuthInfoWriter) (*PatchPresetOK, *PatchPresetNoContent, error) {
+func (a *Client) PatchPreset(params *PatchPresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchPresetOK, *PatchPresetNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchPresetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchPreset",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/presets/{preset.uuid}",
@@ -257,7 +279,12 @@ func (a *Client) PatchPreset(params *PatchPresetParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -275,13 +302,12 @@ func (a *Client) PatchPreset(params *PatchPresetParams, authInfo runtime.ClientA
 /*
   UpdatePreset updates scheduling preset
 */
-func (a *Client) UpdatePreset(params *UpdatePresetParams, authInfo runtime.ClientAuthInfoWriter) (*UpdatePresetOK, *UpdatePresetNoContent, error) {
+func (a *Client) UpdatePreset(params *UpdatePresetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdatePresetOK, *UpdatePresetNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdatePresetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdatePreset",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/presets/{preset.uuid}",
@@ -293,7 +319,12 @@ func (a *Client) UpdatePreset(params *UpdatePresetParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

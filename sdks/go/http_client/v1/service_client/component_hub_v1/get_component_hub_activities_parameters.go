@@ -82,6 +82,12 @@ type GetComponentHubActivitiesParams struct {
 	*/
 	Limit *int32
 
+	/* Mode.
+
+	   Mode the search.
+	*/
+	Mode *string
+
 	/* Name.
 
 	   Entity managing the resource
@@ -178,6 +184,17 @@ func (o *GetComponentHubActivitiesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithMode adds the mode to the get component hub activities params
+func (o *GetComponentHubActivitiesParams) WithMode(mode *string) *GetComponentHubActivitiesParams {
+	o.SetMode(mode)
+	return o
+}
+
+// SetMode adds the mode to the get component hub activities params
+func (o *GetComponentHubActivitiesParams) SetMode(mode *string) {
+	o.Mode = mode
+}
+
 // WithName adds the name to the get component hub activities params
 func (o *GetComponentHubActivitiesParams) WithName(name string) *GetComponentHubActivitiesParams {
 	o.SetName(name)
@@ -253,6 +270,23 @@ func (o *GetComponentHubActivitiesParams) WriteToRequest(r runtime.ClientRequest
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Mode != nil {
+
+		// query param mode
+		var qrMode string
+
+		if o.Mode != nil {
+			qrMode = *o.Mode
+		}
+		qMode := qrMode
+		if qMode != "" {
+
+			if err := r.SetQueryParam("mode", qMode); err != nil {
 				return err
 			}
 		}

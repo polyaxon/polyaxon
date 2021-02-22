@@ -29,25 +29,25 @@ message IO {
     string description = 2;
 
     // The type of the input/output
-    string iotype = 3;
+    string type = 3;
 
     // The value of the input/output should be compatible with the type
     google.protobuf.Struct value = 4;
 
     // A flag to tell if this input/output is optional
-    bool is_optional = 5;
+    bool isOptional = 5;
 
     // A flag to tell if this input/output is list
-    bool is_list = 6;
+    bool isList = 6;
 
     // A flag to tell if this input/output is flag, only valid for bool type
-    bool is_flag = 7;
+    bool isFlag = 7;
 
     // An optional argFromat of the input/output to be used instead of passing the value as is
-    string arg_format = 8;
+    string argFormat = 8;
 
     // A flag to tell if param validation for this input/output should be delayed
-    bool delay_validation = 9;
+    bool delayValidation = 9;
 
     // An optional field to provide possible values for validation
     repeated google.protobuf.Struct options = 10;
@@ -56,7 +56,7 @@ message IO {
     string connection = 11;
 
     // A flag to signal to Polyaxon that this io must be tranformed to an init container
-    bool to_init = 12;
+    bool toInit = 12;
 }
 
 // Param specification
@@ -71,8 +71,8 @@ message Param {
     string connection = 4;
 
     // A flag to signal to Polyaxon that this param must be tranformed to an init container
-    bool to_init = 5;
+    bool toInit = 5;
 
     // A flag to signal to Polyaxon that this param should not be validated against io
-    bool context_only = 6;
+    bool contextOnly = 6;
 }

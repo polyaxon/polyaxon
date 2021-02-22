@@ -24,6 +24,7 @@ from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.utils.signal_decorators import check_partial
 
 
 def validate_matrix(matrix):
@@ -54,6 +55,7 @@ class GridSearchSchema(BaseCamelSchema):
         return V1GridSearch
 
     @validates_schema
+    @check_partial
     def validate_matrix(self, data, **kwargs):
         """Validates matrix data and creates the config objects"""
         validate_matrix(data.get("params"))

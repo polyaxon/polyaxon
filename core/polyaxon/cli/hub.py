@@ -18,11 +18,11 @@ import sys
 
 import click
 
-from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon_sdk import V1ComponentHub, V1ComponentVersion
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon import settings
 from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.options import (
@@ -37,7 +37,7 @@ from polyaxon.env_vars.getters import get_component_info
 from polyaxon.exceptions import PolyaxonException
 from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile import get_specification
-from polyaxon import settings
+from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,

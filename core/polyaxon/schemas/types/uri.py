@@ -72,7 +72,7 @@ class V1UriType(BaseTypeConfig, polyaxon_sdk.V1UriType):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="test1",
-    >>>         iotype=types.URI,
+    >>>         type=types.URI,
     >>>     ),
     >>> ]
     ```

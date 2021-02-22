@@ -38,6 +38,7 @@ from polyaxon.polypod.init.artifacts import get_artifacts_path_container
 from polyaxon.polypod.init.auth import get_auth_context_container
 from polyaxon.polypod.init.custom import get_custom_init_container
 from polyaxon.polypod.init.dockerfile import get_dockerfile_init_container
+from polyaxon.polypod.init.file import get_file_init_container
 from polyaxon.polypod.init.git import get_git_init_container
 from polyaxon.polypod.init.store import get_store_container
 from polyaxon.polypod.main.container import get_main_container
@@ -394,6 +395,21 @@ class BaseConverter(ConverterAbstract):
                         get_dockerfile_init_container(
                             polyaxon_init=polyaxon_init,
                             dockerfile_args=init_connection.dockerfile,
+                            env=self.get_init_service_env_vars(
+                                external_host=external_host
+                            ),
+                            mount_path=init_connection.path,
+                            contexts=contexts,
+                            run_path=self.run_path,
+                            run_instance=self.run_instance,
+                        )
+                    )
+                # File initialization
+                if init_connection.file:
+                    containers.append(
+                        get_file_init_container(
+                            polyaxon_init=polyaxon_init,
+                            file_args=init_connection.file,
                             env=self.get_init_service_env_vars(
                                 external_host=external_host
                             ),

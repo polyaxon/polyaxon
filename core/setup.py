@@ -74,7 +74,7 @@ setup(
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
         "marshmallow<3.11.0",
-        "polyaxon-sdk==1.5.4",
+        "polyaxon-sdk==1.6.0",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "PyYAML>=5.1",
@@ -96,7 +96,7 @@ setup(
         "polytune": ["scikit-learn==0.23.2", "hyperopt==0.2.4"],
         "polyboard": [
             "Pillow",
-            "matplotlib",
+            "matplotlib<3.3.3",
             "moviepy",
             "plotly",
             "bokeh",

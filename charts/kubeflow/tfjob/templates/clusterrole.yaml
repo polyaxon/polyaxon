@@ -17,32 +17,92 @@ metadata:
     app.kubernetes.io/managed-by: "helm"
 rules:
 - apiGroups:
-  - kubeflow.org
+  - ""
   resources:
-  - tfjobs
-  - tfjobs/status
-  - tfjobs/finalizers
+  - configmaps
+  - serviceaccounts
+  - services
+  - secrets
+  - events
+  - namespaces
+  - persistentvolumes
+  - persistentvolumeclaims
   verbs:
-  - "*"
+    - "*"
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  - pods/status
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+# This is needed for the launcher Role.
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - create
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - roles
+  - rolebindings
+  verbs:
+  - create
+  - list
+  - watch
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - create
+  - list
+  - update
+  - watch
 - apiGroups:
   - apiextensions.k8s.io
   resources:
   - customresourcedefinitions
   verbs:
-  - "*"
+  - create
+  - get
 - apiGroups:
-  - ""
+  - kubeflow.org
   resources:
-  - pods
-  - services
-  - endpoints
-  - events
+  - tfjobs
+  - tfjobs/status
   verbs:
   - "*"
 - apiGroups:
-  - apps
-  - extensions
+  - scheduling.incubator.k8s.io
+  - scheduling.sigs.dev
+  - scheduling.volcano.sh
   resources:
-  - deployments
+  - queues
+  - podgroups
   verbs:
   - "*"

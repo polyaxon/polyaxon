@@ -182,14 +182,16 @@ class BaseConfig:
         return {cls.IDENTIFIER: cls.obj_to_dict(obj)}
 
     @classmethod
-    def from_dict(cls, value, unknown=None):
+    def from_dict(cls, value, unknown=None, partial: bool = False):
         unknown = unknown or cls.UNKNOWN_BEHAVIOUR
-        return cls.SCHEMA(unknown=unknown).load(value)  # pylint: disable=not-callable
+        return cls.SCHEMA(unknown=unknown).load(  # pylint: disable=not-callable
+            value, partial=partial
+        )
 
     @classmethod
-    def read(cls, values, unknown=None, config_type=None):
+    def read(cls, values, unknown=None, partial: bool = False, config_type=None):
         values = ConfigSpec.read_from(values, config_type=config_type)
-        return cls.from_dict(values, unknown=unknown)
+        return cls.from_dict(values, unknown=unknown, partial=partial)
 
     @classmethod
     def init_file(cls, filepath: str, config=None):

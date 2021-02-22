@@ -37,25 +37,28 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateQueue(params *CreateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*CreateQueueOK, *CreateQueueNoContent, error)
+	CreateQueue(params *CreateQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateQueueOK, *CreateQueueNoContent, error)
 
-	DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteQueueOK, *DeleteQueueNoContent, error)
+	DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteQueueOK, *DeleteQueueNoContent, error)
 
-	GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInfoWriter) (*GetQueueOK, *GetQueueNoContent, error)
+	GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetQueueOK, *GetQueueNoContent, error)
 
-	ListOrganizationQueueNames(params *ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueueNamesOK, *ListOrganizationQueueNamesNoContent, error)
+	ListOrganizationQueueNames(params *ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationQueueNamesOK, *ListOrganizationQueueNamesNoContent, error)
 
-	ListOrganizationQueues(params *ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueuesOK, *ListOrganizationQueuesNoContent, error)
+	ListOrganizationQueues(params *ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationQueuesOK, *ListOrganizationQueuesNoContent, error)
 
-	ListQueueNames(params *ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueueNamesOK, *ListQueueNamesNoContent, error)
+	ListQueueNames(params *ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListQueueNamesOK, *ListQueueNamesNoContent, error)
 
-	ListQueues(params *ListQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueuesOK, *ListQueuesNoContent, error)
+	ListQueues(params *ListQueuesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListQueuesOK, *ListQueuesNoContent, error)
 
-	PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAuthInfoWriter) (*PatchQueueOK, *PatchQueueNoContent, error)
+	PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchQueueOK, *PatchQueueNoContent, error)
 
-	UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateQueueOK, *UpdateQueueNoContent, error)
+	UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateQueueOK, *UpdateQueueNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -63,13 +66,12 @@ type ClientService interface {
 /*
   CreateQueue creates queue
 */
-func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*CreateQueueOK, *CreateQueueNoContent, error) {
+func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateQueueOK, *CreateQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateQueueParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateQueue",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues",
@@ -81,7 +83,12 @@ func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -99,13 +106,12 @@ func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientA
 /*
   DeleteQueue deletes queue
 */
-func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteQueueOK, *DeleteQueueNoContent, error) {
+func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteQueueOK, *DeleteQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteQueueParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteQueue",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}",
@@ -117,7 +123,12 @@ func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -135,13 +146,12 @@ func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientA
 /*
   GetQueue gets queue
 */
-func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInfoWriter) (*GetQueueOK, *GetQueueNoContent, error) {
+func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetQueueOK, *GetQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetQueueParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetQueue",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}",
@@ -153,7 +163,12 @@ func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInf
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -171,13 +186,12 @@ func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInf
 /*
   ListOrganizationQueueNames lists organization level queues names
 */
-func (a *Client) ListOrganizationQueueNames(params *ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueueNamesOK, *ListOrganizationQueueNamesNoContent, error) {
+func (a *Client) ListOrganizationQueueNames(params *ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationQueueNamesOK, *ListOrganizationQueueNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListOrganizationQueueNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListOrganizationQueueNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/queues/names",
@@ -189,7 +203,12 @@ func (a *Client) ListOrganizationQueueNames(params *ListOrganizationQueueNamesPa
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -207,13 +226,12 @@ func (a *Client) ListOrganizationQueueNames(params *ListOrganizationQueueNamesPa
 /*
   ListOrganizationQueues lists organization level queues
 */
-func (a *Client) ListOrganizationQueues(params *ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueuesOK, *ListOrganizationQueuesNoContent, error) {
+func (a *Client) ListOrganizationQueues(params *ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationQueuesOK, *ListOrganizationQueuesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListOrganizationQueuesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListOrganizationQueues",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/queues",
@@ -225,7 +243,12 @@ func (a *Client) ListOrganizationQueues(params *ListOrganizationQueuesParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -243,13 +266,12 @@ func (a *Client) ListOrganizationQueues(params *ListOrganizationQueuesParams, au
 /*
   ListQueueNames lists queues names
 */
-func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueueNamesOK, *ListQueueNamesNoContent, error) {
+func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListQueueNamesOK, *ListQueueNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListQueueNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListQueueNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{name}/queues/names",
@@ -261,7 +283,12 @@ func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -279,13 +306,12 @@ func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.C
 /*
   ListQueues lists queues
 */
-func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueuesOK, *ListQueuesNoContent, error) {
+func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListQueuesOK, *ListQueuesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListQueuesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListQueues",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{name}/queues",
@@ -297,7 +323,12 @@ func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -315,13 +346,12 @@ func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAut
 /*
   PatchQueue patches queue
 */
-func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAuthInfoWriter) (*PatchQueueOK, *PatchQueueNoContent, error) {
+func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchQueueOK, *PatchQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchQueueParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchQueue",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}",
@@ -333,7 +363,12 @@ func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -351,13 +386,12 @@ func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAut
 /*
   UpdateQueue updates queue
 */
-func (a *Client) UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateQueueOK, *UpdateQueueNoContent, error) {
+func (a *Client) UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateQueueOK, *UpdateQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateQueueParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateQueue",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}",
@@ -369,7 +403,12 @@ func (a *Client) UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

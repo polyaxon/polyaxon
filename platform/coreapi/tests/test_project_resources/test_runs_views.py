@@ -24,6 +24,7 @@ from rest_framework import status
 from coredb.api.artifacts.queries import project_runs_artifacts
 from coredb.api.artifacts.serializers import RunArtifactLightSerializer
 from coredb.api.project_resources.serializers import (
+    OfflineRunSerializer,
     OperationCreateSerializer,
     RunSerializer,
 )
@@ -35,6 +36,7 @@ from coredb.models.artifacts import Artifact, ArtifactLineage
 from coredb.models.runs import Run
 from polyaxon.api import API_V1
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
+from polyaxon.parser import parser
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1CloningKind, V1RunKind
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
@@ -211,7 +213,18 @@ class TestProjectRunsDeleteViewV1(BaseTest):
             API_V1, self.user.username, self.project.name
         )
 
-    def test_delete_auditor(self):
+    def test_delete_non_managed_auditor(self):
+        data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
+        assert Run.objects.count() == 3
+        with patch("polycommon.auditor.record") as auditor_record:
+            resp = self.client.delete(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert Run.objects.count() == 1
+        assert Run.all.count() == 1
+        assert auditor_record.call_count == 2
+
+    def test_delete_managed_auditor(self):
+        Run.objects.all().update(is_managed=True)
         data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
         assert Run.objects.count() == 3
         with patch("polycommon.auditor.record") as auditor_record:
@@ -228,7 +241,7 @@ class TestProjectRunsDeleteViewV1(BaseTest):
             resp = self.client.delete(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert Run.objects.count() == 1
-        assert Run.all.count() == 3
+        assert Run.all.count() == 1
         assert workers_send.call_count == 2
         assert {c[0][0] for c in workers_send.call_args_list} == {
             CoreSchedulerCeleryTasks.RUNS_DELETE,
@@ -336,7 +349,7 @@ class TestProjectRunsArtifactsViewV15(TestProjectRunsArtifactsViewV1):
 
 
 @pytest.mark.projects_resources_mark
-class TestProjectRunListViewV1(BaseTest):
+class TestProjectRunsListViewV1(BaseTest):
     serializer_class = RunSerializer
     model_class = Run
     factory_class = RunFactory
@@ -823,7 +836,7 @@ class TestProjectRunListViewV1(BaseTest):
 
 
 @pytest.mark.projects_resources_mark
-class TestProjectRunCreateViewV1(BaseTest):
+class TestProjectRunsCreateViewV1(BaseTest):
     serializer_class = OperationCreateSerializer
     model_class = Run
     factory_class = RunFactory
@@ -927,3 +940,94 @@ class TestProjectRunCreateViewV1(BaseTest):
         assert last_run.is_managed is True
         assert last_run.is_approved is False
         assert last_run.meta_info == {"test": "works"}
+
+
+@pytest.mark.projects_resources_mark
+class TestProjectRunsSyncViewV1(BaseTest):
+    serializer_class = OfflineRunSerializer
+    model_class = Run
+    factory_class = RunFactory
+    num_objects = 3
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory()
+
+        self.url = "/{}/polyaxon/{}/runs/sync".format(API_V1, self.project.name)
+
+    def test_sync(self):
+        xp_count = Run.objects.count()
+        data = {
+            "uuid": "7df9e651eee441ed9d03846f3bbbecdf",
+            "owner": "acme",
+            "project": "tracking",
+            "created_at": "2021-01-03T22:43:38.986013+00:00",
+            "started_at": "2021-01-03T22:43:38.986145+00:00",
+            "finished_at": "2021-01-03T22:45:56.598210+00:00",
+            "wait_time": 0,
+            "duration": 137,
+            "status": "succeeded",
+            "kind": V1RunKind.JOB,
+            "runtime": V1RunKind.JOB,
+            "is_managed": False,
+            "meta_info": {
+                "has_metrics": True,
+                "has_events": True,
+                "has_tensorboard": True,
+            },
+            "outputs": {
+                "val_acc": 0.949134820863907,
+                "learning rate": 0.00532,
+                "loss": 0.2689676582813263,
+                "accuracy": 0.999002509377165,
+                "lr": 0.005319999996572733,
+                "val_loss": 0.27277910709381104,
+            },
+            "status_conditions": [
+                {
+                    "type": "created",
+                    "status": True,
+                    "reason": "OfflineOperation",
+                    "message": "Operation is starting",
+                    "last_update_time": "2021-02-03T22:43:38.986013+00:00",
+                    "last_transition_time": "2021-02-03T22:43:38.986013+00:00",
+                },
+                {
+                    "type": "running",
+                    "status": True,
+                    "reason": "PolyaxonClient",
+                    "message": "Operation is running",
+                    "last_update_time": "2021-02-03T22:43:38.986102+00:00",
+                    "last_transition_time": "2021-02-03T22:43:38.986102+00:00",
+                },
+                {
+                    "type": "succeeded",
+                    "status": True,
+                    "reason": "PolyaxonClient",
+                    "message": "Operation has succeeded",
+                    "last_update_time": "2021-02-03T22:45:56.598121+00:00",
+                    "last_transition_time": "2021-02-03T22:45:56.598121+00:00",
+                },
+            ],
+        }
+        resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert Run.objects.count() == xp_count + 1
+        xp = Run.objects.last()
+        result_data = OfflineRunSerializer(xp).data
+        assert result_data.pop("updated_at") is not None
+        assert parser.get_datetime(
+            key="created_at", value=result_data.pop("created_at")
+        ) == parser.get_datetime(key="created_at", value=data.pop("created_at"))
+        assert parser.get_datetime(
+            key="started_at", value=result_data.pop("started_at")
+        ) == parser.get_datetime(key="started_at", value=data.pop("started_at"))
+        assert parser.get_datetime(
+            key="finished_at", value=result_data.pop("finished_at")
+        ) == parser.get_datetime(key="finished_at", value=data.pop("finished_at"))
+        assert xp.project == self.project
+
+    def test_sync_with_invalid_config(self):
+        data = {"content": "bar"}
+        resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST

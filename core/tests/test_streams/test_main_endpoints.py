@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import pytest
 
 from starlette.exceptions import HTTPException
 
@@ -20,6 +21,7 @@ from tests.test_streams.base import get_streams_client, set_store
 from tests.utils import BaseTestCase
 
 
+@pytest.mark.streams_mark
 class TestMainEndpoints(BaseTestCase):
     def setUp(self):
         super().setUp()

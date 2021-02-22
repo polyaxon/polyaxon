@@ -43,7 +43,7 @@ type V1Hook struct {
 	DisableDefaults bool `json:"disableDefaults,omitempty"`
 
 	// Component name to use
-	HubRef string `json:"hub_ref,omitempty"`
+	HubRef string `json:"hubRef,omitempty"`
 
 	// Optional dict of params
 	Params map[string]V1Param `json:"params,omitempty"`

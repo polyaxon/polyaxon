@@ -37,55 +37,58 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ArchiveModelRegistry(params *ArchiveModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveModelRegistryOK, *ArchiveModelRegistryNoContent, error)
+	ArchiveModelRegistry(params *ArchiveModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveModelRegistryOK, *ArchiveModelRegistryNoContent, error)
 
-	BookmarkModelRegistry(params *BookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkModelRegistryOK, *BookmarkModelRegistryNoContent, error)
+	BookmarkModelRegistry(params *BookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkModelRegistryOK, *BookmarkModelRegistryNoContent, error)
 
-	CreateModelRegistry(params *CreateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelRegistryOK, *CreateModelRegistryNoContent, error)
+	CreateModelRegistry(params *CreateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateModelRegistryOK, *CreateModelRegistryNoContent, error)
 
-	CreateModelVersion(params *CreateModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelVersionOK, *CreateModelVersionNoContent, error)
+	CreateModelVersion(params *CreateModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateModelVersionOK, *CreateModelVersionNoContent, error)
 
-	CreateModelVersionStage(params *CreateModelVersionStageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelVersionStageOK, *CreateModelVersionStageNoContent, error)
+	CreateModelVersionStage(params *CreateModelVersionStageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateModelVersionStageOK, *CreateModelVersionStageNoContent, error)
 
-	DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteModelRegistryOK, *DeleteModelRegistryNoContent, error)
+	DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteModelRegistryOK, *DeleteModelRegistryNoContent, error)
 
-	DeleteModelVersion(params *DeleteModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteModelVersionOK, *DeleteModelVersionNoContent, error)
+	DeleteModelVersion(params *DeleteModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteModelVersionOK, *DeleteModelVersionNoContent, error)
 
-	GetModelRegistry(params *GetModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryOK, *GetModelRegistryNoContent, error)
+	GetModelRegistry(params *GetModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelRegistryOK, *GetModelRegistryNoContent, error)
 
-	GetModelRegistryActivities(params *GetModelRegistryActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryActivitiesOK, *GetModelRegistryActivitiesNoContent, error)
+	GetModelRegistryActivities(params *GetModelRegistryActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelRegistryActivitiesOK, *GetModelRegistryActivitiesNoContent, error)
 
-	GetModelRegistrySettings(params *GetModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistrySettingsOK, *GetModelRegistrySettingsNoContent, error)
+	GetModelRegistrySettings(params *GetModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelRegistrySettingsOK, *GetModelRegistrySettingsNoContent, error)
 
-	GetModelVersion(params *GetModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionOK, *GetModelVersionNoContent, error)
+	GetModelVersion(params *GetModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelVersionOK, *GetModelVersionNoContent, error)
 
-	GetModelVersionStages(params *GetModelVersionStagesParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionStagesOK, *GetModelVersionStagesNoContent, error)
+	GetModelVersionStages(params *GetModelVersionStagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelVersionStagesOK, *GetModelVersionStagesNoContent, error)
 
-	ListModelRegistries(params *ListModelRegistriesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistriesOK, *ListModelRegistriesNoContent, error)
+	ListModelRegistries(params *ListModelRegistriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListModelRegistriesOK, *ListModelRegistriesNoContent, error)
 
-	ListModelRegistryNames(params *ListModelRegistryNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistryNamesOK, *ListModelRegistryNamesNoContent, error)
+	ListModelRegistryNames(params *ListModelRegistryNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListModelRegistryNamesOK, *ListModelRegistryNamesNoContent, error)
 
-	ListModelVersionNames(params *ListModelVersionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelVersionNamesOK, *ListModelVersionNamesNoContent, error)
+	ListModelVersionNames(params *ListModelVersionNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListModelVersionNamesOK, *ListModelVersionNamesNoContent, error)
 
-	ListModelVersions(params *ListModelVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelVersionsOK, *ListModelVersionsNoContent, error)
+	ListModelVersions(params *ListModelVersionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListModelVersionsOK, *ListModelVersionsNoContent, error)
 
-	PatchModelRegistry(params *PatchModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelRegistryOK, *PatchModelRegistryNoContent, error)
+	PatchModelRegistry(params *PatchModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchModelRegistryOK, *PatchModelRegistryNoContent, error)
 
-	PatchModelRegistrySettings(params *PatchModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelRegistrySettingsOK, *PatchModelRegistrySettingsNoContent, error)
+	PatchModelRegistrySettings(params *PatchModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchModelRegistrySettingsOK, *PatchModelRegistrySettingsNoContent, error)
 
-	PatchModelVersion(params *PatchModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelVersionOK, *PatchModelVersionNoContent, error)
+	PatchModelVersion(params *PatchModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchModelVersionOK, *PatchModelVersionNoContent, error)
 
-	RestoreModelRegistry(params *RestoreModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreModelRegistryOK, *RestoreModelRegistryNoContent, error)
+	RestoreModelRegistry(params *RestoreModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreModelRegistryOK, *RestoreModelRegistryNoContent, error)
 
-	UnbookmarkModelRegistry(params *UnbookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkModelRegistryOK, *UnbookmarkModelRegistryNoContent, error)
+	UnbookmarkModelRegistry(params *UnbookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkModelRegistryOK, *UnbookmarkModelRegistryNoContent, error)
 
-	UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelRegistryOK, *UpdateModelRegistryNoContent, error)
+	UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateModelRegistryOK, *UpdateModelRegistryNoContent, error)
 
-	UpdateModelRegistrySettings(params *UpdateModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelRegistrySettingsOK, *UpdateModelRegistrySettingsNoContent, error)
+	UpdateModelRegistrySettings(params *UpdateModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateModelRegistrySettingsOK, *UpdateModelRegistrySettingsNoContent, error)
 
-	UpdateModelVersion(params *UpdateModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelVersionOK, *UpdateModelVersionNoContent, error)
+	UpdateModelVersion(params *UpdateModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateModelVersionOK, *UpdateModelVersionNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -93,13 +96,12 @@ type ClientService interface {
 /*
   ArchiveModelRegistry archives registry model
 */
-func (a *Client) ArchiveModelRegistry(params *ArchiveModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveModelRegistryOK, *ArchiveModelRegistryNoContent, error) {
+func (a *Client) ArchiveModelRegistry(params *ArchiveModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveModelRegistryOK, *ArchiveModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewArchiveModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ArchiveModelRegistry",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/registry/{name}/archive",
@@ -111,7 +113,12 @@ func (a *Client) ArchiveModelRegistry(params *ArchiveModelRegistryParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -129,13 +136,12 @@ func (a *Client) ArchiveModelRegistry(params *ArchiveModelRegistryParams, authIn
 /*
   BookmarkModelRegistry bookmarks registry model
 */
-func (a *Client) BookmarkModelRegistry(params *BookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkModelRegistryOK, *BookmarkModelRegistryNoContent, error) {
+func (a *Client) BookmarkModelRegistry(params *BookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkModelRegistryOK, *BookmarkModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "BookmarkModelRegistry",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/registry/{name}/bookmark",
@@ -147,7 +153,12 @@ func (a *Client) BookmarkModelRegistry(params *BookmarkModelRegistryParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -165,13 +176,12 @@ func (a *Client) BookmarkModelRegistry(params *BookmarkModelRegistryParams, auth
 /*
   CreateModelRegistry creates registry model
 */
-func (a *Client) CreateModelRegistry(params *CreateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelRegistryOK, *CreateModelRegistryNoContent, error) {
+func (a *Client) CreateModelRegistry(params *CreateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateModelRegistryOK, *CreateModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateModelRegistry",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/registry/create",
@@ -183,7 +193,12 @@ func (a *Client) CreateModelRegistry(params *CreateModelRegistryParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -201,13 +216,12 @@ func (a *Client) CreateModelRegistry(params *CreateModelRegistryParams, authInfo
 /*
   CreateModelVersion creates model version
 */
-func (a *Client) CreateModelVersion(params *CreateModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelVersionOK, *CreateModelVersionNoContent, error) {
+func (a *Client) CreateModelVersion(params *CreateModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateModelVersionOK, *CreateModelVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateModelVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateModelVersion",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/registry/{model}/versions",
@@ -219,7 +233,12 @@ func (a *Client) CreateModelVersion(params *CreateModelVersionParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -237,13 +256,12 @@ func (a *Client) CreateModelVersion(params *CreateModelVersionParams, authInfo r
 /*
   CreateModelVersionStage creates new model version stage
 */
-func (a *Client) CreateModelVersionStage(params *CreateModelVersionStageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelVersionStageOK, *CreateModelVersionStageNoContent, error) {
+func (a *Client) CreateModelVersionStage(params *CreateModelVersionStageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateModelVersionStageOK, *CreateModelVersionStageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateModelVersionStageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateModelVersionStage",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/registry/{entity}/versions/{name}/stages",
@@ -255,7 +273,12 @@ func (a *Client) CreateModelVersionStage(params *CreateModelVersionStageParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -273,13 +296,12 @@ func (a *Client) CreateModelVersionStage(params *CreateModelVersionStageParams, 
 /*
   DeleteModelRegistry deletes registry model
 */
-func (a *Client) DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteModelRegistryOK, *DeleteModelRegistryNoContent, error) {
+func (a *Client) DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteModelRegistryOK, *DeleteModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteModelRegistry",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/registry/{name}",
@@ -291,7 +313,12 @@ func (a *Client) DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -309,13 +336,12 @@ func (a *Client) DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo
 /*
   DeleteModelVersion deletes model version
 */
-func (a *Client) DeleteModelVersion(params *DeleteModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteModelVersionOK, *DeleteModelVersionNoContent, error) {
+func (a *Client) DeleteModelVersion(params *DeleteModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteModelVersionOK, *DeleteModelVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteModelVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteModelVersion",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/registry/{entity}/versions/{name}",
@@ -327,7 +353,12 @@ func (a *Client) DeleteModelVersion(params *DeleteModelVersionParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -345,13 +376,12 @@ func (a *Client) DeleteModelVersion(params *DeleteModelVersionParams, authInfo r
 /*
   GetModelRegistry gets registry model
 */
-func (a *Client) GetModelRegistry(params *GetModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryOK, *GetModelRegistryNoContent, error) {
+func (a *Client) GetModelRegistry(params *GetModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelRegistryOK, *GetModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetModelRegistry",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/{name}",
@@ -363,7 +393,12 @@ func (a *Client) GetModelRegistry(params *GetModelRegistryParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -381,13 +416,12 @@ func (a *Client) GetModelRegistry(params *GetModelRegistryParams, authInfo runti
 /*
   GetModelRegistryActivities gets model activities
 */
-func (a *Client) GetModelRegistryActivities(params *GetModelRegistryActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryActivitiesOK, *GetModelRegistryActivitiesNoContent, error) {
+func (a *Client) GetModelRegistryActivities(params *GetModelRegistryActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelRegistryActivitiesOK, *GetModelRegistryActivitiesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetModelRegistryActivitiesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetModelRegistryActivities",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/{name}/activities",
@@ -399,7 +433,12 @@ func (a *Client) GetModelRegistryActivities(params *GetModelRegistryActivitiesPa
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -417,13 +456,12 @@ func (a *Client) GetModelRegistryActivities(params *GetModelRegistryActivitiesPa
 /*
   GetModelRegistrySettings gets registry model settings
 */
-func (a *Client) GetModelRegistrySettings(params *GetModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistrySettingsOK, *GetModelRegistrySettingsNoContent, error) {
+func (a *Client) GetModelRegistrySettings(params *GetModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelRegistrySettingsOK, *GetModelRegistrySettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetModelRegistrySettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetModelRegistrySettings",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/{name}/settings",
@@ -435,7 +473,12 @@ func (a *Client) GetModelRegistrySettings(params *GetModelRegistrySettingsParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -453,13 +496,12 @@ func (a *Client) GetModelRegistrySettings(params *GetModelRegistrySettingsParams
 /*
   GetModelVersion gets model version
 */
-func (a *Client) GetModelVersion(params *GetModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionOK, *GetModelVersionNoContent, error) {
+func (a *Client) GetModelVersion(params *GetModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelVersionOK, *GetModelVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetModelVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetModelVersion",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/{entity}/versions/{name}",
@@ -471,7 +513,12 @@ func (a *Client) GetModelVersion(params *GetModelVersionParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -489,13 +536,12 @@ func (a *Client) GetModelVersion(params *GetModelVersionParams, authInfo runtime
 /*
   GetModelVersionStages gets model version stages
 */
-func (a *Client) GetModelVersionStages(params *GetModelVersionStagesParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionStagesOK, *GetModelVersionStagesNoContent, error) {
+func (a *Client) GetModelVersionStages(params *GetModelVersionStagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetModelVersionStagesOK, *GetModelVersionStagesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetModelVersionStagesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetModelVersionStages",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/{entity}/versions/{name}/stages",
@@ -507,7 +553,12 @@ func (a *Client) GetModelVersionStages(params *GetModelVersionStagesParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -525,13 +576,12 @@ func (a *Client) GetModelVersionStages(params *GetModelVersionStagesParams, auth
 /*
   ListModelRegistries lists registry models
 */
-func (a *Client) ListModelRegistries(params *ListModelRegistriesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistriesOK, *ListModelRegistriesNoContent, error) {
+func (a *Client) ListModelRegistries(params *ListModelRegistriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListModelRegistriesOK, *ListModelRegistriesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListModelRegistriesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListModelRegistries",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/list",
@@ -543,7 +593,12 @@ func (a *Client) ListModelRegistries(params *ListModelRegistriesParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -561,13 +616,12 @@ func (a *Client) ListModelRegistries(params *ListModelRegistriesParams, authInfo
 /*
   ListModelRegistryNames lists registry model names
 */
-func (a *Client) ListModelRegistryNames(params *ListModelRegistryNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistryNamesOK, *ListModelRegistryNamesNoContent, error) {
+func (a *Client) ListModelRegistryNames(params *ListModelRegistryNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListModelRegistryNamesOK, *ListModelRegistryNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListModelRegistryNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListModelRegistryNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/names",
@@ -579,7 +633,12 @@ func (a *Client) ListModelRegistryNames(params *ListModelRegistryNamesParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -597,13 +656,12 @@ func (a *Client) ListModelRegistryNames(params *ListModelRegistryNamesParams, au
 /*
   ListModelVersionNames lists model versions names
 */
-func (a *Client) ListModelVersionNames(params *ListModelVersionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelVersionNamesOK, *ListModelVersionNamesNoContent, error) {
+func (a *Client) ListModelVersionNames(params *ListModelVersionNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListModelVersionNamesOK, *ListModelVersionNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListModelVersionNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListModelVersionNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/{name}/versions/names",
@@ -615,7 +673,12 @@ func (a *Client) ListModelVersionNames(params *ListModelVersionNamesParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -633,13 +696,12 @@ func (a *Client) ListModelVersionNames(params *ListModelVersionNamesParams, auth
 /*
   ListModelVersions lists model versions
 */
-func (a *Client) ListModelVersions(params *ListModelVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelVersionsOK, *ListModelVersionsNoContent, error) {
+func (a *Client) ListModelVersions(params *ListModelVersionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListModelVersionsOK, *ListModelVersionsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListModelVersionsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListModelVersions",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/registry/{name}/versions",
@@ -651,7 +713,12 @@ func (a *Client) ListModelVersions(params *ListModelVersionsParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -669,13 +736,12 @@ func (a *Client) ListModelVersions(params *ListModelVersionsParams, authInfo run
 /*
   PatchModelRegistry patches registry model
 */
-func (a *Client) PatchModelRegistry(params *PatchModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelRegistryOK, *PatchModelRegistryNoContent, error) {
+func (a *Client) PatchModelRegistry(params *PatchModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchModelRegistryOK, *PatchModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchModelRegistry",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/registry/{model.name}",
@@ -687,7 +753,12 @@ func (a *Client) PatchModelRegistry(params *PatchModelRegistryParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -705,13 +776,12 @@ func (a *Client) PatchModelRegistry(params *PatchModelRegistryParams, authInfo r
 /*
   PatchModelRegistrySettings patches registry model settings
 */
-func (a *Client) PatchModelRegistrySettings(params *PatchModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelRegistrySettingsOK, *PatchModelRegistrySettingsNoContent, error) {
+func (a *Client) PatchModelRegistrySettings(params *PatchModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchModelRegistrySettingsOK, *PatchModelRegistrySettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchModelRegistrySettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchModelRegistrySettings",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/registry/{model}/settings",
@@ -723,7 +793,12 @@ func (a *Client) PatchModelRegistrySettings(params *PatchModelRegistrySettingsPa
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -741,13 +816,12 @@ func (a *Client) PatchModelRegistrySettings(params *PatchModelRegistrySettingsPa
 /*
   PatchModelVersion patches model version
 */
-func (a *Client) PatchModelVersion(params *PatchModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelVersionOK, *PatchModelVersionNoContent, error) {
+func (a *Client) PatchModelVersion(params *PatchModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchModelVersionOK, *PatchModelVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchModelVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchModelVersion",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/registry/{model}/versions/{version.name}",
@@ -759,7 +833,12 @@ func (a *Client) PatchModelVersion(params *PatchModelVersionParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -777,13 +856,12 @@ func (a *Client) PatchModelVersion(params *PatchModelVersionParams, authInfo run
 /*
   RestoreModelRegistry restores registry model
 */
-func (a *Client) RestoreModelRegistry(params *RestoreModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreModelRegistryOK, *RestoreModelRegistryNoContent, error) {
+func (a *Client) RestoreModelRegistry(params *RestoreModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreModelRegistryOK, *RestoreModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestoreModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "RestoreModelRegistry",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/registry/{name}/restore",
@@ -795,7 +873,12 @@ func (a *Client) RestoreModelRegistry(params *RestoreModelRegistryParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -813,13 +896,12 @@ func (a *Client) RestoreModelRegistry(params *RestoreModelRegistryParams, authIn
 /*
   UnbookmarkModelRegistry unbookmarks registry model
 */
-func (a *Client) UnbookmarkModelRegistry(params *UnbookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkModelRegistryOK, *UnbookmarkModelRegistryNoContent, error) {
+func (a *Client) UnbookmarkModelRegistry(params *UnbookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkModelRegistryOK, *UnbookmarkModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUnbookmarkModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UnbookmarkModelRegistry",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/registry/{name}/unbookmark",
@@ -831,7 +913,12 @@ func (a *Client) UnbookmarkModelRegistry(params *UnbookmarkModelRegistryParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -849,13 +936,12 @@ func (a *Client) UnbookmarkModelRegistry(params *UnbookmarkModelRegistryParams, 
 /*
   UpdateModelRegistry updates registry model
 */
-func (a *Client) UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelRegistryOK, *UpdateModelRegistryNoContent, error) {
+func (a *Client) UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateModelRegistryOK, *UpdateModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateModelRegistryParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateModelRegistry",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/registry/{model.name}",
@@ -867,7 +953,12 @@ func (a *Client) UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -885,13 +976,12 @@ func (a *Client) UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo
 /*
   UpdateModelRegistrySettings updates registry model settings
 */
-func (a *Client) UpdateModelRegistrySettings(params *UpdateModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelRegistrySettingsOK, *UpdateModelRegistrySettingsNoContent, error) {
+func (a *Client) UpdateModelRegistrySettings(params *UpdateModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateModelRegistrySettingsOK, *UpdateModelRegistrySettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateModelRegistrySettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateModelRegistrySettings",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/registry/{model}/settings",
@@ -903,7 +993,12 @@ func (a *Client) UpdateModelRegistrySettings(params *UpdateModelRegistrySettings
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -921,13 +1016,12 @@ func (a *Client) UpdateModelRegistrySettings(params *UpdateModelRegistrySettings
 /*
   UpdateModelVersion updates model version
 */
-func (a *Client) UpdateModelVersion(params *UpdateModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelVersionOK, *UpdateModelVersionNoContent, error) {
+func (a *Client) UpdateModelVersion(params *UpdateModelVersionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateModelVersionOK, *UpdateModelVersionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateModelVersionParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateModelVersion",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/registry/{model}/versions/{version.name}",
@@ -939,7 +1033,12 @@ func (a *Client) UpdateModelVersion(params *UpdateModelVersionParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.5.4",
+    "version": "1.6.0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -1930,6 +1930,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -2008,6 +2015,13 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -5615,6 +5629,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -6459,207 +6480,6 @@
         ],
         "tags": [
           "UsersV1"
-        ]
-      }
-    },
-    "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy": {
-      "post": {
-        "summary": "Restart run with copy",
-        "operationId": "CopyRun",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "entity.owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.entity",
-            "description": "Entity: project name, hub name, registry name, ...",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.uuid",
-            "description": "Uuid identifier of the sub-entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Run object",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart": {
-      "post": {
-        "summary": "Restart run",
-        "operationId": "RestartRun",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "entity.owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.entity",
-            "description": "Entity: project name, hub name, registry name, ...",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.uuid",
-            "description": "Uuid identifier of the sub-entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Run object",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume": {
-      "post": {
-        "summary": "Resume run",
-        "operationId": "ResumeRun",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "entity.owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.entity",
-            "description": "Entity: project name, hub name, registry name, ...",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.uuid",
-            "description": "Uuid identifier of the sub-entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Run object",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          }
-        ],
-        "tags": [
-          "RunsV1"
         ]
       }
     },
@@ -7696,6 +7516,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -8020,6 +7847,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -8098,6 +7932,13 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -9342,6 +9183,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -9666,6 +9514,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -9744,6 +9599,13 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -11747,6 +11609,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -12018,6 +11887,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -12096,6 +11972,13 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -12228,6 +12111,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -12306,6 +12196,13 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -12390,6 +12287,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -12468,6 +12372,13 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -13341,6 +13252,63 @@
         ]
       }
     },
+    "/api/v1/{owner}/{project}/runs/sync": {
+      "post": {
+        "summary": "Sync offline run",
+        "operationId": "SyncRun",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the run will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Run object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project}/runs/tag": {
       "post": {
         "summary": "Tag runs",
@@ -13467,6 +13435,207 @@
       "patch": {
         "summary": "Patch run",
         "operationId": "PatchRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the run will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Run object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run.uuid}/copy": {
+      "post": {
+        "summary": "Restart run with copy",
+        "operationId": "CopyRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the run will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Run object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run.uuid}/restart": {
+      "post": {
+        "summary": "Restart run",
+        "operationId": "RestartRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the run will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Run object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run.uuid}/resume": {
+      "post": {
+        "summary": "Resume run",
+        "operationId": "ResumeRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -14111,7 +14280,7 @@
     },
     "/schemas": {
       "get": {
-        "summary": "Get random",
+        "summary": "NoOp",
         "operationId": "NoOp",
         "responses": {
           "200": {
@@ -15432,7 +15601,7 @@
           "description": "Must be a valid serialized protocol buffer of the above specified type."
         }
       },
-      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(&foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := &pb.Foo{...}\n     any, err := ptypes.MarshalAny(foo)\n     ...\n     foo := &pb.Foo{}\n     if err := ptypes.UnmarshalAny(any, foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": <string>,\n      \"lastName\": <string>\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(&foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := &pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := &pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": <string>,\n      \"lastName\": <string>\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
     },
     "protobufNullValue": {
       "type": "string",
@@ -15725,7 +15894,7 @@
           "title": "Optional password"
         }
       },
-      "title": "Uri type specification"
+      "title": "Auth type specification"
     },
     "v1Bayes": {
       "type": "object",
@@ -15742,17 +15911,17 @@
           },
           "title": "Hyperparams/Space definition of params to traverse"
         },
-        "num_initial_runs": {
+        "numInitialRuns": {
           "type": "integer",
           "format": "int32",
           "title": "Number of intial random observations to create"
         },
-        "max_iterations": {
+        "maxIterations": {
           "type": "integer",
           "format": "int32",
           "title": "Maximim number of iteration to produce new observations"
         },
-        "utility_function": {
+        "utilityFunction": {
           "type": "object",
           "title": "A utility function to use for the bayesian optimization"
         },
@@ -15774,7 +15943,7 @@
           "$ref": "#/definitions/v1Container",
           "title": "Container to override"
         },
-        "early_stopping": {
+        "earlyStopping": {
           "type": "array",
           "items": {
             "type": "object"
@@ -15819,15 +15988,15 @@
     "v1ClaimConnection": {
       "type": "object",
       "properties": {
-        "volume_claim": {
+        "volumeClaim": {
           "type": "string",
           "title": "Claim name"
         },
-        "mount_path": {
+        "mountPath": {
           "type": "string",
           "title": "Mount path"
         },
-        "read_only": {
+        "readOnly": {
           "type": "boolean",
           "title": "Read Only"
         },
@@ -15973,7 +16142,7 @@
           "type": "string",
           "title": "An optional template containing conditions to check before starting the run"
         },
-        "skip_on_upstream_skip": {
+        "skipOnUpstreamSkip": {
           "type": "boolean",
           "title": "Optional flag to skip this run if upstream was skipped"
         },
@@ -16009,7 +16178,7 @@
           },
           "title": "Optional outputs definition"
         },
-        "is_approved": {
+        "isApproved": {
           "type": "boolean",
           "title": "Optional flag to mark this specification requires approval before running"
         },
@@ -16099,7 +16268,7 @@
           "$ref": "#/definitions/v1Template",
           "title": "Optional flag to mark this specification as template"
         },
-        "is_approved": {
+        "isApproved": {
           "type": "boolean",
           "title": "Optional flag to mark this specification requires approval before running"
         }
@@ -16173,6 +16342,13 @@
     "v1ComponentHubSettings": {
       "type": "object",
       "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authorized users"
+        },
         "teams": {
           "type": "array",
           "items": {
@@ -16234,6 +16410,10 @@
         "content": {
           "type": "string",
           "title": "The Component body content"
+        },
+        "role": {
+          "type": "string",
+          "title": "Current user's role in this (org/teams)/hub/version"
         }
       },
       "title": "component hub specification"
@@ -16339,19 +16519,19 @@
     "v1ConnectionSchema": {
       "type": "object",
       "properties": {
-        "bucket_connection": {
+        "bucketConnection": {
           "$ref": "#/definitions/v1BucketConnection"
         },
-        "host_path_connection": {
+        "hostPathConnection": {
           "$ref": "#/definitions/v1HostPathConnection"
         },
-        "claim_connection": {
+        "claimConnection": {
           "$ref": "#/definitions/v1ClaimConnection"
         },
-        "host_connection": {
+        "hostConnection": {
           "$ref": "#/definitions/v1HostConnection"
         },
-        "git_connection": {
+        "gitConnection": {
           "$ref": "#/definitions/v1GitConnection"
         }
       }
@@ -16383,7 +16563,7 @@
           "$ref": "#/definitions/v1K8sResourceSchema",
           "title": "Secret resource schema"
         },
-        "config_map": {
+        "configMap": {
           "$ref": "#/definitions/v1K8sResourceSchema",
           "title": "ConfigMap resource schema"
         }
@@ -16415,17 +16595,17 @@
           "title": "Kind of schedule, should be equal to \"cron\"",
           "default": "cron"
         },
-        "start_at": {
+        "startAt": {
           "type": "string",
           "format": "date-time",
           "title": "Whan to start this cron schedule"
         },
-        "end_at": {
+        "endAt": {
           "type": "string",
           "format": "date-time",
           "title": "Whan to end this cron schedule"
         },
-        "max_runs": {
+        "maxRuns": {
           "type": "integer",
           "format": "int32",
           "title": "Limit to stop executing this schedule"
@@ -16434,7 +16614,7 @@
           "type": "string",
           "title": "Cron definition, e.g. 0 1 * * *"
         },
-        "depends_on_past": {
+        "dependsOnPast": {
           "type": "boolean",
           "title": "A flag to set a dependency on past executions"
         }
@@ -16468,7 +16648,7 @@
           "format": "int32",
           "title": "Optional component description"
         },
-        "early_stopping": {
+        "earlyStopping": {
           "type": "array",
           "items": {
             "type": "object"
@@ -16577,17 +16757,17 @@
           "format": "int32",
           "title": "Number of workers"
         },
-        "adapt_min": {
+        "adaptMin": {
           "type": "integer",
           "format": "int32",
           "title": "Adaptive config min workers"
         },
-        "adapt_max": {
+        "adaptMax": {
           "type": "integer",
           "format": "int32",
           "title": "Adaptive config max workers"
         },
-        "adapt_interval": {
+        "adaptInterval": {
           "type": "string",
           "title": "Adaptive config interval"
         },
@@ -16638,7 +16818,7 @@
           "title": "Kind of schedule, should be equal to \"datetime\"",
           "default": "datetime"
         },
-        "start_at": {
+        "startAt": {
           "type": "string",
           "format": "date-time",
           "title": "Whan to start this cron schedule"
@@ -16658,17 +16838,17 @@
           "format": "float",
           "title": "The diff factor, if not given than a zero tolerance policy is applied"
         },
-        "evaluation_interval": {
+        "evaluationInterval": {
           "type": "integer",
           "format": "int32",
           "description": "Interval/Frequency for applying the policy."
         },
-        "min_interval": {
+        "minInterval": {
           "type": "integer",
           "format": "int32",
           "title": "Min interval (e.g steps) before starting the process"
         },
-        "min_samples": {
+        "minSamples": {
           "type": "integer",
           "format": "int32",
           "title": "Min samples runs succeeded before starting the process"
@@ -16711,7 +16891,7 @@
           },
           "title": "An optional list of strubg for executing Run commands, translate to a RUN statements"
         },
-        "lang_env": {
+        "langEnv": {
           "type": "string",
           "title": "An optional string defining a language, e.g. en_US.UTF-8"
         },
@@ -16733,7 +16913,7 @@
           "type": "string",
           "title": "A work dir to copy code to, default to /code"
         },
-        "workdir_path": {
+        "workdirPath": {
           "type": "string",
           "title": "An optional workdir path"
         },
@@ -16880,7 +17060,7 @@
           },
           "title": "Optional Metadata annotations to pass to the k8s"
         },
-        "node_selector": {
+        "nodeSelector": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
@@ -16898,33 +17078,33 @@
           },
           "description": "Optional Tolerations to apply."
         },
-        "node_name": {
+        "nodeName": {
           "type": "string",
           "description": "Optional NodeName is a request to schedule this pod onto a specific node. If it is non-empty,\nthe scheduler simply schedules this pod onto that node, assuming that it fits resource\nrequirements."
         },
-        "service_account_name": {
+        "serviceAccountName": {
           "type": "string",
           "title": "Optional service account name to use for this run"
         },
-        "host_aliases": {
+        "hostAliases": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/v1HostAlias"
           },
           "description": "Optional HostAliases is an optional list of hosts and IPs that will be injected into the pod spec."
         },
-        "security_context": {
+        "securityContext": {
           "$ref": "#/definitions/v1PodSecurityContext",
           "description": "PodSecurityContext holds pod-level security attributes and common container settings.\nSome fields are also present in container.securityContext.  Field values of\ncontainer.securityContext take precedence over field values of PodSecurityContext."
         },
-        "image_pull_secrets": {
+        "imagePullSecrets": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "title": "Optional image pull secrets to use for this run\nImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images\nin pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets\ncan be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet.\nMore info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod"
         },
-        "host_network": {
+        "hostNetwork": {
           "type": "boolean",
           "description": "Host networking requested for this workflow pod. Default to false."
         },
@@ -16932,19 +17112,19 @@
           "type": "string",
           "description": "Use the host's pid namespace. Default to false."
         },
-        "dns_policy": {
+        "dnsPolicy": {
           "type": "string",
           "description": "Set DNS policy for the pod.\nDefaults to \"ClusterFirst\".\nValid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'.\nDNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.\nTo have DNS options set along with hostNetwork, you have to specify DNS policy\nexplicitly to 'ClusterFirstWithHostNet'."
         },
-        "dns_config": {
+        "dnsConfig": {
           "$ref": "#/definitions/v1PodDNSConfig",
           "description": "PodDNSConfig defines the DNS parameters of a pod in addition to\nthose generated from DNSPolicy."
         },
-        "scheduler_name": {
+        "schedulerName": {
           "type": "string",
           "title": "If specified, the pod will be dispatched by specified scheduler.\nOr it will be dispatched by workflow scope scheduler if specified.\nIf neither specified, the pod will be dispatched by default scheduler.\n+optional"
         },
-        "priority_class_name": {
+        "priorityClassName": {
           "type": "string",
           "description": "If specified, indicates the pod's priority. \"system-node-critical\" and\n\"system-cluster-critical\" are two special keywords which indicate the\nhighest priorities with the former being the highest priority. Any other\nname must be defined by creating a PriorityClass object with that name.\nIf not specified, the pod priority will be default or zero if there is no\ndefault."
         },
@@ -16953,7 +17133,7 @@
           "format": "int32",
           "description": "The priority value. Various system components use this field to find the\npriority of the pod. When Priority Admission Controller is enabled, it\nprevents users from setting this field. The admission controller populates\nthis field from PriorityClassName.\nThe higher the value, the higher the priority."
         },
-        "restart_policy": {
+        "restartPolicy": {
           "type": "string",
           "title": "A valid restart policy"
         }
@@ -17326,6 +17506,28 @@
       },
       "description": "FailureEarlyStoppingSchema specification\nEarly stopping based on failure config.\nthis policy stops based on a percentage of\nfailed runs at every evaluation."
     },
+    "v1FileType": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "title": "File content"
+        },
+        "filename": {
+          "type": "string",
+          "title": "A name to give to the generated file"
+        },
+        "chmod": {
+          "type": "string",
+          "title": "An optional permissions to apply to the file after creation, e.g +x"
+        },
+        "kind": {
+          "type": "string",
+          "title": "An optional Artifact kind to log the lineage information"
+        }
+      },
+      "title": "File type specification"
+    },
     "v1Flink": {
       "type": "object",
       "properties": {
@@ -17384,7 +17586,7 @@
           "title": "Optional Url"
         },
         "revision": {
-          "type": "boolean",
+          "type": "string",
           "title": "Optional revision"
         },
         "flags": {
@@ -17412,7 +17614,7 @@
           },
           "title": "Hyperparams/Space definition of params to traverse"
         },
-        "num_runs": {
+        "numRuns": {
           "type": "integer",
           "format": "int32",
           "title": "Number of runs to generate and search"
@@ -17427,7 +17629,7 @@
           "format": "int32",
           "title": "Number of concurrent runs"
         },
-        "early_stopping": {
+        "earlyStopping": {
           "type": "array",
           "items": {
             "type": "object"
@@ -17448,7 +17650,7 @@
           "$ref": "#/definitions/v1Statuses",
           "title": "Optional trigger policy, default done"
         },
-        "hub_ref": {
+        "hubRef": {
           "type": "string",
           "title": "Component name to use"
         },
@@ -17498,15 +17700,15 @@
     "v1HostPathConnection": {
       "type": "object",
       "properties": {
-        "host_path": {
+        "hostPath": {
           "type": "string",
           "title": "host path"
         },
-        "mount_path": {
+        "mountPath": {
           "type": "string",
           "title": "Mount path"
         },
-        "read_only": {
+        "readOnly": {
           "type": "boolean",
           "title": "Read Only"
         },
@@ -17804,7 +18006,7 @@
           },
           "title": "Hyperparams/Space definition of params to traverse"
         },
-        "max_iterations": {
+        "maxIterations": {
           "type": "integer",
           "format": "int32",
           "title": "Maximim number of iteration to produce new observations"
@@ -17840,7 +18042,7 @@
           "$ref": "#/definitions/v1Container",
           "title": "Container to override"
         },
-        "early_stopping": {
+        "earlyStopping": {
           "type": "array",
           "items": {
             "type": "object"
@@ -17869,15 +18071,15 @@
           },
           "title": "Hyperparams/Space definition of params to traverse"
         },
-        "num_runs": {
+        "numRuns": {
           "type": "integer",
           "format": "int32",
           "title": "Number of runs to generate and search"
         },
-        "max_iterations": {
+        "maxIterations": {
           "type": "integer",
           "format": "int32",
-          "title": "Maximim number of iteration to produce new observations"
+          "title": "Maximum number of iteration to produce new observations"
         },
         "seed": {
           "type": "integer",
@@ -17893,12 +18095,12 @@
           "$ref": "#/definitions/v1Container",
           "title": "Container to override"
         },
-        "early_stopping": {
+        "earlyStopping": {
           "type": "array",
           "items": {
             "type": "object"
           },
-          "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
+          "title": "A list of Early stopping objects, accepts both metric and failure early stopping mechanisms"
         }
       },
       "title": "Matrix based on hyperopt"
@@ -17925,7 +18127,7 @@
           "type": "string",
           "title": "Description for the input/output"
         },
-        "iotype": {
+        "type": {
           "type": "string",
           "title": "The type of the input/output"
         },
@@ -17933,23 +18135,23 @@
           "type": "object",
           "title": "The value of the input/output should be compatible with the type"
         },
-        "is_optional": {
+        "isOptional": {
           "type": "boolean",
           "title": "A flag to tell if this input/output is optional"
         },
-        "is_list": {
+        "isList": {
           "type": "boolean",
           "title": "A flag to tell if this input/output is list"
         },
-        "is_flag": {
+        "isFlag": {
           "type": "boolean",
           "title": "A flag to tell if this input/output is flag, only valid for bool type"
         },
-        "arg_format": {
+        "argFormat": {
           "type": "string",
           "title": "An optional argFromat of the input/output to be used instead of passing the value as is"
         },
-        "delay_validation": {
+        "delayValidation": {
           "type": "boolean",
           "title": "A flag to tell if param validation for this input/output should be delayed"
         },
@@ -17964,7 +18166,7 @@
           "type": "string",
           "title": "A flag to signal to Polyaxon that this io is used with a connection"
         },
-        "to_init": {
+        "toInit": {
           "type": "boolean",
           "title": "A flag to signal to Polyaxon that this io must be tranformed to an init container"
         }
@@ -17985,6 +18187,10 @@
         "dockerfile": {
           "$ref": "#/definitions/v1DockerfileType",
           "title": "Schema of the dockerfile to init"
+        },
+        "file": {
+          "$ref": "#/definitions/v1FileType",
+          "title": "File intializer"
         },
         "connection": {
           "type": "string",
@@ -18035,17 +18241,17 @@
           "title": "Kind of schedule, should be equal to \"interval\"",
           "default": "interval"
         },
-        "start_at": {
+        "startAt": {
           "type": "string",
           "format": "date-time",
           "title": "When to start this interval schedule"
         },
-        "end_at": {
+        "endAt": {
           "type": "string",
           "format": "date-time",
           "title": "Whan to end this interval schedule"
         },
-        "max_runs": {
+        "maxRuns": {
           "type": "integer",
           "format": "int32",
           "title": "Limit to stop executing this schedule"
@@ -18055,30 +18261,12 @@
           "format": "int32",
           "title": "Frequency (timedelta) at which to execute the runs"
         },
-        "depends_on_past": {
+        "dependsOnPast": {
           "type": "boolean",
           "title": "A flag to set a dependency on past executions"
         }
       },
       "title": "Interval schedule specification"
-    },
-    "v1IoCond": {
-      "type": "object",
-      "properties": {
-        "kind": {
-          "type": "string",
-          "title": "Kind of condition, should be equal to \"io\""
-        },
-        "param": {
-          "type": "string",
-          "title": "Param to condition on: e.g. builds.outputs.param1"
-        },
-        "trigger": {
-          "type": "string",
-          "title": "Trigger to check, trigger condition must conform to the iotype, e.g. value condition: v1|v2|V3"
-        }
-      },
-      "title": "Input condition specification"
     },
     "v1Iterative": {
       "type": "object",
@@ -18093,12 +18281,12 @@
           "additionalProperties": {
             "type": "object"
           },
-          "title": "Hyperparams/Space definition of params to traverse"
+          "title": "Hyperparam/Space definition of params to traverse"
         },
-        "max_iterations": {
+        "maxIterations": {
           "type": "integer",
           "format": "int32",
-          "title": "Maximim number of iteration to produce new observations"
+          "title": "Maximum number of iteration to produce new observations"
         },
         "seed": {
           "type": "integer",
@@ -18114,12 +18302,12 @@
           "$ref": "#/definitions/v1Container",
           "title": "Container specification for crating new observations based on data from previous iterations"
         },
-        "early_stopping": {
+        "earlyStopping": {
           "type": "array",
           "items": {
             "type": "object"
           },
-          "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
+          "title": "A list of Early stopping objects, accepts both metric and failure early stopping mechanisms"
         }
       },
       "title": "Matrix based on a custom iterative algorithm (suggestions -> mapping -> reduce -> repeat)"
@@ -18217,11 +18405,11 @@
           "type": "string",
           "title": "A flag to signal to Polyaxon that this param is used with a connection"
         },
-        "to_init": {
+        "toInit": {
           "type": "boolean",
           "title": "A flag to signal to Polyaxon that this param must be tranformed to an init container"
         },
-        "context_only": {
+        "contextOnly": {
           "type": "boolean",
           "title": "A flag to signal to Polyaxon that this param should not be validated against io"
         }
@@ -18234,7 +18422,7 @@
         "name": {
           "type": "string"
         },
-        "mount_path": {
+        "mountPath": {
           "type": "string"
         },
         "items": {
@@ -18243,7 +18431,7 @@
             "type": "string"
           }
         },
-        "default_mode": {
+        "defaultMode": {
           "type": "integer",
           "format": "int32"
         }
@@ -18261,7 +18449,7 @@
           "$ref": "#/definitions/v1K8sResourceSchema",
           "title": "The connection schema should be a valid ConnectionSchema"
         },
-        "is_requested": {
+        "isRequested": {
           "type": "boolean",
           "title": "Option if the config resource is requested"
         }
@@ -18966,7 +19154,7 @@
           "$ref": "#/definitions/v1CleanPodPolicy",
           "title": "optional clean pod policy section"
         },
-        "slots_per_worker": {
+        "slotsPerWorker": {
           "type": "integer",
           "format": "int32",
           "title": "Optional slots per worker"
@@ -19002,7 +19190,7 @@
           "format": "int32",
           "title": "Number of concurrent runs"
         },
-        "early_stopping": {
+        "earlyStopping": {
           "type": "array",
           "items": {
             "type": "object"
@@ -19060,17 +19248,17 @@
           "title": "Kind of this stopping policy, should be equal to \"median\"",
           "default": "median"
         },
-        "evaluation_interval": {
+        "evaluationInterval": {
           "type": "integer",
           "format": "int32",
           "description": "Interval/Frequency for applying the policy."
         },
-        "min_interval": {
+        "minInterval": {
           "type": "integer",
           "format": "int32",
           "title": "Min interval (e.g steps) before starting the process"
         },
-        "min_samples": {
+        "minSamples": {
           "type": "integer",
           "format": "int32",
           "title": "Min samples runs succeeded before starting the process"
@@ -19172,6 +19360,13 @@
     "v1ModelRegistrySettings": {
       "type": "object",
       "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authorized users"
+        },
         "teams": {
           "type": "array",
           "items": {
@@ -19248,6 +19443,10 @@
         "metadata": {
           "type": "string",
           "title": "Model spec metadata"
+        },
+        "role": {
+          "type": "string",
+          "title": "Current user's role in this (org/teams)/model/version"
         }
       },
       "title": "Model Version specification"
@@ -19352,7 +19551,7 @@
           "type": "string",
           "title": "An optional template containing conditions to check before starting the run"
         },
-        "skip_on_upstream_skip": {
+        "skipOnUpstreamSkip": {
           "type": "boolean",
           "title": "Optional flag to skip this run if upstream was skipped"
         },
@@ -19374,7 +19573,7 @@
           },
           "title": "Optional dict of params"
         },
-        "run_patch": {
+        "runPatch": {
           "type": "object",
           "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
         },
@@ -19382,11 +19581,11 @@
           "$ref": "#/definitions/v1PatchStrategy",
           "title": "Optional patch strategy, default post_merge"
         },
-        "is_preset": {
+        "isPreset": {
           "type": "boolean",
           "title": "Optional flag to mark this specification as preset"
         },
-        "is_approved": {
+        "isApproved": {
           "type": "boolean",
           "title": "Optional flag to mark this specification requires approval before running"
         },
@@ -19394,16 +19593,16 @@
           "$ref": "#/definitions/v1Template",
           "title": "Optional to mark this specification as template with instructions"
         },
-        "url_ref": {
+        "urlRef": {
           "type": "string"
         },
-        "path_ref": {
+        "pathRef": {
           "type": "string"
         },
-        "hub_ref": {
+        "hubRef": {
           "type": "string"
         },
-        "dag_ref": {
+        "dagRef": {
           "type": "string"
         },
         "component": {
@@ -19448,17 +19647,6 @@
         }
       },
       "title": "Operation creation"
-    },
-    "v1OperationCond": {
-      "type": "object",
-      "properties": {
-        "io_conidtion": {
-          "$ref": "#/definitions/v1IoCond"
-        },
-        "status_condition": {
-          "$ref": "#/definitions/v1StatusCond"
-        }
-      }
     },
     "v1Optimization": {
       "type": "string",
@@ -19615,11 +19803,11 @@
           "type": "string",
           "title": "A flag to signal to Polyaxon that this param is used with a connection"
         },
-        "to_init": {
+        "toInit": {
           "type": "boolean",
           "title": "A flag to signal to Polyaxon that this param must be tranformed to an init container"
         },
-        "context_only": {
+        "contextOnly": {
           "type": "boolean",
           "title": "A flag to signal to Polyaxon that this param should not be validated against io"
         }
@@ -19711,33 +19899,37 @@
           "type": "boolean",
           "title": "Optional flag to tell Polyaxon if it should set a shm context for the run, default false"
         },
-        "collect_artifacts": {
+        "collectArtifacts": {
           "type": "boolean",
           "title": "Optional flag to tell Polyaxon to collect articats and outputs"
         },
-        "collect_logs": {
+        "collectLogs": {
           "type": "boolean",
           "title": "Optional flag to tell Polyaxon to collect logs"
         },
-        "collect_resources": {
+        "collectResources": {
           "type": "string",
           "title": "Optional flag to tell Polyaxon to collect container resouces (cpu/memory/gpu)"
         },
-        "sync_statuses": {
+        "syncStatuses": {
           "type": "boolean",
           "title": "Optional flag to tell Polyaxon to sync statuses"
         },
-        "auto_resume": {
+        "autoResume": {
           "type": "boolean",
           "title": "Auto resume a run's artifacts (applies to resume and retries), works if collects_artifacts is enabled"
         },
-        "log_level": {
+        "logLevel": {
           "type": "string",
           "title": "Optional log level"
         },
         "externalHost": {
           "type": "boolean",
           "title": "Optional flag to tell Polyaxon to connect to the control plan via the external host"
+        },
+        "sidecar": {
+          "$ref": "#/definitions/v1PolyaxonSidecarContainer",
+          "title": "Optional to override the sidecar's default config"
         },
         "notifications": {
           "type": "array",
@@ -19763,10 +19955,10 @@
         "image": {
           "type": "string"
         },
-        "image_tag": {
+        "imageTag": {
           "type": "string"
         },
-        "image_pull_policy": {
+        "imagePullPolicy": {
           "type": "string"
         },
         "resources": {
@@ -19781,21 +19973,21 @@
         "image": {
           "type": "string"
         },
-        "image_tag": {
+        "imageTag": {
           "type": "string"
         },
-        "image_pull_policy": {
+        "imagePullPolicy": {
           "type": "string"
         },
-        "sleep_interval": {
+        "sleepInterval": {
           "type": "integer",
           "format": "int32"
         },
-        "sync_interval": {
+        "syncInterval": {
           "type": "integer",
           "format": "int32"
         },
-        "monitor_logs": {
+        "monitorLogs": {
           "type": "boolean"
         },
         "resources": {
@@ -19955,6 +20147,13 @@
           },
           "title": "Authorized agents"
         },
+        "user_accesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ProjectUserAccess"
+          },
+          "title": "Authorized users"
+        },
         "teams": {
           "type": "array",
           "items": {
@@ -19964,6 +20163,23 @@
         }
       },
       "title": "Project Settings specification"
+    },
+    "v1ProjectUserAccess": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "title": "User to give access to"
+        },
+        "queue": {
+          "type": "string",
+          "title": "Optional queue to configure for user"
+        },
+        "preset": {
+          "type": "string",
+          "title": "Optional preset to configure for user"
+        }
+      }
     },
     "v1PytorchJob": {
       "type": "object",
@@ -20052,7 +20268,7 @@
           },
           "title": "Hyperparams/Space definition of params to traverse"
         },
-        "num_runs": {
+        "numRuns": {
           "type": "integer",
           "format": "int32",
           "title": "Number of runs to generate and search"
@@ -20067,7 +20283,7 @@
           "format": "int32",
           "title": "Number of concurrent runs"
         },
-        "early_stopping": {
+        "earlyStopping": {
           "type": "array",
           "items": {
             "type": "object"
@@ -20094,16 +20310,16 @@
     "v1Reference": {
       "type": "object",
       "properties": {
-        "hub_reference": {
+        "hubRef": {
           "$ref": "#/definitions/v1HubRef"
         },
-        "dag_reference": {
+        "dagRef": {
           "$ref": "#/definitions/v1DagRef"
         },
-        "url_reference": {
+        "urlRef": {
           "$ref": "#/definitions/v1UrlRef"
         },
-        "path_reference": {
+        "pathRef": {
           "$ref": "#/definitions/v1PathRef"
         }
       },
@@ -20424,13 +20640,13 @@
         "dag": {
           "$ref": "#/definitions/v1Dag"
         },
-        "tf_job": {
+        "tfJob": {
           "$ref": "#/definitions/v1TFJob"
         },
-        "pytorch_job": {
+        "pytorchJob": {
           "$ref": "#/definitions/v1PytorchJob"
         },
-        "mpi_job": {
+        "mpiJob": {
           "$ref": "#/definitions/v1MPIJob"
         },
         "dask": {
@@ -20532,10 +20748,7 @@
     "v1Schemas": {
       "type": "object",
       "properties": {
-        "operation_cond": {
-          "$ref": "#/definitions/v1OperationCond"
-        },
-        "early_stopping": {
+        "earlyStopping": {
           "$ref": "#/definitions/v1EarlyStopping"
         },
         "matrix": {
@@ -20547,28 +20760,28 @@
         "operation": {
           "$ref": "#/definitions/v1Operation"
         },
-        "compiled_operation": {
+        "compiledOperation": {
           "$ref": "#/definitions/v1CompiledOperation"
         },
         "schedule": {
           "$ref": "#/definitions/v1Schedule"
         },
-        "connection_schema": {
+        "connectionSchema": {
           "$ref": "#/definitions/v1ConnectionSchema"
         },
-        "hp_params": {
+        "hpParams": {
           "$ref": "#/definitions/v1HpParams"
         },
         "reference": {
           "$ref": "#/definitions/v1Reference"
         },
-        "artifacts_mount": {
+        "artifactsMount": {
           "$ref": "#/definitions/v1ArtifactsMount"
         },
-        "polyaxon_sidecar_container": {
+        "polyaxonSidecarContainer": {
           "$ref": "#/definitions/v1PolyaxonSidecarContainer"
         },
-        "polyaxon_init_container": {
+        "polyaxonInitContainer": {
           "$ref": "#/definitions/v1PolyaxonInitContainer"
         },
         "artifacs": {
@@ -20583,31 +20796,25 @@
         "s3": {
           "$ref": "#/definitions/v1S3Type"
         },
-        "autg": {
+        "auth": {
           "$ref": "#/definitions/v1AuthType"
-        },
-        "dockerfile": {
-          "$ref": "#/definitions/v1DockerfileType"
-        },
-        "git": {
-          "$ref": "#/definitions/v1GitType"
         },
         "uri": {
           "$ref": "#/definitions/v1UriType"
         },
-        "k8s_resource": {
+        "k8sResource": {
           "$ref": "#/definitions/v1K8sResourceType"
         },
         "connection": {
           "$ref": "#/definitions/v1ConnectionType"
         },
-        "event_type": {
+        "eventType": {
           "$ref": "#/definitions/v1EventType"
         },
-        "matrix_kind": {
+        "matrixKind": {
           "$ref": "#/definitions/v1MatrixKind"
         },
-        "schedule_kind": {
+        "scheduleKind": {
           "$ref": "#/definitions/v1ScheduleKind"
         },
         "event": {
@@ -20775,23 +20982,23 @@
           "$ref": "#/definitions/v1SparkType",
           "description": "Type tells the type of the Spark application."
         },
-        "spark_version": {
+        "sparkVersion": {
           "type": "string",
           "description": "Spark version is the version of Spark the application uses."
         },
-        "python_version": {
+        "pythonVersion": {
           "type": "string",
           "description": "Spark version is the version of Spark the application uses."
         },
-        "deploy_mode": {
+        "deployMode": {
           "$ref": "#/definitions/SparkDeployMode",
           "description": "Mode is the deployment mode of the Spark application."
         },
-        "main_class": {
+        "mainClass": {
           "type": "string",
           "description": "MainClass is the fully-qualified main class of the Spark application.\nThis only applies to Java/Scala Spark applications."
         },
-        "main_application_file": {
+        "mainApplicationFile": {
           "type": "string",
           "description": "MainFile is the path to a bundled JAR, Python, or R file of the application."
         },
@@ -20802,25 +21009,25 @@
           },
           "description": "Arguments is a list of arguments to be passed to the application."
         },
-        "hadoop_conf": {
+        "hadoopConf": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
           "description": "HadoopConf carries user-specified Hadoop configuration properties as they would use the  the \"--conf\" option\nin spark-submit.  The SparkApplication controller automatically adds prefix \"spark.hadoop.\" to Hadoop\nconfiguration properties."
         },
-        "spark_conf": {
+        "sparkConf": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
           "description": "HadoopConf carries user-specified Hadoop configuration properties as they would use the  the \"--conf\" option\nin spark-submit.  The SparkApplication controller automatically adds prefix \"spark.hadoop.\" to Hadoop\nconfiguration properties."
         },
-        "spark_config_map": {
+        "sparkConfigMap": {
           "type": "string",
           "description": "SparkConfigMap carries the name of the ConfigMap containing Spark configuration files such as log4j.properties.\nThe controller will add environment variable SPARK_CONF_DIR to the path where the ConfigMap is mounted to."
         },
-        "hadoop_config_map": {
+        "hadoopConfigMap": {
           "type": "string",
           "description": "HadoopConfigMap carries the name of the ConfigMap containing Hadoop configuration files such as core-site.xml.\nThe controller will add environment variable HADOOP_CONF_DIR to the path where the ConfigMap is mounted to."
         },
@@ -20961,24 +21168,6 @@
         }
       },
       "title": "Status specification"
-    },
-    "v1StatusCond": {
-      "type": "object",
-      "properties": {
-        "kind": {
-          "type": "string",
-          "title": "Kind of condition, should be equal to \"status\""
-        },
-        "operation": {
-          "type": "string",
-          "title": "Operation to set the condition on"
-        },
-        "trigger": {
-          "type": "string",
-          "title": "Trigger to check, must a valid status or union of statuses, e.g. succeeded  or succeeded | failed"
-        }
-      },
-      "title": "Status condition specification"
     },
     "v1StatusCondition": {
       "type": "object",
@@ -21169,7 +21358,7 @@
     "v1Termination": {
       "type": "object",
       "properties": {
-        "max_retries": {
+        "maxRetries": {
           "type": "integer",
           "format": "int32",
           "title": "Max retries for a specific run"
@@ -21274,22 +21463,22 @@
           "format": "int32",
           "description": "The percentage of runs to stop, at each evaluation interval.\ne.g. 1 - 99."
         },
-        "evaluation_interval": {
+        "evaluationInterval": {
           "type": "integer",
           "format": "int32",
           "description": "Interval/Frequency for applying the policy."
         },
-        "min_interval": {
+        "minInterval": {
           "type": "integer",
           "format": "int32",
           "title": "Min interval (e.g steps) before starting the process"
         },
-        "min_samples": {
+        "minSamples": {
           "type": "integer",
           "format": "int32",
           "title": "Min samples runs succeeded before starting the process"
         },
-        "include_succeeded": {
+        "includeSucceeded": {
           "type": "boolean",
           "title": "Flag to include or not the succeeded runs in the calculation"
         }
@@ -21428,7 +21617,7 @@
           "type": "string",
           "title": "Optional container"
         },
-        "storage_account": {
+        "storageAccount": {
           "type": "string",
           "title": "Optional storage_account"
         },

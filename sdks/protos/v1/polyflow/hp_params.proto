@@ -149,7 +149,7 @@ message HpQLogNormal {
 
 // Hp Matrix specification
 message HpParams {
-    oneof hp_params {
+    oneof hpParams {
         HpChoice choice = 1;
         HpPChoice pchoice = 2;
         HpRange range = 3;

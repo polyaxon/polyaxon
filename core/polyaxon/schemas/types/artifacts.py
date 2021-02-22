@@ -52,6 +52,8 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
 
     ### YAML usage
 
+    ### Usage in IO and params definition
+
     The inputs definition
 
     ```yaml
@@ -84,7 +86,32 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
     Polyaxon knows about that connection and that it's of type S3.
     It will load all data in that S3 bucket before starting the experiment.
 
+    ### Usage in initializers
+
+    ```yaml
+    >>> version:  1.1
+    >>> kind: component
+    >>> run:
+    >>>   kind: job
+    >>>   init:
+    >>>   - artifacts:
+    >>>       files: ["file1", "/path/to/file2"]
+    >>>   - artifacts:
+    >>>       files: [["file1", "to/this/path/file1"], "/path/to/file2"]
+    >>>   - artifacts:
+    >>>       dirs: ["/tensorboard-logs"]
+    >>>     connection: foo
+    >>>   - artifacts:
+    >>>       dirs: ["/"]
+    >>>     connection: s3-datase
+    >>>
+    >>>   container:
+    >>>     ...
+    ```
+
     ### Python usage
+
+    ### Usage in IO and params definition
 
     The inputs definition
 
@@ -95,15 +122,15 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="some-file-names",
-    >>>         iotype=types.ARTIFACTS,
+    >>>         type=types.ARTIFACTS,
     >>>     ),
     >>>     V1IO(
     >>>         name="tensorboard-log-dir",
-    >>>         iotype=types.ARTIFACTS,
+    >>>         type=types.ARTIFACTS,
     >>>     ),
     >>>     V1IO(
     >>>         name="dataset1",
-    >>>         iotype=types.ARTIFACTS,
+    >>>         type=types.ARTIFACTS,
     >>>     )
     >>> ]
     ```
@@ -127,6 +154,32 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
     >>>         to_init=True
     >>>     ),
     >>> }
+    ```
+
+    ### Usage in initializers
+
+    ```python
+    >>> from polyaxon.polyflow import V1Component, V1Init, V1Job
+    >>> from polyaxon.schemas.types import V1ArtifactsType
+    >>> from polyaxon.k8s import k8s_schemas
+    >>> component = V1Component(
+    >>>     run=V1Job(
+    >>>        init=[
+    >>>             V1Init(
+    >>>                 artifacts=V1ArtifactsType(files=["file1", "/path/to/file2"])
+    >>>             ),
+    >>>             V1Init(
+    >>>                 artifacts=V1ArtifactsType(dirs=["/tensorboard-logs"]),
+    >>>                 connection="foo"
+    >>>             ),
+    >>>             V1Init(
+    >>>                 artifacts=V1ArtifactsType(dirs=["/"], workers=10),
+    >>>                 connection="s3-dataset"
+    >>>             ),
+    >>>        ],
+    >>>        container=k8s_schemas.V1Container(...)
+    >>>     )
+    >>> )
     ```
     """
 

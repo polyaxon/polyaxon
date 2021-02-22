@@ -35,10 +35,10 @@ type V1JoinParam struct {
 	Connection string `json:"connection,omitempty"`
 
 	// A flag to signal to Polyaxon that this param should not be validated against io
-	ContextOnly bool `json:"context_only,omitempty"`
+	ContextOnly bool `json:"contextOnly,omitempty"`
 
 	// A flag to signal to Polyaxon that this param must be tranformed to an init container
-	ToInit bool `json:"to_init,omitempty"`
+	ToInit bool `json:"toInit,omitempty"`
 
 	// The value to pass, if no ref or search is passed then it corresponds to a literal value
 	Value string `json:"value,omitempty"`

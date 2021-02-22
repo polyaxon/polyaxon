@@ -536,7 +536,7 @@ Name | Type | Description  | Notes
 
 <a name="getProjectActivities"></a>
 # **getProjectActivities**
-> V1ListActivitiesResponse getProjectActivities(owner, name, offset, limit, sort, query)
+> V1ListActivitiesResponse getProjectActivities(owner, name, offset, limit, sort, query, mode)
 
 Get project activities
 
@@ -568,8 +568,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListActivitiesResponse result = apiInstance.getProjectActivities(owner, name, offset, limit, sort, query);
+      V1ListActivitiesResponse result = apiInstance.getProjectActivities(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#getProjectActivities");
@@ -592,6 +593,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 

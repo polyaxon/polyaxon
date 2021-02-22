@@ -17,7 +17,6 @@ from typing import List
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
-from coredb.managers.duration import set_finished_at, set_started_at
 from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
 from polyaxon.utils.list_utils import to_list
 from polycommon import auditor
@@ -80,8 +79,8 @@ def new_status(
 
     entity = set_entity_status(entity=entity, condition=condition)
 
-    set_started_at(run=entity)
-    set_finished_at(run=entity)
+    LifeCycle.set_started_at(entity=entity)
+    LifeCycle.set_finished_at(entity=entity)
     additional_fields = additional_fields or []
     entity.save(
         update_fields=additional_fields

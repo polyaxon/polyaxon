@@ -51,24 +51,6 @@ class TestEventsRegistry(TestCase):
             run.RunStoppedEvent, run.RunStoppedEvent.get_event_subject(), "run", events
         )
         self._asser_event(
-            run.RunResumedActorEvent,
-            run.RunResumedActorEvent.get_event_subject(),
-            "run",
-            events,
-        )
-        self._asser_event(
-            run.RunRestartedActorEvent,
-            run.RunRestartedActorEvent.get_event_subject(),
-            "run",
-            events,
-        )
-        self._asser_event(
-            run.RunCopiedActorEvent,
-            run.RunCopiedActorEvent.get_event_subject(),
-            "run",
-            events,
-        )
-        self._asser_event(
             run.RunNewStatusEvent,
             run.RunNewStatusEvent.get_event_subject(),
             "run",
@@ -131,6 +113,12 @@ class TestEventsRegistry(TestCase):
         self._asser_event(
             run.RunCopiedActorEvent,
             run.RunCopiedActorEvent.get_event_subject(),
+            "run",
+            events,
+        )
+        self._asser_event(
+            run.RunSyncedActorEvent,
+            run.RunSyncedActorEvent.get_event_subject(),
             "run",
             events,
         )
@@ -199,12 +187,6 @@ class TestEventsRegistry(TestCase):
             events,
         )
         self._asser_event(
-            run.RunCopiedActorEvent,
-            run.RunCopiedActorEvent.get_event_action(),
-            "copied",
-            events,
-        )
-        self._asser_event(
             run.RunCreatedActorEvent,
             run.RunCreatedActorEvent.get_event_action(),
             "created",
@@ -250,6 +232,12 @@ class TestEventsRegistry(TestCase):
             run.RunCopiedActorEvent,
             run.RunCopiedActorEvent.get_event_action(),
             "copied",
+            events,
+        )
+        self._asser_event(
+            run.RunSyncedActorEvent,
+            run.RunSyncedActorEvent.get_event_action(),
+            "synced",
             events,
         )
         self._asser_event(

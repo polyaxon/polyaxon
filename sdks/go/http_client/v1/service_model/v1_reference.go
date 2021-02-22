@@ -32,36 +32,36 @@ import (
 // swagger:model v1Reference
 type V1Reference struct {
 
-	// dag reference
-	DagReference *V1DagRef `json:"dag_reference,omitempty"`
+	// dag ref
+	DagRef *V1DagRef `json:"dagRef,omitempty"`
 
-	// hub reference
-	HubReference *V1HubRef `json:"hub_reference,omitempty"`
+	// hub ref
+	HubRef *V1HubRef `json:"hubRef,omitempty"`
 
-	// path reference
-	PathReference *V1PathRef `json:"path_reference,omitempty"`
+	// path ref
+	PathRef *V1PathRef `json:"pathRef,omitempty"`
 
-	// url reference
-	URLReference *V1URLRef `json:"url_reference,omitempty"`
+	// url ref
+	URLRef *V1URLRef `json:"urlRef,omitempty"`
 }
 
 // Validate validates this v1 reference
 func (m *V1Reference) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateDagReference(formats); err != nil {
+	if err := m.validateDagRef(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateHubReference(formats); err != nil {
+	if err := m.validateHubRef(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validatePathReference(formats); err != nil {
+	if err := m.validatePathRef(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateURLReference(formats); err != nil {
+	if err := m.validateURLRef(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -71,15 +71,15 @@ func (m *V1Reference) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Reference) validateDagReference(formats strfmt.Registry) error {
-	if swag.IsZero(m.DagReference) { // not required
+func (m *V1Reference) validateDagRef(formats strfmt.Registry) error {
+	if swag.IsZero(m.DagRef) { // not required
 		return nil
 	}
 
-	if m.DagReference != nil {
-		if err := m.DagReference.Validate(formats); err != nil {
+	if m.DagRef != nil {
+		if err := m.DagRef.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("dag_reference")
+				return ve.ValidateName("dagRef")
 			}
 			return err
 		}
@@ -88,15 +88,15 @@ func (m *V1Reference) validateDagReference(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Reference) validateHubReference(formats strfmt.Registry) error {
-	if swag.IsZero(m.HubReference) { // not required
+func (m *V1Reference) validateHubRef(formats strfmt.Registry) error {
+	if swag.IsZero(m.HubRef) { // not required
 		return nil
 	}
 
-	if m.HubReference != nil {
-		if err := m.HubReference.Validate(formats); err != nil {
+	if m.HubRef != nil {
+		if err := m.HubRef.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("hub_reference")
+				return ve.ValidateName("hubRef")
 			}
 			return err
 		}
@@ -105,15 +105,15 @@ func (m *V1Reference) validateHubReference(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Reference) validatePathReference(formats strfmt.Registry) error {
-	if swag.IsZero(m.PathReference) { // not required
+func (m *V1Reference) validatePathRef(formats strfmt.Registry) error {
+	if swag.IsZero(m.PathRef) { // not required
 		return nil
 	}
 
-	if m.PathReference != nil {
-		if err := m.PathReference.Validate(formats); err != nil {
+	if m.PathRef != nil {
+		if err := m.PathRef.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("path_reference")
+				return ve.ValidateName("pathRef")
 			}
 			return err
 		}
@@ -122,15 +122,15 @@ func (m *V1Reference) validatePathReference(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Reference) validateURLReference(formats strfmt.Registry) error {
-	if swag.IsZero(m.URLReference) { // not required
+func (m *V1Reference) validateURLRef(formats strfmt.Registry) error {
+	if swag.IsZero(m.URLRef) { // not required
 		return nil
 	}
 
-	if m.URLReference != nil {
-		if err := m.URLReference.Validate(formats); err != nil {
+	if m.URLRef != nil {
+		if err := m.URLRef.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("url_reference")
+				return ve.ValidateName("urlRef")
 			}
 			return err
 		}
@@ -143,19 +143,19 @@ func (m *V1Reference) validateURLReference(formats strfmt.Registry) error {
 func (m *V1Reference) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateDagReference(ctx, formats); err != nil {
+	if err := m.contextValidateDagRef(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateHubReference(ctx, formats); err != nil {
+	if err := m.contextValidateHubRef(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.contextValidatePathReference(ctx, formats); err != nil {
+	if err := m.contextValidatePathRef(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateURLReference(ctx, formats); err != nil {
+	if err := m.contextValidateURLRef(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -165,12 +165,12 @@ func (m *V1Reference) ContextValidate(ctx context.Context, formats strfmt.Regist
 	return nil
 }
 
-func (m *V1Reference) contextValidateDagReference(ctx context.Context, formats strfmt.Registry) error {
+func (m *V1Reference) contextValidateDagRef(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.DagReference != nil {
-		if err := m.DagReference.ContextValidate(ctx, formats); err != nil {
+	if m.DagRef != nil {
+		if err := m.DagRef.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("dag_reference")
+				return ve.ValidateName("dagRef")
 			}
 			return err
 		}
@@ -179,12 +179,12 @@ func (m *V1Reference) contextValidateDagReference(ctx context.Context, formats s
 	return nil
 }
 
-func (m *V1Reference) contextValidateHubReference(ctx context.Context, formats strfmt.Registry) error {
+func (m *V1Reference) contextValidateHubRef(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.HubReference != nil {
-		if err := m.HubReference.ContextValidate(ctx, formats); err != nil {
+	if m.HubRef != nil {
+		if err := m.HubRef.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("hub_reference")
+				return ve.ValidateName("hubRef")
 			}
 			return err
 		}
@@ -193,12 +193,12 @@ func (m *V1Reference) contextValidateHubReference(ctx context.Context, formats s
 	return nil
 }
 
-func (m *V1Reference) contextValidatePathReference(ctx context.Context, formats strfmt.Registry) error {
+func (m *V1Reference) contextValidatePathRef(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.PathReference != nil {
-		if err := m.PathReference.ContextValidate(ctx, formats); err != nil {
+	if m.PathRef != nil {
+		if err := m.PathRef.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("path_reference")
+				return ve.ValidateName("pathRef")
 			}
 			return err
 		}
@@ -207,12 +207,12 @@ func (m *V1Reference) contextValidatePathReference(ctx context.Context, formats 
 	return nil
 }
 
-func (m *V1Reference) contextValidateURLReference(ctx context.Context, formats strfmt.Registry) error {
+func (m *V1Reference) contextValidateURLRef(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.URLReference != nil {
-		if err := m.URLReference.ContextValidate(ctx, formats); err != nil {
+	if m.URLRef != nil {
+		if err := m.URLRef.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("url_reference")
+				return ve.ValidateName("urlRef")
 			}
 			return err
 		}

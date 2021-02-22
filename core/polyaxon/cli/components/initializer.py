@@ -13,13 +13,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
+import sys
 
 import click
 
+from marshmallow import ValidationError
+
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.connections.kinds import V1ConnectionKind
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.parser import parser
-from polyaxon.schemas.types import V1ConnectionType
+from polyaxon.schemas.types import V1ConnectionType, V1FileType
 from polyaxon.utils.formatting import Printer
+from polyaxon.utils.path_utils import check_or_create_path, copy_file
 
 
 @click.group()
@@ -33,6 +40,52 @@ def auth():
     from polyaxon.init.auth import create_auth_context
 
     create_auth_context()
+
+
+@initializer.command()
+@click.option("--file-context", help="The context file definition.")
+@click.option("--filepath", help="The path where to save the file.")
+@click.option("--copy-path", help="Copy generated files to a specific path.")
+@click.option(
+    "--track",
+    is_flag=True,
+    default=False,
+    help="Flag to track or not the file content.",
+)
+def file(file_context, filepath, copy_path, track):
+    """Create auth context."""
+    from polyaxon.init.file import create_file_lineage
+    from polyaxon.utils.hashing import hash_value
+
+    try:
+        file_context = V1FileType.from_dict(ConfigSpec.read_from(file_context))
+    except (PolyaxonSchemaError, ValidationError) as e:
+        Printer.print_error("received a non valid file context.")
+        Printer.print_error("Error message: {}.".format(e))
+        sys.exit(1)
+
+    filepath = os.path.join(filepath, file_context.filename)
+    check_or_create_path(filepath, is_dir=False)
+    # Clean any previous file on that path
+    if os.path.exists(filepath):
+        os.remove(filepath)
+
+    with open(filepath, "w") as generated_file:
+        generated_file.write(file_context.content)
+        if file_context.chmod:
+            os.chmod(filepath, file_context.chmod)
+
+    if copy_path:
+        filepath = copy_file(filepath, copy_path)
+
+    if track:
+        create_file_lineage(
+            filepath=filepath,
+            summary={"hash": hash_value(file_context.content)},
+            kind=file_context.kind,
+        )
+
+    Printer.print_success("File is initialized, path: `{}`".format(filepath))
 
 
 @initializer.command()

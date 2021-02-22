@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **url** | **String** |  | [optional] 
-**revision** | **Boolean** |  | [optional] 
+**revision** | **String** |  | [optional] 
 **flags** | **[String]** |  | [optional] 
 
 

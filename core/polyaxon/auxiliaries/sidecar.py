@@ -33,8 +33,8 @@ def get_sidecar_resources() -> k8s_schemas.V1ResourceRequirements:
 
 
 class PolyaxonSidecarContainerSchema(BaseCamelSchema):
-    image = fields.Str(required=True)
-    image_tag = fields.Str(required=True)
+    image = fields.Str(allow_none=True)
+    image_tag = fields.Str(allow_none=True)
     image_pull_policy = fields.Str(allow_none=True)
     resources = SwaggerField(cls=k8s_schemas.V1ResourceRequirements, allow_none=True)
     sleep_interval = fields.Int(allow_none=True)
@@ -61,7 +61,6 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
         resources: V1ResourceRequirements, optional.
         sleep_interval: int, optional.
         sync_interval: int, optional.
-        monitor_logs: bool, optional.
 
     ## YAML usage
 
@@ -119,7 +118,7 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
 
     ### sleepInterval
 
-    The default interval between two consecutive checks.
+    The interval between two consecutive checks, default 10s.
 
     > **N.B.1**: It's possible to alter this behaviour on per operation level
         using the sidecar plugin.
@@ -135,7 +134,7 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
 
     ### syncInterval
 
-    The default interval two consecutive archiving checks.
+    The interval between two consecutive archiving checks. default 10s.
 
     > **N.B.1**: It's possible to alter this behaviour on per operation level
         using the sidecar plugin.
@@ -146,9 +145,10 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
         you might set this field to a high value, or `-1` to only trigger
         this behavior when the workload is done.
 
-    ### monitorLogs
-
-    If the the sidecar should monitor the logs. this options is disabled by default.
+    ```yaml
+    >>> sidecar:
+    >>>   syncInterval: 5
+    ```
     """
 
     SCHEMA = PolyaxonSidecarContainerSchema
@@ -180,8 +180,8 @@ def get_default_sidecar_container(schema=True):
             "limits": {"cpu": "1", "memory": "100Mi"},
             "requests": {"cpu": "0.1", "memory": "60Mi"},
         },
-        "sleepInterval": 5,
-        "syncInterval": -1,
+        "sleepInterval": 10,
+        "syncInterval": 10,
     }
     if schema:
         return V1PolyaxonSidecarContainer.from_dict(default)

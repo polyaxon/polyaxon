@@ -57,9 +57,9 @@ message PathRef {
 // Reference specification
 message Reference {
     oneof reference {
-        HubRef hub_reference = 1;
-        DagRef dag_reference = 2;
-        UrlRef url_reference = 3;
-        PathRef path_reference = 4;
+        HubRef hubRef = 1;
+        DagRef dagRef = 2;
+        UrlRef urlRef = 3;
+        PathRef pathRef = 4;
     }
 }

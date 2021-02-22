@@ -32,13 +32,13 @@ import (
 type V1K8sResourceSchema struct {
 
 	// default mode
-	DefaultMode int32 `json:"default_mode,omitempty"`
+	DefaultMode int32 `json:"defaultMode,omitempty"`
 
 	// items
 	Items []string `json:"items"`
 
 	// mount path
-	MountPath string `json:"mount_path,omitempty"`
+	MountPath string `json:"mountPath,omitempty"`
 
 	// name
 	Name string `json:"name,omitempty"`

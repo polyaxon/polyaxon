@@ -38,6 +38,9 @@ RUN_UPDATED_ACTOR = "{}.{}.{}".format(
 RUN_CREATED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.CREATED, event_subjects.ACTOR
 )
+RUN_SYNCED_ACTOR = "{}.{}.{}".format(
+    event_subjects.RUN, event_actions.SYNCED, event_subjects.ACTOR
+)
 RUN_VIEWED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.VIEWED, event_subjects.ACTOR
 )
@@ -80,6 +83,7 @@ EVENTS = {
     RUN_FAILED,
     RUN_DONE,
     RUN_CREATED_ACTOR,
+    RUN_SYNCED_ACTOR,
     RUN_UPDATED_ACTOR,
     RUN_VIEWED_ACTOR,
     RUN_DELETED_ACTOR,
@@ -152,6 +156,13 @@ class RunDoneEvent(RunEvent):
 
 class RunCreatedActorEvent(RunActorEvent):
     event_type = RUN_CREATED_ACTOR
+    actor_id = "user.id"
+    actor_name = "user.username"
+    attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
+
+
+class RunSyncedActorEvent(RunActorEvent):
+    event_type = RUN_SYNCED_ACTOR
     actor_id = "user.id"
     actor_name = "user.username"
     attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES

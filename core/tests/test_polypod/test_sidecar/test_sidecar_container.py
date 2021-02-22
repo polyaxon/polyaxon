@@ -901,6 +901,7 @@ class TestSidecarContainer(BaseTestCase):
             auto_resume=True,
             sync_statuses=True,
             external_host=False,
+            sidecar=None,
         )
 
         sidecar = get_sidecar_container(
@@ -921,4 +922,82 @@ class TestSidecarContainer(BaseTestCase):
             get_auth_context_mount(read_only=True),
             get_artifacts_context_mount(read_only=False),
             get_mount_from_store(store=artifacts_store),
+        ]
+
+    def test_get_sidecar_container_override_sync(self):
+        artifacts_store = V1ConnectionType(
+            name="plx-outputs",
+            kind=V1ConnectionKind.HOST_PATH,
+            schema=V1HostPathConnection(
+                mount_path="/tmp/plx/outputs", host_path="/tmp/plx/outputs"
+            ),
+        )
+
+        contexts = PluginsContextsSpec(
+            auth=True,
+            docker=False,
+            shm=False,
+            collect_logs=True,
+            collect_artifacts=True,
+            collect_resources=True,
+            auto_resume=True,
+            sync_statuses=True,
+            external_host=False,
+            sidecar=None,
+        )
+
+        sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
+            polyaxon_sidecar=V1PolyaxonSidecarContainer(
+                image="foo",
+                image_pull_policy="sdf",
+                sleep_interval=2,
+                sync_interval=212,
+            ),
+            env=[],
+            artifacts_store=artifacts_store,
+            contexts=contexts,
+            run_path="test",
+        )
+
+        assert sidecar.args == [
+            "--container-id=polyaxon-main",
+            "--sleep-interval=2",
+            "--sync-interval=212",
+        ]
+
+        contexts = PluginsContextsSpec(
+            auth=True,
+            docker=False,
+            shm=False,
+            collect_logs=True,
+            collect_artifacts=True,
+            collect_resources=True,
+            auto_resume=True,
+            sync_statuses=True,
+            external_host=False,
+            sidecar=V1PolyaxonSidecarContainer(
+                sleep_interval=-1,
+                sync_interval=-1,
+            ),
+        )
+
+        sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
+            polyaxon_sidecar=V1PolyaxonSidecarContainer(
+                image="foo",
+                image_pull_policy="sdf",
+                sleep_interval=2,
+                sync_interval=212,
+            ),
+            env=[],
+            artifacts_store=artifacts_store,
+            contexts=contexts,
+            run_path="test",
+        )
+
+        assert sidecar.args == [
+            "--container-id=polyaxon-main",
+            "--sleep-interval=-1",
+            "--sync-interval=-1",
         ]

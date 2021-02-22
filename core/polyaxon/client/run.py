@@ -17,12 +17,15 @@
 import os
 import sys
 import time
+import uuid
 
 from collections.abc import Mapping
+from datetime import datetime
 from typing import Dict, List, Optional, Sequence, Tuple, Union
 
 import click
 import polyaxon_sdk
+import ujson
 
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
@@ -31,9 +34,10 @@ from urllib3.exceptions import HTTPError
 from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client.client import PolyaxonClient
-from polyaxon.client.decorators import check_no_op, check_offline
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
+from polyaxon.client.decorators import client_handler
+from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS, CONTEXT_OFFLINE_ROOT
 from polyaxon.env_vars.getters import (
+    get_artifacts_store_name,
     get_entity_full_name,
     get_project_error_message,
     get_project_or_local,
@@ -41,18 +45,27 @@ from polyaxon.env_vars.getters import (
     get_run_or_local,
 )
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.lifecycle import LifeCycle, V1StatusCondition
+from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
 from polyaxon.logger import logger
+from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
-from polyaxon.polyboard.logging.handler import get_logs_handler
-from polyaxon.polyflow import V1Operation
+from polyaxon.polyboard.events import V1Events
+from polyaxon.polyboard.logging.streamer import get_logs_streamer
+from polyaxon.polyflow import V1Operation, V1RunKind
 from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
+from polyaxon.utils.date_utils import file_modified_since
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.hashing import hash_value
-from polyaxon.utils.http_utils import clean_host
+from polyaxon.utils.http_utils import absolute_uri
 from polyaxon.utils.list_utils import to_list
+from polyaxon.utils.path_utils import (
+    delete_path,
+    get_dirs_under_path,
+    get_files_in_path_context,
+    get_path,
+)
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.tz_utils import now
 from polyaxon.utils.validation import validate_tags
@@ -97,15 +110,18 @@ class RunClient:
             resolve the values from the environment.
     """
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def __init__(
         self,
         owner: str = None,
         project: str = None,
         run_uuid: str = None,
         client: PolyaxonClient = None,
+        is_offline: bool = None,
     ):
-
+        self._is_offline = (
+            is_offline if is_offline is not None else settings.CLIENT_CONFIG.is_offline
+        )
         try:
             owner, project = get_project_or_local(
                 get_entity_full_name(owner=owner, entity=project)
@@ -117,25 +133,42 @@ class RunClient:
             if settings.CLIENT_CONFIG.is_managed:
                 owner, project, _run_uuid = get_run_info()
                 run_uuid = run_uuid or _run_uuid
-            else:
+            elif not self._is_offline:
                 raise PolyaxonClientException(
                     "Please provide a valid project, "
                     "or make sure this operation is managed by Polyaxon."
                 )
 
         error_message = get_project_error_message(owner, project)
-        if error_message:
+        if error_message and not self._is_offline:
             raise PolyaxonClientException(error_message)
 
-        self.client = client
-        if not (self.client or settings.CLIENT_CONFIG.is_offline):
-            self.client = PolyaxonClient()
-
+        self._client = client
         self._owner = owner
         self._project = project
-        self._run_uuid = get_run_or_local(run_uuid)
-        self._run_data = polyaxon_sdk.V1Run()
+        self._run_uuid = (
+            get_run_or_local(run_uuid)
+            if not self._is_offline
+            else run_uuid or uuid.uuid4().hex
+        )
+        self._run_data = polyaxon_sdk.V1Run(
+            owner=self._owner,
+            project=self._project,
+            uuid=self._run_uuid,
+            kind=V1RunKind.JOB if self._is_offline else None,
+            runtime=V1RunKind.JOB if self._is_offline else None,
+            is_managed=False if self._is_offline else None,
+        )
         self._namespace = None
+        self._results = {}
+        self._lineages = {}
+
+    @property
+    def client(self):
+        if self._client:
+            return self._client
+        self._client = PolyaxonClient()
+        return self._client
 
     @property
     def status(self) -> str:
@@ -171,7 +204,7 @@ class RunClient:
     def run_data(self):
         return self._run_data
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_inputs(self) -> Dict:
         """Gets the run's inputs.
         Returns:
@@ -179,7 +212,7 @@ class RunClient:
         """
         return self._run_data.inputs
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_outputs(self) -> Dict:
         """Gets the run's outputs.
         Returns:
@@ -187,8 +220,7 @@ class RunClient:
         """
         return self._run_data.outputs
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def refresh_data(self):
         """Fetches the run data from the api."""
         self._run_data = self.client.runs_v1.get_run(
@@ -198,6 +230,8 @@ class RunClient:
     def _update(
         self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = True
     ) -> V1Run:
+        if self._is_offline:
+            return self.run_data
         response = self.client.runs_v1.patch_run(
             owner=self.owner,
             project=self.project,
@@ -209,8 +243,7 @@ class RunClient:
             self._run_data = response
         return response
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def update(
         self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = False
     ) -> V1Run:
@@ -225,10 +258,11 @@ class RunClient:
         Returns:
             V1Run, run instance from the response.
         """
+        if self._is_offline:
+            for k in data:
+                setattr(self._run_data, k, getattr(data, k, None))
         return self._update(data=data, async_req=async_req)
 
-    @check_no_op
-    @check_offline
     def _create(
         self, data: Union[Dict, polyaxon_sdk.V1OperationBody], async_req: bool = False
     ) -> V1Run:
@@ -241,13 +275,13 @@ class RunClient:
         if not async_req:
             self._run_data = response
             self._run_uuid = self._run_data.uuid
+            self._run_data.status = V1Statuses.CREATED
+            self._namespace = None
+            self._results = {}
+            self._lineages = {}
         return response
 
-    def _post_create(self):
-        pass
-
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def create(
         self,
         name: str = None,
@@ -268,8 +302,7 @@ class RunClient:
           * from url: `create_from_url`
           * from hub: `create_from_hub`
 
-        > Note that if you don't pass `content`, the creation will pass,
-        and the run will be marked as non-managed.
+        > **Note**: If the `content` param is not passed, the run will be marked as non-managed.
 
         [Run API](/docs/api/#operation/CreateRun)
 
@@ -287,6 +320,14 @@ class RunClient:
         Returns:
             V1Run, run instance from the response.
         """
+        if self._is_offline:
+            self._run_data.name = name
+            self._run_data.description = description
+            self._run_data.tags = tags
+            if not self._run_uuid:
+                self._run_uuid = uuid.uuid4().hex
+            self.run_data.uuid = self._run_uuid
+            return self.run_data
         if not content:
             is_managed = False
         elif not isinstance(content, (str, Mapping, V1Operation)):
@@ -309,11 +350,9 @@ class RunClient:
             meta_info=meta_info,
         )
         self._create(data=data, async_req=False)
-        self._post_create()
         return self.run_data
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def create_from_polyaxonfile(
         self,
         polyaxonfile: str,
@@ -375,8 +414,7 @@ class RunClient:
             name=name, description=description, tags=tags, content=op_spec
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def create_from_url(
         self,
         url: str,
@@ -437,8 +475,7 @@ class RunClient:
             name=name, description=description, tags=tags, content=op_spec
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def create_from_hub(
         self,
         component: str,
@@ -498,9 +535,15 @@ class RunClient:
             name=name, description=description, tags=tags, content=op_spec
         )
 
-    @check_no_op
-    @check_offline
-    def log_status(self, status: str, reason: str = None, message: str = None):
+    @client_handler(check_no_op=True)
+    def log_status(
+        self,
+        status: str,
+        reason: str = None,
+        message: str = None,
+        last_transition_time: datetime = None,
+        last_update_time: datetime = None,
+    ):
         """Logs a new run status.
 
         <blockquote class="info">
@@ -519,12 +562,30 @@ class RunClient:
 
         Args:
             status: str, a valid [Statuses](/docs/core/specification/lifecycle/) value.
-            reason: str, optional, reason for this status change.
+            reason: str, optional, reason or service issuing the status change.
             message: str, optional, message to log with this status.
+            last_transition_time: datetime, default `now`.
+            last_update_time: datetime, default `now`.
         """
+        reason = reason or "PolyaxonClient"
+        self._run_data.status = status
+        current_date = now()
         status_condition = V1StatusCondition(
-            type=status, status=True, reason=reason, message=message
+            type=status,
+            status=True,
+            reason=reason,
+            message=message,
+            last_transition_time=last_transition_time or current_date,
+            last_update_time=last_update_time or current_date,
         )
+        if self._is_offline:
+            self._run_data.status_conditions = self._run_data.status_conditions or []
+            self._run_data.status_conditions.append(status_condition)
+            if status == polyaxon_sdk.V1Statuses.CREATED:
+                self._run_data.created_at = current_date
+            LifeCycle.set_started_at(self._run_data)
+            LifeCycle.set_finished_at(self._run_data)
+            return
         self.client.runs_v1.create_run_status(
             owner=self.owner,
             project=self.project,
@@ -533,8 +594,7 @@ class RunClient:
             async_req=True,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def get_statuses(
         self, last_status: str = None
     ) -> Tuple[str, List[V1StatusCondition]]:
@@ -583,8 +643,7 @@ class RunClient:
             last_status, _conditions = self.get_statuses(last_status)
             yield last_status, _conditions
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def wait_for_condition(
         self, statuses: List[str] = None, print_status: bool = False
     ):
@@ -604,8 +663,7 @@ class RunClient:
             if print_status:
                 print("Last received status: {}\n".format(status))
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def watch_statuses(self, statuses: List[str] = None):
         """Watches run statuses.
 
@@ -626,8 +684,7 @@ class RunClient:
             self._run_data.status = status
             yield status, conditions
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def get_logs(self, last_file=None, last_time=None) -> "V1Logs":
         """Gets the run's logs.
 
@@ -641,8 +698,7 @@ class RunClient:
             self.namespace, self.owner, self.project, self.run_uuid, **params
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def watch_logs(self, hide_time: bool = False, all_info: bool = False):
         """Watches run logs.
 
@@ -654,8 +710,7 @@ class RunClient:
             client=self, hide_time=hide_time, all_info=all_info, follow=True
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def get_events(
         self,
         kind: V1ArtifactKind,
@@ -682,8 +737,7 @@ class RunClient:
             force=force,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def get_multi_runs_events(
         self,
         kind: V1ArtifactKind,
@@ -712,8 +766,7 @@ class RunClient:
             force=force,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def get_artifact(self, path: str, stream: bool = True, force: bool = False):
         """Gets the run's artifact.
 
@@ -736,8 +789,7 @@ class RunClient:
             _preload_content=True,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def download_artifact(self, path: str, force: bool = False, path_to: str = None):
         """Downloads a single run artifact.
 
@@ -756,7 +808,7 @@ class RunClient:
             uuid=self.run_uuid,
             subpath="artifact",
         )
-        url = "{host}/{url}".format(host=clean_host(self.client.config.host), url=url)
+        url = absolute_uri(url=url, host=self.client.config.host)
         if force:
             url = "{}?force=true".format(url)
 
@@ -764,8 +816,7 @@ class RunClient:
             url=url, path=path, path_to=path_to
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def download_artifacts(
         self,
         path: str = "",
@@ -793,7 +844,7 @@ class RunClient:
             uuid=self.run_uuid,
             subpath="artifacts",
         )
-        url = "{host}/{url}".format(host=clean_host(self.client.config.host), url=url)
+        url = absolute_uri(url=url, host=self.client.config.host)
 
         return PolyaxonStore(client=self).download_file(
             url=url,
@@ -804,8 +855,7 @@ class RunClient:
             extract_path=extract_path,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def upload_artifact(
         self,
         filepath: str,
@@ -831,7 +881,7 @@ class RunClient:
             uuid=self.run_uuid,
             subpath="artifact",
         )
-        url = "{host}/{url}".format(host=clean_host(self.client.config.host), url=url)
+        url = absolute_uri(url=url, host=self.client.config.host)
 
         return PolyaxonStore(client=self).upload_file(
             url=url,
@@ -841,8 +891,37 @@ class RunClient:
             overwrite=overwrite,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
+    def upload_artifacts_dir(
+        self,
+        dirpath: str,
+        path: str = "",
+        overwrite: bool = True,
+        relative_to: str = None,
+    ):
+        """Uploads a full directory to the run's artifacts store path.
+
+        > This function crawls all files to upload and uses `upload_artifacts`.
+
+        Args:
+            dirpath: str, the dirpath to upload.
+            path: str, the relative path of the artifact to return.
+            overwrite: bool, optional, if the file uploaded should overwrite any previous content.
+            relative_to: str, optional, if the path uploaded is not the current dir,
+                and you want to cancel the relative path.
+
+        Returns:
+            str.
+        """
+        files = IgnoreConfigManager.get_unignored_filepaths(dirpath)
+        return self.upload_artifacts(
+            files=files,
+            path=path,
+            overwrite=overwrite,
+            relative_to=relative_to,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def upload_artifacts(
         self,
         files: List[str],
@@ -869,7 +948,7 @@ class RunClient:
             uuid=self.run_uuid,
             subpath="artifacts",
         )
-        url = "{host}/{url}".format(host=clean_host(self.client.config.host), url=url)
+        url = absolute_uri(url=url, host=self.client.config.host)
 
         return PolyaxonStore(client=self).upload_dir(
             url=url,
@@ -879,8 +958,37 @@ class RunClient:
             relative_to=relative_to,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
+    def delete_artifact(self, path: str):
+        """Deletes a single run artifact.
+
+        Args:
+            path: str, the relative path of the artifact to return.
+        """
+        return self.client.runs_v1.delete_run_artifact(
+            namespace=self.namespace,
+            owner=self.owner,
+            project=self.project,
+            uuid=self.run_uuid,
+            path=path,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def delete_artifacts(self, path: str):
+        """Deletes a subpath containing multiple run artifacts.
+
+        Args:
+            path: str, the relative path of the artifact to return.
+        """
+        return self.client.runs_v1.delete_run_artifacts(
+            namespace=self.namespace,
+            owner=self.owner,
+            project=self.project,
+            uuid=self.run_uuid,
+            path=path,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def get_artifacts_tree(self, path: str = ""):
         """Return the artifacts tree based on the path.
 
@@ -898,8 +1006,7 @@ class RunClient:
             path=path,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def stop(self):
         """Stops the current run."""
         self.client.runs_v1.stop_run(
@@ -908,8 +1015,7 @@ class RunClient:
             self.run_uuid,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def approve(self):
         """Stops the current run."""
         self.client.runs_v1.approve_run(
@@ -918,8 +1024,7 @@ class RunClient:
             self.run_uuid,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def invalidate(self):
         """Invalidates the current run."""
         self.client.runs_v1.invalidate_run(
@@ -928,8 +1033,7 @@ class RunClient:
             self.run_uuid,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def restart(self, override_config=None, copy: bool = False, **kwargs):
         """Restarts the current run
 
@@ -951,8 +1055,7 @@ class RunClient:
                 self.owner, self.project, self.run_uuid, body=body, **kwargs
             )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def resume(self, override_config=None, **kwargs):
         """Resumes the current run
 
@@ -968,8 +1071,7 @@ class RunClient:
             self.owner, self.project, self.run_uuid, body=body, **kwargs
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def set_description(self, description: str, async_req: bool = True):
         """Sets a new description for the current run.
 
@@ -977,11 +1079,10 @@ class RunClient:
             description: str, the description to set.
             async_req: bool, optional, default: False, execute request asynchronously.
         """
-        self._update({"description": description}, async_req=async_req)
         self._run_data.description = description
+        self._update({"description": description}, async_req=async_req)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def set_name(self, name: str, async_req: bool = True):
         """Sets a new name for the current run.
 
@@ -989,20 +1090,18 @@ class RunClient:
             name: str, the name to set.
             async_req: bool, optional, default: False, execute request asynchronously.
         """
-        self._update({"name": name}, async_req=async_req)
         self._run_data.name = name
+        self._update({"name": name}, async_req=async_req)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_inputs(self, reset: bool = False, async_req: bool = True, **inputs):
         """Logs or resets new inputs/params for the current run.
 
-        <blockquote class="light">
-        N.B. If you are starting a run from the CLI/UI
-        polyaxon will track all inputs from the Polyaxonfile,
-        so you generally don't need to set them manually.
-        But you can always add or reset these params/inputs once your code starts running.
-        </blockquote>
+
+        > **Note**: If you are starting a run from the CLI/UI
+            polyaxon will track all inputs from the Polyaxonfile,
+            so you generally don't need to set them manually.
+            But you can always add or reset these params/inputs once your code starts running.
 
         Args:
             reset: bool, optional, if True, it will reset the whole inputs state.
@@ -1020,8 +1119,7 @@ class RunClient:
             self._run_data.inputs = inputs
         self._update(patch_dict, async_req=async_req)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_outputs(self, reset: bool = False, async_req: bool = True, **outputs):
         """Logs a new outputs for the current run.
 
@@ -1042,6 +1140,7 @@ class RunClient:
             self._run_data.outputs = outputs
         self._update(patch_dict, async_req=async_req)
 
+    @client_handler(check_no_op=True)
     def log_meta(self, reset: bool = False, async_req: bool = True, **meta):
         """Logs meta_info for the current run.
 
@@ -1074,8 +1173,7 @@ class RunClient:
             self._run_data.meta_info = meta
         self._update(patch_dict, async_req=async_req)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_tags(
         self,
         tags: Union[str, Sequence[str]],
@@ -1091,13 +1189,18 @@ class RunClient:
                 on the Polyaxonfile.
             async_req: bool, optional, default: False, execute request asynchronously.
         """
-        patch_dict = {"tags": validate_tags(tags)}
+        tags = validate_tags(tags)
+        patch_dict = {"tags": tags}
         if reset is False:
             patch_dict["merge"] = True
+            self._run_data.tags += [
+                t for t in tags if t not in (self._run_data.tags or [])
+            ]
+        else:
+            self._run_data.tags = tags
         self._update(patch_dict, async_req=async_req)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def start(self):
         """Sets the current run to `running` status.
 
@@ -1106,12 +1209,14 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self.log_status(polyaxon_sdk.V1Statuses.RUNNING, "Operation is running")
-        self._run_data.status = polyaxon_sdk.V1Statuses.RUNNING
+        self.log_status(polyaxon_sdk.V1Statuses.RUNNING, message="Operation is running")
 
-    @check_no_op
-    @check_offline
-    def end(self, status: str, message: str = None, traceback: str = None):
+    def _log_end_status(
+        self,
+        status: str,
+        reason: str = None,
+        message: str = None,
+    ):
         """Sets the current run to `status` status.
 
         <blockquote class="info">
@@ -1121,19 +1226,17 @@ class RunClient:
 
         Args:
             status: str, a valid [Statuses](/docs/core/specification/lifecycle/) value.
+            reason: str, optional, reason or service issuing the status change.
             message: str, optional, message to log with this status.
-            traceback: str, optional, reason for this status change.
         """
         if self.status in LifeCycle.DONE_VALUES:
             return
-        self.log_status(status=status, reason=message, message=traceback)
-        self._run_data.status = status
+        self.log_status(status=status, reason=reason, message=message)
         time.sleep(
             0.1
         )  # Just to give the opportunity to the worker to pick the message
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_succeeded(self, message="Operation has succeeded"):
         """Sets the current run to `succeeded` status.
 
@@ -1142,10 +1245,9 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self.end(polyaxon_sdk.V1Statuses.SUCCEEDED, message)
+        self._log_end_status(status=polyaxon_sdk.V1Statuses.SUCCEEDED, message=message)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_stopped(self, message="Operation is stopped"):
         """Sets the current run to `stopped` status.
 
@@ -1154,11 +1256,10 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self.end(polyaxon_sdk.V1Statuses.STOPPED, message)
+        self._log_end_status(status=polyaxon_sdk.V1Statuses.STOPPED, message=message)
 
-    @check_no_op
-    @check_offline
-    def log_failed(self, message: str = None, traceback: str = None):
+    @client_handler(check_no_op=True)
+    def log_failed(self, reason: str = None, message: str = None):
         """Sets the current run to `failed` status.
 
         <blockquote class="info">
@@ -1167,15 +1268,16 @@ class RunClient:
         </blockquote>
 
         Args:
+            reason: str, optional, reason or service issuing the status change.
             message: str, optional, message to log with this status.
-            traceback: str, optional, reason for this status change.
         """
-        self.end(
-            status=polyaxon_sdk.V1Statuses.FAILED, message=message, traceback=traceback
+        self._log_end_status(
+            status=polyaxon_sdk.V1Statuses.FAILED,
+            reason=reason,
+            message=message,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_code_ref(self, code_ref: Dict = None, is_input: bool = True):
         """Logs code reference.
 
@@ -1195,19 +1297,21 @@ class RunClient:
             self.log_artifact_lineage(body=artifact_run)
 
     @staticmethod
-    def get_rel_asset_path(path: str = None, rel_path: str = None):
+    def get_rel_asset_path(
+        path: str = None, rel_path: str = None, is_offline: bool = False
+    ):
         if not path or rel_path:
             return rel_path
-        if CONTEXT_MOUNT_ARTIFACTS in path:
+        artifacts_root = CONTEXT_OFFLINE_ROOT if is_offline else CONTEXT_MOUNT_ARTIFACTS
+        if artifacts_root in path:
             try:
-                return os.path.relpath(path, CONTEXT_MOUNT_ARTIFACTS)
+                return os.path.relpath(path, artifacts_root)
             except Exception as e:
                 logger.debug("could not calculate relative path %s", e)
 
         return rel_path or path
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_data_ref(
         self,
         name: str,
@@ -1243,8 +1347,81 @@ class RunClient:
             )
             self.log_artifact_lineage(body=artifact_run)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
+    def log_artifact_ref(
+        self,
+        path: str,
+        kind: V1ArtifactKind,
+        name: str = None,
+        hash: str = None,
+        content=None,
+        is_input: bool = False,
+        rel_path: str = None,
+    ):
+        """Logs an artifact reference with custom kind.
+
+        **Note**: This is a generic method that is used by `log_file_ref` and `log_model_ref`.
+
+        Args:
+            path: str, filepath, the name is extracted from the filepath.
+            kind: V1ArtifactKind, the artifact kind.
+            name: str, if the name is passed it will be used instead of the filename from the path.
+            hash: str, optional, default = None, the hash version of the file,
+                if not provided it will be calculated based on the file content.
+            content: the file content.
+            is_input: bool, if the file reference is an input or outputs.
+            rel_path: str, optional relative path to the run artifacts path.
+        """
+        summary = {"path": path}
+        if hash:
+            summary["hash"] = hash
+        elif content is not None:
+            summary["hash"] = hash_value(content)
+        name = name or os.path.basename(path)
+        rel_path = self.get_rel_asset_path(
+            path=path, rel_path=rel_path, is_offline=self._is_offline
+        )
+        if name:
+            artifact_run = V1RunArtifact(
+                name=name,
+                kind=kind,
+                path=rel_path,
+                summary=summary,
+                is_input=is_input,
+            )
+            self.log_artifact_lineage(body=artifact_run)
+
+    @client_handler(check_no_op=True)
+    def log_model_ref(
+        self,
+        path: str,
+        name: str = None,
+        is_input: bool = False,
+        rel_path: str = None,
+    ):
+        """Logs model reference.
+
+         > **Note**: The difference between this method and the `log_model`
+         is that this one does not copy or move the asset, it only registers a lineage reference.
+         If you need the model asset to be on the `artifacts_path` or the `outputs_path`
+         you have to copy it manually using a relative path to
+         `self.get_artifacts_path` or `self.get_outputs_path`.
+
+        Args:
+            path: str, filepath, the name is extracted from the filepath.
+            name: str, if the name is passed it will be used instead of the filename from the path.
+            is_input: bool, if the file reference is an input or outputs.
+            rel_path: str, optional relative path to the run artifacts path.
+        """
+        return self.log_artifact_ref(
+            path=path,
+            kind=V1ArtifactKind.FILE,
+            name=name,
+            is_input=is_input,
+            rel_path=rel_path,
+        )
+
+    @client_handler(check_no_op=True)
     def log_file_ref(
         self,
         path: str,
@@ -1265,25 +1442,17 @@ class RunClient:
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
-        summary = {"path": path}
-        if hash:
-            summary["hash"] = hash
-        elif content is not None:
-            summary["hash"] = hash_value(content)
-        name = name or os.path.basename(path)
-        rel_path = self.get_rel_asset_path(path=path, rel_path=rel_path)
-        if name:
-            artifact_run = V1RunArtifact(
-                name=name,
-                kind=V1ArtifactKind.FILE,
-                path=rel_path,
-                summary=summary,
-                is_input=is_input,
-            )
-            self.log_artifact_lineage(body=artifact_run)
+        return self.log_artifact_ref(
+            path=path,
+            kind=V1ArtifactKind.FILE,
+            name=name,
+            hash=hash,
+            content=content,
+            is_input=is_input,
+            rel_path=rel_path,
+        )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_dir_ref(
         self,
         path: str,
@@ -1300,7 +1469,9 @@ class RunClient:
             rel_path: str, optional relative path to the run artifacts path.
         """
         name = name or os.path.basename(path)
-        rel_path = self.get_rel_asset_path(path=path, rel_path=rel_path)
+        rel_path = self.get_rel_asset_path(
+            path=path, rel_path=rel_path, is_offline=self._is_offline
+        )
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
@@ -1311,8 +1482,14 @@ class RunClient:
             )
             self.log_artifact_lineage(body=artifact_run)
 
-    @check_no_op
-    @check_offline
+    def _has_meta_key(self, key: str):
+        return (
+            self.run_data
+            and self.run_data.meta_info
+            and self.run_data.meta_info.get(key, False)
+        )
+
+    @client_handler(check_no_op=True)
     def log_tensorboard_ref(
         self,
         path: str,
@@ -1328,36 +1505,50 @@ class RunClient:
             is_input: bool, if the tensorboard reference is an input or outputs
             rel_path: str, optional relative path to run the artifacts path.
         """
-        rel_path = self.get_rel_asset_path(path=path, rel_path=rel_path)
-        artifact_run = V1RunArtifact(
-            name=name,
-            kind=V1ArtifactKind.TENSORBOARD,
-            path=rel_path,
-            summary={"path": path},
-            is_input=is_input,
-        )
-        self.log_artifact_lineage(body=artifact_run)
-        self.log_meta(has_tensorboard=True)
+        if not self._has_meta_key("has_tensorboard"):
+            rel_path = self.get_rel_asset_path(
+                path=path, rel_path=rel_path, is_offline=self._is_offline
+            )
+            artifact_run = V1RunArtifact(
+                name=name,
+                kind=V1ArtifactKind.TENSORBOARD,
+                path=rel_path,
+                summary={"path": path},
+                is_input=is_input,
+            )
+            self.log_artifact_lineage(body=artifact_run)
+            self.log_meta(has_tensorboard=True)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True)
     def log_artifact_lineage(
-        self, body: Union[Dict, List[Dict], V1RunArtifact, List[V1RunArtifact]]
+        self,
+        body: Union[Dict, List[Dict], V1RunArtifact, List[V1RunArtifact]],
+        async_req: bool = True,
     ):
         """Logs an artifact lineage.
 
+        **Note**: This method can be used to log manual lieange objects, it is used internally
+            to log model/file/artifact/code refs
+
         Args:
             body: dict or List[dict] or V1RunArtifact or List[V1RunArtifact], body of the lineage.
+            async_req: bool, optional, default: False, execute request asynchronously.
         """
+        if self._is_offline:
+            for b in to_list(body, check_none=True):
+                if not isinstance(b, V1RunArtifact):
+                    b = V1RunArtifact.read(b)
+                self._lineages[b.name] = b
+            return
         self.client.runs_v1.create_run_artifacts_lineage(
             self.owner,
             self.project,
             self.run_uuid,
             body=body,
+            async_req=async_req,
         )
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def get_namespace(self):
         """Fetches the run namespace."""
         return self.client.runs_v1.get_run_namespace(
@@ -1366,14 +1557,12 @@ class RunClient:
             self.run_uuid,
         ).namespace
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def delete(self):
         """Deletes the current run."""
         return self.client.runs_v1.delete_run(self.owner, self.project, self.run_uuid)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def list(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ):
@@ -1395,8 +1584,7 @@ class RunClient:
         params = get_query_params(limit=limit, offset=offset, query=query, sort=sort)
         return self.client.runs_v1.list_runs(self.owner, self.project, **params)
 
-    @check_no_op
-    @check_offline
+    @client_handler(check_no_op=True, check_offline=True)
     def list_children(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ):
@@ -1423,6 +1611,208 @@ class RunClient:
 
         return self.client.runs_v1.list_runs(self.owner, self.project, **params)
 
+    def _sync_events_summaries(
+        self,
+        events_path: str,
+        events_kind: str,
+        last_check: Optional[datetime],
+    ) -> Tuple[List, Dict]:
+        current_events_path = get_path(events_path, events_kind)
+
+        summaries = []
+        last_values = {}
+        connection_name = get_artifacts_store_name()
+        with get_files_in_path_context(current_events_path) as files:
+            for f in files:
+                if last_check and not file_modified_since(
+                    filepath=f, last_time=last_check
+                ):
+                    continue
+
+                event_name = os.path.basename(f).split(".plx")[0]
+                event = V1Events.read(kind=events_kind, name=event_name, data=f)
+                if event.df.empty:
+                    continue
+
+                # Get only the relpath from run uuid
+                event_rel_path = self.get_rel_asset_path(
+                    path=f, is_offline=self._is_offline
+                )
+                summary = event.get_summary()
+                run_artifact = V1RunArtifact(
+                    name=event_name,
+                    kind=events_kind,
+                    connection=connection_name,
+                    summary=summary,
+                    path=event_rel_path,
+                    is_input=False,
+                )
+                summaries.append(run_artifact)
+                if events_kind == V1ArtifactKind.METRIC:
+                    last_values[event_name] = summary[V1ArtifactKind.METRIC]["last"]
+
+        return summaries, last_values
+
+    @client_handler(check_no_op=True)
+    def sync_events_summaries(self, last_check: Optional[datetime], events_path: str):
+        """Syncs all tracked events and auto-generates summaries and lineage data.
+
+        > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
+            automatically, so yuo should not call this mehtod manually.
+        """
+        # check if there's a path to sync
+        if not os.path.exists(events_path):
+            return
+
+        # crawl dirs
+        summaries = []
+        last_values = {}
+
+        for events_kind in get_dirs_under_path(events_path):
+            _summaries, _last_values = self._sync_events_summaries(
+                events_path=events_path,
+                events_kind=events_kind,
+                last_check=last_check,
+            )
+            summaries += _summaries
+            last_values.update(_last_values)
+
+        if summaries:
+            self.log_artifact_lineage(summaries)
+        if last_values:
+            self.log_outputs(**last_values)
+
+    @client_handler(check_no_op=True)
+    def persist_offline_run(self, artifacts_path: str):
+        """Persists an offline run to a local path.
+
+        > **Note**: When offline mode is enabled, this method is triggered automatically at the end.
+        """
+        if not self._is_offline or not self.run_data:
+            logger.debug(
+                "Persist offline run call failed. "
+                "Make sure that the offline mode is enabled and that run_data is provided."
+            )
+            return
+        run_path = "{}/run_data.json".format(artifacts_path)
+        with open(run_path, "w") as config_file:
+            config_file.write(
+                ujson.dumps(self.client.sanitize_for_serialization(self.run_data))
+            )
+
+        if not self._lineages:
+            logger.debug("Persist offline run call did not find any lineage data. ")
+            return
+
+        lineages_path = "{}/lineages.json".format(artifacts_path)
+        with open(lineages_path, "w") as config_file:
+            config_file.write(
+                ujson.dumps(
+                    [
+                        self.client.sanitize_for_serialization(l)
+                        for l in self._lineages.values()
+                    ]
+                )
+            )
+
+    @classmethod
+    @client_handler(check_no_op=True)
+    def load_offline_run(
+        cls, artifacts_path: str, run_client: Union["RunClient", "Run"] = None
+    ) -> Union["RunClient", "Run"]:
+        """Loads an offline run from a local path.
+
+        > **Note**: When offline mode is enabled, and the run uuid is provided,
+            this method is triggered automatically to load last checkpoint.
+            If `auto_resume` is passed it will also transition the status to
+            `resuming` and then `running`.
+        """
+        run_path = "{}/run_data.json".format(artifacts_path)
+        if not os.path.isfile(run_path):
+            logger.info(f"Offline data was not found: {run_path}")
+            return
+        with open(run_path, "r") as config_file:
+            config_str = config_file.read()
+            run_config = polyaxon_sdk.V1Run(**ujson.loads(config_str))
+            if run_client:
+                run_client._owner = run_config.owner
+                run_client._project = run_config.project
+                run_client._run_uuid = run_config.uuid
+            else:
+                run_client = cls(
+                    owner=run_config.owner,
+                    project=run_config.project,
+                    run_uuid=run_config.uuid,
+                )
+            run_client._run_data = run_config
+            logger.info(f"Offline data loaded from: {run_path}")
+
+        lineages_path = "{}/lineages.json".format(artifacts_path)
+        if not os.path.isfile(lineages_path):
+            logger.info(f"Offline lineage data was not found: {lineages_path}")
+            return
+        with open(lineages_path, "r") as config_file:
+            config_str = config_file.read()
+            lineages = [V1RunArtifact(**l) for l in ujson.loads(config_str)]
+            run_client._lineages = {l.name: l for l in lineages}
+            logger.info(f"Offline lineage data loaded from: {run_path}")
+
+        return run_client
+
+    @client_handler(check_no_op=True)
+    def sync_offline_run(
+        self,
+        artifacts_path: str = None,
+        load_offline_run: bool = False,
+        upload_artifacts: bool = True,
+        clean: bool = False,
+    ):
+        """Syncs an offline run to Polyaxon's API and artifacts store."""
+        if artifacts_path and load_offline_run:
+            self._run_uuid = None
+            self._run_data = None
+            self.load_offline_run(artifacts_path=artifacts_path, run_client=self)
+
+        # We ensure that the is_offline is False
+        is_offline = self._is_offline
+        self._is_offline = False
+
+        if not self.run_data:
+            logger.warning(
+                "Sync offline run failed. Make sure that run_data is provided."
+            )
+            return
+        self.client.runs_v1.sync_run(
+            owner=self.owner,
+            project=self.project,
+            body=self.run_data,
+            async_req=False,
+        )
+        logger.info(f"Offline data for run {self.run_data.uuid} synced")
+        if self._lineages:
+            self.log_artifact_lineage(
+                [l for l in self._lineages.values()], async_req=False
+            )
+            logger.info(f"Offline lineage data for run {self.run_data.uuid} synced")
+        else:
+            logger.info("Sync offline run failed. No lineage data found.")
+            return
+
+        if artifacts_path and upload_artifacts:
+            self.upload_artifacts_dir(
+                dirpath=artifacts_path,
+                path="/",
+                overwrite=True,
+                relative_to=artifacts_path,
+            )
+            logger.info(f"Offline artifacts for run {self.run_data.uuid} uploaded")
+
+        if clean:
+            delete_path(artifacts_path)
+
+        # Reset is_offline
+        self._is_offline = is_offline
+
 
 def get_run_logs(
     client: RunClient,
@@ -1434,7 +1824,7 @@ def get_run_logs(
     def get_logs(last_file=None, last_time=None):
         try:
             response = client.get_logs(last_file=last_file, last_time=last_time)
-            get_logs_handler(
+            get_logs_streamer(
                 show_timestamp=not hide_time,
                 all_containers=all_containers,
                 all_info=all_info,

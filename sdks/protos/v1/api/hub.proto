@@ -97,6 +97,8 @@ message ComponentVersion {
   // The Component body content
   string content = 10;
 
+  // Current user's role in this (org/teams)/hub/version
+  string role = 11;
 }
 
  // Request data to create/update component hub
@@ -156,8 +158,11 @@ message ListComponentVersionsResponse {
 
 // Hub Settings specification
 message ComponentHubSettings {
+  // Authorized users
+  repeated string users = 1;
+
   // Authorized teams
-  repeated string teams = 1;
+  repeated string teams = 2;
 }
 
 // Request data to update hub settings

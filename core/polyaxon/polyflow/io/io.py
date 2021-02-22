@@ -23,6 +23,7 @@ from polyaxon import types
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.parser import parser
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.utils.signal_decorators import check_partial
 
 IO_NAME_BLACK_LIST = ["globals", "params", "connections"]
 IO_NAME_ERROR = (
@@ -34,7 +35,7 @@ IO_NAME_ERROR = (
 
 def validate_io_value(
     name: str,
-    iotype: str,
+    type: str,
     value: Any,
     default: Any,
     is_optional: bool,
@@ -43,7 +44,7 @@ def validate_io_value(
     parse: bool = True,
 ):
     try:
-        parsed_value = parser.TYPE_MAPPING[iotype](
+        parsed_value = parser.TYPE_MAPPING[type](
             key=name,
             value=value,
             is_list=is_list,
@@ -63,11 +64,11 @@ def validate_io_value(
         )
 
 
-def validate_io(name, iotype, value, is_optional, is_list, is_flag, options):
-    if iotype and value:
+def validate_io(name, type, value, is_optional, is_list, is_flag, options):
+    if type and value:
         validate_io_value(
             name=name,
-            iotype=iotype,
+            type=type,
             value=value,
             default=None,
             is_list=is_list,
@@ -83,10 +84,10 @@ def validate_io(name, iotype, value, is_optional, is_list, is_flag, options):
             )
         )
 
-    if is_flag and iotype != types.BOOL:
+    if is_flag and type != types.BOOL:
         raise ValidationError(
             "IO type `{}` cannot be a flag, it must be of type `{}`".format(
-                iotype, types.BOOL
+                type, types.BOOL
             )
         )
 
@@ -96,9 +97,7 @@ class IOSchema(BaseCamelSchema):
         required=True, validate=validate.NoneOf(IO_NAME_BLACK_LIST, error=IO_NAME_ERROR)
     )
     description = fields.Str(allow_none=True)
-    iotype = fields.Str(
-        allow_none=True, data_key="type", validate=validate.OneOf(types.VALUES)
-    )
+    type = fields.Str(allow_none=True, validate=validate.OneOf(types.VALUES))
     value = fields.Raw(allow_none=True)
     is_optional = fields.Bool(allow_none=True)
     is_list = fields.Bool(allow_none=True)
@@ -114,10 +113,11 @@ class IOSchema(BaseCamelSchema):
         return V1IO
 
     @validates_schema
+    @check_partial
     def validate_io(self, values, **kwargs):
         validate_io(
             name=values.get("name"),
-            iotype=values.get("iotype"),
+            type=values.get("type"),
             value=values.get("value"),
             is_list=values.get("is_list"),
             is_optional=values.get("is_optional"),
@@ -159,7 +159,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     Args:
         name: str
         description: str, optional
-        iotype: str, one of: [any, int, float, bool, str, dict, dict_of_dicts, uri, auth, list,
+        type: str, one of: [any, int, float, bool, str, dict, dict_of_dicts, uri, auth, list,
                               gcs, s3, wasb, dockerfile, git, image, event, artifacts, path,
                               metric, metadata, date, datetime]
         value: any, optional
@@ -197,25 +197,25 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="loss",
-    >>>         iotype=types.STR,
+    >>>         type=types.STR,
     >>>         description="Loss to use for training my model",
     >>>         is_optional=True,
     >>>         value="MeanSquaredError"
     >>>     ),
     >>>     V1IO(
     >>>         name="preprocess",
-    >>>         iotype=types.BOOL,
+    >>>         type=types.BOOL,
     >>>         description="A flag to preprocess data before training",
     >>>     )
     >>> ]
     >>> outputs = [
     >>>     V1IO(
     >>>         name="accuracy",
-    >>>         iotype=types.FLOAT,
+    >>>         type=types.FLOAT,
     >>>     ),
     >>>     V1IO(
     >>>         name="outputs-path",
-    >>>         iotype=types.PATH,
+    >>>         type=types.PATH,
     >>>     )
     >>> ]
     ```
@@ -531,13 +531,53 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
         "toInit",
     ]
 
+    def __init__(
+        self,
+        name=None,
+        description=None,
+        type=None,
+        value=None,
+        is_optional=None,
+        is_list=None,
+        is_flag=None,
+        arg_format=None,
+        delay_validation=None,
+        options=None,
+        connection=None,
+        to_init=None,
+        iotype=None,
+        local_vars_configuration=None,
+    ):
+        # Backward compatibility
+        if iotype:
+            print(
+                "`iotype` was deprecated in favor of `type`, "
+                "and will be removed in future releases."
+            )
+        type = type or iotype
+        super().__init__(
+            name=name,
+            description=description,
+            type=type,
+            value=value,
+            is_optional=is_optional,
+            is_list=is_list,
+            is_flag=is_flag,
+            arg_format=arg_format,
+            delay_validation=delay_validation,
+            options=options,
+            connection=connection,
+            to_init=to_init,
+            local_vars_configuration=local_vars_configuration,
+        )
+
     def validate_value(self, value: Any, parse: bool = True):
-        if self.iotype is None:
+        if self.type is None:
             return value
 
         return validate_io_value(
             name=self.name,
-            iotype=self.iotype,
+            type=self.type,
             value=value,
             default=self.value,
             is_list=self.is_list,

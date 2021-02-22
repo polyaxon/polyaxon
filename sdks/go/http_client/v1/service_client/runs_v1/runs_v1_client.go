@@ -39,117 +39,122 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ApproveRunOK, *ApproveRunNoContent, error)
+	ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApproveRunOK, *ApproveRunNoContent, error)
 
-	ApproveRuns(params *ApproveRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ApproveRunsOK, *ApproveRunsNoContent, error)
+	ApproveRuns(params *ApproveRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApproveRunsOK, *ApproveRunsNoContent, error)
 
-	ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveRunOK, *ArchiveRunNoContent, error)
+	ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveRunOK, *ArchiveRunNoContent, error)
 
-	BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunOK, *BookmarkRunNoContent, error)
+	BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkRunOK, *BookmarkRunNoContent, error)
 
-	BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunsOK, *BookmarkRunsNoContent, error)
+	BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkRunsOK, *BookmarkRunsNoContent, error)
 
-	CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*CollectRunLogsOK, *CollectRunLogsNoContent, error)
+	CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CollectRunLogsOK, *CollectRunLogsNoContent, error)
 
-	CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoWriter) (*CopyRunOK, *CopyRunNoContent, error)
+	CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CopyRunOK, *CopyRunNoContent, error)
 
-	CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunOK, *CreateRunNoContent, error)
+	CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRunOK, *CreateRunNoContent, error)
 
-	CreateRunArtifactsLineage(params *CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunArtifactsLineageOK, *CreateRunArtifactsLineageNoContent, error)
+	CreateRunArtifactsLineage(params *CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRunArtifactsLineageOK, *CreateRunArtifactsLineageNoContent, error)
 
-	CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunStatusOK, *CreateRunStatusNoContent, error)
+	CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRunStatusOK, *CreateRunStatusNoContent, error)
 
-	DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunOK, *DeleteRunNoContent, error)
+	DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunOK, *DeleteRunNoContent, error)
 
-	DeleteRunArtifact(params *DeleteRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactOK, *DeleteRunArtifactNoContent, error)
+	DeleteRunArtifact(params *DeleteRunArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunArtifactOK, *DeleteRunArtifactNoContent, error)
 
-	DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error)
+	DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error)
 
-	DeleteRunArtifacts(params *DeleteRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactsOK, *DeleteRunArtifactsNoContent, error)
+	DeleteRunArtifacts(params *DeleteRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunArtifactsOK, *DeleteRunArtifactsNoContent, error)
 
-	DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunsOK, *DeleteRunsNoContent, error)
+	DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunsOK, *DeleteRunsNoContent, error)
 
-	GetMultiRunEvents(params *GetMultiRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetMultiRunEventsOK, *GetMultiRunEventsNoContent, error)
+	GetMultiRunEvents(params *GetMultiRunEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMultiRunEventsOK, *GetMultiRunEventsNoContent, error)
 
-	GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunOK, *GetRunNoContent, error)
+	GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunOK, *GetRunNoContent, error)
 
-	GetRunArtifact(params *GetRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactOK, *GetRunArtifactNoContent, error)
+	GetRunArtifact(params *GetRunArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactOK, *GetRunArtifactNoContent, error)
 
-	GetRunArtifactLineage(params *GetRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactLineageOK, *GetRunArtifactLineageNoContent, error)
+	GetRunArtifactLineage(params *GetRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactLineageOK, *GetRunArtifactLineageNoContent, error)
 
-	GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsOK, *GetRunArtifactsNoContent, error)
+	GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactsOK, *GetRunArtifactsNoContent, error)
 
-	GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageOK, *GetRunArtifactsLineageNoContent, error)
+	GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactsLineageOK, *GetRunArtifactsLineageNoContent, error)
 
-	GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageNamesOK, *GetRunArtifactsLineageNamesNoContent, error)
+	GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactsLineageNamesOK, *GetRunArtifactsLineageNamesNoContent, error)
 
-	GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error)
+	GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error)
 
-	GetRunClonesLineage(params *GetRunClonesLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunClonesLineageOK, *GetRunClonesLineageNoContent, error)
+	GetRunClonesLineage(params *GetRunClonesLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunClonesLineageOK, *GetRunClonesLineageNoContent, error)
 
-	GetRunConnectionsLineage(params *GetRunConnectionsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunConnectionsLineageOK, *GetRunConnectionsLineageNoContent, error)
+	GetRunConnectionsLineage(params *GetRunConnectionsLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunConnectionsLineageOK, *GetRunConnectionsLineageNoContent, error)
 
-	GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunDownstreamLineageOK, *GetRunDownstreamLineageNoContent, error)
+	GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunDownstreamLineageOK, *GetRunDownstreamLineageNoContent, error)
 
-	GetRunEvents(params *GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunEventsOK, *GetRunEventsNoContent, error)
+	GetRunEvents(params *GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunEventsOK, *GetRunEventsNoContent, error)
 
-	GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunLogsOK, *GetRunLogsNoContent, error)
+	GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunLogsOK, *GetRunLogsNoContent, error)
 
-	GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunNamespaceOK, *GetRunNamespaceNoContent, error)
+	GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunNamespaceOK, *GetRunNamespaceNoContent, error)
 
-	GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunResourcesOK, *GetRunResourcesNoContent, error)
+	GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunResourcesOK, *GetRunResourcesNoContent, error)
 
-	GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunSettingsOK, *GetRunSettingsNoContent, error)
+	GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunSettingsOK, *GetRunSettingsNoContent, error)
 
-	GetRunStats(params *GetRunStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatsOK, *GetRunStatsNoContent, error)
+	GetRunStats(params *GetRunStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunStatsOK, *GetRunStatsNoContent, error)
 
-	GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error)
+	GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunStatusesOK, *GetRunStatusesNoContent, error)
 
-	GetRunUpstreamLineage(params *GetRunUpstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunUpstreamLineageOK, *GetRunUpstreamLineageNoContent, error)
+	GetRunUpstreamLineage(params *GetRunUpstreamLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunUpstreamLineageOK, *GetRunUpstreamLineageNoContent, error)
 
-	GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunsArtifactsLineageOK, *GetRunsArtifactsLineageNoContent, error)
+	GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunsArtifactsLineageOK, *GetRunsArtifactsLineageNoContent, error)
 
-	ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*ImpersonateTokenOK, *ImpersonateTokenNoContent, error)
+	ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ImpersonateTokenOK, *ImpersonateTokenNoContent, error)
 
-	InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunOK, *InvalidateRunNoContent, error)
+	InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InvalidateRunOK, *InvalidateRunNoContent, error)
 
-	InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunsOK, *InvalidateRunsNoContent, error)
+	InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InvalidateRunsOK, *InvalidateRunsNoContent, error)
 
-	ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedRunsOK, *ListArchivedRunsNoContent, error)
+	ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListArchivedRunsOK, *ListArchivedRunsNoContent, error)
 
-	ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedRunsOK, *ListBookmarkedRunsNoContent, error)
+	ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListBookmarkedRunsOK, *ListBookmarkedRunsNoContent, error)
 
-	ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, *ListRunsNoContent, error)
+	ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListRunsOK, *ListRunsNoContent, error)
 
-	NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*NotifyRunStatusOK, *NotifyRunStatusNoContent, error)
+	NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*NotifyRunStatusOK, *NotifyRunStatusNoContent, error)
 
-	PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunOK, *PatchRunNoContent, error)
+	PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchRunOK, *PatchRunNoContent, error)
 
-	RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestartRunOK, *RestartRunNoContent, error)
+	RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestartRunOK, *RestartRunNoContent, error)
 
-	RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreRunOK, *RestoreRunNoContent, error)
+	RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreRunOK, *RestoreRunNoContent, error)
 
-	ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter) (*ResumeRunOK, *ResumeRunNoContent, error)
+	ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResumeRunOK, *ResumeRunNoContent, error)
 
-	StartRunTensorboard(params *StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StartRunTensorboardOK, *StartRunTensorboardNoContent, error)
+	StartRunTensorboard(params *StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StartRunTensorboardOK, *StartRunTensorboardNoContent, error)
 
-	StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunOK, *StopRunNoContent, error)
+	StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StopRunOK, *StopRunNoContent, error)
 
-	StopRunTensorboard(params *StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunTensorboardOK, *StopRunTensorboardNoContent, error)
+	StopRunTensorboard(params *StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StopRunTensorboardOK, *StopRunTensorboardNoContent, error)
 
-	StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunsOK, *StopRunsNoContent, error)
+	StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StopRunsOK, *StopRunsNoContent, error)
 
-	TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoWriter) (*TagRunsOK, *TagRunsNoContent, error)
+	SyncRun(params *SyncRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SyncRunOK, *SyncRunNoContent, error)
 
-	UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error)
+	TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TagRunsOK, *TagRunsNoContent, error)
 
-	UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunOK, *UpdateRunNoContent, error)
+	UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error)
 
-	UploadRunArtifact(params *UploadRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunArtifactOK, *UploadRunArtifactNoContent, error)
+	UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRunOK, *UpdateRunNoContent, error)
 
-	UploadRunLogs(params *UploadRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunLogsOK, *UploadRunLogsNoContent, error)
+	UploadRunArtifact(params *UploadRunArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadRunArtifactOK, *UploadRunArtifactNoContent, error)
+
+	UploadRunLogs(params *UploadRunLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadRunLogsOK, *UploadRunLogsNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -157,13 +162,12 @@ type ClientService interface {
 /*
   ApproveRun approves run
 */
-func (a *Client) ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ApproveRunOK, *ApproveRunNoContent, error) {
+func (a *Client) ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApproveRunOK, *ApproveRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewApproveRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ApproveRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/approve",
@@ -175,7 +179,12 @@ func (a *Client) ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -193,13 +202,12 @@ func (a *Client) ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAut
 /*
   ApproveRuns approves runs
 */
-func (a *Client) ApproveRuns(params *ApproveRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ApproveRunsOK, *ApproveRunsNoContent, error) {
+func (a *Client) ApproveRuns(params *ApproveRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApproveRunsOK, *ApproveRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewApproveRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ApproveRuns",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/approve",
@@ -211,7 +219,12 @@ func (a *Client) ApproveRuns(params *ApproveRunsParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -229,13 +242,12 @@ func (a *Client) ApproveRuns(params *ApproveRunsParams, authInfo runtime.ClientA
 /*
   ArchiveRun archives run
 */
-func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveRunOK, *ArchiveRunNoContent, error) {
+func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveRunOK, *ArchiveRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewArchiveRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ArchiveRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/archive",
@@ -247,7 +259,12 @@ func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -265,13 +282,12 @@ func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAut
 /*
   BookmarkRun bookmarks run
 */
-func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunOK, *BookmarkRunNoContent, error) {
+func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkRunOK, *BookmarkRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "BookmarkRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/bookmark",
@@ -283,7 +299,12 @@ func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -301,13 +322,12 @@ func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientA
 /*
   BookmarkRuns bookmarks runs
 */
-func (a *Client) BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunsOK, *BookmarkRunsNoContent, error) {
+func (a *Client) BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkRunsOK, *BookmarkRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "BookmarkRuns",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/bookmark",
@@ -319,7 +339,12 @@ func (a *Client) BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -337,13 +362,12 @@ func (a *Client) BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.Clien
 /*
   CollectRunLogs collects run logs
 */
-func (a *Client) CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*CollectRunLogsOK, *CollectRunLogsNoContent, error) {
+func (a *Client) CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CollectRunLogsOK, *CollectRunLogsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCollectRunLogsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CollectRunLogs",
 		Method:             "POST",
 		PathPattern:        "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs",
@@ -355,7 +379,12 @@ func (a *Client) CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -373,16 +402,15 @@ func (a *Client) CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.C
 /*
   CopyRun restarts run with copy
 */
-func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoWriter) (*CopyRunOK, *CopyRunNoContent, error) {
+func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CopyRunOK, *CopyRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCopyRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CopyRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}/copy",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -391,7 +419,12 @@ func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoW
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -409,13 +442,12 @@ func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoW
 /*
   CreateRun creates new run
 */
-func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunOK, *CreateRunNoContent, error) {
+func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRunOK, *CreateRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs",
@@ -427,7 +459,12 @@ func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -445,13 +482,12 @@ func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthI
 /*
   CreateRunArtifactsLineage creates bulk run artifacts lineage
 */
-func (a *Client) CreateRunArtifactsLineage(params *CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunArtifactsLineageOK, *CreateRunArtifactsLineageNoContent, error) {
+func (a *Client) CreateRunArtifactsLineage(params *CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRunArtifactsLineageOK, *CreateRunArtifactsLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateRunArtifactsLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateRunArtifactsLineage",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts",
@@ -463,7 +499,12 @@ func (a *Client) CreateRunArtifactsLineage(params *CreateRunArtifactsLineagePara
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -481,13 +522,12 @@ func (a *Client) CreateRunArtifactsLineage(params *CreateRunArtifactsLineagePara
 /*
   CreateRunStatus creates new run status
 */
-func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunStatusOK, *CreateRunStatusNoContent, error) {
+func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRunStatusOK, *CreateRunStatusNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateRunStatusParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateRunStatus",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
@@ -499,7 +539,12 @@ func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -517,13 +562,12 @@ func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime
 /*
   DeleteRun deletes run
 */
-func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunOK, *DeleteRunNoContent, error) {
+func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunOK, *DeleteRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteRun",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}",
@@ -535,7 +579,12 @@ func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -553,13 +602,12 @@ func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthI
 /*
   DeleteRunArtifact deletes run artifact
 */
-func (a *Client) DeleteRunArtifact(params *DeleteRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactOK, *DeleteRunArtifactNoContent, error) {
+func (a *Client) DeleteRunArtifact(params *DeleteRunArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunArtifactOK, *DeleteRunArtifactNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRunArtifactParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteRunArtifact",
 		Method:             "DELETE",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact",
@@ -571,7 +619,12 @@ func (a *Client) DeleteRunArtifact(params *DeleteRunArtifactParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -589,13 +642,12 @@ func (a *Client) DeleteRunArtifact(params *DeleteRunArtifactParams, authInfo run
 /*
   DeleteRunArtifactLineage deletes run artifact lineage
 */
-func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error) {
+func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRunArtifactLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteRunArtifactLineage",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}",
@@ -607,7 +659,12 @@ func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -625,13 +682,12 @@ func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams
 /*
   DeleteRunArtifacts deletes run artifacts
 */
-func (a *Client) DeleteRunArtifacts(params *DeleteRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactsOK, *DeleteRunArtifactsNoContent, error) {
+func (a *Client) DeleteRunArtifacts(params *DeleteRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunArtifactsOK, *DeleteRunArtifactsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRunArtifactsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteRunArtifacts",
 		Method:             "DELETE",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts",
@@ -643,7 +699,12 @@ func (a *Client) DeleteRunArtifacts(params *DeleteRunArtifactsParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -661,13 +722,12 @@ func (a *Client) DeleteRunArtifacts(params *DeleteRunArtifactsParams, authInfo r
 /*
   DeleteRuns deletes runs
 */
-func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunsOK, *DeleteRunsNoContent, error) {
+func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRunsOK, *DeleteRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteRuns",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/delete",
@@ -679,7 +739,12 @@ func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -697,13 +762,12 @@ func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAut
 /*
   GetMultiRunEvents gets multi runs events
 */
-func (a *Client) GetMultiRunEvents(params *GetMultiRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetMultiRunEventsOK, *GetMultiRunEventsNoContent, error) {
+func (a *Client) GetMultiRunEvents(params *GetMultiRunEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMultiRunEventsOK, *GetMultiRunEventsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetMultiRunEventsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetMultiRunEvents",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}",
@@ -715,7 +779,12 @@ func (a *Client) GetMultiRunEvents(params *GetMultiRunEventsParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -733,13 +802,12 @@ func (a *Client) GetMultiRunEvents(params *GetMultiRunEventsParams, authInfo run
 /*
   GetRun gets run
 */
-func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunOK, *GetRunNoContent, error) {
+func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunOK, *GetRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRun",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}",
@@ -751,7 +819,12 @@ func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWri
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -769,13 +842,12 @@ func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWri
 /*
   GetRunArtifact gets run artifact
 */
-func (a *Client) GetRunArtifact(params *GetRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactOK, *GetRunArtifactNoContent, error) {
+func (a *Client) GetRunArtifact(params *GetRunArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactOK, *GetRunArtifactNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunArtifactParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunArtifact",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact",
@@ -787,7 +859,12 @@ func (a *Client) GetRunArtifact(params *GetRunArtifactParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -805,13 +882,12 @@ func (a *Client) GetRunArtifact(params *GetRunArtifactParams, authInfo runtime.C
 /*
   GetRunArtifactLineage gets run artifacts lineage
 */
-func (a *Client) GetRunArtifactLineage(params *GetRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactLineageOK, *GetRunArtifactLineageNoContent, error) {
+func (a *Client) GetRunArtifactLineage(params *GetRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactLineageOK, *GetRunArtifactLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunArtifactLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunArtifactLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}",
@@ -823,7 +899,12 @@ func (a *Client) GetRunArtifactLineage(params *GetRunArtifactLineageParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -841,13 +922,12 @@ func (a *Client) GetRunArtifactLineage(params *GetRunArtifactLineageParams, auth
 /*
   GetRunArtifacts gets run artifacts
 */
-func (a *Client) GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsOK, *GetRunArtifactsNoContent, error) {
+func (a *Client) GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactsOK, *GetRunArtifactsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunArtifactsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunArtifacts",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts",
@@ -859,7 +939,12 @@ func (a *Client) GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -877,13 +962,12 @@ func (a *Client) GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime
 /*
   GetRunArtifactsLineage gets run artifacts lineage
 */
-func (a *Client) GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageOK, *GetRunArtifactsLineageNoContent, error) {
+func (a *Client) GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactsLineageOK, *GetRunArtifactsLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunArtifactsLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunArtifactsLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts",
@@ -895,7 +979,12 @@ func (a *Client) GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -913,13 +1002,12 @@ func (a *Client) GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, au
 /*
   GetRunArtifactsLineageNames gets run artifacts lineage names
 */
-func (a *Client) GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageNamesOK, *GetRunArtifactsLineageNamesNoContent, error) {
+func (a *Client) GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactsLineageNamesOK, *GetRunArtifactsLineageNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunArtifactsLineageNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunArtifactsLineageNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names",
@@ -931,7 +1019,12 @@ func (a *Client) GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNames
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -949,13 +1042,12 @@ func (a *Client) GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNames
 /*
   GetRunArtifactsTree gets run artifacts tree
 */
-func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error) {
+func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunArtifactsTreeParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunArtifactsTree",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree",
@@ -967,7 +1059,12 @@ func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -985,13 +1082,12 @@ func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo
 /*
   GetRunClonesLineage gets run clones lineage
 */
-func (a *Client) GetRunClonesLineage(params *GetRunClonesLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunClonesLineageOK, *GetRunClonesLineageNoContent, error) {
+func (a *Client) GetRunClonesLineage(params *GetRunClonesLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunClonesLineageOK, *GetRunClonesLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunClonesLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunClonesLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones",
@@ -1003,7 +1099,12 @@ func (a *Client) GetRunClonesLineage(params *GetRunClonesLineageParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1021,13 +1122,12 @@ func (a *Client) GetRunClonesLineage(params *GetRunClonesLineageParams, authInfo
 /*
   GetRunConnectionsLineage gets run connections lineage
 */
-func (a *Client) GetRunConnectionsLineage(params *GetRunConnectionsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunConnectionsLineageOK, *GetRunConnectionsLineageNoContent, error) {
+func (a *Client) GetRunConnectionsLineage(params *GetRunConnectionsLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunConnectionsLineageOK, *GetRunConnectionsLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunConnectionsLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunConnectionsLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections",
@@ -1039,7 +1139,12 @@ func (a *Client) GetRunConnectionsLineage(params *GetRunConnectionsLineageParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1057,13 +1162,12 @@ func (a *Client) GetRunConnectionsLineage(params *GetRunConnectionsLineageParams
 /*
   GetRunDownstreamLineage gets run downstream lineage
 */
-func (a *Client) GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunDownstreamLineageOK, *GetRunDownstreamLineageNoContent, error) {
+func (a *Client) GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunDownstreamLineageOK, *GetRunDownstreamLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunDownstreamLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunDownstreamLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream",
@@ -1075,7 +1179,12 @@ func (a *Client) GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1093,13 +1202,12 @@ func (a *Client) GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, 
 /*
   GetRunEvents gets run events
 */
-func (a *Client) GetRunEvents(params *GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunEventsOK, *GetRunEventsNoContent, error) {
+func (a *Client) GetRunEvents(params *GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunEventsOK, *GetRunEventsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunEventsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunEvents",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}",
@@ -1111,7 +1219,12 @@ func (a *Client) GetRunEvents(params *GetRunEventsParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1129,13 +1242,12 @@ func (a *Client) GetRunEvents(params *GetRunEventsParams, authInfo runtime.Clien
 /*
   GetRunLogs gets run logs
 */
-func (a *Client) GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunLogsOK, *GetRunLogsNoContent, error) {
+func (a *Client) GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunLogsOK, *GetRunLogsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunLogsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunLogs",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs",
@@ -1147,7 +1259,12 @@ func (a *Client) GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1165,13 +1282,12 @@ func (a *Client) GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAut
 /*
   GetRunNamespace gets run namespace
 */
-func (a *Client) GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunNamespaceOK, *GetRunNamespaceNoContent, error) {
+func (a *Client) GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunNamespaceOK, *GetRunNamespaceNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunNamespaceParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunNamespace",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/namespace",
@@ -1183,7 +1299,12 @@ func (a *Client) GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1201,13 +1322,12 @@ func (a *Client) GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime
 /*
   GetRunResources gets run resources events
 */
-func (a *Client) GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunResourcesOK, *GetRunResourcesNoContent, error) {
+func (a *Client) GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunResourcesOK, *GetRunResourcesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunResourcesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunResources",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources",
@@ -1219,7 +1339,12 @@ func (a *Client) GetRunResources(params *GetRunResourcesParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1237,13 +1362,12 @@ func (a *Client) GetRunResources(params *GetRunResourcesParams, authInfo runtime
 /*
   GetRunSettings gets run settings
 */
-func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunSettingsOK, *GetRunSettingsNoContent, error) {
+func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunSettingsOK, *GetRunSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunSettings",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/settings",
@@ -1255,7 +1379,12 @@ func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1273,13 +1402,12 @@ func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.C
 /*
   GetRunStats gets run stats
 */
-func (a *Client) GetRunStats(params *GetRunStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatsOK, *GetRunStatsNoContent, error) {
+func (a *Client) GetRunStats(params *GetRunStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunStatsOK, *GetRunStatsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunStatsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunStats",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/stats",
@@ -1291,7 +1419,12 @@ func (a *Client) GetRunStats(params *GetRunStatsParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1309,13 +1442,12 @@ func (a *Client) GetRunStats(params *GetRunStatsParams, authInfo runtime.ClientA
 /*
   GetRunStatuses gets run statuses
 */
-func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error) {
+func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunStatusesOK, *GetRunStatusesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunStatusesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunStatuses",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/statuses",
@@ -1327,7 +1459,12 @@ func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1345,13 +1482,12 @@ func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.C
 /*
   GetRunUpstreamLineage gets run upstream lineage
 */
-func (a *Client) GetRunUpstreamLineage(params *GetRunUpstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunUpstreamLineageOK, *GetRunUpstreamLineageNoContent, error) {
+func (a *Client) GetRunUpstreamLineage(params *GetRunUpstreamLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunUpstreamLineageOK, *GetRunUpstreamLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunUpstreamLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunUpstreamLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream",
@@ -1363,7 +1499,12 @@ func (a *Client) GetRunUpstreamLineage(params *GetRunUpstreamLineageParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1381,13 +1522,12 @@ func (a *Client) GetRunUpstreamLineage(params *GetRunUpstreamLineageParams, auth
 /*
   GetRunsArtifactsLineage gets runs artifacts lineage
 */
-func (a *Client) GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunsArtifactsLineageOK, *GetRunsArtifactsLineageNoContent, error) {
+func (a *Client) GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunsArtifactsLineageOK, *GetRunsArtifactsLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunsArtifactsLineageParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetRunsArtifactsLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/runs/lineage/artifacts",
@@ -1399,7 +1539,12 @@ func (a *Client) GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1417,13 +1562,12 @@ func (a *Client) GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, 
 /*
   ImpersonateToken impersonates run token
 */
-func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*ImpersonateTokenOK, *ImpersonateTokenNoContent, error) {
+func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ImpersonateTokenOK, *ImpersonateTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewImpersonateTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ImpersonateToken",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/impersonate",
@@ -1435,7 +1579,12 @@ func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1453,13 +1602,12 @@ func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runti
 /*
   InvalidateRun invalidates run
 */
-func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunOK, *InvalidateRunNoContent, error) {
+func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InvalidateRunOK, *InvalidateRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewInvalidateRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "InvalidateRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/invalidate",
@@ -1471,7 +1619,12 @@ func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1489,13 +1642,12 @@ func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.Cli
 /*
   InvalidateRuns invalidates runs
 */
-func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunsOK, *InvalidateRunsNoContent, error) {
+func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InvalidateRunsOK, *InvalidateRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewInvalidateRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "InvalidateRuns",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/invalidate",
@@ -1507,7 +1659,12 @@ func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1525,13 +1682,12 @@ func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.C
 /*
   ListArchivedRuns lists archived runs for user
 */
-func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedRunsOK, *ListArchivedRunsNoContent, error) {
+func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListArchivedRunsOK, *ListArchivedRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListArchivedRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListArchivedRuns",
 		Method:             "GET",
 		PathPattern:        "/api/v1/archives/{user}/runs",
@@ -1543,7 +1699,12 @@ func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1561,13 +1722,12 @@ func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runti
 /*
   ListBookmarkedRuns lists bookmarked runs for user
 */
-func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedRunsOK, *ListBookmarkedRunsNoContent, error) {
+func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListBookmarkedRunsOK, *ListBookmarkedRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListBookmarkedRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListBookmarkedRuns",
 		Method:             "GET",
 		PathPattern:        "/api/v1/bookmarks/{user}/runs",
@@ -1579,7 +1739,12 @@ func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1597,13 +1762,12 @@ func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo r
 /*
   ListRuns lists runs
 */
-func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, *ListRunsNoContent, error) {
+func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListRunsOK, *ListRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListRuns",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/runs",
@@ -1615,7 +1779,12 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1633,13 +1802,12 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 /*
   NotifyRunStatus notifies run status
 */
-func (a *Client) NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*NotifyRunStatusOK, *NotifyRunStatusNoContent, error) {
+func (a *Client) NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*NotifyRunStatusOK, *NotifyRunStatusNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotifyRunStatusParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "NotifyRunStatus",
 		Method:             "POST",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify",
@@ -1651,7 +1819,12 @@ func (a *Client) NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1669,13 +1842,12 @@ func (a *Client) NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime
 /*
   PatchRun patches run
 */
-func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunOK, *PatchRunNoContent, error) {
+func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchRunOK, *PatchRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchRun",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}",
@@ -1687,7 +1859,12 @@ func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInf
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1705,16 +1882,15 @@ func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInf
 /*
   RestartRun restarts run
 */
-func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestartRunOK, *RestartRunNoContent, error) {
+func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestartRunOK, *RestartRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestartRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "RestartRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1723,7 +1899,12 @@ func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1741,13 +1922,12 @@ func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAut
 /*
   RestoreRun restores run
 */
-func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreRunOK, *RestoreRunNoContent, error) {
+func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreRunOK, *RestoreRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestoreRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "RestoreRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/restore",
@@ -1759,7 +1939,12 @@ func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1777,16 +1962,15 @@ func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAut
 /*
   ResumeRun resumes run
 */
-func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter) (*ResumeRunOK, *ResumeRunNoContent, error) {
+func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResumeRunOK, *ResumeRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewResumeRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ResumeRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1795,7 +1979,12 @@ func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1813,13 +2002,12 @@ func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthI
 /*
   StartRunTensorboard starts run tensorboard
 */
-func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StartRunTensorboardOK, *StartRunTensorboardNoContent, error) {
+func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StartRunTensorboardOK, *StartRunTensorboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStartRunTensorboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "StartRunTensorboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start",
@@ -1831,7 +2019,12 @@ func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1849,13 +2042,12 @@ func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo
 /*
   StopRun stops run
 */
-func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunOK, *StopRunNoContent, error) {
+func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StopRunOK, *StopRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "StopRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/stop",
@@ -1867,7 +2059,12 @@ func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoW
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1885,13 +2082,12 @@ func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoW
 /*
   StopRunTensorboard stops run tensorboard
 */
-func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunTensorboardOK, *StopRunTensorboardNoContent, error) {
+func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StopRunTensorboardOK, *StopRunTensorboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopRunTensorboardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "StopRunTensorboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/stop",
@@ -1903,7 +2099,12 @@ func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1921,13 +2122,12 @@ func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo r
 /*
   StopRuns stops runs
 */
-func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunsOK, *StopRunsNoContent, error) {
+func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StopRunsOK, *StopRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "StopRuns",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/stop",
@@ -1939,7 +2139,12 @@ func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInf
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1955,15 +2160,54 @@ func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInf
 }
 
 /*
+  SyncRun syncs offline run
+*/
+func (a *Client) SyncRun(params *SyncRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SyncRunOK, *SyncRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSyncRunParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "SyncRun",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/sync",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &SyncRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *SyncRunOK:
+		return value, nil, nil
+	case *SyncRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*SyncRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   TagRuns tags runs
 */
-func (a *Client) TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoWriter) (*TagRunsOK, *TagRunsNoContent, error) {
+func (a *Client) TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TagRunsOK, *TagRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewTagRunsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "TagRuns",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/tag",
@@ -1975,7 +2219,12 @@ func (a *Client) TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoW
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1993,13 +2242,12 @@ func (a *Client) TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoW
 /*
   UnbookmarkRun unbookmarks run
 */
-func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error) {
+func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUnbookmarkRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UnbookmarkRun",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/unbookmark",
@@ -2011,7 +2259,12 @@ func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -2029,13 +2282,12 @@ func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.Cli
 /*
   UpdateRun updates run
 */
-func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunOK, *UpdateRunNoContent, error) {
+func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRunOK, *UpdateRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateRunParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateRun",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}",
@@ -2047,7 +2299,12 @@ func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -2065,13 +2322,12 @@ func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthI
 /*
   UploadRunArtifact uploads an artifact file to a store via run access
 */
-func (a *Client) UploadRunArtifact(params *UploadRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunArtifactOK, *UploadRunArtifactNoContent, error) {
+func (a *Client) UploadRunArtifact(params *UploadRunArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadRunArtifactOK, *UploadRunArtifactNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUploadRunArtifactParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UploadRunArtifact",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload",
@@ -2083,7 +2339,12 @@ func (a *Client) UploadRunArtifact(params *UploadRunArtifactParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -2101,13 +2362,12 @@ func (a *Client) UploadRunArtifact(params *UploadRunArtifactParams, authInfo run
 /*
   UploadRunLogs uploads a logs file to a store via run access
 */
-func (a *Client) UploadRunLogs(params *UploadRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunLogsOK, *UploadRunLogsNoContent, error) {
+func (a *Client) UploadRunLogs(params *UploadRunLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadRunLogsOK, *UploadRunLogsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUploadRunLogsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UploadRunLogs",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/logs/upload",
@@ -2119,7 +2379,12 @@ func (a *Client) UploadRunLogs(params *UploadRunLogsParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

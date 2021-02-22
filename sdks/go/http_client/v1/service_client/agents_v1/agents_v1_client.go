@@ -37,35 +37,38 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentOK, *CreateAgentNoContent, error)
+	CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAgentOK, *CreateAgentNoContent, error)
 
-	CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error)
+	CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error)
 
-	DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAgentOK, *DeleteAgentNoContent, error)
+	DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAgentOK, *DeleteAgentNoContent, error)
 
-	GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentOK, *GetAgentNoContent, error)
+	GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentOK, *GetAgentNoContent, error)
 
-	GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStateOK, *GetAgentStateNoContent, error)
+	GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStateOK, *GetAgentStateNoContent, error)
 
-	GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error)
+	GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error)
 
-	GetAgentToken(params *GetAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentTokenOK, *GetAgentTokenNoContent, error)
+	GetAgentToken(params *GetAgentTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentTokenOK, *GetAgentTokenNoContent, error)
 
-	ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error)
+	ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListAgentNamesOK, *ListAgentNamesNoContent, error)
 
-	ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentsOK, *ListAgentsNoContent, error)
+	ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListAgentsOK, *ListAgentsNoContent, error)
 
-	PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentOK, *PatchAgentNoContent, error)
+	PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchAgentOK, *PatchAgentNoContent, error)
 
-	PatchAgentToken(params *PatchAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentTokenOK, *PatchAgentTokenNoContent, error)
+	PatchAgentToken(params *PatchAgentTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchAgentTokenOK, *PatchAgentTokenNoContent, error)
 
-	SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error)
+	SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SyncAgentOK, *SyncAgentNoContent, error)
 
-	UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentOK, *UpdateAgentNoContent, error)
+	UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAgentOK, *UpdateAgentNoContent, error)
 
-	UpdateAgentToken(params *UpdateAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentTokenOK, *UpdateAgentTokenNoContent, error)
+	UpdateAgentToken(params *UpdateAgentTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAgentTokenOK, *UpdateAgentTokenNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -73,13 +76,12 @@ type ClientService interface {
 /*
   CreateAgent creates agent
 */
-func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentOK, *CreateAgentNoContent, error) {
+func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAgentOK, *CreateAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateAgentParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateAgent",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/agents",
@@ -91,7 +93,12 @@ func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -109,13 +116,12 @@ func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientA
 /*
   CreateAgentStatus creates new run status
 */
-func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error) {
+func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateAgentStatusParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateAgentStatus",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/statuses",
@@ -127,7 +133,12 @@ func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -145,13 +156,12 @@ func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo run
 /*
   DeleteAgent deletes agent
 */
-func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAgentOK, *DeleteAgentNoContent, error) {
+func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAgentOK, *DeleteAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteAgentParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteAgent",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}",
@@ -163,7 +173,12 @@ func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -181,13 +196,12 @@ func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientA
 /*
   GetAgent gets agent
 */
-func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentOK, *GetAgentNoContent, error) {
+func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentOK, *GetAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAgentParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetAgent",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}",
@@ -199,7 +213,12 @@ func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInf
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -217,13 +236,12 @@ func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInf
 /*
   GetAgentState gets state queues runs
 */
-func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStateOK, *GetAgentStateNoContent, error) {
+func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStateOK, *GetAgentStateNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAgentStateParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetAgentState",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/state",
@@ -235,7 +253,12 @@ func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -253,13 +276,12 @@ func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.Cli
 /*
   GetAgentStatuses gets agent status
 */
-func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error) {
+func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAgentStatusesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetAgentStatuses",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/statuses",
@@ -271,7 +293,12 @@ func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -289,13 +316,12 @@ func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runti
 /*
   GetAgentToken gets agent token
 */
-func (a *Client) GetAgentToken(params *GetAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentTokenOK, *GetAgentTokenNoContent, error) {
+func (a *Client) GetAgentToken(params *GetAgentTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentTokenOK, *GetAgentTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAgentTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetAgentToken",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/token",
@@ -307,7 +333,12 @@ func (a *Client) GetAgentToken(params *GetAgentTokenParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -325,13 +356,12 @@ func (a *Client) GetAgentToken(params *GetAgentTokenParams, authInfo runtime.Cli
 /*
   ListAgentNames lists agents names
 */
-func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error) {
+func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListAgentNamesOK, *ListAgentNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListAgentNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListAgentNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/names",
@@ -343,7 +373,12 @@ func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -361,13 +396,12 @@ func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.C
 /*
   ListAgents lists agents
 */
-func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentsOK, *ListAgentsNoContent, error) {
+func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListAgentsOK, *ListAgentsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListAgentsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListAgents",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents",
@@ -379,7 +413,12 @@ func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -397,13 +436,12 @@ func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAut
 /*
   PatchAgent patches agent
 */
-func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentOK, *PatchAgentNoContent, error) {
+func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchAgentOK, *PatchAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchAgentParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchAgent",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent.uuid}",
@@ -415,7 +453,12 @@ func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -433,13 +476,12 @@ func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAut
 /*
   PatchAgentToken patches agent token
 */
-func (a *Client) PatchAgentToken(params *PatchAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentTokenOK, *PatchAgentTokenNoContent, error) {
+func (a *Client) PatchAgentToken(params *PatchAgentTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchAgentTokenOK, *PatchAgentTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchAgentTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchAgentToken",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/token",
@@ -451,7 +493,12 @@ func (a *Client) PatchAgentToken(params *PatchAgentTokenParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -469,13 +516,12 @@ func (a *Client) PatchAgentToken(params *PatchAgentTokenParams, authInfo runtime
 /*
   SyncAgent syncs agent
 */
-func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error) {
+func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SyncAgentOK, *SyncAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSyncAgentParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "SyncAgent",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent.uuid}/sync",
@@ -487,7 +533,12 @@ func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -505,13 +556,12 @@ func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthI
 /*
   UpdateAgent updates agent
 */
-func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentOK, *UpdateAgentNoContent, error) {
+func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAgentOK, *UpdateAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateAgentParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateAgent",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent.uuid}",
@@ -523,7 +573,12 @@ func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -541,13 +596,12 @@ func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientA
 /*
   UpdateAgentToken updates agent token
 */
-func (a *Client) UpdateAgentToken(params *UpdateAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentTokenOK, *UpdateAgentTokenNoContent, error) {
+func (a *Client) UpdateAgentToken(params *UpdateAgentTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAgentTokenOK, *UpdateAgentTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateAgentTokenParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateAgentToken",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/token",
@@ -559,7 +613,12 @@ func (a *Client) UpdateAgentToken(params *UpdateAgentTokenParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

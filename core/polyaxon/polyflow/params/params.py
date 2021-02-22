@@ -29,6 +29,7 @@ from polyaxon.contexts import sections as contexts_sections
 from polyaxon.contexts.params import PARAM_REGEX
 from polyaxon.polyflow.init import V1Init
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.utils.signal_decorators import check_partial
 
 
 def validate_param_value(value, ref, to_init, context_only):
@@ -180,7 +181,7 @@ class ParamValueMixin:
 
         return ParamSpec(
             name=name,
-            iotype=iotype,
+            type=iotype,
             param=self,
             is_flag=is_flag,
             is_list=is_list,
@@ -201,6 +202,7 @@ class ParamSchema(BaseCamelSchema):
         return V1Param
 
     @validates_schema
+    @check_partial
     def validate_param(self, values, **kwargs):
         validate_param_value(
             value=values.get("value"),
@@ -418,7 +420,7 @@ class V1Param(
 
 
 class ParamSpec(
-    namedtuple("ParamSpec", "name iotype param is_flag is_list is_context arg_format")
+    namedtuple("ParamSpec", "name type param is_flag is_list is_context arg_format")
 ):
     def get_display_value(self):
         if self.is_flag:
@@ -442,7 +444,7 @@ class ParamSpec(
                 if self.param.value is not None
                 else ""
             )
-        if self.iotype == types.BOOL:
+        if self.type == types.BOOL:
             return "--{}".format(self.name) if self.param.value else ""
         return (
             "--{}={}".format(self.name.replace("_", "-"), self.as_str())
@@ -454,7 +456,7 @@ class ParamSpec(
         parsed_param = {
             "connection": self.param.connection,
             "value": self.param.value,
-            "type": self.iotype,
+            "type": self.type,
             "as_str": self.as_str(),
             "as_arg": self.as_arg(),
         }
@@ -464,7 +466,7 @@ class ParamSpec(
         if not self.param.to_init:
             return False
 
-        if not self.iotype:
+        if not self.type:
             raise ValidationError(
                 "Param `{}` cannot be turned to an initializer without a valid type! "
                 "Please set an input with a type to use the `to_init` field.".format(
@@ -475,28 +477,28 @@ class ParamSpec(
         if self.param.connection:
             return True
 
-        if self.iotype in {types.GIT, types.ARTIFACTS, types.DOCKERFILE}:
+        if self.type in {types.GIT, types.ARTIFACTS, types.DOCKERFILE}:
             return True
 
         raise ValidationError(
             "Param `{}` with type `{}`, "
             "cannot be turned to an init container automatically.".format(
-                self.name, self.iotype, self.param.ref
+                self.name, self.type, self.param.ref
             )
         )
 
     def to_init(self) -> Optional[V1Init]:
         if not self.param.to_init:
             return None
-        if self.iotype == types.GIT:
+        if self.type == types.GIT:
             return V1Init.from_dict(
                 dict(git=self.param.value, connection=self.param.connection)
             )
-        elif self.iotype == types.DOCKERFILE:
+        elif self.type == types.DOCKERFILE:
             return V1Init.from_dict(
                 dict(dockerfile=self.param.value, connection=self.param.connection)
             )
-        elif self.iotype == types.ARTIFACTS:
+        elif self.type == types.ARTIFACTS:
             return V1Init.from_dict(
                 dict(artifacts=self.param.value, connection=self.param.connection)
             )
@@ -515,7 +517,7 @@ class ParamSpec(
         and that the types
         """
         if self.param.is_join_ref:
-            if not self.is_list and self.iotype != types.ARTIFACTS:
+            if not self.is_list and self.type != types.ARTIFACTS:
                 raise ValidationError(
                     "Param `{}` has a an input type `{}`"
                     "and it does not expect a list of values from the join.".format(
@@ -542,9 +544,7 @@ class ParamSpec(
                 )
             )
 
-        if not types.are_compatible(
-            self.iotype, context[self.param.searchable_ref].iotype
-        ):
+        if not types.are_compatible(self.type, context[self.param.searchable_ref].type):
             raise ValidationError(
                 "Param `{}` has a an input type `{}` "
                 "and it does not correspond to the type of ref `{}.".format(

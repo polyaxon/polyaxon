@@ -26,6 +26,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
     POLYAXON_KEYS_AGENT_CONNECTIONS,
     POLYAXON_KEYS_AGENT_INIT,
+    POLYAXON_KEYS_AGENT_IS_REPLICA,
     POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
     POLYAXON_KEYS_AGENT_RUNS_SA,
     POLYAXON_KEYS_AGENT_SECRET_NAME,
@@ -37,6 +38,7 @@ from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.parser import parser
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.types import ConnectionTypeSchema, V1K8sResourceType
+from polyaxon.utils.signal_decorators import check_partial
 
 
 def validate_agent_config(artifacts_store, connections):
@@ -61,6 +63,7 @@ def validate_agent_config(artifacts_store, connections):
 
 class AgentSchema(BaseSchema):
     namespace = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_NAMESPACE)
+    is_replica = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_AGENT_IS_REPLICA)
     sidecar = fields.Nested(
         PolyaxonSidecarContainerSchema,
         allow_none=True,
@@ -102,6 +105,7 @@ class AgentSchema(BaseSchema):
         return AgentConfig
 
     @validates_schema
+    @check_partial
     def validate_connection(self, data, **kwargs):
         validate_agent_config(data.get("artifacts_store"), data.get("connections"))
 
@@ -183,6 +187,7 @@ class AgentConfig(BaseConfig):
     REDUCED_ATTRIBUTES = [
         POLYAXON_KEYS_AGENT_SIDECAR,
         POLYAXON_KEYS_AGENT_INIT,
+        POLYAXON_KEYS_AGENT_IS_REPLICA,
         POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
         POLYAXON_KEYS_AGENT_CONNECTIONS,
         POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
@@ -194,6 +199,7 @@ class AgentConfig(BaseConfig):
     def __init__(
         self,
         namespace=None,
+        is_replica=None,
         sidecar=None,
         init=None,
         artifacts_store=None,
@@ -205,6 +211,7 @@ class AgentConfig(BaseConfig):
         **kwargs
     ):
         self.namespace = namespace
+        self.is_replica = is_replica
         self.sidecar = sidecar
         self.init = init
         self.artifacts_store = artifacts_store

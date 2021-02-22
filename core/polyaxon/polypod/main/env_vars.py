@@ -17,6 +17,7 @@
 from typing import Iterable, List
 
 from polyaxon.env_vars.keys import (
+    POLYAXON_KEYS_ARTIFACTS_STORE_NAME,
     POLYAXON_KEYS_COLLECT_ARTIFACTS,
     POLYAXON_KEYS_COLLECT_RESOURCES,
     POLYAXON_KEYS_LOG_LEVEL,
@@ -38,6 +39,7 @@ def get_env_vars(
     contexts: PluginsContextsSpec,
     log_level: str,
     kv_env_vars: List[List],
+    artifacts_store_name: str,
     connections: Iterable[V1ConnectionType],
     secrets: Iterable[V1K8sResourceType],
     config_maps: Iterable[V1K8sResourceType],
@@ -53,6 +55,13 @@ def get_env_vars(
 
     if contexts and contexts.collect_resources:
         env_vars.append(get_env_var(name=POLYAXON_KEYS_COLLECT_RESOURCES, value=True))
+
+    if artifacts_store_name:
+        env_vars.append(
+            get_env_var(
+                name=POLYAXON_KEYS_ARTIFACTS_STORE_NAME, value=artifacts_store_name
+            )
+        )
 
     # Add connection env vars information
     for connection in connections:

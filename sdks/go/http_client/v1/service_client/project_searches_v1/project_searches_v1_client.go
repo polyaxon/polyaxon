@@ -37,23 +37,26 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateProjectSearch(params *CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectSearchOK, *CreateProjectSearchNoContent, error)
+	CreateProjectSearch(params *CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectSearchOK, *CreateProjectSearchNoContent, error)
 
-	DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectSearchOK, *DeleteProjectSearchNoContent, error)
+	DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectSearchOK, *DeleteProjectSearchNoContent, error)
 
-	GetProjectSearch(params *GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSearchOK, *GetProjectSearchNoContent, error)
+	GetProjectSearch(params *GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectSearchOK, *GetProjectSearchNoContent, error)
 
-	ListProjectSearchNames(params *ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchNamesOK, *ListProjectSearchNamesNoContent, error)
+	ListProjectSearchNames(params *ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectSearchNamesOK, *ListProjectSearchNamesNoContent, error)
 
-	ListProjectSearches(params *ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchesOK, *ListProjectSearchesNoContent, error)
+	ListProjectSearches(params *ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectSearchesOK, *ListProjectSearchesNoContent, error)
 
-	PatchProjectSearch(params *PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSearchOK, *PatchProjectSearchNoContent, error)
+	PatchProjectSearch(params *PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProjectSearchOK, *PatchProjectSearchNoContent, error)
 
-	PromoteProjectSearch(params *PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectSearchOK, *PromoteProjectSearchNoContent, error)
+	PromoteProjectSearch(params *PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PromoteProjectSearchOK, *PromoteProjectSearchNoContent, error)
 
-	UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSearchOK, *UpdateProjectSearchNoContent, error)
+	UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProjectSearchOK, *UpdateProjectSearchNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -61,13 +64,12 @@ type ClientService interface {
 /*
   CreateProjectSearch creates project search
 */
-func (a *Client) CreateProjectSearch(params *CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectSearchOK, *CreateProjectSearchNoContent, error) {
+func (a *Client) CreateProjectSearch(params *CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectSearchOK, *CreateProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateProjectSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateProjectSearch",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/searches",
@@ -79,7 +81,12 @@ func (a *Client) CreateProjectSearch(params *CreateProjectSearchParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -97,13 +104,12 @@ func (a *Client) CreateProjectSearch(params *CreateProjectSearchParams, authInfo
 /*
   DeleteProjectSearch deletes project search
 */
-func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectSearchOK, *DeleteProjectSearchNoContent, error) {
+func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectSearchOK, *DeleteProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteProjectSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteProjectSearch",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{entity}/searches/{uuid}",
@@ -115,7 +121,12 @@ func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -133,13 +144,12 @@ func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo
 /*
   GetProjectSearch gets project search
 */
-func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSearchOK, *GetProjectSearchNoContent, error) {
+func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectSearchOK, *GetProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetProjectSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetProjectSearch",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{entity}/searches/{uuid}",
@@ -151,7 +161,12 @@ func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -169,13 +184,12 @@ func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runti
 /*
   ListProjectSearchNames lists project search names
 */
-func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchNamesOK, *ListProjectSearchNamesNoContent, error) {
+func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectSearchNamesOK, *ListProjectSearchNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListProjectSearchNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListProjectSearchNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/searches/names",
@@ -187,7 +201,12 @@ func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -205,13 +224,12 @@ func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, au
 /*
   ListProjectSearches lists project searches
 */
-func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchesOK, *ListProjectSearchesNoContent, error) {
+func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectSearchesOK, *ListProjectSearchesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListProjectSearchesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListProjectSearches",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/searches",
@@ -223,7 +241,12 @@ func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -241,13 +264,12 @@ func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo
 /*
   PatchProjectSearch patches project search
 */
-func (a *Client) PatchProjectSearch(params *PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSearchOK, *PatchProjectSearchNoContent, error) {
+func (a *Client) PatchProjectSearch(params *PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProjectSearchOK, *PatchProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchProjectSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchProjectSearch",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{search.uuid}",
@@ -259,7 +281,12 @@ func (a *Client) PatchProjectSearch(params *PatchProjectSearchParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -277,13 +304,12 @@ func (a *Client) PatchProjectSearch(params *PatchProjectSearchParams, authInfo r
 /*
   PromoteProjectSearch promotes project search
 */
-func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectSearchOK, *PromoteProjectSearchNoContent, error) {
+func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PromoteProjectSearchOK, *PromoteProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPromoteProjectSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PromoteProjectSearch",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{entity}/searches/{uuid}/promote",
@@ -295,7 +321,12 @@ func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -313,13 +344,12 @@ func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authIn
 /*
   UpdateProjectSearch updates project search
 */
-func (a *Client) UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSearchOK, *UpdateProjectSearchNoContent, error) {
+func (a *Client) UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProjectSearchOK, *UpdateProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateProjectSearchParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateProjectSearch",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{search.uuid}",
@@ -331,7 +361,12 @@ func (a *Client) UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

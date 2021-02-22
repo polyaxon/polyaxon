@@ -89,11 +89,21 @@ def get_sidecar_container(
         use_shm_context=False,
     )
 
+    sleep_interval = polyaxon_sidecar.sleep_interval
+    sync_interval = polyaxon_sidecar.sync_interval
+    monitor_logs = polyaxon_sidecar.monitor_logs
+    if contexts and contexts.sidecar:
+        if contexts.sidecar.sleep_interval:
+            sleep_interval = contexts.sidecar.sleep_interval
+        if contexts.sidecar.sync_interval:
+            sync_interval = contexts.sidecar.sync_interval
+        if contexts.sidecar.monitor_logs:
+            monitor_logs = contexts.sidecar.monitor_logs
     sidecar_args = get_sidecar_args(
         container_id=container_id,
-        sleep_interval=polyaxon_sidecar.sleep_interval,
-        sync_interval=polyaxon_sidecar.sync_interval,
-        monitor_logs=polyaxon_sidecar.monitor_logs,
+        sleep_interval=sleep_interval,
+        sync_interval=sync_interval,
+        monitor_logs=monitor_logs,
     )
 
     env_from = []

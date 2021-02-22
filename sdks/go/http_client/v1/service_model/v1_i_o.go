@@ -32,28 +32,25 @@ import (
 type V1IO struct {
 
 	// An optional argFromat of the input/output to be used instead of passing the value as is
-	ArgFormat string `json:"arg_format,omitempty"`
+	ArgFormat string `json:"argFormat,omitempty"`
 
 	// A flag to signal to Polyaxon that this io is used with a connection
 	Connection string `json:"connection,omitempty"`
 
 	// A flag to tell if param validation for this input/output should be delayed
-	DelayValidation bool `json:"delay_validation,omitempty"`
+	DelayValidation bool `json:"delayValidation,omitempty"`
 
 	// Description for the input/output
 	Description string `json:"description,omitempty"`
 
-	// The type of the input/output
-	Iotype string `json:"iotype,omitempty"`
-
 	// A flag to tell if this input/output is flag, only valid for bool type
-	IsFlag bool `json:"is_flag,omitempty"`
+	IsFlag bool `json:"isFlag,omitempty"`
 
 	// A flag to tell if this input/output is list
-	IsList bool `json:"is_list,omitempty"`
+	IsList bool `json:"isList,omitempty"`
 
 	// A flag to tell if this input/output is optional
-	IsOptional bool `json:"is_optional,omitempty"`
+	IsOptional bool `json:"isOptional,omitempty"`
 
 	// Name for the input/output
 	Name string `json:"name,omitempty"`
@@ -62,7 +59,10 @@ type V1IO struct {
 	Options []interface{} `json:"options"`
 
 	// A flag to signal to Polyaxon that this io must be tranformed to an init container
-	ToInit bool `json:"to_init,omitempty"`
+	ToInit bool `json:"toInit,omitempty"`
+
+	// The type of the input/output
+	Type string `json:"type,omitempty"`
 
 	// The value of the input/output should be compatible with the type
 	Value interface{} `json:"value,omitempty"`

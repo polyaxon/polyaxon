@@ -20,13 +20,13 @@ Name | Type | Description | Notes
 **dependencies** | **[String]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 
 **conditions** | **String** |  | [optional] 
-**skip_on_upstream_skip** | **Boolean** |  | [optional] 
+**skipOnUpstreamSkip** | **Boolean** |  | [optional] 
 **matrix** | [**Object**](.md) |  | [optional] 
 **joins** | [**{String: V1Join}**](V1Join.md) |  | [optional] 
 **inputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **contexts** | [**[V1IO]**](V1IO.md) |  | [optional] 
-**is_approved** | **Boolean** |  | [optional] 
+**isApproved** | **Boolean** |  | [optional] 
 **run** | [**Object**](.md) |  | [optional] 
 
 

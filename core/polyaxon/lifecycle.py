@@ -15,8 +15,7 @@
 # limitations under the License.
 import polyaxon_sdk
 
-from dateutil import parser as dt_parser
-
+from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.tz_utils import now
 
 
@@ -255,6 +254,33 @@ class LifeCycle:
         """Checks if a run with this status is skipped."""
         return status == V1Statuses.SKIPPED
 
+    @classmethod
+    def set_started_at(cls, entity) -> bool:
+        # We allow to override started_at if the value is running
+        if entity.started_at is not None:
+            return False
+
+        if cls.is_running(entity.status):
+            entity.started_at = now()
+            # Update wait_time
+            if entity.wait_time is None:
+                entity.wait_time = (entity.started_at - entity.created_at).seconds
+            return True
+
+        return False
+
+    @classmethod
+    def set_finished_at(cls, entity) -> bool:
+        if cls.is_done(entity.status) and entity.finished_at is None:
+            entity.finished_at = now()
+            if entity.started_at is None:  # We should not have this case
+                entity.started_at = entity.created_at
+            # Update duration
+            if entity.duration is None:
+                entity.duration = (entity.finished_at - entity.started_at).seconds
+            return True
+        return False
+
 
 class ConditionMixin:
     @classmethod
@@ -284,9 +310,7 @@ class ConditionMixin:
 
     @classmethod
     def get_last_update_time(cls, value):
-        if isinstance(value, str):
-            return dt_parser.parse(value)
-        return value
+        return parse_datetime(value)
 
 
 class V1StatusCondition(ConditionMixin, polyaxon_sdk.V1StatusCondition):

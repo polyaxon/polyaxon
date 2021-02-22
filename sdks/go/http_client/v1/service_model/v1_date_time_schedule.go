@@ -38,7 +38,7 @@ type V1DateTimeSchedule struct {
 
 	// Whan to start this cron schedule
 	// Format: date-time
-	StartAt strfmt.DateTime `json:"start_at,omitempty"`
+	StartAt strfmt.DateTime `json:"startAt,omitempty"`
 }
 
 // Validate validates this v1 date time schedule
@@ -60,7 +60,7 @@ func (m *V1DateTimeSchedule) validateStartAt(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.FormatOf("start_at", "body", "date-time", m.StartAt.String(), formats); err != nil {
+	if err := validate.FormatOf("startAt", "body", "date-time", m.StartAt.String(), formats); err != nil {
 		return err
 	}
 

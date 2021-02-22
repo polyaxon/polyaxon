@@ -35,7 +35,7 @@ type V1GitType struct {
 	Flags []string `json:"flags"`
 
 	// Optional revision
-	Revision bool `json:"revision,omitempty"`
+	Revision string `json:"revision,omitempty"`
 
 	// Optional Url
 	URL string `json:"url,omitempty"`

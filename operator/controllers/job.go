@@ -144,6 +144,14 @@ func (r *OperationReconciler) reconcileJobStatus(instance *operationv1.Operation
 		}
 	}
 
+	if job.Status.CompletionTime != nil && job.Status.Succeeded > 0 && managers.IsJobSucceeded(newJobCond) {
+		if updated := instance.LogSucceeded(); updated {
+			instance.Status.CompletionTime = &now
+			log.V(1).Info("Job Logging Status Succeeded with active non null")
+			return true
+		}
+	}
+
 	if job.Status.Failed > 0 && managers.IsJobFailed(newJobCond) {
 		newMessage := operationv1.GetFailureMessage(newJobCond.Message, podStatus, reason, message)
 		if updated := instance.LogFailed(newJobCond.Reason, newMessage); updated {

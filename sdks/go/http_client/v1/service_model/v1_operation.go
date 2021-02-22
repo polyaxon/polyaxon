@@ -44,7 +44,7 @@ type V1Operation struct {
 	Conditions string `json:"conditions,omitempty"`
 
 	// dag ref
-	DagRef string `json:"dag_ref,omitempty"`
+	DagRef string `json:"dagRef,omitempty"`
 
 	// Optional graph dependencies of this op
 	Dependencies []string `json:"dependencies"`
@@ -59,13 +59,13 @@ type V1Operation struct {
 	Hooks []*V1Hook `json:"hooks"`
 
 	// hub ref
-	HubRef string `json:"hub_ref,omitempty"`
+	HubRef string `json:"hubRef,omitempty"`
 
 	// Optional flag to mark this specification requires approval before running
-	IsApproved bool `json:"is_approved,omitempty"`
+	IsApproved bool `json:"isApproved,omitempty"`
 
 	// Optional flag to mark this specification as preset
-	IsPreset bool `json:"is_preset,omitempty"`
+	IsPreset bool `json:"isPreset,omitempty"`
 
 	// Optional dict of joins
 	Joins map[string]V1Join `json:"joins,omitempty"`
@@ -86,7 +86,7 @@ type V1Operation struct {
 	PatchStrategy *V1PatchStrategy `json:"patch_strategy,omitempty"`
 
 	// path ref
-	PathRef string `json:"path_ref,omitempty"`
+	PathRef string `json:"pathRef,omitempty"`
 
 	// Optional plugins to enable
 	Plugins *V1Plugins `json:"plugins,omitempty"`
@@ -99,13 +99,13 @@ type V1Operation struct {
 
 	// Optional a run section to override  the content of the run in the template
 	// should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
-	RunPatch interface{} `json:"run_patch,omitempty"`
+	RunPatch interface{} `json:"runPatch,omitempty"`
 
 	// Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
 	Schedule interface{} `json:"schedule,omitempty"`
 
 	// Optional flag to skip this run if upstream was skipped
-	SkipOnUpstreamSkip bool `json:"skip_on_upstream_skip,omitempty"`
+	SkipOnUpstreamSkip bool `json:"skipOnUpstreamSkip,omitempty"`
 
 	// Optional component tags override
 	Tags []string `json:"tags"`
@@ -120,7 +120,7 @@ type V1Operation struct {
 	Trigger *V1TriggerPolicy `json:"trigger,omitempty"`
 
 	// url ref
-	URLRef string `json:"url_ref,omitempty"`
+	URLRef string `json:"urlRef,omitempty"`
 
 	// Spec version
 	Version float32 `json:"version,omitempty"`

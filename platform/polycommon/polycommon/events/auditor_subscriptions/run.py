@@ -18,6 +18,7 @@ from polycommon import auditor
 from polycommon.events.registry import run
 
 auditor.subscribe(run.RunCreatedEvent)
+auditor.subscribe(run.RunSyncedActorEvent)
 auditor.subscribe(run.RunResumedEvent)
 auditor.subscribe(run.RunStoppedEvent)
 auditor.subscribe(run.RunSkippedEvent)
@@ -35,6 +36,7 @@ auditor.subscribe(run.RunApprovedActorEvent)
 auditor.subscribe(run.RunInvalidatedActorEvent)
 auditor.subscribe(run.RunResumedActorEvent)
 auditor.subscribe(run.RunRestartedActorEvent)
+auditor.subscribe(run.RunSyncedActorEvent)
 auditor.subscribe(run.RunCopiedActorEvent)
 auditor.subscribe(run.RunSkippedActorEvent)
 auditor.subscribe(run.RunStatsActorEvent)

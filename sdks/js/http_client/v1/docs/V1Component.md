@@ -19,6 +19,6 @@ Name | Type | Description | Notes
 **outputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **run** | [**Object**](.md) |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
-**is_approved** | **Boolean** |  | [optional] 
+**isApproved** | **Boolean** |  | [optional] 
 
 

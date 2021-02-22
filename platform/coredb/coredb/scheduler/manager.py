@@ -131,7 +131,7 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
             type=V1Statuses.FAILED,
             status="True",
             reason="SchedulerPrepare",
-            message=f"Run compilation error: {e}",
+            message=f"Failed to compile.\n{e}",
         )
         new_run_status(run=run, condition=condition)
         return False
@@ -140,7 +140,7 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
             type=V1Statuses.FAILED,
             status="True",
             reason="SchedulerPrepare",
-            message=f"Compiler received an internal error: {e}",
+            message=f"Compiler received an internal error.\n{e}",
         )
         new_run_status(run=run, condition=condition)
         return False

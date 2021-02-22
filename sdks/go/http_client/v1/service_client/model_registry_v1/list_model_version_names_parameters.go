@@ -82,6 +82,12 @@ type ListModelVersionNamesParams struct {
 	*/
 	Limit *int32
 
+	/* Mode.
+
+	   Mode the search.
+	*/
+	Mode *string
+
 	/* Name.
 
 	   Entity managing the resource
@@ -178,6 +184,17 @@ func (o *ListModelVersionNamesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithMode adds the mode to the list model version names params
+func (o *ListModelVersionNamesParams) WithMode(mode *string) *ListModelVersionNamesParams {
+	o.SetMode(mode)
+	return o
+}
+
+// SetMode adds the mode to the list model version names params
+func (o *ListModelVersionNamesParams) SetMode(mode *string) {
+	o.Mode = mode
+}
+
 // WithName adds the name to the list model version names params
 func (o *ListModelVersionNamesParams) WithName(name string) *ListModelVersionNamesParams {
 	o.SetName(name)
@@ -253,6 +270,23 @@ func (o *ListModelVersionNamesParams) WriteToRequest(r runtime.ClientRequest, re
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Mode != nil {
+
+		// query param mode
+		var qrMode string
+
+		if o.Mode != nil {
+			qrMode = *o.Mode
+		}
+		qMode := qrMode
+		if qMode != "" {
+
+			if err := r.SetQueryParam("mode", qMode); err != nil {
 				return err
 			}
 		}

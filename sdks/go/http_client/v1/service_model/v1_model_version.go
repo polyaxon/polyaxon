@@ -50,6 +50,9 @@ type V1ModelVersion struct {
 	// Optional component name, should be a valid fully qualified value: name[:version]
 	Name string `json:"name,omitempty"`
 
+	// Current user's role in this (org/teams)/model/version
+	Role string `json:"role,omitempty"`
+
 	// Run lineage
 	Run string `json:"run,omitempty"`
 

@@ -48,5 +48,5 @@ def create_auth_context():
                 repr(e), traceback.format_exc()
             )
             time.sleep(retry)
-    run_client.log_failed("Could not create an auth context.", traceback=exp)
+    run_client.log_failed(reason="AuthContext", message=exp)
     raise PolyaxonContainerException("Init job did not succeed authenticating job.")

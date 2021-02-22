@@ -47,16 +47,16 @@ def get_tuner(
         "iteration": V1Param(value=iteration),
     }
     inputs = [
-        V1IO(name="matrix", iotype=types.DICT, is_list=False, is_optional=True),
-        V1IO(name="join", iotype=types.DICT, is_list=False, is_optional=True),
-        V1IO(name="iteration", iotype=types.INT, is_list=False, is_optional=True),
+        V1IO(name="matrix", type=types.DICT, is_list=False, is_optional=True),
+        V1IO(name="join", type=types.DICT, is_list=False, is_optional=True),
+        V1IO(name="iteration", type=types.INT, is_list=False, is_optional=True),
     ]
     if bracket_iteration is not None:
         params["bracket_iteration"] = V1Param(value=bracket_iteration)
         inputs.append(
             V1IO(
                 name="bracket_iteration",
-                iotype=types.INT,
+                type=types.INT,
                 is_list=False,
                 is_optional=True,
             )
@@ -76,7 +76,7 @@ def get_tuner(
             outputs=[
                 V1IO(
                     name="suggestions",
-                    iotype=types.DICT,
+                    type=types.DICT,
                     is_list=True,
                     is_optional=False,
                 ),

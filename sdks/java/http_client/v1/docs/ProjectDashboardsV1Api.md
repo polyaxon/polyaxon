@@ -241,7 +241,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectDashboardNames"></a>
 # **listProjectDashboardNames**
-> V1ListDashboardsResponse listProjectDashboardNames(owner, name, offset, limit, sort, query)
+> V1ListDashboardsResponse listProjectDashboardNames(owner, name, offset, limit, sort, query, mode)
 
 List project dashboard
 
@@ -273,8 +273,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListDashboardsResponse result = apiInstance.listProjectDashboardNames(owner, name, offset, limit, sort, query);
+      V1ListDashboardsResponse result = apiInstance.listProjectDashboardNames(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#listProjectDashboardNames");
@@ -297,6 +298,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -322,7 +324,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectDashboards"></a>
 # **listProjectDashboards**
-> V1ListDashboardsResponse listProjectDashboards(owner, name, offset, limit, sort, query)
+> V1ListDashboardsResponse listProjectDashboards(owner, name, offset, limit, sort, query, mode)
 
 List project dashboards
 
@@ -354,8 +356,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListDashboardsResponse result = apiInstance.listProjectDashboards(owner, name, offset, limit, sort, query);
+      V1ListDashboardsResponse result = apiInstance.listProjectDashboards(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#listProjectDashboards");
@@ -378,6 +381,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 

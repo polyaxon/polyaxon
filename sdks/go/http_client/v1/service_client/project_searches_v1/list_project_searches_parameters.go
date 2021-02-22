@@ -82,6 +82,12 @@ type ListProjectSearchesParams struct {
 	*/
 	Limit *int32
 
+	/* Mode.
+
+	   Mode the search.
+	*/
+	Mode *string
+
 	/* Name.
 
 	   Entity managing the resource
@@ -178,6 +184,17 @@ func (o *ListProjectSearchesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithMode adds the mode to the list project searches params
+func (o *ListProjectSearchesParams) WithMode(mode *string) *ListProjectSearchesParams {
+	o.SetMode(mode)
+	return o
+}
+
+// SetMode adds the mode to the list project searches params
+func (o *ListProjectSearchesParams) SetMode(mode *string) {
+	o.Mode = mode
+}
+
 // WithName adds the name to the list project searches params
 func (o *ListProjectSearchesParams) WithName(name string) *ListProjectSearchesParams {
 	o.SetName(name)
@@ -253,6 +270,23 @@ func (o *ListProjectSearchesParams) WriteToRequest(r runtime.ClientRequest, reg 
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Mode != nil {
+
+		// query param mode
+		var qrMode string
+
+		if o.Mode != nil {
+			qrMode = *o.Mode
+		}
+		qMode := qrMode
+		if qMode != "" {
+
+			if err := r.SetQueryParam("mode", qMode); err != nil {
 				return err
 			}
 		}

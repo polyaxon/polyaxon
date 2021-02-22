@@ -21,8 +21,8 @@ try:
     from fastai.basics import *
     from fastai.learner import Callback
     from fastai.vision.all import *
-except:
-    raise PolyaxonClientException("Fastai is required to use PolyaxonFastai")
+except ImportError:
+    raise PolyaxonClientException("Fastai is required to use PolyaxonFastaiCallback")
 
 
 class PolyaxonFastaiCallback(Callback):
@@ -53,7 +53,7 @@ class PolyaxonFastaiCallback(Callback):
         except:
             print(
                 "Did not log model summary. "
-                "Check if your model is PyTorch model and the Polyaxon has correctly initialized "
+                "Check if your model is PyTorch model and that Polyaxon has correctly initialized "
                 "the artifacts/outputs path."
             )
 

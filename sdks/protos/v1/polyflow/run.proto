@@ -32,9 +32,9 @@ message RunSchema {
         Job job = 1;
         Service service = 2;
         Dag dag = 3;
-        TFJob tf_job = 4;
-        PytorchJob pytorch_job = 5;
-        MPIJob mpi_job = 6;
+        TFJob tfJob = 4;
+        PytorchJob pytorchJob = 5;
+        MPIJob mpiJob = 6;
         Dask dask = 7;
         Spark spark = 8;
         Flink flink = 9;

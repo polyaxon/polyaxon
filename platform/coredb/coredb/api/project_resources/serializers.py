@@ -13,9 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
+
+from django.db import IntegrityError
 
 from coredb.abstracts.getter import get_run_model
 from coredb.api.base.cloning import CloningMixin
@@ -64,8 +65,51 @@ class RunSerializer(
         )
         extra_kwargs = {
             "is_managed": {"read_only": True},
-            "cloning_kind": {"read_only": True},
         }
+
+
+class OfflineRunSerializer(
+    serializers.ModelSerializer,
+):
+    uuid = fields.UUIDField(format="hex")
+    created_at = fields.DateTimeField()
+
+    class Meta:
+        model = get_run_model()
+        fields = (
+            "uuid",
+            "name",
+            "description",
+            "tags",
+            "created_at",
+            "updated_at",
+            "started_at",
+            "finished_at",
+            "wait_time",
+            "duration",
+            "kind",
+            "runtime",
+            "meta_info",
+            "status",
+            "status_conditions",
+            "is_managed",
+            "inputs",
+            "outputs",
+        )
+
+    def create(self, validated_data):
+        try:
+            obj = self.Meta.model.objects.create(**validated_data)
+        except IntegrityError:
+            raise ValidationError(
+                f"A run with uuid {validated_data.get('uuid')} already exists."
+            )
+        # Override auto-field for created_at
+        created_at = validated_data.get("created_at")
+        if created_at:
+            obj.created_at = created_at
+        obj.save()
+        return obj
 
 
 class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):

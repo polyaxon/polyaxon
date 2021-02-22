@@ -31,7 +31,7 @@ from polyaxon.polyboard.processors.writer import (
 from tests.utils import BaseTestCase
 
 
-@pytest.mark.tracking_mark
+@pytest.mark.polyboard_mark
 class TestEventWriter(BaseTestCase):
     def test_event_file(self):
         run_path = tempfile.mkdtemp()
@@ -194,7 +194,7 @@ class TestEventWriter(BaseTestCase):
         assert results.get_event_at(3).to_dict() == new_events[1].event.to_dict()
 
 
-@pytest.mark.tracking_mark
+@pytest.mark.polyboard_mark
 class TestEventFileWriter(BaseTestCase):
     def test_event_file_writer_initializes_paths(self):
         some_path = tempfile.mkdtemp()
@@ -390,7 +390,7 @@ class TestEventFileWriter(BaseTestCase):
         assert len(os.listdir(run_path + "/events")) == 0
 
 
-@pytest.mark.tracking_mark
+@pytest.mark.polyboard_mark
 class TestEventAsyncManager(BaseTestCase):
     def test_async_writer_write_once(self):
         run_path = tempfile.mkdtemp()

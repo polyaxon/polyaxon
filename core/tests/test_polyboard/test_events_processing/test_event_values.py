@@ -37,7 +37,7 @@ from polyaxon.polyboard.processors.events_processors import (
 from tests.utils import BaseTestCase, tensor_np
 
 
-@pytest.mark.tracking_mark
+@pytest.mark.polyboard_mark
 class TestEventValues(BaseTestCase):
     def setUp(self):
         self.run_path = tempfile.mkdtemp()

@@ -48,6 +48,8 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
 
     ### YAML usage
 
+    ### Usage in IO and params definition
+
     The inputs definition
 
     ```yaml
@@ -70,7 +72,27 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
     >>>   }
     ```
 
+    ### Usage in initializers
+
+    ```yaml
+    >>> version:  1.1
+    >>> kind: component
+    >>> run:
+    >>>   kind: job
+    >>>   init:
+    >>>   - git: {"url": "https://github.com/tensorflow/models"}
+    >>>   - git:
+    >>>       revision: branchA
+    >>>     connection: my-git-connection
+    >>>   - git:
+    >>>       flags: ["--recursive", "-c http.sslVerify=false"]
+    >>>     connection: my-git-connection
+    >>>   ...
+    ```
+
     ### Python usage
+
+    ### Usage in IO and params definition
 
     The inputs definition
 
@@ -81,11 +103,11 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="test1",
-    >>>         iotype=types.GIT,
+    >>>         type=types.GIT,
     >>>     ),
     >>>     V1IO(
     >>>         name="test2",
-    >>>         iotype=types.GIT,
+    >>>         type=types.GIT,
     >>>     ),
     >>> ]
     ```
@@ -105,6 +127,27 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
     >>>         connection="my-git-connection",
     >>>     ),
     >>> }
+    ```
+
+    ### Usage in initializers
+    ```python
+    >>> from polyaxon.polyflow import V1Component, V1Init, V1Job
+    >>> from polyaxon.schemas.types import V1GitType
+    >>> from polyaxon.k8s import k8s_schemas
+    >>> component = V1Component(
+    >>>     run=V1Job(
+    >>>        init=[
+    >>>             V1Init(
+    >>>               git=V1GitType(url="https://github.com/tensorflow/models"),
+    >>>             ),
+    >>>             V1Init(
+    >>>               git=V1GitType(revision="branchA"),
+    >>>               connection="my-git-connection",
+    >>>             ),
+    >>>        ],
+    >>>        container=k8s_schemas.V1Container(...)
+    >>>     )
+    >>> )
     ```
     """
 

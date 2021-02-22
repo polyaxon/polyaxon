@@ -20,7 +20,7 @@ from polyaxon.exceptions import PolyaxonClientException
 try:
     from fastai.callbacks import TrackerCallback
 except ImportError:
-    raise PolyaxonClientException("Fastai is required to use PolyaxonFastai")
+    raise PolyaxonClientException("Fastai is required to use PolyaxonFastaiCallback")
 
 
 class PolyaxonFastaiCallback(TrackerCallback):

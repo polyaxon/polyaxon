@@ -50,6 +50,9 @@ type V1ComponentVersion struct {
 	// Optional component name, should be a valid fully qualified value: name[:version]
 	Name string `json:"name,omitempty"`
 
+	// Current user's role in this (org/teams)/hub/version
+	Role string `json:"role,omitempty"`
+
 	// Optional latest stage of this entity
 	Stage *V1Stages `json:"stage,omitempty"`
 

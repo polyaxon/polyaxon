@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from polyaxon import tracking
+from polyaxon.client.decorators import client_handler
 from polyaxon.exceptions import PolyaxonClientException
 
 try:
@@ -34,6 +35,7 @@ class PolyaxonKerasCallback(Callback):
         self.run = tracking.get_or_create_run(run)
         self.metrics = metrics
 
+    @client_handler(check_no_op=True)
     def on_epoch_end(self, epoch, logs=None):
         if not logs or not self.run:
             return
@@ -55,6 +57,7 @@ class PolyaxonKerasModelCheckpoint(ModelCheckpoint):
         filepath = filepath or "/tmp/model"
         super().__init__(filepath, **kwargs)
 
+    @client_handler(check_no_op=True)
     def on_epoch_end(self, epoch, logs=None):
         super().on_epoch_end(epoch, logs=logs)
 

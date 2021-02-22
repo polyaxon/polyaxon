@@ -55,14 +55,26 @@ def get_project_run_or_local(project=None, run_uuid=None, is_cli: bool = True):
     return user, project_name, run_uuid
 
 
-def get_collect_artifact():
+def get_collect_artifacts(default: bool = None):
     """If set, Polyaxon will collect artifacts"""
-    return to_bool(os.getenv(POLYAXON_KEYS_COLLECT_ARTIFACTS, None), handle_none=True)
+    return (
+        default
+        if default is not None
+        else to_bool(
+            os.getenv(POLYAXON_KEYS_COLLECT_ARTIFACTS, False), handle_none=True
+        )
+    )
 
 
-def get_collect_resources():
+def get_collect_resources(default: bool = None):
     """If set, Polyaxon will collect resources"""
-    return to_bool(os.getenv(POLYAXON_KEYS_COLLECT_RESOURCES, None), handle_none=True)
+    return (
+        default
+        if default is not None
+        else to_bool(
+            os.getenv(POLYAXON_KEYS_COLLECT_RESOURCES, False), handle_none=True
+        )
+    )
 
 
 def get_log_level():

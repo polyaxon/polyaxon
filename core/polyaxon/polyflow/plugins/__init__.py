@@ -18,6 +18,7 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
+from polyaxon.auxiliaries.sidecar import PolyaxonSidecarContainerSchema
 from polyaxon.polyflow.notifications import NotificationSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
@@ -34,6 +35,10 @@ class PluginsSchema(BaseCamelSchema):
     external_host = fields.Bool(allow_none=True)
     log_level = fields.Str(allow_none=True)
     notifications = fields.List(fields.Nested(NotificationSchema), allow_none=True)
+    sidecar = fields.Nested(
+        PolyaxonSidecarContainerSchema,
+        allow_none=True,
+    )
 
     @staticmethod
     def schema_config():
@@ -58,6 +63,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         auto_resume: bool, optional, default: True
         sync_statuses: bool, optional, default: True
         log_level: str, optional
+        sidecar: V1PolyaxonSidecarContainer, optional
 
     ## YAML usage
 
@@ -73,6 +79,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   syncStatuses:
     >>>   externalHost:
     >>>   logLevel:
+    >>>   sidecar:
     ```
 
     ## Python usage
@@ -280,6 +287,17 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   logLevel: warning
     ```
 
+    ### sidecar
+
+    <blockquote class="light">Default is None.</blockquote>
+
+    To override the default global sidecar configuration.
+
+    ```yaml
+    >>> plugins:
+    >>>   sidecar:
+    >>>     syncInterval: 60
+    ```
     """
 
     IDENTIFIER = "plugins"
@@ -295,5 +313,6 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         "syncStatuses",
         "externalHost",
         "logLevel",
+        "sidecar",
         "notifications",
     ]

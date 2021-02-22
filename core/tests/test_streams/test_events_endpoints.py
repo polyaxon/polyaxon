@@ -15,6 +15,7 @@
 # limitations under the License.
 import os
 import pandas as pd
+import pytest
 import shutil
 
 from polyaxon import settings
@@ -27,6 +28,7 @@ from tests.test_streams.base import get_streams_client, set_store
 from tests.utils import BaseTestCase
 
 
+@pytest.mark.streams_mark
 class TestEventsEndpoints(BaseTestCase):
     def setUp(self):
         super().setUp()

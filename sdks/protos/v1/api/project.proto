@@ -89,6 +89,17 @@ message Project {
     string next = 4;
 }
 
+message ProjectUserAccess {
+  // User to give access to
+  string user = 1;
+
+  // Optional queue to configure for user
+  string queue = 2;
+
+  // Optional preset to configure for user
+  string preset = 3;
+}
+
 // Project Settings specification
 message ProjectSettings {
     // Authorized connections
@@ -109,8 +120,11 @@ message ProjectSettings {
     // Authorized agents
     repeated string agents = 6;
 
+    // Authorized users
+    repeated ProjectUserAccess user_accesses = 7;
+
     // Authorized teams
-    repeated string teams = 7;
+    repeated string teams = 8;
 }
 
 // Request data to update project settings

@@ -36,61 +36,52 @@ type V1Schemas struct {
 	Artifacs *V1ArtifactsType `json:"artifacs,omitempty"`
 
 	// artifacts mount
-	ArtifactsMount *V1ArtifactsMount `json:"artifacts_mount,omitempty"`
+	ArtifactsMount *V1ArtifactsMount `json:"artifactsMount,omitempty"`
 
-	// autg
-	Autg *V1AuthType `json:"autg,omitempty"`
+	// auth
+	Auth *V1AuthType `json:"auth,omitempty"`
 
 	// compiled operation
-	CompiledOperation *V1CompiledOperation `json:"compiled_operation,omitempty"`
+	CompiledOperation *V1CompiledOperation `json:"compiledOperation,omitempty"`
 
 	// connection
 	Connection *V1ConnectionType `json:"connection,omitempty"`
 
 	// connection schema
-	ConnectionSchema *V1ConnectionSchema `json:"connection_schema,omitempty"`
-
-	// dockerfile
-	Dockerfile *V1DockerfileType `json:"dockerfile,omitempty"`
+	ConnectionSchema *V1ConnectionSchema `json:"connectionSchema,omitempty"`
 
 	// early stopping
-	EarlyStopping *V1EarlyStopping `json:"early_stopping,omitempty"`
+	EarlyStopping *V1EarlyStopping `json:"earlyStopping,omitempty"`
 
 	// event
 	Event *V1Event `json:"event,omitempty"`
 
 	// event type
-	EventType *V1EventType `json:"event_type,omitempty"`
+	EventType *V1EventType `json:"eventType,omitempty"`
 
 	// gcs
 	Gcs *V1GcsType `json:"gcs,omitempty"`
 
-	// git
-	Git *V1GitType `json:"git,omitempty"`
-
 	// hp params
-	HpParams *V1HpParams `json:"hp_params,omitempty"`
+	HpParams *V1HpParams `json:"hpParams,omitempty"`
 
 	// k8s resource
-	K8sResource *V1K8sResourceType `json:"k8s_resource,omitempty"`
+	K8sResource *V1K8sResourceType `json:"k8sResource,omitempty"`
 
 	// matrix
 	Matrix *V1Matrix `json:"matrix,omitempty"`
 
 	// matrix kind
-	MatrixKind *V1MatrixKind `json:"matrix_kind,omitempty"`
+	MatrixKind *V1MatrixKind `json:"matrixKind,omitempty"`
 
 	// operation
 	Operation *V1Operation `json:"operation,omitempty"`
 
-	// operation cond
-	OperationCond *V1OperationCond `json:"operation_cond,omitempty"`
-
 	// polyaxon init container
-	PolyaxonInitContainer *V1PolyaxonInitContainer `json:"polyaxon_init_container,omitempty"`
+	PolyaxonInitContainer *V1PolyaxonInitContainer `json:"polyaxonInitContainer,omitempty"`
 
 	// polyaxon sidecar container
-	PolyaxonSidecarContainer *V1PolyaxonSidecarContainer `json:"polyaxon_sidecar_container,omitempty"`
+	PolyaxonSidecarContainer *V1PolyaxonSidecarContainer `json:"polyaxonSidecarContainer,omitempty"`
 
 	// reference
 	Reference *V1Reference `json:"reference,omitempty"`
@@ -105,7 +96,7 @@ type V1Schemas struct {
 	Schedule *V1Schedule `json:"schedule,omitempty"`
 
 	// schedule kind
-	ScheduleKind *V1ScheduleKind `json:"schedule_kind,omitempty"`
+	ScheduleKind *V1ScheduleKind `json:"scheduleKind,omitempty"`
 
 	// uri
 	URI *V1URIType `json:"uri,omitempty"`
@@ -126,7 +117,7 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateAutg(formats); err != nil {
+	if err := m.validateAuth(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -139,10 +130,6 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateConnectionSchema(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDockerfile(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -159,10 +146,6 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateGcs(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateGit(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -183,10 +166,6 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateOperation(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateOperationCond(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -257,7 +236,7 @@ func (m *V1Schemas) validateArtifactsMount(formats strfmt.Registry) error {
 	if m.ArtifactsMount != nil {
 		if err := m.ArtifactsMount.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("artifacts_mount")
+				return ve.ValidateName("artifactsMount")
 			}
 			return err
 		}
@@ -266,15 +245,15 @@ func (m *V1Schemas) validateArtifactsMount(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Schemas) validateAutg(formats strfmt.Registry) error {
-	if swag.IsZero(m.Autg) { // not required
+func (m *V1Schemas) validateAuth(formats strfmt.Registry) error {
+	if swag.IsZero(m.Auth) { // not required
 		return nil
 	}
 
-	if m.Autg != nil {
-		if err := m.Autg.Validate(formats); err != nil {
+	if m.Auth != nil {
+		if err := m.Auth.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("autg")
+				return ve.ValidateName("auth")
 			}
 			return err
 		}
@@ -291,7 +270,7 @@ func (m *V1Schemas) validateCompiledOperation(formats strfmt.Registry) error {
 	if m.CompiledOperation != nil {
 		if err := m.CompiledOperation.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("compiled_operation")
+				return ve.ValidateName("compiledOperation")
 			}
 			return err
 		}
@@ -325,24 +304,7 @@ func (m *V1Schemas) validateConnectionSchema(formats strfmt.Registry) error {
 	if m.ConnectionSchema != nil {
 		if err := m.ConnectionSchema.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("connection_schema")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Schemas) validateDockerfile(formats strfmt.Registry) error {
-	if swag.IsZero(m.Dockerfile) { // not required
-		return nil
-	}
-
-	if m.Dockerfile != nil {
-		if err := m.Dockerfile.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("dockerfile")
+				return ve.ValidateName("connectionSchema")
 			}
 			return err
 		}
@@ -359,7 +321,7 @@ func (m *V1Schemas) validateEarlyStopping(formats strfmt.Registry) error {
 	if m.EarlyStopping != nil {
 		if err := m.EarlyStopping.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("early_stopping")
+				return ve.ValidateName("earlyStopping")
 			}
 			return err
 		}
@@ -393,7 +355,7 @@ func (m *V1Schemas) validateEventType(formats strfmt.Registry) error {
 	if m.EventType != nil {
 		if err := m.EventType.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("event_type")
+				return ve.ValidateName("eventType")
 			}
 			return err
 		}
@@ -419,23 +381,6 @@ func (m *V1Schemas) validateGcs(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Schemas) validateGit(formats strfmt.Registry) error {
-	if swag.IsZero(m.Git) { // not required
-		return nil
-	}
-
-	if m.Git != nil {
-		if err := m.Git.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("git")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 func (m *V1Schemas) validateHpParams(formats strfmt.Registry) error {
 	if swag.IsZero(m.HpParams) { // not required
 		return nil
@@ -444,7 +389,7 @@ func (m *V1Schemas) validateHpParams(formats strfmt.Registry) error {
 	if m.HpParams != nil {
 		if err := m.HpParams.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("hp_params")
+				return ve.ValidateName("hpParams")
 			}
 			return err
 		}
@@ -461,7 +406,7 @@ func (m *V1Schemas) validateK8sResource(formats strfmt.Registry) error {
 	if m.K8sResource != nil {
 		if err := m.K8sResource.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("k8s_resource")
+				return ve.ValidateName("k8sResource")
 			}
 			return err
 		}
@@ -495,7 +440,7 @@ func (m *V1Schemas) validateMatrixKind(formats strfmt.Registry) error {
 	if m.MatrixKind != nil {
 		if err := m.MatrixKind.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("matrix_kind")
+				return ve.ValidateName("matrixKind")
 			}
 			return err
 		}
@@ -521,23 +466,6 @@ func (m *V1Schemas) validateOperation(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Schemas) validateOperationCond(formats strfmt.Registry) error {
-	if swag.IsZero(m.OperationCond) { // not required
-		return nil
-	}
-
-	if m.OperationCond != nil {
-		if err := m.OperationCond.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("operation_cond")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 func (m *V1Schemas) validatePolyaxonInitContainer(formats strfmt.Registry) error {
 	if swag.IsZero(m.PolyaxonInitContainer) { // not required
 		return nil
@@ -546,7 +474,7 @@ func (m *V1Schemas) validatePolyaxonInitContainer(formats strfmt.Registry) error
 	if m.PolyaxonInitContainer != nil {
 		if err := m.PolyaxonInitContainer.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("polyaxon_init_container")
+				return ve.ValidateName("polyaxonInitContainer")
 			}
 			return err
 		}
@@ -563,7 +491,7 @@ func (m *V1Schemas) validatePolyaxonSidecarContainer(formats strfmt.Registry) er
 	if m.PolyaxonSidecarContainer != nil {
 		if err := m.PolyaxonSidecarContainer.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("polyaxon_sidecar_container")
+				return ve.ValidateName("polyaxonSidecarContainer")
 			}
 			return err
 		}
@@ -648,7 +576,7 @@ func (m *V1Schemas) validateScheduleKind(formats strfmt.Registry) error {
 	if m.ScheduleKind != nil {
 		if err := m.ScheduleKind.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("schedule_kind")
+				return ve.ValidateName("scheduleKind")
 			}
 			return err
 		}
@@ -703,7 +631,7 @@ func (m *V1Schemas) ContextValidate(ctx context.Context, formats strfmt.Registry
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateAutg(ctx, formats); err != nil {
+	if err := m.contextValidateAuth(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -716,10 +644,6 @@ func (m *V1Schemas) ContextValidate(ctx context.Context, formats strfmt.Registry
 	}
 
 	if err := m.contextValidateConnectionSchema(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateDockerfile(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -736,10 +660,6 @@ func (m *V1Schemas) ContextValidate(ctx context.Context, formats strfmt.Registry
 	}
 
 	if err := m.contextValidateGcs(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateGit(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -760,10 +680,6 @@ func (m *V1Schemas) ContextValidate(ctx context.Context, formats strfmt.Registry
 	}
 
 	if err := m.contextValidateOperation(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateOperationCond(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -828,7 +744,7 @@ func (m *V1Schemas) contextValidateArtifactsMount(ctx context.Context, formats s
 	if m.ArtifactsMount != nil {
 		if err := m.ArtifactsMount.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("artifacts_mount")
+				return ve.ValidateName("artifactsMount")
 			}
 			return err
 		}
@@ -837,12 +753,12 @@ func (m *V1Schemas) contextValidateArtifactsMount(ctx context.Context, formats s
 	return nil
 }
 
-func (m *V1Schemas) contextValidateAutg(ctx context.Context, formats strfmt.Registry) error {
+func (m *V1Schemas) contextValidateAuth(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.Autg != nil {
-		if err := m.Autg.ContextValidate(ctx, formats); err != nil {
+	if m.Auth != nil {
+		if err := m.Auth.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("autg")
+				return ve.ValidateName("auth")
 			}
 			return err
 		}
@@ -856,7 +772,7 @@ func (m *V1Schemas) contextValidateCompiledOperation(ctx context.Context, format
 	if m.CompiledOperation != nil {
 		if err := m.CompiledOperation.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("compiled_operation")
+				return ve.ValidateName("compiledOperation")
 			}
 			return err
 		}
@@ -884,21 +800,7 @@ func (m *V1Schemas) contextValidateConnectionSchema(ctx context.Context, formats
 	if m.ConnectionSchema != nil {
 		if err := m.ConnectionSchema.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("connection_schema")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Schemas) contextValidateDockerfile(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Dockerfile != nil {
-		if err := m.Dockerfile.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("dockerfile")
+				return ve.ValidateName("connectionSchema")
 			}
 			return err
 		}
@@ -912,7 +814,7 @@ func (m *V1Schemas) contextValidateEarlyStopping(ctx context.Context, formats st
 	if m.EarlyStopping != nil {
 		if err := m.EarlyStopping.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("early_stopping")
+				return ve.ValidateName("earlyStopping")
 			}
 			return err
 		}
@@ -940,7 +842,7 @@ func (m *V1Schemas) contextValidateEventType(ctx context.Context, formats strfmt
 	if m.EventType != nil {
 		if err := m.EventType.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("event_type")
+				return ve.ValidateName("eventType")
 			}
 			return err
 		}
@@ -963,26 +865,12 @@ func (m *V1Schemas) contextValidateGcs(ctx context.Context, formats strfmt.Regis
 	return nil
 }
 
-func (m *V1Schemas) contextValidateGit(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Git != nil {
-		if err := m.Git.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("git")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 func (m *V1Schemas) contextValidateHpParams(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.HpParams != nil {
 		if err := m.HpParams.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("hp_params")
+				return ve.ValidateName("hpParams")
 			}
 			return err
 		}
@@ -996,7 +884,7 @@ func (m *V1Schemas) contextValidateK8sResource(ctx context.Context, formats strf
 	if m.K8sResource != nil {
 		if err := m.K8sResource.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("k8s_resource")
+				return ve.ValidateName("k8sResource")
 			}
 			return err
 		}
@@ -1024,7 +912,7 @@ func (m *V1Schemas) contextValidateMatrixKind(ctx context.Context, formats strfm
 	if m.MatrixKind != nil {
 		if err := m.MatrixKind.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("matrix_kind")
+				return ve.ValidateName("matrixKind")
 			}
 			return err
 		}
@@ -1047,26 +935,12 @@ func (m *V1Schemas) contextValidateOperation(ctx context.Context, formats strfmt
 	return nil
 }
 
-func (m *V1Schemas) contextValidateOperationCond(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.OperationCond != nil {
-		if err := m.OperationCond.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("operation_cond")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 func (m *V1Schemas) contextValidatePolyaxonInitContainer(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.PolyaxonInitContainer != nil {
 		if err := m.PolyaxonInitContainer.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("polyaxon_init_container")
+				return ve.ValidateName("polyaxonInitContainer")
 			}
 			return err
 		}
@@ -1080,7 +954,7 @@ func (m *V1Schemas) contextValidatePolyaxonSidecarContainer(ctx context.Context,
 	if m.PolyaxonSidecarContainer != nil {
 		if err := m.PolyaxonSidecarContainer.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("polyaxon_sidecar_container")
+				return ve.ValidateName("polyaxonSidecarContainer")
 			}
 			return err
 		}
@@ -1150,7 +1024,7 @@ func (m *V1Schemas) contextValidateScheduleKind(ctx context.Context, formats str
 	if m.ScheduleKind != nil {
 		if err := m.ScheduleKind.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("schedule_kind")
+				return ve.ValidateName("scheduleKind")
 			}
 			return err
 		}

@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  | [optional] 
 **percent** | **Number** |  | [optional] 
-**evaluation_interval** | **Number** | Interval/Frequency for applying the policy. | [optional] 
-**min_interval** | **Number** |  | [optional] 
-**min_samples** | **Number** |  | [optional] 
+**evaluationInterval** | **Number** | Interval/Frequency for applying the policy. | [optional] 
+**minInterval** | **Number** |  | [optional] 
+**minSamples** | **Number** |  | [optional] 
 
 

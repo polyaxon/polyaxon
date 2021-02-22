@@ -18,13 +18,13 @@ import pandas as pd
 from typing import Dict, List, Set, Union
 
 from polyaxon.client import RunClient
-from polyaxon.client.decorators import check_no_op
+from polyaxon.client.decorators import client_handler
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events
 
 
 class RunPlot(RunClient):
-    @check_no_op
+    @client_handler(check_no_op=True)
     def __init__(
         self,
         owner=None,
@@ -36,13 +36,13 @@ class RunPlot(RunClient):
         self.metrics = {}
         self.metric_names = set([])
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def refresh_data(self, force: bool = False):
         super().refresh_data()
         if self.metrics:
             self.get_metrics(self.metric_names, force)
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_metrics(
         self, names: Union[Set[str], List[str]], force: bool = False
     ) -> Dict:
@@ -57,7 +57,7 @@ class RunPlot(RunClient):
             self.metric_names.add(e["name"])
         return self.metrics
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_tidy_df(self):
         dfs = []
         for m in self.metric_names:
@@ -67,7 +67,7 @@ class RunPlot(RunClient):
             dfs.append(df)
         return pd.concat(dfs)
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_wide_df(self):
         dfs = []
         for m in self.metric_names:
@@ -79,7 +79,7 @@ class RunPlot(RunClient):
 
         return pd.concat(dfs, axis=1)
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def bar(
         self,
         x: str = "timestamp",
@@ -92,14 +92,14 @@ class RunPlot(RunClient):
         df = self.get_tidy_df()
         return px.bar(df, x=x, y=y, color=color, barmode=barmode)
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def line(self, x: str = "timestamp", y: str = "metric", color: str = "name"):
         import plotly.express as px
 
         df = self.get_tidy_df()
         return px.line(df, x=x, y=y, color=color)
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def scatter(self, x: str = None, y: str = None, color: str = None, **kwargs):
         import plotly.express as px
 
@@ -111,7 +111,7 @@ class RunPlot(RunClient):
 
 
 class MultiRunPlot(RunClient):
-    @check_no_op
+    @client_handler(check_no_op=True)
     def __init__(
         self,
         owner=None,
@@ -123,7 +123,7 @@ class MultiRunPlot(RunClient):
         self.run_uuids = set([])
         self.metric_names = set([])
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def refresh_data(self):
         super().refresh_data()
         if self.runs:
@@ -131,7 +131,7 @@ class MultiRunPlot(RunClient):
             if self.metric_names:
                 self.get_metrics(self.metric_names)
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_metrics(
         self, names: Union[Set[str], List[str]], force: bool = False
     ) -> Dict:
@@ -147,7 +147,7 @@ class MultiRunPlot(RunClient):
 
         return self.metrics
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_runs(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ) -> Dict:
@@ -174,7 +174,7 @@ class MultiRunPlot(RunClient):
             data.append({"uid": run.uuid, "values": values})
         return data
 
-    @check_no_op
+    @client_handler(check_no_op=True)
     def get_hiplot(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ):

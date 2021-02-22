@@ -126,6 +126,10 @@ def delete_runs(view, request, actor, *args, **kwargs):
             owner_name=view.owner_name,
             project_name=view.project_name,
         )
+    # Delete non managed immediately
+    runs.filter(is_managed=False).delete()
     # Deletion in progress
-    runs.update(live_state=live_state.STATE_DELETION_PROGRESSING)
+    runs.filter(is_managed=True).update(
+        live_state=live_state.STATE_DELETION_PROGRESSING
+    )
     return Response(status=status.HTTP_200_OK, data={})

@@ -164,28 +164,39 @@ class BaseConfigManager:
 
         if os.path.isfile(config_filepath) and init:
             logger.debug(
-                "%s file already present at %s", cls.CONFIG_FILE_NAME, config_filepath
+                "%s file already present at %s\n", cls.CONFIG_FILE_NAME, config_filepath
             )
             return
 
         with open(config_filepath, "w") as config_file:
             if hasattr(config, "to_dict"):
                 logger.debug(
-                    "Setting %s in the file %s", config.to_dict(), cls.CONFIG_FILE_NAME
+                    "Setting %s in the file %s\n",
+                    config.to_dict(),
+                    cls.CONFIG_FILE_NAME,
                 )
                 config_file.write(ujson.dumps(config.to_dict()))
             elif isinstance(config, Mapping):
                 config_file.write(ujson.dumps(config))
             else:
-                logger.debug("Setting %s in the file %s", config, cls.CONFIG_FILE_NAME)
+                logger.debug(
+                    "Setting %s in the file %s\n", config, cls.CONFIG_FILE_NAME
+                )
                 config_file.write(config)
 
     @classmethod
-    def get_config(cls):
-        if not cls.is_initialized():
+    def get_config(cls, check: bool = True):
+        if check and not cls.is_initialized():
             return None
 
         config_filepath = cls.get_config_filepath()
+        logger.debug(
+            "Reading config `%s` from path: %s\n", cls.__name__, config_filepath
+        )
+        return cls.read_from_path(config_filepath)
+
+    @classmethod
+    def read_from_path(cls, config_filepath: str):
         with open(config_filepath, "r") as config_file:
             config_str = config_file.read()
         if issubclass(cls.CONFIG, BaseConfig):
@@ -197,7 +208,7 @@ class BaseConfigManager:
         if not cls.is_initialized():
             return cls.CONFIG()  # pylint:disable=not-callable
 
-        return cls.get_config()
+        return cls.get_config(check=False)
 
     @classmethod
     def get_config_from_env(cls, **kwargs):

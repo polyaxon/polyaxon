@@ -6,9 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  | [optional] [default to &#39;truncation&#39;]
 **percent** | **Number** | The percentage of runs to stop, at each evaluation interval. e.g. 1 - 99. | [optional] 
-**evaluation_interval** | **Number** | Interval/Frequency for applying the policy. | [optional] 
-**min_interval** | **Number** |  | [optional] 
-**min_samples** | **Number** |  | [optional] 
-**include_succeeded** | **Boolean** |  | [optional] 
+**evaluationInterval** | **Number** | Interval/Frequency for applying the policy. | [optional] 
+**minInterval** | **Number** |  | [optional] 
+**minSamples** | **Number** |  | [optional] 
+**includeSucceeded** | **Boolean** |  | [optional] 
 
 

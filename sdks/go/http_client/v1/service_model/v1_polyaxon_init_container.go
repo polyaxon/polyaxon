@@ -35,10 +35,10 @@ type V1PolyaxonInitContainer struct {
 	Image string `json:"image,omitempty"`
 
 	// image pull policy
-	ImagePullPolicy string `json:"image_pull_policy,omitempty"`
+	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
 	// image tag
-	ImageTag string `json:"image_tag,omitempty"`
+	ImageTag string `json:"imageTag,omitempty"`
 
 	// resources
 	Resources V1ResourceRequirements `json:"resources,omitempty"`

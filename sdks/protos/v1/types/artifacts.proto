@@ -38,7 +38,7 @@ message WasbType {
     string container = 1;
 
     // Optional storage_account
-    string storage_account = 2;
+    string storageAccount = 2;
 
     // Optional path
     bool path = 3;

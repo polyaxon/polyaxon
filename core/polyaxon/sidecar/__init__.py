@@ -19,6 +19,7 @@ import os
 from kubernetes.client.rest import ApiException
 
 from polyaxon.client import RunClient
+from polyaxon.containers.contexts import CONTEXT_MOUNT_RUN_EVENTS_FORMAT
 from polyaxon.env_vars.getters import get_run_info
 from polyaxon.env_vars.keys import POLYAXON_KEYS_K8S_POD_ID
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
@@ -26,7 +27,7 @@ from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.logger import logger
 from polyaxon.settings import CLIENT_CONFIG
 from polyaxon.sidecar.intervals import get_sync_interval
-from polyaxon.sidecar.monitors import sync_artifacts, sync_logs, sync_summaries
+from polyaxon.sidecar.monitors import sync_artifacts, sync_logs
 
 
 async def start_sidecar(
@@ -81,10 +82,9 @@ async def start_sidecar(
                 last_check=last_check,
                 run_uuid=run_uuid,
             )
-            sync_summaries(
+            client.sync_events_summaries(
                 last_check=last_check,
-                run_uuid=run_uuid,
-                client=client,
+                events_path=CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(run_uuid),
             )
 
     while is_running and retry <= 3:

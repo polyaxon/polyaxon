@@ -72,11 +72,11 @@ class V1WasbType(BaseTypeConfig, polyaxon_sdk.V1WasbType):
     >>> inputs = [
     >>>     V1IO(
     >>>         name="test1",
-    >>>         iotype=types.WASB,
+    >>>         type=types.WASB,
     >>>     ),
     >>>     V1IO(
     >>>         name="test2",
-    >>>         iotype=types.WASB,
+    >>>         type=types.WASB,
     >>>     ),
     >>> ]
     ```

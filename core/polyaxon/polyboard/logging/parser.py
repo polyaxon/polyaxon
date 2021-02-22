@@ -16,7 +16,7 @@
 
 import re
 
-from dateutil import parser as dt_parser
+from polyaxon.utils.date_utils import parse_datetime
 
 # pylint:disable=anomalous-backslash-in-string
 
@@ -37,6 +37,6 @@ def timestamp_search_regex(regex, log_line):
         return log_line, None
 
     ts = log_search.group()
-    ts = dt_parser.parse(ts)
+    ts = parse_datetime(ts)
 
     return re.sub(regex, "", log_line), ts

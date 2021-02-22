@@ -59,7 +59,7 @@ type V1CompiledOperation struct {
 	Inputs []*V1IO `json:"inputs"`
 
 	// Optional flag to mark this specification requires approval before running
-	IsApproved bool `json:"is_approved,omitempty"`
+	IsApproved bool `json:"isApproved,omitempty"`
 
 	// Optional dict of joins
 	Joins map[string]V1Join `json:"joins,omitempty"`
@@ -92,7 +92,7 @@ type V1CompiledOperation struct {
 	Schedule interface{} `json:"schedule,omitempty"`
 
 	// Optional flag to skip this run if upstream was skipped
-	SkipOnUpstreamSkip bool `json:"skip_on_upstream_skip,omitempty"`
+	SkipOnUpstreamSkip bool `json:"skipOnUpstreamSkip,omitempty"`
 
 	// Optional component tags
 	Tags []string `json:"tags"`

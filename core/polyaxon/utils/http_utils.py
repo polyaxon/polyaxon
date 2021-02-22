@@ -28,15 +28,21 @@ def clean_host(host: str):
     return host.rstrip("/")
 
 
-def absolute_uri(url: str, api_host: str = None, protocol: str = None) -> Optional[str]:
+def absolute_uri(url: str, host: str = None, protocol: str = None) -> Optional[str]:
     if not url:
         return None
 
-    if not api_host:
+    if not host:
         return url
+
+    host = clean_host(host)
+
+    if "http" in host:
+        return "{host}/{url}".format(host=host, url=url)
+
     protocol = protocol or "http"
 
-    url = urljoin(clean_host(api_host) + "/", url.lstrip("/"))
+    url = urljoin(clean_host(host) + "/", url.lstrip("/"))
     return f"{protocol}://{url}"
 
 

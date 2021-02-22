@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**hub_reference** | [**V1HubRef**](V1HubRef.md) |  | [optional] 
-**dag_reference** | [**V1DagRef**](V1DagRef.md) |  | [optional] 
-**url_reference** | [**V1UrlRef**](V1UrlRef.md) |  | [optional] 
-**path_reference** | [**V1PathRef**](V1PathRef.md) |  | [optional] 
+**hubRef** | [**V1HubRef**](V1HubRef.md) |  | [optional] 
+**dagRef** | [**V1DagRef**](V1DagRef.md) |  | [optional] 
+**urlRef** | [**V1UrlRef**](V1UrlRef.md) |  | [optional] 
+**pathRef** | [**V1PathRef**](V1PathRef.md) |  | [optional] 
 
 

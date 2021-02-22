@@ -27,6 +27,7 @@ from polyaxon.polyflow.references import V1DagRef, V1HubRef, V1PathRef, V1UrlRef
 from polyaxon.polyflow.run.patch import validate_run_patch
 from polyaxon.polyflow.templates import TemplateMixinConfig, TemplateMixinSchema
 from polyaxon.schemas.patch_strategy import V1PatchStrategy
+from polyaxon.utils.signal_decorators import check_partial
 
 
 class OperationSchema(BaseOpSchema, TemplateMixinSchema):
@@ -50,6 +51,7 @@ class OperationSchema(BaseOpSchema, TemplateMixinSchema):
         return V1Operation
 
     @validates_schema
+    @check_partial
     def validate_run_patch(self, data, **kwargs):
         component = data.get("component")
         run_patch = data.get("run_patch")
@@ -59,6 +61,7 @@ class OperationSchema(BaseOpSchema, TemplateMixinSchema):
         validate_run_patch(run_patch=run_patch, kind=component.run.kind)
 
     @validates_schema
+    @check_partial
     def validate_reference(self, data, **kwargs):
         if data.get("is_preset"):
             return

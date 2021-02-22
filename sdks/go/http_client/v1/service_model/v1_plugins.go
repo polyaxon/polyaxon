@@ -37,16 +37,16 @@ type V1Plugins struct {
 	Auth bool `json:"auth,omitempty"`
 
 	// Auto resume a run's artifacts (applies to resume and retries), works if collects_artifacts is enabled
-	AutoResume bool `json:"auto_resume,omitempty"`
+	AutoResume bool `json:"autoResume,omitempty"`
 
 	// Optional flag to tell Polyaxon to collect articats and outputs
-	CollectArtifacts bool `json:"collect_artifacts,omitempty"`
+	CollectArtifacts bool `json:"collectArtifacts,omitempty"`
 
 	// Optional flag to tell Polyaxon to collect logs
-	CollectLogs bool `json:"collect_logs,omitempty"`
+	CollectLogs bool `json:"collectLogs,omitempty"`
 
 	// Optional flag to tell Polyaxon to collect container resouces (cpu/memory/gpu)
-	CollectResources string `json:"collect_resources,omitempty"`
+	CollectResources string `json:"collectResources,omitempty"`
 
 	// Optional flag to tell Polyaxon if it should set a docker socket context for the run, default false
 	Docker bool `json:"docker,omitempty"`
@@ -55,7 +55,7 @@ type V1Plugins struct {
 	ExternalHost bool `json:"externalHost,omitempty"`
 
 	// Optional log level
-	LogLevel string `json:"log_level,omitempty"`
+	LogLevel string `json:"logLevel,omitempty"`
 
 	// Option Notifications: Deprecated
 	Notifications []*V1Notification `json:"notifications"`
@@ -63,8 +63,11 @@ type V1Plugins struct {
 	// Optional flag to tell Polyaxon if it should set a shm context for the run, default false
 	Shm bool `json:"shm,omitempty"`
 
+	// Optional to override the sidecar's default config
+	Sidecar *V1PolyaxonSidecarContainer `json:"sidecar,omitempty"`
+
 	// Optional flag to tell Polyaxon to sync statuses
-	SyncStatuses bool `json:"sync_statuses,omitempty"`
+	SyncStatuses bool `json:"syncStatuses,omitempty"`
 }
 
 // Validate validates this v1 plugins
@@ -72,6 +75,10 @@ func (m *V1Plugins) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateNotifications(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSidecar(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -105,11 +112,32 @@ func (m *V1Plugins) validateNotifications(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Plugins) validateSidecar(formats strfmt.Registry) error {
+	if swag.IsZero(m.Sidecar) { // not required
+		return nil
+	}
+
+	if m.Sidecar != nil {
+		if err := m.Sidecar.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sidecar")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this v1 plugins based on the context it is used
 func (m *V1Plugins) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateNotifications(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSidecar(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -132,6 +160,20 @@ func (m *V1Plugins) contextValidateNotifications(ctx context.Context, formats st
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *V1Plugins) contextValidateSidecar(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Sidecar != nil {
+		if err := m.Sidecar.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sidecar")
+			}
+			return err
+		}
 	}
 
 	return nil

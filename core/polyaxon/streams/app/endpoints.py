@@ -19,7 +19,6 @@ from typing import Any, Dict
 
 import ujson
 
-from dateutil import parser as dt_parser
 from starlette import status
 from starlette.background import BackgroundTask
 from starlette.datastructures import QueryParams
@@ -56,6 +55,7 @@ from polyaxon.streams.controllers.uploads import handle_upload
 from polyaxon.streams.tasks.logs import clean_tmp_logs, upload_logs
 from polyaxon.streams.tasks.notification import notify_run
 from polyaxon.utils.bool_utils import to_bool
+from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.fqn_utils import get_resource_name, get_resource_name_for_kind
 
 
@@ -73,7 +73,7 @@ async def get_logs(request: Request) -> UJSONResponse:
     force = to_bool(request.query_params.get("force"), handle_none=True)
     last_time = QueryParams(request.url.query).get("last_time")
     if last_time:
-        last_time = dt_parser.parse(last_time).astimezone()
+        last_time = parse_datetime(last_time).astimezone()
     last_file = QueryParams(request.url.query).get("last_file")
     files = []
 
@@ -145,8 +145,10 @@ async def collect_logs(request: Request) -> Response:
             % e,
             status_code=status.HTTP_400_BAD_REQUEST,
         )
-    task = BackgroundTask(clean_tmp_logs, run_uuid=run_uuid)
-    return Response(background=task)
+    if settings.AGENT_CONFIG.is_replica:
+        task = BackgroundTask(clean_tmp_logs, run_uuid=run_uuid)
+        return Response(background=task)
+    return Response(status_code=status.HTTP_200_OK)
 
 
 async def get_multi_runs_events(request: Request) -> UJSONResponse:

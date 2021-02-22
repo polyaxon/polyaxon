@@ -83,7 +83,7 @@ message Operation {
     string conditions = 16;
 
     // Optional flag to skip this run if upstream was skipped
-    bool skip_on_upstream_skip = 17;
+    bool skipOnUpstreamSkip = 17;
 
     // Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
     google.protobuf.Struct matrix = 18;
@@ -96,26 +96,26 @@ message Operation {
 
     // Optional a run section to override  the content of the run in the template
     // should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run_patch = 21;
+    google.protobuf.Struct runPatch = 21;
 
     // Optional patch strategy, default post_merge
     PatchStrategy patch_strategy = 22;
 
     // Optional flag to mark this specification as preset
-    bool is_preset = 23;
+    bool isPreset = 23;
 
     // Optional flag to mark this specification requires approval before running
-    bool is_approved = 24;
+    bool isApproved = 24;
 
     // Optional to mark this specification as template with instructions
     Template template = 25;
 
     // Component template specification
     oneof definition {
-      string url_ref = 26;
-      string path_ref = 27;
-      string hub_ref = 28;
-      string dag_ref = 29;
+      string urlRef = 26;
+      string pathRef = 27;
+      string hubRef = 28;
+      string dagRef = 29;
       Component component = 30;
     }
 }

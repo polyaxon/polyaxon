@@ -14,59 +14,56 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections import deque
-from typing import Callable
+import logging
+import os
+import socket
 
-from polyaxon.containers.names import MAIN_JOB_CONTAINER
-from polyaxon.polyboard.logging.schemas import V1Log, V1Logs
-from polyaxon.utils.formatting import Printer
-from polyaxon.utils.tz_utils import local_datetime
+from polyaxon import settings
+from polyaxon.env_vars.keys import POLYAXON_KEYS_K8S_NODE_NAME, POLYAXON_KEYS_K8S_POD_ID
+from polyaxon.logger import logger
+from polyaxon.polyboard.logging import V1Log
+from polyaxon.utils.date_utils import to_datetime
+from polyaxon.utils.env import get_user
 
 
-def get_logs_handler(
-    show_timestamp=True, all_containers=False, all_info=False
-) -> Callable:
-    colors = deque(Printer.COLORS)
-    job_to_color = {}
-    if all_info:
-        all_containers = True
+class PolyaxonHandler(logging.Handler):
+    def __init__(self, add_logs, **kwargs):
+        self._add_logs = add_logs
+        self._container = socket.gethostname()
+        self._node = os.environ.get(POLYAXON_KEYS_K8S_NODE_NAME, "local")
+        self._pod = os.environ.get(POLYAXON_KEYS_K8S_POD_ID, get_user())
+        super().__init__(
+            level=kwargs.get(
+                "level", settings.CLIENT_CONFIG.log_level or logging.NOTSET
+            ),
+        )
 
-    def handle_log_line(log: V1Log):
-        log_dict = log.to_dict()
-        log_line = ""
-        if log.timestamp and show_timestamp:
-            date_value = local_datetime(log_dict.get("timestamp"))
-            log_line = Printer.add_color(date_value, "white") + " | "
+    def set_add_logs(self, add_logs):
+        self._add_logs = add_logs
 
-        def get_container_info():
-            if container_info in job_to_color:
-                color = job_to_color[container_info]
-            else:
-                color = colors[0]
-                colors.rotate(-1)
-                job_to_color[container_info] = color
-            return Printer.add_color(container_info, color) + " | "
+    def can_record(self, record):
+        return not (
+            record.name == "polyaxon"
+            or record.name == "polyaxon.cli"
+            or record.name.startswith("polyaxon")
+        )
 
-        if not all_containers and log.container != MAIN_JOB_CONTAINER:
-            return log_line
+    def format_record(self, record):
+        message = ""
+        if record.msg:
+            message = record.msg % record.args
+        return V1Log.process_log_line(
+            value=message,
+            timestamp=to_datetime(record.created),
+            node=self._node,
+            pod=self._pod,
+            container=self._container,
+        )
 
-        if all_info:
-            container_info = ""
-            if log.node:
-                log_line += Printer.add_color(log_dict.get("node"), "white") + " | "
-            if log.pod:
-                log_line += Printer.add_color(log_dict.get("pod"), "white") + " | "
-            if log.container:
-                container_info = log_dict.get("container")
-
-            log_line += get_container_info()
-
-        log_line += log_dict.get("value")
-        Printer.log(log_line, nl=True)
-
-    def handle_log_lines(logs: V1Logs):
-        for log in logs.logs:
-            if log:
-                handle_log_line(log=log)
-
-    return handle_log_lines
+    def emit(self, record):  # pylint:disable=inconsistent-return-statements
+        if not self.can_record(record):
+            return
+        try:
+            return self._add_logs(self.format_record(record))
+        except Exception as e:
+            logger.warning("Polyaxon failed creating log record %e", e)

@@ -26,10 +26,10 @@ from polyaxon.utils.list_utils import to_list
 def collect_artifacts_from_io(
     io: V1IO, connection_by_names: Dict[str, V1ConnectionType], is_input: bool
 ) -> Optional[V1RunArtifact]:
-    if io.iotype not in LINEAGE_VALUES:
+    if io.type not in LINEAGE_VALUES:
         return None
 
-    if io.iotype == IMAGE:
+    if io.type == IMAGE:
         image = io.value
         connection = connection_by_names.get(io.connection)
         if connection and connection.schema and connection.schema.url:

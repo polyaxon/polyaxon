@@ -684,7 +684,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_component_hub_activities**
-> V1ListActivitiesResponse get_component_hub_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListActivitiesResponse get_component_hub_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
 
 Get hub activities
 
@@ -728,10 +728,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+mode = 'mode_example' # str | Mode the search. (optional)
 
     try:
         # Get hub activities
-        api_response = api_instance.get_component_hub_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.get_component_hub_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->get_component_hub_activities: %s\n" % e)
@@ -747,6 +748,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **mode** | **str**| Mode the search. | [optional] 
 
 ### Return type
 
@@ -1194,7 +1196,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_component_version_names**
-> V1ListComponentVersionsResponse list_component_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListComponentVersionsResponse list_component_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
 
 List component version names
 
@@ -1238,10 +1240,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+mode = 'mode_example' # str | Mode the search. (optional)
 
     try:
         # List component version names
-        api_response = api_instance.list_component_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_component_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->list_component_version_names: %s\n" % e)
@@ -1257,6 +1260,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **mode** | **str**| Mode the search. | [optional] 
 
 ### Return type
 
@@ -1283,7 +1287,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_component_versions**
-> V1ListComponentVersionsResponse list_component_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListComponentVersionsResponse list_component_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
 
 List component versions
 
@@ -1327,10 +1331,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+mode = 'mode_example' # str | Mode the search. (optional)
 
     try:
         # List component versions
-        api_response = api_instance.list_component_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_component_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->list_component_versions: %s\n" % e)
@@ -1346,6 +1351,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **mode** | **str**| Mode the search. | [optional] 
 
 ### Return type
 

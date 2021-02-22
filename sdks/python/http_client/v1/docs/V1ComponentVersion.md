@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **stage** | [**V1Stages**](V1Stages.md) |  | [optional] 
 **stage_conditions** | [**list[V1StageCondition]**](V1StageCondition.md) |  | [optional] 
 **content** | **str** |  | [optional] 
+**role** | **str** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

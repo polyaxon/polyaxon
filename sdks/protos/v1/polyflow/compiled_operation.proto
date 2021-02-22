@@ -80,7 +80,7 @@ message CompiledOperation {
     string conditions = 16;
 
     // Optional flag to skip this run if upstream was skipped
-    bool skip_on_upstream_skip = 17;
+    bool skipOnUpstreamSkip = 17;
 
     // Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
     google.protobuf.Struct matrix = 18;
@@ -98,7 +98,7 @@ message CompiledOperation {
     repeated IO contexts = 23;
 
     // Optional flag to mark this specification requires approval before running
-    bool is_approved = 24;
+    bool isApproved = 24;
 
     // Run definition, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
     google.protobuf.Struct run = 25;

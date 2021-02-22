@@ -4,10 +4,10 @@ FROM polyaxon/polyaxon-npm-base
 LABEL maintainer="Polyaxon, Inc. <contact@polyaxon.com>"
 
 RUN apt-get -y update && \
-    apt-get -y install curl unzip && \
-    apt-get autoremove -y && \
-    apt-get clean -y && \
-    rm -rf /var/lib/apt/lists/*
+  apt-get -y install curl unzip && \
+  apt-get autoremove -y && \
+  apt-get clean -y && \
+  rm -rf /var/lib/apt/lists/*
 
 # Install Go
 RUN mkdir -p /goroot && \
@@ -19,9 +19,9 @@ ENV GOPATH /gopath
 RUN mkdir -p $GOPATH/src
 ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
 
-# Install `protoc` v3.9.0
-RUN curl -OL https://github.com/google/protobuf/releases/download/v3.9.0/protoc-3.9.0-linux-x86_64.zip
-RUN unzip protoc-3.9.0-linux-x86_64.zip -d protoc3
+# Install `protoc` v3.14.0
+RUN curl -OL https://github.com/google/protobuf/releases/download/v3.14.0/protoc-3.14.0-linux-x86_64.zip
+RUN unzip protoc-3.14.0-linux-x86_64.zip -d protoc3
 RUN mv protoc3/bin/* /usr/bin/
 RUN mv protoc3/include/* /usr/local/include/
 

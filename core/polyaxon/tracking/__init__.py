@@ -13,11 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from datetime import datetime
 from typing import Dict, List, Optional, Sequence, Union
 
 from polyaxon import settings
 from polyaxon.client import RunClient
-from polyaxon.polyboard.artifacts import V1RunArtifact
+from polyaxon.client.decorators import client_handler
+from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.tracking.run import Run
 
 TRACKING_RUN = None
@@ -32,6 +34,13 @@ def init(
     track_env: bool = True,
     refresh_data: bool = False,
     artifacts_path: str = None,
+    collect_artifacts: str = None,
+    collect_resources: str = None,
+    is_offline: bool = None,
+    is_new: bool = None,
+    name: str = None,
+    description: str = None,
+    tags: List[str] = None,
 ):
     """Tracking module is similar to the tracking client without the need to create a run instance.
 
@@ -66,7 +75,29 @@ def init(
                 configured in the context where this client is instantiated.
             track_env: bool, optional, default True, to track information about the environment.
             refresh_data: bool, optional, default False, to refresh the run data at instantiation.
+            refresh_data: bool, optional, default False, to instruct the run to resume,
+                only useful when the run is not managed by Polyaxon.
             artifacts_path: str, optional, for in-cluster runs it will be set automatically.
+            collect_artifacts: bool, optional,
+                similar to the env var flag `POLYAXON_COLLECT_ARTIFACTS`, this env var is `True`
+                by default for managed runs and is controlled by the plugins section.
+            collect_resources: bool, optional,
+                similar to the env var flag `POLYAXON_COLLECT_RESOURCES`, this env var is `True`
+                by default for managed runs and is controlled by the plugins section.
+            is_offline: bool, optional,
+                To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+            is_new: bool, optional,
+                Force the creation of a new run instead of trying to discover a cached run or
+                refreshing an instance from the env var
+            name: str, optional,
+                When `is_new` or `is_offline` is set to true, a new instance is created and
+                you can initialize that new run with a name.
+            description: str, optional,
+                When `is_new` or `is_offline` is set to true, a new instance is created and
+                you can initialize that new run with a description.
+            tags: str or List[str], optional,
+                When `is_new` or `is_offline` is set to true, a new instance is created and
+                you can initialize that new run with tags.
 
         Raises:
             PolyaxonClientException: If no owner and/or project are passed and Polyaxon cannot
@@ -83,9 +114,17 @@ def init(
         refresh_data=refresh_data,
         track_env=track_env,
         artifacts_path=artifacts_path,
+        collect_artifacts=collect_artifacts,
+        collect_resources=collect_resources,
+        is_offline=is_offline,
+        is_new=is_new,
+        name=name,
+        description=description,
+        tags=tags,
     )
 
 
+@client_handler(check_no_op=True)
 def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
     """Get or create a new tracking run.
 
@@ -103,11 +142,6 @@ def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
     if settings.CLIENT_CONFIG.is_managed:
         init()
         return TRACKING_RUN
-
-
-def get_model_path(rel_path: str = "model"):
-    global TRACKING_RUN
-    return TRACKING_RUN.get_model_path(rel_path=rel_path)
 
 
 def get_tensorboard_path(rel_path: str = "tensorboard"):
@@ -486,12 +520,28 @@ def set_name(name: str, async_req: bool = True):
 set_name.__doc__ = Run.set_name.__doc__
 
 
-def log_status(status, reason=None, message=None):
+def end():
+    global TRACKING_RUN
+    TRACKING_RUN.end()
+
+
+end.__doc__ = Run.end.__doc__
+
+
+def log_status(
+    status: str,
+    reason=None,
+    message=None,
+    last_transition_time: datetime = None,
+    last_update_time: datetime = None,
+):
     global TRACKING_RUN
     TRACKING_RUN.log_status(
         status=status,
         reason=reason,
         message=message,
+        last_transition_time=last_transition_time,
+        last_update_time=last_update_time,
     )
 
 
@@ -550,12 +600,51 @@ def log_stopped():
 log_stopped.__doc__ = Run.log_stopped.__doc__
 
 
-def log_failed(message=None, traceback=None):
+def log_failed(reason: str = None, message: str = None):
     global TRACKING_RUN
-    TRACKING_RUN.log_failed(message=message, traceback=traceback)
+    TRACKING_RUN.log_failed(reason=reason, message=message)
 
 
 log_failed.__doc__ = Run.log_failed.__doc__
+
+
+def log_artifact_ref(
+    path: str,
+    kind: V1ArtifactKind,
+    name: str = None,
+    hash: str = None,
+    content=None,
+    is_input: bool = False,
+    rel_path: str = None,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_artifact_ref(
+        path=path,
+        kind=kind,
+        name=name,
+        hash=hash,
+        content=content,
+        is_input=is_input,
+        rel_path=rel_path,
+    )
+
+
+log_artifact_ref.__doc__ = Run.log_artifact_ref.__doc__
+
+
+def log_model_ref(
+    path: str,
+    name: str = None,
+    is_input: bool = False,
+    rel_path: str = None,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_model_ref(
+        path=path, name=name, is_input=is_input, rel_path=rel_path
+    )
+
+
+log_model_ref.__doc__ = Run.log_model_ref.__doc__
 
 
 def log_code_ref(code_ref: Dict = None, is_input: bool = True):
@@ -618,6 +707,14 @@ def log_artifact_lineage(body: List[V1RunArtifact]):
 log_artifact_lineage.__doc__ = Run.log_artifact_lineage.__doc__
 
 
+def log_env(rel_path: str = None, content: Dict = None):
+    global TRACKING_RUN
+    return TRACKING_RUN.log_env(rel_path=rel_path, content=content)
+
+
+log_env.__doc__ = Run.log_env.__doc__
+
+
 def set_artifacts_path(artifacts_path: str):
     global TRACKING_RUN
     TRACKING_RUN.set_artifacts_path(artifacts_path)
@@ -626,9 +723,39 @@ def set_artifacts_path(artifacts_path: str):
 set_artifacts_path.__doc__ = Run.set_artifacts_path.__doc__
 
 
-def log_env(rel_path: str = None, content: Dict = None):
+def set_run_event_logger():
     global TRACKING_RUN
-    return TRACKING_RUN.log_env(rel_path=rel_path, content=content)
+    TRACKING_RUN.set_run_event_logger()
 
 
-log_env.__doc__ = Run.log_env.__doc__
+set_run_event_logger.__doc__ = Run.set_run_event_logger.__doc__
+
+
+def set_run_resource_logger():
+    global TRACKING_RUN
+    TRACKING_RUN.set_run_resource_logger()
+
+
+set_run_resource_logger.__doc__ = Run.set_run_resource_logger.__doc__
+
+
+def sync_events_summaries():
+    global TRACKING_RUN
+    TRACKING_RUN.sync_events_summaries()
+
+
+sync_events_summaries.__doc__ = Run.sync_events_summaries.__doc__
+
+
+def sync_offline_run(
+    artifacts_path: str = None,
+    load_offline_run: bool = False,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.sync_offline_run(
+        artifacts_path=artifacts_path,
+        load_offline_run=load_offline_run,
+    )
+
+
+sync_offline_run.__doc__ = Run.sync_offline_run.__doc__

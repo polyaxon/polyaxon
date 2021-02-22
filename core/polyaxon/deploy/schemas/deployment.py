@@ -43,6 +43,7 @@ from polyaxon.deploy.schemas.ssl import SSLSchema
 from polyaxon.deploy.schemas.ui import UISchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.types import ConnectionTypeSchema
+from polyaxon.utils.signal_decorators import check_partial
 
 
 def validate_connections(artifacts_store, connections):
@@ -276,10 +277,12 @@ class DeploymentSchema(BaseCamelSchema):
         return DeploymentConfig
 
     @validates_schema
+    @check_partial
     def validate_connections(self, data, **kwargs):
         validate_connections(data.get("artifacts_store"), data.get("connections"))
 
     @validates_schema
+    @check_partial
     def validate_deployment(self, data, **kwargs):
         validate_deployment_chart(
             deployment_chart=data.get("deployment_chart"),

@@ -35,22 +35,22 @@ type V1PolyaxonSidecarContainer struct {
 	Image string `json:"image,omitempty"`
 
 	// image pull policy
-	ImagePullPolicy string `json:"image_pull_policy,omitempty"`
+	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
 	// image tag
-	ImageTag string `json:"image_tag,omitempty"`
+	ImageTag string `json:"imageTag,omitempty"`
 
 	// monitor logs
-	MonitorLogs bool `json:"monitor_logs,omitempty"`
+	MonitorLogs bool `json:"monitorLogs,omitempty"`
 
 	// resources
 	Resources V1ResourceRequirements `json:"resources,omitempty"`
 
 	// sleep interval
-	SleepInterval int32 `json:"sleep_interval,omitempty"`
+	SleepInterval int32 `json:"sleepInterval,omitempty"`
 
 	// sync interval
-	SyncInterval int32 `json:"sync_interval,omitempty"`
+	SyncInterval int32 `json:"syncInterval,omitempty"`
 }
 
 // Validate validates this v1 polyaxon sidecar container

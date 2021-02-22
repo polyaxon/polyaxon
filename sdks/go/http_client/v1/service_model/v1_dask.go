@@ -34,13 +34,13 @@ import (
 type V1Dask struct {
 
 	// Adaptive config interval
-	AdaptInterval string `json:"adapt_interval,omitempty"`
+	AdaptInterval string `json:"adaptInterval,omitempty"`
 
 	// Adaptive config max workers
-	AdaptMax int32 `json:"adapt_max,omitempty"`
+	AdaptMax int32 `json:"adaptMax,omitempty"`
 
 	// Adaptive config min workers
-	AdaptMin int32 `json:"adapt_min,omitempty"`
+	AdaptMin int32 `json:"adaptMin,omitempty"`
 
 	// Optional connections section
 	Connections []string `json:"connections"`

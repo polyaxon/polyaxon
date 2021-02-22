@@ -14,21 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import json
-import os
 
 from collections import namedtuple
-from io import StringIO
 from typing import Dict, Mapping, Optional, Union
 
 import polyaxon_sdk
 
-from dateutil import parser as dt_parser
 from marshmallow import ValidationError, fields, pre_load, validate, validates_schema
 
 from polyaxon.parser import parser
 from polyaxon.polyboard.artifacts.kinds import V1ArtifactKind
+from polyaxon.polyboard.utils import validate_csv
 from polyaxon.schemas.base import BaseConfig, BaseSchema
+from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.np_utils import sanitize_np_types
+from polyaxon.utils.signal_decorators import check_partial
 from polyaxon.utils.tz_utils import now
 
 
@@ -280,6 +280,7 @@ class EventSchema(BaseSchema):
         return data
 
     @validates_schema
+    @check_partial
     def validate_event(self, values, **kwargs):
         count = 0
 
@@ -365,7 +366,7 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
     ) -> "V1Event":
         if isinstance(timestamp, str):
             try:
-                timestamp = dt_parser.parse(timestamp)
+                timestamp = parse_datetime(timestamp)
             except Exception as e:
                 raise ValidationError("Received an invalid timestamp") from e
 
@@ -431,13 +432,6 @@ class V1Events:
         self.name = name
         self.df = df
 
-    @staticmethod
-    def validate_csv(csv: str):
-        if csv and not os.path.exists(csv):
-            csv = StringIO(csv)
-
-        return csv
-
     @classmethod
     def read(
         cls, kind: str, name: str, data: Union[str, Dict], parse_dates: bool = True
@@ -445,7 +439,7 @@ class V1Events:
         import pandas as pd
 
         if isinstance(data, str):
-            csv = cls.validate_csv(data)
+            csv = validate_csv(data)
             if parse_dates:
                 df = pd.read_csv(
                     csv,

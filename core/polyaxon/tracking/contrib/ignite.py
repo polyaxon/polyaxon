@@ -14,15 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon import tracking
 from polyaxon.exceptions import PolyaxonClientException
+from polyaxon.tracking import Run
 
 try:
     from ignite.contrib.handlers.polyaxon_logger import PolyaxonLogger
-except:
-    raise PolyaxonClientException("ignite is required to use PolyaxonLogger")
+except ImportError:
+    raise PolyaxonClientException("ignite is required to use PolyaxonIgniteLogger")
 
 
 class PolyaxonIgniteLogger(PolyaxonLogger):
     def __init__(self, *args, **kwargs):
-        self.experiment = tracking.get_or_create_run(kwargs.get("run"))
+        self.experiment = kwargs.get("run", Run(*args, **kwargs))

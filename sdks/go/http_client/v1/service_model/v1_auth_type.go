@@ -26,7 +26,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1AuthType Uri type specification
+// V1AuthType Auth type specification
 //
 // swagger:model v1AuthType
 type V1AuthType struct {

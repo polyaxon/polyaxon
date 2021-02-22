@@ -50,7 +50,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.5.4";
+        version: "1.6.0";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -166,6 +166,14 @@ service RunsV1 {
     };
   }
 
+  // Sync offline run
+  rpc SyncRun(RunBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/{project}/runs/sync"
+      body: "run"
+    };
+  }
+
   // Stop run
   rpc StopRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -220,25 +228,25 @@ service RunsV1 {
   }
 
   // Restart run with copy
-  rpc CopyRun(EntityRunBodyRequest) returns (Run) {
+  rpc CopyRun(RunBodyRequest) returns (Run) {
     option (google.api.http) = {
-      post: "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy"
+      post: "/api/v1/{owner}/{project}/runs/{run.uuid}/copy"
       body: "run"
     };
   }
 
   // Restart run
-  rpc RestartRun(EntityRunBodyRequest) returns (Run) {
+  rpc RestartRun(RunBodyRequest) returns (Run) {
     option (google.api.http) = {
-      post: "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart"
+      post: "/api/v1/{owner}/{project}/runs/{run.uuid}/restart"
       body: "run"
     };
   }
 
   // Resume run
-  rpc ResumeRun(EntityRunBodyRequest) returns (Run) {
+  rpc ResumeRun(RunBodyRequest) returns (Run) {
     option (google.api.http) = {
-      post: "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume"
+      post: "/api/v1/{owner}/{project}/runs/{run.uuid}/resume"
       body: "run"
     };
   }
@@ -1923,7 +1931,7 @@ service TeamsV1 {
 
 // Service noop
 service SchemasV1 {
-  // Get random
+  // NoOp
   rpc NoOp(google.protobuf.Empty) returns (Schemas) {
     option (google.api.http) = {
       get: "/schemas"

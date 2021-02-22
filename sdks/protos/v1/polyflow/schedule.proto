@@ -32,19 +32,19 @@ message CronSchedule {
     string kind = 1;
 
     // Whan to start this cron schedule
-    google.protobuf.Timestamp start_at = 2;
+    google.protobuf.Timestamp startAt = 2;
 
     // Whan to end this cron schedule
-    google.protobuf.Timestamp end_at = 3;
+    google.protobuf.Timestamp endAt = 3;
 
     // Limit to stop executing this schedule
-    int32 max_runs = 4;
+    int32 maxRuns = 4;
 
     // Cron definition, e.g. 0 1 * * *
     string cron = 5;
 
     // A flag to set a dependency on past executions
-    bool depends_on_past = 6;
+    bool dependsOnPast = 6;
 }
 
 
@@ -54,7 +54,7 @@ message DateTimeSchedule {
     string kind = 1;
 
     // Whan to start this cron schedule
-    google.protobuf.Timestamp start_at = 2;
+    google.protobuf.Timestamp startAt = 2;
 }
 
 
@@ -64,19 +64,19 @@ message IntervalSchedule {
     string kind = 1;
 
     // When to start this interval schedule
-    google.protobuf.Timestamp start_at = 2;
+    google.protobuf.Timestamp startAt = 2;
 
     // Whan to end this interval schedule
-    google.protobuf.Timestamp end_at = 3;
+    google.protobuf.Timestamp endAt = 3;
 
     // Limit to stop executing this schedule
-    int32 max_runs = 4;
+    int32 maxRuns = 4;
 
     // Frequency (timedelta) at which to execute the runs
     int32 frequency = 5;
 
     // A flag to set a dependency on past executions
-    bool depends_on_past = 6;
+    bool dependsOnPast = 6;
 }
 
 

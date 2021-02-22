@@ -35,7 +35,7 @@ class TestCliRuns(BaseCommandTestCase):
     @patch("polyaxon.managers.run.RunConfigManager.set_config")
     @patch("polyaxon.cli.operations.get_run_details")
     def test_get_run(
-        self, get_run_details, set_config, is_initialized, get_config, get_run
+        self, get_run_details, set_config, get_config, is_initialized, get_run
     ):
         self.runner.invoke(
             ops,

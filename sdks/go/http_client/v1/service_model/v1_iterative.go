@@ -37,16 +37,16 @@ type V1Iterative struct {
 	// Container specification for crating new observations based on data from previous iterations
 	Container V1Container `json:"container,omitempty"`
 
-	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-	EarlyStopping []interface{} `json:"early_stopping"`
+	// A list of Early stopping objects, accepts both metric and failure early stopping mechanisms
+	EarlyStopping []interface{} `json:"earlyStopping"`
 
 	// Kind of matrix, should be equal to "iterative"
 	Kind *string `json:"kind,omitempty"`
 
-	// Maximim number of iteration to produce new observations
-	MaxIterations int32 `json:"max_iterations,omitempty"`
+	// Maximum number of iteration to produce new observations
+	MaxIterations int32 `json:"maxIterations,omitempty"`
 
-	// Hyperparams/Space definition of params to traverse
+	// Hyperparam/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`
 
 	// Seed for the random generator

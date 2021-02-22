@@ -24,7 +24,9 @@ from polyaxon.logger import clean_outputs
 from polyaxon.utils.http_utils import clean_host
 
 
-def get_dashboard_url(base: str = "ui", subpath: str = "", use_cloud: bool = False) -> str:
+def get_dashboard_url(
+    base: str = "ui", subpath: str = "", use_cloud: bool = False
+) -> str:
     host = POLYAXON_CLOUD_HOST if use_cloud else clean_host(settings.CLIENT_CONFIG.host)
     dashboard_url = "{}/{}/".format(host, base)
     if subpath:

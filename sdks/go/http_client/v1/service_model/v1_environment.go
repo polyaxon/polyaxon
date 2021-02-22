@@ -39,7 +39,7 @@ type V1Environment struct {
 
 	// PodDNSConfig defines the DNS parameters of a pod in addition to
 	// those generated from DNSPolicy.
-	DNSConfig V1PodDNSConfig `json:"dns_config,omitempty"`
+	DNSConfig V1PodDNSConfig `json:"dnsConfig,omitempty"`
 
 	// Set DNS policy for the pod.
 	// Defaults to "ClusterFirst".
@@ -47,23 +47,23 @@ type V1Environment struct {
 	// DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.
 	// To have DNS options set along with hostNetwork, you have to specify DNS policy
 	// explicitly to 'ClusterFirstWithHostNet'.
-	DNSPolicy string `json:"dns_policy,omitempty"`
+	DNSPolicy string `json:"dnsPolicy,omitempty"`
+
+	// Optional HostAliases is an optional list of hosts and IPs that will be injected into the pod spec.
+	HostAliases []V1HostAlias `json:"hostAliases"`
+
+	// Host networking requested for this workflow pod. Default to false.
+	HostNetwork bool `json:"hostNetwork,omitempty"`
 
 	// Use the host's pid namespace. Default to false.
 	HostPID string `json:"hostPID,omitempty"`
-
-	// Optional HostAliases is an optional list of hosts and IPs that will be injected into the pod spec.
-	HostAliases []V1HostAlias `json:"host_aliases"`
-
-	// Host networking requested for this workflow pod. Default to false.
-	HostNetwork bool `json:"host_network,omitempty"`
 
 	// Optional image pull secrets to use for this run
 	// ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images
 	// in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets
 	// can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet.
 	// More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
-	ImagePullSecrets []string `json:"image_pull_secrets"`
+	ImagePullSecrets []string `json:"imagePullSecrets"`
 
 	// Optional Metadata labels to pass to the k8s
 	Labels map[string]string `json:"labels,omitempty"`
@@ -71,12 +71,12 @@ type V1Environment struct {
 	// Optional NodeName is a request to schedule this pod onto a specific node. If it is non-empty,
 	// the scheduler simply schedules this pod onto that node, assuming that it fits resource
 	// requirements.
-	NodeName string `json:"node_name,omitempty"`
+	NodeName string `json:"nodeName,omitempty"`
 
 	// Optional NodeSelector is a selector which must be true for the pod to fit on a node.
 	// Selector which must match a node's labels for the pod to be scheduled on that node.
 	// More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-	NodeSelector map[string]string `json:"node_selector,omitempty"`
+	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
 
 	// The priority value. Various system components use this field to find the
 	// priority of the pod. When Priority Admission Controller is enabled, it
@@ -91,24 +91,24 @@ type V1Environment struct {
 	// name must be defined by creating a PriorityClass object with that name.
 	// If not specified, the pod priority will be default or zero if there is no
 	// default.
-	PriorityClassName string `json:"priority_class_name,omitempty"`
+	PriorityClassName string `json:"priorityClassName,omitempty"`
 
 	// A valid restart policy
-	RestartPolicy string `json:"restart_policy,omitempty"`
+	RestartPolicy string `json:"restartPolicy,omitempty"`
 
 	// If specified, the pod will be dispatched by specified scheduler.
 	// Or it will be dispatched by workflow scope scheduler if specified.
 	// If neither specified, the pod will be dispatched by default scheduler.
 	// +optional
-	SchedulerName string `json:"scheduler_name,omitempty"`
+	SchedulerName string `json:"schedulerName,omitempty"`
 
 	// PodSecurityContext holds pod-level security attributes and common container settings.
 	// Some fields are also present in container.securityContext.  Field values of
 	// container.securityContext take precedence over field values of PodSecurityContext.
-	SecurityContext V1PodSecurityContext `json:"security_context,omitempty"`
+	SecurityContext V1PodSecurityContext `json:"securityContext,omitempty"`
 
 	// Optional service account name to use for this run
-	ServiceAccountName string `json:"service_account_name,omitempty"`
+	ServiceAccountName string `json:"serviceAccountName,omitempty"`
 
 	// Optional Tolerations to apply.
 	Tolerations []V1Toleration `json:"tolerations"`

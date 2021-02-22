@@ -621,7 +621,7 @@ Name | Type | Description  | Notes
 
 <a name="getModelRegistryActivities"></a>
 # **getModelRegistryActivities**
-> V1ListActivitiesResponse getModelRegistryActivities(owner, name, offset, limit, sort, query)
+> V1ListActivitiesResponse getModelRegistryActivities(owner, name, offset, limit, sort, query, mode)
 
 Get model activities
 
@@ -653,8 +653,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListActivitiesResponse result = apiInstance.getModelRegistryActivities(owner, name, offset, limit, sort, query);
+      V1ListActivitiesResponse result = apiInstance.getModelRegistryActivities(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ModelRegistryV1Api#getModelRegistryActivities");
@@ -677,6 +678,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -1083,7 +1085,7 @@ Name | Type | Description  | Notes
 
 <a name="listModelVersionNames"></a>
 # **listModelVersionNames**
-> V1ListModelVersionsResponse listModelVersionNames(owner, name, offset, limit, sort, query)
+> V1ListModelVersionsResponse listModelVersionNames(owner, name, offset, limit, sort, query, mode)
 
 List model versions names
 
@@ -1115,8 +1117,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListModelVersionsResponse result = apiInstance.listModelVersionNames(owner, name, offset, limit, sort, query);
+      V1ListModelVersionsResponse result = apiInstance.listModelVersionNames(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ModelRegistryV1Api#listModelVersionNames");
@@ -1139,6 +1142,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 
@@ -1164,7 +1168,7 @@ Name | Type | Description  | Notes
 
 <a name="listModelVersions"></a>
 # **listModelVersions**
-> V1ListModelVersionsResponse listModelVersions(owner, name, offset, limit, sort, query)
+> V1ListModelVersionsResponse listModelVersions(owner, name, offset, limit, sort, query, mode)
 
 List model versions
 
@@ -1196,8 +1200,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    String mode = "mode_example"; // String | Mode the search.
     try {
-      V1ListModelVersionsResponse result = apiInstance.listModelVersions(owner, name, offset, limit, sort, query);
+      V1ListModelVersionsResponse result = apiInstance.listModelVersions(owner, name, offset, limit, sort, query, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ModelRegistryV1Api#listModelVersions");
@@ -1220,6 +1225,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **mode** | **String**| Mode the search. | [optional]
 
 ### Return type
 

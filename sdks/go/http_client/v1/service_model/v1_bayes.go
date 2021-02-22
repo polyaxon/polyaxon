@@ -39,19 +39,19 @@ type V1Bayes struct {
 	Container V1Container `json:"container,omitempty"`
 
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-	EarlyStopping []interface{} `json:"early_stopping"`
+	EarlyStopping []interface{} `json:"earlyStopping"`
 
 	// Kind of matrix, should be equal to "bayes"
 	Kind *string `json:"kind,omitempty"`
 
 	// Maximim number of iteration to produce new observations
-	MaxIterations int32 `json:"max_iterations,omitempty"`
+	MaxIterations int32 `json:"maxIterations,omitempty"`
 
 	// Metric to optimize during the iterations
 	Metric *V1OptimizationMetric `json:"metric,omitempty"`
 
 	// Number of intial random observations to create
-	NumInitialRuns int32 `json:"num_initial_runs,omitempty"`
+	NumInitialRuns int32 `json:"numInitialRuns,omitempty"`
 
 	// Hyperparams/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`
@@ -60,7 +60,7 @@ type V1Bayes struct {
 	Seed int32 `json:"seed,omitempty"`
 
 	// A utility function to use for the bayesian optimization
-	UtilityFunction interface{} `json:"utility_function,omitempty"`
+	UtilityFunction interface{} `json:"utilityFunction,omitempty"`
 }
 
 // Validate validates this v1 bayes

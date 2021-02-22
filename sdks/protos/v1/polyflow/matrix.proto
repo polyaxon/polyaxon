@@ -42,7 +42,7 @@ message RandomSearch {
     map<string, google.protobuf.Struct> params = 2;
 
     // Number of runs to generate and search
-    int32 num_runs = 3;
+    int32 numRuns = 3;
 
     // Seed for the random generator
     int32 seed = 4;
@@ -51,7 +51,7 @@ message RandomSearch {
     int32 concurrency = 5;
 
     // A list of Early stoppings, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 6;
+    repeated google.protobuf.Struct earlyStopping = 6;
 }
 
 
@@ -64,7 +64,7 @@ message GridSearch {
     map<string, google.protobuf.Struct> params = 2;
 
     // Number of runs to generate and search
-    int32 num_runs = 3;
+    int32 numRuns = 3;
 
     // Seed for the random generator
     int32 seed = 4;
@@ -73,7 +73,7 @@ message GridSearch {
     int32 concurrency = 5;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 6;
+    repeated google.protobuf.Struct earlyStopping = 6;
 }
 
 // Matrix based on hyperband
@@ -85,7 +85,7 @@ message Hyperband {
     map<string, google.protobuf.Struct> params = 2;
 
     // Maximim number of iteration to produce new observations
-    int32 max_iterations = 3;
+    int32 maxIterations = 3;
 
     // Eta
     int32 eta = 4;
@@ -109,7 +109,7 @@ message Hyperband {
     Container container = 10;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 11;
+    repeated google.protobuf.Struct earlyStopping = 11;
 }
 
 
@@ -122,13 +122,13 @@ message Bayes {
     map<string, google.protobuf.Struct> params = 2;
 
     // Number of intial random observations to create
-    int32 num_initial_runs = 3;
+    int32 numInitialRuns = 3;
 
     // Maximim number of iteration to produce new observations
-    int32 max_iterations = 4;
+    int32 maxIterations = 4;
 
     // A utility function to use for the bayesian optimization
-    google.protobuf.Struct utility_function = 5;
+    google.protobuf.Struct utilityFunction = 5;
 
     // Metric to optimize during the iterations
     OptimizationMetric metric = 6;
@@ -143,7 +143,7 @@ message Bayes {
     Container container = 9;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 110;
+    repeated google.protobuf.Struct earlyStopping = 110;
 }
 
 
@@ -171,10 +171,10 @@ message Hyperopt {
     map<string, google.protobuf.Struct> params = 3;
 
     // Number of runs to generate and search
-    int32 num_runs = 4;
+    int32 numRuns = 4;
 
-    // Maximim number of iteration to produce new observations
-    int32 max_iterations = 5;
+    // Maximum number of iteration to produce new observations
+    int32 maxIterations = 5;
 
     // Seed for the random generator
     int32 seed = 6;
@@ -185,8 +185,8 @@ message Hyperopt {
     // Container to override
     Container container = 8;
 
-    // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 9;
+    // A list of Early stopping objects, accepts both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct earlyStopping = 9;
 }
 
 
@@ -195,11 +195,11 @@ message Iterative {
     // Kind of matrix, should be equal to "iterative"
     string kind = 1;
 
-    // Hyperparams/Space definition of params to traverse
+    // Hyperparam/Space definition of params to traverse
     map<string, google.protobuf.Struct> params = 2;
 
-    // Maximim number of iteration to produce new observations
-    int32 max_iterations = 3;
+    // Maximum number of iteration to produce new observations
+    int32 maxIterations = 3;
 
     // Seed for the random generator
     int32 seed = 4;
@@ -210,8 +210,8 @@ message Iterative {
     // Container specification for crating new observations based on data from previous iterations
     Container container = 6;
 
-    // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 7;
+    // A list of Early stopping objects, accepts both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct earlyStopping = 7;
 }
 
 
@@ -227,7 +227,7 @@ message Mapping {
     int32 concurrency = 6;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 7;
+    repeated google.protobuf.Struct earlyStopping = 7;
 }
 
 // All Schemas message

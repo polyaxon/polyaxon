@@ -39,49 +39,52 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ArchiveProject(params *ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveProjectOK, *ArchiveProjectNoContent, error)
+	ArchiveProject(params *ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveProjectOK, *ArchiveProjectNoContent, error)
 
-	BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkProjectOK, *BookmarkProjectNoContent, error)
+	BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkProjectOK, *BookmarkProjectNoContent, error)
 
-	CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectOK, *CreateProjectNoContent, error)
+	CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectOK, *CreateProjectNoContent, error)
 
-	DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectOK, *DeleteProjectNoContent, error)
+	DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectOK, *DeleteProjectNoContent, error)
 
-	DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*DisableProjectCIOK, *DisableProjectCINoContent, error)
+	DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DisableProjectCIOK, *DisableProjectCINoContent, error)
 
-	EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*EnableProjectCIOK, *EnableProjectCINoContent, error)
+	EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EnableProjectCIOK, *EnableProjectCINoContent, error)
 
-	GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectOK, *GetProjectNoContent, error)
+	GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectOK, *GetProjectNoContent, error)
 
-	GetProjectActivities(params *GetProjectActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectActivitiesOK, *GetProjectActivitiesNoContent, error)
+	GetProjectActivities(params *GetProjectActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectActivitiesOK, *GetProjectActivitiesNoContent, error)
 
-	GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error)
+	GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error)
 
-	GetProjectStats(params *GetProjectStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectStatsOK, *GetProjectStatsNoContent, error)
+	GetProjectStats(params *GetProjectStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectStatsOK, *GetProjectStatsNoContent, error)
 
-	ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error)
+	ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error)
 
-	ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error)
+	ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error)
 
-	ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, *ListProjectNamesNoContent, error)
+	ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectNamesOK, *ListProjectNamesNoContent, error)
 
-	ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectsOK, *ListProjectsNoContent, error)
+	ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectsOK, *ListProjectsNoContent, error)
 
-	PatchProject(params *PatchProjectParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectOK, *PatchProjectNoContent, error)
+	PatchProject(params *PatchProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProjectOK, *PatchProjectNoContent, error)
 
-	PatchProjectSettings(params *PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSettingsOK, *PatchProjectSettingsNoContent, error)
+	PatchProjectSettings(params *PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProjectSettingsOK, *PatchProjectSettingsNoContent, error)
 
-	RestoreProject(params *RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreProjectOK, *RestoreProjectNoContent, error)
+	RestoreProject(params *RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreProjectOK, *RestoreProjectNoContent, error)
 
-	UnbookmarkProject(params *UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkProjectOK, *UnbookmarkProjectNoContent, error)
+	UnbookmarkProject(params *UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkProjectOK, *UnbookmarkProjectNoContent, error)
 
-	UpdateProject(params *UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectOK, *UpdateProjectNoContent, error)
+	UpdateProject(params *UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProjectOK, *UpdateProjectNoContent, error)
 
-	UpdateProjectSettings(params *UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSettingsOK, *UpdateProjectSettingsNoContent, error)
+	UpdateProjectSettings(params *UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProjectSettingsOK, *UpdateProjectSettingsNoContent, error)
 
-	UploadProjectArtifact(params *UploadProjectArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadProjectArtifactOK, *UploadProjectArtifactNoContent, error)
+	UploadProjectArtifact(params *UploadProjectArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadProjectArtifactOK, *UploadProjectArtifactNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -89,13 +92,12 @@ type ClientService interface {
 /*
   ArchiveProject archives project
 */
-func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveProjectOK, *ArchiveProjectNoContent, error) {
+func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveProjectOK, *ArchiveProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewArchiveProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ArchiveProject",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{name}/archive",
@@ -107,7 +109,12 @@ func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -125,13 +132,12 @@ func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.C
 /*
   BookmarkProject bookmarks project
 */
-func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkProjectOK, *BookmarkProjectNoContent, error) {
+func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkProjectOK, *BookmarkProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "BookmarkProject",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{name}/bookmark",
@@ -143,7 +149,12 @@ func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -161,13 +172,12 @@ func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime
 /*
   CreateProject creates new project
 */
-func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectOK, *CreateProjectNoContent, error) {
+func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectOK, *CreateProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "CreateProject",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/projects/create",
@@ -179,7 +189,12 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -197,13 +212,12 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 /*
   DeleteProject deletes project
 */
-func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectOK, *DeleteProjectNoContent, error) {
+func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectOK, *DeleteProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DeleteProject",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{name}",
@@ -215,7 +229,12 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -233,13 +252,12 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.Cli
 /*
   DisableProjectCI disbales project c i
 */
-func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*DisableProjectCIOK, *DisableProjectCINoContent, error) {
+func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DisableProjectCIOK, *DisableProjectCINoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDisableProjectCIParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "DisableProjectCI",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{name}/ci",
@@ -251,7 +269,12 @@ func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -269,13 +292,12 @@ func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runti
 /*
   EnableProjectCI enables project c i
 */
-func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*EnableProjectCIOK, *EnableProjectCINoContent, error) {
+func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EnableProjectCIOK, *EnableProjectCINoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEnableProjectCIParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "EnableProjectCI",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{name}/ci",
@@ -287,7 +309,12 @@ func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -305,13 +332,12 @@ func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime
 /*
   GetProject gets project
 */
-func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectOK, *GetProjectNoContent, error) {
+func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectOK, *GetProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetProject",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}",
@@ -323,7 +349,12 @@ func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -341,13 +372,12 @@ func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAut
 /*
   GetProjectActivities gets project activities
 */
-func (a *Client) GetProjectActivities(params *GetProjectActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectActivitiesOK, *GetProjectActivitiesNoContent, error) {
+func (a *Client) GetProjectActivities(params *GetProjectActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectActivitiesOK, *GetProjectActivitiesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetProjectActivitiesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetProjectActivities",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/activities",
@@ -359,7 +389,12 @@ func (a *Client) GetProjectActivities(params *GetProjectActivitiesParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -377,13 +412,12 @@ func (a *Client) GetProjectActivities(params *GetProjectActivitiesParams, authIn
 /*
   GetProjectSettings gets project settings
 */
-func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error) {
+func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetProjectSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetProjectSettings",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/settings",
@@ -395,7 +429,12 @@ func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -413,13 +452,12 @@ func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo r
 /*
   GetProjectStats gets project stats
 */
-func (a *Client) GetProjectStats(params *GetProjectStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectStatsOK, *GetProjectStatsNoContent, error) {
+func (a *Client) GetProjectStats(params *GetProjectStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProjectStatsOK, *GetProjectStatsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetProjectStatsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "GetProjectStats",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{name}/stats",
@@ -431,7 +469,12 @@ func (a *Client) GetProjectStats(params *GetProjectStatsParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -449,13 +492,12 @@ func (a *Client) GetProjectStats(params *GetProjectStatsParams, authInfo runtime
 /*
   ListArchivedProjects lists archived projects for user
 */
-func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error) {
+func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListArchivedProjectsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListArchivedProjects",
 		Method:             "GET",
 		PathPattern:        "/api/v1/archives/{user}/projects",
@@ -467,7 +509,12 @@ func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -485,13 +532,12 @@ func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authIn
 /*
   ListBookmarkedProjects lists bookmarked projects for user
 */
-func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error) {
+func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListBookmarkedProjectsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListBookmarkedProjects",
 		Method:             "GET",
 		PathPattern:        "/api/v1/bookmarks/{user}/projects",
@@ -503,7 +549,12 @@ func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -521,13 +572,12 @@ func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, au
 /*
   ListProjectNames lists project names
 */
-func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, *ListProjectNamesNoContent, error) {
+func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectNamesOK, *ListProjectNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListProjectNamesParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListProjectNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/projects/names",
@@ -539,7 +589,12 @@ func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -557,13 +612,12 @@ func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runti
 /*
   ListProjects lists projects
 */
-func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectsOK, *ListProjectsNoContent, error) {
+func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectsOK, *ListProjectsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListProjectsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ListProjects",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/projects/list",
@@ -575,7 +629,12 @@ func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -593,13 +652,12 @@ func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.Clien
 /*
   PatchProject patches project
 */
-func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectOK, *PatchProjectNoContent, error) {
+func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProjectOK, *PatchProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchProject",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project.name}",
@@ -611,7 +669,12 @@ func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -629,13 +692,12 @@ func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.Clien
 /*
   PatchProjectSettings patches project settings
 */
-func (a *Client) PatchProjectSettings(params *PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSettingsOK, *PatchProjectSettingsNoContent, error) {
+func (a *Client) PatchProjectSettings(params *PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProjectSettingsOK, *PatchProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchProjectSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "PatchProjectSettings",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/settings",
@@ -647,7 +709,12 @@ func (a *Client) PatchProjectSettings(params *PatchProjectSettingsParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -665,13 +732,12 @@ func (a *Client) PatchProjectSettings(params *PatchProjectSettingsParams, authIn
 /*
   RestoreProject restores project
 */
-func (a *Client) RestoreProject(params *RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreProjectOK, *RestoreProjectNoContent, error) {
+func (a *Client) RestoreProject(params *RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreProjectOK, *RestoreProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestoreProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "RestoreProject",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{name}/restore",
@@ -683,7 +749,12 @@ func (a *Client) RestoreProject(params *RestoreProjectParams, authInfo runtime.C
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -701,13 +772,12 @@ func (a *Client) RestoreProject(params *RestoreProjectParams, authInfo runtime.C
 /*
   UnbookmarkProject unbookmarks project
 */
-func (a *Client) UnbookmarkProject(params *UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkProjectOK, *UnbookmarkProjectNoContent, error) {
+func (a *Client) UnbookmarkProject(params *UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkProjectOK, *UnbookmarkProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUnbookmarkProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UnbookmarkProject",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{name}/unbookmark",
@@ -719,7 +789,12 @@ func (a *Client) UnbookmarkProject(params *UnbookmarkProjectParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -737,13 +812,12 @@ func (a *Client) UnbookmarkProject(params *UnbookmarkProjectParams, authInfo run
 /*
   UpdateProject updates project
 */
-func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectOK, *UpdateProjectNoContent, error) {
+func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProjectOK, *UpdateProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateProjectParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateProject",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project.name}",
@@ -755,7 +829,12 @@ func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -773,13 +852,12 @@ func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.Cli
 /*
   UpdateProjectSettings updates project settings
 */
-func (a *Client) UpdateProjectSettings(params *UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSettingsOK, *UpdateProjectSettingsNoContent, error) {
+func (a *Client) UpdateProjectSettings(params *UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProjectSettingsOK, *UpdateProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateProjectSettingsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UpdateProjectSettings",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/settings",
@@ -791,7 +869,12 @@ func (a *Client) UpdateProjectSettings(params *UpdateProjectSettingsParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -809,13 +892,12 @@ func (a *Client) UpdateProjectSettings(params *UpdateProjectSettingsParams, auth
 /*
   UploadProjectArtifact uploads artifact to a store via project access
 */
-func (a *Client) UploadProjectArtifact(params *UploadProjectArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadProjectArtifactOK, *UploadProjectArtifactNoContent, error) {
+func (a *Client) UploadProjectArtifact(params *UploadProjectArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadProjectArtifactOK, *UploadProjectArtifactNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUploadProjectArtifactParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "UploadProjectArtifact",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/artifacts/{uuid}/upload",
@@ -827,7 +909,12 @@ func (a *Client) UploadProjectArtifact(params *UploadProjectArtifactParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

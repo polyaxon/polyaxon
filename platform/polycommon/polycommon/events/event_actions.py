@@ -27,6 +27,7 @@ RESTARTED = "restarted"
 COPIED = "copied"
 SUCCEEDED = "succeeded"
 FAILED = "failed"
+SYNCED = "synced"
 DONE = "done"
 STOPPED = "stopped"
 APPROVED = "approved"
@@ -43,6 +44,8 @@ WRITE_ACTIONS = [
     UPDATED,
     DELETED,
     RESUMED,
+    RESTARTED,
+    SYNCED,
     COPIED,
     CLONED,
     STOPPED,
