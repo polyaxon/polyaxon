@@ -57,7 +57,7 @@ spec:
           periodSeconds: 30
           successThreshold: 1
           failureThreshold: 10
-          timeoutSeconds: 2
+          timeoutSeconds: 4
         readinessProbe:
           httpGet:
             path: /healthz/
@@ -72,7 +72,7 @@ spec:
           periodSeconds: 30
           successThreshold: 1
           failureThreshold: 10
-          timeoutSeconds: 2
+          timeoutSeconds: 4
         resources:
           requests:
 {{ toYaml .Values.api.resources.requests | indent 12 }}

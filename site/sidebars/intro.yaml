@@ -25,6 +25,8 @@
       link: /docs/intro/quick-start/deploying-ml-apps/
     - title: Building Containers
       link: /docs/intro/quick-start/building-containers/
+    - title: Running Inline Scripts
+      link: /docs/intro/quick-start/running-inline-scripts/
   - group: How-Tos
     items:
     - title: Introduction

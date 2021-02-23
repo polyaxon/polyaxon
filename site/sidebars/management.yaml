@@ -43,6 +43,8 @@
       link: /docs/management/runs-dashboard/
     - title: Comparison
       link: /docs/management/runs-dashboard/comparison/
+    - title: Timeline
+      link: /docs/management/runs-dashboard/timeline/
     - title: Run Info
       link: /docs/management/runs-dashboard/info/
     - title: Run Logs

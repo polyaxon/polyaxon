@@ -97,7 +97,7 @@ class TestLogV1(BaseTestCase):
             container="container1",
         )
 
-        assert log_line.to_csv() == '{}|node1|pod1|container1|"foo"'.format(
+        assert log_line.to_csv() == '{}|node1|pod1|container1|{{"_":"foo"}}'.format(
             log_line.timestamp
         )
 

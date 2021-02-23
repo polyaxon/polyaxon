@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import subprocess
 import sys
 
 import click
@@ -73,7 +74,7 @@ def file(file_context, filepath, copy_path, track):
     with open(filepath, "w") as generated_file:
         generated_file.write(file_context.content)
         if file_context.chmod:
-            os.chmod(filepath, file_context.chmod)
+            subprocess.check_call(['chmod', file_context.chmod, filepath])
 
     if copy_path:
         filepath = copy_file(filepath, copy_path)

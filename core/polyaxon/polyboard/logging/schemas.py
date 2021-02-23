@@ -90,7 +90,7 @@ class V1Log(BaseConfig, polyaxon_sdk.V1Log):
             str(self.node) if self.node is not None else "",
             str(self.pod) if self.pod is not None else "",
             str(self.container) if self.container is not None else "",
-            ujson.dumps(self.value) if self.value is not None else "",
+            ujson.dumps({"_": self.value}) if self.value is not None else "",
         ]
 
         return self.SEPARATOR.join(values)
@@ -118,7 +118,7 @@ class V1Logs(BaseConfig, polyaxon_sdk.V1Logs):
         return V1Log.SEPARATOR.join(V1Log.REDUCED_ATTRIBUTES)
 
     def to_csv(self):
-        _logs = ["\n{}".format(e.to_csv()) for e in self.logs]
+        _logs = ["\n{}".format(e.to_csv()) for e in self.logs if e.value]
         return "".join(_logs)
 
     @classmethod
@@ -156,7 +156,7 @@ class V1Logs(BaseConfig, polyaxon_sdk.V1Logs):
                     node=i.get("node"),
                     pod=i.get("pod"),
                     container=i.get("container"),
-                    value=ujson.loads('"{}"'.format(i.get("value"))),
+                    value=ujson.loads(i.get("value")).get("_"),
                 )
                 for i in df.replace({np.nan: None}).to_dict(orient="records")
             ]

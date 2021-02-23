@@ -84,7 +84,7 @@ def get_compatibility(
             uuid=key,
             service=service,
             version=version,
-            _request_timeout=15,
+            _request_timeout=2,
         )
     except ApiException as e:
         if e.status == 403 and is_cli:
