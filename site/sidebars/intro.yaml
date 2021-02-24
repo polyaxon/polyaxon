@@ -9,14 +9,16 @@
       link: /docs/intro/quick-start/operations/
     - title: Iterate in Notebooks
       link: /docs/intro/quick-start/iterate-in-notebooks/
-    - title: Distributed Training
-      link: /docs/intro/quick-start/distributed-training/
-    - title: Hyperparameter Tuning
-      link: /docs/intro/quick-start/hyperparameter-tuning/
     - title: Iterate with local code
       link: /docs/intro/quick-start/iterate-with-cli-local-code/
     - title: Iterate with remote code
       link: /docs/intro/quick-start/iterate-with-cli-git-code/
+    - title: Iterate Programatically
+      link: /docs/intro/quick-start/iterate-programmatically/
+    - title: Distributed Training
+      link: /docs/intro/quick-start/distributed-training/
+    - title: Hyperparameter Tuning
+      link: /docs/intro/quick-start/hyperparameter-tuning/
     - title: Automation
       link: /docs/intro/quick-start/automation/
     - title: Running on schedule
@@ -44,7 +46,9 @@
     - title: Handling Termination
       link: /docs/intro/how-tos/handling-termination/
     - title: Start runs with different names
-      link: run-with-different-names
+      link: /docs/intro/how-tos/run-with-different-names
+    - title: Enable ML tracking
+      link: /docs/intro/how-tos/enable-ml-tracking
   - group: Features & Architecture
     items:
     - title: Features

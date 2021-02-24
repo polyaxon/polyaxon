@@ -167,7 +167,7 @@ model = create_model(
     conv_activation=args.conv_activation,
     dense_activation=args.dense_activation,
     optimizer=args.optimizer,
-    log_learning_rate=args.log_learning_rate,
+    learning_rate=args.learning_rate,
     loss=args.loss,
     num_classes=y_test.shape[1]
 )
@@ -235,7 +235,7 @@ inputs:
 - {name: conv_activation, type: str, value: relu, isOptional: true}
 - {name: dense_activation, type: str, value: relu, isOptional: true}
 - {name: optimizer, type: str, value: adam, isOptional: true}
-- {name: log_learning_rate, type: int, value: -3, isOptional: true}
+- {name: learning_rate, type: float, value: 0.001, isOptional: true}
 - {name: epochs, type: int}
 outputs:
 - {name: loss, type: float}
@@ -246,8 +246,9 @@ run:
   init:
   - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
   container:
-    image: mouradmourafiq/test:quicky
-    command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/model.py"]
+    image: polyaxon/polyaxon-quick-start
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
+    command: [python3, model.py]
     args: [
       "--conv1_size={{ conv1_size }}",
       "--conv2_size={{ conv2_size }}",
@@ -256,7 +257,7 @@ run:
       "--optimizer={{ optimizer }}",
       "--conv_activation={{ conv_activation }}",
       "--dense_activation={{ dense_activation }}",
-      "--log_learning_rate={{ log_learning_rate }}",
+      "--learning_rate={{ learning_rate }}",
       "--epochs={{ epochs }}"
     ]
 ```
