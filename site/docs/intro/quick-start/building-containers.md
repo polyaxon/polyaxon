@@ -63,8 +63,7 @@ that we configured to authenticate Kaniko to push images.
 
 ## Deploying with a registry connection
 
-In order to build container in-cluster with Polyaxon, you need to update your deployment with a [registry connection](/docs/setup/connections/registry/).
-For instance to deploy an in-cluster registry to be used with Polyaxon, you can visit this [integration page](/integrations/in-cluster-registry/). 
+In order to build containers in-cluster with Polyaxon, you need to update your deployment with a [registry connection](/docs/setup/connections/registry/).
 
 After configuring a valid registry connection, you can upgrade your deployment:
 
