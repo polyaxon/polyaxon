@@ -1658,7 +1658,7 @@ class RunClient:
         """Syncs all tracked events and auto-generates summaries and lineage data.
 
         > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
-            automatically, so yuo should not call this mehtod manually.
+            automatically, so you should not call this mehtod manually.
         """
         # check if there's a path to sync
         if not os.path.exists(events_path):
