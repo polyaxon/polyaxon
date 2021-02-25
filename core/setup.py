@@ -74,7 +74,7 @@ setup(
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
         "marshmallow<3.11.0",
-        "polyaxon-sdk==1.6.0",
+        "polyaxon-sdk==1.6.1",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "PyYAML>=5.1",
@@ -104,7 +104,7 @@ setup(
             "altair",
         ],
         "streams": [
-            "kubernetes_asyncio==11.3.0",
+            "kubernetes_asyncio==12.0.1",
             "starlette==0.14.1",
             "aiofiles==0.6.0",
             "uvicorn==0.13.3",

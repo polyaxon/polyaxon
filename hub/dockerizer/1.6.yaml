@@ -1,0 +1,40 @@
+version: 1.1
+kind: component
+name: dockerizer
+description: "Build container images with Polyaxon dockerizer"
+tags: ["build"]
+
+inputs:
+- name: context
+  isOptional: true
+  type: str
+- name: nocache
+  isOptional: true
+  type: bool
+  isFlag: true
+  value: false
+
+outputs:
+- name: destination
+  type: image
+
+plugins:
+  docker: true
+
+run:
+  kind: job
+  connections: ["{{ params.destination.connection }}"]
+  container:
+    image: polyaxon/polyaxon-dockerizer:1.6.1
+    imagePullPolicy: "IfNotPresent"
+    args: [
+      "build-and-push",
+      "-c",
+      "{{ context or globals.artifacts_path }}",
+      "-d",
+      "{{ (connections[params.destination.connection].url + '/' + destination) if (params.destination.connection in connections and connections[params.destination.connection].url) else destination }}",
+      "{{ nocache }}"
+    ]
+    env:
+    - name: PYTHONUNBUFFERED
+      value: "true"

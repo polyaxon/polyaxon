@@ -142,6 +142,7 @@ class V1Logs(BaseConfig, polyaxon_sdk.V1Logs):
                 csv,
                 sep=V1Log.SEPARATOR,
                 parse_dates=["timestamp"],
+                error_bad_lines=False,
             )
         else:
             df = pd.read_csv(
