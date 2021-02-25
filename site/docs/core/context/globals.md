@@ -38,8 +38,8 @@ The following information can be accessed by all Polyaxon sections:
  * `{{ globals.namespace }}`: The k8s namespace where the operation will be scheduled.
  * `{{ globals.context_path }}`: The context that Polyaxon will share with the main container: `/plx_context`. This context contains all artifacts and other configs.
  * `{{ globals.artifacts_path }}`: The artifacts root path that Polyaxon will share with the main container: `/plx_context/artifacts`, by default all connections will be populated under this path, unless the user sets a custom path.
- * `{{ globals.run_artifacts_path }}`: This where this specific run will store its artifacts, including those created and managed by Polyaxon `/plx_context/artifacts/run_uuid`.
- * `{{ globals.run_outputs_path }}`: Since the run artifacts will host artifacts and assets that are automatically created by Polyaxon, `/plx_context/artifacts/run_uuid/outputs` is a subpath that the user can use to store anything manually.
+ * `{{ globals.run_artifacts_path }}`: This the specific path where the run will store its artifacts, including those created and managed by Polyaxon `/plx_context/artifacts/run_uuid`.
+ * `{{ globals.run_outputs_path }}`: Since the run artifacts will host artifacts and assets that are automatically created by Polyaxon, `/plx_context/artifacts/run_uuid/outputs` is a subpath that the user can use to store anything manually, like a tensorboard logs.
  * `{{ globals.created_at }}`: Datetime when the operation was created.
  * `{{ globals.compiled_at }}`: Datetime when the operation was compiled.
  * `{{ globals.cloning_kind }}`: Is populated if the operation is restarted or copied from another operation.
@@ -89,11 +89,11 @@ params:
     value: globals.uuid
 ```
 
-At first, you might think might that all these params will have the same value, but that is not the case.
+At first, you might think that all these params will have the same value, but that is not the case.
 
- * The value of `param1` will be the `uuid` of the run where this manifest is used, meaning that each time you execute this Polyaxonfile, `param1` will take the `uuid` of that run.
+ * The value of `param1` will be the `uuid` of the run currently being compiled, meaning that each time you execute this Polyaxonfile, `param1` will take the `uuid` of that run.
  * The value of `param2` will be the `uuid` of the upstream run defined in the reference, ony if that run with `UUID` exists and is accessible to the current operation (mostly running in the same project).
-   * this param is of course not necessary, since the `UUID` is already known to use it as a reference, but it could any other value, for example `globals.started_at` which the user might not know yet.
+   * this param is of course not necessary, since the `UUID` is already known to use it as a reference, but it could be any other value, for example `globals.started_at` which the user might not at the time of creating the manifest.
  * If an operation is running in the context of a DAG, the value of `param3` will be the `uuid` of the pipeline managing the execution graph.
  * If an operation is running in the context of a DAG, the value of `param4` will be the `uuid` of the upstream operation that the current operation depends on.
 

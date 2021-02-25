@@ -60,11 +60,13 @@ It's very important to understand the order of these steps to build valid Polyax
 
 ### Global information
 
-This is the information that is unique to each run. Each run in Polyaxon has a project, an owner, and a user.
-It has, as well, several metadata like datetimes, e.g. time of creation, 
-as well as information specific to the kind and runtime of the operation.
+This is the information that is unique to each run.
 
-This is information is available first and can be used immediately in all areas of the Polyaxonfile using the `{{ globals.* }}` prefix.
+Each run in Polyaxon has metadata about a project, an owner, and a user.
+It has, as well, several metadata, e.g. time of creation, 
+as well as specific information, e.g. component kind and runtime.
+
+This information is available first and can be used immediately in all areas of the Polyaxonfile using the `{{ globals.* }}` prefix.
 
 > **Note**: It's very important to note that when `globals.*` is used in a param section with `ref`, 
 it will not correspond anymore to the current run, but will be resolved from the reference defined in the `param.ref`.
@@ -79,11 +81,11 @@ This is the information coming from the params passed via CLI or one of the para
  * join params
  * matrix params
 
-This information appears at the top level of a context and can be used without a prefix. 
+This information appears at the top level of the context and can be used without a prefix. 
 However, you might need to access the meta-information about your inputs and outputs and not just the values, in which case you can use the `{{ params.* }}` prefix.
 
 Users can freely use any information from the `globals.*` section in params, 
-since those values are already part of the context, and can be used if a param definition ha a variable containing `globals.*`.
+since those values are already part of the context, and can be used if a param definition has a variable containing `globals.*`.
 
 The params section is the most confusing section since parameters can come from several areas `params`, `matrix.params`, `joins.[JOIN].params`, 
 and sometimes params might depend on each other before resolving the value.
@@ -91,7 +93,7 @@ and sometimes params might depend on each other before resolving the value.
 It's very important to note the order when defining inputs and outputs.
 
 Polyaxon goes through each input and resolves it, and adds any value to the context before moving forward to the next input.
-This means that when creating an operation, the params section can define conditional value based on previous params, the order is the one defined in the inputs section.
+This means that when creating an operation, the params section can define conditional values based on previous params, the order is the one defined in the inputs section.
 
 When the compiler is done with the inputs, it moves to the outputs and performs a similar procedure. It's important to note that if both an input and an output have the same name, 
 the context will only have one entry, if the output has a valid value, it will be the value used in the context.
@@ -102,7 +104,7 @@ In general all values resolved in the joins params are lists, unless the values 
 in which case the value is just a merged [ArtifactsType](/docs/core/specification/types/#v1artifactstype).
 
 After resolving the joins, all resulting values will be available in the context, and the compiler moves to the last params section, params defined in the matrix section 
-([Optimization](/docs/automation/optimization-engine/) or [MApping](/docs/automation/mapping/)).
+([Optimization](/docs/automation/optimization-engine/) or [Mapping](/docs/automation/mapping/)).
 
 > **Note**: Please check the [context params section](/docs/core/context/params/) for more details.
 

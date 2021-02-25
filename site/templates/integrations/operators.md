@@ -59,7 +59,7 @@ For more details about the specification for creating {{name}} runtime, please c
 Running components with the {{name}} runtime is similar to running any other component:
 
 ```bash
-polyaxon run --hub component -P ...
+polyaxon run -f manifest.yaml -P ...
 ```
 
 ## View a running operation on the dashboard

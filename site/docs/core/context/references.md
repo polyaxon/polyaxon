@@ -52,7 +52,7 @@ Each parameter can use the following references:
  
 ## Values
 
-Each parameter with `ref` can request the following information those references:
+Each parameter with `ref` can request the following information that reference:
 
  * `globals`: All general context information from the reference as a dictionary.
  * `globals.*`: Specific general context value from the reference.

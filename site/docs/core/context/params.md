@@ -22,7 +22,7 @@ The information provided in the params is injected after the [globals context in
 
 ## Top level access
 
-The values of the inputs and the outputs are made available on the top level of the context, this means that when users are developing their Polyaxonfiles,
+The values of the inputs and the outputs are made available in the top level of the context, this means that when users are developing their Polyaxonfiles,
 they can use the variables defined in their inputs and outputs without any prefix:
 
 ```yaml
@@ -143,9 +143,9 @@ params:
     contextOnly: True
 ```
 
-This no different than setting the values directly, but sometimes you might need to use a variable several times without using magic strings.
+This is not different from setting the values directly, but sometimes you might need to use a variable several times without using magic strings.
 
-To take this to the next level, the params can be coming from an input definition:
+To take this to the next level, the params can come from an input definition:
 
 ```yaml
 kind: operation
