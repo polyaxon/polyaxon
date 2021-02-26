@@ -28,30 +28,30 @@ def client_handler(
     can_log_events: bool = False,
     can_log_outputs: bool = False,
 ):
+    """
+    The `ClientHandlerDecorator` is a decorator to handle several checks in PolyaxonClient.
+
+     * check_offline: to ignore any decorated function when POLYAXON_IS_OFFLINE env var is found.
+     * check_no_op: to ignore any decorated function when NO_OP env var is found.
+     * handle_openapi_exceptions: to handle exception of OpenApi and generate better
+        debugging outputs.
+     * can_log_events: to check if there's an event logger instance on the object.
+     * can_log_outputs: to check if there's an outputs path set on the run.
+     * openapi_extra_context: to augment openapi errors.
+
+    usage example with class method:
+        @client_handler(check_no_op=True)
+        def my_func(self, *args, **kwargs):
+            ...
+            return ...
+
+    usage example with a function:
+        @client_handler(check_no_op=True)
+        def my_func(arg1, arg2):
+            ...
+            return ...
+    """
     def client_handler_wrapper(f):
-        """
-        The `ClientHandlerDecorator` is a decorator to handle several checks in PolyaxonClient.
-
-         * check_offline: to ignore any decorated function when POLYAXON_IS_OFFLINE env var is found.
-         * check_no_op: to ignore any decorated function when NO_OP env var is found.
-         * handle_openapi_exceptions: to handle exception of OpenApi and generate better
-            debugging outputs.
-         * can_log_events: to check if there's an event logger instance on the object.
-         * can_log_outputs: to check if there's an outputs path set on the run.
-         * openapi_extra_context: to augment openapi errors.
-
-        usage example with class method:
-            @client_handler
-            def my_func(self, *args, **kwargs):
-                ...
-                return ...
-
-        usage example with a function:
-            @client_handler
-            def my_func(arg1, arg2):
-                ...
-                return ...
-        """
 
         @functools.wraps(f)
         def wrapper(*args, **kwargs):
