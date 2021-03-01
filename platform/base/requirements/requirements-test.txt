@@ -3,5 +3,5 @@ factory-boy==3.2.0
 responses==0.12.1
 pylint-django==2.4.2
 pytest-cov==2.11.1
-pytest-django==3.9.0
+pytest-django==4.1.0
 pytest-pythonpath==0.7.3
