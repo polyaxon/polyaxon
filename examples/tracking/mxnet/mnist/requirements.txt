@@ -1,2 +1,2 @@
-mxnet==1.2.1
+mxnet==1.7.0.post2
 polyaxon==1.6.1
