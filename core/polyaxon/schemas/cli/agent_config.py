@@ -24,6 +24,7 @@ from polyaxon.auxiliaries import (
 from polyaxon.containers.contexts import CONTEXT_ARTIFACTS_ROOT
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
+    POLYAXON_KEYS_AGENT_COMPRESSED_LOGS,
     POLYAXON_KEYS_AGENT_CONNECTIONS,
     POLYAXON_KEYS_AGENT_INIT,
     POLYAXON_KEYS_AGENT_IS_REPLICA,
@@ -64,6 +65,9 @@ def validate_agent_config(artifacts_store, connections):
 class AgentSchema(BaseSchema):
     namespace = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_NAMESPACE)
     is_replica = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_AGENT_IS_REPLICA)
+    compressed_logs = fields.Bool(
+        allow_none=True, data_key=POLYAXON_KEYS_AGENT_COMPRESSED_LOGS
+    )
     sidecar = fields.Nested(
         PolyaxonSidecarContainerSchema,
         allow_none=True,
@@ -188,6 +192,7 @@ class AgentConfig(BaseConfig):
         POLYAXON_KEYS_AGENT_SIDECAR,
         POLYAXON_KEYS_AGENT_INIT,
         POLYAXON_KEYS_AGENT_IS_REPLICA,
+        POLYAXON_KEYS_AGENT_COMPRESSED_LOGS,
         POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
         POLYAXON_KEYS_AGENT_CONNECTIONS,
         POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
@@ -200,6 +205,7 @@ class AgentConfig(BaseConfig):
         self,
         namespace=None,
         is_replica=None,
+        compressed_logs=None,
         sidecar=None,
         init=None,
         artifacts_store=None,
@@ -212,6 +218,7 @@ class AgentConfig(BaseConfig):
     ):
         self.namespace = namespace
         self.is_replica = is_replica
+        self.compressed_logs = compressed_logs
         self.sidecar = sidecar
         self.init = init
         self.artifacts_store = artifacts_store

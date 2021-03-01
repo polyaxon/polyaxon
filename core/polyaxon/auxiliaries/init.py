@@ -109,8 +109,8 @@ class V1PolyaxonInitContainer(BaseConfig, polyaxon_sdk.V1PolyaxonInitContainer):
     >>>     cpu: "50m"
     ```
 
-    > **N.B.1**: That this resources are applied to all instances of
-    the init container within the same pod.
+    > **N.B.1**: Resources are applied to all instances of
+        the init container within the same pod.
 
     > **N.B.2**: It's possible to alter this behaviour on per operation level
         using the init section.

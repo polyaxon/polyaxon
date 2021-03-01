@@ -51,8 +51,8 @@ def client_handler(
             ...
             return ...
     """
-    def client_handler_wrapper(f):
 
+    def client_handler_wrapper(f):
         @functools.wraps(f)
         def wrapper(*args, **kwargs):
             if check_no_op and settings.CLIENT_CONFIG.no_op:

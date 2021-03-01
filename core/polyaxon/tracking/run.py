@@ -26,7 +26,7 @@ import polyaxon_sdk
 import ujson
 
 from polyaxon import settings
-from polyaxon.client import RunClient
+from polyaxon.client import RunClient, get_rel_asset_path
 from polyaxon.client.decorators import client_handler
 from polyaxon.constants import UNKNOWN
 from polyaxon.containers import contexts as container_contexts
@@ -50,8 +50,6 @@ from polyaxon.utils.path_utils import (
     get_base_filename,
     get_path_extension,
 )
-
-TEMP_RUN_ARTIFACTS = "/tmp/.plxartifacts"
 
 
 class Run(RunClient):
@@ -258,19 +256,39 @@ class Run(RunClient):
         )
 
     @client_handler(check_no_op=True)
-    def get_artifacts_path(self):
-        """Returns the current artifacts path configured for this instance.
+    def get_artifacts_path(self, rel_path: str = None):
+        """Get the absolute path of the specified artifact in the currently active run.
+
+        If `rel_path` is specified, the artifact root path of the currently active
+        run will be returned: `root_run_artifacts_path/rel_path`.
+        If `rel_path` is not specified, the current root artifacts path configured
+         for this instance will be returned: `root_run_artifacts_path`.
+
+        Args:
+            rel_path: str, optional.
         Returns:
             str, artifacts_path
         """
+        if rel_path:
+            return os.path.join(self._artifacts_path, rel_path)
         return self._artifacts_path
 
     @client_handler(check_no_op=True)
-    def get_outputs_path(self):
-        """Returns the current outputs path configured for this instance.
+    def get_outputs_path(self, rel_path: str = None):
+        """Get the absolute outputs path of the specified artifact in the currently active run.
+
+        If `rel_path` is specified, the outputs artifact root path of the currently active
+        run will be returned: `root_run_artifacts_path/outputs/rel_path`.
+        If `rel_path` is not specified, the current root artifacts path configured
+         for this instance will be returned: `root_run_artifacts_path/outputs`.
+
+        Args:
+            rel_path: str, optional.
         Returns:
             str, outputs_path
         """
+        if rel_path:
+            return os.path.join(self._outputs_path, rel_path)
         return self._outputs_path
 
     @client_handler(check_no_op=True, can_log_outputs=True)
@@ -283,18 +301,17 @@ class Run(RunClient):
         Returns:
             str, outputs_path/rel_path
         """
-        path = self._outputs_path
-        if rel_path:
-            path = os.path.join(path, rel_path)
+        path = self.get_outputs_path(rel_path)
         self.log_tensorboard_ref(path)
         return path
 
     @client_handler(check_no_op=True)
     def set_artifacts_path(self, artifacts_path: str = None, is_related: bool = False):
-        """Sets an artifacts_path.
-        Be careful, this method is called automatically
-        when a job is running in-cluster and follows some flags that Polyaxon sets. Polyaxon
-        has some processes to automatically sync your run's artifacts and outputs.
+        """Sets the root artifacts_path.
+
+        > **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
+            Be careful, this method is called automatically. Polyaxon has some processes
+            to automatically sync your run's artifacts and outputs.
 
         Args:
             artifacts_path: str, optional
@@ -327,9 +344,10 @@ class Run(RunClient):
     @client_handler(check_no_op=True)
     def set_run_event_logger(self):
         """Sets an event logger.
-        Be careful, this method is called automatically
-        when a job is running in-cluster and follows some flags that Polyaxon sets. Polyaxon
-        has some processes to automatically sync your run's artifacts and outputs.
+
+        > **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
+            Be careful, this method is called automatically. Polyaxon has some processes
+            to automatically sync your run's artifacts and outputs.
         """
         self._event_logger = EventFileWriter(run_path=self._artifacts_path)
 
@@ -337,9 +355,9 @@ class Run(RunClient):
     def set_run_resource_logger(self):
         """Sets an resources logger.
 
-        Be careful, this method is called automatically
-        when a job is running in-cluster and follows some flags that Polyaxon sets. Polyaxon
-        has some processes to automatically sync your run's artifacts and outputs.
+        > **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
+            Be careful, this method is called automatically. Polyaxon has some processes
+            to automatically sync your run's artifacts and outputs.
         """
         self._resource_logger = ResourceFileWriter(run_path=self._artifacts_path)
 
@@ -1021,10 +1039,12 @@ class Run(RunClient):
     def log_model(
         self, path, name=None, framework=None, spec=None, step=None, timestamp=None
     ):
-        """Logs a model.
+        """Logs a versioned model.
 
-        > **Note 1**: This method does two things:
-          * It moves the mode under the assets directory
+        This method will save several versions of the model and create an event file.
+
+        > **Note 1**: This method does a couple things:
+          * It moves the model under the assets directory
           * It creates an event file and
           * It creates a lineage reference to the event file
 
@@ -1111,14 +1131,24 @@ class Run(RunClient):
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_artifact(
-        self, path, name=None, artifact_kind=None, step=None, timestamp=None
+        self, path, name=None, kind=None, step=None, timestamp=None, **kwargs
     ):
-        """Logs a generic artifact.
+        """Logs a versioned generic artifact.
+
+        This method will save several versions of the artifact and create an event file.
+
+        > **Note 1**: This method does a couple things:
+          * It moves the artifact under the assets directory
+          * It creates an event file and
+          * It creates a lineage reference to the event file
+
+        > **Note 2**: If you need to have more control over where the artifact should be saved and
+            only record a lineage information of that path you can use `log_artifact_ref`.
 
         Args:
             path: str, path to the artifact
             name: str, optional, if not provided the name of the file will be used
-            artifact_kind: optional, str
+            kind: optional, str
             step: int, optional
             timestamp: datetime, optional
         """
@@ -1127,11 +1157,12 @@ class Run(RunClient):
         name = name or get_base_filename(path)
         name = events_processors.to_fqn_event(name)
         ext = get_path_extension(filepath=path)
-        artifact_kind = artifact_kind or V1ArtifactKind.FILE
+        kind = kind or kwargs.get("artifact_kind")  # Backwards compatibility
+        kind = kind or V1ArtifactKind.FILE
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
-            kind=artifact_kind,
+            kind=kind,
             name=name,
             step=step,
             ext=ext,
@@ -1141,12 +1172,12 @@ class Run(RunClient):
         artifact = events_processors.artifact_path(
             from_path=path,
             asset_path=asset_path,
-            kind=artifact_kind,
+            kind=kind,
             asset_rel_path=asset_rel_path,
         )
         logged_event = LoggedEventSpec(
             name=name,
-            kind=artifact_kind,
+            kind=kind,
             event=V1Event.make(timestamp=timestamp, step=step, artifact=artifact),
         )
         self._add_event(logged_event)
@@ -1240,7 +1271,7 @@ class Run(RunClient):
         return get_log_level()
 
     def end(self):
-        """Manually end a run and collect artifacts."""
+        """Manually end a run and trigger post done logic (artifacts and lineage collection)."""
         atexit.unregister(self._exit_handler)
         self._exit_handler()
 
@@ -1324,7 +1355,7 @@ class Run(RunClient):
         artifact_run = V1RunArtifact(
             name="env",
             kind=V1ArtifactKind.ENV,
-            path=self.get_rel_asset_path(path=path, is_offline=self._is_offline),
+            path=get_rel_asset_path(path=path, is_offline=self._is_offline),
             summary={"path": path},
             is_input=False,
         )

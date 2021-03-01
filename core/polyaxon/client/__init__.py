@@ -16,4 +16,4 @@
 
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.project import ProjectClient
-from polyaxon.client.run import RunClient
+from polyaxon.client.run import RunClient, get_rel_asset_path, get_run_logs

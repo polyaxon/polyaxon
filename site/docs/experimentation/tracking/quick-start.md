@@ -1,15 +1,17 @@
 ---
-title: "Enable ML Tracking"
-sub_link: "how-tos/enable-ml-tracking"
-meta_title: "Enable tracking for your machine learning code - Core Concepts"
+title: "Quick Start"
+sub_link: "tracking/quick-start"
+meta_title: "Enable tracking for your machine learning code - Tracking - Experimentation"
 meta_description: "Enable tracking for your machine learning code."
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - quick-start
-sidebar: "intro"
+  - tracking
+  - reference
+  - polyaxon
+  - client
+  - sdk
+sidebar: "experimentation"
 ---
 
 Polyaxon provides feature complete tracking and dashboarding capabilities for your ML scripts.  
@@ -37,22 +39,22 @@ if __name__ == "__main__":
     # Log multiple metrics at once
     tracking.log_metrics(metric2=random(), metric3=random(), step=OPTIONAL, timestamp=OPTIONAL)
     
-    # Log a final result without
+    # Log a final results
     tracking.log_outputs(res1=randint(0, 100), res2="test value", ...) 
 
-    # Log an artifact
-    asset_path = "{}/test.txt".format(tracking.get_outputs_path())
+    # Save the artifact
+    asset_path = tracking.get_outputs_path("test.txt")
     with open(asset_path, "w") as f:
         f.write("Artifact content.")
-    # Name will default to test
-    tracking.log_artifact(path=asset_path, artifact_kind=V1ArtifactKind.FILE)
+    # Track the lineage Name will default to test
+    tracking.log_artifact_ref(path=asset_path, kind=V1ArtifactKind.FILE)
     
-    # Log a second artifact 
-    asset_path = "{}/file.csv".format(tracking.get_outputs_path())
+    # Save a second artifact 
+    asset_path = tracking.get_outputs_path("file.csv")
     with open(asset_path, "w") as f:
         f.write("Artifact content.")
-    # Passing a name
-    tracking.log_artifact(path=asset_path, artifact_kind=V1ArtifactKind.CSV, name="my-csv", step=OPTIONAL, timestamp=OPTIONAL)
+    # Track the with a different name
+    tracking.log_artifact_ref(path=asset_path, kind=V1ArtifactKind.CSV, name="my-csv", step=OPTIONAL, timestamp=OPTIONAL)
 ```
 
 
@@ -132,7 +134,6 @@ tracking.init(project="owner/project2", name="run2", is_new=True, is_offline=Tru
 # End run2
 tracking.end()
 ```
-
 
 ## Resuming an offline run
 

@@ -47,8 +47,6 @@
       link: /docs/intro/how-tos/handling-termination/
     - title: Start runs with different names
       link: /docs/intro/how-tos/run-with-different-names
-    - title: Enable ML tracking
-      link: /docs/intro/how-tos/enable-ml-tracking
   - group: Features & Architecture
     items:
     - title: Features

@@ -150,6 +150,7 @@ class AgentServiceSchema(ServiceSchema):
     instance = fields.String(allow_none=True)
     token = fields.String(allow_none=True)
     is_replica = fields.Bool(allow_none=True)
+    compressed_logs = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -158,7 +159,12 @@ class AgentServiceSchema(ServiceSchema):
 
 class AgentServiceConfig(Service):
     SCHEMA = AgentServiceSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["instance", "token", "isReplica"]
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + [
+        "instance",
+        "token",
+        "isReplica",
+        "compressedLogs",
+    ]
 
     def __init__(
         self,
@@ -172,6 +178,7 @@ class AgentServiceConfig(Service):
         instance=None,
         token=None,
         is_replica=None,
+        compressed_logs=None,
     ):
         super().__init__(
             enabled=enabled,
@@ -185,10 +192,12 @@ class AgentServiceConfig(Service):
         self.instance = instance
         self.token = token
         self.is_replica = is_replica
+        self.compressed_logs = compressed_logs
 
 
 class OperatorServiceSchema(ServiceSchema):
     skip_crd = fields.Bool(allow_none=True, data_key="skipCRD")
+    use_crd_v1beta1 = fields.Bool(allow_none=True, data_key="useCRDV1Beta1")
 
     @staticmethod
     def schema_config():
@@ -197,7 +206,7 @@ class OperatorServiceSchema(ServiceSchema):
 
 class OperatorServiceConfig(Service):
     SCHEMA = OperatorServiceSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["skipCRD"]
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["skipCRD", "useCRDV1Beta1"]
 
     def __init__(
         self,
@@ -209,6 +218,7 @@ class OperatorServiceConfig(Service):
         concurrency=None,
         resources=None,
         skip_crd=None,
+        use_crd_v1beta1=None,
     ):
         super().__init__(
             enabled=enabled,
@@ -220,6 +230,7 @@ class OperatorServiceConfig(Service):
             resources=resources,
         )
         self.skip_crd = skip_crd
+        self.use_crd_v1beta1 = use_crd_v1beta1
 
 
 class ApiServiceSchema(ServiceSchema):

@@ -25,8 +25,7 @@ from polyaxon.api import REWRITE_SERVICES_V1, SERVICES_V1
 from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.options import OPTIONS_PROJECT, OPTIONS_RUN_UID
-from polyaxon.client import RunClient
-from polyaxon.client.run import get_run_logs
+from polyaxon.client import RunClient, get_run_logs
 from polyaxon.containers import contexts as container_contexts
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import (

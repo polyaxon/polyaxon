@@ -18,7 +18,7 @@ import os
 from typing import Dict
 
 from polyaxon import settings
-from polyaxon.client import RunClient
+from polyaxon.client import RunClient, get_rel_asset_path
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 
@@ -39,7 +39,7 @@ def create_dockerfile_lineage(dockerfile_path: str, summary: Dict):
     artifact_run = V1RunArtifact(
         name=filename,
         kind=V1ArtifactKind.DOCKERFILE,
-        path=RunClient.get_rel_asset_path(dockerfile_path),
+        path=get_rel_asset_path(dockerfile_path),
         summary=summary,
         is_input=True,
     )

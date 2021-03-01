@@ -33,6 +33,10 @@
     items:
     - title: Overview
       link: /docs/experimentation/tracking/
+    - title: Quick Start
+      link: /docs/experimentation/tracking/quick-start/
+    - title: Artifacts Tracking
+      link: /docs/experimentation/tracking/artifacts-tracking/
     - title: Client Reference
       link: /docs/experimentation/tracking/client/
     - title: Module Reference

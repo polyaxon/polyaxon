@@ -123,8 +123,8 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
     > **N.B.1**: It's possible to alter this behaviour on per operation level
         using the sidecar plugin.
 
-    > **N.B.2**: be careful between a large sleep interval and a short interval the trade-off,
-        you don't want the sidecar to be overwhelm Polyaxon API and Kuberenetes API,
+    > **N.B.2**: be careful of the trade-off between a large sleep interval and a short interval,
+        you don't want the sidecar to overwhelm the API and Kuberenetes API,
         and you don't want also the sidecar to penalize your workload with additional latency.
 
     ```yaml

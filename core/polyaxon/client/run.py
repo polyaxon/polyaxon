@@ -1121,7 +1121,7 @@ class RunClient:
 
     @client_handler(check_no_op=True)
     def log_outputs(self, reset: bool = False, async_req: bool = True, **outputs):
-        """Logs a new outputs for the current run.
+        """Logs a new outputs/results for the current run.
 
 
         Args:
@@ -1279,7 +1279,10 @@ class RunClient:
 
     @client_handler(check_no_op=True)
     def log_code_ref(self, code_ref: Dict = None, is_input: bool = True):
-        """Logs code reference.
+        """Logs code reference as a
+        lineage information with the code_ref dictionary in the summary field.
+
+        In offline
 
         Args:
             code_ref: dict, optional, if not provided,
@@ -1296,21 +1299,6 @@ class RunClient:
             )
             self.log_artifact_lineage(body=artifact_run)
 
-    @staticmethod
-    def get_rel_asset_path(
-        path: str = None, rel_path: str = None, is_offline: bool = False
-    ):
-        if not path or rel_path:
-            return rel_path
-        artifacts_root = CONTEXT_OFFLINE_ROOT if is_offline else CONTEXT_MOUNT_ARTIFACTS
-        if artifacts_root in path:
-            try:
-                return os.path.relpath(path, artifacts_root)
-            except Exception as e:
-                logger.debug("could not calculate relative path %s", e)
-
-        return rel_path or path
-
     @client_handler(check_no_op=True)
     def log_data_ref(
         self,
@@ -1318,6 +1306,7 @@ class RunClient:
         hash: str = None,
         path: str = None,
         content=None,
+        summary: Dict = None,
         is_input: bool = True,
     ):
         """Logs data reference.
@@ -1327,10 +1316,12 @@ class RunClient:
             hash: str, optional, default = None, the hash version of the data,
                 if not provided it will be calculated based on the data in the content.
             path: str, optional, path of where the data is coming from.
+            summary: Dict, optional, additional summary information to log about data
+                in the lineage table.
             is_input: bool, if the data reference is an input or outputs.
             content: the data content.
         """
-        summary = {}
+        summary = summary or {}
         if hash:
             summary["hash"] = hash
         elif content is not None:
@@ -1355,10 +1346,23 @@ class RunClient:
         name: str = None,
         hash: str = None,
         content=None,
+        summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
     ):
         """Logs an artifact reference with custom kind.
+
+        Logging a generic file reference to the lineage table:
+
+        ```python
+        >>> # Get outputs artifact path
+        >>> asset_path = tracking.get_outputs_path("test.txt")
+        >>> with open(asset_path, "w") as f:
+        >>>     f.write("Artifact content.")
+        >>> # Log reference to the lineage table
+        >>> # Name of the artifact will default to test
+        >>> tracking.log_artifact_ref(path=asset_path, kind=V1ArtifactKind.FILE)
+        ```
 
         **Note**: This is a generic method that is used by `log_file_ref` and `log_model_ref`.
 
@@ -1369,16 +1373,19 @@ class RunClient:
             hash: str, optional, default = None, the hash version of the file,
                 if not provided it will be calculated based on the file content.
             content: the file content.
+            summary: Dict, optional, additional summary information to log about data
+                in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
-        summary = {"path": path}
+        summary = summary or {}
+        summary["path"] = path
         if hash:
             summary["hash"] = hash
         elif content is not None:
             summary["hash"] = hash_value(content)
         name = name or os.path.basename(path)
-        rel_path = self.get_rel_asset_path(
+        rel_path = get_rel_asset_path(
             path=path, rel_path=rel_path, is_offline=self._is_offline
         )
         if name:
@@ -1396,6 +1403,7 @@ class RunClient:
         self,
         path: str,
         name: str = None,
+        summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
     ):
@@ -1407,9 +1415,21 @@ class RunClient:
          you have to copy it manually using a relative path to
          `self.get_artifacts_path` or `self.get_outputs_path`.
 
+         ```python
+        >>> # Get outputs artifact path
+        >>> asset_path = tracking.get_outputs_path("model/model_data.h5")
+        >>> with open(asset_path, "w") as f:
+        >>>     f.write("Artifact content.")
+        >>> # Log reference to the lineage table
+        >>> # Name of the artifact will default to model_data
+        >>> tracking.log_model_ref(path=asset_path)
+        ```
+
         Args:
             path: str, filepath, the name is extracted from the filepath.
             name: str, if the name is passed it will be used instead of the filename from the path.
+            summary: Dict, optional, additional summary information to log about data
+                in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
@@ -1417,6 +1437,7 @@ class RunClient:
             path=path,
             kind=V1ArtifactKind.FILE,
             name=name,
+            summary=summary,
             is_input=is_input,
             rel_path=rel_path,
         )
@@ -1428,6 +1449,7 @@ class RunClient:
         name: str = None,
         hash: str = None,
         content=None,
+        summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
     ):
@@ -1439,6 +1461,8 @@ class RunClient:
             hash: str, optional, default = None, the hash version of the file,
                 if not provided it will be calculated based on the file content.
             content: the file content.
+            summary: Dict, optional, additional summary information to log about data
+                in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
@@ -1448,6 +1472,7 @@ class RunClient:
             name=name,
             hash=hash,
             content=content,
+            summary=summary,
             is_input=is_input,
             rel_path=rel_path,
         )
@@ -1457,6 +1482,7 @@ class RunClient:
         self,
         path: str,
         name: str = None,
+        summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
     ):
@@ -1465,19 +1491,23 @@ class RunClient:
         Args:
             path: str, dir path, the name is extracted from the path.
             name: str, if the name is passed it will be used instead of the dirname from the path.
+            summary: Dict, optional, additional summary information to log about data
+                in the lineage table.
             is_input: bool, if the dir reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
         name = name or os.path.basename(path)
-        rel_path = self.get_rel_asset_path(
+        rel_path = get_rel_asset_path(
             path=path, rel_path=rel_path, is_offline=self._is_offline
         )
+        summary = summary or {}
+        summary["path"] = path
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
                 kind=V1ArtifactKind.DIR,
                 path=rel_path,
-                summary={"path": path},
+                summary=summary,
                 is_input=is_input,
             )
             self.log_artifact_lineage(body=artifact_run)
@@ -1506,7 +1536,7 @@ class RunClient:
             rel_path: str, optional relative path to run the artifacts path.
         """
         if not self._has_meta_key("has_tensorboard"):
-            rel_path = self.get_rel_asset_path(
+            rel_path = get_rel_asset_path(
                 path=path, rel_path=rel_path, is_offline=self._is_offline
             )
             artifact_run = V1RunArtifact(
@@ -1527,7 +1557,7 @@ class RunClient:
     ):
         """Logs an artifact lineage.
 
-        **Note**: This method can be used to log manual lieange objects, it is used internally
+        **Note**: This method can be used to log manual lineage objects, it is used internally
             to log model/file/artifact/code refs
 
         Args:
@@ -1635,9 +1665,7 @@ class RunClient:
                     continue
 
                 # Get only the relpath from run uuid
-                event_rel_path = self.get_rel_asset_path(
-                    path=f, is_offline=self._is_offline
-                )
+                event_rel_path = get_rel_asset_path(path=f, is_offline=self._is_offline)
                 summary = event.get_summary()
                 run_artifact = V1RunArtifact(
                     name=event_name,
@@ -1658,7 +1686,7 @@ class RunClient:
         """Syncs all tracked events and auto-generates summaries and lineage data.
 
         > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
-            automatically, so you should not call this mehtod manually.
+            automatically, so you should not call this method manually.
         """
         # check if there's a path to sync
         if not os.path.exists(events_path):
@@ -1686,7 +1714,8 @@ class RunClient:
     def persist_offline_run(self, artifacts_path: str):
         """Persists an offline run to a local path.
 
-        > **Note**: When offline mode is enabled, this method is triggered automatically at the end.
+        > **Note**: You generally do not need to call this method manually,
+            When the `offline` mode is enabled, this method is triggered automatically at the end.
         """
         if not self._is_offline or not self.run_data:
             logger.debug(
@@ -1722,10 +1751,8 @@ class RunClient:
     ) -> Union["RunClient", "Run"]:
         """Loads an offline run from a local path.
 
-        > **Note**: When offline mode is enabled, and the run uuid is provided,
+        > **Note**: When the `offline` mode is enabled, and the run uuid is provided,
             this method is triggered automatically to load last checkpoint.
-            If `auto_resume` is passed it will also transition the status to
-            `resuming` and then `running`.
         """
         run_path = "{}/run_data.json".format(artifacts_path)
         if not os.path.isfile(run_path):
@@ -1915,3 +1942,18 @@ def get_run_logs(
             checks += 1
 
     handle_logs()
+
+
+def get_rel_asset_path(
+    path: str = None, rel_path: str = None, is_offline: bool = False
+):
+    if not path or rel_path:
+        return rel_path
+    artifacts_root = CONTEXT_OFFLINE_ROOT if is_offline else CONTEXT_MOUNT_ARTIFACTS
+    if artifacts_root in path:
+        try:
+            return os.path.relpath(path, artifacts_root)
+        except Exception as e:
+            logger.debug("could not calculate relative path %s", e)
+
+    return rel_path or path

@@ -18,7 +18,7 @@ import os
 from typing import Dict
 
 from polyaxon import settings
-from polyaxon.client import RunClient
+from polyaxon.client import RunClient, get_rel_asset_path
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 
@@ -41,7 +41,7 @@ def create_file_lineage(filepath: str, summary: Dict, kind: str):
     artifact_run = V1RunArtifact(
         name=filename,
         kind=kind,
-        path=RunClient.get_rel_asset_path(filepath),
+        path=get_rel_asset_path(filepath),
         summary=summary,
         is_input=True,
     )

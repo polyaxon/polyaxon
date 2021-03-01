@@ -37,6 +37,7 @@ data:
   POLYAXON_AGENT_IS_REPLICA: {{ .Values.agent.isReplica | quote }}
   {{- end }}
   {{- end }}
+  POLYAXON_AGENT_COMPRESSED_LOGS: {{ .Values.agent.compressedLogs | quote }}
   {{- if .Values.operator.maxConcurrentReconciles }}
   POLYAXON_MAX_CONCURRENT_RECONCILES: {{ .Values.operator.maxConcurrentReconciles | quote }}
   {{- end }}

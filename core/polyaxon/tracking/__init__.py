@@ -363,14 +363,15 @@ def log_dataframe(path, name=None, content_type=None, step=None, timestamp=None)
 log_dataframe.__doc__ = Run.log_dataframe.__doc__
 
 
-def log_artifact(path, name=None, artifact_kind=None, step=None, timestamp=None):
+def log_artifact(path, name=None, kind=None, step=None, timestamp=None, **kwargs):
     global TRACKING_RUN
     TRACKING_RUN.log_artifact(
         path=path,
         name=name,
-        artifact_kind=artifact_kind,
+        kind=kind,
         step=step,
         timestamp=timestamp,
+        **kwargs,
     )
 
 
@@ -614,6 +615,7 @@ def log_artifact_ref(
     name: str = None,
     hash: str = None,
     content=None,
+    summary: Dict = None,
     is_input: bool = False,
     rel_path: str = None,
 ):
@@ -624,6 +626,7 @@ def log_artifact_ref(
         name=name,
         hash=hash,
         content=content,
+        summary=summary,
         is_input=is_input,
         rel_path=rel_path,
     )
@@ -635,12 +638,13 @@ log_artifact_ref.__doc__ = Run.log_artifact_ref.__doc__
 def log_model_ref(
     path: str,
     name: str = None,
+    summary: Dict = None,
     is_input: bool = False,
     rel_path: str = None,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_model_ref(
-        path=path, name=name, is_input=is_input, rel_path=rel_path
+        path=path, name=name, summary=summary, is_input=is_input, rel_path=rel_path
     )
 
 
@@ -656,11 +660,21 @@ log_code_ref.__doc__ = Run.log_code_ref.__doc__
 
 
 def log_data_ref(
-    name: str, hash: str = None, path: str = None, content=None, is_input: bool = True
+    name: str,
+    hash: str = None,
+    path: str = None,
+    content=None,
+    summary: Dict = None,
+    is_input: bool = True,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_data_ref(
-        name=name, content=content, hash=hash, path=path, is_input=is_input
+        name=name,
+        content=content,
+        hash=hash,
+        path=path,
+        summary=summary,
+        is_input=is_input,
     )
 
 
@@ -672,6 +686,7 @@ def log_file_ref(
     name: str = None,
     hash: str = None,
     content=None,
+    summary: Dict = None,
     is_input: bool = True,
     rel_path: str = None,
 ):
@@ -681,6 +696,7 @@ def log_file_ref(
         name=name,
         hash=hash,
         content=content,
+        summary=summary,
         is_input=is_input,
         rel_path=rel_path,
     )
@@ -690,10 +706,16 @@ log_file_ref.__doc__ = Run.log_file_ref.__doc__
 
 
 def log_dir_ref(
-    path: str, name: str = None, is_input: bool = False, rel_path: str = None
+    path: str,
+    name: str = None,
+    summary: Dict = None,
+    is_input: bool = False,
+    rel_path: str = None,
 ):
     global TRACKING_RUN
-    TRACKING_RUN.log_dir_ref(path=path, name=name, is_input=is_input, rel_path=rel_path)
+    TRACKING_RUN.log_dir_ref(
+        path=path, name=name, summary=summary, is_input=is_input, rel_path=rel_path
+    )
 
 
 log_dir_ref.__doc__ = Run.log_dir_ref.__doc__

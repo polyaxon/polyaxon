@@ -148,6 +148,8 @@ sidecar:
 agent:
   token:
   instance:
+  isReplica: false
+  compressedLogs: false
   enabled: false
   image: polyaxon/polyaxon-agent
   imageTag: 1.0.9
@@ -162,7 +164,8 @@ agent:
 
 operator:
   enabled: true
-  skipCRD: false
+  skipCRD: true
+  useCRDV1Beta1: true
   image: polyaxon/polyaxon-operator
   imageTag: 1.0.9
   imagePullPolicy: Always

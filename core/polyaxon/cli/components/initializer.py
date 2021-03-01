@@ -74,7 +74,7 @@ def file(file_context, filepath, copy_path, track):
     with open(filepath, "w") as generated_file:
         generated_file.write(file_context.content)
         if file_context.chmod:
-            subprocess.check_call(['chmod', file_context.chmod, filepath])
+            subprocess.check_call(["chmod", file_context.chmod, filepath])
 
     if copy_path:
         filepath = copy_file(filepath, copy_path)
