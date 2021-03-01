@@ -18,7 +18,7 @@ google-compute-engine==2.8.13
 kubernetes_asyncio==12.0.1
 starlette==0.14.2
 aiofiles==0.6.0
-uvicorn==0.13.3
+uvicorn==0.13.4
 uvloop==0.14.0
 httptools==0.1.1
 python-multipart==0.0.5
