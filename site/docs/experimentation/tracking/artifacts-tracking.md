@@ -43,14 +43,14 @@ They can also get a relative path to these root paths:
 Polyaxon also exposes two types of logging methods:
 
  * Reference logging: these are the methods ending with `_ref`, they generally only log the lineage reference, the user has to save the artifact manually.
- * Versioned assets logging: These are the methods that save both the assets and an the corresponding event file.
+ * Versioned assets logging: These are the methods that save both the assets and the corresponding event file.
 
 ## Reference logging
 
 Reference logging is useful when the user needs to:
 
  * have more control where the asset must be saved.
- * do not need to log multiple version of the asset during the run, i.e. the asset is only saved once.
+ * do not need to log multiple versions of the asset during the run, i.e. the asset is only saved once.
  
 In reference logging the user is responsible for saving the artifacts, you can use a relative path to the run's root artifacts or a relative path to the run's outputs path:
 
@@ -63,7 +63,7 @@ After saving the artifact under that path, you can decide if you want to create 
 asset_path = tracking.get_artifacts_path("custom_artifacts/filename.ext")
 custom_logic_to_save_the_file(asset_path)
 # This is optional
-tracking.log_artifact_ref(path=asset_path)
+tracking.log_artifact_ref(path=asset_path, ...)
 ```
 
 Sometimes you will need to save an artifact on different backend and not on the artifact store, you can still use the ref to log the lineage:
@@ -82,7 +82,7 @@ In reference lineage tracking, you can also provide extra key/value summary to a
 
 ## Versioned assets logging
 
-Versioned assets logging is useful when the user needs to save the same asset but several times in the same run, based on timestamp value and / or steps.
+Versioned assets logging is useful when the user needs to save the same asset but several times in the same run, based on timestamp values and/or steps.
 For that the tracking module will automatically generate a new subpath under the `assets` sub-folder, e.g. `assets/model/dirname_STEP_NUMBER` or `assets/audio/filename_STEP_NUMBER`,
 and each time a logging method is called with the same artifact name, it will create a new entry in the event file and and a new subpath with the step number.
 

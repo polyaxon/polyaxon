@@ -54,7 +54,7 @@ if __name__ == "__main__":
     with open(asset_path, "w") as f:
         f.write("Artifact content.")
     # Track the with a different name
-    tracking.log_artifact_ref(path=asset_path, kind=V1ArtifactKind.CSV, name="my-csv", step=OPTIONAL, timestamp=OPTIONAL)
+    tracking.log_artifact_ref(path=asset_path, kind=V1ArtifactKind.CSV, name="my-csv")
 ```
 
 

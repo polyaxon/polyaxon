@@ -35,10 +35,6 @@ spec:
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        args:
-        - --alsologtostderr
-        - -v=1
-        - --monitoring-port=8443
         env:
         - name: MY_POD_NAMESPACE
           valueFrom:

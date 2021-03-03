@@ -232,10 +232,10 @@ Polyaxon CLI can start new execution based on python files as well as YAML files
 We can start a new experiment by running the following command:
 
 ```bash
-polyaxon run -pm path/to/typed_experiment.py[component] -P epochs=10 -l
+polyaxon run -pm path/to/typed_experiment.py:component -P epochs=10 -l
 ``` 
 
-You probably noticed that we passed the name of the variable `component` in `typed_experiment.py[component]`.
+You probably noticed that we passed the name of the variable `component` in `typed_experiment.py:component`.
 This is how we tell the CLI to execute that component by providing a variable name, by default the CLI looks for a component named `main` otherwise it raises, 
 so we pass the name to tell the CLI to look for the specific variable, this is also useful if the Python module has more than one component.
 
