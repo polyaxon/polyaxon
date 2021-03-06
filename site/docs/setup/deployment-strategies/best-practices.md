@@ -31,7 +31,7 @@ In order to achieve such behavior, please check:
 You can also decide to just use at a minimum 2 selectors one for core components and one for the workload to keep them separated.
 
 Several teams have advanced setups where they take advantage of Node Selectors, Affinity, and Tolerations to setup the default platform behavior,
-and use a custom scheduling per experiment/job when needed. Please refer to this section for a full reference of the [node scheduling behavior](/configuration/custom-node-scheduling/).
+and use a custom scheduling per experiment/job when needed. Please refer to this section for a full reference of the [node scheduling behavior](/docs/setup/platform/common-reference/#node-and-deployment-manipulation).
 
 If you are running Polyaxon Enterprise Edition, you can also deploy the control plane in a separate namespace or even cluster than the data plane(workloads)
 
@@ -74,7 +74,7 @@ If you are using Polyaxon EE or Polyaxon Cloud you can deploy several agents bac
 Security is important and we strongly recommend that you deploy Polyaxon on a network that you control.
 If you expose the gateway to the internet we recommend that you use SSL for your Polyaxon deployment.
 
-Please read this [SSL reference](/configuration/ssl/),
+Please read this [SSL reference](/docs/setup/platform/common-reference/#ssl),
 our [FAQ on using custom domain](/faq/use-custom-domain/),
 [Nginx Ingress](/integrations/nginx/),
 and [Let's encrypt](/integrations/letsencrypt/).

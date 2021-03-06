@@ -130,8 +130,8 @@ Polyaxon will follow the order of these presets and will patch the main operatio
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
 If you have access to Polyaxon Cloud or Polyaxon EE you can also save these presets on the organization level.
-You can additionally set the a default preset on organization or project level using Polyaxon UI, 
-such preset will be applied to all operations in the organization or project where it's set.    
+You can additionally set the default preset on your organization or on a project level using Polyaxon UI, 
+such preset will be applied to all operations in the organization or the project where it's set.    
 
 Users can just reference the presets in their [operations specification](/docs/core/specification/operation/#presets) or using the CLI/Client `polyaxon run ... --presets=preset1,preset2`
 

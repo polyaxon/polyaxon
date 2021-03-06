@@ -335,7 +335,7 @@ class V1Param(
     >>>       - dirs: ["subpath/dir1", "another/subpath/dir2"]
     ```
 
-    > **Note**: the difference between using `artfiacts.lineage_name`
+    > **Note**: the difference between using `artifacts.lineage_name`
     and [ArtifactsType](/docs/core/specification/types/#v1artifactstype),
     is that the former will only expose the path based on any lineage logged during the runtime,
     the later is a manual way of selecting specific files and dirs.

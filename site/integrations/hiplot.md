@@ -29,3 +29,17 @@ You can track hyperparameter and metrics of your experiments using [Polyaxon's t
 ## In notebooks
 
 You can use the module [MultiRunPlot](/docs/experimentation/visualizations/programmatic/#hiplot) which requires hiplot to create interactive parallel coordinates inside a notebook or jupyter lab.
+
+## Example
+
+```python
+from polyaxon.polyplot import MultiRunPlot
+
+client = MultiRunPlot()
+exp = client.get_hiplot(query="metrics.loss:<0.1")
+exp.display()
+```
+
+![run-dashboards-hiplot1](../../content/images/dashboard/runs/programmatic-hiplot1.png)
+
+![run-dashboards-hiplot2](../../content/images/dashboard/runs/programmatic-hiplot2.png)

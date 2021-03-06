@@ -85,7 +85,7 @@ Please check this [integration guide](/integrations/database/) for cloud specifi
 
 ## Scheduling
 
-If you decided to deploy Polyaxon in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/)
+If you decided to deploy Polyaxon in-cluster make sure to set proper [node scheduling](/docs/setup/platform/common-reference/#node-and-deployment-manipulation)
 to avoid running high load runs on the same node hosting the database.
 
 

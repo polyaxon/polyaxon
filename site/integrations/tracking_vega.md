@@ -38,3 +38,38 @@ You can also consume any events or charts tracked in your experiments using the 
 
 All charts and events are stored on your artifacts store, and follow any networking or security policy you set for your cluster.
 You can download any chart tracked to either render it manually or to archive it to a different location using the [Python Library](/docs/core/python-library/run-client/#get_events)
+
+## Example
+
+```python
+import altair as alt
+from vega_datasets import data
+
+from polyaxon import tracking
+
+source = data.cars()
+
+brush = alt.selection(type='interval')
+
+points = alt.Chart(source).mark_point().encode(
+    x='Horsepower:Q',
+    y='Miles_per_Gallon:Q',
+    color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
+).add_selection(
+    brush
+)
+
+bars = alt.Chart(source).mark_bar().encode(
+    y='Origin:N',
+    color='Origin:N',
+    x='count(Origin):Q'
+).transform_filter(
+    brush
+)
+
+chart = points & bars
+
+tracking.log_altair_chart(name='altair_chart', figure=chart)
+```
+
+![run-dashboards-altair](../../content/images/dashboard/runs/dashboards-altair.png)

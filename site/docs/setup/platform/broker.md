@@ -30,7 +30,7 @@ rabbitmq-ha:
   enabled: true
 ```
 
-You can have as much control on the RabbitMQ dependency, or you can [turn it off and provide your own instance configuration](/configuration/rabbitmq-ha/).
+You can have as much control on the RabbitMQ dependency, or you can [turn it off and provide your own instance configuration](/docs/setup/platform/postgresql-ha/).
 
 
 ## Redis
@@ -47,4 +47,4 @@ redis:
 broker: redis
 ```
 
-You can further customize the redis dependency or you can [turn it off and provide your own instance configuration](/configuration/redis-ha/).
+You can further customize the redis dependency or you can [turn it off and provide your own instance configuration](/docs/setup/platform/redis-ha/).

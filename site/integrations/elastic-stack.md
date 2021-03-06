@@ -169,4 +169,4 @@ You can inspect the logs on the Kibana UI, by port-forwarding for example.
 ## Notes
 
 Polyaxon will persist by default all runs' logs to a persistent volume or a cloud bucket provided by the user.
-Please check the [Logs storage configuration](/configuration/custom-logs-storage/) for more details.
+Please check the [Logs storage configuration](/docs/setup/connections/artifacts/) for more details.

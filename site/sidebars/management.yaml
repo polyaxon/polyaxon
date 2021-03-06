@@ -29,6 +29,8 @@
       link: /docs/management/organizations/analytics/
     - title: Activities
       link: /docs/management/organizations/activities/
+    - title: Billing
+      link: /docs/management/organizations/billing/
   - group: Projects
     items:
     - title: Overview

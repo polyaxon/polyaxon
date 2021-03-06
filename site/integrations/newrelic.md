@@ -33,7 +33,7 @@ metrics:
 
 ## Set the external service
 
-Add instrumentation and send Polyaxon metrics emitted to the New Relic.
+Add instrumentation and send Polyaxon metrics to New Relic.
 
 ```yaml
 externalServices:

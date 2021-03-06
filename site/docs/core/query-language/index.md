@@ -138,8 +138,7 @@ the nil operator can be used with negation as well, e.g. `x:~nil`.
 
 ## Query by combining multiple conditions
 
-Every time you put a comma `,` Polyaxon will filter further= by the condition that comes after the comma.
-
+Every time you put a comma `,` Polyaxon will filter further by the condition that comes after the comma.
 
 ## Entities
 

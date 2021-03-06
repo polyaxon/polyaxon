@@ -13,6 +13,8 @@
       link: /docs/intro/quick-start/iterate-with-cli-local-code/
     - title: Iterate with remote code
       link: /docs/intro/quick-start/iterate-with-cli-git-code/
+    - title: Iterate With Presets
+      link: /docs/intro/quick-start/iterate-with-presets/
     - title: Iterate Programatically
       link: /docs/intro/quick-start/iterate-programmatically/
     - title: Distributed Training
