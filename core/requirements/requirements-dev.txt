@@ -1,34 +1,34 @@
 -r ../../requirements/base.txt
 
-docker
+docker==4.4.4
 GitPython<3.2.0
 
 numpy>=1.15.2
-scikit-learn==0.23.2
-hyperopt==0.2.4
+scikit-learn==0.24.1
+hyperopt==0.2.5
 
-azure-storage-blob==12.4.0
-boto3==1.16.5
-botocore==1.19.5
-google-cloud-storage==1.31.0
+azure-storage-blob==12.7.1
+boto3==1.17.17
+botocore==1.20.17
+google-cloud-storage==1.36.1
 
-moto==1.3.16
+moto==2.0.0
 google-compute-engine==2.8.13
 
 kubernetes_asyncio==12.0.1
-starlette==0.14.1
+starlette==0.14.2
 aiofiles==0.6.0
-uvicorn==0.13.3
-uvloop==0.14.0
+uvicorn==0.13.4
+uvloop==0.15.2
 httptools==0.1.1
 python-multipart==0.0.5
 
 altair==4.1.0
-matplotlib==3.2.1
-moviepy==1.0.2
-plotly==4.6.0
-Pillow==7.1.2
-bokeh==2.0.2
-pandas==1.0.3
+matplotlib==3.3.4
+moviepy==1.0.3
+plotly==4.14.3
+Pillow==8.1.0
+bokeh==2.3.0
+pandas==1.2.2
 
 nvidia-ml-py3==7.352.0

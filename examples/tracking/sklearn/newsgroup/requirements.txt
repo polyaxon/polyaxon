@@ -1,2 +1,2 @@
-scikit-learn==0.22.2
-polyaxon
+scikit-learn==0.24.1
+polyaxon==1.6.1
