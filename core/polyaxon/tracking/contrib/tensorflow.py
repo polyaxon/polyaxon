@@ -21,54 +21,40 @@ from polyaxon.tracking.contrib.tensorboard import PolyaxonTensorboardLogger
 try:
     import tensorflow as tf
 except ImportError:
-    raise PolyaxonClientException(
-        "tensorflow is required to use PolyaxonLoggingTensorHook"
-    )
+    raise PolyaxonClientException("tensorflow is required to use PolyaxonCallback")
 
-LoggingTensorHook = None
 SessionRunHook = None
 
 try:
-    from tensorflow.train import LoggingTensorHook, SessionRunHook  # noqa
+    from tensorflow.train import SessionRunHook  # noqa
 except ImportError:
     pass
 
 try:
-    from tensorflow.estimator import LoggingTensorHook, SessionRunHook  # noqa
+    from tensorflow.estimator import LoggingTensorHookSessionRunHook  # noqa
 except ImportError:
     pass
 
-if not LoggingTensorHook or not SessionRunHook:
-    raise PolyaxonClientException(
-        "tensorflow is required to use PolyaxonLoggingTensorHook"
-    )
+if not SessionRunHook:
+    raise PolyaxonClientException("tensorflow is required to use PolyaxonCallback")
 
 
-class PolyaxonLoggingTensorHook(LoggingTensorHook):
-    """Hook that logs data to console and Polyaxon"""
-
-    def __init__(self, tensors, run=None, every_num_iterations=None, every_n_secs=None):
-        super().__init__(
-            tensors=tensors,
-            every_num_iterations=every_num_iterations,
-            every_n_secs=every_n_secs,
-        )
-        self.run = tracking.get_or_create_run(run)
-
-    def _log_tensors(self, tensor_values):
-        super()._log_tensors(tensor_values)
-
-        if not self.run:
-            return
-        metrics = {k: tensor_values[k] for k in self._tensors.keys()}
-        self.run.log_metrics(**metrics)
-
-
-class PolyaxonSessionRunHook(SessionRunHook):
-    def __init__(self, summary_op=None, steps_per_log=1000, run=None):
+class PolyaxonCallback(SessionRunHook):
+    def __init__(
+        self,
+        summary_op=None,
+        steps_per_log=1000,
+        run=None,
+        log_image: bool = False,
+        log_histo: bool = False,
+        log_tensor: bool = False,
+    ):
         self._summary_op = summary_op
         self._steps_per_log = steps_per_log
         self.run = tracking.get_or_create_run(run)
+        self._log_image = log_image
+        self._log_histo = log_histo
+        self._log_tensor = log_tensor
 
     def begin(self):
         if self._summary_op is None:
@@ -82,5 +68,12 @@ class PolyaxonSessionRunHook(SessionRunHook):
     def after_run(self, run_context, run_values):
         if self._step % self._steps_per_log == 0:
             PolyaxonTensorboardLogger.process_summary(
-                run_values.results["summary"], run=self.run
+                run_values.results["summary"],
+                run=self.run,
+                log_image=self._log_image,
+                log_histo=self._log_histo,
+                log_tensor=self._log_tensor,
             )
+
+
+PolyaxonSessionRunHook = PolyaxonCallback

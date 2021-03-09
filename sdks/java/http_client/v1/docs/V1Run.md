@@ -38,6 +38,7 @@ Name | Type | Description | Notes
 **statusConditions** | [**List&lt;V1StatusCondition&gt;**](V1StatusCondition.md) |  |  [optional]
 **role** | **String** |  |  [optional]
 **settings** | [**V1RunSettings**](V1RunSettings.md) |  |  [optional]
+**graph** | [**Object**](.md) |  |  [optional]
 
 
 

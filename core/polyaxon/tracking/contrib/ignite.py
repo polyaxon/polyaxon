@@ -18,11 +18,17 @@ from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.tracking import Run
 
 try:
-    from ignite.contrib.handlers.polyaxon_logger import PolyaxonLogger
+    from ignite.contrib.handlers.polyaxon_logger import (
+        PolyaxonLogger as _PolyaxonLogger,
+    )
 except ImportError:
-    raise PolyaxonClientException("ignite is required to use PolyaxonIgniteLogger")
+    raise PolyaxonClientException("ignite is required to use PolyaxonCallback")
 
 
-class PolyaxonIgniteLogger(PolyaxonLogger):
+class PolyaxonLogger(_PolyaxonLogger):
     def __init__(self, *args, **kwargs):
         self.experiment = kwargs.get("run", Run(*args, **kwargs))
+
+
+# alias
+PolyaxonIgniteLogger = PolyaxonLogger

@@ -16,9 +16,11 @@
 
 import json
 import sys
+import urllib.parse as urlparse
 
 from collections import OrderedDict
 from typing import Dict, List, Tuple
+from urllib.parse import parse_qs
 
 import click
 
@@ -31,11 +33,29 @@ from polyaxon.utils.units import to_percentage, to_unit_memory
 
 
 def get_meta_response(response):
+    def get_pagination(url):
+        parsed = urlparse.urlparse(url)
+        parsed_query = parse_qs(parsed.query)
+        limit = parsed_query.get("limit")
+        offset = parsed_query.get("offset")
+        res = []
+        if limit is not None:
+            res.append("--limit={}".format(limit[0]))
+        if offset is not None:
+            res.append("--offset={}".format(offset[0]))
+        return " ".join(res)
+
     results = {}
     if response.next:
-        results["next"] = response.next
+        try:
+            results["next"] = get_pagination(response.next)
+        except:  # noqa
+            results["next"] = response.next
     if response.previous:
-        results["previous"] = response.previous
+        try:
+            results["previous"] = get_pagination(response.previous)
+        except:  # noqa
+            results["previous"] = response.previous
     if response.count:
         results["count"] = response.count
     return results

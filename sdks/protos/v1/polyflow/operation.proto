@@ -99,7 +99,7 @@ message Operation {
     google.protobuf.Struct runPatch = 21;
 
     // Optional patch strategy, default post_merge
-    PatchStrategy patch_strategy = 22;
+    PatchStrategy patchStrategy = 22;
 
     // Optional flag to mark this specification as preset
     bool isPreset = 23;

@@ -74,7 +74,7 @@ def client_handler(
                 ):
                     logger.warning(
                         "You should set an event logger before calling: {}".format(
-                            repr(f)
+                            f.__name__
                         )
                     )
 
@@ -84,7 +84,7 @@ def client_handler(
                 ):
                     logger.warning(
                         "You should set an an outputs path before calling: {}".format(
-                            repr(f)
+                            f.__name__
                         )
                     )
 

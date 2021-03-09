@@ -35,6 +35,7 @@ Name | Type | Description | Notes
 **status_conditions** | [**list[V1StatusCondition]**](V1StatusCondition.md) |  | [optional] 
 **role** | **str** |  | [optional] 
 **settings** | [**V1RunSettings**](V1RunSettings.md) |  | [optional] 
+**graph** | [**object**](.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

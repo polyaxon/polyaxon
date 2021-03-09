@@ -50,7 +50,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.6.1";
+        version: "1.7.0";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -1512,6 +1512,14 @@ service QueuesV1 {
 
 // Service to manage auth
 service AuthV1 {
+  // Trial Start
+  rpc Trial(TrialStart) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/trial"
+      body: "*"
+    };
+  }
+
   // Login
   rpc Login(Credentials) returns (Auth) {
     option (google.api.http) = {

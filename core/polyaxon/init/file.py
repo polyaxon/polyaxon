@@ -21,6 +21,7 @@ from polyaxon import settings
 from polyaxon.client import RunClient, get_rel_asset_path
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
+from polyaxon.utils.path_utils import get_base_filename
 
 
 def create_file_lineage(filepath: str, summary: Dict, kind: str):
@@ -39,7 +40,7 @@ def create_file_lineage(filepath: str, summary: Dict, kind: str):
         raise PolyaxonContainerException(e)
 
     artifact_run = V1RunArtifact(
-        name=filename,
+        name=get_base_filename(filename),
         kind=kind,
         path=get_rel_asset_path(filepath),
         summary=summary,

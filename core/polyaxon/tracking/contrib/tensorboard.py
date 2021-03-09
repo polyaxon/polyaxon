@@ -38,13 +38,21 @@ except ImportError:
 
 if not summary_pb2:
     raise PolyaxonClientException(
-        "tensorflow/tensorboard/tensorboardx is required to use PolyaxonTensorboardLogger"
+        "tensorflow/tensorboard/tensorboardx is required to use PolyaxonCallback"
     )
 
 
 class PolyaxonTensorboardLogger:
     @classmethod
-    def process_summary(cls, summary, global_step=None, run=None):
+    def process_summary(
+        cls,
+        summary,
+        global_step=None,
+        run=None,
+        log_image: bool = False,
+        log_histo: bool = False,
+        log_tensor: bool = False,
+    ):
         run = tracking.get_or_create_run(run)
         if not run:
             return
@@ -57,26 +65,42 @@ class PolyaxonTensorboardLogger:
         step = cls._process_step(global_step)
         for value in summary.value:
             try:
-                cls.add_value(run=run, step=step, value=value)
+                cls.add_value(
+                    run=run,
+                    step=step,
+                    value=value,
+                    log_image=log_image,
+                    log_histo=log_histo,
+                    log_tensor=log_tensor,
+                )
             except PolyaxonClientException(
                 "Polyaxon failed processing tensorboard summary."
             ):
                 pass
 
     @classmethod
-    def add_value(cls, run, step, value):
+    def add_value(
+        cls,
+        run,
+        step,
+        value,
+        log_image: bool = False,
+        log_histo: bool = False,
+        log_tensor: bool = False,
+    ):
         field = value.WhichOneof("value")
 
         if field == "simple_value":
             run.log_metric(name=value.tag, step=step, value=value.simple_value)
             return
 
-        if field == "image":
+        if field == "image" and log_image:
             run.log_image(name=value.tag, step=step, data=value.image)
             return
 
         if (
             field == "tensor"
+            and log_tensor
             and value.tensor.string_val
             and len(value.tensor.string_val)
         ):
@@ -88,7 +112,7 @@ class PolyaxonTensorboardLogger:
                 run.log_text(name=value.tag, step=step, text=", ".join(string_values))
             return
 
-        elif field == "histo":
+        elif field == "histo" and log_histo:
             if len(value.histo.bucket_limit) >= 3:
                 first = (
                     value.histo.bucket_limit[0]

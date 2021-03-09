@@ -18,16 +18,12 @@ from typing import Dict, List
 
 from polyaxon import logger
 from polyaxon.polyboard.processors.events_processors import metrics_dict_to_list
+from polyaxon.vendor import pynvml
 
 try:
     import psutil
 except ImportError:
     psutil = None
-
-try:
-    import pynvml
-except ImportError:
-    pynvml = None
 
 
 def can_log_gpu_resources():

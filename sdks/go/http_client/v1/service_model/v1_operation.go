@@ -83,7 +83,7 @@ type V1Operation struct {
 	Params map[string]V1Param `json:"params,omitempty"`
 
 	// Optional patch strategy, default post_merge
-	PatchStrategy *V1PatchStrategy `json:"patch_strategy,omitempty"`
+	PatchStrategy *V1PatchStrategy `json:"patchStrategy,omitempty"`
 
 	// path ref
 	PathRef string `json:"pathRef,omitempty"`
@@ -312,7 +312,7 @@ func (m *V1Operation) validatePatchStrategy(formats strfmt.Registry) error {
 	if m.PatchStrategy != nil {
 		if err := m.PatchStrategy.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("patch_strategy")
+				return ve.ValidateName("patchStrategy")
 			}
 			return err
 		}
@@ -542,7 +542,7 @@ func (m *V1Operation) contextValidatePatchStrategy(ctx context.Context, formats 
 	if m.PatchStrategy != nil {
 		if err := m.PatchStrategy.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("patch_strategy")
+				return ve.ValidateName("patchStrategy")
 			}
 			return err
 		}

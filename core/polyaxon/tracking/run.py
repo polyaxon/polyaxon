@@ -17,6 +17,7 @@
 import atexit
 import os
 import sys
+import tempfile
 import time
 
 from datetime import datetime
@@ -42,9 +43,11 @@ from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.events import LoggedEventSpec, V1Event, get_asset_path
 from polyaxon.polyboard.logging import V1Log, V1Logs
 from polyaxon.polyboard.processors import events_processors
+from polyaxon.polyboard.processors.events_processors import copy_file_or_dir_path
 from polyaxon.polyboard.processors.logs_processor import setup_logging
 from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
 from polyaxon.utils.env import get_run_env
+from polyaxon.utils.fqn_utils import to_fqn_name
 from polyaxon.utils.path_utils import (
     check_or_create_path,
     get_base_filename,
@@ -202,9 +205,11 @@ class Run(RunClient):
                 )
             )
 
-        if self._artifacts_path and get_collect_artifacts(collect_artifacts):
+        if self._artifacts_path and get_collect_artifacts(
+            arg=collect_artifacts, default=self._is_offline
+        ):
             self.set_run_event_logger()
-            if get_collect_resources(collect_resources):
+            if get_collect_resources(arg=collect_resources, default=self._is_offline):
                 self.set_run_resource_logger()
 
     def _add_event(self, event: LoggedEventSpec):
@@ -256,7 +261,9 @@ class Run(RunClient):
         )
 
     @client_handler(check_no_op=True)
-    def get_artifacts_path(self, rel_path: str = None):
+    def get_artifacts_path(
+        self, rel_path: str = None, ensure_path: bool = False, is_dir: bool = False
+    ):
         """Get the absolute path of the specified artifact in the currently active run.
 
         If `rel_path` is specified, the artifact root path of the currently active
@@ -264,17 +271,28 @@ class Run(RunClient):
         If `rel_path` is not specified, the current root artifacts path configured
          for this instance will be returned: `root_run_artifacts_path`.
 
+        If `ensure_path` is provided, the path will be created. By default the path will
+        be created until the last part of the `rel_path` argument,
+        if `is_dir` is True, the complete `rel_path` is created.
+
         Args:
             rel_path: str, optional.
+            ensure_path: bool, optional, default True.
+            is_dir: bool, optional, default False.
         Returns:
             str, artifacts_path
         """
         if rel_path:
-            return os.path.join(self._artifacts_path, rel_path)
+            path = os.path.join(self._artifacts_path, rel_path)
+            if ensure_path:
+                check_or_create_path(path, is_dir=is_dir)
+            return path
         return self._artifacts_path
 
     @client_handler(check_no_op=True)
-    def get_outputs_path(self, rel_path: str = None):
+    def get_outputs_path(
+        self, rel_path: str = None, ensure_path: bool = True, is_dir: bool = False
+    ):
         """Get the absolute outputs path of the specified artifact in the currently active run.
 
         If `rel_path` is specified, the outputs artifact root path of the currently active
@@ -282,13 +300,22 @@ class Run(RunClient):
         If `rel_path` is not specified, the current root artifacts path configured
          for this instance will be returned: `root_run_artifacts_path/outputs`.
 
+        If `ensure_path` is provided, the path will be created. By default the path will
+        be created until the last part of the `rel_path` argument,
+        if `is_dir` is True, the complete `rel_path` is created.
+
         Args:
             rel_path: str, optional.
+            ensure_path: bool, optional, default True.
+            is_dir: bool, optional, default False.
         Returns:
             str, outputs_path
         """
         if rel_path:
-            return os.path.join(self._outputs_path, rel_path)
+            path = os.path.join(self._outputs_path, rel_path)
+            if ensure_path:
+                check_or_create_path(path, is_dir=is_dir)
+            return path
         return self._outputs_path
 
     @client_handler(check_no_op=True, can_log_outputs=True)
@@ -367,25 +394,10 @@ class Run(RunClient):
         elif settings.CLIENT_CONFIG.is_managed:
             self._register_exit_handler(self._wait)
 
-    def _log_has_events(self):
-        if not self._has_meta_key("has_events"):
-            self.log_meta(has_events=True)
-
-    def _log_has_metrics(self):
-        data = {}
-        if not self._has_meta_key("has_metrics"):
-            data["has_metrics"] = True
-        if not self._has_meta_key("has_events"):
-            data["has_events"] = True
-        if data:
-            self.log_meta(**data)
-
-    def _log_has_model(self):
-        if not self._has_meta_key("has_model"):
-            self.log_meta(has_model=True)
-
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_metric(self, name: str, value: float, step: int = None, timestamp=None):
+    def log_metric(
+        self, name: str, value: float, step: int = None, timestamp: datetime = None
+    ):
         """Logs a metric datapoint.
 
         ```python
@@ -402,7 +414,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_metrics()
 
         events = []
@@ -421,7 +433,7 @@ class Run(RunClient):
             self._results[name] = event_value
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_metrics(self, step=None, timestamp=None, **metrics):
+    def log_metrics(self, step: int = None, timestamp: datetime = None, **metrics):
         """Logs multiple metrics.
 
         ```python
@@ -441,7 +453,7 @@ class Run(RunClient):
 
         events = []
         for metric in metrics:
-            metric_name = events_processors.to_fqn_event(metric)
+            metric_name = to_fqn_name(metric)
             event_value = events_processors.metric(metrics[metric])
             if event_value == UNKNOWN:
                 continue
@@ -458,7 +470,15 @@ class Run(RunClient):
             self._add_events(events)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_roc_auc_curve(self, name, fpr, tpr, auc=None, step=None, timestamp=None):
+    def log_roc_auc_curve(
+        self,
+        name: str,
+        fpr,
+        tpr,
+        auc=None,
+        step: int = None,
+        timestamp: datetime = None,
+    ):
         """Logs ROC/AUC curve. This method expects an already processed values.
 
         ```python
@@ -472,7 +492,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         event_value = events_processors.roc_auc_curve(
@@ -489,7 +509,13 @@ class Run(RunClient):
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_sklearn_roc_auc_curve(
-        self, name, y_preds, y_targets, step=None, timestamp=None
+        self,
+        name: str,
+        y_preds,
+        y_targets,
+        step: int = None,
+        timestamp: datetime = None,
+        is_multi_class: bool = False,
     ):
         """Calculates and logs ROC/AUC curve using sklearn.
 
@@ -497,30 +523,53 @@ class Run(RunClient):
         >>> log_sklearn_roc_auc_curve("roc_value", y_preds, y_targets, step=10)
         ```
 
+        If you are logging a multi-class roc curve, you should set
+        `is_multi_class=True` to allow persisting curves for all classes.
+
         Args:
             name: str, name of the curve
             y_preds: List[float] or numpy.array
             y_targets: List[float] or numpy.array
             step: int, optional
             timestamp: datetime, optional
+            is_multi_class: bool, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
-        event_value = events_processors.sklearn_roc_auc_curve(
-            y_preds=y_preds,
-            y_targets=y_targets,
-        )
-        logged_event = LoggedEventSpec(
-            name=name,
-            kind=V1ArtifactKind.CURVE,
-            event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
-        )
-        self._add_event(logged_event)
+        def create_event(chart_name, y_p, y_t, pos_label=None):
+            event_value = events_processors.sklearn_roc_auc_curve(
+                y_preds=y_p,
+                y_targets=y_t,
+                pos_label=pos_label,
+            )
+            logged_event = LoggedEventSpec(
+                name=chart_name,
+                kind=V1ArtifactKind.CURVE,
+                event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
+            )
+            self._add_event(logged_event)
+
+        if is_multi_class:
+            import numpy as np
+
+            classes = np.unique(y_targets)
+            for i in range(len(classes)):
+                create_event(
+                    "{}_{}".format(name, i), y_preds[:, i], y_targets, classes[i]
+                )
+        else:
+            create_event(name, y_preds, y_targets)
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_pr_curve(
-        self, name, precision, recall, average_precision=None, step=None, timestamp=None
+        self,
+        name: str,
+        precision,
+        recall,
+        average_precision=None,
+        step: int = None,
+        timestamp: datetime = None,
     ):
         """Logs PR curve. This method expects an already processed values.
 
@@ -535,7 +584,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         event_value = events_processors.pr_curve(
@@ -551,12 +600,23 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_sklearn_pr_curve(self, name, y_preds, y_targets, step=None, timestamp=None):
+    def log_sklearn_pr_curve(
+        self,
+        name: str,
+        y_preds,
+        y_targets,
+        step: int = None,
+        timestamp: datetime = None,
+        is_multi_class: bool = False,
+    ):
         """Calculates and logs PR curve using sklearn.
 
         ```python
         >>> log_sklearn_pr_curve("pr_value", y_preds, y_targets, step=10)
         ```
+
+        If you are logging a multi-class roc curve, you should set
+        `is_multi_class=True` to allow persisting curves for all classes.
 
         Args:
             name: str, name of the event
@@ -564,23 +624,45 @@ class Run(RunClient):
             y_targets: List[float] or numpy.array
             step: int, optional
             timestamp: datetime, optional
+            is_multi_class: bool, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
-        event_value = events_processors.sklearn_pr_curve(
-            y_preds=y_preds,
-            y_targets=y_targets,
-        )
-        logged_event = LoggedEventSpec(
-            name=name,
-            kind=V1ArtifactKind.CURVE,
-            event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
-        )
-        self._add_event(logged_event)
+        def create_event(chart_name, y_p, y_t, pos_label=None):
+            event_value = events_processors.sklearn_pr_curve(
+                y_preds=y_p,
+                y_targets=y_t,
+                pos_label=pos_label,
+            )
+            logged_event = LoggedEventSpec(
+                name=chart_name,
+                kind=V1ArtifactKind.CURVE,
+                event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
+            )
+            self._add_event(logged_event)
+
+        if is_multi_class:
+            import numpy as np
+
+            classes = np.unique(y_targets)
+            for i in range(len(classes)):
+                create_event(
+                    "{}_{}".format(name, i), y_preds[:, i], y_targets, classes[i]
+                )
+        else:
+            create_event(name, y_preds, y_targets)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_curve(self, name, x, y, annotation=None, step=None, timestamp=None):
+    def log_curve(
+        self,
+        name: str,
+        x,
+        y,
+        annotation=None,
+        step: int = None,
+        timestamp: datetime = None,
+    ):
         """Logs a custom curve.
 
         ```python
@@ -595,7 +677,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         event_value = events_processors.curve(
@@ -612,7 +694,13 @@ class Run(RunClient):
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_image(
-        self, data, name=None, step=None, timestamp=None, rescale=1, dataformats="CHW"
+        self,
+        data,
+        name: str = None,
+        step: int = None,
+        timestamp: datetime = None,
+        rescale: int = 1,
+        dataformats: str = "CHW",
     ):
         """Logs an image.
 
@@ -639,7 +727,7 @@ class Run(RunClient):
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "image"
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -685,11 +773,11 @@ class Run(RunClient):
         self,
         tensor_image,
         tensor_boxes,
-        name=None,
-        step=None,
-        timestamp=None,
-        rescale=1,
-        dataformats="CHW",
+        name: str = None,
+        step: int = None,
+        timestamp: datetime = None,
+        rescale: int = 1,
+        dataformats: str = "CHW",
     ):
         """Logs an image with bounding boxes.
 
@@ -714,7 +802,7 @@ class Run(RunClient):
         self._log_has_events()
 
         name = name or "figure"
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
             kind=V1ArtifactKind.IMAGE,
@@ -740,7 +828,14 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_mpl_image(self, data, name=None, close=True, step=None, timestamp=None):
+    def log_mpl_image(
+        self,
+        data,
+        name: str = None,
+        close: bool = True,
+        step: int = None,
+        timestamp: datetime = None,
+    ):
         """Logs a matplotlib image.
 
         ```python
@@ -755,7 +850,7 @@ class Run(RunClient):
             timestamp: datetime, optional
         """
         name = name or "figure"
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         if isinstance(data, list):
             event_value = events_processors.figures_to_images(figures=data, close=close)
 
@@ -781,7 +876,13 @@ class Run(RunClient):
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_video(
-        self, data, name=None, fps=4, step=None, timestamp=None, content_type=None
+        self,
+        data,
+        name: str = None,
+        fps: int = 4,
+        step: int = None,
+        timestamp: datetime = None,
+        content_type: int = None,
     ):
         """Logs a video.
 
@@ -810,7 +911,7 @@ class Run(RunClient):
             content_type = get_path_extension(filepath=data) or content_type
         else:
             name = name or "video"
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -850,11 +951,11 @@ class Run(RunClient):
     def log_audio(
         self,
         data,
-        name=None,
-        sample_rate=44100,
-        step=None,
-        timestamp=None,
-        content_type=None,
+        name: str = None,
+        sample_rate: int = 44100,
+        step: int = None,
+        timestamp: datetime = None,
+        content_type: str = None,
     ):
         """Logs a audio.
 
@@ -880,7 +981,7 @@ class Run(RunClient):
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "audio"
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -917,7 +1018,9 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_text(self, name, text, step=None, timestamp=None):
+    def log_text(
+        self, name: str, text: str, step: int = None, timestamp: datetime = None
+    ):
         """Logs a text.
 
         ```python
@@ -930,7 +1033,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         logged_event = LoggedEventSpec(
@@ -941,7 +1044,9 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_html(self, name, html, step=None, timestamp=None):
+    def log_html(
+        self, name: str, html: str, step: int = None, timestamp: datetime = None
+    ):
         """Logs an html.
 
         ```python
@@ -954,7 +1059,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         logged_event = LoggedEventSpec(
@@ -965,7 +1070,9 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_np_histogram(self, name, values, counts, step=None, timestamp=None):
+    def log_np_histogram(
+        self, name: str, values, counts, step: int = None, timestamp: datetime = None
+    ):
         """Logs a numpy histogram.
 
         ```python
@@ -980,7 +1087,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         event_value = events_processors.np_histogram(values=values, counts=counts)
@@ -997,7 +1104,13 @@ class Run(RunClient):
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_histogram(
-        self, name, values, bins, max_bins=None, step=None, timestamp=None
+        self,
+        name: str,
+        values,
+        bins,
+        max_bins=None,
+        step: int = None,
+        timestamp: datetime = None,
     ):
         """Logs a histogram.
 
@@ -1018,7 +1131,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         event_value = events_processors.histogram(
@@ -1037,16 +1150,26 @@ class Run(RunClient):
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_model(
-        self, path, name=None, framework=None, spec=None, step=None, timestamp=None
+        self,
+        path: str,
+        name: str = None,
+        framework: str = None,
+        summary: Dict = None,
+        step: int = None,
+        timestamp: datetime = None,
+        rel_path: str = None,
+        versioned: bool = True,
     ):
-        """Logs a versioned model.
+        """Logs a model or a versioned model if versioned is true or a step value is provided.
 
-        This method will save several versions of the model and create an event file.
+        This method will:
+         * save the model
+         * several versions of the model and create an event file if the step is provided.
 
         > **Note 1**: This method does a couple things:
-          * It moves the model under the assets directory
-          * It creates an event file and
-          * It creates a lineage reference to the event file
+          * It moves the model under the outputs or the assets directory if the step is provided
+          * If the step is provided it creates an event file
+          * It creates a lineage reference to the model or to the event file if the step is provided
 
         > **Note 2**: If you need to have more control over where the model should be saved and
         only record a lineage information of that path you can use `log_model_ref`.
@@ -1055,92 +1178,77 @@ class Run(RunClient):
             path: str, path to the model to log
             name: str, name
             framework: str, optional ,name of the framework
-            spec: Dict, optional, key, value information about the model
+            summary: Dict, optional, key, value information about the model
             step: int, optional
             timestamp: datetime, optional
+            rel_path: str, relative path where to store the model
+            versioned: bool, to enable the versioned behavior for storing the model
         """
-        self._log_has_model()
-
         name = name or get_base_filename(path)
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         ext = None
         if os.path.isfile(path):
             ext = get_path_extension(filepath=path)
 
-        asset_path = get_asset_path(
-            run_path=self._artifacts_path,
-            kind=V1ArtifactKind.MODEL,
-            name=name,
-            step=step,
-            ext=ext,
-        )
-        asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
-        model = events_processors.model_path(
-            from_path=path,
-            asset_path=asset_path,
-            framework=framework,
-            spec=spec,
-            asset_rel_path=asset_rel_path,
-        )
-        logged_event = LoggedEventSpec(
-            name=name,
-            kind=V1ArtifactKind.MODEL,
-            event=V1Event.make(timestamp=timestamp, step=step, model=model),
-        )
-        self._add_event(logged_event)
-
-    @client_handler(check_no_op=True, can_log_events=True)
-    def log_dataframe(
-        self, path, name=None, content_type=None, step=None, timestamp=None
-    ):
-        """Logs a dataframe.
-
-        Args:
-            path: path to the dataframe saved as file
-            name: str, optional, if not provided the name of the file will be used
-            content_type: str, optional
-            step: int, optional
-            timestamp: datetime, optional
-        """
-        self._log_has_events()
-
-        name = name or get_base_filename(path)
-        name = events_processors.to_fqn_event(name)
-        ext = get_path_extension(filepath=path)
-
-        asset_path = get_asset_path(
-            run_path=self._artifacts_path,
-            kind=V1ArtifactKind.DATAFRAME,
-            name=name,
-            step=step,
-            ext=ext,
-        )
-        asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
-        df = events_processors.dataframe_path(
-            from_path=path,
-            asset_path=asset_path,
-            content_type=content_type,
-            asset_rel_path=asset_rel_path,
-        )
-        logged_event = LoggedEventSpec(
-            name=name,
-            kind=V1ArtifactKind.DATAFRAME,
-            event=V1Event.make(timestamp=timestamp, step=step, dataframe=df),
-        )
-        self._add_event(logged_event)
+        if versioned or step is not None:
+            self._log_has_model()
+            asset_path = get_asset_path(
+                run_path=self._artifacts_path,
+                kind=V1ArtifactKind.MODEL,
+                name=name,
+                step=step,
+                ext=ext,
+            )
+            asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
+            model = events_processors.model_path(
+                from_path=path,
+                asset_path=asset_path,
+                framework=framework,
+                spec=summary,
+                asset_rel_path=asset_rel_path,
+            )
+            logged_event = LoggedEventSpec(
+                name=name,
+                kind=V1ArtifactKind.MODEL,
+                event=V1Event.make(timestamp=timestamp, step=step, model=model),
+            )
+            self._add_event(logged_event)
+        else:
+            asset_path = self.get_outputs_path(rel_path, is_dir=True)
+            copy_file_or_dir_path(path, asset_path, True)
+            asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
+            self.log_model_ref(
+                path=asset_path,
+                name=name,
+                framework=framework,
+                summary=summary,
+                rel_path=asset_rel_path,
+            )
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_artifact(
-        self, path, name=None, kind=None, step=None, timestamp=None, **kwargs
+        self,
+        path: str,
+        name: str = None,
+        kind: str = None,
+        summary: Dict = None,
+        step: int = None,
+        timestamp: datetime = None,
+        rel_path: str = None,
+        versioned: bool = True,
+        **kwargs,
     ):
-        """Logs a versioned generic artifact.
+        """Logs a generic artifact or a versioned generic artifact
+        if versioned is true or a step value is provided.
 
-        This method will save several versions of the artifact and create an event file.
+        This method will:
+         * save the artifact
+         * several versions of the artifact and create an event file if the step is provided.
 
         > **Note 1**: This method does a couple things:
-          * It moves the artifact under the assets directory
-          * It creates an event file and
-          * It creates a lineage reference to the event file
+          * It moves the artifact under the outputs or the assets directory if the step is provided
+          * If the step is provided it creates an event file
+          * It creates a lineage reference to the artifact or to the event file if the step is provided
 
         > **Note 2**: If you need to have more control over where the artifact should be saved and
             only record a lineage information of that path you can use `log_artifact_ref`.
@@ -1149,41 +1257,113 @@ class Run(RunClient):
             path: str, path to the artifact
             name: str, optional, if not provided the name of the file will be used
             kind: optional, str
+            summary: Dict, optional, additional summary information to log about data
+                in the lineage table.
+            step: int, optional
+            timestamp: datetime, optional
+            rel_path: str, relative path where to store the artifacts
+            versioned: bool, to enable the versioned behavior for storing the artifact
+        """
+        name = name or get_base_filename(path)
+        name = to_fqn_name(name)
+        ext = get_path_extension(filepath=path)
+        kind = kind or kwargs.get("artifact_kind")  # Backwards compatibility
+        kind = kind or V1ArtifactKind.FILE
+
+        if versioned and step is not None:
+            self._log_has_events()
+            asset_path = get_asset_path(
+                run_path=self._artifacts_path,
+                kind=kind,
+                name=name,
+                step=step,
+                ext=ext,
+            )
+            asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
+
+            artifact = events_processors.artifact_path(
+                from_path=path,
+                asset_path=asset_path,
+                kind=kind,
+                asset_rel_path=asset_rel_path,
+            )
+            logged_event = LoggedEventSpec(
+                name=name,
+                kind=kind,
+                event=V1Event.make(timestamp=timestamp, step=step, artifact=artifact),
+            )
+            self._add_event(logged_event)
+        else:
+            asset_path = self.get_outputs_path(rel_path, is_dir=True)
+            copy_file_or_dir_path(path, asset_path, True)
+            asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
+            self.log_artifact_ref(
+                path=asset_path,
+                name=name,
+                kind=kind,
+                summary=summary,
+                rel_path=asset_rel_path,
+            )
+
+    @client_handler(check_no_op=True, can_log_events=True)
+    def log_dataframe(
+        self,
+        df,
+        name: str,
+        content_type: str = V1ArtifactKind.CSV,
+        step: int = None,
+        timestamp: datetime = None,
+    ):
+        """Logs a dataframe.
+
+        Args:
+            df: the dataframe to save
+            name: str, optional, if not provided the name of the file will be used
+            content_type: str, optional, csv or html.
             step: int, optional
             timestamp: datetime, optional
         """
         self._log_has_events()
 
-        name = name or get_base_filename(path)
-        name = events_processors.to_fqn_event(name)
-        ext = get_path_extension(filepath=path)
-        kind = kind or kwargs.get("artifact_kind")  # Backwards compatibility
-        kind = kind or V1ArtifactKind.FILE
-
+        name = to_fqn_name(name)
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
-            kind=kind,
+            kind=V1ArtifactKind.DATAFRAME,
             name=name,
             step=step,
-            ext=ext,
+            ext=content_type,
         )
         asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
-
-        artifact = events_processors.artifact_path(
-            from_path=path,
-            asset_path=asset_path,
-            kind=kind,
-            asset_rel_path=asset_rel_path,
-        )
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, name)
+            path = "{}.{}".format(path, content_type)
+            if content_type == V1ArtifactKind.CSV:
+                df.to_csv(path)
+            elif content_type == V1ArtifactKind.HTML:
+                df.to_html(path)
+            else:
+                raise ValueError(
+                    "The content_type `{}` is not supported "
+                    "by the method log_dataframe. "
+                    "This method supports `csv` or `html`.".format(content_type)
+                )
+            df = events_processors.dataframe_path(
+                from_path=path,
+                asset_path=asset_path,
+                content_type=content_type,
+                asset_rel_path=asset_rel_path,
+            )
         logged_event = LoggedEventSpec(
             name=name,
-            kind=kind,
-            event=V1Event.make(timestamp=timestamp, step=step, artifact=artifact),
+            kind=V1ArtifactKind.DATAFRAME,
+            event=V1Event.make(timestamp=timestamp, step=step, dataframe=df),
         )
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_plotly_chart(self, name, figure, step=None, timestamp=None):
+    def log_plotly_chart(
+        self, name: str, figure, step: int = None, timestamp: datetime = None
+    ):
         """Logs a plotly chart/figure.
 
         Args:
@@ -1192,7 +1372,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         chart = events_processors.plotly_chart(figure=figure)
@@ -1204,7 +1384,9 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_bokeh_chart(self, name, figure, step=None, timestamp=None):
+    def log_bokeh_chart(
+        self, name: str, figure, step: int = None, timestamp: datetime = None
+    ):
         """Logs a bokeh chart/figure.
 
         Args:
@@ -1213,7 +1395,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         chart = events_processors.bokeh_chart(figure=figure)
@@ -1225,7 +1407,9 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_altair_chart(self, name, figure, step=None, timestamp=None):
+    def log_altair_chart(
+        self, name: str, figure, step: int = None, timestamp: datetime = None
+    ):
         """Logs a vega/altair chart/figure.
 
         Args:
@@ -1234,7 +1418,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         chart = events_processors.altair_chart(figure=figure)
@@ -1246,7 +1430,9 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
-    def log_mpl_plotly_chart(self, name, figure, step=None, timestamp=None):
+    def log_mpl_plotly_chart(
+        self, name: str, figure, step: int = None, timestamp: datetime = None
+    ):
         """Logs a matplotlib figure to plotly figure.
 
         Args:
@@ -1255,7 +1441,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = events_processors.to_fqn_event(name)
+        name = to_fqn_name(name)
         self._log_has_events()
 
         chart = events_processors.mpl_plotly_chart(figure=figure)

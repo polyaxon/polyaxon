@@ -22,12 +22,10 @@ try:
     from fastai.learner import Callback
     from fastai.vision.all import *
 except ImportError:
-    raise PolyaxonClientException("Fastai is required to use PolyaxonFastaiCallback")
+    raise PolyaxonClientException("Fastai is required to use PolyaxonCallback")
 
 
-class PolyaxonFastaiCallback(Callback):
-    """Log losses, metrics, model weights, model architecture summary to polyaxon"""
-
+class PolyaxonCallback(Callback):
     def __init__(self, log_model=False, run=None):
         self.log_model = log_model
         self.plx_run = tracking.get_or_create_run(run)
@@ -44,9 +42,7 @@ class PolyaxonFastaiCallback(Callback):
             print("Did not log all properties to Polyaxon.")
 
         try:
-            model_summary_path = "{}/model_summary.txt".format(
-                self.plx_run.get_outputs_path()
-            )
+            model_summary_path = self.plx_run.get_outputs_path("model_summary.txt")
             with open(model_summary_path, "w") as g:
                 g.write(repr(self.learn.model))
             self.plx_run.log_file_ref(path=model_summary_path, name="model_summary")
@@ -71,7 +67,7 @@ class PolyaxonFastaiCallback(Callback):
             metrics = {
                 "smooth_loss": to_detach(self.smooth_loss.clone()),
                 "raw_loss": to_detach(self.loss.clone()),
-                "train_iter": self.learn.train_iter,
+                "train_iter": self.train_iter,
             }
             for i, h in enumerate(self.learn.opt.hypers):
                 for k, v in h.items():
@@ -97,10 +93,17 @@ class PolyaxonFastaiCallback(Callback):
                     self.learn.path / self.learn.model_dir,
                     ext=".pth",
                 )
+                self.plx_run.log_model(
+                    _file, framework="fastai", step=self.learn.save_model.epoch
+                )
             else:
                 _file = join_path_file(
                     self.learn.save_model.fname,
                     self.learn.path / self.learn.model_dir,
                     ext=".pth",
                 )
-            self.plx_run.log_model(_file, framework="fastai", step=self._plx_step)
+                self.plx_run.log_model(_file, framework="fastai", versioned=False)
+
+
+# alias
+PolyaxonFastaiCallback = PolyaxonCallback

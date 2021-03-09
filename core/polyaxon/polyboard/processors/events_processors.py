@@ -15,9 +15,7 @@
 # limitations under the License.
 import io
 import os
-import re
 import shutil
-import unicodedata
 
 from typing import Dict, List
 
@@ -66,7 +64,12 @@ def copy_dir_path(from_path: str, asset_path: str):
     shutil.copytree(from_path, asset_path)
 
 
-def copy_file_or_dir_path(from_path: str, asset_path: str):
+def copy_file_or_dir_path(from_path: str, asset_path: str, use_basename: bool = False):
+    if use_basename:
+        dir_name = os.path.basename(os.path.normpath(from_path))
+        asset_path = (
+            os.path.join(asset_path, dir_name) if asset_path is not None else dir_name
+        )
     check_or_create_path(asset_path, is_dir=False)
     if os.path.isfile(from_path):
         shutil.copy(from_path, asset_path)
@@ -453,7 +456,7 @@ def roc_auc_curve(fpr, tpr, auc=None):
     )
 
 
-def sklearn_roc_auc_curve(y_preds, y_targets):
+def sklearn_roc_auc_curve(y_preds, y_targets, pos_label=None):
     try:
         from sklearn.metrics import auc, roc_curve
     except ImportError:
@@ -467,7 +470,7 @@ def sklearn_roc_auc_curve(y_preds, y_targets):
         y_pred = y_preds.numpy()
     except AttributeError:
         y_pred = y_preds
-    fpr, tpr, _ = roc_curve(y_true, y_pred)
+    fpr, tpr, _ = roc_curve(y_true, y_pred, pos_label=pos_label)
     auc_score = auc(fpr, tpr)
     return V1EventCurve(
         kind=V1EventCurveKind.ROC,
@@ -486,7 +489,7 @@ def pr_curve(precision, recall, average_precision=None):
     )
 
 
-def sklearn_pr_curve(y_preds, y_targets):
+def sklearn_pr_curve(y_preds, y_targets, pos_label=None):
     try:
         from sklearn.metrics import average_precision_score, precision_recall_curve
     except ImportError:
@@ -501,7 +504,7 @@ def sklearn_pr_curve(y_preds, y_targets):
     except AttributeError:
         y_pred = y_preds
 
-    precision, recall, _ = precision_recall_curve(y_true, y_pred)
+    precision, recall, _ = precision_recall_curve(y_true, y_pred, pos_label=pos_label)
     ap = average_precision_score(y_true, y_pred)
     return V1EventCurve(
         kind=V1EventCurveKind.PR,
@@ -787,17 +790,3 @@ def metrics_dict_to_list(metrics: Dict) -> List:
             )
         )
     return results
-
-
-def to_fqn_event(name: str) -> str:
-    if not name:
-        raise ValueError("A name is required to process events.")
-
-    value = str(name)
-    value = (
-        unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
-    )
-    value = re.sub(r"[^\w\\\/\.\s-]", "", value).strip()
-    value = re.sub(r"[\\\/]+", "__", value)
-    value = re.sub(r"[-\.\s]+", "-", value)
-    return value

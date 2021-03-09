@@ -54,6 +54,9 @@ type V1Run struct {
 	// Format: date-time
 	FinishedAt strfmt.DateTime `json:"finished_at,omitempty"`
 
+	// Optional graph defintion
+	Graph interface{} `json:"graph,omitempty"`
+
 	// Optional inputs of this entity
 	Inputs interface{} `json:"inputs,omitempty"`
 

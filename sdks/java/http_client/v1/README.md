@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.6.1
+- API version: 1.7.0
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.6.1</version>
+  <version>1.7.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.6.1"
+compile "org.openapitools:openapi-java-client:1.7.0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.6.1.jar`
+* `target/openapi-java-client-1.7.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -135,6 +135,7 @@ Class | Method | HTTP request | Description
 *AuthV1Api* | [**resetPassword**](docs/AuthV1Api.md#resetPassword) | **POST** /api/v1/auth/reset-password | Reset password
 *AuthV1Api* | [**resetPasswordConfirm**](docs/AuthV1Api.md#resetPasswordConfirm) | **POST** /api/v1/auth/reset-password-confirm | Reset password confirm
 *AuthV1Api* | [**signup**](docs/AuthV1Api.md#signup) | **POST** /api/v1/auth/signup | Signup
+*AuthV1Api* | [**trial**](docs/AuthV1Api.md#trial) | **POST** /api/v1/auth/trial | Trial Start
 *ComponentHubV1Api* | [**archiveComponentHub**](docs/ComponentHubV1Api.md#archiveComponentHub) | **POST** /api/v1/{owner}/hub/{name}/archive | Archive hub component
 *ComponentHubV1Api* | [**bookmarkComponentHub**](docs/ComponentHubV1Api.md#bookmarkComponentHub) | **POST** /api/v1/{owner}/hub/{name}/bookmark | Bookmark component hub
 *ComponentHubV1Api* | [**createComponentHub**](docs/ComponentHubV1Api.md#createComponentHub) | **POST** /api/v1/{owner}/hub/create | Create hub component
@@ -567,6 +568,7 @@ Class | Method | HTTP request | Description
  - [V1Template](docs/V1Template.md)
  - [V1Termination](docs/V1Termination.md)
  - [V1Token](docs/V1Token.md)
+ - [V1TrialStart](docs/V1TrialStart.md)
  - [V1TriggerPolicy](docs/V1TriggerPolicy.md)
  - [V1TruncationStoppingPolicy](docs/V1TruncationStoppingPolicy.md)
  - [V1UriType](docs/V1UriType.md)

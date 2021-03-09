@@ -18,6 +18,7 @@ import pytest
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1ClaimConnection
+from polyaxon.containers import contexts as container_contexts
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.contexts import resolve_contexts
@@ -33,6 +34,7 @@ class V1CloningKin(object):
 @pytest.mark.polypod_mark
 class TestResolveContexts(BaseTestCase):
     def test_resolver_default_contexts(self):
+        context_root = container_contexts.CONTEXT_ROOT
         compiled_operation = V1CompiledOperation.read(
             {
                 "version": 1.1,
@@ -69,8 +71,8 @@ class TestResolveContexts(BaseTestCase):
                 "project_name": "project",
                 "project_uuid": "uuid",
                 "run_info": "user.project.runs.uuid",
-                "context_path": "/plx-context",
-                "artifacts_path": "/plx-context/artifacts",
+                "context_path": context_root,
+                "artifacts_path": "{}/artifacts".format(context_root),
                 "name": "run",
                 "uuid": "uuid",
                 "namespace": "test",
@@ -89,6 +91,7 @@ class TestResolveContexts(BaseTestCase):
         }
 
     def test_resolver_init_and_connections_contexts(self):
+        context_root = container_contexts.CONTEXT_ROOT
         store = V1ConnectionType(
             name="test_claim",
             kind=V1ConnectionKind.VOLUME_CLAIM,
@@ -142,8 +145,8 @@ class TestResolveContexts(BaseTestCase):
                 "project_uuid": "uuid",
                 "name": "run",
                 "uuid": "uuid",
-                "context_path": "/plx-context",
-                "artifacts_path": "/plx-context/artifacts",
+                "context_path": context_root,
+                "artifacts_path": "{}/artifacts".format(context_root),
                 "run_artifacts_path": "/claim/path/test",
                 "run_outputs_path": "/claim/path/test/outputs",
                 "namespace": "test",
@@ -163,6 +166,7 @@ class TestResolveContexts(BaseTestCase):
         }
 
     def test_resolver_outputs_collections(self):
+        context_root = container_contexts.CONTEXT_ROOT
         store = V1ConnectionType(
             name="test_claim",
             kind=V1ConnectionKind.VOLUME_CLAIM,
@@ -213,10 +217,10 @@ class TestResolveContexts(BaseTestCase):
                 "name": "run",
                 "uuid": "uuid",
                 "run_info": "user.project.runs.uuid",
-                "context_path": "/plx-context",
-                "artifacts_path": "/plx-context/artifacts",
-                "run_artifacts_path": "/plx-context/artifacts/test",
-                "run_outputs_path": "/plx-context/artifacts/test/outputs",
+                "context_path": context_root,
+                "artifacts_path": "{}/artifacts".format(context_root),
+                "run_artifacts_path": "{}/artifacts/test".format(context_root),
+                "run_outputs_path": "{}/artifacts/test/outputs".format(context_root),
                 "namespace": "test",
                 "iteration": 12,
                 "created_at": None,
@@ -233,6 +237,7 @@ class TestResolveContexts(BaseTestCase):
         }
 
     def test_resolver_default_service_ports(self):
+        context_root = container_contexts.CONTEXT_ROOT
         compiled_operation = V1CompiledOperation.read(
             {
                 "version": 1.1,
@@ -275,10 +280,10 @@ class TestResolveContexts(BaseTestCase):
                 "run_info": "user.project.runs.uuid",
                 "name": "run",
                 "uuid": "uuid",
-                "context_path": "/plx-context",
-                "artifacts_path": "/plx-context/artifacts",
-                "run_artifacts_path": "/plx-context/artifacts/test",
-                "run_outputs_path": "/plx-context/artifacts/test/outputs",
+                "context_path": context_root,
+                "artifacts_path": "{}/artifacts".format(context_root),
+                "run_artifacts_path": "{}/artifacts/test".format(context_root),
+                "run_outputs_path": "{}/artifacts/test/outputs".format(context_root),
                 "namespace": "test",
                 "iteration": 12,
                 "ports": [1212, 1234],

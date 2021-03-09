@@ -57,11 +57,14 @@ from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.date_utils import file_modified_since
 from polyaxon.utils.formatting import Printer
+from polyaxon.utils.fqn_utils import to_fqn_name
 from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.http_utils import absolute_uri
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import (
+    check_or_create_path,
     delete_path,
+    get_base_filename,
     get_dirs_under_path,
     get_files_in_path_context,
     get_path,
@@ -324,6 +327,8 @@ class RunClient:
             self._run_data.name = name
             self._run_data.description = description
             self._run_data.tags = tags
+            self._run_data.owner = self._owner
+            self._run_data.project = self._project
             if not self._run_uuid:
                 self._run_uuid = uuid.uuid4().hex
             self.run_data.uuid = self._run_uuid
@@ -1110,6 +1115,7 @@ class RunClient:
             async_req: bool, optional, default: False, execute request asynchronously.
             inputs: **kwargs, e.g. param1=value1, param2=value2, ...
         """
+        inputs = {to_fqn_name(k): v for k, v in inputs.items()}
         patch_dict = {"inputs": inputs}
         if reset is False:
             patch_dict["merge"] = True
@@ -1131,6 +1137,7 @@ class RunClient:
             async_req: bool, optional, default: False, execute request asynchronously.
             outputs: **kwargs, e.g. output1=value1, metric2=value2, ...
         """
+        outputs = {to_fqn_name(k): v for k, v in outputs.items()}
         patch_dict = {"outputs": outputs}
         if reset is False:
             patch_dict["merge"] = True
@@ -1164,6 +1171,7 @@ class RunClient:
             async_req: bool, optional, default: False, execute request asynchronously.
             meta: **kwargs, e.g. concurrency=10, has_flag=True, ...
         """
+        meta = {to_fqn_name(k): v for k, v in meta.items()}
         patch_dict = {"meta_info": meta}
         if reset is False:
             patch_dict["merge"] = True
@@ -1277,6 +1285,23 @@ class RunClient:
             message=message,
         )
 
+    def _log_has_events(self):
+        if not self._has_meta_key("has_events"):
+            self.log_meta(has_events=True)
+
+    def _log_has_metrics(self):
+        data = {}
+        if not self._has_meta_key("has_metrics"):
+            data["has_metrics"] = True
+        if not self._has_meta_key("has_events"):
+            data["has_events"] = True
+        if data:
+            self.log_meta(**data)
+
+    def _log_has_model(self):
+        if not self._has_meta_key("has_model"):
+            self.log_meta(has_model=True)
+
     @client_handler(check_no_op=True)
     def log_code_ref(self, code_ref: Dict = None, is_input: bool = True):
         """Logs code reference as a
@@ -1384,13 +1409,13 @@ class RunClient:
             summary["hash"] = hash
         elif content is not None:
             summary["hash"] = hash_value(content)
-        name = name or os.path.basename(path)
+        name = name or get_base_filename(path)
         rel_path = get_rel_asset_path(
             path=path, rel_path=rel_path, is_offline=self._is_offline
         )
         if name:
             artifact_run = V1RunArtifact(
-                name=name,
+                name=to_fqn_name(name),
                 kind=kind,
                 path=rel_path,
                 summary=summary,
@@ -1403,6 +1428,7 @@ class RunClient:
         self,
         path: str,
         name: str = None,
+        framework: str = None,
         summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
@@ -1428,14 +1454,18 @@ class RunClient:
         Args:
             path: str, filepath, the name is extracted from the filepath.
             name: str, if the name is passed it will be used instead of the filename from the path.
+            framework: str, optional ,name of the framework
             summary: Dict, optional, additional summary information to log about data
                 in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
+        summary = summary or {}
+        summary["framework"] = framework
+        self._log_has_model()
         return self.log_artifact_ref(
             path=path,
-            kind=V1ArtifactKind.FILE,
+            kind=V1ArtifactKind.MODEL,
             name=name,
             summary=summary,
             is_input=is_input,
@@ -1504,7 +1534,7 @@ class RunClient:
         summary["path"] = path
         if name:
             artifact_run = V1RunArtifact(
-                name=name,
+                name=to_fqn_name(name),
                 kind=V1ArtifactKind.DIR,
                 path=rel_path,
                 summary=summary,
@@ -1540,7 +1570,7 @@ class RunClient:
                 path=path, rel_path=rel_path, is_offline=self._is_offline
             )
             artifact_run = V1RunArtifact(
-                name=name,
+                name=to_fqn_name(name),
                 kind=V1ArtifactKind.TENSORBOARD,
                 path=rel_path,
                 summary={"path": path},
@@ -1611,7 +1641,9 @@ class RunClient:
         Returns:
             List[V1Run], list of run instances.
         """
-        params = get_query_params(limit=limit, offset=offset, query=query, sort=sort)
+        params = get_query_params(
+            limit=limit or 20, offset=offset, query=query, sort=sort
+        )
         return self.client.runs_v1.list_runs(self.owner, self.project, **params)
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1723,6 +1755,8 @@ class RunClient:
                 "Make sure that the offline mode is enabled and that run_data is provided."
             )
             return
+        if not os.path.exists(artifacts_path):
+            check_or_create_path(artifacts_path, is_dir=True)
         run_path = "{}/run_data.json".format(artifacts_path)
         with open(run_path, "w") as config_file:
             config_file.write(

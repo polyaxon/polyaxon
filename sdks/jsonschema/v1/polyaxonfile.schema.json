@@ -8328,7 +8328,7 @@
           "title": "Optional dict of params",
           "type": "object"
         },
-        "patch_strategy": {
+        "patchStrategy": {
           "$ref": "#/definitions/v1PatchStrategy",
           "title": "Optional patch strategy, default post_merge"
         },
@@ -9200,6 +9200,10 @@
           "format": "date-time",
           "title": "Optional last time the entity was started",
           "type": "string"
+        },
+        "graph": {
+          "title": "Optional graph defintion",
+          "type": "object"
         },
         "inputs": {
           "title": "Optional inputs of this entity",
@@ -10268,6 +10272,37 @@
     },
     "v1Toleration": {
       "title": "Placeholder for Toleration",
+      "type": "object"
+    },
+    "v1TrialStart": {
+      "properties": {
+        "details": {
+          "title": "Details",
+          "type": "object"
+        },
+        "email": {
+          "title": "Email",
+          "type": "string"
+        },
+        "name": {
+          "title": "name",
+          "type": "string"
+        },
+        "organization": {
+          "title": "Organization",
+          "type": "string"
+        },
+        "plan": {
+          "title": "Plan",
+          "type": "string"
+        },
+        "seats": {
+          "format": "int32",
+          "title": "Sets",
+          "type": "integer"
+        }
+      },
+      "title": "Trial start",
       "type": "object"
     },
     "v1TriggerPolicy": {

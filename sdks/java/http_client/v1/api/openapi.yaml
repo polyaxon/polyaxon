@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.6.1
+  version: 1.7.0
 servers:
 - url: /
 security:
@@ -365,6 +365,49 @@ paths:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
       summary: Login
+      tags:
+      - AuthV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /api/v1/auth/trial:
+    post:
+      operationId: Trial
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1TrialStart'
+        required: true
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Trial Start
       tags:
       - AuthV1
       x-codegen-request-body-name: body
@@ -20589,6 +20632,7 @@ components:
             bookmarked: true
             live_state: 5
             readme: readme
+            graph: '{}'
             tags:
             - tags
             - tags
@@ -20652,6 +20696,7 @@ components:
             bookmarked: true
             live_state: 5
             readme: readme
+            graph: '{}'
             tags:
             - tags
             - tags
@@ -20717,6 +20762,7 @@ components:
             bookmarked: true
             live_state: 5
             readme: readme
+            graph: '{}'
             tags:
             - tags
             - tags
@@ -20780,6 +20826,7 @@ components:
             bookmarked: true
             live_state: 5
             readme: readme
+            graph: '{}'
             tags:
             - tags
             - tags
@@ -20868,6 +20915,7 @@ components:
           bookmarked: true
           live_state: 5
           readme: readme
+          graph: '{}'
           tags:
           - tags
           - tags
@@ -20929,6 +20977,7 @@ components:
           bookmarked: true
           live_state: 5
           readme: readme
+          graph: '{}'
           tags:
           - tags
           - tags
@@ -22251,7 +22300,7 @@ components:
             Optional a run section to override  the content of the run in the template
             should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
           type: object
-        patch_strategy:
+        patchStrategy:
           $ref: '#/components/schemas/v1PatchStrategy'
         isPreset:
           title: Optional flag to mark this specification as preset
@@ -23308,6 +23357,7 @@ components:
         bookmarked: true
         live_state: 5
         readme: readme
+        graph: '{}'
         tags:
         - tags
         - tags
@@ -23437,6 +23487,10 @@ components:
           type: string
         settings:
           $ref: '#/components/schemas/v1RunSettings'
+        graph:
+          properties: {}
+          title: Optional graph defintion
+          type: object
       title: Run specification
       type: object
     v1RunArtifact:
@@ -23538,6 +23592,7 @@ components:
           bookmarked: true
           live_state: 5
           readme: readme
+          graph: '{}'
           tags:
           - tags
           - tags
@@ -23601,6 +23656,7 @@ components:
           bookmarked: true
           live_state: 5
           readme: readme
+          graph: '{}'
           tags:
           - tags
           - tags
@@ -31134,6 +31190,30 @@ components:
       type: object
     v1Toleration:
       title: Placeholder for Toleration
+      type: object
+    v1TrialStart:
+      properties:
+        name:
+          title: name
+          type: string
+        email:
+          title: Email
+          type: string
+        organization:
+          title: Organization
+          type: string
+        plan:
+          title: Plan
+          type: string
+        seats:
+          format: int32
+          title: Sets
+          type: integer
+        details:
+          properties: {}
+          title: Details
+          type: object
+      title: Trial start
       type: object
     v1TriggerPolicy:
       default: all_succeeded

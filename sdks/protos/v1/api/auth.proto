@@ -18,6 +18,7 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 // Auth specification
@@ -136,4 +137,25 @@ message ListTokenResponse {
 
     // Next page
     string next = 4;
+}
+
+// Trial start
+message TrialStart{
+  // name
+  string name = 1;
+
+  // Email
+  string email = 2;
+
+  // Organization
+  string organization = 3;
+
+  // Plan
+  string plan = 4;
+
+  // Sets
+  int32 seats = 5;
+
+  // Details
+  google.protobuf.Struct details = 6;
 }

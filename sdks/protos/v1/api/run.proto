@@ -180,6 +180,9 @@ message Run {
 
     // Optional settings
     RunSettings settings = 33;
+
+    // Optional graph defintion
+    google.protobuf.Struct graph = 34;
 }
 
 // Operation creation

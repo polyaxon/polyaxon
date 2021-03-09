@@ -20,10 +20,10 @@ from polyaxon.exceptions import PolyaxonClientException
 try:
     from fastai.callbacks import TrackerCallback
 except ImportError:
-    raise PolyaxonClientException("Fastai is required to use PolyaxonFastaiCallback")
+    raise PolyaxonClientException("Fastai is required to use PolyaxonCallback")
 
 
-class PolyaxonFastaiCallback(TrackerCallback):
+class PolyaxonCallback(TrackerCallback):
     def __init__(self, learn, run=None, monitor="auto", mode="auto"):
         super().__init__(learn, monitor=monitor, mode=mode)
         if monitor is None:

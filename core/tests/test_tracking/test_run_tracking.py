@@ -256,11 +256,15 @@ class TestRunTracking(TestEnvVarsCase):
         with patch("polyaxon.tracking.run.EventFileWriter") as event_call:
             with patch("polyaxon.tracking.run.ResourceFileWriter") as resource_call:
                 with patch("polyaxon.tracking.run.Run.refresh_data") as refresh_call:
-                    run = Run(project="owner-test.test", run_uuid="uuid")
+                    with patch(
+                        "polyaxon.tracking.run.Run._set_exit_handler"
+                    ) as exit_call:
+                        run = Run(project="owner-test.test", run_uuid="uuid")
 
         assert refresh_call.call_count == 1
         assert event_call.call_count == 1
         assert resource_call.call_count == 1
+        assert exit_call.call_count == 1
         assert run.get_artifacts_path() == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uuid")
         assert run.get_outputs_path() == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uuid")
 
@@ -289,10 +293,14 @@ class TestRunTracking(TestEnvVarsCase):
                 "polyaxon.tracking.run.Run.set_run_resource_logger"
             ) as resource_call:
                 with patch("polyaxon.tracking.run.Run.refresh_data") as refresh_call:
-                    Run(project="test.test", run_uuid="uuid")
+                    with patch(
+                        "polyaxon.tracking.run.Run._set_exit_handler"
+                    ) as exit_call:
+                        Run(project="test.test", run_uuid="uuid")
         assert event_call.call_count == 1
         assert resource_call.call_count == 1
         assert refresh_call.call_count == 1
+        assert exit_call.call_count == 1
 
         # Set run info
         os.environ[POLYAXON_KEYS_RUN_INSTANCE] = "user.project_bar.runs.uid"
@@ -345,6 +353,7 @@ class TestRunLogging(TestEnvVarsCase):
     def setUp(self):
         super().setUp()
         self.run_path = tempfile.mkdtemp()
+        self.run_outputs_path = tempfile.mkdtemp()
         settings.CLIENT_CONFIG.is_managed = False
         os.environ[POLYAXON_KEYS_COLLECT_ARTIFACTS] = "false"
         os.environ[POLYAXON_KEYS_COLLECT_RESOURCES] = "false"
@@ -354,6 +363,7 @@ class TestRunLogging(TestEnvVarsCase):
         self.event_logger = EventFileWriter(run_path=self.run_path)
         self.resource_logger = ResourceFileWriter(run_path=self.run_path)
         self.run._artifacts_path = self.run_path
+        self.run._outputs_path = self.run_outputs_path
         self.run._event_logger = self.event_logger
         self.run._resource_logger = self.resource_logger
         assert os.path.exists(get_event_path(self.run_path)) is True
@@ -1091,10 +1101,80 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.MODEL))
             is False
         )
-        model_file = tempfile.mkdtemp() + "model.pkl"
+        assert os.path.exists(self.run.get_outputs_path(V1ArtifactKind.MODEL)) is False
+        model_file = tempfile.mkdtemp() + "/model.pkl"
+        self.touch(model_file)
+        with patch("polyaxon.tracking.run.Run.log_model_ref") as log_model:
+            self.run.log_model(
+                name="my_model", path=model_file, framework="scikit", versioned=False
+            )
+        assert log_model.call_count == 1
+        self.event_logger.flush()
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.MODEL))
+            is False
+        )
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.MODEL))
+            is False
+        )
+        assert os.path.exists(self.run.get_outputs_path(V1ArtifactKind.MODEL)) is False
+        model_file = self.run.get_outputs_path("model.pkl")
+        assert os.path.exists(model_file) is True
+
+    def test_log_model_dir(self):
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.MODEL))
+            is False
+        )
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.MODEL))
+            is False
+        )
+        assert os.path.exists(self.run.get_outputs_path(V1ArtifactKind.MODEL)) is False
+        model_dir = tempfile.mkdtemp() + "/model"
+        create_path(model_dir)
+        model_file = model_dir + "/model.pkl"
+        self.touch(model_file)
+        weights_file = model_dir + "/weights"
+        self.touch(weights_file)
+        configs_file = model_dir + "/configs"
+        self.touch(configs_file)
+        with patch("polyaxon.tracking.run.Run.log_model_ref") as log_model:
+            self.run.log_model(
+                name="my_model", path=model_dir, framework="tensorflow", versioned=False
+            )
+        assert log_model.call_count == 1
+        self.event_logger.flush()
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.MODEL))
+            is False
+        )
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.MODEL))
+            is False
+        )
+        assert os.path.exists(self.run.get_outputs_path(V1ArtifactKind.MODEL)) is True
+        model_file = self.run.get_outputs_path(
+            "{}/{}".format(V1ArtifactKind.MODEL, "model.pkl")
+        )
+        assert os.path.exists(model_file) is True
+
+    def test_log_versioned_model_file(self):
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.MODEL))
+            is False
+        )
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.MODEL))
+            is False
+        )
+        model_file = tempfile.mkdtemp() + "/model.pkl"
         self.touch(model_file)
         with patch("polyaxon.tracking.run.Run._log_has_model") as log_model:
-            self.run.log_model(name="my_model", path=model_file, framework="scikit")
+            self.run.log_model(
+                name="my_model", path=model_file, framework="scikit", step=1
+            )
         assert log_model.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1113,11 +1193,11 @@ class TestRunLogging(TestEnvVarsCase):
         assert len(results.df.values) == 1
 
         asset_file = get_asset_path(
-            self.run_path, kind=V1ArtifactKind.MODEL, name="my_model", ext="pkl"
+            self.run_path, kind=V1ArtifactKind.MODEL, name="my_model_1", ext="pkl"
         )
         assert os.path.exists(asset_file) is True
 
-    def test_log_model_dir(self):
+    def test_log_versioned_model_dir(self):
         assert (
             os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.MODEL))
             is False
@@ -1135,7 +1215,9 @@ class TestRunLogging(TestEnvVarsCase):
         configs_file = model_dir + "/configs"
         self.touch(configs_file)
         with patch("polyaxon.tracking.run.Run._log_has_model") as log_model:
-            self.run.log_model(name="my_model", path=model_dir, framework="tensorflow")
+            self.run.log_model(
+                name="my_model", path=model_dir, framework="tensorflow", step=1
+            )
         assert log_model.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1154,8 +1236,36 @@ class TestRunLogging(TestEnvVarsCase):
         assert len(results.df.values) == 1
 
         asset_file = get_asset_path(
-            self.run_path, kind=V1ArtifactKind.MODEL, name="my_model"
+            self.run_path, kind=V1ArtifactKind.MODEL, name="my_model_1"
         )
+        assert os.path.exists(asset_file) is True
+
+    def test_log_dataframe_ref(self):
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.DATAFRAME))
+            is False
+        )
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.DATAFRAME))
+            is False
+        )
+        model_file = tempfile.mkdtemp() + "/df.pkl"
+        self.touch(model_file)
+        with patch("polyaxon.tracking.run.Run.log_artifact_ref") as log_artifact_ref:
+            self.run.log_artifact(
+                name="dataframe", path=model_file, kind=V1ArtifactKind.DATAFRAME
+            )
+        assert log_artifact_ref.call_count == 1
+        self.event_logger.flush()
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.DATAFRAME))
+            is False
+        )
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.DATAFRAME))
+            is False
+        )
+        asset_file = self.run.get_outputs_path(rel_path="df.pkl")
         assert os.path.exists(asset_file) is True
 
     def test_log_dataframe(self):
@@ -1167,12 +1277,9 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.DATAFRAME))
             is False
         )
-        model_file = tempfile.mkdtemp() + "/df.pkl"
-        self.touch(model_file)
+        df = pd.DataFrame(data=[])
         with patch("polyaxon.tracking.run.Run._log_has_events") as log_dataframe:
-            self.run.log_dataframe(
-                name="dataframe", path=model_file, content_type="pickel"
-            )
+            self.run.log_dataframe(df=df, name="dataframe", content_type="csv")
         assert log_dataframe.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1191,7 +1298,7 @@ class TestRunLogging(TestEnvVarsCase):
         assert len(results.df.values) == 1
 
         asset_file = get_asset_path(
-            self.run_path, kind=V1ArtifactKind.DATAFRAME, name="dataframe", ext="pkl"
+            self.run_path, kind=V1ArtifactKind.DATAFRAME, name="dataframe", ext="csv"
         )
         assert os.path.exists(asset_file) is True
 
@@ -1206,8 +1313,35 @@ class TestRunLogging(TestEnvVarsCase):
         )
         tsv_file = tempfile.mkdtemp() + "/file.tsv"
         self.touch(tsv_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
+        with patch("polyaxon.tracking.run.Run.log_artifact_ref") as log_artifact:
             self.run.log_artifact(name="file", path=tsv_file, kind=V1ArtifactKind.TSV)
+        assert log_artifact.call_count == 1
+        self.event_logger.flush()
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.TSV))
+            is False
+        )
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.TSV))
+            is False
+        )
+        assert os.path.exists(self.run.get_outputs_path("file.tsv")) is True
+
+    def test_versioned_log_artifact(self):
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.TSV))
+            is False
+        )
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.TSV))
+            is False
+        )
+        tsv_file = tempfile.mkdtemp() + "/file.tsv"
+        self.touch(tsv_file)
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
+            self.run.log_artifact(
+                name="file", path=tsv_file, kind=V1ArtifactKind.TSV, step=1
+            )
         assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1226,7 +1360,7 @@ class TestRunLogging(TestEnvVarsCase):
         assert len(results.df.values) == 1
 
         asset_file = get_asset_path(
-            self.run_path, kind=V1ArtifactKind.TSV, name="file", ext="tsv"
+            self.run_path, kind=V1ArtifactKind.TSV, name="file_1", ext="tsv"
         )
         assert os.path.exists(asset_file) is True
 
@@ -1242,7 +1376,7 @@ class TestRunLogging(TestEnvVarsCase):
         tsv_file = tempfile.mkdtemp() + "/file.tsv"
         self.touch(tsv_file)
         with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
-            self.run.log_artifact(path=tsv_file, kind=V1ArtifactKind.TSV)
+            self.run.log_artifact(path=tsv_file, kind=V1ArtifactKind.TSV, step=1)
         assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1261,7 +1395,7 @@ class TestRunLogging(TestEnvVarsCase):
         assert len(results.df.values) == 1
 
         asset_file = get_asset_path(
-            self.run_path, kind=V1ArtifactKind.TSV, name="file", ext="tsv"
+            self.run_path, kind=V1ArtifactKind.TSV, name="file_1", ext="tsv"
         )
         assert os.path.exists(asset_file) is True
 
@@ -1277,7 +1411,7 @@ class TestRunLogging(TestEnvVarsCase):
         tar_file = tempfile.mkdtemp() + "/file.tar.gz"
         self.touch(tar_file)
         with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
-            self.run.log_artifact(path=tar_file, kind=V1ArtifactKind.FILE)
+            self.run.log_artifact(path=tar_file, kind=V1ArtifactKind.FILE, step=1)
         assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1296,11 +1430,11 @@ class TestRunLogging(TestEnvVarsCase):
         assert len(results.df.values) == 1
 
         asset_file = get_asset_path(
-            self.run_path, kind=V1ArtifactKind.FILE, name="file", ext="tar.gz"
+            self.run_path, kind=V1ArtifactKind.FILE, name="file_1", ext="tar.gz"
         )
         assert os.path.exists(asset_file) is True
 
-    def test_log_artifacts(self):
+    def test_log_versioned_artifacts(self):
         assert (
             os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.TSV))
             is False
@@ -1320,13 +1454,15 @@ class TestRunLogging(TestEnvVarsCase):
         tsv_file = tempfile.mkdtemp() + "/file.tsv"
         self.touch(tsv_file)
         with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
-            self.run.log_artifact(name="file", path=tsv_file, kind=V1ArtifactKind.TSV)
+            self.run.log_artifact(
+                name="file", path=tsv_file, kind=V1ArtifactKind.TSV, step=1
+            )
         assert log_artifact.call_count == 1
         pd_file = tempfile.mkdtemp() + "/dataframe"
         self.touch(pd_file)
         with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
             self.run.log_artifact(
-                name="file2", path=pd_file, kind=V1ArtifactKind.DATAFRAME
+                name="file2", path=pd_file, kind=V1ArtifactKind.DATAFRAME, step=1
             )
         assert log_artifact.call_count == 1
         self.event_logger.flush()
@@ -1362,12 +1498,12 @@ class TestRunLogging(TestEnvVarsCase):
         assert len(results.df.values) == 1
 
         asset_file = get_asset_path(
-            self.run_path, kind=V1ArtifactKind.TSV, name="file", ext="tsv"
+            self.run_path, kind=V1ArtifactKind.TSV, name="file_1", ext="tsv"
         )
         assert os.path.exists(asset_file) is True
 
         asset_file = get_asset_path(
-            self.run_path, kind=V1ArtifactKind.DATAFRAME, name="file2"
+            self.run_path, kind=V1ArtifactKind.DATAFRAME, name="file2_1"
         )
         assert os.path.exists(asset_file) is True
 

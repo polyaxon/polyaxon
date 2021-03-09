@@ -74,7 +74,7 @@ setup(
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
         "marshmallow<3.11.0",
-        "polyaxon-sdk==1.6.2",
+        "polyaxon-sdk==1.7.0",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "PyYAML>=5.1",
@@ -84,7 +84,6 @@ setup(
         "sentry-sdk>=0.12.3",
         "certifi>=2019.9.11",
         "psutil",
-        "nvidia-ml-py3",
     ],
     extras_require={
         "gcs": ["google-cloud-storage"],
@@ -114,7 +113,9 @@ setup(
             "pandas",
         ],
     },
-    entry_points={"console_scripts": ["polyaxon = polyaxon.main:cli"]},
+    entry_points={
+        "console_scripts": ["polyaxon = polyaxon.main:cli", "plx = polyaxon.main:cli"]
+    },
     python_requires=">=3.5",
     classifiers=[
         "Programming Language :: Python",

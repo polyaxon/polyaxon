@@ -69,6 +69,7 @@ DEFAULT_EXCLUDE = [
     "pipeline",
     "role",
     "status_conditions",
+    "graph",
 ]
 
 
@@ -98,7 +99,6 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
         response,
         humanize_values=True,
         exclude_attrs=[
-            "project",
             "description",
             "readme",
             "content",
@@ -109,6 +109,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
             "status_conditions",
             "settings",
             "meta_info",
+            "graph",
         ],
     )
 

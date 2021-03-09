@@ -22,6 +22,7 @@ from mock import MagicMock, patch
 from marshmallow import ValidationError
 
 from polyaxon import pkg
+from polyaxon.containers import contexts as container_contexts
 from polyaxon.env_vars.keys import POLYAXON_KEYS_USE_GIT_REGISTRY
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile import check_polyaxonfile
@@ -520,6 +521,7 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.run.to_dict() == expected_run
 
     def test_specification_with_context_requirement(self):
+        context_root = container_contexts.CONTEXT_ROOT
         contexts = {
             "globals": {
                 "owner_name": "user",
@@ -530,9 +532,9 @@ class TestPolyaxonfiles(BaseTestCase):
                 "name": "run",
                 "uuid": "uuid",
                 "context_path": "/plx-context",
-                "artifacts_path": "/plx-context/artifacts",
-                "run_artifacts_path": "/plx-context/artifacts/test",
-                "run_outputs_path": "/plx-context/artifacts/test/outputs",
+                "artifacts_path": "{}/artifacts".format(context_root),
+                "run_artifacts_path": "{}/artifacts/test".format(context_root),
+                "run_outputs_path": "{}/artifacts/test/outputs".format(context_root),
                 "namespace": "test",
                 "iteration": 12,
                 "ports": [1212, 1234],
@@ -580,14 +582,22 @@ class TestPolyaxonfiles(BaseTestCase):
             "kind": V1RunKind.JOB,
             "init": [
                 {
-                    "artifacts": {"files": ["/plx-context/artifacts/test/outputs/foo"]},
+                    "artifacts": {
+                        "files": [
+                            "{}/artifacts/test/outputs/foo".format(
+                                container_contexts.CONTEXT_ROOT
+                            )
+                        ],
+                    },
                     "connection": "connection-value",
                 }
             ],
             "container": {
                 "image": "continuumio/miniconda3",
                 "command": ["python"],
-                "workingDir": "/plx-context/artifacts/repo",
+                "workingDir": "{}/artifacts/repo".format(
+                    container_contexts.CONTEXT_ROOT
+                ),
                 "args": ["-c \"print('Tweet tweet')\""],
                 "name": "polyaxon-main",
             },

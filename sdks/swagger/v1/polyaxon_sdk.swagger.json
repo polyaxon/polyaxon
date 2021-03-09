@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.6.1",
+    "version": "1.7.0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -380,6 +380,48 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/v1Credentials"
+            }
+          }
+        ],
+        "tags": [
+          "AuthV1"
+        ]
+      }
+    },
+    "/api/v1/auth/trial": {
+      "post": {
+        "summary": "Trial Start",
+        "operationId": "Trial",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TrialStart"
             }
           }
         ],
@@ -19577,7 +19619,7 @@
           "type": "object",
           "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
         },
-        "patch_strategy": {
+        "patchStrategy": {
           "$ref": "#/definitions/v1PatchStrategy",
           "title": "Optional patch strategy, default post_merge"
         },
@@ -20483,6 +20525,10 @@
         "settings": {
           "$ref": "#/definitions/v1RunSettings",
           "title": "Optional settings"
+        },
+        "graph": {
+          "type": "object",
+          "title": "Optional graph defintion"
         }
       },
       "title": "Run specification"
@@ -21436,6 +21482,37 @@
     "v1Toleration": {
       "type": "object",
       "title": "Placeholder for Toleration"
+    },
+    "v1TrialStart": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "name"
+        },
+        "email": {
+          "type": "string",
+          "title": "Email"
+        },
+        "organization": {
+          "type": "string",
+          "title": "Organization"
+        },
+        "plan": {
+          "type": "string",
+          "title": "Plan"
+        },
+        "seats": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Sets"
+        },
+        "details": {
+          "type": "object",
+          "title": "Details"
+        }
+      },
+      "title": "Trial start"
     },
     "v1TriggerPolicy": {
       "type": "string",

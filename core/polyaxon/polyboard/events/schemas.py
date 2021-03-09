@@ -493,7 +493,7 @@ class V1Events:
         }
 
     def get_summary(self) -> Dict:
-        summary = {}
+        summary = {"is_event": True}
         step_summary = self._get_step_summary()
         if step_summary:
             summary["step"] = step_summary

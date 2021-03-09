@@ -52,6 +52,8 @@ type ClientService interface {
 
 	Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SignupOK, *SignupNoContent, error)
 
+	Trial(params *TrialParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TrialOK, *TrialNoContent, error)
+
 	SetTransport(transport runtime.ClientTransport)
 }
 
@@ -252,6 +254,46 @@ func (a *Client) Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWri
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*SignupDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  Trial trials start
+*/
+func (a *Client) Trial(params *TrialParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TrialOK, *TrialNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewTrialParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "Trial",
+		Method:             "POST",
+		PathPattern:        "/api/v1/auth/trial",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &TrialReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *TrialOK:
+		return value, nil, nil
+	case *TrialNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*TrialDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

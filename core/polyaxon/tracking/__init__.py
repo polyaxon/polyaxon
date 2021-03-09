@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from datetime import datetime
-from typing import Dict, List, Optional, Sequence, Union
+from typing import Any, Dict, List, Optional, Sequence, Union
 
 from polyaxon import settings
 from polyaxon.client import RunClient
@@ -144,6 +144,34 @@ def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
         return TRACKING_RUN
 
 
+def get_artifacts_path(
+    rel_path: str = None, ensure_path: bool = False, is_dir: bool = False
+):
+    global TRACKING_RUN
+    return TRACKING_RUN.get_artifacts_path(
+        rel_path=rel_path,
+        ensure_path=ensure_path,
+        is_dir=is_dir,
+    )
+
+
+get_artifacts_path.__doc__ = Run.get_artifacts_path.__doc__
+
+
+def get_outputs_path(
+    rel_path: str = None, ensure_path: bool = True, is_dir: bool = False
+):
+    global TRACKING_RUN
+    return TRACKING_RUN.get_outputs_path(
+        rel_path=rel_path,
+        ensure_path=ensure_path,
+        is_dir=is_dir,
+    )
+
+
+get_outputs_path.__doc__ = Run.get_outputs_path.__doc__
+
+
 def get_tensorboard_path(rel_path: str = "tensorboard"):
     global TRACKING_RUN
     return TRACKING_RUN.get_tensorboard_path(rel_path=rel_path)
@@ -152,23 +180,31 @@ def get_tensorboard_path(rel_path: str = "tensorboard"):
 get_tensorboard_path.__doc__ = Run.get_tensorboard_path.__doc__
 
 
-def get_outputs_path():
+def set_artifacts_path(artifacts_path: str, is_related: bool = False):
     global TRACKING_RUN
-    return TRACKING_RUN.get_outputs_path()
+    TRACKING_RUN.set_artifacts_path(artifacts_path, is_related)
 
 
-get_outputs_path.__doc__ = Run.get_outputs_path.__doc__
+set_artifacts_path.__doc__ = Run.set_artifacts_path.__doc__
 
 
-def get_artifacts_path():
+def set_run_event_logger():
     global TRACKING_RUN
-    return TRACKING_RUN.get_artifacts_path()
+    TRACKING_RUN.set_run_event_logger()
 
 
-get_artifacts_path.__doc__ = Run.get_artifacts_path.__doc__
+set_run_event_logger.__doc__ = Run.set_run_event_logger.__doc__
 
 
-def log_metric(name, value, step=None, timestamp=None):
+def set_run_resource_logger():
+    global TRACKING_RUN
+    TRACKING_RUN.set_run_resource_logger()
+
+
+set_run_resource_logger.__doc__ = Run.set_run_resource_logger.__doc__
+
+
+def log_metric(name: str, value: float, step: int = None, timestamp: datetime = None):
     global TRACKING_RUN
     TRACKING_RUN.log_metric(
         name=name,
@@ -181,7 +217,7 @@ def log_metric(name, value, step=None, timestamp=None):
 log_metric.__doc__ = Run.log_metric.__doc__
 
 
-def log_metrics(step=None, timestamp=None, **metrics):
+def log_metrics(step: int = None, timestamp: datetime = None, **metrics):
     global TRACKING_RUN
     TRACKING_RUN.log_metrics(step=step, timestamp=timestamp, **metrics)
 
@@ -189,7 +225,119 @@ def log_metrics(step=None, timestamp=None, **metrics):
 log_metrics.__doc__ = Run.log_metrics.__doc__
 
 
-def log_image(data, name=None, step=None, timestamp=None, rescale=1, dataformats="CHW"):
+def log_roc_auc_curve(
+    name: str, fpr, tpr, auc: float = None, step: int = None, timestamp: datetime = None
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_roc_auc_curve(
+        name=name,
+        fpr=fpr,
+        tpr=tpr,
+        auc=auc,
+        step=step,
+        timestamp=timestamp,
+    )
+
+
+log_roc_auc_curve.__doc__ = Run.log_roc_auc_curve.__doc__
+
+
+def log_sklearn_roc_auc_curve(
+    name: str,
+    y_preds,
+    y_targets,
+    step: int = None,
+    timestamp: datetime = None,
+    is_multi_class: bool = False,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_sklearn_roc_auc_curve(
+        name=name,
+        y_preds=y_preds,
+        y_targets=y_targets,
+        step=step,
+        timestamp=timestamp,
+        is_multi_class=is_multi_class,
+    )
+
+
+log_sklearn_roc_auc_curve.__doc__ = Run.log_sklearn_roc_auc_curve.__doc__
+
+
+def log_pr_curve(
+    name: str,
+    precision,
+    recall,
+    average_precision=None,
+    step: int = None,
+    timestamp: datetime = None,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_pr_curve(
+        name=name,
+        precision=precision,
+        recall=recall,
+        average_precision=average_precision,
+        step=step,
+        timestamp=timestamp,
+    )
+
+
+log_pr_curve.__doc__ = Run.log_pr_curve.__doc__
+
+
+def log_sklearn_pr_curve(
+    name: str,
+    y_preds,
+    y_targets,
+    step: int = None,
+    timestamp: datetime = None,
+    is_multi_class: bool = False,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_sklearn_pr_curve(
+        name=name,
+        y_preds=y_preds,
+        y_targets=y_targets,
+        step=step,
+        timestamp=timestamp,
+        is_multi_class=is_multi_class,
+    )
+
+
+log_sklearn_pr_curve.__doc__ = Run.log_sklearn_pr_curve.__doc__
+
+
+def log_curve(
+    name: str,
+    x,
+    y,
+    annotation: str = None,
+    step: int = None,
+    timestamp: datetime = None,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_curve(
+        name=name,
+        x=x,
+        y=y,
+        annotation=annotation,
+        step=step,
+        timestamp=timestamp,
+    )
+
+
+log_curve.__doc__ = Run.log_curve.__doc__
+
+
+def log_image(
+    data: Any,
+    name: str = None,
+    step: int = None,
+    timestamp: datetime = None,
+    rescale=1,
+    dataformats: str = "CHW",
+):
     global TRACKING_RUN
     TRACKING_RUN.log_image(
         data=data,
@@ -207,11 +355,11 @@ log_image.__doc__ = Run.log_image.__doc__
 def log_image_with_boxes(
     tensor_image,
     tensor_boxes,
-    name=None,
-    step=None,
-    timestamp=None,
-    rescale=1,
-    dataformats="CHW",
+    name: str = None,
+    step: int = None,
+    timestamp: datetime = None,
+    rescale: int = 1,
+    dataformats: str = "CHW",
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_image_with_boxes(
@@ -228,7 +376,13 @@ def log_image_with_boxes(
 log_image_with_boxes.__doc__ = Run.log_image_with_boxes.__doc__
 
 
-def log_mpl_image(data, name=None, close=True, step=None, timestamp=None):
+def log_mpl_image(
+    data,
+    name: str = None,
+    close: bool = True,
+    step: int = None,
+    timestamp: datetime = None,
+):
     global TRACKING_RUN
     TRACKING_RUN.log_mpl_image(
         data=data,
@@ -242,7 +396,14 @@ def log_mpl_image(data, name=None, close=True, step=None, timestamp=None):
 log_mpl_image.__doc__ = Run.log_mpl_image.__doc__
 
 
-def log_video(data, name=None, fps=4, step=None, timestamp=None, content_type=None):
+def log_video(
+    data,
+    name: str = None,
+    fps: int = 4,
+    step: int = None,
+    timestamp: datetime = None,
+    content_type: str = None,
+):
     global TRACKING_RUN
     TRACKING_RUN.log_video(
         data=data,
@@ -259,11 +420,11 @@ log_video.__doc__ = Run.log_video.__doc__
 
 def log_audio(
     data,
-    name=None,
-    sample_rate=44100,
-    step=None,
-    timestamp=None,
-    content_type=None,
+    name: str = None,
+    sample_rate: int = 44100,
+    step: int = None,
+    timestamp: datetime = None,
+    content_type: str = None,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_audio(
@@ -279,7 +440,7 @@ def log_audio(
 log_audio.__doc__ = Run.log_audio.__doc__
 
 
-def log_text(name, text, step=None, timestamp=None):
+def log_text(name: str, text: str, step: int = None, timestamp: datetime = None):
     global TRACKING_RUN
     TRACKING_RUN.log_text(
         name=name,
@@ -292,7 +453,7 @@ def log_text(name, text, step=None, timestamp=None):
 log_text.__doc__ = Run.log_text.__doc__
 
 
-def log_html(name, html, step=None, timestamp=None):
+def log_html(name: str, html: str, step: int = None, timestamp: datetime = None):
     global TRACKING_RUN
     TRACKING_RUN.log_html(
         name=name,
@@ -305,7 +466,9 @@ def log_html(name, html, step=None, timestamp=None):
 log_html.__doc__ = Run.log_html.__doc__
 
 
-def log_np_histogram(name, values, counts, step=None, timestamp=None):
+def log_np_histogram(
+    name: str, values, counts, step: int = None, timestamp: datetime = None
+):
     global TRACKING_RUN
     TRACKING_RUN.log_np_histogram(
         name=name,
@@ -319,7 +482,9 @@ def log_np_histogram(name, values, counts, step=None, timestamp=None):
 log_np_histogram.__doc__ = Run.log_np_histogram.__doc__
 
 
-def log_histogram(name, values, bins, max_bins=None, step=None, timestamp=None):
+def log_histogram(
+    name: str, values, bins, max_bins=None, step: int = None, timestamp: datetime = None
+):
     global TRACKING_RUN
     TRACKING_RUN.log_histogram(
         name=name,
@@ -334,22 +499,67 @@ def log_histogram(name, values, bins, max_bins=None, step=None, timestamp=None):
 log_histogram.__doc__ = Run.log_histogram.__doc__
 
 
-def log_model(path, name=None, framework=None, spec=None, step=None, timestamp=None):
+def log_model(
+    path: str,
+    name: str = None,
+    framework: str = None,
+    summary: Dict = None,
+    step: int = None,
+    timestamp: datetime = None,
+    rel_path: str = "model",
+    versioned: bool = True,
+):
     global TRACKING_RUN
     TRACKING_RUN.log_model(
         path=path,
         name=name,
         framework=framework,
-        spec=spec,
+        summary=summary,
         step=step,
         timestamp=timestamp,
+        rel_path=rel_path,
+        versioned=versioned,
     )
 
 
 log_model.__doc__ = Run.log_model.__doc__
 
 
-def log_dataframe(path, name=None, content_type=None, step=None, timestamp=None):
+def log_artifact(
+    path: str,
+    name: str = None,
+    kind: str = None,
+    summary: Dict = None,
+    step: int = None,
+    timestamp: datetime = None,
+    rel_path: str = None,
+    versioned: bool = True,
+    **kwargs
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_artifact(
+        path=path,
+        name=name,
+        kind=kind,
+        summary=summary,
+        step=step,
+        timestamp=timestamp,
+        rel_path=rel_path,
+        versioned=versioned,
+        **kwargs,
+    )
+
+
+log_artifact.__doc__ = Run.log_artifact.__doc__
+
+
+def log_dataframe(
+    path: str,
+    name: str = None,
+    content_type: str = None,
+    step: int = None,
+    timestamp: datetime = None,
+):
     global TRACKING_RUN
     TRACKING_RUN.log_dataframe(
         path=path,
@@ -363,97 +573,7 @@ def log_dataframe(path, name=None, content_type=None, step=None, timestamp=None)
 log_dataframe.__doc__ = Run.log_dataframe.__doc__
 
 
-def log_artifact(path, name=None, kind=None, step=None, timestamp=None, **kwargs):
-    global TRACKING_RUN
-    TRACKING_RUN.log_artifact(
-        path=path,
-        name=name,
-        kind=kind,
-        step=step,
-        timestamp=timestamp,
-        **kwargs,
-    )
-
-
-log_artifact.__doc__ = Run.log_artifact.__doc__
-
-
-def log_roc_auc_curve(name, fpr, tpr, auc=None, step=None, timestamp=None):
-    global TRACKING_RUN
-    TRACKING_RUN.log_roc_auc_curve(
-        name=name,
-        fpr=fpr,
-        tpr=tpr,
-        auc=auc,
-        step=step,
-        timestamp=timestamp,
-    )
-
-
-log_roc_auc_curve.__doc__ = Run.log_roc_auc_curve.__doc__
-
-
-def log_sklearn_roc_auc_curve(name, y_preds, y_targets, step=None, timestamp=None):
-    global TRACKING_RUN
-    TRACKING_RUN.log_sklearn_roc_auc_curve(
-        name=name,
-        y_preds=y_preds,
-        y_targets=y_targets,
-        step=step,
-        timestamp=timestamp,
-    )
-
-
-log_sklearn_roc_auc_curve.__doc__ = Run.log_sklearn_roc_auc_curve.__doc__
-
-
-def log_pr_curve(
-    name, precision, recall, average_precision=None, step=None, timestamp=None
-):
-    global TRACKING_RUN
-    TRACKING_RUN.log_pr_curve(
-        name=name,
-        precision=precision,
-        recall=recall,
-        average_precision=average_precision,
-        step=step,
-        timestamp=timestamp,
-    )
-
-
-log_pr_curve.__doc__ = Run.log_pr_curve.__doc__
-
-
-def log_sklearn_pr_curve(name, y_preds, y_targets, step=None, timestamp=None):
-    global TRACKING_RUN
-    TRACKING_RUN.log_sklearn_pr_curve(
-        name=name,
-        y_preds=y_preds,
-        y_targets=y_targets,
-        step=step,
-        timestamp=timestamp,
-    )
-
-
-log_sklearn_pr_curve.__doc__ = Run.log_sklearn_pr_curve.__doc__
-
-
-def log_curve(name, x, y, annotation=None, step=None, timestamp=None):
-    global TRACKING_RUN
-    TRACKING_RUN.log_curve(
-        name=name,
-        x=x,
-        y=y,
-        annotation=annotation,
-        step=step,
-        timestamp=timestamp,
-    )
-
-
-log_curve.__doc__ = Run.log_curve.__doc__
-
-
-def log_plotly_chart(name, figure, step=None, timestamp=None):
+def log_plotly_chart(name: str, figure, step: int = None, timestamp: datetime = None):
     global TRACKING_RUN
     TRACKING_RUN.log_plotly_chart(
         name=name,
@@ -466,7 +586,7 @@ def log_plotly_chart(name, figure, step=None, timestamp=None):
 log_plotly_chart.__doc__ = Run.log_plotly_chart.__doc__
 
 
-def log_bokeh_chart(name, figure, step=None, timestamp=None):
+def log_bokeh_chart(name: str, figure, step: int = None, timestamp: datetime = None):
     global TRACKING_RUN
     TRACKING_RUN.log_bokeh_chart(
         name=name,
@@ -479,7 +599,7 @@ def log_bokeh_chart(name, figure, step=None, timestamp=None):
 log_bokeh_chart.__doc__ = Run.log_bokeh_chart.__doc__
 
 
-def log_altair_chart(name, figure, step=None, timestamp=None):
+def log_altair_chart(name: str, figure, step: int = None, timestamp: datetime = None):
     global TRACKING_RUN
     TRACKING_RUN.log_altair_chart(
         name=name,
@@ -492,7 +612,9 @@ def log_altair_chart(name, figure, step=None, timestamp=None):
 log_altair_chart.__doc__ = Run.log_altair_chart.__doc__
 
 
-def log_mpl_plotly_chart(name, figure, step=None, timestamp=None):
+def log_mpl_plotly_chart(
+    name: str, figure, step: int = None, timestamp: datetime = None
+):
     global TRACKING_RUN
     TRACKING_RUN.log_mpl_plotly_chart(
         name=name,
@@ -503,6 +625,14 @@ def log_mpl_plotly_chart(name, figure, step=None, timestamp=None):
 
 
 log_mpl_plotly_chart.__doc__ = Run.log_mpl_plotly_chart.__doc__
+
+
+def get_log_level():
+    global TRACKING_RUN
+    return TRACKING_RUN.get_log_level()
+
+
+get_log_level.__doc__ = Run.get_log_level.__doc__
 
 
 def set_description(description: str, async_req: bool = True):
@@ -531,8 +661,8 @@ end.__doc__ = Run.end.__doc__
 
 def log_status(
     status: str,
-    reason=None,
-    message=None,
+    reason: str = None,
+    message: str = None,
     last_transition_time: datetime = None,
     last_update_time: datetime = None,
 ):
@@ -638,13 +768,19 @@ log_artifact_ref.__doc__ = Run.log_artifact_ref.__doc__
 def log_model_ref(
     path: str,
     name: str = None,
+    framework: str = None,
     summary: Dict = None,
     is_input: bool = False,
     rel_path: str = None,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_model_ref(
-        path=path, name=name, summary=summary, is_input=is_input, rel_path=rel_path
+        path=path,
+        name=name,
+        framework=framework,
+        summary=summary,
+        is_input=is_input,
+        rel_path=rel_path,
     )
 
 
@@ -735,30 +871,6 @@ def log_env(rel_path: str = None, content: Dict = None):
 
 
 log_env.__doc__ = Run.log_env.__doc__
-
-
-def set_artifacts_path(artifacts_path: str):
-    global TRACKING_RUN
-    TRACKING_RUN.set_artifacts_path(artifacts_path)
-
-
-set_artifacts_path.__doc__ = Run.set_artifacts_path.__doc__
-
-
-def set_run_event_logger():
-    global TRACKING_RUN
-    TRACKING_RUN.set_run_event_logger()
-
-
-set_run_event_logger.__doc__ = Run.set_run_event_logger.__doc__
-
-
-def set_run_resource_logger():
-    global TRACKING_RUN
-    TRACKING_RUN.set_run_resource_logger()
-
-
-set_run_resource_logger.__doc__ = Run.set_run_resource_logger.__doc__
 
 
 def sync_events_summaries():

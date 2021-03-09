@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**resetPassword**](AuthV1Api.md#resetPassword) | **POST** /api/v1/auth/reset-password | Reset password
 [**resetPasswordConfirm**](AuthV1Api.md#resetPasswordConfirm) | **POST** /api/v1/auth/reset-password-confirm | Reset password confirm
 [**signup**](AuthV1Api.md#signup) | **POST** /api/v1/auth/signup | Signup
+[**trial**](AuthV1Api.md#trial) | **POST** /api/v1/auth/trial | Trial Start
 
 
 
@@ -248,6 +249,55 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Auth**](V1Auth.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## trial
+
+> trial(body)
+
+Trial Start
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.AuthV1Api();
+let body = new PolyaxonSdk.V1TrialStart(); // V1TrialStart | 
+apiInstance.trial(body, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**V1TrialStart**](V1TrialStart.md)|  | 
+
+### Return type
+
+null (empty response body)
 
 ### Authorization
 

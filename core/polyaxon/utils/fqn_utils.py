@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
+import unicodedata
+
 
 def get_project_instance(owner: str, project: str) -> str:
     return "{}.{}".format(owner, project)
@@ -70,3 +73,17 @@ def get_resource_name_for_kind(run_uuid: str, run_kind: str = None) -> str:
         return get_notifier_resource_name(run_uuid)
     # Operation
     return get_resource_name(run_uuid)
+
+
+def to_fqn_name(name: str) -> str:
+    if not name:
+        raise ValueError("A name is required to process events.")
+
+    value = str(name)
+    value = (
+        unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    )
+    value = re.sub(r"[^\w\\\/\.\s-]", "", value).strip()
+    value = re.sub(r"[\\\/]+", "__", value)
+    value = re.sub(r"[-\.\s]+", "-", value)
+    return value

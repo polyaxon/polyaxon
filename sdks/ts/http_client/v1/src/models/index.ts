@@ -212,6 +212,7 @@ export * from './V1TeamMember';
 export * from './V1Template';
 export * from './V1Termination';
 export * from './V1Token';
+export * from './V1TrialStart';
 export * from './V1TriggerPolicy';
 export * from './V1TruncationStoppingPolicy';
 export * from './V1UriType';

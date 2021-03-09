@@ -25,7 +25,7 @@ Name | Type | Description | Notes
 **joins** | [**{String: V1Join}**](V1Join.md) |  | [optional] 
 **params** | [**{String: V1Param}**](V1Param.md) |  | [optional] 
 **runPatch** | [**Object**](.md) |  | [optional] 
-**patch_strategy** | [**V1PatchStrategy**](V1PatchStrategy.md) |  | [optional] 
+**patchStrategy** | [**V1PatchStrategy**](V1PatchStrategy.md) |  | [optional] 
 **isPreset** | **Boolean** |  | [optional] 
 **isApproved** | **Boolean** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 

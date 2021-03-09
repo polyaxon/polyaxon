@@ -129,7 +129,11 @@ def create(ctx, name, description, tags, public, init):
 
     if init:
         ctx.obj = {}
-        ctx.invoke(init_project, project="{}/{}".format(owner, project_name))
+        ctx.invoke(
+            init_project,
+            project="{}/{}".format(owner, project_name),
+            polyaxonignore=True,
+        )
 
 
 @project.command()
