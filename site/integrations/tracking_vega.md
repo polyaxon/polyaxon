@@ -121,6 +121,6 @@ run:
 
 ### Result
 
-In dashboards, create a new custom chart widget
+In the `dashboards` tab, create a new custom chart widget
 
 ![run-dashboards-altair](../../content/images/dashboard/runs/dashboards-altair.png)

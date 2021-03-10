@@ -98,5 +98,5 @@ To run this component using Polyaxon Client:
 from polyaxon.client import RunClient
 
 client = RunClient(...)
-client.create_from_polyaxonfile(polyaxon="path/to/file", ...)
+client.create_from_polyaxonfile(polyaxonfile="path/to/file", ...)
 ```

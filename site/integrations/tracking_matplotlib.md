@@ -99,7 +99,7 @@ run:
 
 ### Result
 
-In dashboards, create a new image widget
+In the `dashboards` tab, create a new image widget
 
 ![run-dashboards-matplotlib-static](../../content/images/dashboard/runs/dashboards-matplotlib-static.png)
 
@@ -208,6 +208,6 @@ run:
 
 ### Result
 
-In dashboards, create a new custom chart widget
+In the `dashboards` tab, create a new custom chart widget
 
 ![run-dashboards-matplotlib-interactive](../../content/images/dashboard/runs/dashboards-matplotlib-interactive.png)
