@@ -41,11 +41,15 @@ You can download any chart tracked to either render it manually or to archive it
 
 ## Example
 
+### Python script
+
 ```python
 import altair as alt
 from vega_datasets import data
 
 from polyaxon import tracking
+
+tracking.init()
 
 source = data.cars()
 
@@ -71,5 +75,52 @@ chart = points & bars
 
 tracking.log_altair_chart(name='altair_chart', figure=chart)
 ```
+
+### Example as an executable component
+
+```yaml
+version: 1.1
+kind: component
+name: altair-chart
+run:
+  kind: job
+  init:
+    - file:
+        filename: script.py
+        content: |
+          import altair as alt
+          from vega_datasets import data
+  
+          from polyaxon import tracking
+  
+          tracking.init()
+  
+          source = data.cars()
+          brush = alt.selection(type='interval')
+          points = alt.Chart(source).mark_point().encode(
+              x='Horsepower:Q',
+              y='Miles_per_Gallon:Q',
+              color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
+          ).add_selection(
+              brush
+          )
+          bars = alt.Chart(source).mark_bar().encode(
+              y='Origin:N',
+              color='Origin:N',
+              x='count(Origin):Q'
+          ).transform_filter(
+              brush
+          )
+          chart = points & bars
+          tracking.log_altair_chart(name='altair_chart', figure=chart)
+  container:
+    image: 'polyaxon/polyaxon-examples:ml'
+    workingDir: '{{ globals.artifacts_path }}'
+    command: [python3, -u, script.py]
+```
+
+### Result
+
+In dashboards, create a new custom chart widget
 
 ![run-dashboards-altair](../../content/images/dashboard/runs/dashboards-altair.png)

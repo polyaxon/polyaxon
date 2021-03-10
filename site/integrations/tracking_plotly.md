@@ -41,15 +41,53 @@ You can download any chart tracked to either render it manually or to archive it
 
 ## Example
 
+### Python script
+
 ```python
 import plotly.express as px
 
 from polyaxon import tracking
+
+tracking.init()
 
 df = px.data.tips()
 
 fig = px.density_heatmap(df, x="total_bill", y="tip", facet_row="sex", facet_col="smoker")
 tracking.log_plotly_chart(name="2d-hist", figure=fig, step=1)
 ```
+
+### Example as an executable component
+
+```yaml
+version: 1.1
+kind: component
+name: plt-chart
+run:
+  kind: job
+  init:
+    - file:
+        filename: script.py
+        content: |
+          import plotly.express as px
+  
+          from polyaxon import tracking
+  
+          tracking.init()
+  
+          df = px.data.tips()
+  
+          fig = px.density_heatmap(df, x="total_bill", y="tip",
+          facet_row="sex", facet_col="smoker")
+  
+          tracking.log_plotly_chart(name="2d-hist", figure=fig)
+  container:
+    image: 'polyaxon/polyaxon-examples:ml'
+    workingDir: '{{ globals.artifacts_path }}'
+    command: [python3, -u, script.py]
+```
+
+### Result
+
+In dashboards, create a new custom chart widget
 
 ![run-dashboards-plotly](../../content/images/dashboard/runs/dashboards-plotly.png)
