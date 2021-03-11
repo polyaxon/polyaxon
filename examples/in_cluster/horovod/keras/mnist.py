@@ -114,4 +114,4 @@ print('Test accuracy:', score[1])
 
 # Polyaxon
 if hvd.rank() == 0:
-    experiment.log_metrics(loss=score[0], accuracy=score[1])
+    experiment.log_inputs(loss=score[0], accuracy=score[1])

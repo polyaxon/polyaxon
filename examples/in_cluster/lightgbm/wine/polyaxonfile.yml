@@ -1,0 +1,27 @@
+version: 1.1
+kind: component
+tags: [examples, lightgbm]
+inputs:
+- {name: boosting_type, type: str, isOptional: true, value: gbdt}
+- {name: objective, type: str, isOptional: true, value: multiclass}
+- {name: num_class, type: int, isOptional: true, value: 3}
+- {name: num_leaves, type: int, isOptional: true, value: 31}
+- {name: learning_rate, type: float, isOptional: true, value: 0.05}
+- {name: feature_fraction, type: float, isOptional: true, value: 0.9}
+
+run:
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples:ml
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/lightgbm/wine"
+    command: ["python", "-u", "model.py"]
+    args: [
+      "--boosting_type={{ boosting_type }}",
+      "--objective={{ objective }}",
+      "--num_class={{ num_class }}",
+      "--num_leaves={{ num_leaves }}",
+      "--learning_rate={{ learning_rate }}",
+      "--feature_fraction={{ feature_fraction }}",
+    ]

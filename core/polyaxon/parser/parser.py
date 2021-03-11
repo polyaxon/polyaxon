@@ -160,8 +160,23 @@ def get_boolean(
     )
 
 
+def parse_string(v):
+    base_types = (int, float, Mapping, list, tuple, set)
+    if isinstance(v, base_types):
+        return json.dumps(v)
+    if v is None:
+        return v
+    return str(v)
+
+
 def get_string(
-    key, value, is_list=False, is_optional=False, default=None, options=None
+    key,
+    value,
+    is_list=False,
+    is_optional=False,
+    default=None,
+    options=None,
+    strong_type=False,
 ):
     """
     Get the value corresponding to the key and converts it to `str`/`list(str)`.
@@ -173,29 +188,34 @@ def get_string(
         is_optional: To raise an error if key was not found.
         default: default value if is_optional is True.
         options: list/tuple if provided, the value must be one of these values.
+        strong_type: does not allow base types conversion.
 
     Returns:
         `str`: value corresponding to the key.
     """
+    base_types = (int, float, Mapping, list, tuple, set)
+
     if is_list:
         return _get_typed_list_value(
             key=key,
             value=value,
             target_type=str,
-            type_convert=str,
+            type_convert=str if strong_type else parse_string,
             is_optional=is_optional,
             default=default,
             options=options,
+            base_types=None if strong_type else base_types,
         )
 
     return _get_typed_value(
         key=key,
         value=value,
         target_type=str,
-        type_convert=str,
+        type_convert=str if strong_type else parse_string,
         is_optional=is_optional,
         default=default,
         options=options,
+        base_types=None if strong_type else base_types,
     )
 
 

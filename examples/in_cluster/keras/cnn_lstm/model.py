@@ -13,7 +13,7 @@ from keras.preprocessing import sequence
 
 # Polyaxon
 from polyaxon import tracking
-from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback, PolyaxonKerasModelCheckpoint
+from polyaxon.tracking.contrib.keras import PolyaxonCallback
 
 logger = logging.getLogger('cnn-lstm')
 
@@ -61,10 +61,9 @@ def train(max_features,
               epochs=epochs,
               validation_data=(x_test, y_test),
               callbacks=[
-                  PolyaxonKerasCallback(),
-                  PolyaxonKerasModelCheckpoint(),
+                  PolyaxonCallback(),
                   TensorBoard(log_dir=tracking.get_tensorboard_path(), histogram_freq=1),
-                  ModelCheckpoint(tracking.get_model_path())
+                  ModelCheckpoint(tracking.get_outputs_path("model"))
               ])
 
     score, accuracy = model.evaluate(x_test, y_test, batch_size=batch_size)

@@ -3,7 +3,7 @@ import argparse
 from fastai.vision.all import *
 from fastai.basics import *
 
-from polyaxon.tracking.contrib.fastai import PolyaxonFastaiCallback
+from polyaxon.tracking.contrib.fastai import PolyaxonCallback
 
 path = untar_data(URLs.MNIST_SAMPLE)
 items = get_image_files(path)
@@ -15,7 +15,7 @@ learn = cnn_learner(
     dls,
     resnet18,
     loss_func=CrossEntropyLossFlat(),
-    cbs=[PolyaxonFastaiCallback()]
+    cbs=[PolyaxonCallback()]
 )
 
 if __name__ == '__main__':

@@ -102,9 +102,7 @@ async def query_k8s_operation_logs(
             **params,
         )
 
-    if logs:
-        last_time = logs[-1].timestamp
-    return logs, last_time
+    return logs, new_time
 
 
 async def query_k8s_pod_logs(

@@ -19,9 +19,9 @@ run:
   init:
   - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
   container:
-    image: polyaxon/polyaxon-examples
-    command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/keras/bidirectional_lstm/model.py"]
-    imagePullPolicy: "Always"
+    image: polyaxon/polyaxon-examples:tf
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/keras/bidirectional_lstm"
+    command: ["python", "-u", "model.py"]
     args: [
       "--max_features={{ max_features }}",
       "--skip_top={{ skip_top }}",

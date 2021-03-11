@@ -5,16 +5,16 @@ tags: [examples, tensorflow]
 inputs:
 - { name: conv1_size, type: int, isOptional: true, value: 5}
 - { name: conv1_out, type: int, isOptional: true, value: 32}
-- { name: conv1_activation, type: int, isOptional: true, value: 'relu'}
+- { name: conv1_activation, type: str, isOptional: true, value: 'relu'}
 - { name: pool1_size, type: int, isOptional: true, value: 2}
 - { name: conv2_size, type: int, isOptional: true, value: 5}
 - { name: conv2_out, type: int, isOptional: true, value: 64}
-- { name: conv2_activation, type: int, isOptional: true, value: 'relu'}
+- { name: conv2_activation, type: str, isOptional: true, value: 'relu'}
 - { name: pool2_size, type: int, isOptional: true, value: 2}
-- { name: dropout, type: int, isOptional: true, value: 0.2}
+- { name: dropout, type: float, isOptional: true, value: 0.2}
 - { name: fc1_size, type: int, isOptional: true, value: 1024}
-- { name: fc1_activation, type: int, isOptional: true, value: 'sigmoid'}
-- { name: optimizer, type: int, isOptional: true, value: 'adam'}
+- { name: fc1_activation, type: str, isOptional: true, value: 'sigmoid'}
+- { name: optimizer, type: str, isOptional: true, value: 'adam'}
 - { name: log_learning_rate, type: int, isOptional: true, value: -3}
 - { name: batch_size, type: int, isOptional: true, value: 100}
 - { name: epochs, type: int, isOptional: true, value: 1}

@@ -16,9 +16,9 @@ run:
   init:
   - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
   container:
-    image: polyaxon/polyaxon-examples
-    command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/keras/mnist/model.py"]
-    imagePullPolicy: "Always"
+    image: polyaxon/polyaxon-examples:tf
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/keras/mnist"
+    command: ["python", "-u", "model.py"]
     args: ["--conv1_size={{ conv1_size }}",
            "--conv2_size={{ conv2_size }}",
            "--dropout={{ dropout }}",

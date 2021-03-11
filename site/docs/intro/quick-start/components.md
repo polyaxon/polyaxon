@@ -153,8 +153,7 @@ If you open the file [model.py](https://github.com/polyaxon/polyaxon-quick-start
 
 # Polyaxon
 tracking.init()
-plx_callback = PolyaxonKerasCallback()
-plx_model_callback = PolyaxonKerasModelCheckpoint()
+plx_callback = PolyaxonCallback()
 log_dir = tracking.get_tensorboard_path()
 
 
@@ -182,7 +181,7 @@ model.fit(x=X_train,
           y=y_train,
           epochs=args.epochs,
           validation_data=(X_test, y_test),
-          callbacks=[tensorboard_callback, plx_callback, plx_model_callback])
+          callbacks=[tensorboard_callback, plx_callback])  # Polyaxon
 ```
 
 <blockquote class="light">Some parts of the code were removed to reduce the size of the snippet</blockquote>

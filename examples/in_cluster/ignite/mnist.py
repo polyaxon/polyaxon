@@ -125,11 +125,11 @@ def main(train_batch_size, val_batch_size, epochs, lr, momentum, log_interval):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=2)
-    parser.add_argument('--batch_size', type=int, default=256)
-    parser.add_argument('--val_batch_size', type=int, default=100)
+    parser.add_argument('--batch-size', type=int, default=256)
+    parser.add_argument('--val-batch-size', type=int, default=100)
     parser.add_argument('--lr', type=float, default=0.001)
     parser.add_argument('--momentum', type=float, default=0.1)
-    parser.add_argument('--log_interval', type=int, default=10)
+    parser.add_argument('--log-interval', type=int, default=10)
     args = parser.parse_args()
     main(
         args.batch_size, args.val_batch_size, args.epochs, args.lr, args.momentum, args.log_interval

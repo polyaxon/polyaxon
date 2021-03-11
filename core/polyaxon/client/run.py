@@ -414,6 +414,7 @@ class RunClient:
             nocache=nocache,
             cache=cache,
             verbose=False,
+            is_cli=False,
         )
         return self.create(
             name=name, description=description, tags=tags, content=op_spec
@@ -475,6 +476,7 @@ class RunClient:
             nocache=nocache,
             cache=cache,
             verbose=False,
+            is_cli=False,
         )
         return self.create(
             name=name, description=description, tags=tags, content=op_spec
@@ -535,6 +537,7 @@ class RunClient:
             nocache=nocache,
             cache=cache,
             verbose=False,
+            is_cli=False,
         )
         return self.create(
             name=name, description=description, tags=tags, content=op_spec
@@ -1958,8 +1961,6 @@ def get_run_logs(
                     is_done = LifeCycle.is_done(last_status)
                     if not is_done:
                         checks = 0
-                    if not last_time:
-                        last_time = last_transition_time
                 else:
                     is_done = True
             if last_time and not follow:

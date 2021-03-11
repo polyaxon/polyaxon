@@ -37,7 +37,8 @@ There are several distinct features involved in the scheduling strategies:
  * [Node scheduling](/docs/core/scheduling-strategies/node-scheduling/): A feature that leverages the Kubernetes API to select nodes for running your operations.
  * [Resources scheduling](/docs/core/scheduling-strategies/resources-scheduling/): A feature that leverages the Kubernetes API to enable GPU/TPU, or other special resources for your operations.
  * [Queue priority](/docs/core/scheduling-strategies/queue-routing/#priority): A feature to prioritize operations on a queue.
- * [Queue concurrency](/docs/core/scheduling-strategies/queue-routing/#concurrency): A feature to throttle the number of operations on a queue.
+ * [Queue concurrency](/docs/core/scheduling-strategies/queue-routing/#concurrency): A feature to throttle the number of operations on a queue based on parallelism.
+ * Queue Resources **Roadmap**: A feature to throttle the number of operations on a queue based on resources (CPU/Memory/GPU/...).
  * [Queue agent](/docs/core/scheduling-strategies/queue-routing/#agent): A feature to route operations on a queue to a namespace or cluster.
  * [Concurrency management](/docs/core/scheduling-strategies/concurrency-management): A feature to limit the number of operations queued.
  * [Scheduling presets](/docs/core/scheduling-strategies/presets/): A feature for injecting certain information into operations at compilation time to preset configuration

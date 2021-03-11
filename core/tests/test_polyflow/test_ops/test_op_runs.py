@@ -321,38 +321,32 @@ class TestCompiledOperationsConfigs(BaseTestCase):
             outputs=config.outputs,
             is_template=False,
         )
-        # Passing wrong type
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(
-                params={"param2": {"value": 1}},
-                inputs=config.inputs,
-                outputs=config.outputs,
-                is_template=False,
-            )
+        # Auto conversion
+        ops_params.validate_params(
+            params={"param2": {"value": 1}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param2": {"value": False}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param2": {"value": {"foo": "bar"}}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
 
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(
-                params={"param2": {"value": False}},
-                inputs=config.inputs,
-                outputs=config.outputs,
-                is_template=False,
-            )
-
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(
-                params={"param2": {"value": {"foo": "bar"}}},
-                inputs=config.inputs,
-                outputs=config.outputs,
-                is_template=False,
-            )
-
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(
-                params={"param2": {"value": ["gs://bucket/path/to/blob/"]}},
-                inputs=config.inputs,
-                outputs=config.outputs,
-                is_template=False,
-            )
+        ops_params.validate_params(
+            params={"param2": {"value": ["gs://bucket/path/to/blob/"]}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
 
         config_dict = {
             "inputs": [{"name": "param7", "type": types.WASB}],
@@ -440,13 +434,20 @@ class TestCompiledOperationsConfigs(BaseTestCase):
             )
 
         config_dict = {
-            "outputs": [{"name": "param2", "type": types.STR}],
+            "outputs": [{"name": "param2", "type": types.FLOAT}],
             "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
         }
         config = V1CompiledOperation.from_dict(config_dict)
         # Passing correct param
         ops_params.validate_params(
-            params={"param2": {"value": "text"}},
+            params={"param2": {"value": "1.1"}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        # Aut conversion
+        ops_params.validate_params(
+            params={"param2": {"value": False}},
             inputs=config.inputs,
             outputs=config.outputs,
             is_template=False,
@@ -454,15 +455,7 @@ class TestCompiledOperationsConfigs(BaseTestCase):
         # Passing wrong type
         with self.assertRaises(ValidationError):
             ops_params.validate_params(
-                params={"param2": {"value": 1}},
-                inputs=config.inputs,
-                outputs=config.outputs,
-                is_template=False,
-            )
-
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(
-                params={"param2": {"value": False}},
+                params={"param2": {"value": "test"}},
                 inputs=config.inputs,
                 outputs=config.outputs,
                 is_template=False,

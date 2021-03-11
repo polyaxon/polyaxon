@@ -2,7 +2,7 @@ import argparse
 
 from fastai.tabular.all import *
 
-from polyaxon.tracking.contrib.fastai import PolyaxonFastaiCallback
+from polyaxon.tracking.contrib.fastai import PolyaxonCallback
 
 path = untar_data(URLs.ADULT_SAMPLE)
 df = pd.read_csv(path / 'adult.csv')
@@ -16,7 +16,7 @@ dls = TabularDataLoaders.from_csv(
 )
 
 # create a learner and train
-learn = tabular_learner(dls, metrics=accuracy, cbs=[PolyaxonFastaiCallback()])
+learn = tabular_learner(dls, metrics=accuracy, cbs=[PolyaxonCallback()])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

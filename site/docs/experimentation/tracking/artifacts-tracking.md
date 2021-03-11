@@ -52,10 +52,10 @@ Polyaxon also exposes 3 types of logging methods:
 
 ## Reference logging
 
-Reference logging is useful when the user needs to:
+Reference logging is useful when the user:
 
- * have more control where the asset must be saved.
- * do not need to log multiple versions of the asset during the run, i.e. the asset is only saved once.
+ * needs to have more control where the asset must be saved.
+ * does not need to log multiple versions of the asset during the run, i.e. the asset is only saved once.
  
 In reference logging the user is responsible for saving the artifacts, you can use a relative path to the run's root artifacts or a relative path to the run's outputs path:
 

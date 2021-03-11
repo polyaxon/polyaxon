@@ -27,6 +27,7 @@ from polyaxon import types
 from polyaxon.contexts import refs as contexts_refs
 from polyaxon.contexts import sections as contexts_sections
 from polyaxon.contexts.params import PARAM_REGEX
+from polyaxon.parser import parser
 from polyaxon.polyflow.init import V1Init
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.utils.signal_decorators import check_partial
@@ -422,10 +423,17 @@ class V1Param(
 class ParamSpec(
     namedtuple("ParamSpec", "name type param is_flag is_list is_context arg_format")
 ):
+    def get_typed_param_value(self):
+        if self.type == types.STR:
+            if self.is_list:
+                return [parser.parse_string(v) for v in self.param.value]
+            return parser.parse_string(self.param.value)
+        return self.param.value
+
     def get_display_value(self):
         if self.is_flag:
             return "--{}".format(self.name) if self.param.value else ""
-        return self.param.value
+        return self.get_typed_param_value()
 
     def __repr__(self):
         if self.is_flag:
@@ -440,7 +448,9 @@ class ParamSpec(
             from polyaxon.polyaxonfile.specs.libs.parser import Parser
 
             return (
-                Parser.parse_expression(self.arg_format, {self.name: self.param.value})
+                Parser.parse_expression(
+                    self.arg_format, {self.name: self.get_typed_param_value()}
+                )
                 if self.param.value is not None
                 else ""
             )
@@ -455,7 +465,7 @@ class ParamSpec(
     def to_parsed_param(self):
         parsed_param = {
             "connection": self.param.connection,
-            "value": self.param.value,
+            "value": self.get_typed_param_value(),
             "type": self.type,
             "as_str": self.as_str(),
             "as_arg": self.as_arg(),

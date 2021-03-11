@@ -1,19 +1,15 @@
 import argparse
 
-from keras import utils
-from keras import optimizers
-from keras.datasets import mnist
-from keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
-from keras.models import Sequential
+import tensorflow as tf
 
 # Polyaxon
 from polyaxon import tracking
-
+from polyaxon.tracking.contrib.keras import PolyaxonCallback
 
 OPTIMIZERS = {
-    'adam': optimizers.Adam,
-    'rmsprop': optimizers.RMSprop,
-    'sgd': optimizers.SGD,
+    'adam': tf.keras.optimizers.Adam,
+    'rmsprop': tf.keras.optimizers.RMSprop,
+    'sgd': tf.keras.optimizers.SGD,
 }
 
 
@@ -24,34 +20,41 @@ def transform_data(x_train, y_train, x_test, y_test):
     x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
     x_test = x_test.astype('float32') / 255
 
-    y_train = utils.to_categorical(y_train, num_classes=10)
-    y_test = utils.to_categorical(y_test, num_classes=10)
+    y_train = tf.keras.utils.to_categorical(y_train, num_classes=10)
+    y_test = tf.keras.utils.to_categorical(y_test, num_classes=10)
 
     return x_train, y_train, x_test, y_test
 
 
 def train(conv1_size, conv2_size, dropout, hidden1_size, optimizer, log_learning_rate, epochs):
-    model = Sequential()
-    model.add(Conv2D(filters=conv1_size,
-                     kernel_size=(3, 3),
-                     activation='relu',
-                     input_shape=x_train.shape[1:]))
-    model.add(Conv2D(filters=conv2_size,
-                     kernel_size=(3, 3),
-                     activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(dropout))
-    model.add(Flatten())
-    model.add(Dense(hidden1_size, activation='relu'))
-    model.add(Dense(10, activation='softmax'))
+    model = tf.keras.models.Sequential()
+    model.add(tf.keras.layers.Conv2D(filters=conv1_size,
+                                     kernel_size=(3, 3),
+                                     activation='relu',
+                                     input_shape=x_train.shape[1:]))
+    model.add(tf.keras.layers.Conv2D(filters=conv2_size,
+                                     kernel_size=(3, 3),
+                                     activation='relu'))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(tf.keras.layers.Dropout(dropout))
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(hidden1_size, activation='relu'))
+    model.add(tf.keras.layers.Dense(10, activation='softmax'))
+
+    optimizer = OPTIMIZERS[optimizer](lr=10 ** log_learning_rate)
     model.compile(
-        optimizer=OPTIMIZERS[optimizer](lr=10 ** log_learning_rate),
+        optimizer=optimizer,
         loss='categorical_crossentropy',
         metrics=['accuracy'],
     )
 
-    model.fit(x_train, y_train, epochs=epochs, batch_size=100)
-
+    model.fit(
+        x_train,
+        y_train,
+        epochs=epochs,
+        batch_size=100,
+        callbacks=[PolyaxonCallback()],  # Polyaxon
+    )
     return model.evaluate(x_test, y_test)[1]
 
 
@@ -96,7 +99,7 @@ if __name__ == '__main__':
     # Polyaxon
     tracking.init()
 
-    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
     # Polyaxon
     tracking.log_data_ref(content=x_train, name='x_train')
@@ -105,6 +108,13 @@ if __name__ == '__main__':
     tracking.log_data_ref(content=y_test, name='y_test')
 
     x_train, y_train, x_test, y_test = transform_data(x_train, y_train, x_test, y_test)
+    model = tf.keras.models.Sequential([
+        tf.keras.layers.Flatten(),
+        tf.keras.layers.Dense(256, activation=tf.keras.activations.relu),
+        tf.keras.layers.Dropout(0.5),
+        tf.keras.layers.Dense(10, activation=tf.keras.activations.softmax)
+    ])
+
     accuracy = train(conv1_size=args.conv1_size,
                      conv2_size=args.conv2_size,
                      dropout=args.dropout,
@@ -114,4 +124,4 @@ if __name__ == '__main__':
                      epochs=args.epochs)
 
     # Polyaxon
-    tracking.log_metrics(accuracy=accuracy)
+    tracking.log_metrics(eval_accuracy=accuracy)

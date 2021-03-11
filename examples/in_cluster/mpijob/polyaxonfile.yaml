@@ -4,16 +4,43 @@ tags: [examples, mpi, kubeflow]
 
 run:
   kind: mpijob
+  slotsPerWorker: 4
+  cleanPodPolicy: Running
+  launcher:
+    replicas: 1
+    container:
+      image: docker.io/horovod/horovod:0.20.0-tf2.3.0-torch1.6.0-mxnet1.5.0-py3.7-cpu
+      command:
+      - mpirun
+      args:
+      - -np
+      - "2"
+      - --allow-run-as-root
+      - -bind-to
+      - none
+      - -map-by
+      - slot
+      - -x
+      - LD_LIBRARY_PATH
+      - -x
+      - PATH
+      - -mca
+      - pml
+      - ob1
+      - -mca
+      - btl
+      - ^openib
+      - python
+      - /examples/tensorflow2_keras_mnist.py
+      resources:
+        limits:
+          cpu: 1
+          memory: 2Gi
   worker:
     replicas: 2
     container:
-      image: mpioperator/tensorflow-benchmarks:latest
-      command: ["mpirun", "python", "-u", "scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py"]
-      args: [
-        "--model resnet101",
-        "--batch_size 64",
-        "--variable_update horovod",
-      ]
+      image: docker.io/horovod/horovod:0.20.0-tf2.3.0-torch1.6.0-mxnet1.5.0-py3.7-cpu
       resources:
         limits:
-          nvidia.com/gpu: 1
+          cpu: 2
+          memory: 4Gi

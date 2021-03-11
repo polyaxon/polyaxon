@@ -10,7 +10,7 @@ from keras.preprocessing import sequence
 
 # Polyaxon
 from polyaxon import tracking
-from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback, PolyaxonKerasModelCheckpoint
+from polyaxon.tracking.contrib.keras import PolyaxonCallback
 
 logger = logging.getLogger('bidir-lstm')
 
@@ -55,10 +55,9 @@ def train(max_features,
               callbacks=[
                   EarlyStopping(
                       monitor='val_loss', min_delta=1e-4, patience=3, verbose=1, mode='auto'),
-                  PolyaxonKerasCallback(),
-                  PolyaxonKerasModelCheckpoint(),
+                  PolyaxonCallback(),
                   TensorBoard(log_dir=tracking.get_tensorboard_path(), histogram_freq=1),
-                  ModelCheckpoint(tracking.get_model_path())
+                  ModelCheckpoint(tracking.get_outputs_path("model"))
               ])
 
     return model.evaluate(x_test, y_test)[1]

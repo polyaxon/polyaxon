@@ -1,0 +1,17 @@
+version: 1.1
+kind: operation
+name: build
+params:
+  destination:
+    connection: docker-connection
+    value: polyaxon-examples:tf
+runPatch:
+  init:
+  - dockerfile:
+      image: "tensorflow/tensorflow:2.2.2"
+      run:
+      - 'pip3 install --no-cache-dir -U polyaxon==1.7.2'
+      - pip3 install keras
+      - pip3 install tensorflow_datasets
+      langEnv: 'en_US.UTF-8'
+hubRef: kaniko

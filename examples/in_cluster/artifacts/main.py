@@ -1,3 +1,5 @@
+import logging
+
 import argparse
 import random
 import time
@@ -15,6 +17,9 @@ from vega_datasets import data
 # Polyaxon
 from polyaxon import tracking
 from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def get_loss(step):
@@ -348,7 +353,7 @@ def main():
     tracking.init()
 
     for i in range(args.steps):
-        print('Step', i)
+        logger.info('Step %s', i)
         # Scalars
         loss = get_loss(i)
         accuracy = get_accuracy(loss)

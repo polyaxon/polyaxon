@@ -299,29 +299,28 @@ class TestComponentsConfigs(BaseTestCase):
             )
 
         config_dict = {
-            "inputs": [{"name": "param2", "type": types.STR}],
+            "inputs": [{"name": "param2", "type": types.FLOAT}],
             "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
         }
         config = V1Component.from_dict(config_dict)
         # Passing correct param
         ops_params.validate_params(
-            params={"param2": {"value": "text"}},
+            params={"param2": {"value": 1}},
             inputs=config.inputs,
             outputs=config.outputs,
             is_template=False,
         )
+        ops_params.validate_params(
+            params={"param2": {"value": False}},  # auto-conversion (int to 0 to 0.0)
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+
         # Passing wrong type
         with self.assertRaises(ValidationError):
             ops_params.validate_params(
-                params={"param2": {"value": 1}},
-                inputs=config.inputs,
-                outputs=config.outputs,
-                is_template=False,
-            )
-
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(
-                params={"param2": {"value": False}},
+                params={"param2": {"value": "test"}},
                 inputs=config.inputs,
                 outputs=config.outputs,
                 is_template=False,
@@ -429,13 +428,19 @@ class TestComponentsConfigs(BaseTestCase):
             )
 
         config_dict = {
-            "outputs": [{"name": "param2", "type": types.STR}],
+            "outputs": [{"name": "param2", "type": types.FLOAT}],
             "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
         }
         config = V1Component.from_dict(config_dict)
         # Passing correct param
         ops_params.validate_params(
-            params={"param2": {"value": "text"}},
+            params={"param2": {"value": "1.1"}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param2": {"value": False}},  # auto-conversion (int to 0 to 0.0)
             inputs=config.inputs,
             outputs=config.outputs,
             is_template=False,
@@ -443,15 +448,7 @@ class TestComponentsConfigs(BaseTestCase):
         # Passing wrong type
         with self.assertRaises(ValidationError):
             ops_params.validate_params(
-                params={"param2": {"value": 1}},
-                inputs=config.inputs,
-                outputs=config.outputs,
-                is_template=False,
-            )
-
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(
-                params={"param2": {"value": False}},
+                params={"param2": {"value": "test"}},
                 inputs=config.inputs,
                 outputs=config.outputs,
                 is_template=False,

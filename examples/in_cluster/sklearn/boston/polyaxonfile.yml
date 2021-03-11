@@ -1,0 +1,21 @@
+version: 1.1
+kind: component
+tags: [examples, scikit-learn]
+inputs:
+- {name: n_estimators, type: int, isOptional: true, value: 70}
+- {name: max_depth, type: int, isOptional: true, value: 7}
+- {name: min_samples_split, type: int, isOptional: true, value: 3}
+
+run:
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples:ml
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/sklearn/boston"
+    command: ["python", "-u", "model.py"]
+    args: [
+      "--n_estimators={{ n_estimators }}",
+      "--max_features={{ max_features }}",
+      "--min_samples_split={{ min_samples_split }}",
+    ]

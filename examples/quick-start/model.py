@@ -25,7 +25,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras import optimizers
 
 from polyaxon import tracking
-from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback, PolyaxonKerasModelCheckpoint
+from polyaxon.tracking.contrib.keras import PolyaxonCallback
 
 
 OPTIMIZERS = {
@@ -145,12 +145,11 @@ if __name__ == '__main__':
 
     # Polyaxon
     tracking.init()
-    plx_callback = PolyaxonKerasCallback()
-    plx_model_callback = PolyaxonKerasModelCheckpoint()
+    plx_callback = PolyaxonCallback()
     log_dir = tracking.get_tensorboard_path()
 
     print("log_dir", log_dir)
-    print("model_dir", plx_model_callback.filepath)
+    print("model_dir", plx_callback.filepath)
     # TF Model
     model = create_model(
         conv1_size=args.conv1_size,
@@ -175,4 +174,4 @@ if __name__ == '__main__':
               y=y_train,
               epochs=args.epochs,
               validation_data=(X_test, y_test),
-              callbacks=[tensorboard_callback, plx_callback, plx_model_callback])
+              callbacks=[tensorboard_callback, plx_callback])

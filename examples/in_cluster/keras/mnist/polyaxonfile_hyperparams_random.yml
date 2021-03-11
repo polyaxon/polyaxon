@@ -26,7 +26,4 @@ matrix:
     epochs:
       kind: choice
       value: [1, 3, 7]
-    batch_size:
-      kind: choice
-      value: [32, 64]
 pathRef: ./polyaxonfile.yml

@@ -366,36 +366,70 @@ class TestParser(BaseTestCase):
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_string(key="string_error_key_1", value=None)
 
+        assert parser.get_string(key="string_error_key_2", value=123) == "123"
         with self.assertRaises(PolyaxonSchemaError):
-            parser.get_string(key="string_error_key_2", value=123)
+            parser.get_string(key="string_error_key_2", value=123, strong_type=True)
 
+        assert parser.get_string(key="string_error_key_3", value=1.23) == "1.23"
         with self.assertRaises(PolyaxonSchemaError):
-            parser.get_string(key="string_error_key_3", value=1.23)
+            parser.get_string(key="string_error_key_3", value=1.23, strong_type=True)
 
+        assert parser.get_string(key="string_error_key_4", value=True) == "true"
         with self.assertRaises(PolyaxonSchemaError):
-            parser.get_string(key="string_error_key_4", value=True)
+            parser.get_string(key="string_error_key_4", value=True, strong_type=True)
 
-        with self.assertRaises(PolyaxonSchemaError):
+        assert (
             parser.get_string(key="string_list_key_1", value=["123", "1.23", "foo", ""])
-
+            == '["123", "1.23", "foo", ""]'
+        )
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_string(
-                key="string_list_error_key_1", value=["123", 123], is_list=True
+                key="string_list_key_1",
+                value=["123", "1.23", "foo", ""],
+                strong_type=True,
+            )
+
+        assert parser.get_string(
+            key="string_list_error_key_1", value=["123", 123], is_list=True
+        ) == ["123", "123"]
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_string(
+                key="string_list_error_key_1",
+                value=["123", 123],
+                is_list=True,
+                strong_type=True,
+            )
+
+        assert (
+            parser.get_string(
+                key="string_list_error_key_2",
+                value=["123", 12.3],
+                is_list=True,
+            )
+            == ["123", "12.3"]
+        )
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_string(
+                key="string_list_error_key_2",
+                value=["123", 12.3],
+                is_list=True,
+                strong_type=True,
             )
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_string(
-                key="string_list_error_key_2", value=["123", 12.3], is_list=True
+                key="string_list_error_key_3",
+                value=["123", None],
+                is_list=True,
+                strong_type=True,
             )
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_string(
-                key="string_list_error_key_3", value=["123", None], is_list=True
-            )
-
-        with self.assertRaises(PolyaxonSchemaError):
-            parser.get_string(
-                key="string_list_error_key_4", value=["123", False], is_list=True
+                key="string_list_error_key_4",
+                value=["123", False],
+                is_list=True,
+                strong_type=True,
             )
 
         with self.assertRaises(PolyaxonSchemaError):

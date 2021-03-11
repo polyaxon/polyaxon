@@ -14,7 +14,8 @@ sidebar: "intro"
 ---
 
 We briefly went through one aspect of the programmatic experience in the guide [iterate-in-notebooks](/docs/intro/quick-start/iterate-in-notebooks/).
-In this sections we will learn more how to drive the complete workflow, creating valid manifests (Polyaxonfiles) and performing API calls, using the Python client.
+
+In this sections we will learn more how to drive the complete workflow: creating valid manifests (Polyaxonfiles) and performing API calls using the Python client.
 
 In this guide we will recreate the manifests that we used before using Polyaxon's Python library.
 

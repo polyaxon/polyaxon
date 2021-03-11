@@ -16,10 +16,9 @@ run:
   init:
   - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
   container:
-    image: polyaxon/polyaxon-examples
+    image: polyaxon/polyaxon-examples:pytorch
     workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/ignite"
     command: ["python", "-u", "mnist.py"]
-    imagePullPolicy: "Always"
     args: [
       "{{ params.epochs.as_arg }}",
       "{{ params.batch_size.as_arg }}",

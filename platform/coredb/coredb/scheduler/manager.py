@@ -76,19 +76,16 @@ def runs_artifacts_clean(run: hex):
                 run_kind=run.kind,
             )
             try:
-                in_cluster = conf.get(K8S_IN_CLUSTER)
-                if in_cluster and (run.is_service or run.is_job):
-                    manager.make_and_create(
-                        content=op,
-                        owner_name=run.project.owner.name,
-                        project_name=run.project.name,
-                        run_name=run.name,
-                        run_uuid=run.uuid.hex,
-                        run_kind=run.kind,
-                        namespace=conf.get(K8S_NAMESPACE),
-                        in_cluster=in_cluster,
-                    )
-                return
+                manager.make_and_create(
+                    content=op,
+                    owner_name=run.project.owner.name,
+                    project_name=run.project.name,
+                    run_name=run.name,
+                    run_uuid=run.uuid.hex,
+                    run_kind=run.kind,
+                    namespace=conf.get(K8S_NAMESPACE),
+                    in_cluster=in_cluster,
+                )
             except Exception as e:
                 _logger.warning(
                     "Failed to run cleaning job for %s.%s.%s.\n %s",
@@ -100,7 +97,7 @@ def runs_artifacts_clean(run: hex):
 
 
 def runs_delete(run_id: int, run: Optional[BaseRun]):
-    run = get_run(run_id=run_id, run=run)
+    run = get_run(run_id=run_id, run=run, use_all=True)
     if not run:
         return
 
@@ -243,7 +240,6 @@ def runs_stop(
     if not run:
         return True
 
-    stopped = True
     should_stop = (
         LifeCycle.is_k8s_stoppable(run.status) or run.status == V1Statuses.STOPPING
     )
@@ -270,7 +266,7 @@ def runs_stop(
             if clean:
                 _clean()
             try:
-                stopped = manager.stop(
+                manager.stop(
                     run_uuid=run.uuid.hex,
                     run_kind=run.kind,
                     namespace=conf.get(K8S_NAMESPACE),
@@ -283,9 +279,6 @@ def runs_stop(
                     e,
                 )
                 return False
-
-    if not stopped:
-        return False
 
     if not update_status:
         return True

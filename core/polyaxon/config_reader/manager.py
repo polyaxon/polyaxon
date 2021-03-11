@@ -214,6 +214,7 @@ class ConfigManager:
             is_local=is_local,
             default=default,
             options=options,
+            strong_type=True,
         )
 
     def get_dict(
@@ -406,6 +407,7 @@ class ConfigManager:
         is_local,
         default,
         options,
+        **kwargs,
     ):
         """
         Get key from the dictionary made out of the configs passed.
@@ -427,6 +429,7 @@ class ConfigManager:
             is_optional=is_optional,
             default=default,
             options=options,
+            **kwargs,
         )
         self._add_key(key, is_secret=is_secret, is_local=is_local)
         return parsed_value

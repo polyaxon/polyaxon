@@ -162,3 +162,7 @@ values.*.test.sh
 
 # Chart dependencies
 **/charts/*.tgz
+
+# polyaxon configs
+.polyaxon/
+.polyaxonignore

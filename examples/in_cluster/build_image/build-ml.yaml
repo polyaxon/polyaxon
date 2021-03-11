@@ -1,0 +1,16 @@
+version: 1.1
+kind: operation
+name: build
+params:
+  destination:
+    connection: docker-connection
+    value: polyaxon-examples:ml
+runPatch:
+  init:
+  - dockerfile:
+      image: python:3.8.8-buster
+      run:
+      - 'pip3 install --no-cache-dir -U polyaxon["polyboard"]==1.7.2'
+      - pip3 install scikit-learn xgboost matplotlib vega-datasets joblib lightgbm xgboost
+      langEnv: 'en_US.UTF-8'
+hubRef: kaniko
