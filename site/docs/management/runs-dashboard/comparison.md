@@ -12,7 +12,7 @@ sidebar: "management"
 
 ## Overview
 
-Polyaxon comparison view is a powerful tool for listing, filtering, sorting, rearranging, and comparing runs.
+The comparison view is a powerful tool for listing, filtering, sorting, rearranging, and comparing runs.
 
 
 ## Features

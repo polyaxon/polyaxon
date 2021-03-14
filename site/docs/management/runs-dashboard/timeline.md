@@ -13,7 +13,7 @@ sidebar: "management"
 
 ## Overview
 
-Polyaxon timeline view is a powerful tool for listing, filtering, and comparing runs of all kinds under the same pipeline.
+The timeline view is a powerful tool for listing, filtering, and comparing runs of all kinds under the same pipeline following their start date and their duration.
 
 
 ## Features

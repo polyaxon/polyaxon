@@ -47,6 +47,8 @@
       link: /docs/management/runs-dashboard/comparison/
     - title: Timeline
       link: /docs/management/runs-dashboard/timeline/
+    - title: Graph
+      link: /docs/management/runs-dashboard/graph/
     - title: Run Info
       link: /docs/management/runs-dashboard/info/
     - title: Run Logs

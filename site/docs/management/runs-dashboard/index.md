@@ -13,9 +13,9 @@ sidebar: "management"
 
 ## Overview
 
-Polyaxon runs dashboard is a powerful tool with visualization capabilities, collaboration features, and extendable interface.
+The runs dashboard is a powerful tool with visualization capabilities, collaboration features, and extendable interface.
 
-Polyaxon runs dashboard is a free tool, it can run offline and within any network policies, and can be used by both paying customers and users of the community edition.
+The runs dashboard is a free tool, it can run offline and within any network policies, and can be used by both paying customers and users of the community edition.
 
 ## Features
 
