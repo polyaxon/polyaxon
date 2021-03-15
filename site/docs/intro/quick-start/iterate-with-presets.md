@@ -85,7 +85,7 @@ template:
   fields: ["runPatch.container.workingDir"]
 ```
 
-> **Note**: You can learn more about the [template section here](https://polyaxon.com/docs/core/specification/template/) 
+> **Note**: You can learn more about the [template section here](/docs/core/specification/template/) 
 
 ## Using the local code preset
 

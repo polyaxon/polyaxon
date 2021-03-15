@@ -90,7 +90,7 @@ or
 polyaxon ops stop -p [project-name] -uid [run-uuid]
 ```
 
-## Run this component using the client
+## Run the job using the Python client
 
 To run this component using Polyaxon Client:
 

@@ -9,9 +9,30 @@ tags:
     - reference
 ---
 
+## Minimum supported versions
+
+Please run the following command to check the minimum supported versions and the latest published versions:
+
+```bash
+polyaxon version --check
+```
+
+## Migration from v1.x to v1.y
+
+### Polyaxon CE
+
+You can migrate from any Polyaxon `v1.x` to any `v1.y` for any `y >= x`, there are no breaking changes, and all migrations (if there are any between the versions) are automatic.
+
+### Polyaxon Agent
+
+You can migrate from any Polyaxon `v1.x` to any `v1.y` for any `y` and `x`. 
+We recommend however to use at least the minimum supported version to benefit from security fixes, and the latest version to benefit from all new enhancements. 
+
+## Migration from v0.x to v1.y
+
 > **Important**: Polyaxon v1 is not backward compatible with Polyaxon v0, this guide is for the community edition's users.
 
-## Polyaxonfiles
+### Polyaxonfiles
 
 The Polyaxonfile specification has several changes:
  * Support standard Kubernetes container and pod sections: all custom `cmd`, `resources`, and `node selectors` are now using standard Kubernetes definitions.
@@ -20,7 +41,7 @@ The Polyaxonfile specification has several changes:
    * Single job abstraction for managing jobs, builds, and experiments.
    * Single service abstraction for managing: notebooks, Tensorboards, VSCode, Streamlit, Voila, ...
 
-## Apis, Clients, & CLI
+### Apis, Clients, & CLI
 
 We removed all specific APIs and commands for: `experiments`, `jobs`, `builds`, `notebooks`, `tensorboards`,
 and consolidated all logic under the `/api/v1/{owner}/{project}/runs` endpoints and `polyaxon ops` commands group.
@@ -29,7 +50,7 @@ The CLI and Client have also a single function for starting jobs, services, expe
  * `polyaxon run ...`
  * `client.create_ ...`
 
-## Customizable plugins
+### Customizable plugins
 
 Issues related to Tensorboard and Notebook can be solved by users themselves without waiting for new releases. Polyaxon provides several public components,
 but users can customize them at any point.
@@ -38,7 +59,7 @@ It's still possible to start Tensorboard and Notebook in a simple way, e.g.:
 
  * `polyaxon run --hub tensorboard:version`
 
-## Helm & deployment
+### Helm & deployment
 
  * The built-in docker registry is removed: users can still deploy an in-cluster registry for managing docker images,
    but the behavior is now standardized across all registry providers.
@@ -46,7 +67,7 @@ It's still possible to start Tensorboard and Notebook in a simple way, e.g.:
  * Git is managed through external providers by default: no volume for managing repos is required anymore.
  * Logs and outputs are managed through a single artifacts store: One artifacts store connection to manage logs, events, and outputs.
 
-## Connections
+### Connections
 
 All integrations with external systems are managed using the `Connection` abstraction.
 
@@ -59,7 +80,7 @@ Connections have a simple and generic schema for managing secrets and config map
  * Integration with docker/container registries follows standard definitions for mounting secrets and config maps: any tutorial found on the internet for mounting some specific registry should work on Polyaxon.
  * Polyaxon also integrates with several other connections, and users can define custom behavior for consuming connections since they are just mounting secrets and config-maps.
 
-## Auth and User management
+### Auth and User management
 
 Polyaxon CE is now very easy to deploy, and does not provide an auth system:
  * Users in Polyaxon CE can access all projects, submit jobs, and view shared results under a single organization.

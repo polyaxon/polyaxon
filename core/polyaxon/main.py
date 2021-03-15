@@ -71,15 +71,27 @@ def cli(context, verbose, offline):
 
       - You can initialize a project with: polyaxon init -p [project name]
 
-      - Otherwise Polyaxon will use the default global path will be used for the cache.
+      - Otherwise Polyaxon will use the default global path for the cache.
 
-    You can check the version of you CLI by running:
+    You can check the version of your CLI by running:
 
       - polyaxon version
 
+    To can check the version of the CLI and the server, and check the compatibility matrix:
+
+      - polyaxon version --check
+
     To Enable debug mode, you can use the `-v` flag:
 
-      - polyaxon -v admin
+      - polyaxon -v ...
+
+    To configure your host:
+
+      - polyaxon config set --host=...
+
+    To check your current config:
+
+      - polyaxon config show
 
     Common commands:
 
@@ -89,9 +101,9 @@ def cli(context, verbose, offline):
 
       - polyaxon ops ls
 
-      - polyaxon ops get
+      - polyaxon ops logs
 
-      - polyaxon config -l
+      - polyaxon ops get
 
       - polyaxon config set ...
 
@@ -105,7 +117,7 @@ def cli(context, verbose, offline):
 
     For more information, please visit https://polyaxon.com/docs/core/cli/
 
-    Check the help available for each command listed below.
+    Check the help available for each command listed below by appending `-h`.
     """
     settings.set_cli_config()
     configure_logger(verbose)

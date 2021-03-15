@@ -3,7 +3,7 @@ title: "Docker Hub"
 meta_title: "Docker Hub Registry"
 meta_description: "How to pull images from your private docker hub registry."
 custom_excerpt: "Docker Hub is a service provided by Docker for finding and sharing container images with your team. Docker Hub is the world's largest library and community for container images"
-image: "../../content/images/integrations/dockerhub.png"
+image: "../../content/images/integrations/docker.png"
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
