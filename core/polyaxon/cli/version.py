@@ -26,12 +26,12 @@ from polyaxon.utils import indentation
 from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 from polyaxon.utils.versions import clean_version_for_check
 
-PROJECT_CLI_NAME = "polyaxon-cli"
+PROJECT_CLI_NAME = "polyaxon"
 
 
 def pip_upgrade(project_name=PROJECT_CLI_NAME):
     PipOperator.execute(["install", "--upgrade", project_name], stream=True)
-    click.echo("polyaxon-cli upgraded.")
+    click.echo("polyaxon upgraded.")
 
 
 def get_version(package):

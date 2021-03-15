@@ -12,7 +12,7 @@ runPatch:
   - dockerfile:
       image: "pytorch/pytorch"
       run:
-      - 'pip3 install --no-cache-dir -U polyaxon==1.7.2'
+      - 'pip3 install --no-cache-dir -U polyaxon==1.7.3'
       - pip3 install -U pytorch-lightning
       - pip3 install -U pytorch-ignite
       - pip3 install -U "torchvision>=0.9"
