@@ -15,7 +15,7 @@ tags:
 sidebar: "experimentation"
 ---
 
-Polyaxon tracking is a high-level api for logging parameters,
+Polyaxon tracking is a high-level API for logging parameters,
 code versions, metrics, and outputs when running your machine learning code,
 both on a Polyaxon deployment or on a different platform/environment.
 

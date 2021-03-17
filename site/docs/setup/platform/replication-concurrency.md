@@ -18,7 +18,7 @@ Polyaxon supports scaling of it's services (API and workers) in a horizontal way
 
 ## Services Replication
 
-To replicate the platform or one of the services (api or workers),
+To replicate the platform or one of the services (API or workers),
 you just need to modify the `replicas` field of that service you want to scale horizontally.
 
 > There's an hpa for horizontal pod auto-scaling that can be enabled for all services

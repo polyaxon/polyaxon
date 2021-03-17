@@ -35,7 +35,7 @@ Each component can have multiple versions, similar to docker images, to avoid br
 Each component can list all versions, their stage, their specification, and their usage.
 
 Polyaxon provides a special tag to signal the stage of your components' versions.
-By default, if a user runs a component without specifying the version, the Component Hub use `latest` if it exists otherwise it will raise a 404 error.
+By default, if a user runs a component without specifying the version, the Component Hub uses `latest` if it exists otherwise it will raise a 404 error.
 
 ## Managing and using components
 

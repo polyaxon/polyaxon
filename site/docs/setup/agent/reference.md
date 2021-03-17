@@ -110,7 +110,7 @@ ingress.kubernetes.io/send-timeout: "600"
 ingress.kubernetes.io/proxy-body-size: 4G
 ```
 
-## Securing api server with TLS
+## Securing API server with TLS
 
 If you have your own certificate you can make a new secret with the `tls.crt` and the `tls.key`,
 then set the secret name in the values file.

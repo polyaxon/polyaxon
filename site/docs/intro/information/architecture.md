@@ -58,7 +58,7 @@ Polyaxon runs both in the cloud and on-premise, and provides access via:
 
  * Polyaxon command line interface
  * Polyaxon dashboard
- * Polyaxon SDKs targeting the Polyaxon api
+ * Polyaxon SDKs targeting the Polyaxon API
  * Polyaxon Webhooks
 
 
