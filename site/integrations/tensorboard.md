@@ -30,7 +30,7 @@ Polyaxon provides several ways for using Tensorboard, you can check the [compone
 ## Create a new tensorboard using the CLI
 
 ```bash
-polyaxon run --hub tensorboard -P --run-uuid=UUID
+polyaxon run --hub tensorboard -P uuid=UUID
 ```
 
 The `UUID` is the uuid of the experiment to start a tensorboard for.
