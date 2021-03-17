@@ -49,19 +49,19 @@ polyaxon run --hub notebook -p project-name
 Go to the UI under the `service` tab:
 
 ```bash
-polyaxon ops dashboard [--uid] [-p]
+polyaxon ops dashboard [-uid] [-p]
 ```
 
 Or to get to the service directly:
 
 ```bash
-polyaxon ops service [--uid] [-p]
+polyaxon ops service [-uid] [-p]
 ```
 
 Or to get the service in full-screen mode:
 
 ```bash
-polyaxon ops service --external [--uid] [-p]
+polyaxon ops service --external [-uid] [-p]
 ```
 
 ![notebooks](../../content/images/concepts/dashboard/notebooks.png)
@@ -72,7 +72,13 @@ polyaxon ops service --external [--uid] [-p]
 You can provide more information before scheduling the service, like the queue, presets, ...
 
 ```bash
-polyaxon run --hub notebook -q agent-name/queue-name -p preset-name
+polyaxon run --hub notebook -q agent-name/queue-name --presets preset-name1,preset-name2
+```
+
+Local preset
+
+```bash
+polyaxon run --hub notebook -f path/to/preset.yaml
 ```
 
 You can also provide a full operation manifest to customize the environment section, node selector, connections, initializers, resources requirements, ...

@@ -105,19 +105,19 @@ polyaxon run -f polayxonfiles/app.yaml
 Go to the UI under `service` tab:
 
 ```bash
-polyaxon ops dashboard [--uid] [-p]
+polyaxon ops dashboard [-uid] [-p]
 ```
 
 Or to get to the service directly:
 
 ```bash
-polyaxon ops service [--uid] [-p]
+polyaxon ops service [-uid] [-p]
 ```
 
 Or to get the service in full-screen mode:
 
 ```bash
-polyaxon ops service --external [--uid] [-p]
+polyaxon ops service --external [-uid] [-p]
 ```
 
 ![spacy-streamlit-1](../../content/images/integrations/streamlit/spacy-streamlit-1.png)
