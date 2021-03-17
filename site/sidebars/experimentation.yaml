@@ -7,7 +7,7 @@
       link: /docs/experimentation/jobs/specification/
   - group: Distributed Jobs
     items:
-    - title: Intorudction
+    - title: Introduction
       link: /docs/experimentation/distributed/
     - title: TF-Job Specification
       link: /docs/experimentation/distributed/tf-jobs/
@@ -25,7 +25,7 @@
       link: /docs/experimentation/distributed/spark-replica/
   - group: Services
     items:
-    - title: Intorudction
+    - title: Introduction
       link: /docs/experimentation/services/
     - title: Specification
       link: /docs/experimentation/services/specification/
