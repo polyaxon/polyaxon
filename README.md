@@ -108,7 +108,7 @@ Please check [polyaxon installation guide](https://polyaxon.com/docs/setup/)
  * Tensorboard
     ```bash
     # Start TensorBoard for a run's output
-    $ polyaxon run --hub tensorboard --run-uuid=UUID
+    $ polyaxon run --hub tensorboard -P uuid=UUID
     ```
 
 <br>
