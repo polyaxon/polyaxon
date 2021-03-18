@@ -68,7 +68,7 @@ Or using Polyaxon CLI
 polyaxon port-forward -r agent
 ```
 
-> **Note**: `[-r/--release-name]` could be different if you deployed with a different the release name 
+> **Note**: `[-r/--release-name]` could be different if you deployed with a different release name 
 
 ## Ingress and Gateway service
 
@@ -228,12 +228,12 @@ When you deploy an agent all traffic will be checked by the control plane to ens
 | Parameter         | Description                                                   | Default
 | ----------------- | ------------------------------------------------------------- | ----------------------------------------------------------
 | `auth.enabled`    | To use Polyaxon auth system                                   | `true`
-| `auth.useResolver`| The resolve and authenticate all traffic for managed services | `true`
+| `auth.useResolver`| To resolve and authenticate all traffic for managed services  | `true`
 
 
 ## Time zone
 
-To set a different time zone for application (convenient for the dashboard and admin interface)
+To set a different time zone for the agent.
 you can can provide a [valid time zone value](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 
@@ -296,6 +296,8 @@ affinity:
 ```
 
 ## Control Plane
+
+This is the control plane that the agent will connect to. The control plane can be Polyaxon Cloud or a Polyaxon EE managed by the user.
 
 ```yaml
 externalServices:
@@ -366,3 +368,5 @@ connections: []
 ```
 
 You need to configure the connections to authorize for the agent. Please check [connections section](/docs/setup/connections/).
+
+Each `Agent` is responsible for the artifacts store and connections it manages on the namespace where it's deployed.
