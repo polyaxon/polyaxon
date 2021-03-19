@@ -81,8 +81,25 @@ Unrestricted access to the organization, its data, and settings.
  * Can make billing and plan changes.
  * Can delete an organization.
 
+### Billing
+
+> **Note**: Available on EE or to organizations with **Pro features**
+
+ * Has access to the billing information only.
+ * Can manage subscription and billing details.
+
+### Manager
+
+> **Note**: Available on EE or to organizations with **Pro features**
+
+ * Has similar access as an **Owner**.
+ * Does not have access to `billing`.
+ * Cannot delete the organization.
+ * Cannot change the organization's visibility (public/private).
+
 ### Admin
 
+ * Does not have access to the organization settings. 
  * Has admin privileges on any teams of which they're a member.
  * Can admin projects and set restrictions on connections, presets, members access, agents, queues.
  * Can create new teams, projects, model registry and component hub entries.
@@ -103,6 +120,8 @@ Unrestricted access to the organization, its data, and settings.
  * Can view most other data within the organization.
 
 ### Outsider
+
+> **Note**: Available on EE or to organizations with **Pro features**
 
  * Is a person who isn't explicitly a member of your organization.
  * Can read, write, or have admin permissions to one or more projects in your organization if invited and provided with such permissions.

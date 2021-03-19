@@ -33,6 +33,6 @@ You can combine both of these scaling approaches and tune your configuration to 
 
 ## Scaling with Agents
 
-For users with a Polyaxon EE or Polyaxon Cloud subscription, you can additionally scale your deployment over Multiple clusters by deploying multiple Polyaxon Agents.
+For users with a Polyaxon EE or Polyaxon Cloud subscription, you can additionally scale your deployment over multiple clusters by deploying multiple Polyaxon Agents.
 
 > Please check [Polyaxon Agent setup](/docs/setup/agent/) for more details.

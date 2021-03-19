@@ -72,3 +72,6 @@ jobs:
       - name: submit
         run: polyaxon run -p MY-PROJECT -f operation.yaml
 ```
+
+
+> **Note**: You can expose `POLYAXON_TOKEN`, `POLYAXON_HOST`, and other configurations as env vars, in that case `polyaxon config` and `polyaxon login` commands are not required.

@@ -12,7 +12,7 @@ tags:
 sidebar: "intro"
 ---
 
-Polyaxon relies on a set of concepts to drive the schedule and manage the lifecycle of operations.
+Polyaxon relies on a set of concepts to schedule and manage the lifecycle of operations.
 In this section, we provide a high-level introduction to these concepts,
 with more details in pages dedicated to each concept.
 
@@ -70,7 +70,7 @@ Polyaxon provides several interfaces designed to achieve fairness when a limited
 
 ### Presets
 
-`Presets` allows users to extract generic aspect of their polyaxonfiles and apply them using the override argument `-f` to automatically extend the configuration of their operations. 
+`Presets` allows users to extract generic aspects of their polyaxonfiles and apply them using the override argument `-f` to automatically extend the configuration of their operations. 
 
 `Presets` allows admins to preset several meta information about runs, e.g. node scheduling and routing, which facilitate attaching quotas to a user/team/project,
 so that the entities they create, i.e. builds/jobs/experiments/notebooks, cannot exceed the parallelism and may not consume more

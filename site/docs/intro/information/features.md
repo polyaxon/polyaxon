@@ -112,6 +112,7 @@ Deploy Polyaxon with sensible user roles and permissions from the start.
 - **Members:** Members can view and act on experiments/jobs/services, as well as view most other data within the organization.
 - **Admins:** Admin privileges on any teams of which they\'re a member. They can create new teams and projects, as well as remove teams and projects which they are already admin of.
 - **Managers:** Gains admin access on all teams as well as the ability to add and remove members.
+- **Billing:** Can see/edit billing information and subscription details only.
 - **Owners:** Gains full permission across the organization. Can manage members as well as perform catastrophic operations such as removing the organization.
 
 Polyaxon also comes with a concept called `Team` that allows you to promote a user role on specific teams, 

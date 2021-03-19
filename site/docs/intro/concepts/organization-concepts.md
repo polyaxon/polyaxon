@@ -26,7 +26,8 @@ A `User` is the entity that creates projects, starts experiments, creates jobs a
 ### Organization
 
 An `Organization` is the entity that enables several users to collaborate across many projects at once.
-Owners and admins can manage member access to the organization's data and projects with sophisticated security and administrative features.
+Owners and managers can manage member access to the organization's data and projects with sophisticated security and administrative features. 
+They can also delegate project, registry, and hub management to admins. 
 
 <blockquote class="light">Please refer to <a href="/docs/management/organizations/organizations/">management/organizations</a> for more details.</blockquote>
 
