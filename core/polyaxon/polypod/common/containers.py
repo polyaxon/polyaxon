@@ -13,8 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
 from collections.abc import Mapping
-from typing import List
+from typing import List, Dict
 
 from polyaxon.containers.names import generate_container_name
 from polyaxon.k8s import k8s_schemas
@@ -88,14 +89,32 @@ def sanitize_container_command_args(
 def sanitize_container_env(
     container: k8s_schemas.V1Container,
 ) -> k8s_schemas.V1Container:
+
+    def sanitize_env_dict(d: Dict):
+        return {
+            d_k: sanitize_value(d_v, handle_dict=False)
+            if d_k in ["name", "value"] else sanitize_value(d_v, handle_dict=True)
+            for d_k, d_v in d.items()
+        }
+
+    def sanitize_value(d, handle_dict: bool = False):
+        if isinstance(d, str):
+            return d
+        if not isinstance(d, Mapping):
+            return json.dumps(d)
+        if not handle_dict:
+            return json.dumps(d)
+        return {d_k: sanitize_value(d_v, handle_dict=True) for d_k, d_v in d.items()}
+
     if container.env:
         env = []
         for e in container.env:
-            if e:
-                if isinstance(e, Mapping):
-                    e = {k: str(v) for k, v in e.items()}
-                elif e.value:
-                    e.value = str(e.value)
+            if isinstance(e, Mapping):
+                e = sanitize_env_dict(e)
+                env.append(e)
+            elif isinstance(e, k8s_schemas.V1EnvVar):
+                if e.value is not None:
+                    e.value = sanitize_value(e.value, handle_dict=False)
                 env.append(e)
 
         container.env = env
