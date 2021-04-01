@@ -19,7 +19,7 @@ kubernetes_asyncio==12.1.0
 starlette==0.14.2
 aiofiles==0.6.0
 uvicorn==0.13.4
-uvloop==0.14.0
+uvloop==0.15.2
 httptools==0.1.1
 python-multipart==0.0.5
 
