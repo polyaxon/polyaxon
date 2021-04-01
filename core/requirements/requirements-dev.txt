@@ -10,7 +10,7 @@ hyperopt==0.2.5
 azure-storage-blob==12.8.0
 boto3==1.17.42
 botocore==1.20.42
-google-cloud-storage==1.36.2
+google-cloud-storage==1.37.0
 
 moto==1.3.16
 google-compute-engine==2.8.13
