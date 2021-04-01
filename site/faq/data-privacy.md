@@ -18,7 +18,7 @@ tags:
 
 No. We do not access, copy, or upload any of your train/test/dev data or models.
 
-If you are using the community open-source version or the on-premise enterprise version,
+If you are using the community version (Polyaxon CE) or the on-premise enterprise version (Polyaxon EE),
 all your data, workload, models, logs, and metadata generated from your experiments stay within your secure cluster.
 
-If you are using our fully managed version, all of your data, models, and workload is managed by your servers, we only manage the Platform itself for you.
+If you are using Polyaxon Cloud, all of your data, models, logs, code, and workload is managed by you on your own servers, we only manage the control plane.
