@@ -24,7 +24,7 @@ httptools==0.1.1
 python-multipart==0.0.5
 
 altair==4.1.0
-matplotlib==3.2.1
+matplotlib==3.4.1
 moviepy==1.0.2
 plotly==4.6.0
 Pillow==7.1.2
