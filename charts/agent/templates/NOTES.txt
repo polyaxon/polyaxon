@@ -58,7 +58,7 @@ Polyaxon is currently running:
 {{- end }}
 {{- end }}
 
-2. Setup your cli by running theses commands:
+2. Setup your cli by running these commands:
 
    {{- if contains "ClusterIP" .Values.gateway.service.type }}
 

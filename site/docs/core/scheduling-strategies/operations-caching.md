@@ -51,7 +51,7 @@ If you need to include an artifact in the state calculation, you can report a li
 
 ## Further reading
 
-### Inputs cache heuristic
+### IO cache heuristic
 
 If an operation needs to run in the future based on a schedule, or when a user initiates a hyperparameter tuning pipeline, 
 Polyaxon will memoize all params that can be resolved immediately, to avoid recalculating those values, and will only calculate the values that are specific to each run that is part of the pipeline.
