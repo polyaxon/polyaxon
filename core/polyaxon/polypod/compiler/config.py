@@ -70,7 +70,12 @@ class PolypodConfig:
                 agent_config.artifacts_store.name
             ] = agent_config.artifacts_store
 
-        if compiled_operation.is_job_run or compiled_operation.is_service_run:
+        if (
+            compiled_operation.is_job_run
+            or compiled_operation.is_service_run
+            or compiled_operation.is_notifier_run
+            or compiled_operation.is_tuner_run
+        ):
             self._resolve_replica_connections(
                 init=compiled_operation.run.init,
                 connections=compiled_operation.run.connections,
@@ -82,11 +87,6 @@ class PolypodConfig:
             )
         if compiled_operation.is_dag_run:
             self._resolve_connections(
-                connections=compiled_operation.run.connections,
-                agent_config=agent_config,
-            )
-        if compiled_operation.is_notifier_run:
-            self._resolve_notification_connections(
                 connections=compiled_operation.run.connections,
                 agent_config=agent_config,
             )
@@ -106,16 +106,6 @@ class PolypodConfig:
                     "but were not found in the "
                     "agent.connections catalog: `{}`".format(missing_connections)
                 )
-            self.connection_by_names.update(connection_by_names)
-
-    def _resolve_notification_connections(
-        self, connections: List[str], agent_config: AgentConfig
-    ):
-        if connections:
-            connection_by_names = {
-                c: agent_config.notification_connections_by_names[c]
-                for c in connections
-            }
             self.connection_by_names.update(connection_by_names)
 
     def _resolve_replica_connections(

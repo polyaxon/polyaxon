@@ -18,15 +18,6 @@ import polyaxon_sdk
 
 
 class V1MatrixKind(polyaxon_sdk.V1MatrixKind):
-    CHOICES = (
-        (polyaxon_sdk.V1MatrixKind.RANDOM, polyaxon_sdk.V1MatrixKind.RANDOM),
-        (polyaxon_sdk.V1MatrixKind.GRID, polyaxon_sdk.V1MatrixKind.GRID),
-        (polyaxon_sdk.V1MatrixKind.HYPERBAND, polyaxon_sdk.V1MatrixKind.HYPERBAND),
-        (polyaxon_sdk.V1MatrixKind.BAYES, polyaxon_sdk.V1MatrixKind.BAYES),
-        (polyaxon_sdk.V1MatrixKind.HYPEROPT, polyaxon_sdk.V1MatrixKind.HYPEROPT),
-        (polyaxon_sdk.V1MatrixKind.ITERATIVE, polyaxon_sdk.V1MatrixKind.ITERATIVE),
-        (polyaxon_sdk.V1MatrixKind.MAPPING, polyaxon_sdk.V1MatrixKind.MAPPING),
-    )
     eager_values = {
         polyaxon_sdk.V1MatrixKind.RANDOM,
         polyaxon_sdk.V1MatrixKind.GRID,

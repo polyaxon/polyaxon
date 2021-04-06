@@ -7,11 +7,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **namespace** | **String** |  |  [optional]
-**agent** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  |  [optional]
-**queue** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  |  [optional]
-**artifactsStore** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  |  [optional]
-**hub** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  |  [optional]
-**registry** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  |  [optional]
+**agent** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  |  [optional]
+**queue** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  |  [optional]
+**artifactsStore** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  |  [optional]
+**tensorboard** | [**Object**](.md) |  |  [optional]
+**componentVersion** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  |  [optional]
+**modelVersions** | [**List&lt;V1RunReferenceCatalog&gt;**](V1RunReferenceCatalog.md) |  |  [optional]
 
 
 

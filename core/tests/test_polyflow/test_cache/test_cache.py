@@ -26,5 +26,5 @@ class TestCacheConfigs(BaseTestCase):
         config_dict = {"disable": True}
         assert config_dict == V1Cache.from_dict(config_dict).to_dict()
 
-        config_dict = {"disable": True, "ttl": 12, "inputs": ["in1", "in2"]}
+        config_dict = {"disable": True, "ttl": 12, "io": ["in1", "in2"]}
         assert config_dict == V1Cache.from_dict(config_dict).to_dict()

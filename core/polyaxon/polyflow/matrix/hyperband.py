@@ -21,19 +21,17 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
-from polyaxon.containers.names import MAIN_JOB_CONTAINER
-from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
+from polyaxon.polyflow.matrix.tuner import TunerSchema
 from polyaxon.polyflow.optimization import (
     OptimizationMetricSchema,
     OptimizationResourceSchema,
 )
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
-from polyaxon.schemas.fields.swagger import SwaggerField
 
 
 class HyperbandSchema(BaseCamelSchema):
@@ -48,11 +46,7 @@ class HyperbandSchema(BaseCamelSchema):
     resume = RefOrObject(fields.Boolean(allow_none=True))
     seed = RefOrObject(fields.Int(allow_none=True))
     concurrency = RefOrObject(fields.Int(allow_none=True))
-    container = SwaggerField(
-        cls=k8s_schemas.V1Container,
-        defaults={"name": MAIN_JOB_CONTAINER},
-        allow_none=True,
-    )
+    tuner = fields.Nested(TunerSchema, allow_none=True)
     early_stopping = fields.List(fields.Nested(EarlyStoppingSchema), allow_none=True)
 
     @staticmethod
@@ -96,6 +90,7 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
         resume: bool, optional
         seed: int, optional
         concurrency: int, optional
+        tuner: [V1Tuner](/docs/automation/optimization-engine/tuner/), optional
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
     ## YAML usage
@@ -110,6 +105,7 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
     >>>   resume:
     >>>   params:
     >>>   seed:
+    >>>   tuner:
     >>>   earlyStopping:
     ```
 
@@ -271,15 +267,17 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
     For more details please check the
     [early stopping section](/docs/automation/helpers/early-stopping/).
 
-    ### container
+     ### tuner
 
-    The container with the logic for creating new suggestions based on bayesian optimization,
-    users can override this section to provide different resources requirements for the tuner.
+    The tuner reference (w/o a component hub reference) to use.
+    The component contains the logic for creating new suggestions,
+    users can override this section to provide a different tuner component.
 
     ```yaml
     >>> matrix:
     >>>   kind: hyperband
-    >>>   container: ...
+    >>>   tuner:
+    >>>     hubRef: 'acme/my-hyperband-tuner:version'
     ```
 
     ## Example
@@ -356,7 +354,7 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
 
     SCHEMA = HyperbandSchema
     IDENTIFIER = V1MatrixKind.HYPERBAND
-    REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping", "container"]
+    REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping", "tuner"]
 
     def set_tuning_params(self):
         # Maximum iterations per configuration: max_iterations

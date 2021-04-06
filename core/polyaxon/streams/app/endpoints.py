@@ -30,6 +30,7 @@ from polyaxon import settings
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
 from polyaxon.lifecycle import V1StatusCondition
+from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events
 from polyaxon.polyboard.logging import V1Logs
@@ -51,6 +52,7 @@ from polyaxon.streams.controllers.logs import (
     get_operation_logs,
     get_tmp_operation_logs,
 )
+from polyaxon.streams.controllers.notebooks import render_notebook
 from polyaxon.streams.controllers.uploads import handle_upload
 from polyaxon.streams.tasks.logs import clean_tmp_logs, upload_logs
 from polyaxon.streams.tasks.notification import notify_run
@@ -125,9 +127,11 @@ async def collect_logs(request: Request) -> Response:
         k8s_manager=k8s_manager, resource_name=resource_name
     )
     if not k8s_operation:
-        raise HTTPException(
-            detail="Run's logs was not collected, resource was not found.",
-            status_code=status.HTTP_404_NOT_FOUND,
+        errors = "Run's logs was not collected, resource was not found."
+        logger.warning(errors)
+        return UJSONResponse(
+            content={"errors": errors},
+            status_code=status.HTTP_400_BAD_REQUEST,
         )
     operation_logs, _ = await query_k8s_operation_logs(
         instance=run_uuid, k8s_manager=k8s_manager, last_time=None
@@ -140,9 +144,13 @@ async def collect_logs(request: Request) -> Response:
     try:
         await upload_logs(run_uuid=run_uuid, logs=operation_logs)
     except Exception as e:
-        raise HTTPException(
-            detail="Run's logs was not collected, an error was raised while uploading the data %s."
-            % e,
+        errors = (
+            "Run's logs was not collected, an error was raised while uploading the data %s."
+            % e
+        )
+        logger.warning(errors)
+        return UJSONResponse(
+            content={"errors": errors},
             status_code=status.HTTP_400_BAD_REQUEST,
         )
     if settings.AGENT_CONFIG.is_replica:
@@ -247,21 +255,27 @@ async def notify(request: Request) -> Response:
     run_name = body.get("name")
     condition = body.get("condition")
     if not condition:
-        raise HTTPException(
-            detail="Received a notification request without condition.",
+        errors = "Received a notification request without condition."
+        logger.warning(errors)
+        return UJSONResponse(
+            content={"errors": errors},
             status_code=status.HTTP_400_BAD_REQUEST,
         )
     condition = V1StatusCondition.get_condition(**condition)
     connections = body.get("connections")
     if not connections:
-        raise HTTPException(
-            detail="Received a notification request without connections.",
+        errors = "Received a notification request without connections."
+        logger.warning(errors)
+        return UJSONResponse(
+            content={"errors": errors},
             status_code=status.HTTP_400_BAD_REQUEST,
         )
 
-    if not settings.AGENT_CONFIG.notification_connections:
-        raise HTTPException(
-            detail="Run's logs was not collected, resource was not found.",
+    if not settings.AGENT_CONFIG.connections:
+        errors = "Received a notification request, but the agent did not declare connections."
+        logger.warning(errors)
+        return UJSONResponse(
+            content={"errors": errors},
             status_code=status.HTTP_400_BAD_REQUEST,
         )
 
@@ -292,9 +306,15 @@ async def download_artifact(request: Request) -> Response:
     filepath = request.query_params.get("path", "")
     stream = to_bool(request.query_params.get("stream"), handle_none=True)
     force = to_bool(request.query_params.get("force"), handle_none=True)
+    render = to_bool(request.query_params.get("render"), handle_none=True)
     if not filepath:
         return Response(
             content="A `path` query param is required to stream a file content",
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+    if render and not filepath.endswith(".ipynb"):
+        return Response(
+            content="Artifact with 'filepath={}' does not have a valid extension.".format(filepath),
             status_code=status.HTTP_400_BAD_REQUEST,
         )
     subpath = "{}/{}".format(run_uuid, filepath).rstrip("/")
@@ -305,6 +325,8 @@ async def download_artifact(request: Request) -> Response:
             status_code=status.HTTP_404_NOT_FOUND,
         )
     if stream:
+        if render:
+            archived_path = render_notebook(archived_path, check_cache=not force)
         return FileResponse(archived_path)
     return redirect(archived_path)
 

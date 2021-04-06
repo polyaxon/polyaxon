@@ -33,6 +33,11 @@ import (
 // swagger:model v1Statuses
 type V1Statuses string
 
+func NewV1Statuses(value V1Statuses) *V1Statuses {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1StatusesCreated captures enum value "created"

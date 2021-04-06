@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+META_EDGE = "edge"
 META_ITERATION = "iteration"
 META_BRACKET_ITERATION = "bracket_iteration"
 META_REWRITE_PATH = "rewrite_path"

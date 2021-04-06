@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **maxIterations** | **Integer** |  |  [optional]
 **seed** | **Integer** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]
-**container** | [**Object**](.md) |  |  [optional]
+**tuner** | [**V1Tuner**](V1Tuner.md) |  |  [optional]
 **earlyStopping** | **List&lt;Object&gt;** |  |  [optional]
 
 

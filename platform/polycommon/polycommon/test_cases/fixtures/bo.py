@@ -18,7 +18,7 @@ from polyaxon.polyflow import V1RunKind
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 
 
-def get_fxt_bo_with_inputs_outputs():
+def get_fxt_bo_with_inputs_outputs(tuner=None):
     return {
         "version": 1.1,
         "kind": "operation",
@@ -27,6 +27,7 @@ def get_fxt_bo_with_inputs_outputs():
         "params": {"image": {"value": "test"}, "lr": {"value": 0.001}},
         "matrix": {
             "kind": V1MatrixKind.BAYES,
+            "tuner": {"hubRef": tuner} if tuner else None,
             "numInitialRuns": 5,
             "maxIterations": 5,
             "metric": {"name": "loss", "optimization": "minimize"},

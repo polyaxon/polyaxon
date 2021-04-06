@@ -127,7 +127,7 @@ def ops(ctx, project, uid):
     ctx.obj = ctx.obj or {}
     if project or uid:
         Printer.print_warning(
-            "Passing arguments to command groups is deprecated and will be removed in v1.2! "
+            "Passing arguments to command groups is deprecated and will be removed in v2! "
             "Please use arguments on the sub-command directly: `polyaxon ops SUB_COMMAND --help`"
         )
     ctx.obj["project"] = project

@@ -21,6 +21,7 @@ package service_model
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -33,22 +34,25 @@ import (
 type V1RunSettings struct {
 
 	// Agent
-	Agent *V1RunSettingsCatalog `json:"agent,omitempty"`
+	Agent *V1SettingsCatalog `json:"agent,omitempty"`
 
 	// Artifacts Store
-	ArtifactsStore *V1RunSettingsCatalog `json:"artifacts_store,omitempty"`
+	ArtifactsStore *V1SettingsCatalog `json:"artifacts_store,omitempty"`
 
-	// Component Hub reference
-	Hub *V1RunReferenceCatalog `json:"hub,omitempty"`
+	// Component version reference
+	ComponentVersion *V1RunReferenceCatalog `json:"component_version,omitempty"`
+
+	// Model registry version references
+	ModelVersions []*V1RunReferenceCatalog `json:"model_versions"`
 
 	// Namespace
 	Namespace string `json:"namespace,omitempty"`
 
 	// Queue
-	Queue *V1RunSettingsCatalog `json:"queue,omitempty"`
+	Queue *V1SettingsCatalog `json:"queue,omitempty"`
 
-	// Model registry reference
-	Registry *V1RunReferenceCatalog `json:"registry,omitempty"`
+	// Latest Tensorboard reference, if it exists
+	Tensorboard interface{} `json:"tensorboard,omitempty"`
 }
 
 // Validate validates this v1 run settings
@@ -63,15 +67,15 @@ func (m *V1RunSettings) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateHub(formats); err != nil {
+	if err := m.validateComponentVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateModelVersions(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateQueue(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRegistry(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -115,18 +119,42 @@ func (m *V1RunSettings) validateArtifactsStore(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1RunSettings) validateHub(formats strfmt.Registry) error {
-	if swag.IsZero(m.Hub) { // not required
+func (m *V1RunSettings) validateComponentVersion(formats strfmt.Registry) error {
+	if swag.IsZero(m.ComponentVersion) { // not required
 		return nil
 	}
 
-	if m.Hub != nil {
-		if err := m.Hub.Validate(formats); err != nil {
+	if m.ComponentVersion != nil {
+		if err := m.ComponentVersion.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("hub")
+				return ve.ValidateName("component_version")
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSettings) validateModelVersions(formats strfmt.Registry) error {
+	if swag.IsZero(m.ModelVersions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.ModelVersions); i++ {
+		if swag.IsZero(m.ModelVersions[i]) { // not required
+			continue
+		}
+
+		if m.ModelVersions[i] != nil {
+			if err := m.ModelVersions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("model_versions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -149,23 +177,6 @@ func (m *V1RunSettings) validateQueue(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1RunSettings) validateRegistry(formats strfmt.Registry) error {
-	if swag.IsZero(m.Registry) { // not required
-		return nil
-	}
-
-	if m.Registry != nil {
-		if err := m.Registry.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("registry")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 // ContextValidate validate this v1 run settings based on the context it is used
 func (m *V1RunSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -178,15 +189,15 @@ func (m *V1RunSettings) ContextValidate(ctx context.Context, formats strfmt.Regi
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateHub(ctx, formats); err != nil {
+	if err := m.contextValidateComponentVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateModelVersions(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.contextValidateQueue(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateRegistry(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -224,15 +235,33 @@ func (m *V1RunSettings) contextValidateArtifactsStore(ctx context.Context, forma
 	return nil
 }
 
-func (m *V1RunSettings) contextValidateHub(ctx context.Context, formats strfmt.Registry) error {
+func (m *V1RunSettings) contextValidateComponentVersion(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.Hub != nil {
-		if err := m.Hub.ContextValidate(ctx, formats); err != nil {
+	if m.ComponentVersion != nil {
+		if err := m.ComponentVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("hub")
+				return ve.ValidateName("component_version")
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSettings) contextValidateModelVersions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ModelVersions); i++ {
+
+		if m.ModelVersions[i] != nil {
+			if err := m.ModelVersions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("model_versions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -244,20 +273,6 @@ func (m *V1RunSettings) contextValidateQueue(ctx context.Context, formats strfmt
 		if err := m.Queue.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("queue")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1RunSettings) contextValidateRegistry(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Registry != nil {
-		if err := m.Registry.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("registry")
 			}
 			return err
 		}

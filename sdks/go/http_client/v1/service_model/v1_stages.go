@@ -33,6 +33,11 @@ import (
 // swagger:model v1Stages
 type V1Stages string
 
+func NewV1Stages(value V1Stages) *V1Stages {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1StagesTesting captures enum value "testing"

@@ -43,7 +43,8 @@ class TestAgents(BaseTestCase):
     def test_init_agent(
         self, _, get_agent, get_agent_state, create_agent_status, sync_agent
     ):
-        get_agent_state.return_value = MagicMock(status=None)
+        get_agent.return_value = MagicMock(status=None, live_state=1)
+        get_agent_state.return_value = MagicMock(status=None, live_state=1)
         agent = Agent(owner="foo", agent_uuid="uuid")
         assert agent.sleep_interval is None
         assert agent.spawner is not None

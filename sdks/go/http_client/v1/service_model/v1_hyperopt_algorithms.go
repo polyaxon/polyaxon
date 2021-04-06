@@ -37,6 +37,11 @@ import (
 // swagger:model v1HyperoptAlgorithms
 type V1HyperoptAlgorithms string
 
+func NewV1HyperoptAlgorithms(value V1HyperoptAlgorithms) *V1HyperoptAlgorithms {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1HyperoptAlgorithmsTpe captures enum value "tpe"

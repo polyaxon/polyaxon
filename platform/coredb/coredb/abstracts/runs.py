@@ -156,3 +156,11 @@ class BaseRun(
     @property
     def has_pipeline(self):
         return self.is_dag or self.is_matrix or self.is_schedule
+
+    @property
+    def has_tuner_runtime(self):
+        return self.runtime == V1RunKind.TUNER
+
+    @property
+    def has_notifier_runtime(self):
+        return self.runtime == V1RunKind.NOTIFIER

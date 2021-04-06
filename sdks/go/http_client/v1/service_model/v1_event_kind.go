@@ -33,6 +33,11 @@ import (
 // swagger:model v1EventKind
 type V1EventKind string
 
+func NewV1EventKind(value V1EventKind) *V1EventKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1EventKindRunStatusCreated captures enum value "run_status_created"

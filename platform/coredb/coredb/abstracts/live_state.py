@@ -19,7 +19,7 @@ import random
 from django.db import models
 
 from coredb.managers.deleted import ArchivedManager, LiveManager
-from polycommon import live_state
+from polyaxon import live_state
 
 
 class LiveStateModel(models.Model):

@@ -391,7 +391,7 @@ class RunClient:
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
             presets: List[str], optional, the name of the
-                [presets](/docs/core/introduction/concepts/#preset).
+                [presets](/docs/core/scheduling-strategies/presets/).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, simple flag to disable
@@ -453,7 +453,7 @@ class RunClient:
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
             presets: List[str], optional, the name of the
-                [presets](/docs/core/introduction/concepts/#preset).
+                [presets](/docs/core/scheduling-strategies/presets/).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, simple flag to disable
@@ -514,7 +514,7 @@ class RunClient:
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
             presets: List[str], optional, the name of the
-                [presets](/docs/core/introduction/concepts/#preset).
+                [presets](/docs/core/scheduling-strategies/presets/).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, simple flag to disable

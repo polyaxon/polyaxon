@@ -62,6 +62,11 @@ import (
 // swagger:model v1ArtifactKind
 type V1ArtifactKind string
 
+func NewV1ArtifactKind(value V1ArtifactKind) *V1ArtifactKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1ArtifactKindModel captures enum value "model"

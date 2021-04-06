@@ -28,7 +28,6 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_CONNECTIONS,
     POLYAXON_KEYS_AGENT_INIT,
     POLYAXON_KEYS_AGENT_IS_REPLICA,
-    POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
     POLYAXON_KEYS_AGENT_RUNS_SA,
     POLYAXON_KEYS_AGENT_SECRET_NAME,
     POLYAXON_KEYS_AGENT_SIDECAR,
@@ -86,11 +85,6 @@ class AgentSchema(BaseSchema):
         allow_none=True,
         data_key=POLYAXON_KEYS_AGENT_CONNECTIONS,
     )
-    notification_connections = fields.List(
-        fields.Nested(ConnectionTypeSchema),
-        allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
-    )
     app_secret_name = fields.Str(
         allow_none=True,
         data_key=POLYAXON_KEYS_K8S_APP_SECRET_NAME,
@@ -127,23 +121,6 @@ class AgentSchema(BaseSchema):
             raise ValidationError("Received an invalid connections") from e
         if connections:
             data[POLYAXON_KEYS_AGENT_CONNECTIONS] = connections
-
-        notification_connections = data.get(
-            POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS
-        )
-        try:
-            notification_connections = parser.get_dict(
-                key=POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
-                value=notification_connections,
-                is_list=True,
-                is_optional=True,
-            )
-        except PolyaxonSchemaError as e:
-            raise ValidationError("Received an invalid notification connections") from e
-        if notification_connections:
-            data[
-                POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS
-            ] = notification_connections
 
         artifacts_store = data.get(POLYAXON_KEYS_AGENT_ARTIFACTS_STORE)
         try:
@@ -195,7 +172,6 @@ class AgentConfig(BaseConfig):
         POLYAXON_KEYS_AGENT_COMPRESSED_LOGS,
         POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
         POLYAXON_KEYS_AGENT_CONNECTIONS,
-        POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
         POLYAXON_KEYS_K8S_APP_SECRET_NAME,
         POLYAXON_KEYS_AGENT_SECRET_NAME,
         POLYAXON_KEYS_AGENT_RUNS_SA,
@@ -210,7 +186,6 @@ class AgentConfig(BaseConfig):
         init=None,
         artifacts_store=None,
         connections=None,
-        notification_connections=None,
         app_secret_name=None,
         agent_secret_name=None,
         runs_sa=None,
@@ -223,7 +198,6 @@ class AgentConfig(BaseConfig):
         self.init = init
         self.artifacts_store = artifacts_store
         self.connections = connections or []
-        self.notification_connections = notification_connections or []
         self.app_secret_name = app_secret_name
         self.agent_secret_name = agent_secret_name
         self.runs_sa = runs_sa
@@ -233,7 +207,6 @@ class AgentConfig(BaseConfig):
         self._secrets = None
         self._config_maps = None
         self._connections_by_names = {}
-        self._notification_connections_by_names = {}
 
     @property
     def all_connections(self):
@@ -272,16 +245,6 @@ class AgentConfig(BaseConfig):
 
         self._connections_by_names = {c.name: c for c in self._all_connections}
         return self._connections_by_names
-
-    @property
-    def notification_connections_by_names(self):
-        if self._notification_connections_by_names:
-            return self._notification_connections_by_names
-
-        self._notification_connections_by_names = {
-            c.name: c for c in self.notification_connections
-        }
-        return self._notification_connections_by_names
 
     @property
     def artifacts_root(self):

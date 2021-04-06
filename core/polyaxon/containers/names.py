@@ -35,10 +35,11 @@ def generate_container_name(
     import uuid
 
     prefix = prefix or "container"
-    unique_prefix = uuid.uuid4().hex[:10]
+    unique_value = uuid.uuid4().hex[:10]
     if suffix:
+        suffix = suffix.replace("_", "-")
         if unique:
-            suffix = "{}-{}".format(suffix, unique_prefix)
+            suffix = "{}-{}".format(suffix, unique_value)
     else:
-        suffix = unique_prefix
+        suffix = unique_value
     return "{}-{}".format(prefix, suffix)

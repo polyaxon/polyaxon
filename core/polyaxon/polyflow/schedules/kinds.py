@@ -18,8 +18,4 @@ import polyaxon_sdk
 
 
 class V1ScheduleKind(polyaxon_sdk.V1ScheduleKind):
-    CHOICES = (
-        (polyaxon_sdk.V1ScheduleKind.CRON, polyaxon_sdk.V1ScheduleKind.CRON),
-        (polyaxon_sdk.V1ScheduleKind.DATETIME, polyaxon_sdk.V1ScheduleKind.DATETIME),
-        (polyaxon_sdk.V1ScheduleKind.INTERVAL, polyaxon_sdk.V1ScheduleKind.INTERVAL),
-    )
+    pass

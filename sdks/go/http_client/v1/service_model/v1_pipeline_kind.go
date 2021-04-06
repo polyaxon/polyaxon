@@ -33,6 +33,11 @@ import (
 // swagger:model v1PipelineKind
 type V1PipelineKind string
 
+func NewV1PipelineKind(value V1PipelineKind) *V1PipelineKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1PipelineKindDag captures enum value "dag"

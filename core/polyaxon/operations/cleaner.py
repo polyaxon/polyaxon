@@ -16,7 +16,7 @@
 
 from polyaxon.auxiliaries import get_default_cleaner_container
 from polyaxon.polyflow import (
-    V1Cleaner,
+    V1CleanerJob,
     V1Component,
     V1Operation,
     V1Plugins,
@@ -40,7 +40,7 @@ def get_cleaner_operation(
                 auto_resume=False,
                 sync_statuses=False,
             ),
-            run=V1Cleaner(
+            run=V1CleanerJob(
                 connections=[connection.name],
                 container=get_default_cleaner_container(connection, run_uuid, run_kind),
             ),

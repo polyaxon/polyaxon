@@ -462,7 +462,10 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
         return dags.sort_topologically(dag or self.dag, flatten=flatten)
 
-    def process_components(self, inputs=None):
+    def process_components(self, inputs=None, ignore_hub_validation: bool = False):
+        """`ignore_hub_validation` is currently used for ignoring validation
+        during tests with hub_ref.
+        """
         inputs = inputs or []
         self._context["dag.name"] = V1IO(
             name="name", type=types.STR, value="", is_optional=True
@@ -492,8 +495,6 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
         for op in self.operations:
             op_name = op.name
-            if op.has_hub_reference:
-                continue
             if op.has_component_reference:
                 outputs = op.component.outputs
                 inputs = op.component.inputs
@@ -515,6 +516,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 self._op_component_mapping[op_name] = component_ref_name
                 outputs = self._components_by_names[component_ref_name].outputs
                 inputs = self._components_by_names[component_ref_name].inputs
+            elif op.has_hub_reference and ignore_hub_validation:
+                continue
             else:
                 raise PolyaxonSchemaError(
                     "Pipeline op has no definition field `{}`".format(op_name)
@@ -562,9 +565,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             ] = V1IO(name="io", type=types.STR, value={}, is_optional=True)
 
         for op in self.operations:
-            if op.has_hub_reference:
-                continue
-            elif op.has_component_reference:
+            if op.has_component_reference:
                 component_ref = op.definition.name
                 outputs = op.definition.outputs
                 inputs = op.definition.inputs
@@ -572,6 +573,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 component_ref = op.definition.name
                 outputs = self._components_by_names[component_ref].outputs
                 inputs = self._components_by_names[component_ref].inputs
+            elif op.has_hub_reference and ignore_hub_validation:
+                continue
             else:
                 raise PolyaxonSchemaError(
                     "Pipeline op has no definition field `{}`".format(op.name)

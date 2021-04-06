@@ -654,20 +654,17 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         return result
 
     @classmethod
-    def from_hook(cls, hook: V1Hook, inputs: Dict, outputs: Dict, condition: Dict):
+    def from_hook(cls, hook: V1Hook, contexts: Dict):
         run_patch = None
         if hook.connection:
             run_patch = {"connections": [hook.connection]}
         params = hook.params
         # Extend params with
         if not hook.disable_defaults:
+            contexts = contexts or {}
             params = params or {}
-            if inputs:
-                params["inputs"] = V1Param(value=inputs, context_only=True)
-            if outputs:
-                params["outputs"] = V1Param(value=outputs, context_only=True)
-            if condition:
-                params["condition"] = V1Param(value=condition, context_only=True)
+            for k, v in contexts.items():
+                params[k] = V1Param(value=v, context_only=True)
 
         return cls(
             run_patch=run_patch,

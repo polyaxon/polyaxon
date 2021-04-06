@@ -39,9 +39,12 @@ message Hook {
     // Optional dict of params
     map<string, Param> params = 5;
 
-    // Optional preset to use for running this operation
-    repeated string presets = 6;
+    // Optional queue to use for scheduling the hook
+    string queue = 6;
 
     // Optional preset to use for running this operation
-    bool disableDefaults = 7;
+    repeated string presets = 7;
+
+    // Optional preset to use for running this operation
+    bool disableDefaults = 8;
 }

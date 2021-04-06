@@ -33,6 +33,11 @@ import (
 // swagger:model v1TriggerPolicy
 type V1TriggerPolicy string
 
+func NewV1TriggerPolicy(value V1TriggerPolicy) *V1TriggerPolicy {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1TriggerPolicyAllSucceeded captures enum value "all_succeeded"

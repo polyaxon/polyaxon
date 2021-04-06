@@ -35,7 +35,7 @@ class TestNotifyEndpoints(BaseTestCase):
     def setUp(self):
         super().setUp()
         self.store_root = set_store()
-        settings.AGENT_CONFIG.notification_connections = [
+        settings.AGENT_CONFIG.connections = [
             V1ConnectionType(
                 name="slack",
                 kind=V1ConnectionKind.SLACK,
@@ -76,8 +76,8 @@ class TestNotifyEndpoints(BaseTestCase):
         response = self.client.post(self.base_url, json=data)
         assert response.status_code == 400
 
-    def test_notify_with_no_agent_notification_connections(self):
-        settings.AGENT_CONFIG.notification_connections = []
+    def test_notify_with_no_agent_connections(self):
+        settings.AGENT_CONFIG.connections = []
         data = {
             "name": "test",
             "condition": V1StatusCondition(

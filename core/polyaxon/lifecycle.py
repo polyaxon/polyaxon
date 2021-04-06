@@ -94,16 +94,13 @@ class StatusColor:
 
     @classmethod
     def get_color(cls, status: str) -> str:
-        if status in [
-            V1Statuses.FAILED,
-            V1Statuses.STOPPED,
-            V1Statuses.UPSTREAM_FAILED,
-        ]:
+        if status in [V1Statuses.FAILED, V1Statuses.UPSTREAM_FAILED]:
             return cls.RED
-        if status == V1Statuses.SUCCEEDED:
+
+        if status in [V1Statuses.SUCCEEDED, V1Statuses.SKIPPED]:
             return cls.GREEN
 
-        if status == V1Statuses.SKIPPED:
+        if status == V1Statuses.STOPPED:
             return cls.GREY
 
         if LifeCycle.is_done(status):

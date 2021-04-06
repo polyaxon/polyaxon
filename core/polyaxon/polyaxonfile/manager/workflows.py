@@ -47,9 +47,15 @@ def get_ops_from_suggestions(
     suggestions: List[Dict],
 ) -> List[V1Operation]:
     ops = []
+
+    def has_param(k: str):
+        if not compiled_operation.matrix:
+            return None
+        return not compiled_operation.matrix.has_param(k)
+
     for suggestion in suggestions:
         params = {
-            k: V1Param(value=Parser.parse_expression(v, {}))
+            k: V1Param(value=Parser.parse_expression(v, {}), context_only=has_param(k))
             for (k, v) in suggestion.items()
         }
         op_spec = V1Operation.read(content)

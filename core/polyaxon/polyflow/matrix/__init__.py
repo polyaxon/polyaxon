@@ -62,6 +62,7 @@ from polyaxon.polyflow.matrix.params import (
     V1HpUniform,
 )
 from polyaxon.polyflow.matrix.random_search import RandomSearchSchema, V1RandomSearch
+from polyaxon.polyflow.matrix.tuner import V1Tuner
 from polyaxon.schemas.base import BaseOneOfSchema
 
 

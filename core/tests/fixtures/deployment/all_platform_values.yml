@@ -413,7 +413,6 @@ metrics:
 
 artifactsStore:
 connections: []
-notificationConnections: []
 
 imagePullSecrets: []
 

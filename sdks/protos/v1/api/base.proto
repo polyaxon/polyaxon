@@ -361,3 +361,12 @@ message ArtifactTree {
     repeated string dirs = 2;
     bool is_done = 3;
 }
+
+// Settings catalog specification
+message SettingsCatalog {
+  // Uuid
+  string uuid = 1;
+
+  // Name
+  string name = 2;
+}

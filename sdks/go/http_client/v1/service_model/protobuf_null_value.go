@@ -38,6 +38,11 @@ import (
 // swagger:model protobufNullValue
 type ProtobufNullValue string
 
+func NewProtobufNullValue(value ProtobufNullValue) *ProtobufNullValue {
+	v := value
+	return &v
+}
+
 const (
 
 	// ProtobufNullValueNULLVALUE captures enum value "NULL_VALUE"

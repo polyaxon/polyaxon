@@ -531,7 +531,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         # Process the dag
         config.process_dag()
         # No components
-        config.process_components()
+        config.process_components(ignore_hub_validation=True)
         config.validate_dag()
         dag = config.dag
         assert len(dag) == 4
@@ -1092,7 +1092,7 @@ class TestWorkflowV1Dags(BaseTestCase):
 
         # Process the dag
         config.process_dag()
-        config.process_components()
+        config.process_components(ignore_hub_validation=True)
         config.validate_dag()
         dag = config.dag
         assert len(dag) == 4
@@ -1198,7 +1198,7 @@ class TestWorkflowV1Dags(BaseTestCase):
 
         # Process the dag
         config.process_dag()
-        config.process_components()
+        config.process_components(ignore_hub_validation=True)
         config.validate_dag()
         dag = config.dag
         assert len(dag) == 4
@@ -1308,7 +1308,7 @@ class TestWorkflowV1Dags(BaseTestCase):
 
         # Process the dag
         config.process_dag()
-        config.process_components()
+        config.process_components(ignore_hub_validation=True)
         config.validate_dag()
         dag = config.dag
         assert len(dag) == 4
@@ -1403,7 +1403,7 @@ class TestWorkflowV1Dags(BaseTestCase):
 
         # Process the dag
         config.process_dag()
-        config.process_components()
+        config.process_components(ignore_hub_validation=True)
         config.validate_dag()
         dag = config.dag
         assert len(dag) == 5

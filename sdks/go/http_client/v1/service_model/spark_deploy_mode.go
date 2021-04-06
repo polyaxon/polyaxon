@@ -33,6 +33,11 @@ import (
 // swagger:model SparkDeployMode
 type SparkDeployMode string
 
+func NewSparkDeployMode(value SparkDeployMode) *SparkDeployMode {
+	v := value
+	return &v
+}
+
 const (
 
 	// SparkDeployModeCluster captures enum value "cluster"

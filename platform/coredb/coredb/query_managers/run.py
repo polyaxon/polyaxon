@@ -37,6 +37,8 @@ class RunQueryManager(BaseQueryManager):
     FIELDS_USE_UUID = {
         "project",
         "original",
+        "upstream",
+        "downstream",
         "pipeline",
         "agent",
         "queue",
@@ -55,6 +57,8 @@ class RunQueryManager(BaseQueryManager):
         "agent": "agent__name",
         "queue": "queue__name",
         "artifacts_store": "artifacts_store__name",
+        "upstream": "upstream_runs__uuid",
+        "downstream": "downstream_runs__uuid",
     }
     FIELDS_ORDERING = (
         "created_at",
@@ -109,6 +113,10 @@ class RunQueryManager(BaseQueryManager):
         "original": parse_value_operation,
         # Pipeline
         "pipeline": parse_value_operation,
+        # Upstream
+        "upstream": parse_value_operation,
+        # Downstream
+        "downstream": parse_value_operation,
         # Cloning kind
         "cloning_kind": parse_value_operation,
         # Artifact
@@ -143,6 +151,8 @@ class RunQueryManager(BaseQueryManager):
         "live_state": parse_value_operation,
         # Duration
         "duration": parse_scalar_operation,
+        # Wait time
+        "wait_time": parse_scalar_operation,
         # Agent
         "agent": parse_value_operation,
         "queue": parse_value_operation,
@@ -177,6 +187,10 @@ class RunQueryManager(BaseQueryManager):
         "original": ValueCondition,
         # Pipeline
         "pipeline": ValueCondition,
+        # Upstream
+        "upstream": ValueCondition,
+        # Downstream
+        "downstream": ValueCondition,
         # Cloning kind
         "cloning_kind": ValueCondition,
         # Artifact
@@ -215,6 +229,8 @@ class RunQueryManager(BaseQueryManager):
         "live_state": ValueCondition,
         # Duration
         "duration": ComparisonCondition,
+        # Wait time
+        "wait_time": ComparisonCondition,
         # Agent
         "agent": ValueCondition,
         "queue": ValueCondition,

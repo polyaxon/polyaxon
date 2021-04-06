@@ -31,6 +31,7 @@ class HookSchema(BaseCamelSchema):
     )
     hub_ref = fields.Str(required=True)
     conditions = fields.Str(allow_none=True)
+    queue = RefOrObject(fields.Str(allow_none=True))
     presets = RefOrObject(fields.List(fields.Str(allow_none=True)))
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(ParamSchema), allow_none=True
@@ -69,22 +70,23 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
      * stopped
      * done (any final state)
 
-     You can additionally provide a set of `conditions`
-     to perform additional checks before triggering the logic, for instance,
-     in addition to the success status, you can restrict the hook to only trigger
-     if a metric has reached a certain value: `conditions: {{ loss > 0.9 }}`.
+    You can additionally provide a set of `conditions`
+    to perform additional checks before triggering the logic, for instance,
+    in addition to the success status, you can restrict the hook to only trigger
+    if a metric has reached a certain value: `conditions: {{ loss > 0.9 }}`.
 
-     You can resolve any context information from the main operation inside hooks,
-     like params, globals, ...
+    You can resolve any context information from the main operation inside hooks,
+    like params, globals, ...
 
-     Args:
-         trigger: str
-         connection: str
-         hub_ref: str, optional
-         conditions: str, optional
-         presets: List[str], optional
-         disableDefaults: bool, optional
-         params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
+    Args:
+        trigger: str
+        connection: str
+        hub_ref: str, optional
+        conditions: str, optional
+        queue: str, optional
+        presets: List[str], optional
+        disableDefaults: bool, optional
+        params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
 
     ## YAML usage
 
@@ -165,6 +167,24 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
     In the example above, the hook will only run if a param is passed, or an output is logged and
     is equal to "some-value".
 
+    ### queue
+
+    The [queue](/docs/core/scheduling-strategies/queue-routing/) to use.
+    If not provided, the default queue will be used.
+
+    ```yaml
+    >>> hook:
+    >>>   queue: agent-name/queue-name
+    ```
+
+    If the agent name is not specified, Polyaxon will resolve the name of the queue
+    based on the default agent.
+
+    ```yaml
+    >>> hook:
+    >>>   queue: queue-name
+    ```
+
     ### presets
 
     The [presets](/docs/management/organizations/presets/) to use for the hook operation,
@@ -172,14 +192,15 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
     the presets of the component will be used if available.
 
     ```yaml
-    >>> operation:
+    >>> hook:
     >>>   presets: [test]
     ```
 
     ### disableDefaults
 
     One major difference between hooks and normal operations,
-    is that hooks will be initialized automatically with `inputs`, `outputs`, and `condition` as
+    is that hooks will be initialized automatically with:
+    'uuid', 'kind', `name`, `inputs`, `outputs`, `status`, and `condition` as
     context only params, to reduce the boilerplate and the need to request usual information
     required for most notification operations.
 
@@ -216,6 +237,7 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
         "hubRef",
         "params",
         "conditions",
+        "queue",
         "presets",
         "disableDefaults",
     ]

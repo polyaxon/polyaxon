@@ -36,6 +36,11 @@ import (
 // swagger:model v1RunKind
 type V1RunKind string
 
+func NewV1RunKind(value V1RunKind) *V1RunKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1RunKindJob captures enum value "job"

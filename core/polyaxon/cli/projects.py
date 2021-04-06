@@ -52,7 +52,7 @@ def project(ctx, _project):  # pylint:disable=redefined-outer-name
     """Commands for projects."""
     if _project:
         Printer.print_warning(
-            "Passing arguments to command groups is deprecated and will be removed in v1.2! "
+            "Passing arguments to command groups is deprecated and will be removed in v2! "
             "Please use arguments on the sub-command directly: "
             "`polyaxon project SUB_COMMAND --help`"
         )

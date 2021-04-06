@@ -33,6 +33,11 @@ import (
 // swagger:model v1RunEdgeKind
 type V1RunEdgeKind string
 
+func NewV1RunEdgeKind(value V1RunEdgeKind) *V1RunEdgeKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1RunEdgeKindAction captures enum value "action"
@@ -52,6 +57,9 @@ const (
 
 	// V1RunEdgeKindRun captures enum value "run"
 	V1RunEdgeKindRun V1RunEdgeKind = "run"
+
+	// V1RunEdgeKindTb captures enum value "tb"
+	V1RunEdgeKindTb V1RunEdgeKind = "tb"
 )
 
 // for schema
@@ -59,7 +67,7 @@ var v1RunEdgeKindEnum []interface{}
 
 func init() {
 	var res []V1RunEdgeKind
-	if err := json.Unmarshal([]byte(`["action","event","hook","dag","join","run"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["action","event","hook","dag","join","run","tb"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

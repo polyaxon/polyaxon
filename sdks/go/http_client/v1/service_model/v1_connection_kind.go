@@ -33,6 +33,11 @@ import (
 // swagger:model v1ConnectionKind
 type V1ConnectionKind string
 
+func NewV1ConnectionKind(value V1ConnectionKind) *V1ConnectionKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1ConnectionKindHostPath captures enum value "host_path"

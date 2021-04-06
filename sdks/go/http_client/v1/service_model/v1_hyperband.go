@@ -35,9 +35,6 @@ type V1Hyperband struct {
 	// Number of concurrent runs
 	Concurrency int32 `json:"concurrency,omitempty"`
 
-	// Container to override
-	Container V1Container `json:"container,omitempty"`
-
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"earlyStopping"`
 
@@ -64,6 +61,9 @@ type V1Hyperband struct {
 
 	// Seed for the random generator
 	Seed int32 `json:"seed,omitempty"`
+
+	// Tuner reference (hubRef) to use
+	Tuner *V1Tuner `json:"tuner,omitempty"`
 }
 
 // Validate validates this v1 hyperband
@@ -75,6 +75,10 @@ func (m *V1Hyperband) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateResource(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTuner(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -118,6 +122,23 @@ func (m *V1Hyperband) validateResource(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Hyperband) validateTuner(formats strfmt.Registry) error {
+	if swag.IsZero(m.Tuner) { // not required
+		return nil
+	}
+
+	if m.Tuner != nil {
+		if err := m.Tuner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("tuner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this v1 hyperband based on the context it is used
 func (m *V1Hyperband) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -127,6 +148,10 @@ func (m *V1Hyperband) ContextValidate(ctx context.Context, formats strfmt.Regist
 	}
 
 	if err := m.contextValidateResource(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTuner(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -156,6 +181,20 @@ func (m *V1Hyperband) contextValidateResource(ctx context.Context, formats strfm
 		if err := m.Resource.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resource")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Hyperband) contextValidateTuner(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Tuner != nil {
+		if err := m.Tuner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("tuner")
 			}
 			return err
 		}

@@ -5,10 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **namespace** | **String** |  | [optional] 
-**agent** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  | [optional] 
-**queue** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  | [optional] 
-**artifacts_store** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  | [optional] 
-**hub** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  | [optional] 
-**registry** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  | [optional] 
+**agent** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  | [optional] 
+**queue** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  | [optional] 
+**artifacts_store** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  | [optional] 
+**tensorboard** | [**Object**](.md) |  | [optional] 
+**component_version** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  | [optional] 
+**model_versions** | [**[V1RunReferenceCatalog]**](V1RunReferenceCatalog.md) |  | [optional] 
 
 

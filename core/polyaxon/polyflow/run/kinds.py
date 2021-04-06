@@ -39,21 +39,8 @@ class V1CloningKind(polyaxon_sdk.V1CloningKind):
 
 
 class V1PipelineKind(polyaxon_sdk.V1PipelineKind):
-    CHOICES = (
-        (polyaxon_sdk.V1PipelineKind.DAG, polyaxon_sdk.V1PipelineKind.DAG),
-        (
-            polyaxon_sdk.V1PipelineKind.MATRIX,
-            polyaxon_sdk.V1PipelineKind.MATRIX,
-        ),
-    )
+    pass
 
 
 class V1RunEdgeKind(polyaxon_sdk.V1RunEdgeKind):
-    CHOICES = (
-        (polyaxon_sdk.V1RunEdgeKind.ACTION, polyaxon_sdk.V1RunEdgeKind.ACTION),
-        (polyaxon_sdk.V1RunEdgeKind.HOOK, polyaxon_sdk.V1RunEdgeKind.HOOK),
-        (polyaxon_sdk.V1RunEdgeKind.DAG, polyaxon_sdk.V1RunEdgeKind.DAG),
-        (polyaxon_sdk.V1RunEdgeKind.JOIN, polyaxon_sdk.V1RunEdgeKind.JOIN),
-        (polyaxon_sdk.V1RunEdgeKind.RUN, polyaxon_sdk.V1RunEdgeKind.RUN),
-        (polyaxon_sdk.V1RunEdgeKind.EVENT, polyaxon_sdk.V1RunEdgeKind.EVENT),
-    )
+    pass

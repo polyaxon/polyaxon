@@ -74,6 +74,7 @@ from polyaxon.polyflow.matrix import (
     V1Matrix,
     V1MatrixKind,
     V1RandomSearch,
+    V1Tuner,
 )
 from polyaxon.polyflow.mounts import ArtifactsMountSchema, V1ArtifactsMount
 from polyaxon.polyflow.notifications import NotificationSchema, V1Notification
@@ -106,14 +107,14 @@ from polyaxon.polyflow.references import (
     V1UrlRef,
 )
 from polyaxon.polyflow.run import (
-    CleanerSchema,
+    CleanerJobSchema,
     DagSchema,
     DaskSchema,
     FlinkSchema,
     JobSchema,
     KFReplicaSchema,
     MPIJobSchema,
-    NotifierSchema,
+    NotifierJobSchema,
     PytorchJobSchema,
     RunMixin,
     RunSchema,
@@ -121,8 +122,8 @@ from polyaxon.polyflow.run import (
     SparkReplicaSchema,
     SparkSchema,
     TFJobSchema,
-    TunerSchema,
-    V1Cleaner,
+    TunerJobSchema,
+    V1CleanerJob,
     V1CleanPodPolicy,
     V1CloningKind,
     V1Dag,
@@ -131,7 +132,7 @@ from polyaxon.polyflow.run import (
     V1Job,
     V1KFReplica,
     V1MPIJob,
-    V1Notifier,
+    V1NotifierJob,
     V1PipelineKind,
     V1PytorchJob,
     V1RunEdgeKind,
@@ -142,9 +143,7 @@ from polyaxon.polyflow.run import (
     V1SparkReplica,
     V1SparkType,
     V1TFJob,
-    V1Tuner,
-    V1WatchDog,
-    WatchDogSchema,
+    V1TunerJob,
     validate_run_patch,
 )
 from polyaxon.polyflow.schedules import (

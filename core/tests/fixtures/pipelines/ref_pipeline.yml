@@ -24,4 +24,8 @@ run:
           value: inputs.str-input
     - name: ref-hub-op
       hubRef: ref-hub
+      component:
+        name: ref-hub
+        run:
+          kind: job
       events: [{ref: ref-url-op, kinds: [run_status_done]}]

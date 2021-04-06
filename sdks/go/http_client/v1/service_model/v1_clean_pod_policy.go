@@ -33,6 +33,11 @@ import (
 // swagger:model v1CleanPodPolicy
 type V1CleanPodPolicy string
 
+func NewV1CleanPodPolicy(value V1CleanPodPolicy) *V1CleanPodPolicy {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1CleanPodPolicyAll captures enum value "All"

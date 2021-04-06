@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **maxIterations** | **Number** |  | [optional] 
 **seed** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
-**container** | [**Object**](.md) |  | [optional] 
+**tuner** | [**V1Tuner**](V1Tuner.md) |  | [optional] 
 **earlyStopping** | **[Object]** |  | [optional] 
 
 

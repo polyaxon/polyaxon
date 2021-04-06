@@ -542,30 +542,29 @@ class TestProjectRunsListViewV1(BaseTest):
 
         # Set metrics
         optimizers = ["sgd", "sgd", "adam"]
+        flags = [1, 1, 0]
+        bool_flags = [True, True, False]
+        int_values = [1, 2, 9]
+        float_values = [0.1, 0.2, 0.9]
         tags = [["tag1"], ["tag1", "tag2"], ["tag2"]]
         losses = [0.1, 0.2, 0.9]
         for i, obj in enumerate(self.objects[:3]):
             obj.outputs = {"loss": losses[i]}
-            obj.inputs = {"optimizer": optimizers[i]}
+            obj.inputs = {
+                "optimizer": optimizers[i],
+                "flag": flags[i],
+                "bool_flag": bool_flags[i],
+                "int_value": int_values[i],
+                "float_value": float_values[i],
+            }
             obj.tags = tags[i]
             obj.save()
 
+        # Test filters param string
         resp = self.client.get(
             self.url + "?query=created_at:>=2010-01-01,"
             "params.optimizer:sgd,"
-            "metrics.loss:>=0.2,"
-            "tags:tag1"
-        )
-        assert resp.status_code == status.HTTP_200_OK
-
-        assert resp.data["next"] is None
-        assert resp.data["count"] == 1
-
-        # Test that metrics works as well
-        resp = self.client.get(
-            self.url + "?query=created_at:>=2010-01-01,"
-            "params.optimizer:sgd,"
-            "metrics.loss:>=0.2,"
+            "metrics.loss:0.1,"
             "tags:tag1"
         )
         assert resp.status_code == status.HTTP_200_OK
@@ -576,6 +575,98 @@ class TestProjectRunsListViewV1(BaseTest):
         resp = self.client.get(
             self.url + "?query=created_at:>=2010-01-01,"
             "params.optimizer:sgd|adam,"
+            "metrics.loss:>=0.2,"
+            "tags:tag1|tag2"
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 2
+
+        # Test filters param flag
+        resp = self.client.get(
+            self.url + "?query=created_at:>=2010-01-01,"
+            "params.flag:1,"
+            "metrics.loss:0.1,"
+            "tags:tag1"
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url + "?query=created_at:>=2010-01-01,"
+            "params.flag:1|0,"
+            "metrics.loss:>=0.2,"
+            "tags:tag1|tag2"
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 2
+
+        # Test filters param bool_flag
+        resp = self.client.get(
+            self.url + "?query=created_at:>=2010-01-01,"
+            "params.bool_flag:true,"
+            "metrics.loss:0.1,"
+            "tags:tag1"
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url + "?query=created_at:>=2010-01-01,"
+            "params.bool_flag:true|false,"
+            "metrics.loss:>=0.2,"
+            "tags:tag1|tag2"
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 2
+
+        # Test filters param int values
+        resp = self.client.get(
+            self.url + "?query=created_at:>=2010-01-01,"
+            "params.int_value:1,"
+            "metrics.loss:0.1,"
+            "tags:tag1"
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url + "?query=created_at:>=2010-01-01,"
+            "params.int_value:2|9,"
+            "metrics.loss:>=0.2,"
+            "tags:tag1|tag2"
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 2
+
+        # Test filters param float values
+        resp = self.client.get(
+            self.url + "?query=created_at:>=2010-01-01,"
+            "params.float_value:0.1,"
+            "metrics.loss:0.1,"
+            "tags:tag1"
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url + "?query=created_at:>=2010-01-01,"
+            "params.float_value:0.2|0.9,"
             "metrics.loss:>=0.2,"
             "tags:tag1|tag2"
         )

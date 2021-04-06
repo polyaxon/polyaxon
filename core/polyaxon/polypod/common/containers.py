@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import json
+
 from collections.abc import Mapping
-from typing import List, Dict
+from typing import Dict, List
 
 from polyaxon.containers.names import generate_container_name
 from polyaxon.k8s import k8s_schemas
@@ -36,7 +37,7 @@ def patch_container(
     ports: List[k8s_schemas.V1ContainerPort] = None,
     resources: k8s_schemas.V1ResourceRequirements = None,
 ) -> k8s_schemas.V1Container:
-    container.name = name or container.name
+    container.name = sanitize_container_name(name or container.name)
     container.env = to_list(container.env, check_none=True) + to_list(
         env, check_none=True
     )
@@ -58,6 +59,11 @@ def patch_container(
         container.args = args
 
     return sanitize_container(container)
+
+
+def sanitize_container_name(name: str) -> str:
+    name = name.replace("_", "-")
+    return name.lower()
 
 
 def ensure_container_name(
@@ -89,11 +95,11 @@ def sanitize_container_command_args(
 def sanitize_container_env(
     container: k8s_schemas.V1Container,
 ) -> k8s_schemas.V1Container:
-
     def sanitize_env_dict(d: Dict):
         return {
             d_k: sanitize_value(d_v, handle_dict=False)
-            if d_k in ["name", "value"] else sanitize_value(d_v, handle_dict=True)
+            if d_k in ["name", "value"]
+            else sanitize_value(d_v, handle_dict=True)
             for d_k, d_v in d.items()
         }
 

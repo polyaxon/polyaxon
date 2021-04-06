@@ -25,7 +25,6 @@ from polyaxon.connections.schemas import V1BucketConnection, V1K8sResourceSchema
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
     POLYAXON_KEYS_AGENT_CONNECTIONS,
-    POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
     POLYAXON_KEYS_K8S_NAMESPACE,
 )
 from polyaxon.schemas.cli.agent_config import AgentConfig
@@ -51,7 +50,6 @@ class TestAgentConfig(BaseTestCase):
                 "schema": V1BucketConnection(bucket="gs://test").to_dict(),
             },
             POLYAXON_KEYS_AGENT_CONNECTIONS: [],
-            POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS: [],
         }
         config = AgentConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
@@ -59,7 +57,6 @@ class TestAgentConfig(BaseTestCase):
         config_dict = {
             POLYAXON_KEYS_K8S_NAMESPACE: "foo",
             POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: "some",
-            POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS: [],
             POLYAXON_KEYS_AGENT_CONNECTIONS: [
                 {
                     "name": "some",
@@ -80,20 +77,18 @@ class TestAgentConfig(BaseTestCase):
                 "schema": V1BucketConnection(bucket="gs://test").to_dict(),
                 "secret": V1K8sResourceSchema(name="some").to_dict(),
             },
-            POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS: [
-                {
-                    "name": "slack",
-                    "kind": V1ConnectionKind.SLACK,
-                    "secret": V1K8sResourceSchema(name="some").to_dict(),
-                }
-            ],
             POLYAXON_KEYS_AGENT_CONNECTIONS: [
                 {
                     "name": "some",
                     "kind": V1ConnectionKind.GCS,
                     "schema": V1BucketConnection(bucket="gs://test").to_dict(),
                     "secret": V1K8sResourceSchema(name="some").to_dict(),
-                }
+                },
+                {
+                    "name": "slack",
+                    "kind": V1ConnectionKind.SLACK,
+                    "secret": V1K8sResourceSchema(name="some").to_dict(),
+                },
             ],
         }
         config = AgentConfig.from_dict(config_dict)
@@ -110,15 +105,6 @@ class TestAgentConfig(BaseTestCase):
                     "secret": V1K8sResourceSchema(name="some").to_dict(),
                 }
             ),
-            POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS: ujson.dumps(
-                [
-                    {
-                        "name": "slack",
-                        "kind": V1ConnectionKind.SLACK,
-                        "secret": V1K8sResourceSchema(name="some").to_dict(),
-                    }
-                ],
-            ),
             POLYAXON_KEYS_AGENT_CONNECTIONS: ujson.dumps(
                 [
                     {
@@ -126,11 +112,16 @@ class TestAgentConfig(BaseTestCase):
                         "kind": V1ConnectionKind.GCS,
                         "schema": V1BucketConnection(bucket="gs://test").to_dict(),
                         "secret": V1K8sResourceSchema(name="some").to_dict(),
-                    }
+                    },
+                    {
+                        "name": "slack",
+                        "kind": V1ConnectionKind.SLACK,
+                        "secret": V1K8sResourceSchema(name="some").to_dict(),
+                    },
                 ]
             ),
         }
 
         config = AgentConfig.from_dict(config_dict)
         assert len(config.secrets) == 1
-        assert len(config.to_light_dict()[POLYAXON_KEYS_AGENT_CONNECTIONS]) == 1
+        assert len(config.to_light_dict()[POLYAXON_KEYS_AGENT_CONNECTIONS]) == 2

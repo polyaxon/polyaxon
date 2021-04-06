@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from polyaxon.polyflow.run.cleaner import CleanerSchema, V1Cleaner
+from polyaxon.polyflow.run.cleaner import CleanerJobSchema, V1CleanerJob
 from polyaxon.polyflow.run.dag import DagSchema, V1Dag
 from polyaxon.polyflow.run.dask import DaskSchema, V1Dask
 from polyaxon.polyflow.run.flink import FlinkSchema, V1Flink
@@ -29,7 +29,7 @@ from polyaxon.polyflow.run.kubeflow.mpi_job import MPIJobSchema, V1MPIJob
 from polyaxon.polyflow.run.kubeflow.pytorch_job import PytorchJobSchema, V1PytorchJob
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema, V1KFReplica
 from polyaxon.polyflow.run.kubeflow.tf_job import TFJobSchema, V1TFJob
-from polyaxon.polyflow.run.notifier import NotifierSchema, V1Notifier
+from polyaxon.polyflow.run.notifier import NotifierJobSchema, V1NotifierJob
 from polyaxon.polyflow.run.patch import validate_run_patch
 from polyaxon.polyflow.run.ray import RaySchema, V1Ray
 from polyaxon.polyflow.run.service import ServiceSchema, V1Service
@@ -40,8 +40,7 @@ from polyaxon.polyflow.run.spark.spark import (
     V1SparkDeploy,
     V1SparkType,
 )
-from polyaxon.polyflow.run.tuner import TunerSchema, V1Tuner
-from polyaxon.polyflow.run.watchdog import V1WatchDog, WatchDogSchema
+from polyaxon.polyflow.run.tuner import TunerJobSchema, V1TunerJob
 from polyaxon.schemas.base import BaseOneOfSchema
 
 
@@ -59,10 +58,9 @@ class RunSchema(BaseOneOfSchema):
         V1RunKind.FLINK: FlinkSchema,
         V1RunKind.DASK: DaskSchema,
         V1RunKind.RAY: RaySchema,
-        V1RunKind.NOTIFIER: NotifierSchema,
-        V1RunKind.CLEANER: CleanerSchema,
-        V1RunKind.TUNER: TunerSchema,
-        V1RunKind.WATCHDOG: WatchDogSchema,
+        V1RunKind.NOTIFIER: NotifierJobSchema,
+        V1RunKind.CLEANER: CleanerJobSchema,
+        V1RunKind.TUNER: TunerJobSchema,
     }
 
 

@@ -20,14 +20,14 @@ from polyaxon.polyflow.run.job import JobSchema, V1Job
 from polyaxon.polyflow.run.kinds import V1RunKind
 
 
-class TunerSchema(JobSchema):
+class TunerJobSchema(JobSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.TUNER))
 
     @staticmethod
     def schema_config():
-        return V1Tuner
+        return V1TunerJob
 
 
-class V1Tuner(V1Job):
-    SCHEMA = TunerSchema
+class V1TunerJob(V1Job):
+    SCHEMA = TunerJobSchema
     IDENTIFIER = V1RunKind.TUNER

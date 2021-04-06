@@ -26,10 +26,10 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1RunSettingsCatalog Run Settings catalog specification
+// V1SettingsCatalog Settings catalog specification
 //
-// swagger:model v1RunSettingsCatalog
-type V1RunSettingsCatalog struct {
+// swagger:model v1SettingsCatalog
+type V1SettingsCatalog struct {
 
 	// Name
 	Name string `json:"name,omitempty"`
@@ -38,18 +38,18 @@ type V1RunSettingsCatalog struct {
 	UUID string `json:"uuid,omitempty"`
 }
 
-// Validate validates this v1 run settings catalog
-func (m *V1RunSettingsCatalog) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 settings catalog
+func (m *V1SettingsCatalog) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this v1 run settings catalog based on context it is used
-func (m *V1RunSettingsCatalog) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this v1 settings catalog based on context it is used
+func (m *V1SettingsCatalog) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *V1RunSettingsCatalog) MarshalBinary() ([]byte, error) {
+func (m *V1SettingsCatalog) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -57,8 +57,8 @@ func (m *V1RunSettingsCatalog) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1RunSettingsCatalog) UnmarshalBinary(b []byte) error {
-	var res V1RunSettingsCatalog
+func (m *V1SettingsCatalog) UnmarshalBinary(b []byte) error {
+	var res V1SettingsCatalog
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

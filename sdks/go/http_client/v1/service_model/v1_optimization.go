@@ -36,6 +36,11 @@ import (
 // swagger:model v1Optimization
 type V1Optimization string
 
+func NewV1Optimization(value V1Optimization) *V1Optimization {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1OptimizationMaximize captures enum value "maximize"

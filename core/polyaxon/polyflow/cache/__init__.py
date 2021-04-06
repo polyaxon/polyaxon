@@ -24,7 +24,7 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 class CacheSchema(BaseCamelSchema):
     disable = fields.Bool(allow_none=True)
     ttl = fields.Int(allow_none=True)
-    inputs = fields.List(fields.Str(), allow_none=True)
+    io = fields.List(fields.Str(), allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -42,7 +42,7 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
     Args:
         disable: bool, optional, default: False
         ttl: int, optional
-        inputs: List[str], optional
+        io: List[str], optional
 
     ## YAML usage
 
@@ -60,7 +60,7 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
     >>> cache = V1Cache(
     >>>   disable=False,
     >>>   ttl=3600,
-    >>>   inputs=['param1', 'param4']
+    >>>   io=['param1', 'param4']
     >>> )
     ```
 
@@ -89,20 +89,20 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
     >>>   ttl: 36000  # 10 hours
     ```
 
-    ### inputs
+    ### io
 
-    Sometime you might want to discard an input from being considered for
+    Sometime you might want to discard an input/output from being considered for
     the cache state calculation,
-    or you might want to cache a component's run irrespective of the params you pass to some inputs.
+    or you might want to cache a component's run irrespective of the params you pass to some io.
 
     This field gives you full control to define how you want to calculate the cache state.
 
     ```yaml
     >>> cache:
-    >>>   inputs: ['param1', 'param4']
+    >>>   io: ['param1', 'param4']
     ```
     """
 
     SCHEMA = CacheSchema
     IDENTIFIER = "cache"
-    REDUCED_ATTRIBUTES = ["disable", "ttl", "inputs"]
+    REDUCED_ATTRIBUTES = ["disable", "ttl", "io"]

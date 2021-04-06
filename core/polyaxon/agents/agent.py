@@ -44,13 +44,7 @@ class Agent(BaseAgent):
         print("Agent is starting.")
         try:
             agent = self.get_info()
-            if agent.status == V1Statuses.STOPPED:
-                print(
-                    "Agent has been stopped from the platform,"
-                    "but the deployment is still running."
-                    "Please either set the agent to starting or teardown the agent deployment."
-                )
-                return
+            self._check_status(agent)
             self.sync()
             self.log_agent_running()
             print("Agent is running.")

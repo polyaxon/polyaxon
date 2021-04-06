@@ -19,8 +19,8 @@ import click
 
 @click.command()
 @click.option(
-    "--kind",
-    help="The notification kind.",
+    "--backend",
+    help="The notifier backend.",
 )
 @click.option(
     "--owner",
@@ -30,13 +30,50 @@ import click
     "--project",
     help="The project containing the operation.",
 )
-@click.option("--run-uuid", help="The run uuid.")
-@click.option("--run-name", help="The run name.")
+@click.option("--uuid", help="The run uuid.")
+@click.option("--name", help="The run name.")
+@click.option(
+    "--kind",
+    help="The operation kind.",
+)
 @click.option(
     "--condition",
-    help="The run condition to notify.",
+    help="The run's condition.",
 )
-def notify(kind, owner, project, run_uuid, run_name, condition):
+@click.option(
+    "--status",
+    help="The run wait_time.",
+)
+@click.option(
+    "--wait-time",
+    help="The run wait_time.",
+)
+@click.option(
+    "--duration",
+    help="The run duration.",
+)
+@click.option(
+    "--inputs",
+    help="The run's inputs.",
+)
+@click.option(
+    "--outputs",
+    help="The run outputs.",
+)
+def notify(
+    backend,
+    owner,
+    project,
+    uuid,
+    name,
+    kind,
+    condition,
+    status,
+    wait_time,
+    duration,
+    inputs,
+    outputs,
+):
     """Notifier command."""
     import ujson
 
@@ -45,12 +82,18 @@ def notify(kind, owner, project, run_uuid, run_name, condition):
 
     condition = ujson.loads(condition)
     condition = V1StatusCondition.get_condition(**condition)
+    status = status or condition.type
     notification = NotificationSpec(
         kind=kind,
         owner=owner,
         project=project,
-        uuid=run_uuid,
-        name=run_name,
+        uuid=uuid,
+        name=name,
+        status=status,
+        wait_time=wait_time,
+        duration=duration,
         condition=condition,
+        inputs=inputs,
+        outputs=outputs,
     )
-    NOTIFIERS[kind].execute(notification=notification)
+    NOTIFIERS[backend].execute(notification=notification)

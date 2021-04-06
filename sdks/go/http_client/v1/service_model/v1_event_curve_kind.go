@@ -37,6 +37,11 @@ import (
 // swagger:model v1EventCurveKind
 type V1EventCurveKind string
 
+func NewV1EventCurveKind(value V1EventCurveKind) *V1EventCurveKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1EventCurveKindRoc captures enum value "roc"

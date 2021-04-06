@@ -123,8 +123,8 @@ def get(keys):
 @click.option("--host", type=str, help="To set the server endpoint.")
 @click.option(
     "--no-api",
-    type=str,
-    help="To disable using polyaxon.com or on-prem api.",
+    type=bool,
+    help="To disable any API call.",
 )
 @click.option(
     "--verify-ssl",
@@ -135,6 +135,12 @@ def get(keys):
     "--disable-errors-reporting",
     type=bool,
     help="To set the disable errors reporting.",
+)
+@click.option(
+    "--no-purge",
+    is_flag=True,
+    default=False,
+    help="To reconfigure the host without purging auth and other config options.",
 )
 @clean_outputs
 def set(**kwargs):  # pylint:disable=redefined-builtin
@@ -165,7 +171,7 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
     Printer.print_success("Config was updated.")
     # Reset cli config
     CliConfigManager.purge()
-    if should_purge:
+    if should_purge and not kwargs.get("no_purge"):
         AuthConfigManager.purge()
         UserConfigManager.purge()
 

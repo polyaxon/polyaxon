@@ -4341,6 +4341,10 @@
         "compatible_updates": {
           "type": "object"
         },
+        "live_state": {
+          "format": "int32",
+          "type": "integer"
+        },
         "state": {
           "$ref": "#/definitions/AgentStateResponseAgentState"
         },
@@ -4507,10 +4511,6 @@
           "title": "Number of concurrent runs",
           "type": "integer"
         },
-        "container": {
-          "$ref": "#/definitions/v1Container",
-          "title": "Container to override"
-        },
         "earlyStopping": {
           "items": {
             "oneOf": [
@@ -4557,6 +4557,10 @@
           "title": "Seed for the random generator",
           "type": "integer"
         },
+        "tuner": {
+          "$ref": "#/definitions/v1Tuner",
+          "title": "Tuner reference (hubRef) to use"
+        },
         "utilityFunction": {
           "title": "A utility function to use for the bayesian optimization",
           "type": "object"
@@ -4581,11 +4585,11 @@
           "title": "Optional flag to disable cache, Cache is enabled by default",
           "type": "boolean"
         },
-        "inputs": {
+        "io": {
           "items": {
             "type": "string"
           },
-          "title": "Optional Inputs' names to consider for the cache",
+          "title": "Optional Inputs/Outputs' names to consider for the cache",
           "type": "array"
         },
         "ttl": {
@@ -6397,6 +6401,10 @@
           "title": "Optional preset to use for running this operation",
           "type": "array"
         },
+        "queue": {
+          "title": "Optional queue to use for scheduling the hook",
+          "type": "string"
+        },
         "trigger": {
           "$ref": "#/definitions/v1Statuses",
           "title": "Optional trigger policy, default done"
@@ -6724,10 +6732,6 @@
           "title": "Number of concurrent runs",
           "type": "integer"
         },
-        "container": {
-          "$ref": "#/definitions/v1Container",
-          "title": "Container to override"
-        },
         "earlyStopping": {
           "items": {
             "oneOf": [
@@ -6781,6 +6785,10 @@
           "format": "int32",
           "title": "Seed for the random generator",
           "type": "integer"
+        },
+        "tuner": {
+          "$ref": "#/definitions/v1Tuner",
+          "title": "Tuner reference (hubRef) to use"
         }
       },
       "title": "Matrix based on hyperband",
@@ -6796,10 +6804,6 @@
           "format": "int32",
           "title": "Number of concurrent runs",
           "type": "integer"
-        },
-        "container": {
-          "$ref": "#/definitions/v1Container",
-          "title": "Container to override"
         },
         "earlyStopping": {
           "items": {
@@ -6842,6 +6846,10 @@
           "format": "int32",
           "title": "Seed for the random generator",
           "type": "integer"
+        },
+        "tuner": {
+          "$ref": "#/definitions/v1Tuner",
+          "title": "Tuner reference (hubRef) to use"
         }
       },
       "title": "Matrix based on hyperopt",
@@ -7017,10 +7025,6 @@
           "title": "Number of concurrent runs",
           "type": "integer"
         },
-        "container": {
-          "$ref": "#/definitions/v1Container",
-          "title": "Container specification for crating new observations based on data from previous iterations"
-        },
         "earlyStopping": {
           "items": {
             "oneOf": [
@@ -7057,6 +7061,10 @@
           "format": "int32",
           "title": "Seed for the random generator",
           "type": "integer"
+        },
+        "tuner": {
+          "$ref": "#/definitions/v1Tuner",
+          "title": "Tuner reference (hubRef) to use"
         }
       },
       "title": "Matrix based on a custom iterative algorithm (suggestions -\u003e mapping -\u003e reduce -\u003e repeat)",
@@ -8343,7 +8351,7 @@
           "items": {
             "type": "string"
           },
-          "title": "Optional preset to use for running this operation",
+          "title": "Optional list of presets to use for running this operation",
           "type": "array"
         },
         "queue": {
@@ -9424,7 +9432,8 @@
         "hook",
         "dag",
         "join",
-        "run"
+        "run",
+        "tb"
       ],
       "type": "string"
     },
@@ -9503,45 +9512,38 @@
     "v1RunSettings": {
       "properties": {
         "agent": {
-          "$ref": "#/definitions/v1RunSettingsCatalog",
+          "$ref": "#/definitions/v1SettingsCatalog",
           "title": "Agent"
         },
         "artifacts_store": {
-          "$ref": "#/definitions/v1RunSettingsCatalog",
+          "$ref": "#/definitions/v1SettingsCatalog",
           "title": "Artifacts Store"
         },
-        "hub": {
+        "component_version": {
           "$ref": "#/definitions/v1RunReferenceCatalog",
-          "title": "Component Hub reference"
+          "title": "Component version reference"
+        },
+        "model_versions": {
+          "items": {
+            "$ref": "#/definitions/v1RunReferenceCatalog"
+          },
+          "title": "Model registry version references",
+          "type": "array"
         },
         "namespace": {
           "title": "Namespace",
           "type": "string"
         },
         "queue": {
-          "$ref": "#/definitions/v1RunSettingsCatalog",
+          "$ref": "#/definitions/v1SettingsCatalog",
           "title": "Queue"
         },
-        "registry": {
-          "$ref": "#/definitions/v1RunReferenceCatalog",
-          "title": "Model registry reference"
+        "tensorboard": {
+          "title": "Latest Tensorboard reference, if it exists",
+          "type": "object"
         }
       },
       "title": "Run Settings specification",
-      "type": "object"
-    },
-    "v1RunSettingsCatalog": {
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "uuid": {
-          "title": "Uuid",
-          "type": "string"
-        }
-      },
-      "title": "Run Settings catalog specification",
       "type": "object"
     },
     "v1S3Type": {
@@ -9791,6 +9793,20 @@
         }
       },
       "title": "Service specification",
+      "type": "object"
+    },
+    "v1SettingsCatalog": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "uuid": {
+          "title": "Uuid",
+          "type": "string"
+        }
+      },
+      "title": "Settings catalog specification",
       "type": "object"
     },
     "v1Spark": {
@@ -10097,16 +10113,23 @@
     },
     "v1Team": {
       "properties": {
+        "component_hubs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "hubs",
+          "type": "array"
+        },
         "created_at": {
           "format": "date-time",
           "title": "Optional time when the entity was created",
           "type": "string"
         },
-        "hubs": {
+        "model_registries": {
           "items": {
             "type": "string"
           },
-          "title": "hubs",
+          "title": "registries",
           "type": "array"
         },
         "name": {
@@ -10120,12 +10143,9 @@
           "title": "projects",
           "type": "array"
         },
-        "registries": {
-          "items": {
-            "type": "string"
-          },
-          "title": "registries",
-          "type": "array"
+        "settings": {
+          "$ref": "#/definitions/v1TeamSettings",
+          "title": "settings"
         },
         "updated_at": {
           "format": "date-time",
@@ -10170,6 +10190,33 @@
         }
       },
       "title": "Team member specification",
+      "type": "object"
+    },
+    "v1TeamSettings": {
+      "properties": {
+        "hubs": {
+          "items": {
+            "$ref": "#/definitions/v1SettingsCatalog"
+          },
+          "title": "Component hubs",
+          "type": "array"
+        },
+        "projects": {
+          "items": {
+            "$ref": "#/definitions/v1SettingsCatalog"
+          },
+          "title": "Projects",
+          "type": "array"
+        },
+        "registries": {
+          "items": {
+            "$ref": "#/definitions/v1SettingsCatalog"
+          },
+          "title": "Model registries",
+          "type": "array"
+        }
+      },
+      "title": "Run Settings specification",
       "type": "object"
     },
     "v1Template": {
@@ -10351,6 +10398,34 @@
           "type": "integer"
         }
       },
+      "type": "object"
+    },
+    "v1Tuner": {
+      "properties": {
+        "hubRef": {
+          "title": "Component name to use",
+          "type": "string"
+        },
+        "params": {
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Param"
+          },
+          "title": "Optional dict of params",
+          "type": "object"
+        },
+        "presets": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional list of presets to use for running this tuner",
+          "type": "array"
+        },
+        "queue": {
+          "title": "Optional queue to use for scheduling the tuner",
+          "type": "string"
+        }
+      },
+      "title": "Tuner definition",
       "type": "object"
     },
     "v1UriType": {

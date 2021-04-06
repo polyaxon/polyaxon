@@ -23,3 +23,6 @@ class BaseSearchConfig(BaseConfig):
 
     def should_reschedule(self, **kwargs) -> bool:
         return False
+
+    def has_param(self, param: str):
+        return param in self.params

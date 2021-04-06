@@ -33,12 +33,15 @@ import (
 // swagger:model v1Team
 type V1Team struct {
 
+	// hubs
+	ComponentHubs []string `json:"component_hubs"`
+
 	// Optional time when the entity was created
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
-	// hubs
-	Hubs []string `json:"hubs"`
+	// registries
+	ModelRegistries []string `json:"model_registries"`
 
 	// Name
 	Name string `json:"name,omitempty"`
@@ -46,8 +49,8 @@ type V1Team struct {
 	// projects
 	Projects []string `json:"projects"`
 
-	// registries
-	Registries []string `json:"registries"`
+	// settings
+	Settings *V1TeamSettings `json:"settings,omitempty"`
 
 	// Optional last time the entity was updated
 	// Format: date-time
@@ -62,6 +65,10 @@ func (m *V1Team) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSettings(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -87,6 +94,23 @@ func (m *V1Team) validateCreatedAt(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Team) validateSettings(formats strfmt.Registry) error {
+	if swag.IsZero(m.Settings) { // not required
+		return nil
+	}
+
+	if m.Settings != nil {
+		if err := m.Settings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("settings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Team) validateUpdatedAt(formats strfmt.Registry) error {
 	if swag.IsZero(m.UpdatedAt) { // not required
 		return nil
@@ -99,8 +123,31 @@ func (m *V1Team) validateUpdatedAt(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this v1 team based on context it is used
+// ContextValidate validate this v1 team based on the context it is used
 func (m *V1Team) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Team) contextValidateSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Settings != nil {
+		if err := m.Settings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("settings")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

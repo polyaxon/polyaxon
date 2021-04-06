@@ -88,32 +88,52 @@ class PolyaxonCallback(Callback):
     def on_train_begin(self, logs=None):  # pylint: disable=unused-argument
         if not self.run:
             return
-        params = dict(
-            num_layers=len(self.model.layers),
-            optimizer_name=type(self.model.optimizer).__name__,
-        )
 
-        if hasattr(self.model.optimizer, "lr"):
-            params["learning_rate"] = sanitize_np_types(
-                self.model.optimizer.lr
-                if type(self.model.optimizer.lr) is float
-                else keras.backend.eval(self.model.optimizer.lr)
-            )
-        if hasattr(self.model.optimizer, "epsilon"):
-            params["epsilon"] = sanitize_np_types(
-                self.model.optimizer.epsilon
-                if type(self.model.optimizer.epsilon) is float
-                else keras.backend.eval(self.model.optimizer.epsilon)
-            )
+        params = {}
 
-        self.run.log_inputs(**params)
-        sum_list = []
-        self.model.summary(print_fn=sum_list.append)
-        summary = "\n".join(sum_list)
-        rel_path = self.run.get_outputs_path("model_summary.txt")
-        with open(rel_path, "w") as f:
-            f.write(summary)
-        self.run.log_file_ref(path=rel_path)
+        try:
+            params["num_layers"] = len(self.model.layers)
+        except:  # noqa
+            pass
+
+        try:
+            params["optimizer_name"] = type(self.model.optimizer).__name__
+        except:  # noqa
+            pass
+
+        try:
+            if hasattr(self.model.optimizer, "lr"):
+                params["optimizer_lr"] = sanitize_np_types(
+                    self.model.optimizer.lr
+                    if type(self.model.optimizer.lr) is float
+                    else keras.backend.eval(self.model.optimizer.lr)
+                )
+        except:  # noqa
+            pass
+
+        try:
+            if hasattr(self.model.optimizer, "epsilon"):
+                params["optimizer_epsilon"] = sanitize_np_types(
+                    self.model.optimizer.epsilon
+                    if type(self.model.optimizer.epsilon) is float
+                    else keras.backend.eval(self.model.optimizer.epsilon)
+                )
+        except:  # noqa
+            pass
+
+        if params:
+            self.run.log_inputs(**params)
+
+        try:
+            sum_list = []
+            self.model.summary(print_fn=sum_list.append)
+            summary = "\n".join(sum_list)
+            rel_path = self.run.get_outputs_path("model_summary.txt")
+            with open(rel_path, "w") as f:
+                f.write(summary)
+            self.run.log_file_ref(path=rel_path)
+        except:  # noqa
+            pass
 
     @client_handler(check_no_op=True)
     def on_epoch_end(self, epoch, logs=None):

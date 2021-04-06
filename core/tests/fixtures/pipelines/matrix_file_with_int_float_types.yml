@@ -7,6 +7,10 @@ run:
   operations:
     - name: build
       hubRef: kaniko
+      component:
+        name: kaniko
+        run:
+          kind: job
     - name: experiment-group
       dagRef: grid-experiment
       matrix:

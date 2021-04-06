@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.7.4
+  version: 1.7.6
 servers:
 - url: /
 security:
@@ -15338,6 +15338,7 @@ components:
     v1AgentStateResponse:
       example:
         compatible_updates: '{}'
+        live_state: 0
         state:
           deleting: '{}'
           apply: '{}'
@@ -15353,6 +15354,9 @@ components:
           $ref: '#/components/schemas/v1Statuses'
         state:
           $ref: '#/components/schemas/AgentStateResponseAgentState'
+        live_state:
+          format: int32
+          type: integer
         compatible_updates:
           properties: {}
           type: object
@@ -15523,8 +15527,20 @@ components:
       type: object
     v1Bayes:
       example:
-        container: '{}'
         maxIterations: 8
+        tuner:
+          presets:
+          - presets
+          - presets
+          hubRef: hubRef
+          params:
+            key:
+              ref: ref
+              contextOnly: true
+              connection: connection
+              toInit: true
+              value: '{}'
+          queue: queue
         seed: 9
         metric:
           name: name
@@ -15570,9 +15586,8 @@ components:
           format: int32
           title: Number of concurrent runs
           type: integer
-        container:
-          title: Placeholder for Container
-          type: object
+        tuner:
+          $ref: '#/components/schemas/v1Tuner'
         earlyStopping:
           items:
             properties: {}
@@ -15594,9 +15609,9 @@ components:
     v1Cache:
       example:
         disable: true
-        inputs:
-        - inputs
-        - inputs
+        io:
+        - io
+        - io
         ttl: 0
       properties:
         disable:
@@ -15608,10 +15623,10 @@ components:
             Optional time to live for the cache before it gets invalidated automatically,
             the TTL is caclculated based on the time the run starts
           type: integer
-        inputs:
+        io:
           items:
             type: string
-          title: Optional Inputs' names to consider for the cache
+          title: Optional Inputs/Outputs' names to consider for the cache
           type: array
       title: |-
         Cache specification
@@ -15740,9 +15755,9 @@ components:
           isList: true
         cache:
           disable: true
-          inputs:
-          - inputs
-          - inputs
+          io:
+          - io
+          - io
           ttl: 0
         kind: kind
         plugins:
@@ -15862,6 +15877,7 @@ components:
               connection: connection
               toInit: true
               value: '{}'
+          queue: queue
         - presets:
           - presets
           - presets
@@ -15876,6 +15892,7 @@ components:
               connection: connection
               toInit: true
               value: '{}'
+          queue: queue
         queue: queue
         events:
         - ref: ref
@@ -16025,9 +16042,9 @@ components:
           enabled: true
         cache:
           disable: true
-          inputs:
-          - inputs
-          - inputs
+          io:
+          - io
+          - io
           ttl: 0
         kind: kind
         plugins:
@@ -16111,6 +16128,7 @@ components:
               connection: connection
               toInit: true
               value: '{}'
+          queue: queue
         - presets:
           - presets
           - presets
@@ -16125,6 +16143,7 @@ components:
               connection: connection
               toInit: true
               value: '{}'
+          queue: queue
         queue: queue
       properties:
         version:
@@ -16605,9 +16624,9 @@ components:
             enabled: true
           cache:
             disable: true
-            inputs:
-            - inputs
-            - inputs
+            io:
+            - io
+            - io
             ttl: 0
           kind: kind
           plugins:
@@ -16691,6 +16710,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           - presets:
             - presets
             - presets
@@ -16705,6 +16725,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           queue: queue
         - termination:
             maxRetries: 4
@@ -16747,9 +16768,9 @@ components:
             enabled: true
           cache:
             disable: true
-            inputs:
-            - inputs
-            - inputs
+            io:
+            - io
+            - io
             ttl: 0
           kind: kind
           plugins:
@@ -16833,6 +16854,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           - presets:
             - presets
             - presets
@@ -16847,6 +16869,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           queue: queue
         environment:
           nodeName: nodeName
@@ -16942,6 +16965,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           - presets:
             - presets
             - presets
@@ -16956,6 +16980,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           events:
           - ref: ref
             kinds:
@@ -16971,9 +16996,9 @@ components:
             timeout: 7
           cache:
             disable: true
-            inputs:
-            - inputs
-            - inputs
+            io:
+            - io
+            - io
             ttl: 0
           kind: kind
           isPreset: true
@@ -17034,9 +17059,9 @@ components:
               enabled: true
             cache:
               disable: true
-              inputs:
-              - inputs
-              - inputs
+              io:
+              - io
+              - io
               ttl: 0
             kind: kind
             plugins:
@@ -17120,6 +17145,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             - presets:
               - presets
               - presets
@@ -17134,6 +17160,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             queue: queue
           presets:
           - presets
@@ -17210,6 +17237,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           - presets:
             - presets
             - presets
@@ -17224,6 +17252,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           events:
           - ref: ref
             kinds:
@@ -17239,9 +17268,9 @@ components:
             timeout: 7
           cache:
             disable: true
-            inputs:
-            - inputs
-            - inputs
+            io:
+            - io
+            - io
             ttl: 0
           kind: kind
           isPreset: true
@@ -17302,9 +17331,9 @@ components:
               enabled: true
             cache:
               disable: true
-              inputs:
-              - inputs
-              - inputs
+              io:
+              - io
+              - io
               ttl: 0
             kind: kind
             plugins:
@@ -17388,6 +17417,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             - presets:
               - presets
               - presets
@@ -17402,6 +17432,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             queue: queue
           presets:
           - presets
@@ -18619,6 +18650,7 @@ components:
             connection: connection
             toInit: true
             value: '{}'
+        queue: queue
       properties:
         connection:
           title: Optional connection
@@ -18637,6 +18669,9 @@ components:
             $ref: '#/components/schemas/v1Param'
           title: Optional dict of params
           type: object
+        queue:
+          title: Optional queue to use for scheduling the hook
+          type: string
         presets:
           items:
             type: string
@@ -18985,9 +19020,21 @@ components:
     v1Hyperband:
       example:
         resume: true
-        container: '{}'
         maxIterations: 4
         eta: 5
+        tuner:
+          presets:
+          - presets
+          - presets
+          hubRef: hubRef
+          params:
+            key:
+              ref: ref
+              contextOnly: true
+              connection: connection
+              toInit: true
+              value: '{}'
+          queue: queue
         seed: 9
         resource:
           name: name
@@ -19034,9 +19081,8 @@ components:
           format: int32
           title: Number of concurrent runs
           type: integer
-        container:
-          title: Placeholder for Container
-          type: object
+        tuner:
+          $ref: '#/components/schemas/v1Tuner'
         earlyStopping:
           items:
             properties: {}
@@ -19048,8 +19094,20 @@ components:
       type: object
     v1Hyperopt:
       example:
-        container: '{}'
         maxIterations: 6
+        tuner:
+          presets:
+          - presets
+          - presets
+          hubRef: hubRef
+          params:
+            key:
+              ref: ref
+              contextOnly: true
+              connection: connection
+              toInit: true
+              value: '{}'
+          queue: queue
         seed: 1
         numRuns: 3
         kind: hyperopt
@@ -19088,9 +19146,8 @@ components:
           format: int32
           title: Number of concurrent runs
           type: integer
-        container:
-          title: Placeholder for Container
-          type: object
+        tuner:
+          $ref: '#/components/schemas/v1Tuner'
         earlyStopping:
           items:
             properties: {}
@@ -19299,8 +19356,20 @@ components:
       type: object
     v1Iterative:
       example:
-        container: '{}'
         maxIterations: 6
+        tuner:
+          presets:
+          - presets
+          - presets
+          hubRef: hubRef
+          params:
+            key:
+              ref: ref
+              contextOnly: true
+              connection: connection
+              toInit: true
+              value: '{}'
+          queue: queue
         seed: 6
         kind: iterative
         params:
@@ -19332,9 +19401,8 @@ components:
           format: int32
           title: Number of concurrent runs
           type: integer
-        container:
-          title: Placeholder for Container
-          type: object
+        tuner:
+          $ref: '#/components/schemas/v1Tuner'
         earlyStopping:
           items:
             properties: {}
@@ -20607,22 +20675,25 @@ components:
             meta_info: '{}'
             owner: owner
             settings:
-              registry:
-                name: name
-                version: version
               agent:
                 name: name
                 uuid: uuid
-              hub:
-                name: name
-                version: version
+              tensorboard: '{}'
               namespace: namespace
               artifacts_store:
                 name: name
                 uuid: uuid
+              model_versions:
+              - name: name
+                version: version
+              - name: name
+                version: version
               queue:
                 name: name
                 uuid: uuid
+              component_version:
+                name: name
+                version: version
             raw_content: raw_content
             original:
               name: name
@@ -20671,22 +20742,25 @@ components:
             meta_info: '{}'
             owner: owner
             settings:
-              registry:
-                name: name
-                version: version
               agent:
                 name: name
                 uuid: uuid
-              hub:
-                name: name
-                version: version
+              tensorboard: '{}'
               namespace: namespace
               artifacts_store:
                 name: name
                 uuid: uuid
+              model_versions:
+              - name: name
+                version: version
+              - name: name
+                version: version
               queue:
                 name: name
                 uuid: uuid
+              component_version:
+                name: name
+                version: version
             raw_content: raw_content
             original:
               name: name
@@ -20737,22 +20811,25 @@ components:
             meta_info: '{}'
             owner: owner
             settings:
-              registry:
-                name: name
-                version: version
               agent:
                 name: name
                 uuid: uuid
-              hub:
-                name: name
-                version: version
+              tensorboard: '{}'
               namespace: namespace
               artifacts_store:
                 name: name
                 uuid: uuid
+              model_versions:
+              - name: name
+                version: version
+              - name: name
+                version: version
               queue:
                 name: name
                 uuid: uuid
+              component_version:
+                name: name
+                version: version
             raw_content: raw_content
             original:
               name: name
@@ -20801,22 +20878,25 @@ components:
             meta_info: '{}'
             owner: owner
             settings:
-              registry:
-                name: name
-                version: version
               agent:
                 name: name
                 uuid: uuid
-              hub:
-                name: name
-                version: version
+              tensorboard: '{}'
               namespace: namespace
               artifacts_store:
                 name: name
                 uuid: uuid
+              model_versions:
+              - name: name
+                version: version
+              - name: name
+                version: version
               queue:
                 name: name
                 uuid: uuid
+              component_version:
+                name: name
+                version: version
             raw_content: raw_content
             original:
               name: name
@@ -20890,22 +20970,25 @@ components:
           meta_info: '{}'
           owner: owner
           settings:
-            registry:
-              name: name
-              version: version
             agent:
               name: name
               uuid: uuid
-            hub:
-              name: name
-              version: version
+            tensorboard: '{}'
             namespace: namespace
             artifacts_store:
               name: name
               uuid: uuid
+            model_versions:
+            - name: name
+              version: version
+            - name: name
+              version: version
             queue:
               name: name
               uuid: uuid
+            component_version:
+              name: name
+              version: version
           raw_content: raw_content
           original:
             name: name
@@ -20952,22 +21035,25 @@ components:
           meta_info: '{}'
           owner: owner
           settings:
-            registry:
-              name: name
-              version: version
             agent:
               name: name
               uuid: uuid
-            hub:
-              name: name
-              version: version
+            tensorboard: '{}'
             namespace: namespace
             artifacts_store:
               name: name
               uuid: uuid
+            model_versions:
+            - name: name
+              version: version
+            - name: name
+              version: version
             queue:
               name: name
               uuid: uuid
+            component_version:
+              name: name
+              version: version
           raw_content: raw_content
           original:
             name: name
@@ -21116,32 +21202,64 @@ components:
         previous: previous
         count: 0
         results:
-        - projects:
+        - settings:
+            projects:
+            - name: name
+              uuid: uuid
+            - name: name
+              uuid: uuid
+            registries:
+            - name: name
+              uuid: uuid
+            - name: name
+              uuid: uuid
+            hubs:
+            - name: name
+              uuid: uuid
+            - name: name
+              uuid: uuid
+          model_registries:
+          - model_registries
+          - model_registries
+          projects:
           - projects
           - projects
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
+          component_hubs:
+          - component_hubs
+          - component_hubs
           created_at: 2000-01-23T04:56:07.000+00:00
-          registries:
-          - registries
-          - registries
           uuid: uuid
-          hubs:
-          - hubs
-          - hubs
-        - projects:
+        - settings:
+            projects:
+            - name: name
+              uuid: uuid
+            - name: name
+              uuid: uuid
+            registries:
+            - name: name
+              uuid: uuid
+            - name: name
+              uuid: uuid
+            hubs:
+            - name: name
+              uuid: uuid
+            - name: name
+              uuid: uuid
+          model_registries:
+          - model_registries
+          - model_registries
+          projects:
           - projects
           - projects
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
+          component_hubs:
+          - component_hubs
+          - component_hubs
           created_at: 2000-01-23T04:56:07.000+00:00
-          registries:
-          - registries
-          - registries
           uuid: uuid
-          hubs:
-          - hubs
-          - hubs
       properties:
         count:
           format: int32
@@ -21598,9 +21716,21 @@ components:
           concurrency: 1
         hyperband:
           resume: true
-          container: '{}'
           maxIterations: 4
           eta: 5
+          tuner:
+            presets:
+            - presets
+            - presets
+            hubRef: hubRef
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           seed: 9
           resource:
             name: name
@@ -21633,8 +21763,20 @@ components:
           - '{}'
           concurrency: 1
         hyperopt:
-          container: '{}'
           maxIterations: 6
+          tuner:
+            presets:
+            - presets
+            - presets
+            hubRef: hubRef
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           seed: 1
           numRuns: 3
           kind: hyperopt
@@ -21645,8 +21787,20 @@ components:
           - '{}'
           concurrency: 2
         iterative:
-          container: '{}'
           maxIterations: 6
+          tuner:
+            presets:
+            - presets
+            - presets
+            hubRef: hubRef
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           seed: 6
           kind: iterative
           params:
@@ -21656,8 +21810,20 @@ components:
           - '{}'
           concurrency: 5
         bayes:
-          container: '{}'
           maxIterations: 8
+          tuner:
+            presets:
+            - presets
+            - presets
+            hubRef: hubRef
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           seed: 9
           metric:
             name: name
@@ -22015,6 +22181,7 @@ components:
               connection: connection
               toInit: true
               value: '{}'
+          queue: queue
         - presets:
           - presets
           - presets
@@ -22029,6 +22196,7 @@ components:
               connection: connection
               toInit: true
               value: '{}'
+          queue: queue
         events:
         - ref: ref
           kinds:
@@ -22044,9 +22212,9 @@ components:
           timeout: 7
         cache:
           disable: true
-          inputs:
-          - inputs
-          - inputs
+          io:
+          - io
+          - io
           ttl: 0
         kind: kind
         isPreset: true
@@ -22107,9 +22275,9 @@ components:
             enabled: true
           cache:
             disable: true
-            inputs:
-            - inputs
-            - inputs
+            io:
+            - io
+            - io
             ttl: 0
           kind: kind
           plugins:
@@ -22193,6 +22361,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           - presets:
             - presets
             - presets
@@ -22207,6 +22376,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           queue: queue
         presets:
         - presets
@@ -22240,7 +22410,7 @@ components:
         presets:
           items:
             type: string
-          title: Optional preset to use for running this operation
+          title: Optional list of presets to use for running this operation
           type: array
         queue:
           title: Optional queue to use for running this operation
@@ -23332,22 +23502,25 @@ components:
         meta_info: '{}'
         owner: owner
         settings:
-          registry:
-            name: name
-            version: version
           agent:
             name: name
             uuid: uuid
-          hub:
-            name: name
-            version: version
+          tensorboard: '{}'
           namespace: namespace
           artifacts_store:
             name: name
             uuid: uuid
+          model_versions:
+          - name: name
+            version: version
+          - name: name
+            version: version
           queue:
             name: name
             uuid: uuid
+          component_version:
+            name: name
+            version: version
         raw_content: raw_content
         original:
           name: name
@@ -23567,22 +23740,25 @@ components:
           meta_info: '{}'
           owner: owner
           settings:
-            registry:
-              name: name
-              version: version
             agent:
               name: name
               uuid: uuid
-            hub:
-              name: name
-              version: version
+            tensorboard: '{}'
             namespace: namespace
             artifacts_store:
               name: name
               uuid: uuid
+            model_versions:
+            - name: name
+              version: version
+            - name: name
+              version: version
             queue:
               name: name
               uuid: uuid
+            component_version:
+              name: name
+              version: version
           raw_content: raw_content
           original:
             name: name
@@ -23631,22 +23807,25 @@ components:
           meta_info: '{}'
           owner: owner
           settings:
-            registry:
-              name: name
-              version: version
             agent:
               name: name
               uuid: uuid
-            hub:
-              name: name
-              version: version
+            tensorboard: '{}'
             namespace: namespace
             artifacts_store:
               name: name
               uuid: uuid
+            model_versions:
+            - name: name
+              version: version
+            - name: name
+              version: version
             queue:
               name: name
               uuid: uuid
+            component_version:
+              name: name
+              version: version
           raw_content: raw_content
           original:
             name: name
@@ -23708,6 +23887,7 @@ components:
       - dag
       - join
       - run
+      - tb
       type: string
     v1RunKind:
       default: job
@@ -24660,9 +24840,9 @@ components:
               enabled: true
             cache:
               disable: true
-              inputs:
-              - inputs
-              - inputs
+              io:
+              - io
+              - io
               ttl: 0
             kind: kind
             plugins:
@@ -24746,6 +24926,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             - presets:
               - presets
               - presets
@@ -24760,6 +24941,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             queue: queue
           - termination:
               maxRetries: 4
@@ -24802,9 +24984,9 @@ components:
               enabled: true
             cache:
               disable: true
-              inputs:
-              - inputs
-              - inputs
+              io:
+              - io
+              - io
               ttl: 0
             kind: kind
             plugins:
@@ -24888,6 +25070,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             - presets:
               - presets
               - presets
@@ -24902,6 +25085,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             queue: queue
           environment:
             nodeName: nodeName
@@ -24997,6 +25181,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             - presets:
               - presets
               - presets
@@ -25011,6 +25196,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             events:
             - ref: ref
               kinds:
@@ -25026,9 +25212,9 @@ components:
               timeout: 7
             cache:
               disable: true
-              inputs:
-              - inputs
-              - inputs
+              io:
+              - io
+              - io
               ttl: 0
             kind: kind
             isPreset: true
@@ -25089,9 +25275,9 @@ components:
                 enabled: true
               cache:
                 disable: true
-                inputs:
-                - inputs
-                - inputs
+                io:
+                - io
+                - io
                 ttl: 0
               kind: kind
               plugins:
@@ -25175,6 +25361,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               - presets:
                 - presets
                 - presets
@@ -25189,6 +25376,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               queue: queue
             presets:
             - presets
@@ -25265,6 +25453,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             - presets:
               - presets
               - presets
@@ -25279,6 +25468,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             events:
             - ref: ref
               kinds:
@@ -25294,9 +25484,9 @@ components:
               timeout: 7
             cache:
               disable: true
-              inputs:
-              - inputs
-              - inputs
+              io:
+              - io
+              - io
               ttl: 0
             kind: kind
             isPreset: true
@@ -25357,9 +25547,9 @@ components:
                 enabled: true
               cache:
                 disable: true
-                inputs:
-                - inputs
-                - inputs
+                io:
+                - io
+                - io
                 ttl: 0
               kind: kind
               plugins:
@@ -25443,6 +25633,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               - presets:
                 - presets
                 - presets
@@ -25457,6 +25648,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               queue: queue
             presets:
             - presets
@@ -26239,50 +26431,47 @@ components:
       type: object
     v1RunSettings:
       example:
-        registry:
-          name: name
-          version: version
         agent:
           name: name
           uuid: uuid
-        hub:
-          name: name
-          version: version
+        tensorboard: '{}'
         namespace: namespace
         artifacts_store:
           name: name
           uuid: uuid
+        model_versions:
+        - name: name
+          version: version
+        - name: name
+          version: version
         queue:
           name: name
           uuid: uuid
+        component_version:
+          name: name
+          version: version
       properties:
         namespace:
           title: Namespace
           type: string
         agent:
-          $ref: '#/components/schemas/v1RunSettingsCatalog'
+          $ref: '#/components/schemas/v1SettingsCatalog'
         queue:
-          $ref: '#/components/schemas/v1RunSettingsCatalog'
+          $ref: '#/components/schemas/v1SettingsCatalog'
         artifacts_store:
-          $ref: '#/components/schemas/v1RunSettingsCatalog'
-        hub:
+          $ref: '#/components/schemas/v1SettingsCatalog'
+        tensorboard:
+          properties: {}
+          title: Latest Tensorboard reference, if it exists
+          type: object
+        component_version:
           $ref: '#/components/schemas/v1RunReferenceCatalog'
-        registry:
-          $ref: '#/components/schemas/v1RunReferenceCatalog'
+        model_versions:
+          items:
+            $ref: '#/components/schemas/v1RunReferenceCatalog'
+          title: Model registry version references
+          type: array
       title: Run Settings specification
-      type: object
-    v1RunSettingsCatalog:
-      example:
-        name: name
-        uuid: uuid
-      properties:
-        uuid:
-          title: Uuid
-          type: string
-        name:
-          title: Name
-          type: string
-      title: Run Settings catalog specification
       type: object
     v1S3Type:
       example:
@@ -27274,9 +27463,9 @@ components:
                 enabled: true
               cache:
                 disable: true
-                inputs:
-                - inputs
-                - inputs
+                io:
+                - io
+                - io
                 ttl: 0
               kind: kind
               plugins:
@@ -27360,6 +27549,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               - presets:
                 - presets
                 - presets
@@ -27374,6 +27564,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               queue: queue
             - termination:
                 maxRetries: 4
@@ -27416,9 +27607,9 @@ components:
                 enabled: true
               cache:
                 disable: true
-                inputs:
-                - inputs
-                - inputs
+                io:
+                - io
+                - io
                 ttl: 0
               kind: kind
               plugins:
@@ -27502,6 +27693,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               - presets:
                 - presets
                 - presets
@@ -27516,6 +27708,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               queue: queue
             environment:
               nodeName: nodeName
@@ -27611,6 +27804,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               - presets:
                 - presets
                 - presets
@@ -27625,6 +27819,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               events:
               - ref: ref
                 kinds:
@@ -27640,9 +27835,9 @@ components:
                 timeout: 7
               cache:
                 disable: true
-                inputs:
-                - inputs
-                - inputs
+                io:
+                - io
+                - io
                 ttl: 0
               kind: kind
               isPreset: true
@@ -27703,9 +27898,9 @@ components:
                   enabled: true
                 cache:
                   disable: true
-                  inputs:
-                  - inputs
-                  - inputs
+                  io:
+                  - io
+                  - io
                   ttl: 0
                 kind: kind
                 plugins:
@@ -27789,6 +27984,7 @@ components:
                       connection: connection
                       toInit: true
                       value: '{}'
+                  queue: queue
                 - presets:
                   - presets
                   - presets
@@ -27803,6 +27999,7 @@ components:
                       connection: connection
                       toInit: true
                       value: '{}'
+                  queue: queue
                 queue: queue
               presets:
               - presets
@@ -27879,6 +28076,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               - presets:
                 - presets
                 - presets
@@ -27893,6 +28091,7 @@ components:
                     connection: connection
                     toInit: true
                     value: '{}'
+                queue: queue
               events:
               - ref: ref
                 kinds:
@@ -27908,9 +28107,9 @@ components:
                 timeout: 7
               cache:
                 disable: true
-                inputs:
-                - inputs
-                - inputs
+                io:
+                - io
+                - io
                 ttl: 0
               kind: kind
               isPreset: true
@@ -27971,9 +28170,9 @@ components:
                   enabled: true
                 cache:
                   disable: true
-                  inputs:
-                  - inputs
-                  - inputs
+                  io:
+                  - io
+                  - io
                   ttl: 0
                 kind: kind
                 plugins:
@@ -28057,6 +28256,7 @@ components:
                       connection: connection
                       toInit: true
                       value: '{}'
+                  queue: queue
                 - presets:
                   - presets
                   - presets
@@ -28071,6 +28271,7 @@ components:
                       connection: connection
                       toInit: true
                       value: '{}'
+                  queue: queue
                 queue: queue
               presets:
               - presets
@@ -28887,9 +29088,21 @@ components:
             concurrency: 1
           hyperband:
             resume: true
-            container: '{}'
             maxIterations: 4
             eta: 5
+            tuner:
+              presets:
+              - presets
+              - presets
+              hubRef: hubRef
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             seed: 9
             resource:
               name: name
@@ -28922,8 +29135,20 @@ components:
             - '{}'
             concurrency: 1
           hyperopt:
-            container: '{}'
             maxIterations: 6
+            tuner:
+              presets:
+              - presets
+              - presets
+              hubRef: hubRef
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             seed: 1
             numRuns: 3
             kind: hyperopt
@@ -28934,8 +29159,20 @@ components:
             - '{}'
             concurrency: 2
           iterative:
-            container: '{}'
             maxIterations: 6
+            tuner:
+              presets:
+              - presets
+              - presets
+              hubRef: hubRef
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             seed: 6
             kind: iterative
             params:
@@ -28945,8 +29182,20 @@ components:
             - '{}'
             concurrency: 5
           bayes:
-            container: '{}'
             maxIterations: 8
+            tuner:
+              presets:
+              - presets
+              - presets
+              hubRef: hubRef
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             seed: 9
             metric:
               name: name
@@ -29188,6 +29437,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           - presets:
             - presets
             - presets
@@ -29202,6 +29452,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           events:
           - ref: ref
             kinds:
@@ -29217,9 +29468,9 @@ components:
             timeout: 7
           cache:
             disable: true
-            inputs:
-            - inputs
-            - inputs
+            io:
+            - io
+            - io
             ttl: 0
           kind: kind
           isPreset: true
@@ -29280,9 +29531,9 @@ components:
               enabled: true
             cache:
               disable: true
-              inputs:
-              - inputs
-              - inputs
+              io:
+              - io
+              - io
               ttl: 0
             kind: kind
             plugins:
@@ -29366,6 +29617,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             - presets:
               - presets
               - presets
@@ -29380,6 +29632,7 @@ components:
                   connection: connection
                   toInit: true
                   value: '{}'
+              queue: queue
             queue: queue
           presets:
           - presets
@@ -29440,9 +29693,9 @@ components:
             isList: true
           cache:
             disable: true
-            inputs:
-            - inputs
-            - inputs
+            io:
+            - io
+            - io
             ttl: 0
           kind: kind
           plugins:
@@ -29562,6 +29815,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           - presets:
             - presets
             - presets
@@ -29576,6 +29830,7 @@ components:
                 connection: connection
                 toInit: true
                 value: '{}'
+            queue: queue
           queue: queue
           events:
           - ref: ref
@@ -29893,6 +30148,19 @@ components:
             Default is false, the service shoud handle a base url.
           type: boolean
       title: Service specification
+      type: object
+    v1SettingsCatalog:
+      example:
+        name: name
+        uuid: uuid
+      properties:
+        uuid:
+          title: Uuid
+          type: string
+        name:
+          title: Name
+          type: string
+      title: Settings catalog specification
       type: object
     v1Spark:
       example:
@@ -31013,19 +31281,35 @@ components:
       type: object
     v1Team:
       example:
+        settings:
+          projects:
+          - name: name
+            uuid: uuid
+          - name: name
+            uuid: uuid
+          registries:
+          - name: name
+            uuid: uuid
+          - name: name
+            uuid: uuid
+          hubs:
+          - name: name
+            uuid: uuid
+          - name: name
+            uuid: uuid
+        model_registries:
+        - model_registries
+        - model_registries
         projects:
         - projects
         - projects
         updated_at: 2000-01-23T04:56:07.000+00:00
         name: name
+        component_hubs:
+        - component_hubs
+        - component_hubs
         created_at: 2000-01-23T04:56:07.000+00:00
-        registries:
-        - registries
-        - registries
         uuid: uuid
-        hubs:
-        - hubs
-        - hubs
       properties:
         uuid:
           title: Uuid
@@ -31038,16 +31322,18 @@ components:
             type: string
           title: projects
           type: array
-        hubs:
+        component_hubs:
           items:
             type: string
           title: hubs
           type: array
-        registries:
+        model_registries:
           items:
             type: string
           title: registries
           type: array
+        settings:
+          $ref: '#/components/schemas/v1TeamSettings'
         created_at:
           format: date-time
           title: Optional time when the entity was created
@@ -31088,6 +31374,41 @@ components:
           title: Optional last time the entity was updated
           type: string
       title: Team member specification
+      type: object
+    v1TeamSettings:
+      example:
+        projects:
+        - name: name
+          uuid: uuid
+        - name: name
+          uuid: uuid
+        registries:
+        - name: name
+          uuid: uuid
+        - name: name
+          uuid: uuid
+        hubs:
+        - name: name
+          uuid: uuid
+        - name: name
+          uuid: uuid
+      properties:
+        projects:
+          items:
+            $ref: '#/components/schemas/v1SettingsCatalog'
+          title: Projects
+          type: array
+        hubs:
+          items:
+            $ref: '#/components/schemas/v1SettingsCatalog'
+          title: Component hubs
+          type: array
+        registries:
+          items:
+            $ref: '#/components/schemas/v1SettingsCatalog'
+          title: Model registries
+          type: array
+      title: Run Settings specification
       type: object
     v1Template:
       example:
@@ -31263,6 +31584,39 @@ components:
         includeSucceeded:
           title: Flag to include or not the succeeded runs in the calculation
           type: boolean
+      type: object
+    v1Tuner:
+      example:
+        presets:
+        - presets
+        - presets
+        hubRef: hubRef
+        params:
+          key:
+            ref: ref
+            contextOnly: true
+            connection: connection
+            toInit: true
+            value: '{}'
+        queue: queue
+      properties:
+        hubRef:
+          title: Component name to use
+          type: string
+        queue:
+          title: Optional queue to use for scheduling the tuner
+          type: string
+        presets:
+          items:
+            type: string
+          title: Optional list of presets to use for running this tuner
+          type: array
+        params:
+          additionalProperties:
+            $ref: '#/components/schemas/v1Param'
+          title: Optional dict of params
+          type: object
+      title: Tuner definition
       type: object
     v1UriType:
       example:

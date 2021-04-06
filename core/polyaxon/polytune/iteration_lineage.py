@@ -22,7 +22,6 @@ from polyaxon.client import RunClient
 from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyflow import V1Join
-from polyaxon.utils.formatting import Printer
 from polyaxon.utils.np_utils import sanitize_dict, sanitize_np_types
 
 
@@ -87,35 +86,16 @@ def handle_iteration_failure(client: RunClient, exp: Exception):
 
 def handle_iteration(
     client: RunClient,
-    iteration: int = None,
     suggestions: List[Dict] = None,
-    summary: Dict = None,
-    name: str = None,
 ):
-    summary = summary or {}
-    summary.update(
-        {
-            "iteration": iteration,
-            "suggestions": [sanitize_dict(s) for s in suggestions],
-        }
-    )
-
-    def handler():
-        if suggestions:
-            artifact_run = V1RunArtifact(
-                name=name or "out-iteration-{}".format(iteration),
-                kind=V1ArtifactKind.ITERATION,
-                summary=summary,
-                is_input=False,
-            )
-            client.log_artifact_lineage(artifact_run)
-            Printer.print_success("Tuner generated new suggestions.")
-        else:
-            client.log_succeeded(message="Iterative operation has succeeded")
-            Printer.print_success("Iterative optimization succeeded")
-
+    if not suggestions:
+        logger.warning("No new suggestions were created")
+        return
     try:
-        handler()
+        logger.info("Generated new {} suggestions".format(len(suggestions)))
+        client.log_outputs(
+            suggestions=[sanitize_dict(s) for s in suggestions], async_req=False
+        )
     except Exception as e:
         exp = "Polyaxon tuner failed logging iteration definition: {}\n{}".format(
             repr(e), traceback.format_exc()

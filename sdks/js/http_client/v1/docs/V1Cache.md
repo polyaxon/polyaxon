@@ -6,6 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **disable** | **Boolean** |  | [optional] 
 **ttl** | **Number** |  | [optional] 
-**inputs** | **[String]** |  | [optional] 
+**io** | **[String]** |  | [optional] 
 
 

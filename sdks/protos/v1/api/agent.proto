@@ -183,5 +183,6 @@ message AgentStateResponse {
 
     Statuses status = 1;
     AgentState state = 2;
-    google.protobuf.Struct compatible_updates = 3;
+    int32 live_state = 3;
+    google.protobuf.Struct compatible_updates = 4;
 }

@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from coredb.scheduler import manager
+from polyaxon.lifecycle import V1Statuses
 from polycommon import conf
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from polycommon.options.registry.core import SCHEDULER_ENABLED
@@ -23,7 +24,11 @@ from polycommon.options.registry.core import SCHEDULER_ENABLED
 def handle_run_created(workers_backend, event: "Event") -> None:  # noqa: F821
     """Handles creation, resume, and restart"""
     eager = False
-    if event.instance and (event.instance.meta_info or {}).get("eager"):
+    if (
+        event.instance and
+        event.instance.status != V1Statuses.RESUMING and
+        (event.instance.meta_info or {}).get("eager")
+    ):
         eager = True
     if not eager:
         eager = (

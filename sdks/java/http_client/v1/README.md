@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.7.4
+- API version: 1.7.6
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.7.4</version>
+  <version>1.7.6</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.7.4"
+compile "org.openapitools:openapi-java-client:1.7.6"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.7.4.jar`
+* `target/openapi-java-client-1.7.6.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -545,7 +545,6 @@ Class | Method | HTTP request | Description
  - [V1RunReferenceCatalog](docs/V1RunReferenceCatalog.md)
  - [V1RunSchema](docs/V1RunSchema.md)
  - [V1RunSettings](docs/V1RunSettings.md)
- - [V1RunSettingsCatalog](docs/V1RunSettingsCatalog.md)
  - [V1S3Type](docs/V1S3Type.md)
  - [V1Schedule](docs/V1Schedule.md)
  - [V1ScheduleKind](docs/V1ScheduleKind.md)
@@ -553,6 +552,7 @@ Class | Method | HTTP request | Description
  - [V1Search](docs/V1Search.md)
  - [V1SearchSpec](docs/V1SearchSpec.md)
  - [V1Service](docs/V1Service.md)
+ - [V1SettingsCatalog](docs/V1SettingsCatalog.md)
  - [V1Spark](docs/V1Spark.md)
  - [V1SparkReplica](docs/V1SparkReplica.md)
  - [V1SparkType](docs/V1SparkType.md)
@@ -565,12 +565,14 @@ Class | Method | HTTP request | Description
  - [V1TFJob](docs/V1TFJob.md)
  - [V1Team](docs/V1Team.md)
  - [V1TeamMember](docs/V1TeamMember.md)
+ - [V1TeamSettings](docs/V1TeamSettings.md)
  - [V1Template](docs/V1Template.md)
  - [V1Termination](docs/V1Termination.md)
  - [V1Token](docs/V1Token.md)
  - [V1TrialStart](docs/V1TrialStart.md)
  - [V1TriggerPolicy](docs/V1TriggerPolicy.md)
  - [V1TruncationStoppingPolicy](docs/V1TruncationStoppingPolicy.md)
+ - [V1Tuner](docs/V1Tuner.md)
  - [V1UriType](docs/V1UriType.md)
  - [V1UrlRef](docs/V1UrlRef.md)
  - [V1User](docs/V1User.md)

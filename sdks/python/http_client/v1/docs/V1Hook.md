@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **hub_ref** | **str** |  | [optional] 
 **conditions** | **str** |  | [optional] 
 **params** | [**dict(str, V1Param)**](V1Param.md) |  | [optional] 
+**queue** | **str** |  | [optional] 
 **presets** | **list[str]** |  | [optional] 
 **disable_defaults** | **bool** |  | [optional] 
 

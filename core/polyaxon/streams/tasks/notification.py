@@ -37,9 +37,7 @@ async def notify_run(
     spawner = AsyncSpawner(namespace=namespace)
     await spawner.k8s_manager.setup()
     for connection in connections:
-        connection_type = settings.AGENT_CONFIG.notification_connections_by_names.get(
-            connection
-        )
+        connection_type = settings.AGENT_CONFIG.connections_by_names.get(connection)
         if not connection_type:
             logger.warning(
                 "Could not create notification using connection {}, "
@@ -51,7 +49,7 @@ async def notify_run(
 
         operation = get_notifier_operation(
             connection=connection,
-            kind=connection_type.kind,
+            backend=connection_type.kind,
             owner=owner,
             project=project,
             run_uuid=run_uuid,

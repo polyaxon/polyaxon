@@ -470,13 +470,20 @@ class TestV1Operations(BaseTestCase):
         }
         hook = V1Hook.from_dict(config_dict)
 
-        op = V1Operation.from_hook(hook, None, None, None)
+        op = V1Operation.from_hook(hook, None)
         assert op.run_patch["connections"] == [hook.connection]
         assert op.hub_ref == hook.hub_ref
         assert op.params == hook.params
         assert op.presets == hook.presets
 
-        op = V1Operation.from_hook(hook, {"in1": "v1"}, {"out1": "v1"}, {"c1": "v1"})
+        op = V1Operation.from_hook(
+            hook,
+            {
+                "inputs": {"in1": "v1"},
+                "outputs": {"out1": "v1"},
+                "condition": {"c1": "v1"},
+            },
+        )
         assert op.run_patch["connections"] == [hook.connection]
         assert op.hub_ref == hook.hub_ref
         assert op.params == {

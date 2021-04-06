@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import pytest
+
 from mock import MagicMock
 
 from polyaxon.k8s import k8s_schemas
@@ -31,45 +32,53 @@ class TestSanitizeContainerEnv(BaseTestCase):
         value = MagicMock(env=[{"foo": 1}])
         assert sanitize_container_env(value).env[0] == {"foo": "1"}
 
-        value = MagicMock(env=[
-            {
-                "name": "secret-name",
-                "value": True,
-            },
-        ])
+        value = MagicMock(
+            env=[
+                {
+                    "name": "secret-name",
+                    "value": True,
+                },
+            ]
+        )
         assert sanitize_container_env(value).env[0] == {
             "name": "secret-name",
             "value": "true",
         }
 
-        value = MagicMock(env=[
-            {
-                "name": "secret-name",
-                "value": 1,
-            },
-        ])
+        value = MagicMock(
+            env=[
+                {
+                    "name": "secret-name",
+                    "value": 1,
+                },
+            ]
+        )
         assert sanitize_container_env(value).env[0] == {
             "name": "secret-name",
             "value": "1",
         }
 
-        value = MagicMock(env=[
-            {
-                "name": "secret-name",
-                "value": "test",
-            },
-        ])
+        value = MagicMock(
+            env=[
+                {
+                    "name": "secret-name",
+                    "value": "test",
+                },
+            ]
+        )
         assert sanitize_container_env(value).env[0] == {
             "name": "secret-name",
             "value": "test",
         }
 
-        value = MagicMock(env=[
-            {
-                "name": "secret-name",
-                "value": {"foo": "bar"},
-            },
-        ])
+        value = MagicMock(
+            env=[
+                {
+                    "name": "secret-name",
+                    "value": {"foo": "bar"},
+                },
+            ]
+        )
         assert sanitize_container_env(value).env[0] == {
             "name": "secret-name",
             "value": '{"foo": "bar"}',
@@ -79,62 +88,72 @@ class TestSanitizeContainerEnv(BaseTestCase):
         assert sanitize_container_env(value).env[0] == {"foo": {"key": "value"}}
 
     def test_sanitize_container_env_value_obj(self):
-        value = MagicMock(env=[
-            k8s_schemas.V1EnvVar(
-                name="secret-name",
-                value=True,
-            ),
-        ])
+        value = MagicMock(
+            env=[
+                k8s_schemas.V1EnvVar(
+                    name="secret-name",
+                    value=True,
+                ),
+            ]
+        )
         assert sanitize_container_env(value).env[0] == k8s_schemas.V1EnvVar(
-                name="secret-name",
-                value="true",
-            )
+            name="secret-name",
+            value="true",
+        )
 
-        value = MagicMock(env=[
-            k8s_schemas.V1EnvVar(
-                name="secret-name",
-                value=1,
-            ),
-        ])
+        value = MagicMock(
+            env=[
+                k8s_schemas.V1EnvVar(
+                    name="secret-name",
+                    value=1,
+                ),
+            ]
+        )
         assert sanitize_container_env(value).env[0] == k8s_schemas.V1EnvVar(
-                name="secret-name",
-                value="1",
-            )
+            name="secret-name",
+            value="1",
+        )
 
-        value = MagicMock(env=[
-            k8s_schemas.V1EnvVar(
-                name="secret-name",
-                value="test",
-            ),
-        ])
+        value = MagicMock(
+            env=[
+                k8s_schemas.V1EnvVar(
+                    name="secret-name",
+                    value="test",
+                ),
+            ]
+        )
         assert sanitize_container_env(value).env[0] == k8s_schemas.V1EnvVar(
             name="secret-name",
             value="test",
         )
 
-        value = MagicMock(env=[
-            k8s_schemas.V1EnvVar(
-                name="secret-name",
-                value={"foo": "bar"},
-            ),
-        ])
+        value = MagicMock(
+            env=[
+                k8s_schemas.V1EnvVar(
+                    name="secret-name",
+                    value={"foo": "bar"},
+                ),
+            ]
+        )
         assert sanitize_container_env(value).env[0] == k8s_schemas.V1EnvVar(
             name="secret-name",
             value='{"foo": "bar"}',
         )
 
     def test_sanitize_container_env_value_from(self):
-        value = MagicMock(env=[
-            {
-                "name": "secret-name",
-                "valueFrom": {
-                    "secretKeyRef": {
-                        "name": "my-secret",
-                        "key": "my-key",
-                    }
-                }
-            },
-        ])
+        value = MagicMock(
+            env=[
+                {
+                    "name": "secret-name",
+                    "valueFrom": {
+                        "secretKeyRef": {
+                            "name": "my-secret",
+                            "key": "my-key",
+                        }
+                    },
+                },
+            ]
+        )
         assert sanitize_container_env(value).env[0] == {
             "name": "secret-name",
             "valueFrom": {
@@ -142,20 +161,22 @@ class TestSanitizeContainerEnv(BaseTestCase):
                     "name": "my-secret",
                     "key": "my-key",
                 }
-            }
+            },
         }
 
-        value = MagicMock(env=[
-            {
-                "name": "secret-name",
-                "valueFrom": {
-                    "configKeyRef": {
-                        "name": "my-secret",
-                        "key": "my-key",
-                    }
-                }
-            },
-        ])
+        value = MagicMock(
+            env=[
+                {
+                    "name": "secret-name",
+                    "valueFrom": {
+                        "configKeyRef": {
+                            "name": "my-secret",
+                            "key": "my-key",
+                        }
+                    },
+                },
+            ]
+        )
         assert sanitize_container_env(value).env[0] == {
             "name": "secret-name",
             "valueFrom": {
@@ -163,21 +184,23 @@ class TestSanitizeContainerEnv(BaseTestCase):
                     "name": "my-secret",
                     "key": "my-key",
                 }
-            }
+            },
         }
 
     def test_sanitize_container_env_value_from_obj(self):
-        value = MagicMock(env=[
-            k8s_schemas.V1EnvVar(
-                name="secret-name",
-                value_from=k8s_schemas.V1EnvVarSource(
-                    config_map_key_ref=k8s_schemas.V1ConfigMapKeySelector(
-                        key="my-key",
-                        name="my-secret",
-                    )
+        value = MagicMock(
+            env=[
+                k8s_schemas.V1EnvVar(
+                    name="secret-name",
+                    value_from=k8s_schemas.V1EnvVarSource(
+                        config_map_key_ref=k8s_schemas.V1ConfigMapKeySelector(
+                            key="my-key",
+                            name="my-secret",
+                        )
+                    ),
                 ),
-            ),
-        ])
+            ]
+        )
         assert sanitize_container_env(value).env[0] == k8s_schemas.V1EnvVar(
             name="secret-name",
             value_from=k8s_schemas.V1EnvVarSource(
@@ -188,17 +211,19 @@ class TestSanitizeContainerEnv(BaseTestCase):
             ),
         )
 
-        value = MagicMock(env=[
-            k8s_schemas.V1EnvVar(
-                name="secret-name",
-                value_from=k8s_schemas.V1EnvVarSource(
-                    config_map_key_ref=k8s_schemas.V1SecretKeySelector(
-                        key="my-key",
-                        name="my-secret",
-                    )
+        value = MagicMock(
+            env=[
+                k8s_schemas.V1EnvVar(
+                    name="secret-name",
+                    value_from=k8s_schemas.V1EnvVarSource(
+                        config_map_key_ref=k8s_schemas.V1SecretKeySelector(
+                            key="my-key",
+                            name="my-secret",
+                        )
+                    ),
                 ),
-            ),
-        ])
+            ]
+        )
         assert sanitize_container_env(value).env[0] == k8s_schemas.V1EnvVar(
             name="secret-name",
             value_from=k8s_schemas.V1EnvVarSource(

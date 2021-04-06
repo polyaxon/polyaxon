@@ -20,14 +20,14 @@ from polyaxon.polyflow.run.job import JobSchema, V1Job
 from polyaxon.polyflow.run.kinds import V1RunKind
 
 
-class NotifierSchema(JobSchema):
+class NotifierJobSchema(JobSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.NOTIFIER))
 
     @staticmethod
     def schema_config():
-        return V1Notifier
+        return V1NotifierJob
 
 
-class V1Notifier(V1Job):
-    SCHEMA = NotifierSchema
+class V1NotifierJob(V1Job):
+    SCHEMA = NotifierJobSchema
     IDENTIFIER = V1RunKind.NOTIFIER

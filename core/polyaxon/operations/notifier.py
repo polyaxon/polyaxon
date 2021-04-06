@@ -20,7 +20,7 @@ from polyaxon.auxiliaries import get_default_notification_container
 from polyaxon.polyflow import (
     V1IO,
     V1Component,
-    V1Notifier,
+    V1NotifierJob,
     V1Operation,
     V1Param,
     V1Plugins,
@@ -30,7 +30,7 @@ from polyaxon.polyflow import (
 
 def get_notifier_operation(
     connection: str,
-    kind: str,
+    backend: str,
     owner: str,
     project: str,
     run_uuid: str,
@@ -39,11 +39,11 @@ def get_notifier_operation(
 ) -> V1Operation:
     return V1Operation(
         params={
-            "kind": V1Param(value=kind),
+            "backend": V1Param(value=backend),
             "owner": V1Param(value=owner),
             "project": V1Param(value=project),
-            "run_uuid": V1Param(value=run_uuid),
-            "run_name": V1Param(value=run_name),
+            "uuid": V1Param(value=run_uuid),
+            "name": V1Param(value=run_name),
             "condition": V1Param(value=condition),
         },
         termination=V1Termination(max_retries=3),
@@ -59,15 +59,15 @@ def get_notifier_operation(
                 external_host=True,
             ),
             inputs=[
-                V1IO(name="kind", type=types.STR, is_optional=False),
+                V1IO(name="backend", type=types.STR, is_optional=False),
                 V1IO(name="owner", type=types.STR, is_optional=False),
                 V1IO(name="project", type=types.STR, is_optional=False),
-                V1IO(name="run_uuid", type=types.STR, is_optional=False),
-                V1IO(name="run_name", type=types.STR, is_optional=True),
+                V1IO(name="uuid", type=types.STR, is_optional=False),
+                V1IO(name="name", type=types.STR, is_optional=True),
                 V1IO(name="condition", type=types.DICT, is_optional=True),
                 V1IO(name="connection", type=types.STR, is_optional=True),
             ],
-            run=V1Notifier(
+            run=V1NotifierJob(
                 connections=[connection],
                 container=get_default_notification_container(),
             ),

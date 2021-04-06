@@ -25,6 +25,7 @@ NAME_BLACKLIST = {
     "profile",
     "preset",
     "admin",
+    "root",
     "abstract",
     "experiment",
     "gateway",

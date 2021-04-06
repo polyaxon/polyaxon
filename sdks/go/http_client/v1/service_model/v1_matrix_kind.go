@@ -33,6 +33,11 @@ import (
 // swagger:model v1MatrixKind
 type V1MatrixKind string
 
+func NewV1MatrixKind(value V1MatrixKind) *V1MatrixKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1MatrixKindRandom captures enum value "random"

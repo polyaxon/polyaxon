@@ -87,9 +87,8 @@ def _set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
     artifacts_keys = list(artifacts_by_keys.keys())
     query = reduce(or_, (Q(name=name, state=state) for name, state in artifacts_keys))
     to_update = artifact_model.objects.filter(query)
-    to_create = {
-        m for m in artifacts_keys if m not in {(m.name, m.state) for m in to_update}
-    }
+    _to_update = {(m.name, m.state) for m in to_update}
+    to_create = {m for m in artifacts_keys if m not in _to_update}
 
     if to_create:
         artifacts_to_create = []

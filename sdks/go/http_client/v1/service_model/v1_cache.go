@@ -35,8 +35,8 @@ type V1Cache struct {
 	// Optional flag to disable cache, Cache is enabled by default
 	Disable bool `json:"disable,omitempty"`
 
-	// Optional Inputs' names to consider for the cache
-	Inputs []string `json:"inputs"`
+	// Optional Inputs/Outputs' names to consider for the cache
+	Io []string `json:"io"`
 
 	// Optional time to live for the cache before it gets invalidated automatically,
 	// the TTL is caclculated based on the time the run starts

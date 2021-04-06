@@ -36,6 +36,11 @@ import (
 // swagger:model v1ResourceType
 type V1ResourceType string
 
+func NewV1ResourceType(value V1ResourceType) *V1ResourceType {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1ResourceTypeInt captures enum value "int"

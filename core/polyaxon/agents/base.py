@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import time
 import traceback
 
 from concurrent.futures import ThreadPoolExecutor
@@ -22,7 +23,7 @@ import polyaxon_sdk
 
 from kubernetes.client.rest import ApiException
 
-from polyaxon import settings
+from polyaxon import live_state, settings
 from polyaxon.agents import converter
 from polyaxon.agents.spawners.spawner import Spawner
 from polyaxon.client import PolyaxonClient
@@ -37,6 +38,8 @@ from polyaxon.utils.workers_utils import exit_context, get_pool_workers, get_wai
 
 class BaseAgent:
     HEALTH_FILE = "/tmp/.healthz"
+    SLEEP_STOP_TIME = 60 * 5
+    SLEEP_ARCHIVED_TIME = 60 * 60
 
     def __init__(self, sleep_interval=None):
         self.sleep_interval = sleep_interval
@@ -88,9 +91,7 @@ class BaseAgent:
                     while not exit_event.wait(timeout=timeout):
                         index += 1
                         agent_state = self.process(pool)
-                        if agent_state.status == V1Statuses.STOPPED:
-                            self.end()
-                            return
+                        self._check_status(agent_state)
                         if agent_state.state.full:
                             index = 2
                         self.ping()
@@ -99,9 +100,28 @@ class BaseAgent:
         finally:
             self.end()
 
-    def end(self):
+    def _check_status(self, agent_state):
+        if agent_state.status == V1Statuses.STOPPED:
+            print(
+                "Agent has been stopped from the platform,"
+                "but the deployment is still running."
+                "Please either set the agent to starting or teardown the agent deployment."
+            )
+            self.end(sleep=self.SLEEP_STOP_TIME)
+        elif agent_state.live_state < live_state.STATE_LIVE:
+            print(
+                "Agent has been archived from the platform,"
+                "but the deployment is still running."
+                "Please either restore the agent or teardown the agent deployment."
+            )
+            self.end(sleep=self.SLEEP_ARCHIVED_TIME)
+
+    def end(self, sleep: int = None):
         self._graceful_shutdown = True
-        logger.info("Agent is shutting down.")
+        if sleep:
+            time.sleep(sleep)
+        else:
+            logger.info("Agent is shutting down.")
 
     def process(self, pool: "ThreadPoolExecutor") -> polyaxon_sdk.V1AgentStateResponse:
         try:

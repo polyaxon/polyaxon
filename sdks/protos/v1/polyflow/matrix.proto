@@ -20,8 +20,9 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
-import "v1/polyflow/optimization.proto";
+import "v1/polyflow/io.proto";
 import "v1/polyflow/k8s.proto";
+import "v1/polyflow/optimization.proto";
 
 enum MatrixKind {
     random = 0;
@@ -76,6 +77,21 @@ message GridSearch {
     repeated google.protobuf.Struct earlyStopping = 6;
 }
 
+// Tuner definition
+message Tuner {
+  // Component name to use
+  string hubRef = 1;
+
+  // Optional queue to use for scheduling the tuner
+  string queue = 2;
+
+  // Optional list of presets to use for running this tuner
+  repeated string presets = 3;
+
+  // Optional dict of params
+  map<string, Param> params = 4;
+}
+
 // Matrix based on hyperband
 message Hyperband {
     // Kind of matrix, should be equal to "hyperband"
@@ -105,8 +121,8 @@ message Hyperband {
     // Number of concurrent runs
     int32 concurrency = 9;
 
-    // Container to override
-    Container container = 10;
+    // Tuner reference (hubRef) to use
+    Tuner tuner = 10;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct earlyStopping = 11;
@@ -139,8 +155,8 @@ message Bayes {
     // Number of concurrent runs
     int32 concurrency = 8;
 
-    // Container to override
-    Container container = 9;
+    // Tuner reference (hubRef) to use
+    Tuner tuner = 9;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct earlyStopping = 110;
@@ -182,8 +198,8 @@ message Hyperopt {
     // Number of concurrent runs
     int32 concurrency = 7;
 
-    // Container to override
-    Container container = 8;
+    // Tuner reference (hubRef) to use
+    Tuner tuner = 8;
 
     // A list of Early stopping objects, accepts both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct earlyStopping = 9;
@@ -207,8 +223,8 @@ message Iterative {
     // Number of concurrent runs
     int32 concurrency = 5;
 
-    // Container specification for crating new observations based on data from previous iterations
-    Container container = 6;
+    // Tuner reference (hubRef) to use
+    Tuner tuner = 6;
 
     // A list of Early stopping objects, accepts both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct earlyStopping = 7;

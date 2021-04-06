@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
+import "v1/api/base.proto";
+
 // Team specification
 message Team {
     // Uuid
@@ -32,16 +34,19 @@ message Team {
     repeated string projects = 3;
 
     // hubs
-    repeated string hubs = 4;
+    repeated string component_hubs = 4;
 
     // registries
-    repeated string registries = 5;
+    repeated string model_registries = 5;
+
+    // settings
+    TeamSettings settings = 6;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp created_at = 7;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 7;
+    google.protobuf.Timestamp updated_at = 8;
 
 }
 
@@ -117,4 +122,16 @@ message ListTeamMembersResponse {
 
     // Next page
     string next = 4;
+}
+
+// Run Settings specification
+message TeamSettings {
+  // Projects
+  repeated SettingsCatalog projects = 1;
+
+  // Component hubs
+  repeated SettingsCatalog hubs = 2;
+
+  // Model registries
+  repeated SettingsCatalog registries = 3;
 }

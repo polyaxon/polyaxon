@@ -49,7 +49,7 @@ message Operation {
     // Optional component tags override
     repeated string tags = 5;
 
-    // Optional preset to use for running this operation
+    // Optional list of presets to use for running this operation
     repeated string presets = 6;
 
     // Optional queue to use for running this operation

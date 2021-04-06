@@ -33,6 +33,11 @@ import (
 // swagger:model v1ScheduleKind
 type V1ScheduleKind string
 
+func NewV1ScheduleKind(value V1ScheduleKind) *V1ScheduleKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1ScheduleKindCron captures enum value "cron"

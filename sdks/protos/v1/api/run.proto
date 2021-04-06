@@ -145,11 +145,11 @@ message Run {
     // Optional if this entity was bookmarked
     bool bookmarked = 20;
 
-     // Current live state
-     int32 live_state = 21;
+    // Current live state
+    int32 live_state = 21;
 
-     // Markdown description/readme
-     string readme = 22;
+    // Markdown description/readme
+    string readme = 22;
 
     // Optional run meta info
     google.protobuf.Struct meta_info = 23;
@@ -248,16 +248,6 @@ message RunBodyRequest{
     string next = 4;
 }
 
-
-// Run Settings catalog specification
-message RunSettingsCatalog {
-    // Uuid
-    string uuid = 1;
-
-    // Name
-    string name = 2;
-}
-
 // Run Settings catalog specification
 message RunReferenceCatalog {
   // Name
@@ -273,19 +263,22 @@ message RunSettings {
     string namespace = 1;
 
     // Agent
-    RunSettingsCatalog agent = 2;
+    SettingsCatalog agent = 2;
 
     // Queue
-    RunSettingsCatalog queue = 3;
+    SettingsCatalog queue = 3;
 
     // Artifacts Store
-    RunSettingsCatalog artifacts_store = 4;
+    SettingsCatalog artifacts_store = 4;
 
-    // Component Hub reference
-    RunReferenceCatalog hub = 6;
+    // Latest Tensorboard reference, if it exists
+    google.protobuf.Struct tensorboard = 5;
 
-    // Model registry reference
-    RunReferenceCatalog registry = 7;
+    // Component version reference
+    RunReferenceCatalog component_version = 6;
+
+    // Model registry version references
+    repeated RunReferenceCatalog model_versions = 7;
 }
 
 
@@ -299,6 +292,7 @@ message RunConnection {
    // Kind
    string kind = 3;
 }
+
 // Contains list runs
 message ListRunConnectionsResponse{
   // Count of the entities
@@ -323,6 +317,7 @@ message RunEdge {
       dag = 3;
       join = 4;
       run = 5;
+      tb = 6;  // tensorboard
   }
 
   // Optional uuid of the edge run

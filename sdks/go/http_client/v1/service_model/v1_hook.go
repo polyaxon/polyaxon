@@ -51,6 +51,9 @@ type V1Hook struct {
 	// Optional preset to use for running this operation
 	Presets []string `json:"presets"`
 
+	// Optional queue to use for scheduling the hook
+	Queue string `json:"queue,omitempty"`
+
 	// Optional trigger policy, default done
 	Trigger *V1Statuses `json:"trigger,omitempty"`
 }

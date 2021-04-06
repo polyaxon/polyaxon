@@ -33,6 +33,11 @@ import (
 // swagger:model v1SparkType
 type V1SparkType string
 
+func NewV1SparkType(value V1SparkType) *V1SparkType {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1SparkTypeJava captures enum value "java"

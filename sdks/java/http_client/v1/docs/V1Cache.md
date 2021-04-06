@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **disable** | **Boolean** |  |  [optional]
 **ttl** | **Integer** |  |  [optional]
-**inputs** | **List&lt;String&gt;** |  |  [optional]
+**io** | **List&lt;String&gt;** |  |  [optional]
 
 
 

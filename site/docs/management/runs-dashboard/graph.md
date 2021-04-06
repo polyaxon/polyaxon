@@ -24,11 +24,11 @@ The graph view provides similar features as the timeline view, but instead of sh
 
 The graph view comes with two direction:
  
- * down for deep graphs 
+ * `right` direction for deep graphs 
 
 ![graph-deep](../../../../content/images/dashboard/graph/graph-deep.png)
 
- * right for wide graphs
+ * `down` direction for wide graphs
  
 ![graph-wide](../../../../content/images/dashboard/graph/graph-wide.png)
 

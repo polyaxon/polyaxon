@@ -18,15 +18,13 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
-from polyaxon.containers.names import MAIN_JOB_CONTAINER
-from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
+from polyaxon.polyflow.matrix.tuner import TunerSchema
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
-from polyaxon.schemas.fields.swagger import SwaggerField
 
 
 class IterativeSchema(BaseCamelSchema):
@@ -39,11 +37,7 @@ class IterativeSchema(BaseCamelSchema):
         keys=fields.Str(), values=fields.Nested(HpParamSchema), allow_none=True
     )
     seed = RefOrObject(fields.Int(allow_none=True))
-    container = SwaggerField(
-        cls=k8s_schemas.V1Container,
-        defaults={"name": MAIN_JOB_CONTAINER},
-        allow_none=True,
-    )
+    tuner = fields.Nested(TunerSchema, allow_none=True)
     early_stopping = fields.List(fields.Nested(EarlyStoppingSchema), allow_none=True)
 
     @staticmethod
@@ -55,7 +49,7 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
     """To build a custom optimization algorithm, this interface lets you create an iterative
     process for creating suggestions and training your model based on those suggestions
 
-    The iterative process expect a user defined container that will generate the suggestions for
+    The iterative process expect a user defined a tuner that will generate the suggestions for
     running the component.
 
     Args:
@@ -65,7 +59,7 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
         [params](/docs/automation/optimization-engine/params/)]]
         concurrency: int, optional
         seed: int, optional
-        container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
+        tuner: [V1Tuner](/docs/automation/optimization-engine/tuner/), optional
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
     ## YAML usage
@@ -77,7 +71,7 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
     >>>   params:
     >>>   maxIterations:
     >>>   seed:
-    >>>   container:
+    >>>   tuner:
     >>>   earlyStopping:
     ```
 
@@ -86,7 +80,12 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
     ```python
     >>> from polyaxon.k8s import k8s_schemas
     >>> from polyaxon.polyflow import (
-    >>>     V1Iterative, V1HpLogSpace, V1HpUniform, V1FailureEarlyStopping, V1MetricEarlyStopping
+    >>>     V1Iterative,
+    >>>     V1HpLogSpace,
+    >>>     V1HpUniform,
+    >>>     V1FailureEarlyStopping,
+    >>>     V1MetricEarlyStopping,
+    >>>     V1Tuner,
     >>> )
     >>> matrix = V1Iterative(
     >>>   max_iterations=20,
@@ -94,7 +93,7 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
     >>>   seed=23,
     >>>   params={"param1": V1HpLogSpace(...), "param2": V1HpUniform(...), ... },
     >>>   early_stopping=[V1FailureEarlyStopping(...), V1MetricEarlyStopping(...)],
-    >>>   container=k8s_schemas.V1Container(name="my-suggestion-container", ...)
+    >>>   tuner=V1Tuner(hub_ref="org/my-suggestion-component")
     >>> )
     ```
 
@@ -190,14 +189,16 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
     For more details please check the
     [early stopping section](/docs/automation/helpers/early-stopping/).
 
-    ### container
+    ### tuner
 
-    The container with the logic for creating new suggestions.
+    The tuner reference definition (with a component hub reference) to use.
+    The component contains the logic for creating new suggestions.
 
     ```yaml
     >>> matrix:
     >>>   kind: iterative
-    >>>   container: ...
+    >>>   tuner:
+    >>>     hubRef: acme/suggestion-logic:v1
     ```
 
     ## Example
@@ -213,9 +214,8 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
     >>>   kind: iterative
     >>>   concurrency: 10
     >>>   maxIterations: 5
-    >>>   container:
-    >>>     name: my-suggestion-logic
-    >>>     commmand: ...
+    >>>   tuner:
+    >>>     hubRef: my-suggestion-component
     >>>   params:
     >>>     lr:
     >>>       kind: logspace
@@ -259,7 +259,7 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
 
     IDENTIFIER = V1MatrixKind.ITERATIVE
     SCHEMA = IterativeSchema
-    REDUCED_ATTRIBUTES = ["params", "seed", "container", "earlyStopping", "concurrency"]
+    REDUCED_ATTRIBUTES = ["params", "seed", "tuner", "earlyStopping", "concurrency"]
 
     def create_iteration(self, iteration: int = None) -> int:
         if iteration is None:

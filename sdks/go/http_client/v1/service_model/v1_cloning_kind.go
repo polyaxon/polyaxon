@@ -33,6 +33,11 @@ import (
 // swagger:model v1CloningKind
 type V1CloningKind string
 
+func NewV1CloningKind(value V1CloningKind) *V1CloningKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1CloningKindCopy captures enum value "copy"

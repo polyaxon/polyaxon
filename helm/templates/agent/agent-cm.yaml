@@ -21,9 +21,6 @@ data:
   {{- if .Values.connections }}
   POLYAXON_AGENT_CONNECTIONS: {{ toJson .Values.connections | quote }}
   {{- end }}
-  {{- if .Values.notificationConnections }}
-  POLYAXON_AGENT_NOTIFICATION_CONNECTIONS: {{ toJson .Values.notificationConnections | quote }}
-  {{- end }}
   POLYAXON_AGENT_SIDECAR: {{ toJson .Values.sidecar | quote }}
   POLYAXON_AGENT_INIT: {{ toJson .Values.init | quote }}
   POLYAXON_AGENT_RUNS_SA: {{ template "polyaxon.fullname" . }}-runs-sa

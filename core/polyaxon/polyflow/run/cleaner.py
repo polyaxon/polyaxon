@@ -20,14 +20,14 @@ from polyaxon.polyflow.run.job import JobSchema, V1Job
 from polyaxon.polyflow.run.kinds import V1RunKind
 
 
-class CleanerSchema(JobSchema):
+class CleanerJobSchema(JobSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.CLEANER))
 
     @staticmethod
     def schema_config():
-        return V1Cleaner
+        return V1CleanerJob
 
 
-class V1Cleaner(V1Job):
-    SCHEMA = CleanerSchema
+class V1CleanerJob(V1Job):
+    SCHEMA = CleanerJobSchema
     IDENTIFIER = V1RunKind.CLEANER

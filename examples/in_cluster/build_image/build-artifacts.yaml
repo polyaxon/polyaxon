@@ -10,7 +10,7 @@ runPatch:
   - dockerfile:
       image: tensorflow/tensorflow:2.2.2
       run:
-      - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]==1.7.4'
+      - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]==1.7.6'
       - pip3 install scikit-learn matplotlib vega-datasets
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko

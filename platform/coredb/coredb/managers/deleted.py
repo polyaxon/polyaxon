@@ -16,7 +16,7 @@
 
 from django.db import models
 
-from polycommon import live_state
+from polyaxon import live_state
 
 
 class LiveManager(models.Manager):

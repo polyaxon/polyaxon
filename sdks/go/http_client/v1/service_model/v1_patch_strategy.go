@@ -38,6 +38,11 @@ import (
 // swagger:model v1PatchStrategy
 type V1PatchStrategy string
 
+func NewV1PatchStrategy(value V1PatchStrategy) *V1PatchStrategy {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1PatchStrategyReplace captures enum value "replace"

@@ -61,7 +61,9 @@ class OperationsService(Service):
         elif compiled_operation.is_spark_run:
             return V1RunKind.JOB, V1RunKind.SPARK
         elif compiled_operation.is_tuner_run:
-            return V1RunKind.TUNER, V1RunKind.JOB
+            return V1RunKind.JOB, V1RunKind.TUNER
+        elif compiled_operation.is_notifier_run:
+            return V1RunKind.JOB, V1RunKind.NOTIFIER
         # Default case
         kind = compiled_operation.run.kind
         return kind, kind

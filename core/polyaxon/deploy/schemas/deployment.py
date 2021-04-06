@@ -255,10 +255,6 @@ class DeploymentSchema(BaseCamelSchema):
     intervals = fields.Nested(IntervalsSchema, allow_none=True)
     artifacts_store = fields.Nested(ConnectionTypeSchema, allow_none=True)
     connections = fields.List(fields.Nested(ConnectionTypeSchema), allow_none=True)
-    notification_connections = fields.List(
-        fields.Nested(ConnectionTypeSchema),
-        allow_none=True,
-    )
     log_level = fields.Str(allow_none=True)
     security_context = fields.Nested(SecurityContextSchema, allow_none=True)
     external_services = fields.Nested(ExternalServicesSchema, allow_none=True)
@@ -388,7 +384,6 @@ class DeploymentConfig(BaseConfig):
         intervals=None,
         artifacts_store=None,
         connections=None,
-        notification_connections=None,
         log_level=None,
         security_context=None,
         external_services=None,
@@ -472,7 +467,6 @@ class DeploymentConfig(BaseConfig):
         self.intervals = intervals
         self.artifacts_store = artifacts_store
         self.connections = connections
-        self.notification_connections = notification_connections
         self.log_level = log_level
         self.security_context = security_context
         self.external_services = external_services

@@ -62,8 +62,6 @@ connections:
     secret:
       name: ssh-key-secret
       mountPath: /etc/secret-volume
-
-notificationConnections:
   - name: slack1
     kind: slack
     secret:

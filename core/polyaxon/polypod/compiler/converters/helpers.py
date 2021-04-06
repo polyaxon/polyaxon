@@ -16,32 +16,24 @@
 
 from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
 from polyaxon.polypod.compiler.converters.job import JobConverter
-from polyaxon.polypod.mixins import (
-    CleanerMixin,
-    NotifierMixin,
-    TunerMixin,
-    WatchDogMixin,
-)
-from polyaxon.utils.fqn_utils import (
-    get_cleaner_instance,
-    get_cleaner_resource_name,
-    get_notifier_instance,
-    get_notifier_resource_name,
-    get_tuner_instance,
-    get_tuner_resource_name,
-    get_watchdog_instance,
-    get_watchdog_resource_name,
-)
+from polyaxon.polypod.mixins import CleanerMixin, NotifierMixin, TunerMixin
+from polyaxon.utils.fqn_utils import get_cleaner_instance, get_cleaner_resource_name
 
 
 class NotifierConverter(NotifierMixin, JobConverter):
-    def get_instance(self):
-        return get_notifier_instance(
-            owner=self.owner_name, project=self.project_name, run_uuid=self.run_uuid
-        )
+    pass
 
-    def get_resource_name(self):
-        return get_notifier_resource_name(self.run_uuid)
+
+class PlatformNotifierConverter(PlatformConverterMixin, NotifierConverter):
+    pass
+
+
+class TunerConverter(TunerMixin, JobConverter):
+    pass
+
+
+class PlatformTunerConverter(PlatformConverterMixin, TunerConverter):
+    pass
 
 
 class CleanerConverter(CleanerMixin, JobConverter):
@@ -54,37 +46,5 @@ class CleanerConverter(CleanerMixin, JobConverter):
         return get_cleaner_resource_name(self.run_uuid)
 
 
-class TunerConverter(TunerMixin, JobConverter):
-    def get_instance(self):
-        return get_tuner_instance(
-            owner=self.owner_name, project=self.project_name, run_uuid=self.run_uuid
-        )
-
-    def get_resource_name(self):
-        return get_tuner_resource_name(self.run_uuid)
-
-
-class WatchDogConverter(WatchDogMixin, JobConverter):
-    def get_instance(self):
-        return get_watchdog_instance(
-            owner=self.owner_name, project=self.project_name, run_uuid=self.run_uuid
-        )
-
-    def get_resource_name(self):
-        return get_watchdog_resource_name(self.run_uuid)
-
-
-class PlatformNotifierConverter(PlatformConverterMixin, NotifierConverter):
-    pass
-
-
 class PlatformCleanerConverter(PlatformConverterMixin, CleanerConverter):
-    pass
-
-
-class PlatformTunerConverter(PlatformConverterMixin, TunerConverter):
-    pass
-
-
-class PlatformWatchDogConverter(PlatformConverterMixin, WatchDogConverter):
     pass

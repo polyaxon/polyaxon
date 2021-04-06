@@ -42,6 +42,7 @@ class TestWebHookNotification(BaseTestCase):
             project="project",
             uuid=uuid.uuid4().hex,
             name="test",
+            status=V1Statuses.FAILED,
             condition=V1StatusCondition(
                 type=V1Statuses.FAILED,
                 reason="reason",
@@ -49,6 +50,10 @@ class TestWebHookNotification(BaseTestCase):
                 last_update_time=now(),
                 last_transition_time=now(),
             ),
+            wait_time=None,
+            duration=None,
+            inputs=None,
+            outputs=None,
         )
 
     def test_attrs(self):

@@ -22,22 +22,36 @@ from polyaxon.utils.urls_utils import get_run_url
 
 
 class NotificationSpec(
-    namedtuple("Notification", "kind owner project uuid name condition")
+    namedtuple(
+        "Notification",
+        "kind owner project uuid name status wait_time duration condition inputs outputs",
+    )
 ):
     def get_details(self) -> str:
         details = "{} ({})".format(self.name, self.uuid) if self.name else self.uuid
         details = "Run: {}\n".format(details)
-        details += "Status: {}\n".format(self.condition.type)
+        if self.kind:
+            details = "Kind: `{}`\n".format(self.kind)
+        details += "Status: `{}`\n".format(self.status)
         if self.condition.reason:
-            details += "Reason: {}\n".format(self.condition.reason)
+            details += "Reason: `{}`\n".format(self.condition.reason)
         if self.condition.message:
-            details += "Message: {}\n".format(self.condition.message)
-        details += "Transition time: {}\n".format(self.condition.last_transition_time)
+            details += "Message: `{}`\n".format(self.condition.message)
+        details += "Transition time: `{}`\n".format(self.condition.last_transition_time)
+        if self.wait_time:
+            details += "Wait time: `{}`\n".format(self.wait_time)
+        if self.duration:
+            details += "Duration: `{}`\n".format(self.duration)
+        if self.inputs:
+            details += "Inputs: `{}`\n".format(self.inputs)
+        if self.outputs:
+            details += "Outputs: `{}`\n".format(self.outputs)
+
         return details
 
     def get_title(self) -> str:
         details = "{} ({})".format(self.name, self.uuid) if self.name else self.uuid
-        details += "Status: {}\n".format(self.condition.type)
+        details += " Status: {}\n".format(self.status)
         return details
 
     def get_color(self) -> str:

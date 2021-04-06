@@ -30,7 +30,7 @@ class TestWorkflowV1Iterative(BaseTestCase):
         config_dict = {
             "kind": "iterative",
             "maxIterations": 10,
-            "container": {"image": "my-matrix"},
+            "tuner": {"hubRef": "org/my-matrix-tuner"},
         }
         config = V1Iterative.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
@@ -60,7 +60,7 @@ class TestWorkflowV1Iterative(BaseTestCase):
                 "kind": "iterative",
                 "params": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
                 "seed": 1,
-                "container": {"image": "my-matrix"},
+                "tuner": {"hubRef": "org/my-matrix-tuner"},
             },
             "run": {"kind": V1RunKind.JOB, "container": {"image": "foo/bar"}},
         }

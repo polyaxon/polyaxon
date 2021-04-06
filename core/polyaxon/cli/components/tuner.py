@@ -15,12 +15,14 @@
 # limitations under the License.
 
 import click
+import ujson
 
 from polyaxon.logger import logger
 
 
 @click.group()
 def tuner():
+    logger.info("Creating new suggestions...")
     pass
 
 
@@ -30,15 +32,19 @@ def tuner():
     help="A string representing the matrix configuration for bayesian optimization.",
 )
 @click.option(
-    "--join", help="A string representing the join to fetch configs and metrics."
+    "--configs",
+    help="A string representing the list of configs.",
+)
+@click.option(
+    "--metrics",
+    help="A string representing the list of metrics.",
 )
 @click.option("--iteration", type=int, help="The current iteration.")
-def bayes(matrix, join, iteration):
+def bayes(matrix, configs, metrics, iteration):
     """Create suggestions based on bayesian optimization."""
     from polyaxon.client import RunClient
-    from polyaxon.polyflow import V1Bayes, V1Join
+    from polyaxon.polyflow import V1Bayes
     from polyaxon.polytune.iteration_lineage import (
-        get_iteration_definition,
         handle_iteration,
         handle_iteration_failure,
     )
@@ -47,17 +53,12 @@ def bayes(matrix, join, iteration):
     )
 
     matrix = V1Bayes.read(matrix)
-    join = V1Join.read(join)
+    if configs:
+        configs = ujson.loads(configs)
+    if metrics:
+        metrics = ujson.loads(metrics)
+
     client = RunClient()
-    values = get_iteration_definition(
-        client=client,
-        iteration=iteration,
-        join=join,
-        optimization_metric=matrix.metric.name,
-    )
-    if not values:
-        return
-    run_uuids, configs, metrics = values
 
     retry = 1
     exp = None
@@ -69,9 +70,10 @@ def bayes(matrix, join, iteration):
             ).get_suggestions(configs=configs, metrics=metrics)
             exp = None
             break
-        except Exception as exp:
+        except Exception as e:
             retry += 1
-            logger.warning(exp)
+            logger.warning(e)
+            exp = e
 
     if exp:
         handle_iteration_failure(client=client, exp=exp)
@@ -79,7 +81,6 @@ def bayes(matrix, join, iteration):
 
     handle_iteration(
         client=client,
-        iteration=iteration,
         suggestions=suggestions,
     )
 
@@ -89,18 +90,22 @@ def bayes(matrix, join, iteration):
     "--matrix", help="A string representing the matrix configuration for hyperband."
 )
 @click.option(
-    "--join", help="A string representing the join to fetch configs and metrics."
+    "--configs",
+    help="A string representing the list of configs.",
+)
+@click.option(
+    "--metrics",
+    help="A string representing the list of metrics.",
 )
 @click.option("--iteration", type=int, help="The current hyperband iteration.")
 @click.option(
     "--bracket-iteration", type=int, help="The current hyperband bracket iteration."
 )
-def hyperband(matrix, join, iteration, bracket_iteration):
+def hyperband(matrix, configs, metrics, iteration, bracket_iteration):
     """Create suggestions based on hyperband."""
     from polyaxon.client import RunClient
-    from polyaxon.polyflow import V1Hyperband, V1Join
+    from polyaxon.polyflow import V1Hyperband
     from polyaxon.polytune.iteration_lineage import (
-        get_iteration_definition,
         handle_iteration,
         handle_iteration_failure,
     )
@@ -108,18 +113,12 @@ def hyperband(matrix, join, iteration, bracket_iteration):
 
     matrix = V1Hyperband.read(matrix)
     matrix.set_tuning_params()
-    join = V1Join.read(join)
+    if configs:
+        configs = ujson.loads(configs)
+    if metrics:
+        metrics = ujson.loads(metrics)
+
     client = RunClient()
-    values = get_iteration_definition(
-        client=client,
-        iteration=iteration,
-        join=join,
-        optimization_metric=matrix.metric.name,
-        name="in-iteration-{}-{}".format(iteration, bracket_iteration),
-    )
-    if not values:
-        return
-    run_uuids, configs, metrics = values
 
     retry = 1
     exp = None
@@ -134,9 +133,10 @@ def hyperband(matrix, join, iteration, bracket_iteration):
             )
             exp = None
             break
-        except Exception as exp:
+        except Exception as e:
             retry += 1
-            logger.warning(exp)
+            logger.warning(e)
+            exp = e
 
     if exp:
         handle_iteration_failure(client=client, exp=exp)
@@ -144,10 +144,7 @@ def hyperband(matrix, join, iteration, bracket_iteration):
 
     handle_iteration(
         client=client,
-        iteration=iteration,
         suggestions=suggestions,
-        summary={"bracket_iteration": bracket_iteration},
-        name="out-iteration-{}-{}".format(iteration, bracket_iteration),
     )
 
 
@@ -156,32 +153,31 @@ def hyperband(matrix, join, iteration, bracket_iteration):
     "--matrix", help="A string representing the matrix configuration for hyperopt."
 )
 @click.option(
-    "--join", help="A string representing the join to fetch configs and metrics."
+    "--configs",
+    help="A string representing the list of configs.",
+)
+@click.option(
+    "--metrics",
+    help="A string representing the list of metrics.",
 )
 @click.option("--iteration", type=int, help="The current iteration.")
-def hyperopt(matrix, join, iteration):
+def hyperopt(matrix, configs, metrics, iteration):
     """Create suggestions based on hyperopt."""
     from polyaxon.client import RunClient
-    from polyaxon.polyflow import V1Hyperopt, V1Join
+    from polyaxon.polyflow import V1Hyperopt
     from polyaxon.polytune.iteration_lineage import (
-        get_iteration_definition,
         handle_iteration,
         handle_iteration_failure,
     )
     from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
 
     matrix = V1Hyperopt.read(matrix)
-    join = V1Join.read(join)
+    if configs:
+        configs = ujson.loads(configs)
+    if metrics:
+        metrics = ujson.loads(metrics)
+
     client = RunClient()
-    values = get_iteration_definition(
-        client=client,
-        iteration=iteration,
-        join=join,
-        optimization_metric=matrix.metric.name,
-    )
-    if not values:
-        return
-    run_uuids, configs, metrics = values
 
     retry = 1
     exp = None
@@ -193,9 +189,10 @@ def hyperopt(matrix, join, iteration):
             )
             exp = None
             break
-        except Exception as exp:
+        except Exception as e:
             retry += 1
-            logger.warning(exp)
+            logger.warning(e)
+            exp = e
 
     if exp:
         handle_iteration_failure(client=client, exp=exp)
@@ -203,6 +200,5 @@ def hyperopt(matrix, join, iteration):
 
     handle_iteration(
         client=client,
-        iteration=iteration,
         suggestions=suggestions,
     )

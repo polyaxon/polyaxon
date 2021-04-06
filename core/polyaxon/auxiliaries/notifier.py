@@ -27,12 +27,12 @@ def get_default_notification_container():
         image_pull_policy=PullPolicy.IF_NOT_PRESENT.value,
         command=["polyaxon", "notify"],
         args=[
-            "--kind={{kind}}",
-            "--owner={{owner}}",
-            "--project={{project}}",
-            "--run-uuid={{run_uuid}}",
+            "{{params.backend.as_arg}}",
+            "{{params.owner.as_arg}}",
+            "{{params.project.as_arg}}",
+            "{{params.name.as_arg}}",
+            "{{params.uuid.as_arg}}",
             "{{params.condition.as_arg}}",
-            "{{params.run_name.as_arg}}",
         ],
         resources=k8s_schemas.V1ResourceRequirements(
             limits={"cpu": "0.5", "memory": "100Mi"},

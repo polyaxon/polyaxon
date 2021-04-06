@@ -29,6 +29,6 @@ message Cache {
     // the TTL is caclculated based on the time the run starts
     int32 ttl = 2;
 
-    // Optional Inputs' names to consider for the cache
-    repeated string inputs = 3;
+    // Optional Inputs/Outputs' names to consider for the cache
+    repeated string io = 3;
 }

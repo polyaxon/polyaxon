@@ -37,7 +37,7 @@ def collect_dag_components(dag: V1Dag, path_context: str = None):
     """Collect components that cannot be resolved by the scheduler"""
     for op in dag.operations:
         op_name = op.name
-        if op.has_url_reference or op.has_path_reference:
+        if op.has_url_reference or op.has_path_reference or op.has_hub_reference:
             try:
                 op = collect_references(op, path_context)
             except Exception as e:

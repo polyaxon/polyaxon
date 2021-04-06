@@ -37,6 +37,11 @@ import (
 // swagger:model v1EventChartKind
 type V1EventChartKind string
 
+func NewV1EventChartKind(value V1EventChartKind) *V1EventChartKind {
+	v := value
+	return &v
+}
+
 const (
 
 	// V1EventChartKindPlotly captures enum value "plotly"

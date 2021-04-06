@@ -37,6 +37,11 @@ import (
 // swagger:model DashboardView
 type DashboardView string
 
+func NewDashboardView(value DashboardView) *DashboardView {
+	v := value
+	return &v
+}
+
 const (
 
 	// DashboardViewAny captures enum value "any"

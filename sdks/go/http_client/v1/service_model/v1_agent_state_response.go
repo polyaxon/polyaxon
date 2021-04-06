@@ -35,6 +35,9 @@ type V1AgentStateResponse struct {
 	// compatible updates
 	CompatibleUpdates interface{} `json:"compatible_updates,omitempty"`
 
+	// live state
+	LiveState int32 `json:"live_state,omitempty"`
+
 	// state
 	State *AgentStateResponseAgentState `json:"state,omitempty"`
 

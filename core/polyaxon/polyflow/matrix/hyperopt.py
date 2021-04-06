@@ -18,15 +18,13 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
-from polyaxon.containers.names import MAIN_JOB_CONTAINER
-from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
+from polyaxon.polyflow.matrix.tuner import TunerSchema
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
-from polyaxon.schemas.fields.swagger import SwaggerField
 
 
 class HyperoptSchema(BaseCamelSchema):
@@ -43,11 +41,7 @@ class HyperoptSchema(BaseCamelSchema):
     )
     seed = RefOrObject(fields.Int(allow_none=True))
     concurrency = RefOrObject(fields.Int(allow_none=True))
-    container = SwaggerField(
-        cls=k8s_schemas.V1Container,
-        defaults={"name": MAIN_JOB_CONTAINER},
-        allow_none=True,
-    )
+    tuner = fields.Nested(TunerSchema, allow_none=True)
     early_stopping = fields.List(fields.Nested(EarlyStoppingSchema), allow_none=True)
 
     @staticmethod
@@ -71,6 +65,7 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
         concurrency: int, optional
         num_runs: int, optional
         seed: int, optional
+        tuner: [V1Tuner](/docs/automation/optimization-engine/tuner/), optional
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
 
@@ -85,6 +80,7 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
     >>>   params:
     >>>   numRuns:
     >>>   seed:
+    >>>   tuner:
     >>>   earlyStopping:
     ```
 
@@ -214,15 +210,17 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
     >>>   earlyStopping: ...
     ```
 
-    ### container
+    ### tuner
 
-    The container with the logic for creating new suggestions based on bayesian optimization,
-    users can override this section to provide different resources requirements for the tuner.
+    The tuner reference (w/o component hub reference) to use.
+    The component contains the logic for creating new suggestions based on hyperopt library,
+    users can override this section to provide a different tuner component.
 
     ```yaml
     >>> matrix:
     >>>   kind: hyperopt
-    >>>   container: ...
+    >>>   tuner:
+    >>>     hubRef: 'acme/my-hyperopt-tuner:version'
     ```
     """
 
@@ -233,7 +231,7 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
         "seed",
         "concurrency",
         "earlyStopping",
-        "container",
+        "tuner",
     ]
 
     def create_iteration(self, iteration: int = None) -> int:

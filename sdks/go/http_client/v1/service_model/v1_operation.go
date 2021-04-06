@@ -91,7 +91,7 @@ type V1Operation struct {
 	// Optional plugins to enable
 	Plugins *V1Plugins `json:"plugins,omitempty"`
 
-	// Optional preset to use for running this operation
+	// Optional list of presets to use for running this operation
 	Presets []string `json:"presets"`
 
 	// Optional queue to use for running this operation

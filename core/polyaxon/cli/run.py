@@ -157,7 +157,9 @@ from polyaxon.utils.validation import validate_tags
     type=str,
     help="If provided, Polyaxon will use this git revision "
     "instead of trying to detected and use the latest commit. "
-    "The git revision could be a commit or a branch or any valid tree-ish.",
+    "The git revision could be a commit or a branch or any valid tree-ish. "
+    "This flag is only used when the repo is initialized with: "
+    "`polyaxon init [--git-connection] [--git-url]`",
 )
 @click.option(
     "--ignore-template",
@@ -244,11 +246,11 @@ def run(
         )
 
     git_init = None
-    if git_preset:
+    if git_preset or git_revision:
         # Check that the current path was initialized
         if not GitConfigManager.is_initialized():
             Printer.print_error(
-                "You can't use --git-init, "
+                "You can't use `--git-preset [--git-revision]`, "
                 "the current path is not initialized with a valid git connection or a git url, "
                 "please run `polyaxon init [--git-connection] [--git-url]` "
                 "to set a valid git configuration.",

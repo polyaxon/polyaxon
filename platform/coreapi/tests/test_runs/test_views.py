@@ -27,11 +27,11 @@ from coredb.factories.runs import RunFactory
 from coredb.managers.operations import compile_operation_run
 from coredb.managers.statuses import new_run_status, new_run_stop_status
 from coredb.models.runs import Run
+from polyaxon import live_state
 from polyaxon.api import API_V1
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1RunKind
-from polycommon import live_state
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
 

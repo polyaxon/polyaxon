@@ -190,7 +190,8 @@ class Parser:
             return cls._parse_expression(expression, params, check_operators)
         except jinja2.exceptions.TemplateError as e:
             raise PolyaxonSchemaError(
-                "An problem parsing the template, please make sure your variables are resolvable. "
+                "Encountered a problem parsing the template, "
+                "please make sure your variables are resolvable. "
                 "Error: {}".format(repr(e))
             )
 

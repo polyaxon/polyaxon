@@ -56,7 +56,12 @@ class ProjectDetailSerializer(ProjectSerializer, TagsMixin):
             validated_data=validated_data, tags=instance.tags
         )
 
-        return super().update(instance=instance, validated_data=validated_data)
+        try:
+            return super().update(instance=instance, validated_data=validated_data)
+        except IntegrityError:
+            raise ValidationError(
+                f"A project with name {validated_data['name']} already exists."
+            )
 
 
 class ProjectCreateSerializer(ProjectSerializer):
