@@ -45,7 +45,7 @@ or [contact us](mailto:contact@polyaxon.com).
 Please check our [quick start guide](/docs/intro/quick-start/) to start training your first experiment.
 
 To gain a deeper understanding of how Polyaxon can help you iterate faster with your experiments,
-please take some time to familiarize yourself with the [architecture & experimentation workflow](/docs/core/introduction/concepts/)
+please take some time to familiarize yourself with Polyaxon's [concepts](/docs/intro/concepts/organization-concepts/)
 
 ## Mission
 
