@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: azure/setup-helm@v1
+      - uses: azure/setup-helm@v1.1
       - uses: helm/kind-action@v1.1.0
       - name: generate
         run: |
