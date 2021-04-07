@@ -42,9 +42,10 @@ def get_local_owner(is_cli: bool = False):
         owner = DEFAULT
 
     if not owner:
+        error = "An context owner (user or organization) is required."
         if is_cli:
-            Printer.print_error("An owner is required.")
+            Printer.print_error(error)
             sys.exit(1)
         else:
-            raise PolyaxonClientException("An owner is required.")
+            raise PolyaxonClientException(error)
     return owner

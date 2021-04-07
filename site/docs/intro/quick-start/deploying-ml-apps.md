@@ -187,7 +187,7 @@ Sorting the experiments based on their accuracy metric
 
 Comparing `accuracy` against `n_neighbors`
 
-![visualizing-accuracy-n_neighbors](../../../../content/images/dashboard/runs/visualizing-accuracy-n_neighbors.png)
+![visualizing-accuracy-n_neighbors](../../../../content/images/dashboard/runs/notebook-visualizing-accuracy-n_neighbors.png)
 
 ### Selecting and deploying the best model by accuracy as an Iris Classification App
 

@@ -26,22 +26,22 @@ from polyaxon.utils.formatting import Printer
 
 
 def get_project_error_message(owner, project):
-    message_context = ""
-    if owner:
-        message_context += " <owner: {}>".format(owner)
-    if project:
-        message_context += " <project: {}>".format(project)
-    if message_context:
-        message_context = " Context:{}".format(message_context)
     if not owner or not project:
-        return "Please provide a valid project with owner.{}".format(message_context)
+        return (
+            "Please provide a valid project. "
+            "Context: <owner: {}> - <project: {}>".format(
+                owner or "Missing", project or "Missing"
+            )
+        )
 
 
 def get_project_or_local(project=None, is_cli: bool = False):
     from polyaxon import settings
 
     if not project and not ProjectConfigManager.is_initialized():
-        error_message = "Please provide a valid project or initialize a project in the current path."
+        error_message = (
+            "Please provide a valid project or initialize a project in the current path."
+        )
         if is_cli:
             Printer.print_error(error_message)
             sys.exit(1)
