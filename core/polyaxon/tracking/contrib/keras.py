@@ -25,18 +25,14 @@ from polyaxon.utils.np_utils import sanitize_np_types
 
 try:
     from tensorflow import keras
-    from tensorflow.keras.callbacks import Callback
-    from tensorflow.python.keras.callbacks import ModelCheckpoint
 except ImportError:
     try:
         import keras
-
-        from keras.callbacks import Callback, ModelCheckpoint
     except ImportError:
         raise PolyaxonClientException("Keras is required to use PolyaxonCallback")
 
 
-class PolyaxonCallback(Callback):
+class PolyaxonCallback(keras.callbacks.Callback):
     def __init__(
         self,
         run=None,
