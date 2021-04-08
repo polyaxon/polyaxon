@@ -9234,6 +9234,10 @@
           "title": "Current live state",
           "type": "integer"
         },
+        "merge": {
+          "title": "Optional merge flag",
+          "type": "boolean"
+        },
         "meta_info": {
           "title": "Optional run meta info",
           "type": "object"

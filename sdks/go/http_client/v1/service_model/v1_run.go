@@ -72,6 +72,9 @@ type V1Run struct {
 	// Current live state
 	LiveState int32 `json:"live_state,omitempty"`
 
+	// Optional merge flag
+	Merge bool `json:"merge,omitempty"`
+
 	// Optional run meta info
 	MetaInfo interface{} `json:"meta_info,omitempty"`
 

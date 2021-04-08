@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.7.6
+  version: 1.8.0
 servers:
 - url: /
 security:
@@ -20673,6 +20673,7 @@ components:
             duration: 1
             updated_at: 2000-01-23T04:56:07.000+00:00
             meta_info: '{}'
+            merge: true
             owner: owner
             settings:
               agent:
@@ -20740,6 +20741,7 @@ components:
             duration: 1
             updated_at: 2000-01-23T04:56:07.000+00:00
             meta_info: '{}'
+            merge: true
             owner: owner
             settings:
               agent:
@@ -20809,6 +20811,7 @@ components:
             duration: 1
             updated_at: 2000-01-23T04:56:07.000+00:00
             meta_info: '{}'
+            merge: true
             owner: owner
             settings:
               agent:
@@ -20876,6 +20879,7 @@ components:
             duration: 1
             updated_at: 2000-01-23T04:56:07.000+00:00
             meta_info: '{}'
+            merge: true
             owner: owner
             settings:
               agent:
@@ -20968,6 +20972,7 @@ components:
           duration: 1
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
+          merge: true
           owner: owner
           settings:
             agent:
@@ -21033,6 +21038,7 @@ components:
           duration: 1
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
+          merge: true
           owner: owner
           settings:
             agent:
@@ -23500,6 +23506,7 @@ components:
         duration: 1
         updated_at: 2000-01-23T04:56:07.000+00:00
         meta_info: '{}'
+        merge: true
         owner: owner
         settings:
           agent:
@@ -23664,6 +23671,9 @@ components:
           properties: {}
           title: Optional graph defintion
           type: object
+        merge:
+          title: Optional merge flag
+          type: boolean
       title: Run specification
       type: object
     v1RunArtifact:
@@ -23738,6 +23748,7 @@ components:
           duration: 1
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
+          merge: true
           owner: owner
           settings:
             agent:
@@ -23805,6 +23816,7 @@ components:
           duration: 1
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
+          merge: true
           owner: owner
           settings:
             agent:

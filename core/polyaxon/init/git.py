@@ -37,6 +37,7 @@ from polyaxon.utils.code_reference import (
     git_fetch,
     git_init,
     set_remote,
+    update_submodules,
 )
 from polyaxon.utils.path_utils import check_or_create_path
 
@@ -110,6 +111,8 @@ def clone_and_checkout_git_repo(
     clone_git_repo(repo_path=repo_path, url=clone_url, flags=flags)
     if revision:
         checkout_revision(repo_path=repo_path, revision=revision)
+        if flags and "--recurse-submodules" in flags:
+            update_submodules(repo_path=repo_path)
 
 
 def fetch_git_repo(
@@ -125,6 +128,8 @@ def fetch_git_repo(
     if has_ssh_access():
         env = {"GIT_SSH_COMMAND": get_ssh_cmd()}
     git_fetch(repo_path=repo_path, revision=revision, flags=flags, env=env)
+    if flags and "--recurse-submodules" in flags:
+        update_submodules(repo_path=repo_path)
 
 
 def create_code_repo(

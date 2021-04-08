@@ -25,9 +25,9 @@ def handle_run_created(workers_backend, event: "Event") -> None:  # noqa: F821
     """Handles creation, resume, and restart"""
     eager = False
     if (
-        event.instance and
-        event.instance.status != V1Statuses.RESUMING and
-        (event.instance.meta_info or {}).get("eager")
+        event.instance
+        and event.instance.status != V1Statuses.RESUMING
+        and (event.instance.meta_info or {}).get("eager")
     ):
         eager = True
     if not eager:

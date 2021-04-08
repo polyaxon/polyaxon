@@ -37,5 +37,6 @@ Name | Type | Description | Notes
 **role** | **String** |  | [optional] 
 **settings** | [**V1RunSettings**](V1RunSettings.md) |  | [optional] 
 **graph** | [**Object**](.md) |  | [optional] 
+**merge** | **Boolean** |  | [optional] 
 
 

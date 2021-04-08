@@ -27,6 +27,15 @@ def git_init(repo_path):
     )
 
 
+def update_submodules(repo_path: str):
+    run_command(
+        cmd="git submodule update --init --recursive --rebase --force",
+        data=None,
+        location=repo_path,
+        chw=True,
+    )
+
+
 def git_fetch(repo_path: str, revision: str, flags: List[str], env=None):
     flags = flags or []
     fetch_cmd = "git fetch {} origin".format(" ".join(flags))

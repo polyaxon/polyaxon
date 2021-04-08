@@ -39,9 +39,7 @@ def get_project_or_local(project=None, is_cli: bool = False):
     from polyaxon import settings
 
     if not project and not ProjectConfigManager.is_initialized():
-        error_message = (
-            "Please provide a valid project or initialize a project in the current path."
-        )
+        error_message = "Please provide a valid project or initialize a project in the current path."
         if is_cli:
             Printer.print_error(error_message)
             sys.exit(1)

@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.7.6",
+    "version": "1.8.0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -20537,6 +20537,10 @@
         "graph": {
           "type": "object",
           "title": "Optional graph defintion"
+        },
+        "merge": {
+          "type": "boolean",
+          "title": "Optional merge flag"
         }
       },
       "title": "Run specification"

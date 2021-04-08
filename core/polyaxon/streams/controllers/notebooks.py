@@ -17,11 +17,12 @@
 import os
 
 import nbformat
+
 from nbconvert import HTMLExporter
 
 
 def render_notebook(archived_path: str, check_cache=True):
-    html_path = archived_path.split('.ipynb')[0] + '.html'
+    html_path = archived_path.split(".ipynb")[0] + ".html"
     if os.path.exists(html_path):
         if check_cache:
             # file already exists

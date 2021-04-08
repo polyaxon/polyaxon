@@ -1,6 +1,6 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= polyaxon/polyaxon-operator:1.7.6
+IMG ?= polyaxon/polyaxon-operator:1.8.0
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= "crd:crdVersions=v1,trivialVersions=false"
 

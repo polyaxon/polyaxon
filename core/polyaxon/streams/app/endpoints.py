@@ -314,7 +314,9 @@ async def download_artifact(request: Request) -> Response:
         )
     if render and not filepath.endswith(".ipynb"):
         return Response(
-            content="Artifact with 'filepath={}' does not have a valid extension.".format(filepath),
+            content="Artifact with 'filepath={}' does not have a valid extension.".format(
+                filepath
+            ),
             status_code=status.HTTP_400_BAD_REQUEST,
         )
     subpath = "{}/{}".format(run_uuid, filepath).rstrip("/")

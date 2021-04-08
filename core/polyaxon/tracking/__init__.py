@@ -554,15 +554,15 @@ log_artifact.__doc__ = Run.log_artifact.__doc__
 
 
 def log_dataframe(
-    path: str,
-    name: str = None,
-    content_type: str = None,
+    df,
+    name: str,
+    content_type: str = V1ArtifactKind.CSV,
     step: int = None,
     timestamp: datetime = None,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_dataframe(
-        path=path,
+        df=df,
         name=name,
         content_type=content_type,
         step=step,

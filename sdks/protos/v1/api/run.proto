@@ -183,6 +183,9 @@ message Run {
 
     // Optional graph defintion
     google.protobuf.Struct graph = 34;
+
+    // Optional merge flag
+    bool merge = 35;
 }
 
 // Operation creation
