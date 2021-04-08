@@ -547,7 +547,7 @@ def figure_to_image(figure, close=True):
     if close:
         try:
             plt.close(figure.number)
-        except:
+        except Exception:
             plt.close(figure)
     return image_chw
 

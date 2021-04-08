@@ -27,7 +27,7 @@ CACHE_ERROR = (
 def get_local_project():
     try:
         return ProjectConfigManager.get_config()
-    except:
+    except Exception:
         Printer.print_error(CACHE_ERROR, sys_exit=True)
 
 

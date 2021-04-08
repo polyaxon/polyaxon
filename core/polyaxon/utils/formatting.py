@@ -49,12 +49,12 @@ def get_meta_response(response):
     if response.next:
         try:
             results["next"] = get_pagination(response.next)
-        except:  # noqa
+        except Exception:
             results["next"] = response.next
     if response.previous:
         try:
             results["previous"] = get_pagination(response.previous)
-        except:  # noqa
+        except Exception:
             results["previous"] = response.previous
     if response.count:
         results["count"] = response.count
