@@ -119,7 +119,7 @@ we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can either start new sessions using:
 
  * `polyaxon run -f my-custom-tensorboard.yaml`
- * `polyaxon run --hub https://path/to/my-custom-tensorboard.yaml` 
+ * `polyaxon run --url https://path/to/my-custom-tensorboard.yaml` 
 
 On Polyaxon Cloud or Polyaxon EE, you just need to add a new [component hub](/docs/management/component-hub/).
 The end users will need to run with `org-name/tensorboard` instead of `tensorboard`:

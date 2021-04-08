@@ -1,0 +1,18 @@
+version: 1.1
+kind: component
+name: simple-experiment
+description: Notifies slack whenever the experiment reaches a final status
+tags: [examples]
+hooks:
+- trigger: done
+  hubRef: slack
+  connection: slack-notification  # You need to set a slack connection first
+run:
+  kind: job
+  init:
+  - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
+  container:
+    image: polyaxon/polyaxon-quick-start
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
+    command: [python3, model.py]
+    args: ["--epochs=1"]

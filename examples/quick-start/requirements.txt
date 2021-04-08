@@ -1,0 +1,3 @@
+keras==2.4.3
+polyaxon==1.7.5
+

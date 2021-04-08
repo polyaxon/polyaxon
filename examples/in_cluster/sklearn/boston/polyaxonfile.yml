@@ -16,6 +16,6 @@ run:
     command: ["python", "-u", "model.py"]
     args: [
       "--n_estimators={{ n_estimators }}",
-      "--max_features={{ max_features }}",
+      "--max_depth={{ max_depth }}",
       "--min_samples_split={{ min_samples_split }}",
     ]

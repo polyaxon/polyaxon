@@ -1,0 +1,41 @@
+version: 1.1
+kind: component
+name: build-and-run
+description: A recipe that shows how to achieve similar behavior as in v0 using upload, build, and run
+run:
+  kind: dag
+  operations:
+  - name: build
+    hubRef: kaniko  # or dockerizer
+    params:
+      destination:
+        connection: private_docker_connection  # A registry connection is required
+        value: polyaxon-quick-start:{{ globals.uuid }}
+    runPatch:
+      init:
+      - dockerfile:
+          image: "tensorflow/tensorflow:2.2.0"
+          run:
+          - pip3 install keras
+          - 'pip3 install --no-cache-dir -U polyaxon'
+          langEnv: 'en_US.UTF-8'
+  - name: experiment
+    dependencies: [build]
+    params:
+      docker_image:
+        ref: ops.build
+        value: outputs.destination
+        contextOnly: true
+      pipeline_uuid:
+        ref: dag
+        value: "{{globals.uuid}}"
+        contextOnly: true
+    component:
+      run:
+        kind: job
+        init:
+        - artifacts: {dirs: [["{{ pipeline_uuid }}", "{{ globals.run_artifacts_path }}"]]}
+        container:
+          image: "{{ docker_image }}"
+          workingDir: "{{ globals.run_artifacts_path }}/uploads"
+          command: [python3, model.py]

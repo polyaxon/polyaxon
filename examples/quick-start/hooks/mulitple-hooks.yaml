@@ -1,14 +1,17 @@
 version: 1.1
 kind: component
 name: simple-experiment
-description: Runs a tensorboard as a post-success hook
+description: Runs a tensorboard as a post-success hook and notifies slack
 tags: [examples]
 hooks:
 - trigger: succeeded
-  hubRef: acme/tensorboard
-  connection: slack-notification
+  hubRef: tensorboard
+  disableDefaults: true
   params:
     uuid: {value: "{{ globals.uuid }}"}
+- trigger: succeeded
+  hubRef: slack
+  connection: slack-notification  # You need to set a slack connection first
 run:
   kind: job
   init:

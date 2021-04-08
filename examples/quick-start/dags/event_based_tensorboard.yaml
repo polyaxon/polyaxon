@@ -13,7 +13,7 @@ run:
       epochs:
         value: 10
   - name: tensorboard
-    hubRef: acme/tensorboard
+    hubRef: tensorboard
     termination:
       timeout: 3600
     params:

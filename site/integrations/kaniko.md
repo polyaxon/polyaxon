@@ -181,7 +181,7 @@ we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can build container using:
 
  * `polyaxon run -f my-custom-kaniko.yaml`
- * `polyaxon run --hub https://path/to/my-custom-kaniko.yaml` 
+ * `polyaxon run --url https://path/to/my-custom-kaniko.yaml` 
 
 On Polyaxon Cloud or Polyaxon EE, you just need to add a new [component hub](/docs/management/component-hub/).
 The end users will need to run with `org-name/kaniko` instead of `kaniko`:

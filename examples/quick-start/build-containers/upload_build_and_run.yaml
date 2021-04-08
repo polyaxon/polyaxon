@@ -1,0 +1,35 @@
+version: 1.1
+kind: component
+name: build-and-run
+description: A recipe that shows how to achieve similar behavior as in v0 using upload, build, and run
+run:
+  kind: dag
+  operations:
+  - name: build
+    hubRef: kaniko
+    params:
+      destination:
+        connection: private_docker_connection  # A registry connection is required
+        value: polyaxon-quick-start:{{ globals.uuid }}
+      pipeline_uuid:
+        ref: dag
+        value: "{{globals.uuid}}"
+        contextOnly: true
+      context:
+        value: "{{ globals.artifacts_path }}/{{ pipeline_uuid }}/uploads"
+    runPatch:
+      init:
+      - artifacts: {dirs: ["{{ pipeline_uuid }}"]}
+  - name: experiment
+    dependencies: [build]
+    params:
+      docker_image:
+        ref: ops.build
+        value: outputs.destination
+        contextOnly: true
+    component:
+      run:
+        kind: job
+        container:
+          image: "{{ docker_image }}"
+          command: [python3, model.py]
