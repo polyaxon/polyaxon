@@ -30,10 +30,6 @@ try:
 except ImportError:
     pass
 
-try:
-    from tensorflow.estimator import LoggingTensorHookSessionRunHook  # noqa
-except ImportError:
-    pass
 
 if not SessionRunHook:
     raise PolyaxonClientException("tensorflow is required to use PolyaxonCallback")

@@ -35,7 +35,6 @@ from polyaxon.env_vars.getters import get_model_info
 from polyaxon.env_vars.getters.user import get_local_owner
 from polyaxon.exceptions import PolyaxonException
 from polyaxon.logger import clean_outputs
-from polyaxon.polyaxonfile import get_specification
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,

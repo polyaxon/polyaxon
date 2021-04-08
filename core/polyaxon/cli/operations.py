@@ -1236,6 +1236,6 @@ def sync(uid, all_runs, no_artifacts, clean, offline_path):
         _sync(uid)
     else:
         Printer.print_error(
-            f"Please provide a run uuid or pass the flag `-a/--all` to sync runs."
+            "Please provide a run uuid or pass the flag `-a/--all` to sync runs."
         )
         sys.exit(1)

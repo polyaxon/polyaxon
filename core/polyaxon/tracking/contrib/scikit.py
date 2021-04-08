@@ -20,7 +20,6 @@ from polyaxon.utils.np_utils import sanitize_dict
 
 try:
     from sklearn.base import is_classifier, is_regressor
-    from sklearn.cluster import KMeans
     from sklearn.metrics import (
         accuracy_score,
         explained_variance_score,
