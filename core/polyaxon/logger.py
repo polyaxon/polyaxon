@@ -22,11 +22,6 @@ from functools import wraps
 
 from polyaxon.env_vars.keys import POLYAXON_KEYS_DEBUG, POLYAXON_KEYS_LOG_LEVEL
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-
 
 logger = logging.getLogger("polyaxon.cli")
 
@@ -54,7 +49,7 @@ def configure_logger(verbose):
         if settings.CLIENT_CONFIG.log_level:
             try:
                 log_level = logging.getLevelName(settings.CLIENT_CONFIG.log_level)
-            except:  # noqa
+            except Exception:
                 pass
     logging.basicConfig(format="%(message)s", level=log_level, stream=sys.stdout)
 
