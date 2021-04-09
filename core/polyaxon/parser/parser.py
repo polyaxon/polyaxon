@@ -794,7 +794,7 @@ def get_image_init(
         if not isinstance(x, Mapping):
             try:
                 x = convert_to_dict(x, key)
-            except Exception:
+            except Exception:  # noqa
                 return x
 
         if "name" not in x:

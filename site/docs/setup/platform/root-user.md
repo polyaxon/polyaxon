@@ -18,7 +18,7 @@ You can set a password or a random password will be generated that you can retri
 ```yaml
 user:
   username: "rootuser"
-  email: "root@polyaxon.local"
+  email: "rootuser@polyaxon.local"
   password: "rootpassword"
 ```
 

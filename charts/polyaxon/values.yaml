@@ -532,7 +532,7 @@ imagePullSecrets: []
 # Initial admin user to create
 user:
   username: "rootuser"
-  email: "root@polyaxon.local"
+  email: "rootuser@polyaxon.local"
   password: "rootpassword"
 
 # Time zone

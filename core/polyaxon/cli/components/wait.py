@@ -42,7 +42,7 @@ def wait(uuid: str, kind: str, max_retries: int):
     while retry < max_retries:
         try:
             k8s_operation = spawner.get(run_uuid=uuid, run_kind=kind)
-        except Exception:
+        except Exception:  # noqa
             k8s_operation = None
         if k8s_operation:
             retry += 1

@@ -32,5 +32,5 @@ def urlsafe_b64decode(b64string):
     payload = base64.urlsafe_b64decode(padded)
     try:
         return payload.decode("utf-8")
-    except Exception:
+    except Exception:  # noqa
         return payload

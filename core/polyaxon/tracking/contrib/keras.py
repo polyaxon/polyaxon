@@ -93,12 +93,12 @@ class PolyaxonCallback(Callback):
 
         try:
             params["num_layers"] = len(self.model.layers)
-        except Exception:
+        except Exception:  # noqa
             pass
 
         try:
             params["optimizer_name"] = type(self.model.optimizer).__name__
-        except Exception:
+        except Exception:  # noqa
             pass
 
         try:
@@ -108,7 +108,7 @@ class PolyaxonCallback(Callback):
                     if type(self.model.optimizer.lr) is float
                     else keras.backend.eval(self.model.optimizer.lr)
                 )
-        except Exception:
+        except Exception:  # noqa
             pass
 
         try:
@@ -118,7 +118,7 @@ class PolyaxonCallback(Callback):
                     if type(self.model.optimizer.epsilon) is float
                     else keras.backend.eval(self.model.optimizer.epsilon)
                 )
-        except Exception:
+        except Exception:  # noqa
             pass
 
         if params:
@@ -132,7 +132,7 @@ class PolyaxonCallback(Callback):
             with open(rel_path, "w") as f:
                 f.write(summary)
             self.run.log_file_ref(path=rel_path)
-        except Exception:
+        except Exception:  # noqa
             pass
 
     @client_handler(check_no_op=True)

@@ -38,7 +38,7 @@ class PolyaxonCallback(Callback):
             self.plx_run.log_inputs(
                 n_epoch=str(self.learn.n_epoch), model_class=str(type(self.learn.model))
             )
-        except Exception:
+        except Exception:  # noqa
             print("Did not log all properties to Polyaxon.")
 
         try:
@@ -46,7 +46,7 @@ class PolyaxonCallback(Callback):
             with open(model_summary_path, "w") as g:
                 g.write(repr(self.learn.model))
             self.plx_run.log_file_ref(path=model_summary_path, name="model_summary")
-        except Exception:
+        except Exception:  # noqa
             print(
                 "Did not log model summary. "
                 "Check if your model is PyTorch model and that Polyaxon has correctly initialized "

@@ -61,7 +61,7 @@ class BaseAgent:
     def get_healthz_config(cls):
         try:
             return ChecksConfig.read(cls.HEALTH_FILE, config_type=".json")
-        except Exception:
+        except Exception:  # noqa
             return
 
     @classmethod

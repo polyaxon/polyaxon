@@ -30,7 +30,6 @@ try:
 except ImportError:
     pass
 
-
 if not SessionRunHook:
     raise PolyaxonClientException("tensorflow is required to use PolyaxonCallback")
 
