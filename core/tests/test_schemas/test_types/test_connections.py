@@ -16,8 +16,6 @@
 
 import pytest
 
-from flaky import flaky
-
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
     V1BucketConnection,

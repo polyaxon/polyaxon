@@ -16,9 +16,8 @@
 
 import polyaxon_sdk
 
-from marshmallow import fields, validate
+from marshmallow import fields
 
-from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow.params import ParamSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject

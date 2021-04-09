@@ -23,11 +23,7 @@ from polyaxon.exceptions import PolyaxonClientException
 
 try:
     from pytorch_lightning.loggers.base import LightningLoggerBase, rank_zero_experiment
-    from pytorch_lightning.utilities import (
-        _module_available,
-        rank_zero_only,
-        rank_zero_warn,
-    )
+    from pytorch_lightning.utilities import rank_zero_only
 except ImportError:
     raise PolyaxonClientException(
         "PytorchLightning is required to use PolyaxonCallback"

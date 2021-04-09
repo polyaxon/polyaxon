@@ -14,9 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import math
-
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 from polyaxon.polyflow import V1Hyperband, V1Optimization, V1RandomSearch
 from polyaxon.polytune.search_managers.base import BaseManager
