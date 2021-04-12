@@ -93,7 +93,7 @@ only these two roles have access to the organization level settings.
 
 ## Managing users and permissions
 
-Users with the `owner` can promote, demote, and delete all users up to the `owner` level.
+Users with the `owner` role can promote, demote, and delete all users up to the `owner` level.
 
 Users with the `manager` role can manage all users except users with the `owner` role.
 

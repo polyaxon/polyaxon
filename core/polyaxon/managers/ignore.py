@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import io
 import os
 import re
 
@@ -22,7 +22,7 @@ from pathlib import PurePath
 
 from polyaxon.logger import logger
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.utils import constants
+from polyaxon.utils import cli_constants
 from polyaxon.utils.path_utils import unix_style_path
 
 
@@ -126,7 +126,7 @@ class IgnoreConfigManager(BaseConfigManager):
 
     @classmethod
     def init_config(cls):
-        cls.set_config(constants.DEFAULT_IGNORE_LIST, init=True)
+        cls.set_config(cli_constants.DEFAULT_IGNORE_LIST, init=True)
 
     @classmethod
     def find_matching(cls, path, patterns):
@@ -136,9 +136,10 @@ class IgnoreConfigManager(BaseConfigManager):
                 yield pattern
 
     @classmethod
-    def is_ignored(cls, path, patterns):
+    def is_ignored(cls, path, patterns, is_dir: bool = False):
         """Check whether a path is ignored. For directories, include a trailing slash."""
         status = None
+        path = "{}/".format(path.rstrip("/")) if is_dir else path
         for pattern in cls.find_matching(path, patterns):
             status = pattern.is_exclude
         return status
@@ -162,7 +163,8 @@ class IgnoreConfigManager(BaseConfigManager):
         config_filepath = cls.get_config_filepath()
 
         if not os.path.isfile(config_filepath):
-            return []
+            # Return default patterns
+            return cls.get_patterns(io.StringIO(cli_constants.DEFAULT_IGNORE_LIST))
 
         with open(config_filepath) as ignore_file:
             return cls.get_patterns(ignore_file)
@@ -176,7 +178,7 @@ class IgnoreConfigManager(BaseConfigManager):
         for root, dirs, files in os.walk(path):
             logger.debug("Root:%s, Dirs:%s", root, dirs)
 
-            if cls.is_ignored(unix_style_path(root), config):
+            if cls.is_ignored(unix_style_path(root), config, is_dir=True):
                 dirs[:] = []
                 logger.debug("Ignoring directory : %s", root)
                 continue

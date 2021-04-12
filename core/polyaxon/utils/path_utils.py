@@ -25,7 +25,7 @@ from typing import List
 
 from polyaxon.exceptions import PolyaxonPathException
 from polyaxon.logger import logger
-from polyaxon.utils import constants
+from polyaxon.utils import cli_constants
 from polyaxon.utils.list_utils import to_list
 
 
@@ -154,11 +154,11 @@ def unix_style_path(path):
 
 
 def create_init_file():
-    if os.path.exists(constants.INIT_FILE_PATH):
+    if os.path.exists(cli_constants.INIT_FILE_PATH):
         return False
 
-    with open(constants.INIT_FILE_PATH, "w") as f:
-        f.write(constants.INIT_FILE_TEMPLATE)
+    with open(cli_constants.INIT_FILE_PATH, "w") as f:
+        f.write(cli_constants.INIT_FILE_TEMPLATE)
 
     return True
 

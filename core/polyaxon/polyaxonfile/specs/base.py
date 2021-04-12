@@ -53,7 +53,7 @@ class BaseSpecification(Sections):
                 "The Polyaxonfile's version specified is not supported by your current CLI."
                 "Your CLI support Polyaxonfile versions between: {} <= v <= {}."
                 "You can run `polyaxon upgrade` and "
-                "check documentation for the specification.".format(
+                "check documentation for the specification".format(
                     cls.MIN_VERSION, cls.MAX_VERSION
                 )
             )

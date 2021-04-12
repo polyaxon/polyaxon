@@ -13,12 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import io
 import pytest
 
 from unittest.mock import mock_open, patch
 
 from polyaxon.managers.ignore import IgnoreConfigManager
+from polyaxon.utils import cli_constants
 from tests.utils import BaseTestCase
 
 
@@ -130,7 +131,12 @@ class TestIgnoreConfigManager(BaseTestCase):
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=False)
     def test_returns_two_empty_lists_if_file_is_not_present(self, _):
         patterns = IgnoreConfigManager.get_config()
-        self.assertEqual(patterns, [])
+        self.assertEqual(
+            patterns,
+            IgnoreConfigManager.get_patterns(
+                io.StringIO(cli_constants.DEFAULT_IGNORE_LIST)
+            ),
+        )
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=mock_open)

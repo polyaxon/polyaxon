@@ -19,7 +19,7 @@ import sys
 from polyaxon_sdk import V1Project
 
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.utils import constants
+from polyaxon.utils import cli_constants
 from polyaxon.utils.formatting import Printer
 
 
@@ -37,7 +37,7 @@ class ProjectConfigManager(BaseConfigManager):
         if not project:
             Printer.print_error(
                 "No project was found, please initialize a project."
-                " {}".format(constants.INIT_COMMAND)
+                " {}".format(cli_constants.INIT_COMMAND)
             )
             sys.exit(1)
 

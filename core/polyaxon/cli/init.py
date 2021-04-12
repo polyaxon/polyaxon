@@ -32,16 +32,16 @@ from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.schemas.types import V1GitType
-from polyaxon.utils import constants, indentation
+from polyaxon.utils import cli_constants, indentation
 from polyaxon.utils.cache import get_local_project
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.path_utils import create_init_file
 
 
 def create_polyaxonfile():
-    if os.path.isfile(constants.INIT_FILE_PATH):
+    if os.path.isfile(cli_constants.INIT_FILE_PATH):
         try:
-            _ = check_polyaxonfile(constants.INIT_FILE_PATH)  # noqa
+            _ = check_polyaxonfile(cli_constants.INIT_FILE_PATH)  # noqa
             Printer.print_success(
                 "A valid polyaxonfile.yaml was found in this project."
             )
@@ -51,7 +51,7 @@ def create_polyaxonfile():
     else:
         create_init_file()
         # if we are here the file was not created
-        if not os.path.isfile(constants.INIT_FILE_PATH):
+        if not os.path.isfile(cli_constants.INIT_FILE_PATH):
             Printer.print_error(
                 "Something went wrong, init command did not create a file.\n"
                 "Possible reasons: you don't have enough rights to create the file."
@@ -59,7 +59,7 @@ def create_polyaxonfile():
             sys.exit(1)
 
         Printer.print_success(
-            "{} was created successfully.".format(constants.INIT_FILE_PATH)
+            "{} was created successfully.".format(cli_constants.INIT_FILE_PATH)
         )
 
 

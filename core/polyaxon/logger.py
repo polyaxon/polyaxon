@@ -22,7 +22,6 @@ from functools import wraps
 
 from polyaxon.env_vars.keys import POLYAXON_KEYS_DEBUG, POLYAXON_KEYS_LOG_LEVEL
 
-
 logger = logging.getLogger("polyaxon.cli")
 
 

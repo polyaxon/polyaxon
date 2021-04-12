@@ -18,7 +18,7 @@ import sys
 
 from contextlib import contextmanager
 
-from polyaxon.utils.constants import NEWLINES
+from polyaxon.utils.cli_constants import NEWLINES
 
 INDENT_CHAR = " "
 INDENT_STRINGS = []

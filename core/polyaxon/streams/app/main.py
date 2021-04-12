@@ -57,6 +57,10 @@ URLS_RUNS_ARTIFACT = (
     STREAMS_URL
     + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/artifact"
 )
+URLS_RUNS_EMBEDDED_ARTIFACT = (
+    STREAMS_URL
+    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/embedded_artifact"
+)
 URLS_RUNS_ARTIFACTS = (
     STREAMS_URL
     + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/artifacts"
@@ -97,6 +101,11 @@ routes = [
         URLS_RUNS_ARTIFACT, endpoints.handle_artifact,
         name="download_artifact",
         methods=["GET", "DELETE", "POST"]
+    ),
+    Route(
+        URLS_RUNS_EMBEDDED_ARTIFACT, endpoints.handle_artifact,
+        name="download_embedded_artifact",
+        methods=["GET"]
     ),
     Route(
         URLS_RUNS_ARTIFACTS, endpoints.handle_artifacts,
