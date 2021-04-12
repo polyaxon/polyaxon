@@ -9,6 +9,8 @@
       link: /docs/management/organizations/
     - title: Organizations
       link: /docs/management/organizations/general/
+    - title: Members
+      link: /docs/management/organizations/members/
     - title: Teams
       link: /docs/management/organizations/teams/
     - title: Agents
@@ -23,8 +25,8 @@
       link: /docs/management/organizations/dashboards/
     - title: Connections
       link: /docs/management/organizations/connections/
-    - title: Users
-      link: /docs/management/organizations/users/
+    - title: User Profile
+      link: /docs/management/organizations/user_profile/
     - title: Anaylitcs
       link: /docs/management/organizations/analytics/
     - title: Activities

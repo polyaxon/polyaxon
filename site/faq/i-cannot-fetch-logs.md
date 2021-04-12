@@ -22,8 +22,6 @@ you should definitely look at the other persistence strategies.
 
 When the user uses a local path to store logs, a couple of things could happen:
  * The host node might be deleted, or replaced, and all logs will be deleted as well.
- * If the user scales the platform, the API, scheduler, and other components might be deployed on different nodes, which means that only some of these components will be able to access the logs.
- * If the API is replicated on different nodes the same thing could happen as well.
  * After an upgrade, all your components might be scheduled on a different node.
 
 Polyaxon provides several options to make robust persistence of your logs.
