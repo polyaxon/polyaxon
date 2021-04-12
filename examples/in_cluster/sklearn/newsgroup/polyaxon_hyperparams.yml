@@ -16,5 +16,5 @@ matrix:
       value: [1.0, 0.5, 0.1, 0.01]
     max_df:
       kind: choice
-      value: 0.5, 0.75, 1.0]
+      value: [0.5, 0.75, 1.0]
 pathRef: ./polyaxonfile.yml
