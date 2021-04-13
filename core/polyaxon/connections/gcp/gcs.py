@@ -124,8 +124,6 @@ class GCSService(GCPService, StoreMixin):
         if not bucket_name:
             bucket_name, key = self.parse_gcs_url(key)
 
-        bucket = self.get_bucket(bucket_name)
-
         if key and not key.endswith("/"):
             key += "/"
 
@@ -138,7 +136,7 @@ class GCSService(GCPService, StoreMixin):
 
         def get_iterator():
             return self.connection.list_blobs(
-                bucket, prefix=prefix, delimiter=delimiter
+                bucket_name, prefix=prefix, delimiter=delimiter
             )
 
         def get_blobs(_blobs):
