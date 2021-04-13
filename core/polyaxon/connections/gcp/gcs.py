@@ -348,7 +348,8 @@ class GCSService(GCPService, StoreMixin):
                 workers=workers,
                 pool=pool,
                 future_results=future_results,
-                fn=blob.delete,
+                fn=_delete_blob,
+                blob=blob,
             )
 
         if workers:
@@ -363,3 +364,10 @@ class GCSService(GCPService, StoreMixin):
             return bucket.delete_blob(key)
         except (NotFound, GoogleAPIError) as e:
             raise PolyaxonStoresException("Connection error: %s" % e) from e
+
+
+def _delete_blob(blob):
+    try:
+        return blob.delete()
+    except (NotFound, GoogleAPIError) as e:
+        raise PolyaxonStoresException("Connection error: %s" % e) from e
