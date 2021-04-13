@@ -32,11 +32,11 @@ If you are on Polyaxon Cloud you need to set a correct payment method:
 
 ## Set or update you plan
 
-The first time, you will need to click `Confirm Payment` button, you will be prompted to configure (set number of seats, cycle, ...) and confirm your plan:
+The first time configure your plan, you will need to click `Confirm Payment` button, you will be prompted to configure (set number of seats, cycle, ...) and confirm your plan:
 
 ![billing-payment](../../../../content/images/dashboard/billing/billing-payment.png)
 
-After payment the status will be active, and at any given time you can update your organization plan to:
+After that, the payment status will be active, and at any given time you can update your plan to:
 
  * Change the billing cycle
  * Add new seats
