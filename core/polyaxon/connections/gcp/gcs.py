@@ -144,8 +144,8 @@ class GCSService(GCPService, StoreMixin):
             for blob in _blobs:
                 name = blob.name[len(key) :]
                 size = blob.size
-                if all([name, size]):
-                    list_blobs.append((name, blob.size))
+                if name and size is not None:
+                    list_blobs.append((name, size))
             return list_blobs
 
         def get_prefixes(_prefixes):
