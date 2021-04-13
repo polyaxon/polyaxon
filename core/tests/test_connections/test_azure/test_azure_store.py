@@ -86,23 +86,29 @@ class TestAzureStore(BaseTestCase):
         dir_prefix = BlobPrefix()
         dir_prefix.name = base_path + "dir"
 
-        blob_props = BlobProperties()
-        blob_props.size = 42
-        blob_props.name = base_path + "file"
+        blob1_props = BlobProperties()
+        blob1_props.size = 42
+        blob1_props.name = base_path + "file1"
+
+        blob2_props = BlobProperties()
+        blob2_props.size = 0
+        blob2_props.name = base_path + "file2"
 
         client.get_container_client().walk_blobs.return_value = MockBlobList(
-            [dir_prefix, blob_props]
+            [dir_prefix, blob1_props, blob2_props]
         )
 
         store = AzureBlobStoreService()
         store.set_connection(connection=client)
         key_path = self.wasbs_base + base_path
         results = store.list(key=key_path)
-        assert len(results["blobs"]) == 1
+        assert len(results["blobs"]) == 2
         assert len(results["prefixes"]) == 1
         assert results["prefixes"][0] == "dir"
-        assert results["blobs"][0][0] == "file"
+        assert results["blobs"][0][0] == "file1"
         assert results["blobs"][0][1] == 42
+        assert results["blobs"][1][0] == "file2"
+        assert results["blobs"][1][1] == 0
 
     @mock.patch(AZURE_MODULE.format("BlobServiceClient"))
     def test_upload_file(self, client):

@@ -948,7 +948,8 @@ def artifacts(ctx, project, uid, path, path_to, no_untar):
 @click.option(
     "--path-to",
     type=str,
-    help="The destination where to upload the artifacts. If run's root artifacts path will be used.",
+    help="The destination where to upload the artifacts. "
+         "If the path is '/', the root artifacts path of the run will be used.",
 )
 @click.option(
     "--is-file",

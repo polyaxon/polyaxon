@@ -159,9 +159,13 @@ class TestGCSStore(BaseTestCase):
         blob_root_path = "project_path/experiment_id/"
         gcs_url = "gs://bucket/" + blob_root_path
 
-        obj_mock = mock.Mock()
-        file_path = "fileA"
-        obj_mock.configure_mock(name=blob_root_path + file_path, size=1)
+        obj1_mock = mock.Mock()
+        file1_path = "fileA"
+        obj1_mock.configure_mock(name=blob_root_path + file1_path, size=1)
+
+        obj2_mock = mock.Mock()
+        file2_path = "fileB"
+        obj2_mock.configure_mock(name=blob_root_path + file2_path, size=0)
 
         dir_mock = mock.Mock()
         dirname = "model1"
@@ -169,7 +173,7 @@ class TestGCSStore(BaseTestCase):
 
         mock_results = mock.MagicMock()
         mock_results.configure_mock(pages=[dir_mock])
-        mock_results.__iter__.return_value = [obj_mock]
+        mock_results.__iter__.return_value = [obj1_mock, obj2_mock]
 
         client.return_value.get_bucket.return_value.list_blobs.return_value = (
             mock_results
@@ -180,10 +184,14 @@ class TestGCSStore(BaseTestCase):
 
         blobs = results["blobs"]
         prefixes = results["prefixes"]
-        assert len(blobs) == 1
+        assert len(blobs) == 2
         assert len(prefixes) == 1
-        assert blobs[0][0] == file_path
-        assert blobs[0][1] == obj_mock.size
+        assert blobs[0][0] == file1_path
+        assert blobs[0][1] == obj1_mock.size
+        assert blobs[0][1] == 1
+        assert blobs[1][0] == file2_path
+        assert blobs[1][1] == obj2_mock.size
+        assert blobs[1][1] == 0
         assert prefixes[0] == dirname
 
     @mock.patch(GCS_MODULE.format("get_gc_credentials"))
