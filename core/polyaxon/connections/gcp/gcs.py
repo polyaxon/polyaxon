@@ -339,29 +339,16 @@ class GCSService(GCPService, StoreMixin):
         if not bucket_name:
             bucket_name, key = self.parse_gcs_url(key)
 
-        results = self.list(bucket_name=bucket_name, key=key, delimiter="/")
-        if not any([results["prefixes"], results["blobs"]]):
-            self.delete_file(key=key, bucket_name=bucket_name)
-
-        # Delete directories
-        for prefix in sorted(results["prefixes"]):
-            prefix = os.path.join(key, prefix)
-            # Download files under
-            self.delete(key=prefix, bucket_name=bucket_name)
-
+        blobs = self.connection.list_blobs(bucket_name, prefix=key)
         pool, future_results = self.init_pool(workers)
 
         # Delete files
-        for file_key in results["blobs"]:
-            file_key = file_key[0]
-            file_key = os.path.join(key, file_key)
+        for blob in blobs:
             future_results = self.submit_pool(
                 workers=workers,
                 pool=pool,
                 future_results=future_results,
-                fn=self.delete_file,
-                key=file_key,
-                bucket_name=bucket_name,
+                fn=blob.delete,
             )
 
         if workers:
