@@ -137,7 +137,9 @@ class GCSService(GCPService, StoreMixin):
             prefix += "/"
 
         def get_iterator():
-            return bucket.list_blobs(prefix=prefix, delimiter=delimiter)
+            return self.connection.list_blobs(
+                bucket, prefix=prefix, delimiter=delimiter
+            )
 
         def get_blobs(_blobs):
             list_blobs = []
