@@ -1,6 +1,6 @@
 name: Polyaxon Core
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   core:

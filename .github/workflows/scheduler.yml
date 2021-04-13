@@ -1,6 +1,6 @@
 name: Polyaxon scheduler
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   scheduler:

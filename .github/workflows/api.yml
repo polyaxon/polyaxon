@@ -1,6 +1,6 @@
 name: Polyaxon Api
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   api:
