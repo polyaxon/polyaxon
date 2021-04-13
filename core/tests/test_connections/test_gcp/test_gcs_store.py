@@ -148,9 +148,6 @@ class TestGCSStore(BaseTestCase):
     def test_list_empty(self, client, _):
         gcs_url = "gs://bucket/path/to/blob"
         store = GCSService()
-        client.return_value.get_bucket.return_value.list_blobs.return_value = (
-            mock.MagicMock()
-        )
         assert store.list(gcs_url) == {"blobs": [], "prefixes": []}
 
     @mock.patch(GCS_MODULE.format("get_gc_credentials"))
@@ -171,9 +168,7 @@ class TestGCSStore(BaseTestCase):
         mock_results.configure_mock(pages=[dir_mock])
         mock_results.__iter__.return_value = [obj_mock]
 
-        client.return_value.get_bucket.return_value.list_blobs.return_value = (
-            mock_results
-        )
+        client.return_value.list_blobs.return_value = mock_results
 
         store = GCSService()
         results = store.list(gcs_url)
@@ -204,9 +199,7 @@ class TestGCSStore(BaseTestCase):
         mock_results.configure_mock(pages=[subdir_mock])
         mock_results.__iter__.return_value = [obj_mock]
 
-        client.return_value.get_bucket.return_value.list_blobs.return_value = (
-            mock_results
-        )
+        client.return_value.list_blobs.return_value = mock_results
 
         store = GCSService()
         results = store.list(gcs_url, path=dirname)
@@ -456,14 +449,12 @@ class TestGCSStore(BaseTestCase):
         mock_results2.configure_mock(pages=[])
         mock_results2.__iter__.return_value = [obj_mock3]
 
-        def list_side_effect(prefix, delimiter="/"):
+        def list_side_effect(bucket_name, prefix, delimiter="/"):
             if prefix == blob_path:
                 return mock_results1
             return mock_results2
 
-        client.return_value.get_bucket.return_value.list_blobs.side_effect = (
-            list_side_effect
-        )
+        client.return_value.list_blobs.side_effect = list_side_effect
 
         dirname3 = tempfile.mkdtemp()
 
@@ -532,14 +523,12 @@ class TestGCSStore(BaseTestCase):
         mock_results2.configure_mock(pages=[])
         mock_results2.__iter__.return_value = [obj_mock3]
 
-        def list_side_effect(prefix, delimiter="/"):
+        def list_side_effect(bucket_name, prefix, delimiter="/"):
             if prefix == blob_path + "foo/":
                 return mock_results1
             return mock_results2
 
-        client.return_value.get_bucket.return_value.list_blobs.side_effect = (
-            list_side_effect
-        )
+        client.return_value.list_blobs.side_effect = list_side_effect
 
         dirname3 = tempfile.mkdtemp()
 
