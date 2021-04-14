@@ -164,12 +164,9 @@ class TestGCSStore(BaseTestCase):
         file2_path = "fileB"
         obj2_mock.configure_mock(name=blob_root_path + file2_path, size=0)
 
-        dir_mock = mock.Mock()
         dirname = "model1"
-        dir_mock.configure_mock(prefixes=(blob_root_path + dirname + "/",))
-
         mock_results = mock.MagicMock()
-        mock_results.configure_mock(pages=[dir_mock])
+        mock_results.configure_mock(prefixes=(blob_root_path + dirname + "/",))
         mock_results.__iter__.return_value = [obj1_mock, obj2_mock]
 
         client.return_value.list_blobs.return_value = mock_results
@@ -197,14 +194,11 @@ class TestGCSStore(BaseTestCase):
         dirname = "model"
         obj_mock = mock.Mock()
         file_path = dirname + "/" + "tf.pb"
+        subdirname = dirname + "/" + "files"
         obj_mock.configure_mock(name=blob_root_path + file_path, size=1)
 
-        subdir_mock = mock.Mock()
-        subdirname = dirname + "/" + "files"
-        subdir_mock.configure_mock(prefixes=(blob_root_path + subdirname + "/",))
-
         mock_results = mock.MagicMock()
-        mock_results.configure_mock(pages=[subdir_mock])
+        mock_results.configure_mock(prefixes=(blob_root_path + subdirname + "/",))
         mock_results.__iter__.return_value = [obj_mock]
 
         client.return_value.list_blobs.return_value = mock_results
@@ -442,15 +436,13 @@ class TestGCSStore(BaseTestCase):
         obj_mock2 = mock.Mock()
         obj_mock2.configure_mock(name=blob_path + "test2.txt", size=1)
 
-        subdir_mock = mock.Mock()
         subdirname = rel_path2 + "/"
-        subdir_mock.configure_mock(prefixes=(blob_path + subdirname,))
 
         obj_mock3 = mock.Mock()
         obj_mock3.configure_mock(name=blob_path + subdirname + "test3.txt", size=1)
 
         mock_results1 = mock.MagicMock()
-        mock_results1.configure_mock(pages=[subdir_mock])
+        mock_results1.configure_mock(prefixes=(blob_path + subdirname,))
         mock_results1.__iter__.return_value = [obj_mock1, obj_mock2]
 
         mock_results2 = mock.MagicMock()
@@ -514,9 +506,7 @@ class TestGCSStore(BaseTestCase):
         obj_mock2 = mock.Mock()
         obj_mock2.configure_mock(name=blob_path + "foo/test2.txt", size=1)
 
-        subdir_mock = mock.Mock()
         subdirname = rel_path2 + "/"
-        subdir_mock.configure_mock(prefixes=(blob_path + "foo/" + subdirname,))
 
         obj_mock3 = mock.Mock()
         obj_mock3.configure_mock(
@@ -524,7 +514,7 @@ class TestGCSStore(BaseTestCase):
         )
 
         mock_results1 = mock.MagicMock()
-        mock_results1.configure_mock(pages=[subdir_mock])
+        mock_results1.configure_mock(prefixes=(blob_path + "foo/" + subdirname,))
         mock_results1.__iter__.return_value = [obj_mock1, obj_mock2]
 
         mock_results2 = mock.MagicMock()
