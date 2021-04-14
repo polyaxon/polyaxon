@@ -229,7 +229,7 @@ class GCSService(GCPService, StoreMixin):
             blob = append_basename(blob, dirname)
 
         pool, future_results = self.init_pool(workers)
-
+        bucket = self.get_bucket(bucket_name)
         # Turn the path to absolute paths
         dirname = os.path.abspath(dirname)
         with get_files_in_path_context(dirname, exclude=exclude) as files:
@@ -246,11 +246,10 @@ class GCSService(GCPService, StoreMixin):
                     workers=workers,
                     pool=pool,
                     future_results=future_results,
-                    fn=self.upload_file,
+                    fn=_upload_file,
+                    bucket=bucket,
                     filename=f,
                     blob=file_blob,
-                    bucket_name=bucket_name,
-                    use_basename=False,
                 )
 
         if workers:
@@ -351,3 +350,7 @@ def _download_blob(blob, local_path):
         blob.download_to_filename(local_path)
     except (NotFound, GoogleAPIError) as e:
         raise PolyaxonStoresException("Connection error: %s" % e) from e
+
+
+def _upload_file(bucket, filename, blob):
+    bucket.blob(blob).upload_from_filename(filename)
