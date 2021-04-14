@@ -104,9 +104,7 @@ class GCSService(GCPService, StoreMixin):
         results = self.list(key=path)
         return {"files": results["blobs"], "dirs": results["prefixes"]}
 
-    def list(
-        self, key, bucket_name=None, path=None, delimiter="/", blobs=True, prefixes=True
-    ):
+    def list(self, key, bucket_name=None, path=None, delimiter="/"):
         """
         List prefixes and blobs in a bucket.
 
@@ -115,8 +113,6 @@ class GCSService(GCPService, StoreMixin):
             bucket_name: `str`. the name of the bucket.
             path: `str`. an extra path to append to the key.
             delimiter: `str`. the delimiter marks key hierarchy.
-            blobs: `bool`. if it should include blobs.
-            prefixes: `bool`. if it should include prefixes.
 
         Returns:
              Service client instance
@@ -134,37 +130,25 @@ class GCSService(GCPService, StoreMixin):
         if prefix and not prefix.endswith("/"):
             prefix += "/"
 
-        def get_iterator():
-            return self.connection.list_blobs(
-                bucket_name, prefix=prefix, delimiter=delimiter
-            )
-
-        def get_blobs(_blobs):
+        def get_blobs(blobs):
             list_blobs = []
-            for blob in _blobs:
+            for blob in blobs:
                 name = blob.name[len(key) :]
                 size = blob.size
                 if name and size is not None:
                     list_blobs.append((name, size))
             return list_blobs
 
-        def get_prefixes(_prefixes):
-            list_prefixes = []
-            for folder_path in _prefixes:
-                name = folder_path[len(key) : -1]
-                list_prefixes.append(name)
-            return list_prefixes
+        def get_prefixes(prefixes):
+            return [folder_path[len(key) : -1] for folder_path in prefixes]
 
-        results = {"blobs": [], "prefixes": []}
-
-        if blobs:
-            iterator = get_iterator()
-            results["blobs"] = get_blobs(list(iterator))
-
-        if prefixes:
-            iterator = get_iterator()
-            for page in iterator.pages:
-                results["prefixes"] += get_prefixes(page.prefixes)
+        iterator = self.connection.list_blobs(
+            bucket_name, prefix=prefix, delimiter=delimiter
+        )
+        results = {}
+        results["blobs"] = get_blobs(iterator)
+        # iterator.prefixes will be populated after the iterator completes
+        results["prefixes"] = get_prefixes(iterator.prefixes)
 
         return results
 
