@@ -278,41 +278,30 @@ class GCSService(GCPService, StoreMixin):
         if use_basename:
             local_path = append_basename(local_path, blob)
 
-        try:
-            check_dirname_exists(local_path, is_dir=True)
-        except PolyaxonPathException:
-            os.makedirs(local_path)
+        file_blobs = list(self.connection.list_blobs(bucket_name, prefix=blob))
+        subdirs = set(
+            [
+                os.path.dirname(os.path.relpath(file_blob.name, blob))
+                for file_blob in file_blobs
+            ]
+        )
 
-        results = self.list(bucket_name=bucket_name, key=blob, delimiter="/")
-
-        # Create directories
-        for prefix in sorted(results["prefixes"]):
-            direname = os.path.join(local_path, prefix)
-            prefix = os.path.join(blob, prefix)
-            # Download files under
-            self.download_dir(
-                blob=prefix,
-                local_path=direname,
-                bucket_name=bucket_name,
-                use_basename=False,
-            )
+        os.makedirs(local_path, exist_ok=True)
+        for subdir in sorted(subdirs):
+            os.makedirs(os.path.join(local_path, subdir), exist_ok=True)
 
         pool, future_results = self.init_pool(workers)
 
         # Download files
-        for file_key in results["blobs"]:
-            file_key = file_key[0]
-            filename = os.path.join(local_path, file_key)
-            file_key = os.path.join(blob, file_key)
+        for file_blob in file_blobs:
+            filename = os.path.join(local_path, os.path.relpath(file_blob.name, blob))
             future_results = self.submit_pool(
                 workers=workers,
                 pool=pool,
                 future_results=future_results,
-                fn=self.download_file,
-                blob=file_key,
+                fn=_download_blob,
+                blob=file_blob,
                 local_path=filename,
-                bucket_name=bucket_name,
-                use_basename=False,
             )
 
         if workers:
@@ -353,5 +342,12 @@ class GCSService(GCPService, StoreMixin):
 def _delete_blob(blob):
     try:
         return blob.delete()
+    except (NotFound, GoogleAPIError) as e:
+        raise PolyaxonStoresException("Connection error: %s" % e) from e
+
+
+def _download_blob(blob, local_path):
+    try:
+        blob.download_to_filename(local_path)
     except (NotFound, GoogleAPIError) as e:
         raise PolyaxonStoresException("Connection error: %s" % e) from e
