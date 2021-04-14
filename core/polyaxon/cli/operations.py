@@ -944,16 +944,16 @@ def artifacts(ctx, project, uid, path, path_to, no_untar):
     "--path-from",
     type=click.Path(exists=False),
     help="The path to upload from relative the current location (or absolute path), "
-         "Note that this must be a valid path, or the CLI will raise an error. "
-         "Defaults to the current path.",
+    "Note that this must be a valid path, or the CLI will raise an error. "
+    "Defaults to the current path.",
 )
 @click.option(
     "--path-to",
     type=str,
     help="The destination where to upload the artifacts. "
-         "If the path is '/' the root artifacts path of the run will be used, "
-         "otherwise the values should start without the separator, "
-         "e.g. `uploads`, `code`, `dataset/images/values`, ...",
+    "If the path is '/' the root artifacts path of the run will be used, "
+    "otherwise the values should start without the separator, "
+    "e.g. `uploads`, `code`, `dataset/images/values`, ...",
 )
 @click.option(
     "--is-file",

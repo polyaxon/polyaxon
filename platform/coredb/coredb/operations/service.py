@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Optional, Set, Tuple, Union
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
@@ -154,6 +154,7 @@ class OperationsService(Service):
         is_approved: bool = True,
         meta_info: Dict = None,
         supported_kinds: Set[str] = None,
+        init: Optional[List[V1Init]] = None,
         **kwargs,
     ) -> Tuple[V1CompiledOperation, BaseRun]:
         if op_spec:
@@ -195,6 +196,13 @@ class OperationsService(Service):
                         )
                     )
                 )
+            if init:
+                if runtime not in {V1RunKind.JOB, V1RunKind.SERVICE}:
+                    raise ValueError(
+                        "Operation with kind `{}` does not support "
+                        "additional init containers.".format(runtime)
+                    )
+                compiled_operation.run.add_init(init)
             kwargs["content"] = compiled_operation.to_dict(dump=True)
         instance = get_run_model()(
             project_id=project_id,

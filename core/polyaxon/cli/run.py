@@ -83,24 +83,24 @@ from polyaxon.utils.validation import validate_tags
     is_flag=True,
     default=False,
     help="To upload the working dir to run's artifacts path "
-         "as an init context before scheduling the run.",
+    "as an init context before scheduling the run.",
 )
 @click.option(
     "--upload-from",
     "-u-from",
     type=str,
     help="The path to upload from relative the current location (or absolute path), "
-         "Note that this must be a valid path, or the CLI will raise an error. "
-         "Defaults to the current path.",
+    "Note that this must be a valid path, or the CLI will raise an error. "
+    "Defaults to the current path.",
 )
 @click.option(
     "--upload-to",
     "-u-to",
     type=str,
     help="The path to upload to relative the run's root context."
-         "To upload to root path you can use `/`, "
-         "otherwise the values should start without the separator, "
-         "e.g. `uploads`, `code`, `dataset/images/values`, ...",
+    "To upload to root path you can use `/`, "
+    "otherwise the values should start without the separator, "
+    "e.g. `uploads`, `code`, `dataset/images/values`, ...",
 )
 @click.option(
     "--watch",
