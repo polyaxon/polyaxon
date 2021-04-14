@@ -270,20 +270,20 @@ class GCSService(GCPService, StoreMixin):
             use_basename: `bool`. whether or not to use the basename of the key.
             workers: number of workers threads to use for parallel execution.
         """
-        prefix = blob
-        del blob  # the blob variable name will be used later for actual blob objects
-
         if not bucket_name:
-            bucket_name, prefix = self.parse_gcs_url(prefix)
+            bucket_name, blob = self.parse_gcs_url(blob)
 
         local_path = os.path.abspath(local_path)
 
         if use_basename:
-            local_path = append_basename(local_path, prefix)
+            local_path = append_basename(local_path, blob)
 
-        blobs = list(self.connection.list_blobs(bucket_name, prefix=prefix))
+        file_blobs = list(self.connection.list_blobs(bucket_name, prefix=blob))
         subdirs = set(
-            [os.path.dirname(os.path.relpath(blob.name, prefix)) for blob in blobs]
+            [
+                os.path.dirname(os.path.relpath(file_blob.name, blob))
+                for file_blob in file_blobs
+            ]
         )
 
         os.makedirs(local_path, exist_ok=True)
@@ -293,14 +293,14 @@ class GCSService(GCPService, StoreMixin):
         pool, future_results = self.init_pool(workers)
 
         # Download files
-        for blob in blobs:
-            filename = os.path.join(local_path, os.path.relpath(blob.name, prefix))
+        for file_blob in file_blobs:
+            filename = os.path.join(local_path, os.path.relpath(file_blob.name, blob))
             future_results = self.submit_pool(
                 workers=workers,
                 pool=pool,
                 future_results=future_results,
                 fn=_download_blob,
-                blob=blob,
+                blob=file_blob,
                 local_path=filename,
             )
 
