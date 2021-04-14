@@ -441,43 +441,22 @@ class TestGCSStore(BaseTestCase):
         obj_mock3 = mock.Mock()
         obj_mock3.configure_mock(name=blob_path + subdirname + "test3.txt", size=1)
 
-        mock_results1 = mock.MagicMock()
-        mock_results1.configure_mock(prefixes=(blob_path + subdirname,))
-        mock_results1.__iter__.return_value = [obj_mock1, obj_mock2]
+        mock_results = mock.MagicMock()
+        mock_results.configure_mock()
+        mock_results.__iter__.return_value = [obj_mock1, obj_mock2, obj_mock3]
 
-        mock_results2 = mock.MagicMock()
-        mock_results2.configure_mock(pages=[])
-        mock_results2.__iter__.return_value = [obj_mock3]
-
-        def list_side_effect(bucket_name, prefix, delimiter="/"):
-            if prefix == blob_path:
-                return mock_results1
-            return mock_results2
-
-        client.return_value.list_blobs.side_effect = list_side_effect
+        client.return_value.list_blobs.return_value = mock_results
 
         dirname3 = tempfile.mkdtemp()
 
         # Test without basename
         store.download_dir(blob=gcs_url, local_path=dirname3, use_basename=False)
-        client.return_value.get_bucket().get_blob.assert_has_calls(
-            [
-                mock.call("{}test1.txt".format(blob_path)),
-                mock.call("{}test2.txt".format(blob_path)),
-                mock.call("{}{}/test3.txt".format(blob_path, rel_path2)),
-            ],
-            any_order=True,
-        )
+        client.return_value.list_blobs.assert_called_with("bucket", prefix=blob_path)
 
-        (
-            client.return_value.get_bucket.return_value.get_blob.return_value.download_to_filename.assert_has_calls(  # noqa
-                [
-                    mock.call("{}/test1.txt".format(dirname3)),
-                    mock.call("{}/test2.txt".format(dirname3)),
-                    mock.call("{}/{}/test3.txt".format(dirname3, rel_path2)),
-                ],
-                any_order=True,
-            )
+        obj_mock1.download_to_filename.assert_called_with(f"{dirname3}/test1.txt")
+        obj_mock2.download_to_filename.assert_called_with(f"{dirname3}/test2.txt")
+        obj_mock3.download_to_filename.assert_called_with(
+            f"{dirname3}/{rel_path2}/test3.txt"
         )
 
     @mock.patch(GCS_MODULE.format("get_gc_credentials"))
@@ -513,42 +492,22 @@ class TestGCSStore(BaseTestCase):
             name=blob_path + "foo/" + subdirname + "test3.txt", size=1
         )
 
-        mock_results1 = mock.MagicMock()
-        mock_results1.configure_mock(prefixes=(blob_path + "foo/" + subdirname,))
-        mock_results1.__iter__.return_value = [obj_mock1, obj_mock2]
+        mock_results = mock.MagicMock()
+        mock_results.configure_mock()
+        mock_results.__iter__.return_value = [obj_mock1, obj_mock2, obj_mock3]
 
-        mock_results2 = mock.MagicMock()
-        mock_results2.configure_mock(pages=[])
-        mock_results2.__iter__.return_value = [obj_mock3]
-
-        def list_side_effect(bucket_name, prefix, delimiter="/"):
-            if prefix == blob_path + "foo/":
-                return mock_results1
-            return mock_results2
-
-        client.return_value.list_blobs.side_effect = list_side_effect
+        client.return_value.list_blobs.return_value = mock_results
 
         dirname3 = tempfile.mkdtemp()
 
         # Test with basename
         store.download_dir(blob=gcs_url + "foo", local_path=dirname3, use_basename=True)
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket().get_blob.assert_has_calls(
-            [
-                mock.call("{}foo/test1.txt".format(blob_path)),
-                mock.call("{}foo/test2.txt".format(blob_path)),
-                mock.call("{}foo/{}/test3.txt".format(blob_path, rel_path2)),
-            ],
-            any_order=True,
+        client.return_value.list_blobs.assert_called_with(
+            "bucket", prefix=blob_path + "foo"
         )
 
-        (
-            client.return_value.get_bucket.return_value.get_blob.return_value.download_to_filename.assert_has_calls(  # noqa
-                [
-                    mock.call("{}/foo/test1.txt".format(dirname3)),
-                    mock.call("{}/foo/test2.txt".format(dirname3)),
-                    mock.call("{}/foo/{}/test3.txt".format(dirname3, rel_path2)),
-                ],
-                any_order=True,
-            )
+        obj_mock1.download_to_filename.assert_called_with(f"{dirname3}/foo/test1.txt")
+        obj_mock2.download_to_filename.assert_called_with(f"{dirname3}/foo/test2.txt")
+        obj_mock3.download_to_filename.assert_called_with(
+            f"{dirname3}/foo/{rel_path2}/test3.txt"
         )
