@@ -54,14 +54,10 @@ $ helm repo update
 To install the chart with the release name `<RELEASE_NAME>`:
 
 ```bash
-$ helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> --wait polyaxon/polyaxon
+$ helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> polyaxon/polyaxon
 ```
 
-If you encounter an error, please use the `--wait` flag
-
-```bash
-$ helm install --name=<RELEASE_NAME> --wait polyaxon/polyaxon
-```
+Please do not use the `--wait` flag, otherwise the deployment will not succeed.
 
 The command deploys Polyaxon on the Kubernetes cluster in the default configuration.
 

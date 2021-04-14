@@ -49,6 +49,10 @@
       link: /docs/intro/how-tos/handling-termination/
     - title: Start runs with different names
       link: /docs/intro/how-tos/run-with-different-names
+    - title: Reconfiguring the CLI
+      link: /docs/intro/how-tos/reconfigure-cli/
+    - title: Upload artifacts
+      link: /docs/intro/how-tos/upload-artifacts/
   - group: Features & Architecture
     items:
     - title: Features
