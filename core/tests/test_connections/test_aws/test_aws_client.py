@@ -62,6 +62,12 @@ class TestAwsClient(BaseTestCase):
         assert credentials.secret_key == "b2"
         assert credentials.token == "b3"
 
+        # Prevent moto unmock_env_variables from raising an error.
+        os.environ["AWS_ACCESS_KEY_ID"] = ""
+        os.environ["AWS_SECRET_ACCESS_KEY"] = ""
+        os.environ["AWS_SECURITY_TOKEN"] = ""
+        os.environ["AWS_REGION"] = ""
+
     @mock_s3
     def test_get_client(self):
         s3_client = get_aws_client("s3")
