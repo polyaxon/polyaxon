@@ -82,19 +82,25 @@ from polyaxon.utils.validation import validate_tags
     "-u",
     is_flag=True,
     default=False,
-    help="To upload an init context before scheduling the run.",
+    help="To upload the working dir to run's artifacts path "
+         "as an init context before scheduling the run.",
 )
 @click.option(
     "--upload-from",
     "-u-from",
     type=str,
-    help="The path to upload from relative the current location.",
+    help="The path to upload from relative the current location (or absolute path), "
+         "Note that this must be a valid path, or the CLI will raise an error. "
+         "Defaults to the current path.",
 )
 @click.option(
     "--upload-to",
     "-u-to",
     type=str,
-    help="The path to upload to relative the run's root context.",
+    help="The path to upload to relative the run's root context."
+         "To upload to root path you can use `/`, "
+         "otherwise the values should start without the separator, "
+         "e.g. `uploads`, `code`, `dataset/images/values`, ...",
 )
 @click.option(
     "--watch",
@@ -226,13 +232,30 @@ def run(
     If a python file contains a component main, you can run that component
 
     \b
-    polyaxon run -pm path/to/my-component.py
+    $ polyaxon run -pm path/to/my-component.py
 
 
     If a python file contains more than one component, you can specify the component to run
 
     \b
-    polyaxon run -pm path/to/my-component.py:componentA
+    $ polyaxon run -pm path/to/my-component.py:componentA
+
+
+    Uploading from everything in the current folder to the default uploads path
+
+    \b
+    $ polyaxon run ... -u
+
+
+    Uploading from everything in the current folder to a custom path, e.g. code
+
+    \b
+    $ polyaxon run ... -u-to code
+
+    Uploading from everything from a sub-folder, e.g. ./code to the a custom path, e.g. new-code
+
+    \b
+    $ polyaxon run ... -u-from ./code -u-to new-code
     """
     if cache and nocache:
         Printer.print_error(

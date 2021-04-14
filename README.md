@@ -3,7 +3,7 @@
 [![Slack](https://img.shields.io/badge/Slack-1.2k%20members-blue.svg?style=flat&logo=slack&longCache=true)](https://polyaxon.com/slack/)
 
 [![Docs](https://img.shields.io/badge/docs-stable-brightgreen.svg?style=flat&longCache=true)](https://polyaxon.com/docs/)
-[![Release](https://img.shields.io/badge/release-v1.8.1-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/v1.8.1)
+[![Release](https://img.shields.io/badge/release-v1.8.2-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/v1.8.2)
 [![GitHub](https://img.shields.io/badge/issue_tracker-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/issues)
 [![GitHub](https://img.shields.io/badge/roadmap-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/milestones)
 
@@ -87,7 +87,7 @@ Please check [polyaxon installation guide](https://polyaxon.com/docs/setup/)
 
     ```bash
     # Upload code and start experiments
-    $ polyaxon run -f experiment.yaml -l
+    $ polyaxon run -f experiment.yaml -u -l
     ```
 
  * Dashboard
