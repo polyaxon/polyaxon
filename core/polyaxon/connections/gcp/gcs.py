@@ -140,7 +140,7 @@ class GCSService(GCPService, StoreMixin):
             return list_blobs
 
         def get_prefixes(prefixes):
-            return [folder_path[len(key) : -1] for folder_path in prefixes]
+            return sorted([folder_path[len(key) : -1] for folder_path in prefixes])
 
         iterator = self.connection.list_blobs(
             bucket_name, prefix=prefix, delimiter=delimiter
