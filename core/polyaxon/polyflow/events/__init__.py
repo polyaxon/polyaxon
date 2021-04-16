@@ -30,6 +30,7 @@ class V1EventKind(polyaxon_sdk.V1EventKind):
         polyaxon_sdk.V1EventKind.RUN_STATUS_ON_SCHEDULE: V1Statuses.ON_SCHEDULE,
         polyaxon_sdk.V1EventKind.RUN_STATUS_COMPILED: V1Statuses.COMPILED,
         polyaxon_sdk.V1EventKind.RUN_STATUS_QUEUED: V1Statuses.QUEUED,
+        polyaxon_sdk.V1EventKind.RUN_STATUS_AWAITING_CACHE: V1Statuses.AWAITING_CACHE,
         polyaxon_sdk.V1EventKind.RUN_STATUS_SCHEDULED: V1Statuses.SCHEDULED,
         polyaxon_sdk.V1EventKind.RUN_STATUS_STARTING: V1Statuses.STARTING,
         polyaxon_sdk.V1EventKind.RUN_STATUS_RUNNING: V1Statuses.RUNNING,

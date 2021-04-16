@@ -16,7 +16,7 @@
 
 import pytz
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from dateutil.tz import tzlocal
 
@@ -57,3 +57,7 @@ def now(tzinfo=True, no_micor=False):
 
 def local_datetime(datetime_value, tz=None):
     return datetime_value.astimezone(get_timezone(tz))
+
+
+def get_datetime_from_now(days: int, hours: int = 0, minutes: int = 0) -> datetime:
+    return now() - timedelta(days=days, hours=hours, minutes=minutes)

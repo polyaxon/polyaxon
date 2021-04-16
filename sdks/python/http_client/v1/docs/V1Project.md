@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **is_public** | **bool** |  | [optional] 
 **bookmarked** | **bool** |  | [optional] 
 **readme** | **str** |  | [optional] 
+**definition** | [**object**](.md) |  | [optional] 
 **settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  | [optional] 
 **role** | **str** |  | [optional] 
 **live_state** | **int** |  | [optional] 

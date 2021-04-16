@@ -118,11 +118,13 @@ class LifeCycle:
         V1Statuses.ON_SCHEDULE,
         V1Statuses.RESUMING,
         V1Statuses.COMPILED,
+        V1Statuses.AWAITING_CACHE,
     }
     PENDING_VALUES = {
         V1Statuses.CREATED,
         V1Statuses.ON_SCHEDULE,
         V1Statuses.RESUMING,
+        V1Statuses.AWAITING_CACHE,
     }
     COMPILABLE_VALUES = {
         V1Statuses.CREATED,
@@ -187,6 +189,11 @@ class LifeCycle:
     def is_queued(cls, status: str) -> bool:
         """Checks if a run with this status is queued."""
         return status == V1Statuses.QUEUED
+
+    @classmethod
+    def is_awaiting_cache(cls, status: str) -> bool:
+        """Checks if a run with this status is starting."""
+        return status == V1Statuses.AWAITING_CACHE
 
     @classmethod
     def is_starting(cls, status: str) -> bool:

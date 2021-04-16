@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.8.1
+  version: 1.8.3
 servers:
 - url: /
 security:
@@ -18356,6 +18356,7 @@ components:
       - run_status_on_schedule
       - run_status_queued
       - run_status_scheduled
+      - run_status_awaiting_cache
       - run_status_starting
       - run_status_running
       - run_status_processing
@@ -20485,6 +20486,7 @@ components:
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
           is_public: true
+          definition: '{}'
         - owner: owner
           settings:
             presets:
@@ -20524,6 +20526,7 @@ components:
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
           is_public: true
+          definition: '{}'
       properties:
         count:
           format: int32
@@ -22963,6 +22966,7 @@ components:
         updated_at: 2000-01-23T04:56:07.000+00:00
         name: name
         is_public: true
+        definition: '{}'
       properties:
         uuid:
           title: UUID
@@ -22998,6 +23002,10 @@ components:
         readme:
           title: Optional a readme text describing this entity
           type: string
+        definition:
+          properties: {}
+          title: Optional project definition
+          type: object
         settings:
           $ref: '#/components/schemas/v1ProjectSettings'
         role:
@@ -30770,6 +30778,7 @@ components:
       - resuming
       - on_schedule
       - compiled
+      - awaiting_cache
       - queued
       - scheduled
       - starting

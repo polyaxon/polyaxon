@@ -21,6 +21,8 @@ status: published
 
 Polyaxon UI comes with an auto-rendering service for Jupyter Notebooks in the artifacts tab.
 
+> **Note**: Requires CE or Agent v1.8.1 or higher
+
 ## Go to the artifacts tab
 
 The Artifacts tab allows users to organize files, events, logs, models, outputs, ... from their runs 

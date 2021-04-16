@@ -15,6 +15,8 @@
 
 * `run_status_scheduled` (value: `"run_status_scheduled"`)
 
+* `run_status_awaiting_cache` (value: `"run_status_awaiting_cache"`)
+
 * `run_status_starting` (value: `"run_status_starting"`)
 
 * `run_status_running` (value: `"run_status_running"`)

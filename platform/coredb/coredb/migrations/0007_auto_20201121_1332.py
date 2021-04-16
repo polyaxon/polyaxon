@@ -81,6 +81,7 @@ class Migration(migrations.Migration):
             field=models.CharField(
                 blank=True,
                 choices=[
+                    ("awaiting_cache", "awaiting_cache"),
                     ("compiled", "compiled"),
                     ("created", "created"),
                     ("done", "done"),

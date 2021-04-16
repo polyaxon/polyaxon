@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **isPublic** | **Boolean** |  |  [optional]
 **bookmarked** | **Boolean** |  |  [optional]
 **readme** | **String** |  |  [optional]
+**definition** | [**Object**](.md) |  |  [optional]
 **settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  |  [optional]
 **role** | **String** |  |  [optional]
 **liveState** | **Integer** |  |  [optional]

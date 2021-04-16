@@ -21,6 +21,8 @@ status: published
 
 Polyaxon UI comes with a viewer and an auto-rendering service for your neural network, deep learning and machine learning models based on [Netron](https://github.com/lutzroeder/netron).
 
+> **Note**: Requires CE or Agent v1.8.1 or higher
+
 ## Go to the artifacts tab
 
 The Artifacts tab allows users to organize files, events, logs, models, outputs, ... from their runs 

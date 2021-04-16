@@ -55,14 +55,17 @@ message Project {
     // Optional a readme text describing this entity
     string readme = 10;
 
+    // Optional project definition
+    google.protobuf.Struct definition = 11;
+
     // Optional project settings
-    ProjectSettings settings = 11;
+    ProjectSettings settings = 12;
 
     // Current user's role in this (org/teams)/project
-    string role = 12;
+    string role = 13;
 
     // Current live state
-    int32 live_state = 13;
+    int32 live_state = 14;
 }
 
  // Request data to create/update project

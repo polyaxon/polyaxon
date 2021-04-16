@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.8.1",
+    "version": "1.8.3",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -17416,6 +17416,7 @@
         "run_status_on_schedule",
         "run_status_queued",
         "run_status_scheduled",
+        "run_status_awaiting_cache",
         "run_status_starting",
         "run_status_running",
         "run_status_processing",
@@ -20142,6 +20143,10 @@
           "type": "string",
           "title": "Optional a readme text describing this entity"
         },
+        "definition": {
+          "type": "object",
+          "title": "Optional project definition"
+        },
         "settings": {
           "$ref": "#/definitions/v1ProjectSettings",
           "title": "Optional project settings"
@@ -21274,6 +21279,7 @@
         "resuming",
         "on_schedule",
         "compiled",
+        "awaiting_cache",
         "queued",
         "scheduled",
         "starting",

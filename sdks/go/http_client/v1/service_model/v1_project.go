@@ -40,6 +40,9 @@ type V1Project struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Optional project definition
+	Definition interface{} `json:"definition,omitempty"`
+
 	// Optional description
 	Description string `json:"description,omitempty"`
 

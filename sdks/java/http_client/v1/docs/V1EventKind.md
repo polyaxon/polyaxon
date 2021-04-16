@@ -17,6 +17,8 @@
 
 * `RUN_STATUS_SCHEDULED` (value: `"run_status_scheduled"`)
 
+* `RUN_STATUS_AWAITING_CACHE` (value: `"run_status_awaiting_cache"`)
+
 * `RUN_STATUS_STARTING` (value: `"run_status_starting"`)
 
 * `RUN_STATUS_RUNNING` (value: `"run_status_running"`)

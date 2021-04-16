@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
+from typing import Any, List
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
@@ -98,16 +98,30 @@ def new_status(
     return previous_status
 
 
+def bulk_new_entity_status(
+    model_class,
+    entities: List[Any],
+    condition: V1StatusCondition,
+    additional_fields: List[str] = None,
+):
+    for entity in entities:
+        set_entity_status(entity=entity, condition=condition)
+    additional_fields = additional_fields or []
+    model_class.objects.bulk_update(
+        entities, additional_fields + ["status_conditions", "status"]
+    )
+
+
 def bulk_new_run_status(
     runs: List[BaseRun],
     condition: V1StatusCondition,
     additional_fields: List[str] = None,
 ):
-    for run in runs:
-        set_entity_status(entity=run, condition=condition)
-    additional_fields = additional_fields or []
-    get_run_model().objects.bulk_update(
-        runs, additional_fields + ["status_conditions", "status"]
+    bulk_new_entity_status(
+        model_class=get_run_model(),
+        entities=runs,
+        condition=condition,
+        additional_fields=additional_fields,
     )
 
 

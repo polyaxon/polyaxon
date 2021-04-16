@@ -6092,6 +6092,7 @@
         "run_status_on_schedule",
         "run_status_queued",
         "run_status_scheduled",
+        "run_status_awaiting_cache",
         "run_status_starting",
         "run_status_running",
         "run_status_processing",
@@ -8888,6 +8889,10 @@
           "title": "Optional time when the entity was created",
           "type": "string"
         },
+        "definition": {
+          "title": "Optional project definition",
+          "type": "object"
+        },
         "description": {
           "title": "Optional description",
           "type": "string"
@@ -10065,6 +10070,7 @@
         "resuming",
         "on_schedule",
         "compiled",
+        "awaiting_cache",
         "queued",
         "scheduled",
         "starting",
