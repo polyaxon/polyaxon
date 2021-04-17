@@ -19,6 +19,6 @@ tags:
 
 Parallelism and concurrency management depends on your distribution.
 
- * In Polyaxon CE, there's n concurrency management, you can submit as many operations as you want, you can scale Polyaxon to manage and monitor the executions.
+ * In Polyaxon CE, there's no concurrency management, you can submit as many operations as you want, you can scale Polyaxon to manage and monitor the executions.
 
  * In Polyaxon commercial offerings each Agent can manage multiple queues. Each queue has a configurable maximum concurrency and priority.

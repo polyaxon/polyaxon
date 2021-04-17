@@ -12,6 +12,13 @@ sidebar: "management"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
+## Overview
+
+Membership in Polyaxon is handled at the organizational level.
+The system is designed so each end user is assigned to a single Polyaxon account, which can then join one or more organizations.
+
+Each end user should have their own account, where they can manage their personal preferences and security settings.
+
 You can invite members to your organization members and assign roles with specific permissions.
 
 ## Organization members
@@ -23,6 +30,47 @@ After creating an organization, you can invite or remove members using the organ
 You can also update their roles.
 
 ![organization-roles](../../../../content/images/dashboard/orgs/roles.png)
+
+
+## Organization permissions
+
+| Action                                                       | Viewer | Member | Admin | Manager | Owner | Billing |
+| ------------------------------------------------------------ | ------ | ------ | ----- | ------- | ----- | ------- |
+| Can see/edit billing information and subscription details    |        |        |       |         | X     | X       |
+| Can remove an organization                                   |        |        |       |         | X     |         |
+| Can change an organization's visibility                      |        |        |       |         | X     |         |
+| Can change an organization's settings                        |        |        |       | X       | X     |         |
+| Can add/remove/change a team                                 |        |        |       | X       | X     |         |
+| Can add/remove/change a member                               |        |        |       | X       | X     |         |
+| Can add/remove/change an agent                               |        |        |       | X       | X     |         |
+| Can add/remove/change an preset                              |        |        |       | X       | X     |         |
+| Can edit global integrations                                 |        |        |       | X       | X     |         |
+| Can view an organization's level analytics                   |        |        | X     | X       | X     |         |
+| Can view an organization's level activity logs               |        |        | X     | X       | X     |         |
+| Can add/remove/change a project                              |        |        | X     | X       | X     |         |
+| Can change a project's settings                              |        |        | X     | X       | X     |         |
+| Can change a project's permissions                           |        |        | X     | X       | X     |         |
+| Can add/remove/change a component hub                        |        |        | X     | X       | X     |         |
+| Can change a component hub's settings                        |        |        | X     | X       | X     |         |
+| Can change a component hub's permissions                     |        |        | X     | X       | X     |         |
+| Can add/remove/change a model registry                       |        |        | X     | X       | X     |         |
+| Can change a model registry's settings                       |        |        | X     | X       | X     |         |
+| Can change a model registry's permissions                    |        |        | X     | X       | X     |         |
+| Can create/update runs                                       |        | X      | X     | X       | X     |         |
+| Can delete runs                                              |        |        | X     | X       | X     |         |
+| Can create/update searches                                   |        | X      | X     | X       | X     |         |
+| Can delete searches                                          |        |        | X     | X       | X     |         |
+| Can promote searches to the organization level               |        |        | X     | X       | X     |         |
+| Can create/update dashboards                                 |        | X      | X     | X       | X     |         |
+| Can delete dashboards                                        |        |        | X     | X       | X     |         |
+| Can promote dashboards to the organization level             |        |        | X     | X       | X     |         |
+| Can create/update component versions                         |        | X      | X     | X       | X     |         |
+| Can delete component versions                                |        |        | X     | X       | X     |         |
+| Can create/update model versions                             |        | X      | X     | X       | X     |         |
+| Can delete model versions                                    |        |        | X     | X       | X     |         |
+| Can view projects, runs and related metadata and artifacts   | X      | X      | X     | X       | X     |         |
+| Can view component hub and versions                          | X      | X      | X     | X       | X     |         |
+| Can view model registry and versions                         | X      | X      | X     | X       | X     |         |
 
 
 ## Organization roles
@@ -85,12 +133,6 @@ Unrestricted access to the organization, its data, and settings.
  * Can read, write, or have admin permissions to one or more projects in your organization if invited and provided with such permissions.
 
 
-## Re-assigning seats
-
-By removing a user from the members table, you can re-invite or add a different user based on a new email.
-Only users with the `owner` and `manager` roles can add/remove users, in fact, 
-only these two roles have access to the organization level settings.
-
 ## Managing users and permissions
 
 Users with the `owner` role can promote, demote, and delete all users up to the `owner` level.
@@ -98,3 +140,18 @@ Users with the `owner` role can promote, demote, and delete all users up to the 
 Users with the `manager` role can manage all users except users with the `owner` role.
 
 Users with the `admin` role can only manage configurations and restrictions on the project, model registry, and component hub level.
+
+## Team level roles
+
+Users with `outsider`, `viewer`, `member`, and `admin` can be invited to teams and they can be promoted up-to the `admin` level role, e.g. `outisder` -> `member`, `member` -> `admin`.
+
+Each project, component hub, model registry can restrict access by selecting users and teams. 
+If teams are selected, users will act based on the highest role they have in the teams they belong to and have access to that entity.
+
+Please check [teams section](/docs/management/organizations/teams/) for more details.
+
+## Re-assigning seats
+
+By removing a user from the members table, you can re-invite or add a different user based on a new email.
+Only users with the `owner` and `manager` roles can add/remove users, in fact, 
+only these two roles have access to the organization level settings.
