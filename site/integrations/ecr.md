@@ -29,3 +29,20 @@ In order to push private images to ECR, you need to grant the build access.
 ## Kaniko
 
 In order to push docker images to ECR, please follow this [guide](https://github.com/GoogleContainerTools/kaniko#pushing-to-amazon-ecr) for configuring a registry to use with Kaniko.
+
+If you decide to use the secret and config-map approach, your connection should be:
+
+```yaml
+connections:
+  - name: docker-registry
+    kind: registry
+    description: "aws docker repository"
+    schema:
+      url: aws_account_id.dkr.ecr.region.amazonaws.com
+    secret:
+      name: aws-secret
+      mountPath: /root/.aws/
+    configMap:
+      name: docker-config
+      mountPath: /kaniko/.docker/
+```
