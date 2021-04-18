@@ -16,10 +16,8 @@ sidebar: "management"
 
 Membership in Polyaxon is handled at the organizational level.
 The system is designed so each end user is assigned to a single Polyaxon account, which can then join one or more organizations.
-
 Each end user should have their own account, where they can manage their personal preferences and security settings.
-
-You can invite members to your organization members and assign roles with specific permissions.
+You can invite members to your organization and assign them roles with specific permissions.
 
 ## Organization members
 
@@ -43,7 +41,7 @@ You can also update their roles.
 | Can add/remove/change a team                                 |        |        |       | X       | X     |         |
 | Can add/remove/change a member                               |        |        |       | X       | X     |         |
 | Can add/remove/change an agent                               |        |        |       | X       | X     |         |
-| Can add/remove/change an preset                              |        |        |       | X       | X     |         |
+| Can add/remove/change a preset                               |        |        |       | X       | X     |         |
 | Can edit global integrations                                 |        |        |       | X       | X     |         |
 | Can view an organization's level analytics                   |        |        | X     | X       | X     |         |
 | Can view an organization's level activity logs               |        |        | X     | X       | X     |         |
