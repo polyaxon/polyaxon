@@ -7,10 +7,10 @@ meta_description: "Random search creates unique experiments by sampling randomly
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - experimentation
-    - hyperparameter-optimization
+  - reference
+  - polyaxon
+  - experimentation
+  - hyperparameter-optimization
 sidebar: "automation"
 ---
 

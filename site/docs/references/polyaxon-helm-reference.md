@@ -6,12 +6,12 @@ meta_description: "Polyaxon chart is a Helm chart for creating reproducible and 
 visibility: public
 status: published
 tags:
-    - specification
-    - polyaxon
-    - yaml
-    - helm
-    - reference
-    - kubernetes
+  - specification
+  - polyaxon
+  - yaml
+  - helm
+  - reference
+  - kubernetes
 ---
 
 Polyaxon chart is a Helm chart for creating reproducible and maintainable deployments of Polyaxon with Kubernetes.

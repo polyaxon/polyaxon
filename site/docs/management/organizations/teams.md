@@ -4,9 +4,9 @@ sub_link: "organizations/teams"
 meta_title: "Polyaxon management tools and UI - Teams"
 meta_description: "You can group organization members into teams that reflect your company or group's structure with cascading access permissions."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

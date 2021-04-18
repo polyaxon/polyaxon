@@ -4,9 +4,9 @@ sub_link: "projects/settings"
 meta_title: "Project settings - Management UI"
 meta_description: "Every Project has settings to archive, restrict access, set defaults ..."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

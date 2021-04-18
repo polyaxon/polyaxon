@@ -6,10 +6,10 @@ meta_description: "Polyaxon Webhooks are specific events triggered when somethin
 visibility: public
 status: published
 tags:
-    - webhooks
-    - reference
-    - polyaxon
-    - integration
+  - webhooks
+  - reference
+  - polyaxon
+  - integration
 ---
 
 Webhooks are specific events triggered when something happens in Polyaxon,

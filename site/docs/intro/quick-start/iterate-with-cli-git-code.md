@@ -6,10 +6,10 @@ meta_description: "Iterate with Polyaxon CLI - Become familiar with the ecosyste
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - notebook
-    - quick-start
+  - tutorials
+  - concepts
+  - notebook
+  - quick-start
 sidebar: "intro"
 ---
 

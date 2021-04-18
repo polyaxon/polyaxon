@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - model
-    - serving
+  - model
+  - serving
 ---
 
 Currently, Polyaxon does not provide an in-cluster mechanism for deploying models.

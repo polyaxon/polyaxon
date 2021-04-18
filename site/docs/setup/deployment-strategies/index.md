@@ -6,9 +6,9 @@ title_link: "Deployment Strategies"
 meta_title: "How to deploy, manage, and scale Polyaxon on Kubernetes"
 meta_description: "This is a set of guides to assist you through the process of deploying, managing, and scaling a Polyaxon Deployment with common strategies and best practices."
 tags:
-    - setup
-    - kubernetes
-    - install
+  - setup
+  - kubernetes
+  - install
 sidebar: "setup"
 ---
 

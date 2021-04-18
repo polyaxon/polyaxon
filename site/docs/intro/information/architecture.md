@@ -6,9 +6,9 @@ meta_description: "Polyaxon is structured as a modern, decoupled, micro-services
 visibility: public
 status: published
 tags:
-    - concepts
-    - quick-start
-    - architecture
+  - concepts
+  - quick-start
+  - architecture
 sidebar: "intro"
 ---
 

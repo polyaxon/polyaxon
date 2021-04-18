@@ -4,13 +4,13 @@ sub_link: "platform/sso"
 meta_title: "Single Sign On in Polyaxon - Configuration"
 meta_description: "Polyaxon has built-in single sign on for offloading users' creation process to a third party system."
 tags:
-    - configuration
-    - polyaxon
-    - management
-    - users
-    - sso
-    - kubernetes
-    - docker-compose
+  - configuration
+  - polyaxon
+  - management
+  - users
+  - sso
+  - kubernetes
+  - docker-compose
 sidebar: "setup"
 ---
 Single Sign-On (or SSO) allows you to manage your organization’s entire membership via a third party provider.

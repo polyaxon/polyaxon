@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - deployment
-    - kubernetes
+  - deployment
+  - kubernetes
 ---
 
 Kubernetes supports, and often requires, using [Role Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/)

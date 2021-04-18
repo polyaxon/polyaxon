@@ -8,12 +8,12 @@ execute generic tasks on remote infrastructure and can be used to perform a vari
 visibility: public
 status: published
 tags:
-    - specification
-    - api
-    - polyaxon
-    - yaml
-    - json
-    - python
+  - specification
+  - api
+  - polyaxon
+  - yaml
+  - json
+  - python
 sidebar: "experimentation"
 ---
 

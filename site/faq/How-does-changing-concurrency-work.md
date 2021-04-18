@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - scheduling
+  - scheduling
 ---
 
 When you reduce a pipeline or a queue concurrency, Polyaxon does not kill or cancel active or scheduled runs to meet the new value.

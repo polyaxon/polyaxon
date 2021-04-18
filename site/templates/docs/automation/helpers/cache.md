@@ -7,12 +7,12 @@ meta_description: "Polyaxon provides a cache layer to reuse run executions by de
 visibility: public
 status: published
 tags:
-    - specification
-    - api
-    - polyaxon
-    - yaml
-    - json
-    - python
+  - specification
+  - api
+  - polyaxon
+  - yaml
+  - json
+  - python
 sidebar: "automation"
 ---
 

@@ -5,9 +5,9 @@ title_link: "Deployment Strategies"
 meta_title: "How to deploy Polyaxon on Kubernetes"
 meta_description: "This is a guide to assist you through the process and strategies of deploying Polyaxon."
 tags:
-    - setup
-    - kubernetes
-    - install
+  - setup
+  - kubernetes
+  - install
 sidebar: "setup"
 ---
 

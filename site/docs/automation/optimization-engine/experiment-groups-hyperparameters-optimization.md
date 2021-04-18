@@ -4,13 +4,13 @@ sub_link: "experiment-groups-hyperparameters-optimization"
 meta_title: "Experiment Groups - Hyperparameters Optimization in Polyaxon - Core Concepts"
 meta_description: "An Experiment Group is an automatic and practical way to run a version of your model and data with different hyper parameters."
 tags:
-    - concepts
-    - polyaxon
-    - experimentation
-    - experiment-groups
-    - architecture
-    - experimentation
-    - hyperparameter-optimization
+  - concepts
+  - polyaxon
+  - experimentation
+  - experiment-groups
+  - architecture
+  - experimentation
+  - hyperparameter-optimization
 sidebar: "core"
 ---
 

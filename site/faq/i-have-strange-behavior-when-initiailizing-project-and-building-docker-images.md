@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - cli
+  - cli
 ---
 
 Make sure to add the local cache `.polyaxon` to your `.gitignore` and `.dockerignore` files.

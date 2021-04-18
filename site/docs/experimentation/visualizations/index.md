@@ -5,11 +5,11 @@ is_index: true
 meta_title: "Visualization in Polyaxon - Experimentation"
 meta_description: "Polyaxon comes with a powerful and customizable visualization system for driving visualization in the dashboard or programmatically."
 tags:
-    - concepts
-    - polyaxon
-    - experimentation
-    - experiments
-    - architecture
+  - concepts
+  - polyaxon
+  - experimentation
+  - experiments
+  - architecture
 sidebar: "experimentation"
 ---
 

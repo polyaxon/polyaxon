@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - deployment
-    - kubernetes
+  - deployment
+  - kubernetes
 ---
 
 Polyaxon chart provides support for an Ingress resource. You need to set `ingress.enabled` to `true` and `gateway.service.type`  to `CluterIp` and choose an `ingress.hosts` for the URL.

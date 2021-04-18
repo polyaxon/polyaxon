@@ -5,9 +5,9 @@ title_link: "Multiarch Deployment"
 meta_title: "How to deploy Polyaxon on Kubernetes with CPU-heterogeneous node architecture."
 meta_description: "This is a guide to assist you through the process and strategies of deploying Polyaxon on Kubernetes with CPU-heterogeneous node architecture."
 tags:
-    - setup
-    - kubernetes
-    - install
+  - setup
+  - kubernetes
+  - install
 sidebar: "setup"
 ---
 

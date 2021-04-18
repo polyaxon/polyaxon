@@ -9,13 +9,13 @@ both on a Polyaxon deployment or on a different platform/environment."
 visibility: public
 status: published
 tags:
-    - client
-    - api
-    - tracking
-    - ml
-    - yaml
-    - json
-    - python
+  - client
+  - api
+  - tracking
+  - ml
+  - yaml
+  - json
+  - python
 sidebar: "experimentation"
 ---
 

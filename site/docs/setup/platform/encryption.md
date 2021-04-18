@@ -4,10 +4,10 @@ sub_link: "platform/encryption"
 meta_title: "Encryption configuration in Polyaxon - Configuration"
 meta_description: "Polyaxon's Encryption configuration."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - docker-compose
+  - configuration
+  - polyaxon
+  - kubernetes
+  - docker-compose
 sidebar: "setup"
 ---
 

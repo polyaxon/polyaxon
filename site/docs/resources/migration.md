@@ -6,7 +6,7 @@ meta_description: "Polyaxon Migration to Polyaxon v1.x."
 visibility: public
 status: published
 tags:
-    - reference
+  - reference
 ---
 
 ## Minimum supported versions

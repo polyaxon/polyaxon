@@ -8,12 +8,12 @@ speeds up your hyperparameter tuning, and early terminate workflows and underper
 visibility: public
 status: published
 tags:
-    - specification
-    - api
-    - polyaxon
-    - yaml
-    - json
-    - optimization
+  - specification
+  - api
+  - polyaxon
+  - yaml
+  - json
+  - optimization
 sidebar: "automation"
 ---
 

@@ -7,9 +7,9 @@ date: "2018-10-01"
 meta_title: "How to install Polyaxon on Kubernetes"
 meta_description: "This is a guide to assist you through the process of setting up a Polyaxon deployment using Kubernetes."
 tags:
-    - setup
-    - kubernetes
-    - install
+  - setup
+  - kubernetes
+  - install
 sidebar: "setup"
 ---
 

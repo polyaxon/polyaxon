@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - contribution
+  - contribution
 ---
 
 Polyaxon is an open-source software, and we would be happy to welcome your contributions.

@@ -7,12 +7,12 @@ meta_description: "Polyaxon core tools are the building blocks to interact with 
 visibility: public
 status: published
 tags:
-    - tracking
-    - reference
-    - polyaxon
-    - client
-    - sdk
-    - experiment
+  - tracking
+  - reference
+  - polyaxon
+  - client
+  - sdk
+  - experiment
 sidebar: "core"
 ---
 

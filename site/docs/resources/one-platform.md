@@ -6,7 +6,7 @@ meta_description: "Polyaxon is a single platform that does everything from acces
 visibility: public
 status: published
 tags:
-    - reference
+  - reference
 ---
 
 ## One platform

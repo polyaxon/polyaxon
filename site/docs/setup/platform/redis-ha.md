@@ -4,13 +4,13 @@ sub_link: "platform/redis-ha"
 meta_title: "High availability for Redis in Polyaxon - Configuration"
 meta_description: "Polyaxon offers a couple of ways to set a high available redis instances."
 tags:
-    - configuration
-    - polyaxon
-    - redis
-    - scaling
-    - high-availability
-    - kubernetes
-    - docker-compose
+  - configuration
+  - polyaxon
+  - redis
+  - scaling
+  - high-availability
+  - kubernetes
+  - docker-compose
 sidebar: "setup"
 ---
 

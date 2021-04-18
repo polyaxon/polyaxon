@@ -7,12 +7,12 @@ meta_description: "Mapping for running a component over a specific set of argume
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - polyflow
-    - pipelines
-    - mapping
-    - parallel
+  - reference
+  - polyaxon
+  - polyflow
+  - pipelines
+  - mapping
+  - parallel
 sidebar: "automation"
 ---
 

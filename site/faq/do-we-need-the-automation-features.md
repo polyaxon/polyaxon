@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - api
+  - api
 ---
 
 Polyaxon Automation is not part of Polyaxon's core product and it's priced separately.

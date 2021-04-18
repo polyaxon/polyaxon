@@ -6,9 +6,9 @@ meta_description: "Often, users want to just execute a script specified as a her
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - quick-start
+  - tutorials
+  - concepts
+  - quick-start
 sidebar: "intro"
 ---
 

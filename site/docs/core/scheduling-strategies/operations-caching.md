@@ -6,8 +6,8 @@ meta_description: "A feature to skip and avoid repetitive work and execute faste
 visibility: public
 status: published
 tags:
-    - concepts
-    - tutorials
+  - concepts
+  - tutorials
 sidebar: "core"
 ---
 

@@ -6,8 +6,8 @@ date: "2018-10-01"
 meta_title: "How to install Polyaxon CLI"
 meta_description: "Polyaxon CLI is a Python command line interface to interact with Polyaxon API."
 tags:
-    - cli
-    - install
+  - cli
+  - install
 sidebar: "setup"
 ---
 

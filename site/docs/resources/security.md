@@ -4,12 +4,12 @@ sub_link: "security"
 meta_title: "Polyaxon Security - Core Concepts"
 meta_description: "Polyaxon is committed to developing secure, reliable products utilizing all modern security best practices. Find out more!"
 tags:
-    - reference
-    - polyaxon
-    - kubernetes
-    - deep-learning
-    - machine-learning
-    - security
+  - reference
+  - polyaxon
+  - kubernetes
+  - deep-learning
+  - machine-learning
+  - security
 ---
 
 Polyaxon is committed to developing secure, reliable products utilizing all modern security best practices and processes.

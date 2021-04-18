@@ -7,8 +7,8 @@ is_index: true
 visibility: public
 status: published
 tags:
-    - concepts
-    - tutorials
+  - concepts
+  - tutorials
 sidebar: "intro"
 ---
 

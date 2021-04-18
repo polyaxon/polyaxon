@@ -4,15 +4,15 @@ sub_link: "connections/ssh"
 meta_title: "Use SSH to integrate your workflow with external system or to load git repos from github, gitlab, bitbucket in Polyaxon - Configuration"
 meta_description: "Polyaxon allows to use ssh connections to connect to external systems and to integrate with git providers for code management."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - docker-compose
-    - environment
-    - orchestration
-    - github
-    - gitlab
-    - bitbucket
+  - configuration
+  - polyaxon
+  - kubernetes
+  - docker-compose
+  - environment
+  - orchestration
+  - github
+  - gitlab
+  - bitbucket
 sidebar: "setup"
 ---
 

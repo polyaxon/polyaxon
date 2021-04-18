@@ -6,10 +6,10 @@ meta_description: "Notebooks Iteration - Become familiar with the ecosystem of P
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - notebook
-    - quick-start
+  - tutorials
+  - concepts
+  - notebook
+  - quick-start
 sidebar: "intro"
 ---
 

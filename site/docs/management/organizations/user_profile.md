@@ -4,9 +4,9 @@ sub_link: "organizations/user_profile"
 meta_title: "Polyaxon management tools and UI - Users"
 meta_description: "Member' profile page to manage token, bookmakrs, and profile settings."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

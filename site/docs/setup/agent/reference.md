@@ -6,12 +6,12 @@ meta_description: "Polyaxon Agent chart is a Helm chart for creating reproducibl
 visibility: public
 status: published
 tags:
-    - specification
-    - polyaxon
-    - yaml
-    - helm
-    - reference
-    - kubernetes
+  - specification
+  - polyaxon
+  - yaml
+  - helm
+  - reference
+  - kubernetes
 sidebar: "setup"
 ---
 

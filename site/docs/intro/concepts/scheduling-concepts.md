@@ -6,9 +6,9 @@ meta_description: "Polyaxon can trigger execution manually or automatically usin
 visibility: public
 status: published
 tags:
-    - architecture
-    - concepts
-    - polyaxon
+  - architecture
+  - concepts
+  - polyaxon
 sidebar: "intro"
 ---
 

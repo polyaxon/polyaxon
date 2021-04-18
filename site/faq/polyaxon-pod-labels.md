@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - deployment
-    - kubernetes
+  - deployment
+  - kubernetes
 ---
 
 Kubernetes recommends a set of labels to describe resources, called Recommended Labels.

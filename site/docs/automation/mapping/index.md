@@ -7,12 +7,12 @@ visibility: public
 status: published
 is_index: true
 tags:
-    - reference
-    - polyaxon
-    - polyflow
-    - pipelines
-    - dags
-    - experimentation
+  - reference
+  - polyaxon
+  - polyflow
+  - pipelines
+  - dags
+  - experimentation
 sidebar: "automation"
 ---
 

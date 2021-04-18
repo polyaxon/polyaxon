@@ -7,12 +7,12 @@ meta_description: "Cron schedules to trigger components repeatedly using a cron 
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - polyflow
-    - pipelines
-    - dags
-    - schedules
+  - reference
+  - polyaxon
+  - polyflow
+  - pipelines
+  - dags
+  - schedules
 sidebar: "automation"
 ---
 

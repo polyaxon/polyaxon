@@ -4,9 +4,9 @@ sub_link: "organizations/connections"
 meta_title: "Polyaxon management tools and UI - Connections"
 meta_description: "Polyaxon connection management."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

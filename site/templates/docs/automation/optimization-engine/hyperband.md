@@ -7,10 +7,10 @@ meta_description: "Hyperband is a relatively new method for tuning iterative alg
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - experimentation
-    - hyperparameter-optimization
+  - reference
+  - polyaxon
+  - experimentation
+  - hyperparameter-optimization
 sidebar: "automation"
 ---
 

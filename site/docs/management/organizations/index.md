@@ -5,9 +5,9 @@ is_index: true
 meta_title: "Polyaxon organizations management UI"
 meta_description: "Polyaxon management UI is a tool for managing organizations, teams, projects, agents."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

@@ -4,9 +4,9 @@ sub_link: "projects/general"
 meta_title: "Projects in Polyaxon - Management UI"
 meta_description: "A Project in Polyaxon is very similar to a project in GitHub, it aims at organizing your efforts to solve a specific problem."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

@@ -4,13 +4,13 @@ sub_link: "platform/replication-concurrency"
 meta_title: "Replication and Concurrency in Polyaxon - Configuration"
 meta_description: "Polyaxon supports scaling of it's services (API and workers) in a horizontal way using replication, and the user can increase the workers' concurrency for higher throughput."
 tags:
-    - configuration
-    - polyaxon
-    - replication
-    - scaling
-    - concurrency
-    - kubernetes
-    - docker-compose
+  - configuration
+  - polyaxon
+  - replication
+  - scaling
+  - concurrency
+  - kubernetes
+  - docker-compose
 sidebar: "setup"
 ---
 

@@ -6,10 +6,10 @@ meta_description: "Using presets to improve the process of using git and code up
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - client
-    - quick-start
+  - tutorials
+  - concepts
+  - client
+  - quick-start
 sidebar: "intro"
 ---
 

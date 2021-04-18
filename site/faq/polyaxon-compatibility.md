@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - api
+  - api
 ---
 
 Polyaxon will periodically communicate with a remote compatibility server.

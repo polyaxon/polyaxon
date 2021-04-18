@@ -7,11 +7,11 @@ meta_description: "Joins for running a component based on the results of upstrea
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - polyflow
-    - pipelines
-    - joins
+  - reference
+  - polyaxon
+  - polyflow
+  - pipelines
+  - joins
 sidebar: "automation"
 ---
 

@@ -4,13 +4,13 @@ sub_link: "platform/rabbitmq-ha"
 meta_title: "High availability of Rabbitmq in Polyaxon - Configuration"
 meta_description: "Polyaxon offers a couple of ways to set a high available Rabbitmq."
 tags:
-    - configuration
-    - polyaxon
-    - rabbitmq
-    - scaling
-    - high-availability
-    - kubernetes
-    - docker-compose
+  - configuration
+  - polyaxon
+  - rabbitmq
+  - scaling
+  - high-availability
+  - kubernetes
+  - docker-compose
 sidebar: "setup"
 ---
 

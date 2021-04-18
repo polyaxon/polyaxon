@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - api
-    - enterprise
+  - api
+  - enterprise
 ---
 
 Component Hub is not part of Polyaxon's core product, we intend to make it easy for people to manage their private components using local storage, Github, or other backends.

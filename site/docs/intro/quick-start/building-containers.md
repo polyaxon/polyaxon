@@ -6,9 +6,9 @@ meta_description: "Building Containers - Become familiar with the ecosystem of P
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - quick-start
+  - tutorials
+  - concepts
+  - quick-start
 sidebar: "intro"
 ---
 

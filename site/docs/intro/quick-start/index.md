@@ -7,9 +7,9 @@ visibility: public
 status: published
 is_index: true
 tags:
-    - tutorials
-    - concepts
-    - quick-start
+  - tutorials
+  - concepts
+  - quick-start
 sidebar: "intro"
 ---
 

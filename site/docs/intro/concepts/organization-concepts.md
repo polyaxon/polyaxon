@@ -6,9 +6,9 @@ meta_description: "Polyaxon relies on a set of concepts to manage your organizat
 visibility: public
 status: published
 tags:
-    - architecture
-    - concepts
-    - polyaxon
+  - architecture
+  - concepts
+  - polyaxon
 sidebar: "intro"
 ---
 

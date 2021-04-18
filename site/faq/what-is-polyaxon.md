@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - polyaxon
+  - polyaxon
 ---
 
 Polyaxon is a platform that tries to simplify Deep Learning and Machine Learning workflow and makes it reproducible, scalable, and portable.

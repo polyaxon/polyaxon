@@ -4,9 +4,9 @@ sub_link: "platform/root-user"
 meta_title: "Root user and db access in Polyaxon - Configuration"
 meta_description: "Polyaxon's root user and db access."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
+  - configuration
+  - polyaxon
+  - kubernetes
 sidebar: "setup"
 ---
 

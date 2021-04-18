@@ -4,9 +4,9 @@ sub_link: "runs-dashboard/logs"
 meta_title: "Polyaxon management tools and UI - Runs dashboard - Run Logs"
 meta_description: "Polyaxon runs dashboard for Machine learning experiment tracking and visualizations."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

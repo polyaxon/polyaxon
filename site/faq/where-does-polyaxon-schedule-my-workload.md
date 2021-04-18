@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - deployment
-    - kubernetes
+  - deployment
+  - kubernetes
 ---
 
 All your workload is scheduled on your own clusters whether you are using Polyaxon Cloud, Polyaxon EE, or Polyaxon CE.

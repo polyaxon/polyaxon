@@ -7,9 +7,9 @@ meta_description: "Polyaxonfile Command Line Interface Specification - {{title}}
 visibility: public
 status: published
 tags:
-    - cli
-    - reference
-    - polyaxon
+  - cli
+  - reference
+  - polyaxon
 sidebar: "core"
 ---
 

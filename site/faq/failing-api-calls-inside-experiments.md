@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - api
+  - api
 ---
 
 Polyaxon uses an ephemeral token to authenticate the jobs/experiments before granting client access to other APIs related to the experiment/job,

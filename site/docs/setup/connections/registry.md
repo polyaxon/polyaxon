@@ -4,17 +4,17 @@ sub_link: "connections/registry"
 meta_title: "Integrate your private docker images and registries in Polyaxon - Configuration"
 meta_description: "Polyaxon allows to define and pull images from private Container Registries."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - docker-compose
-    - environment
-    - orchestration
-    - registries
-    - gcr
-    - ecr
-    - acr
-    - docker
+  - configuration
+  - polyaxon
+  - kubernetes
+  - docker-compose
+  - environment
+  - orchestration
+  - registries
+  - gcr
+  - ecr
+  - acr
+  - docker
 sidebar: "setup"
 ---
 

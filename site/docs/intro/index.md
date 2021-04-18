@@ -7,18 +7,18 @@ is_index: true
 visibility: public
 status: published
 tags:
-    - concepts
-    - training
-    - scale
-    - scheduling
-    - platform
-    - kubernetes
-    - helm
-    - containers
-    - micro-services
-    - deep-learning
-    - machine-learning
-    - enterprise
+  - concepts
+  - training
+  - scale
+  - scheduling
+  - platform
+  - kubernetes
+  - helm
+  - containers
+  - micro-services
+  - deep-learning
+  - machine-learning
+  - enterprise
 sidebar: "intro"
 ---
 

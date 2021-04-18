@@ -6,9 +6,9 @@ is_index: true
 meta_title: "Polyaxon's auxiliary containers provide utilities to initialize and watch users' workload."
 meta_description: "Polyaxon's auxiliary containers provide utilities to initialize and watch users' workload."
 tags:
-    - setup
-    - kubernetes
-    - install
+  - setup
+  - kubernetes
+  - install
 sidebar: "setup"
 ---
 

@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - polyaxon
+  - polyaxon
 ---
 
 Yes, Polyaxon supports NVIDIA DGX. Polyaxon schedules the workload on Kubernetes and [NVIDIA has added Kubernetes](https://developer.nvidia.com/blog/maximizing-nvidia-dgx-kubernetes/) to its containerization toolbox.

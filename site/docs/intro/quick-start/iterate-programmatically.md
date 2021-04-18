@@ -6,10 +6,10 @@ meta_description: "Programmatic Iteration with the python client - Become famili
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - client
-    - quick-start
+  - tutorials
+  - concepts
+  - client
+  - quick-start
 sidebar: "intro"
 ---
 

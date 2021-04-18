@@ -4,9 +4,9 @@ sub_link: "organizations/members"
 meta_title: "Polyaxon management tools and UI - Members"
 meta_description: "You can invite members to your organization members and assign roles with specific permissions."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

@@ -4,11 +4,11 @@ sub_link: "platform/celery"
 meta_title: "Celery Distributed Task Queue in Polyaxon - Configuration"
 meta_description: "Polyaxon's Celery Distributed Task Queue configuration."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - broker
-    - celery
+  - configuration
+  - polyaxon
+  - kubernetes
+  - broker
+  - celery
 sidebar: "setup"
 ---
 

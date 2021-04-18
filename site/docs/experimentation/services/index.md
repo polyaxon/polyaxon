@@ -5,11 +5,11 @@ is_index: true
 meta_title: "Polyaxon Services - Experimentation"
 meta_description: "A Service is the execution of your container with a service."
 tags:
-    - concepts
-    - polyaxon
-    - experimentation
-    - experiments
-    - architecture
+  - concepts
+  - polyaxon
+  - experimentation
+  - experiments
+  - architecture
 sidebar: "experimentation"
 ---
 

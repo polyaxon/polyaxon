@@ -7,12 +7,12 @@ visibility: public
 status: published
 is_index: true
 tags:
-    - api
-    - reference
-    - polyaxon
-    - query
-    - syntax
-    - search
+  - api
+  - reference
+  - polyaxon
+  - query
+  - syntax
+  - search
 sidebar: "core"
 ---
 

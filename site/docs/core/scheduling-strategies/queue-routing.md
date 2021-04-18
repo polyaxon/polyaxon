@@ -7,13 +7,13 @@ to throttle the number of operations on a queue,
 to route operations on a queue to a namespace or cluster,
 to limit the number of operations queued from a single workflow or nested workflows."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - environment
-    - scheduling
-    - orchestration
-    - nodes
+  - configuration
+  - polyaxon
+  - kubernetes
+  - environment
+  - scheduling
+  - orchestration
+  - nodes
 sidebar: "core"
 ---
 

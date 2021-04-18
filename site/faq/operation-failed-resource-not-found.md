@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - deployment
-    - api
+  - deployment
+  - api
 ---
 
 Please make sure that Polyaxon Operation CRD is installed in the namespace.

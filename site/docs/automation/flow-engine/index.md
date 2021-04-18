@@ -7,11 +7,11 @@ visibility: public
 status: published
 is_index: true
 tags:
-    - reference
-    - polyaxon
-    - automation
-    - workflow
-    - pipelines
+  - reference
+  - polyaxon
+  - automation
+  - workflow
+  - pipelines
 sidebar: "automation"
 ---
 

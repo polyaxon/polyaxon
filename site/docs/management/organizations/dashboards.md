@@ -4,9 +4,9 @@ sub_link: "organizations/dashboards"
 meta_title: "Polyaxon management UI - Dashboards"
 meta_description: "Saved dashboards let you save and describe dashboards and widgets."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

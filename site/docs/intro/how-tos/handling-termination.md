@@ -6,9 +6,9 @@ meta_description: "Handling failures and termination and ensuring robust schedul
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - quick-start
+  - tutorials
+  - concepts
+  - quick-start
 sidebar: "intro"
 ---
 

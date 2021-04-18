@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - users
+  - users
 ---
 
 The target audience of Polyaxon, are individuals or teams looking for more organized and rigorous workflow,

@@ -7,12 +7,12 @@ meta_description: "Interval schedules to trigger components following a specific
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - polyflow
-    - pipelines
-    - dags
-    - schedules
+  - reference
+  - polyaxon
+  - polyflow
+  - pipelines
+  - dags
+  - schedules
 sidebar: "automation"
 ---
 

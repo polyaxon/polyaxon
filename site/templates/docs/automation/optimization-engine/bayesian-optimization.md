@@ -8,10 +8,10 @@ The way Polyaxon performs bayesian optimization is by measuring the expected inc
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - experimentation
-    - hyperparameter-optimization
+  - reference
+  - polyaxon
+  - experimentation
+  - hyperparameter-optimization
 sidebar: "automation"
 ---
 

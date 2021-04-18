@@ -7,9 +7,9 @@ visibility: public
 status: published
 is_index: true
 tags:
-    - specifications
-    - polyaxon
-    - python
+  - specifications
+  - polyaxon
+  - python
 sidebar: "core"
 ---
 

@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - deployment
-    - kubernetes
+  - deployment
+  - kubernetes
 ---
 
 Parallelism and concurrency management depends on your distribution.

@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - logging
-    - dashboard
+  - logging
+  - dashboard
 ---
 
 Polyaxon provides two modes for viewing jobs, experiments, and services:

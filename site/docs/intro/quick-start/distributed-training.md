@@ -6,9 +6,9 @@ meta_description: "Distributed Training - Become familiar with the ecosystem of 
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - quick-start
+  - tutorials
+  - concepts
+  - quick-start
 sidebar: "intro"
 ---
 

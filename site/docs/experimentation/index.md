@@ -7,12 +7,12 @@ meta_description: "Polyaxon experimentation tools to record and visualize every 
 visibility: public
 status: published
 tags:
-    - tracking
-    - reference
-    - polyaxon
-    - client
-    - sdk
-    - experiment
+  - tracking
+  - reference
+  - polyaxon
+  - client
+  - sdk
+  - experiment
 sidebar: "experimentation"
 ---
 

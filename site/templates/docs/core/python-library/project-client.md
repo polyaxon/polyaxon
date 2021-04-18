@@ -7,10 +7,10 @@ meta_description: "The project client allows to communicate with project APIs."
 visibility: public
 status: published
 tags:
-    - client
-    - api
-    - polyaxon
-    - python
+  - client
+  - api
+  - polyaxon
+  - python
 sidebar: "core"
 ---
 

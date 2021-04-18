@@ -4,13 +4,13 @@ sub_link: "platform/postgresql-ha"
 meta_title: "High availability of postgresql database in Polyaxon - Configuration"
 meta_description: "Keeping database records of your users, projects, experiments, and jobs is very important. Polyaxon offers a couple of ways to set a high available database."
 tags:
-    - configuration
-    - polyaxon
-    - postgresql
-    - scaling
-    - high-availability
-    - kubernetes
-    - docker-compose
+  - configuration
+  - polyaxon
+  - postgresql
+  - scaling
+  - high-availability
+  - kubernetes
+  - docker-compose
 sidebar: "setup"
 ---
 

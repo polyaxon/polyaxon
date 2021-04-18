@@ -6,11 +6,11 @@ meta_title: "How to schedule runs on Polyaxon"
 meta_description: "This is a guide to assist you through the process and strategies for scheduling your runs."
 is_index: true
 tags:
-    - namespace
-    - queueing
-    - pipelines
-    - kubernetes
-    - scheduling
+  - namespace
+  - queueing
+  - pipelines
+  - kubernetes
+  - scheduling
 sidebar: "core"
 ---
 

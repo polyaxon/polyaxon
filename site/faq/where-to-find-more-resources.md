@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - logging
+  - logging
 ---
 
 Polyaxon provides several [resources](/docs/resources/) and documentation about the roadmap, release notes,

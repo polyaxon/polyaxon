@@ -6,15 +6,15 @@ meta_description: "Polyaxon Experiments Query Syntax Specification."
 visibility: public
 status: published
 tags:
-    - api
-    - reference
-    - polyaxon
-    - query
-    - syntax
-    - search
-    - experiment
-    - tracking
-    - insights
+  - api
+  - reference
+  - polyaxon
+  - query
+  - syntax
+  - search
+  - experiment
+  - tracking
+  - insights
 sidebar: "core"
 ---
 

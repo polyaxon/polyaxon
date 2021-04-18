@@ -4,9 +4,9 @@ sub_link: "organizations/agents"
 meta_title: "Polyaxon management tools and UI - Agents"
 meta_description: "Polyaxon Agent is the tool that allows orchestrating runs on user's clusters."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

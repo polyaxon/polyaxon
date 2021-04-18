@@ -6,7 +6,7 @@ meta_description: "Polyaxon's master plan is to replace disparate tools and appl
 visibility: public
 status: published
 tags:
-    - reference
+  - reference
 ---
 
 Polyaxon's master plan is to replace disparate tools and applications with a [Single Platform](/docs/resources/one-platform/)

@@ -6,9 +6,9 @@ meta_description: "Polyaxon schedules and manage the lifecycle of several runtim
 visibility: public
 status: published
 tags:
-    - architecture
-    - concepts
-    - polyaxon
+  - architecture
+  - concepts
+  - polyaxon
 sidebar: "intro"
 ---
 

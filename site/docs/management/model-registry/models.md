@@ -5,9 +5,9 @@ meta_title: "Polyaxon management UI - Models"
 meta_description: "Models is the entity that defines the a version of a model created in Polyaxon or other system,
 each model: Can have multiple versions, Can be published publicly or privately within your organization, Can define team and project level permissions."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

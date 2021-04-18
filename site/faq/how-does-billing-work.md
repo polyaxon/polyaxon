@@ -13,9 +13,9 @@ author:
 visibility: public
 status: published
 tags:
-    - billing
-    - deployment
-    - enterprise
+  - billing
+  - deployment
+  - enterprise
 ---
 
 If you deploy the community open-source version,

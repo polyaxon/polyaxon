@@ -4,9 +4,9 @@ sub_link: "platform/enterprise-control-plane"
 meta_title: "Polyaxon Enterprise Edition Control Plane Setup - Configuration"
 meta_description: "Polyaxon Enterprise Edition Control Plane Setup."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
+  - configuration
+  - polyaxon
+  - kubernetes
 sidebar: "setup"
 ---
 

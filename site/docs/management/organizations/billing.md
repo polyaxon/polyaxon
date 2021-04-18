@@ -4,9 +4,9 @@ sub_link: "organizations/billing"
 meta_title: "Polyaxon management tools and UI - Billing"
 meta_description: "Owners on Polyaxon can update and manage their billing information under the settings page."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

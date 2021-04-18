@@ -9,12 +9,12 @@ meta_description: "DAG ()Directed Acyclic Graphs) is
 visibility: public
 status: published
 tags:
-    - specification
-    - api
-    - polyaxon
-    - yaml
-    - json
-    - python
+  - specification
+  - api
+  - polyaxon
+  - yaml
+  - json
+  - python
 sidebar: "automation"
 ---
 

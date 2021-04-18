@@ -6,9 +6,9 @@ meta_title: "Polyaxon management UI - Component Hub"
 meta_description: "Polyaxon Component Hub is a product for managing versioned and reusable components,
 each component: Can have multiple versions, Can be published publicly or privately within your organization, Can define team level permissions."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

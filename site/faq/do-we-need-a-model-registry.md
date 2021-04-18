@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - api
+  - api
 ---
 
 If you have already a Model Registry, you intend to use an external registry, 

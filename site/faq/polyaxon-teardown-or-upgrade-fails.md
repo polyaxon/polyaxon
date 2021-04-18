@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - api
+  - api
 ---
 
 Polyaxon uses some default values for deploying and managing Polyaxon deployment.

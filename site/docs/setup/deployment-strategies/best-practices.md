@@ -5,9 +5,9 @@ title_link: "Deployment Best Practices"
 meta_title: "Deployment Best Practices"
 meta_description: "Deploying Polyaxon can be hard, not only because it requires using Kubernetes a tool that is hard to manage and maintain, but also because it is a stateful application. In this guide, we will try to go through several aspects of Polyaxon deployment that we think any user trying to use Polyaxon in production mode should think about."
 tags:
-    - setup
-    - kubernetes
-    - install
+  - setup
+  - kubernetes
+  - install
 sidebar: "setup"
 ---
 

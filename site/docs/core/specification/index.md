@@ -7,9 +7,9 @@ visibility: public
 status: published
 is_index: true
 tags:
-    - specifications
-    - polyaxon
-    - yaml
+  - specifications
+  - polyaxon
+  - yaml
 sidebar: "core"
 ---
 

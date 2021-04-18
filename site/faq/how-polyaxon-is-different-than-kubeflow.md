@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - experimentation
+  - experimentation
 ---
 
 Polyaxon has a native integration of Kubeflow's components.

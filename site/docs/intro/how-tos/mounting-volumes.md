@@ -7,8 +7,8 @@ is_index: true
 visibility: public
 status: published
 tags:
-    - concepts
-    - tutorials
+  - concepts
+  - tutorials
 sidebar: "intro"
 ---
 
@@ -40,7 +40,7 @@ run:
     volumeMounts:
     - name: volume1
       mountPath: /mnt1/vol1/path
-    - name: volume2
+  - name: volume2
       mountPath: /mnt2/vol2/path
 ```
 

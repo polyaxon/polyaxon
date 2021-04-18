@@ -7,12 +7,12 @@ meta_description: "Exact datetime schedules to trigger components at a specific 
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - polyflow
-    - pipelines
-    - dags
-    - schedules
+  - reference
+  - polyaxon
+  - polyflow
+  - pipelines
+  - dags
+  - schedules
 sidebar: "automation"
 ---
 

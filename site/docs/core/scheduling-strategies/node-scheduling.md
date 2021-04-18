@@ -4,13 +4,13 @@ sub_link: "scheduling-strategies/node-scheduling"
 meta_title: "Node Scheduling in Polyaxon - Scheduling strategies"
 meta_description: "Polyaxon provides a list of options to select which nodes should be used for a specific operations."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - environment
-    - scheduling
-    - orchestration
-    - nodes
+  - configuration
+  - polyaxon
+  - kubernetes
+  - environment
+  - scheduling
+  - orchestration
+  - nodes
 sidebar: "core"
 ---
 

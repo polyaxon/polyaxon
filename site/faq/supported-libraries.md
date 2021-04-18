@@ -13,10 +13,10 @@ author:
 visibility: public
 status: published
 tags:
-    - libraries
-    - frameworks
-    - environment
-    - run
+  - libraries
+  - frameworks
+  - environment
+  - run
 ---
 
 Polyaxon supports all popular deep learning frameworks and machine learning libraries.

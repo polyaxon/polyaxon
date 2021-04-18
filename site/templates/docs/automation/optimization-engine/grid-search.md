@@ -7,10 +7,10 @@ meta_description: "Grid Search is essentially an exhaustive search through a man
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - experimentation
-    - hyperparameter-optimization
+  - reference
+  - polyaxon
+  - experimentation
+  - hyperparameter-optimization
 sidebar: "automation"
 ---
 

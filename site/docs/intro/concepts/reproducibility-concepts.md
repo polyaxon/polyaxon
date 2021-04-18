@@ -6,9 +6,9 @@ meta_description: "Polyaxon makes your experiments reproducible, portable, and r
 visibility: public
 status: published
 tags:
-    - architecture
-    - concepts
-    - polyaxon
+  - architecture
+  - concepts
+  - polyaxon
 sidebar: "intro"
 ---
 

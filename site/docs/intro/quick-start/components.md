@@ -6,9 +6,9 @@ meta_description: "Components - Become familiar with the ecosystem of Polyaxon t
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - quick-start
+  - tutorials
+  - concepts
+  - quick-start
 sidebar: "intro"
 ---
 

@@ -4,9 +4,9 @@ sub_link: "organizations/activities"
 meta_title: "Polyaxon management tools and UI - Activities"
 meta_description: "Polyaxon provides a page to show activities and audit changes made on project, component hub, model registry, and organization levels."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

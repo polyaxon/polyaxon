@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - logging
+  - logging
 ---
 
 Polyaxon provides several ways for storing the [logs](/docs/setup/connections/artifacts/), the default method uses a local path on the host node.

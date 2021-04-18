@@ -4,10 +4,10 @@ sub_link: "platform/broker"
 meta_title: "Asynchronous Workers Broker in Polyaxon - Configuration"
 meta_description: "Polyaxon's Asynchronous Workers Broker configuration."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - broker
+  - configuration
+  - polyaxon
+  - kubernetes
+  - broker
 sidebar: "setup"
 ---
 

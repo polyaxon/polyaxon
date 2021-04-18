@@ -4,9 +4,9 @@ sub_link: "platform/community-edition"
 meta_title: "Polyaxon Community Edition Setup - Configuration"
 meta_description: "Polyaxon Community Edition Setup based on Polyaxon open-source."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
+  - configuration
+  - polyaxon
+  - kubernetes
 sidebar: "setup"
 ---
 

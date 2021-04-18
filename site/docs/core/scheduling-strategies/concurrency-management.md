@@ -4,11 +4,11 @@ sub_link: "scheduling-strategies/concurrency-management"
 meta_title: "Managing concurrency and parallelism in Polyaxon - scheduling strategies"
 meta_description: "A feature managing concurrency and controlling parallelism."
 tags:
-    - namespace
-    - queueing
-    - pipelines
-    - kubernetes
-    - scheduling
+  - namespace
+  - queueing
+  - pipelines
+  - kubernetes
+  - scheduling
 sidebar: "core"
 ---
 

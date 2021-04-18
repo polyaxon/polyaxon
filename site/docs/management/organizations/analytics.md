@@ -4,9 +4,9 @@ sub_link: "organizations/analytics"
 meta_title: "Polyaxon management tools and UI - Analytics"
 meta_description: "Polyaxon provides a page to drive analytics and insights about your operations."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

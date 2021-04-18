@@ -13,8 +13,8 @@ author:
 visibility: public
 status: published
 tags:
-    - kubernetes
-    - kubeadm
+  - kubernetes
+  - kubeadm
 ---
 Please check that networking is working as intended.
 Some users reported that deploying Kubernetes with Canal for networking works better.

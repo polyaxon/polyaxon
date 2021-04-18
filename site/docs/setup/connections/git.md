@@ -4,15 +4,15 @@ sub_link: "connections/git"
 meta_title: "Integrate your workflow with github, gitlab, bitbucket in Polyaxon - Configuration"
 meta_description: "Polyaxon allows to use external git providers for code management."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - docker-compose
-    - environment
-    - orchestration
-    - github
-    - gitlab
-    - bitbucket
+  - configuration
+  - polyaxon
+  - kubernetes
+  - docker-compose
+  - environment
+  - orchestration
+  - github
+  - gitlab
+  - bitbucket
 sidebar: "setup"
 ---
 

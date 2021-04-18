@@ -7,12 +7,12 @@ meta_description: "Events specification for subscribing operations to specific e
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - polyflow
-    - pipelines
-    - mapping
-    - parallel
+  - reference
+  - polyaxon
+  - polyflow
+  - pipelines
+  - mapping
+  - parallel
 sidebar: "automation"
 ---
 

@@ -4,11 +4,11 @@ sub_link: "scheduling-strategies/conditional-scheduling"
 meta_title: "How to conditionally schedule operations in Polyaxon - scheduling strategies"
 meta_description: "A feature to start operations on nodes or queues based on inputs data or to completely skip scheduling."
 tags:
-    - namespace
-    - queueing
-    - pipelines
-    - kubernetes
-    - scheduling
+  - namespace
+  - queueing
+  - pipelines
+  - kubernetes
+  - scheduling
 sidebar: "core"
 ---
 

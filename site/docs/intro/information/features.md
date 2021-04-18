@@ -6,10 +6,10 @@ meta_description: "Polyaxon comes with powerful features built directly into the
 visibility: public
 status: published
 tags:
-    - concepts
-    - quick-start
-    - tutorials
-    - features
+  - concepts
+  - quick-start
+  - tutorials
+  - features
 sidebar: "intro"
 ---
 

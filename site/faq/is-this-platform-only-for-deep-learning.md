@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - platform
+  - platform
 ---
 
 Not at all, Polyaxon aims at solving different aspects of the data science workflow.

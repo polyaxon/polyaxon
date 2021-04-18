@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - api
+  - api
 ---
 
 Make sure to enable SSL verification by setting `--verify-ssl=true`.

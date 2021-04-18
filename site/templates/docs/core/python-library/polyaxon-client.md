@@ -7,10 +7,10 @@ meta_description: "Polyaxon client is the base client with logic to pass config 
 visibility: public
 status: published
 tags:
-    - client
-    - api
-    - polyaxon
-    - python
+  - client
+  - api
+  - polyaxon
+  - python
 sidebar: "core"
 ---
 

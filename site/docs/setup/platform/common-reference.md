@@ -6,12 +6,12 @@ meta_description: "Polyaxon Common Helm Reference For Polyaxon CE and EE charts.
 visibility: public
 status: published
 tags:
-    - specification
-    - polyaxon
-    - yaml
-    - helm
-    - reference
-    - kubernetes
+  - specification
+  - polyaxon
+  - yaml
+  - helm
+  - reference
+  - kubernetes
 sidebar: "setup"
 ---
 

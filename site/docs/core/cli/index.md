@@ -7,9 +7,9 @@ visibility: public
 status: published
 is_index: true
 tags:
-    - cli
-    - reference
-    - polyaxon
+  - cli
+  - reference
+  - polyaxon
 sidebar: "core"
 ---
 

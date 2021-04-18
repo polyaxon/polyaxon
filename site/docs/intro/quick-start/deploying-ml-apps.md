@@ -6,10 +6,10 @@ meta_description: "Deploying ML apps - Become familiar with the ecosystem of Pol
 visibility: public
 status: published
 tags:
-    - tutorials
-    - concepts
-    - notebook
-    - quick-start
+  - tutorials
+  - concepts
+  - notebook
+  - quick-start
 sidebar: "intro"
 ---
 

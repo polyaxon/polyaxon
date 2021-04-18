@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - privacy
+  - privacy
 ---
 
 No. We do not access, copy, or upload any of your train/test/dev data or models.

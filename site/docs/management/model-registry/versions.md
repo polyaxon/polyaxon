@@ -5,9 +5,9 @@ meta_title: "Polyaxon management UI - Model Versions"
 meta_description: "Model versions,
 each model: Can have multiple versions, Can be published publicly or privately within your organization, Can define team and project level permissions."
 tags:
-    - concepts
-    - polyaxon
-    - management
+  - concepts
+  - polyaxon
+  - management
 sidebar: "management"
 ---
 

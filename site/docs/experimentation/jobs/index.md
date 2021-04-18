@@ -5,11 +5,11 @@ is_index: true
 meta_title: "Polyaxon Jobs - Experimentation"
 meta_description: "A Job is the execution of your model with data and the provided parameters on the cluster."
 tags:
-    - concepts
-    - polyaxon
-    - experimentation
-    - experiments
-    - architecture
+  - concepts
+  - polyaxon
+  - experimentation
+  - experiments
+  - architecture
 sidebar: "experimentation"
 ---
 
