@@ -81,7 +81,7 @@ run:
   ports: [8501]
   rewritePath: true
   container:
-    image: polyaxon/spacy-streamlit-demo
+    image: polyaxon/polyaxon-examples:spacy-streamlit-demo
     command: [streamlit, run, app.py]
 ```
 
@@ -120,13 +120,21 @@ Or to get the service in full-screen mode:
 polyaxon ops service --external [-uid] [-p]
 ```
 
-![spacy-streamlit-1](../../content/images/integrations/streamlit/spacy-streamlit-1.png)
+Using the light the theme:
 
-![spacy-streamlit-2](../../content/images/integrations/streamlit/spacy-streamlit-2.png)
+![spacy-streamlit-light-1](../../content/images/integrations/streamlit/spacy-streamlit-light-1.png)
+
+![spacy-streamlit-light-2](../../content/images/integrations/streamlit/spacy-streamlit-light-2.png)
+
+Using the dark the theme:
+
+![spacy-streamlit-dark-1](../../content/images/integrations/streamlit/spacy-streamlit-dark-1.png)
+
+![spacy-streamlit-dark-2](../../content/images/integrations/streamlit/spacy-streamlit-dark-2.png)
 
 ## Additional information
 
-The docker image `polyaxon/spacy-streamlit-demo` was created using this [operation](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/polyaxonfiles/build.yaml):
+The docker image `polyaxon/polyaxon-examples:spacy-streamlit-demo` was created using this [operation](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/polyaxonfiles/build.yaml):
 
 ```yaml
 version: 1.1
@@ -135,7 +143,7 @@ name: build-spacy-streamlit
 params:
   destination:
     connection: CONNECTION_NAME
-    value: spacy-streamlit-demo
+    value: polyaxon-examples:spacy-streamlit-demo
   context:
     value: "{{ globals.artifacts_path }}/spacy-streamlit-polyaxon-demo"
 runPatch:

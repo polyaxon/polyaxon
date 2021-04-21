@@ -95,13 +95,12 @@ The operation should look like this:
 ```yaml
 version: 1.1
 kind: operation
-name: build-spacy-streamlit
 params:
   destination:
     connection: CONNECTION_NAME
     value: image:tag
   context:
-    value: "{{ globals.artifacts_path }}/uploads"
+    value: "{{ globals.run_artifacts_path }}/uploads"
 hubRef: dockerizer
 ```
 
