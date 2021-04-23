@@ -17,6 +17,7 @@
 from collections.abc import Mapping
 from typing import Dict, Union
 
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyaxonfile.specs.base import BaseSpecification
 from polyaxon.polyflow import (
@@ -46,6 +47,13 @@ class OperationSpecification(BaseSpecification):
             config = config.patch(preset, preset.patch_strategy)
         # Patch run
         component = config.component  # type: V1Component
+        if not component:
+            raise PolyaxonSchemaError(
+                "Compile operation received an invalid configuration: "
+                "the component is missing. "
+                "Please make sure that the polyaxonfile was correctly resolved "
+                "before to calling this operation."
+            )
         if config.run_patch:
             component.run = component.run.patch(
                 validate_run_patch(config.run_patch, component.run.kind),

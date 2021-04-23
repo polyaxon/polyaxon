@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from marshmallow import ValidationError as MarshmallowValidationError
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
@@ -179,7 +180,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                     supported_kinds=validated_data.get("supported_kinds"),
                     supported_owners=validated_data.get("supported_owners"),
                 )
-            except (PolyaxonException, ValueError) as e:
+            except (MarshmallowValidationError, PolyaxonException, ValueError) as e:
                 raise ValidationError(e)
         else:
             return create_run(

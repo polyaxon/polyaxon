@@ -8531,6 +8531,15 @@
           "title": "Optional time when the entity was created",
           "type": "string"
         },
+        "expiration": {
+          "format": "int32",
+          "title": "Optional expiration for support",
+          "type": "integer"
+        },
+        "is_cloud_viewable": {
+          "title": "Setting to enable viewable metadata on cloud",
+          "type": "boolean"
+        },
         "is_public": {
           "title": "Optional flag to tell if this organization is public",
           "type": "boolean"
@@ -8553,6 +8562,11 @@
         },
         "role": {
           "title": "Current user's role in this org",
+          "type": "string"
+        },
+        "support_revoke_at": {
+          "format": "date-time",
+          "title": "Optional time to revoke support access",
           "type": "string"
         },
         "updated_at": {
@@ -8889,13 +8903,16 @@
           "title": "Optional time when the entity was created",
           "type": "string"
         },
-        "definition": {
-          "title": "Optional project definition",
-          "type": "object"
-        },
         "description": {
           "title": "Optional description",
           "type": "string"
+        },
+        "excluded_runtimes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional project definition",
+          "type": "array"
         },
         "is_public": {
           "title": "Optional flag to tell if this project is public",

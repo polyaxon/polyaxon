@@ -426,7 +426,8 @@ class ParamSpec(
     def get_typed_param_value(self):
         if self.type == types.STR:
             if self.is_list:
-                return [parser.parse_string(v) for v in self.param.value]
+                value = self.param.value or []  # Handles the case of None
+                return [parser.parse_string(v) for v in value]
             return parser.parse_string(self.param.value)
         return self.param.value
 

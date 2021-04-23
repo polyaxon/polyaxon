@@ -82,6 +82,20 @@ type GetOrganizationSettingsParams struct {
 	*/
 	OrganizationCreatedAt *strfmt.DateTime
 
+	/* OrganizationExpiration.
+
+	   Optional expiration for support.
+
+	   Format: int32
+	*/
+	OrganizationExpiration *int32
+
+	/* OrganizationIsCloudViewable.
+
+	   Setting to enable viewable metadata on cloud.
+	*/
+	OrganizationIsCloudViewable *bool
+
 	/* OrganizationIsPublic.
 
 	   Optional flag to tell if this organization is public.
@@ -111,6 +125,14 @@ type GetOrganizationSettingsParams struct {
 	   Current user's role in this org.
 	*/
 	OrganizationRole *string
+
+	/* OrganizationSupportRevokeAt.
+
+	   Optional time to revoke support access.
+
+	   Format: date-time
+	*/
+	OrganizationSupportRevokeAt *strfmt.DateTime
 
 	/* OrganizationUpdatedAt.
 
@@ -202,6 +224,28 @@ func (o *GetOrganizationSettingsParams) SetOrganizationCreatedAt(organizationCre
 	o.OrganizationCreatedAt = organizationCreatedAt
 }
 
+// WithOrganizationExpiration adds the organizationExpiration to the get organization settings params
+func (o *GetOrganizationSettingsParams) WithOrganizationExpiration(organizationExpiration *int32) *GetOrganizationSettingsParams {
+	o.SetOrganizationExpiration(organizationExpiration)
+	return o
+}
+
+// SetOrganizationExpiration adds the organizationExpiration to the get organization settings params
+func (o *GetOrganizationSettingsParams) SetOrganizationExpiration(organizationExpiration *int32) {
+	o.OrganizationExpiration = organizationExpiration
+}
+
+// WithOrganizationIsCloudViewable adds the organizationIsCloudViewable to the get organization settings params
+func (o *GetOrganizationSettingsParams) WithOrganizationIsCloudViewable(organizationIsCloudViewable *bool) *GetOrganizationSettingsParams {
+	o.SetOrganizationIsCloudViewable(organizationIsCloudViewable)
+	return o
+}
+
+// SetOrganizationIsCloudViewable adds the organizationIsCloudViewable to the get organization settings params
+func (o *GetOrganizationSettingsParams) SetOrganizationIsCloudViewable(organizationIsCloudViewable *bool) {
+	o.OrganizationIsCloudViewable = organizationIsCloudViewable
+}
+
 // WithOrganizationIsPublic adds the organizationIsPublic to the get organization settings params
 func (o *GetOrganizationSettingsParams) WithOrganizationIsPublic(organizationIsPublic *bool) *GetOrganizationSettingsParams {
 	o.SetOrganizationIsPublic(organizationIsPublic)
@@ -255,6 +299,17 @@ func (o *GetOrganizationSettingsParams) WithOrganizationRole(organizationRole *s
 // SetOrganizationRole adds the organizationRole to the get organization settings params
 func (o *GetOrganizationSettingsParams) SetOrganizationRole(organizationRole *string) {
 	o.OrganizationRole = organizationRole
+}
+
+// WithOrganizationSupportRevokeAt adds the organizationSupportRevokeAt to the get organization settings params
+func (o *GetOrganizationSettingsParams) WithOrganizationSupportRevokeAt(organizationSupportRevokeAt *strfmt.DateTime) *GetOrganizationSettingsParams {
+	o.SetOrganizationSupportRevokeAt(organizationSupportRevokeAt)
+	return o
+}
+
+// SetOrganizationSupportRevokeAt adds the organizationSupportRevokeAt to the get organization settings params
+func (o *GetOrganizationSettingsParams) SetOrganizationSupportRevokeAt(organizationSupportRevokeAt *strfmt.DateTime) {
+	o.OrganizationSupportRevokeAt = organizationSupportRevokeAt
 }
 
 // WithOrganizationUpdatedAt adds the organizationUpdatedAt to the get organization settings params
@@ -321,6 +376,40 @@ func (o *GetOrganizationSettingsParams) WriteToRequest(r runtime.ClientRequest, 
 		if qOrganizationCreatedAt != "" {
 
 			if err := r.SetQueryParam("organization.created_at", qOrganizationCreatedAt); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.OrganizationExpiration != nil {
+
+		// query param organization.expiration
+		var qrOrganizationExpiration int32
+
+		if o.OrganizationExpiration != nil {
+			qrOrganizationExpiration = *o.OrganizationExpiration
+		}
+		qOrganizationExpiration := swag.FormatInt32(qrOrganizationExpiration)
+		if qOrganizationExpiration != "" {
+
+			if err := r.SetQueryParam("organization.expiration", qOrganizationExpiration); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.OrganizationIsCloudViewable != nil {
+
+		// query param organization.is_cloud_viewable
+		var qrOrganizationIsCloudViewable bool
+
+		if o.OrganizationIsCloudViewable != nil {
+			qrOrganizationIsCloudViewable = *o.OrganizationIsCloudViewable
+		}
+		qOrganizationIsCloudViewable := swag.FormatBool(qrOrganizationIsCloudViewable)
+		if qOrganizationIsCloudViewable != "" {
+
+			if err := r.SetQueryParam("organization.is_cloud_viewable", qOrganizationIsCloudViewable); err != nil {
 				return err
 			}
 		}
@@ -406,6 +495,23 @@ func (o *GetOrganizationSettingsParams) WriteToRequest(r runtime.ClientRequest, 
 		if qOrganizationRole != "" {
 
 			if err := r.SetQueryParam("organization.role", qOrganizationRole); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.OrganizationSupportRevokeAt != nil {
+
+		// query param organization.support_revoke_at
+		var qrOrganizationSupportRevokeAt strfmt.DateTime
+
+		if o.OrganizationSupportRevokeAt != nil {
+			qrOrganizationSupportRevokeAt = *o.OrganizationSupportRevokeAt
+		}
+		qOrganizationSupportRevokeAt := qrOrganizationSupportRevokeAt.String()
+		if qOrganizationSupportRevokeAt != "" {
+
+			if err := r.SetQueryParam("organization.support_revoke_at", qOrganizationSupportRevokeAt); err != nil {
 				return err
 			}
 		}

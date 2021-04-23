@@ -30,6 +30,7 @@ class BaseKubeflowCRDTestCase(BaseTestCase):
             sidecar_containers=sidecar_containers,
             main_container=main_container,
             labels=environment.labels,
+            annotations=environment.annotations,
             environment=environment,
             num_replicas=12,
         )
@@ -42,6 +43,7 @@ class BaseKubeflowCRDTestCase(BaseTestCase):
             volumes=[],
             environment=environment,
             labels=environment.labels,
+            annotations=environment.annotations,
         )
         replica_template = {
             "replicas": replica.num_replicas,

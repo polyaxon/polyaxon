@@ -26,6 +26,7 @@ def get_kf_replicas_template(
     replica_name: str,
     replica: Optional[ReplicaSpec],
     labels: Dict[str, str],
+    annotations: Dict[str, str],
     template_spec: Dict,
 ):
     if not replica:
@@ -40,6 +41,7 @@ def get_kf_replicas_template(
         volumes=replica.volumes,
         environment=replica.environment,
         labels=labels,
+        annotations=annotations,
     )
 
     template_spec[replica_name] = {

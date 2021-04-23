@@ -48,6 +48,7 @@ class TestPodSpec(BaseTestCase):
                 volumes=None,
                 environment=V1Environment(),
                 labels={},
+                annotations={},
             )
 
         environment = V1Environment(
@@ -70,6 +71,7 @@ class TestPodSpec(BaseTestCase):
             volumes=None,
             environment=environment,
             labels=environment.labels,
+            annotations=environment.annotations,
         )
 
         assert metadata.name == "foo"
@@ -108,9 +110,10 @@ class TestPodSpec(BaseTestCase):
             volumes=volumes,
             environment=environment,
             labels={},
+            annotations={},
         )
 
         assert pod_spec.init_containers == [init_container]
         assert pod_spec.containers == [main_container, sidecar_container]
         assert pod_spec.volumes == volumes
-        assert metadata.labels == {}
+        assert metadata.annotations == {}

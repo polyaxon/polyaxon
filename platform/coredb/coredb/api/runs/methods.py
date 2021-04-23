@@ -15,11 +15,13 @@
 # limitations under the License.
 import ujson
 
+from marshmallow import ValidationError as MarshmallowValidationError
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from coredb.managers.statuses import new_run_status, new_run_stopping_status
+from polyaxon.exceptions import PolyaxonException
 from polyaxon.lifecycle import V1StatusCondition
 
 
@@ -36,7 +38,7 @@ def clone_run(view, request, *args, **kwargs):
             raise ValidationError("Cloning was not successful, error: {}".format(e))
     try:
         new_obj = view.clone(obj=view.run, content=content)
-    except Exception as e:
+    except (MarshmallowValidationError, PolyaxonException, ValueError) as e:
         raise ValidationError("Cloning was not successful, error: {}".format(e))
 
     view.audit(request, *args, **kwargs)

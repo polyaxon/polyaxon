@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.8.3",
+    "version": "1.8.4",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -5071,6 +5071,22 @@
             "format": "date-time"
           },
           {
+            "name": "organization.support_revoke_at",
+            "description": "Optional time to revoke support access.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "organization.expiration",
+            "description": "Optional expiration for support.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
             "name": "organization.role",
             "description": "Current user's role in this org.",
             "in": "query",
@@ -5090,6 +5106,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "organization.is_cloud_viewable",
+            "description": "Setting to enable viewable metadata on cloud.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -19766,6 +19789,16 @@
           "format": "date-time",
           "title": "Optional last time the entity was updated"
         },
+        "support_revoke_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time to revoke support access"
+        },
+        "expiration": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Optional expiration for support"
+        },
         "role": {
           "type": "string",
           "title": "Current user's role in this org"
@@ -19777,6 +19810,10 @@
         "preset": {
           "type": "string",
           "title": "Default preset"
+        },
+        "is_cloud_viewable": {
+          "type": "boolean",
+          "title": "Setting to enable viewable metadata on cloud"
         },
         "auth": {
           "type": "object",
@@ -20143,8 +20180,11 @@
           "type": "string",
           "title": "Optional a readme text describing this entity"
         },
-        "definition": {
-          "type": "object",
+        "excluded_runtimes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
           "title": "Optional project definition"
         },
         "settings": {

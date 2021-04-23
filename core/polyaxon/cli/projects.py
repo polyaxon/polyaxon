@@ -258,7 +258,7 @@ def delete(ctx, _project):
     try:
         polyaxon_client = ProjectClient(owner=owner, project=project_name)
         polyaxon_client.delete()
-        local_project = get_local_project()
+        local_project = get_local_project(is_cli=True)
         if local_project and (owner, project_name) == (
             local_project.owner,
             local_project.name,

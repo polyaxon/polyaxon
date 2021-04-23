@@ -50,6 +50,7 @@ def get_pytorch_job_custom_resource(
         namespace=namespace,
         resource_name=resource_name,
         labels=labels,
+        annotations=annotations,
         template_spec=template_spec,
     )
     get_kf_replicas_template(
@@ -58,6 +59,7 @@ def get_pytorch_job_custom_resource(
         namespace=namespace,
         resource_name=resource_name,
         labels=labels,
+        annotations=annotations,
         template_spec=template_spec,
     )
     template_spec = {"replicaSpecs": template_spec}

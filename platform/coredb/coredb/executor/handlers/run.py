@@ -99,10 +99,18 @@ def handle_new_artifacts(workers_backend, event: "Event") -> None:  # noqa: F821
 
 
 def handle_run_deleted(workers_backend, event: "Event") -> None:  # noqa: F821
-    if conf.get(SCHEDULER_ENABLED):
-        workers_backend.send(
-            CoreSchedulerCeleryTasks.RUNS_DELETE, kwargs={"run_id": event.instance_id}
-        )
+    run = manager.get_run(run_id=event.instance_id, run=event.instance)
+    if not run:
         return
 
-    manager.runs_delete(run_id=event.instance_id, run=event.instance)
+    if not run.is_managed:
+        run.delete()
+        return
+
+    if conf.get(SCHEDULER_ENABLED):
+        run.delete_in_progress()
+        workers_backend.send(
+            CoreSchedulerCeleryTasks.RUNS_DELETE, kwargs={"run_id": run.id}
+        )
+    else:
+        manager.runs_delete(run_id=run.id, run=run)

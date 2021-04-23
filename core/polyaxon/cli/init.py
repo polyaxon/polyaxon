@@ -129,7 +129,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
             sys.exit(1)
         init_project = False
         if ProjectConfigManager.is_initialized():
-            local_project = get_local_project()
+            local_project = get_local_project(is_cli=True)
             click.echo(
                 "Warning! This project is already initialized with the following project:"
             )

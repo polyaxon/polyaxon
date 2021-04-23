@@ -40,6 +40,12 @@ type V1Organization struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Optional expiration for support
+	Expiration int32 `json:"expiration,omitempty"`
+
+	// Setting to enable viewable metadata on cloud
+	IsCloudViewable bool `json:"is_cloud_viewable,omitempty"`
+
 	// Optional flag to tell if this organization is public
 	IsPublic bool `json:"is_public,omitempty"`
 
@@ -57,6 +63,10 @@ type V1Organization struct {
 
 	// Current user's role in this org
 	Role string `json:"role,omitempty"`
+
+	// Optional time to revoke support access
+	// Format: date-time
+	SupportRevokeAt strfmt.DateTime `json:"support_revoke_at,omitempty"`
 
 	// Optional last time the entity was updated
 	// Format: date-time
@@ -80,6 +90,10 @@ func (m *V1Organization) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateSupportRevokeAt(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateUpdatedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -96,6 +110,18 @@ func (m *V1Organization) validateCreatedAt(formats strfmt.Registry) error {
 	}
 
 	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Organization) validateSupportRevokeAt(formats strfmt.Registry) error {
+	if swag.IsZero(m.SupportRevokeAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("support_revoke_at", "body", "date-time", m.SupportRevokeAt.String(), formats); err != nil {
 		return err
 	}
 

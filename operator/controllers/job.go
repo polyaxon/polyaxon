@@ -41,6 +41,7 @@ func (r *OperationReconciler) reconcileJob(ctx context.Context, instance *operat
 		instance.Name,
 		instance.Namespace,
 		instance.Labels,
+		instance.Annotations,
 		instance.Termination.BackoffLimit,
 		instance.Termination.ActiveDeadlineSeconds,
 		instance.Termination.TTLSecondsAfterFinished,

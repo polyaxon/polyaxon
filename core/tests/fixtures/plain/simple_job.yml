@@ -5,6 +5,9 @@ plugins:
   collectArtifacts: False
 run:
   kind: job
+  environment:
+    annotations:
+      tf-version.cloud-tpus.google.com: '2.2'
   volumes:
   - name: foo
     secret:

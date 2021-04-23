@@ -32,7 +32,7 @@ class TestServiceCRD(BaseTestCase):
         termination = V1Termination(timeout=10)
         environment = V1Environment(
             labels={"foo": "bar"},
-            annotations={"foo": "bar"},
+            annotations={"foo": "long-foo-bar" * 300},
             node_selector={"foo": "bar"},
             node_name="foo",
             restart_policy="never",
@@ -46,6 +46,7 @@ class TestServiceCRD(BaseTestCase):
             volumes=[],
             environment=environment,
             labels=environment.labels,
+            annotations=environment.annotations,
         )
         custom_object = {
             "serviceSpec": {
@@ -96,6 +97,7 @@ class TestServiceCRD(BaseTestCase):
             volumes=[],
             environment=None,
             labels=None,
+            annotations=None,
         )
         notifications = [V1Notification(connections=["test"], trigger=V1Statuses.DONE)]
         custom_object = {

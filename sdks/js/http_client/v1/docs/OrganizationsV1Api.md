@@ -556,9 +556,12 @@ let opts = {
   'organization_is_public': true, // Boolean | Optional flag to tell if this organization is public.
   'organization_created_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time when the entity was created.
   'organization_updated_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional last time the entity was updated.
+  'organization_support_revoke_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time to revoke support access.
+  'organization_expiration': 56, // Number | Optional expiration for support.
   'organization_role': "organization_role_example", // String | Current user's role in this org.
   'organization_queue': "organization_queue_example", // String | Default queue.
-  'organization_preset': "organization_preset_example" // String | Default preset.
+  'organization_preset': "organization_preset_example", // String | Default preset.
+  'organization_is_cloud_viewable': true // Boolean | Setting to enable viewable metadata on cloud.
 };
 apiInstance.getOrganizationSettings(owner, opts, (error, data, response) => {
   if (error) {
@@ -581,9 +584,12 @@ Name | Type | Description  | Notes
  **organization_is_public** | **Boolean**| Optional flag to tell if this organization is public. | [optional] 
  **organization_created_at** | **Date**| Optional time when the entity was created. | [optional] 
  **organization_updated_at** | **Date**| Optional last time the entity was updated. | [optional] 
+ **organization_support_revoke_at** | **Date**| Optional time to revoke support access. | [optional] 
+ **organization_expiration** | **Number**| Optional expiration for support. | [optional] 
  **organization_role** | **String**| Current user&#39;s role in this org. | [optional] 
  **organization_queue** | **String**| Default queue. | [optional] 
  **organization_preset** | **String**| Default preset. | [optional] 
+ **organization_is_cloud_viewable** | **Boolean**| Setting to enable viewable metadata on cloud. | [optional] 
 
 ### Return type
 

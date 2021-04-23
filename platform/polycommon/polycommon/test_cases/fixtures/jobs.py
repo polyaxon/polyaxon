@@ -205,3 +205,65 @@ def get_fxt_job_with_inputs_and_joins():
             },
         },
     }
+
+
+def get_fxt_tf_job():
+    return {
+        "version": 1.1,
+        "kind": "operation",
+        "name": "foo",
+        "description": "a description",
+        "component": {
+            "name": "tf-distributed-gpu",
+            "tags": ["tag1", "tag2"],
+            "run": {
+                "kind": "tfjob",
+                "chief": {
+                    "environment": {
+                        "nodeSelector": {"polyaxon": "experiments-gpu-t4"},
+                        "tolerations": [
+                            {
+                                "key": "nvidia.com/gpu",
+                                "operator": "Equal",
+                                "value": "present",
+                                "effect": "NoSchedule",
+                            }
+                        ],
+                    },
+                    "container": {
+                        "resources": {
+                            "requests": {"cpu": 4, "memory": "4Gi"},
+                            "limits": {"nvidia.com/gpu": 1, "cpu": 4, "memory": "8Gi"},
+                        },
+                        "image": "foo/bar:gpu",
+                        "workingDir": "{{ globals.run_artifacts_path }}/uploads/src",
+                        "command": ["python", "-u", "mnist.py"],
+                    },
+                },
+                "worker": {
+                    "replicas": 2,
+                    "environment": {
+                        "restartPolicy": "OnFailure",
+                        "nodeSelector": {"polyaxon": "experiments-gpu-t4"},
+                        "tolerations": [
+                            {
+                                "key": "nvidia.com/gpu",
+                                "operator": "Equal",
+                                "value": "present",
+                                "effect": "NoSchedule",
+                            }
+                        ],
+                    },
+                    "container": {
+                        "resources": {
+                            "requests": {"cpu": 4, "memory": "4Gi"},
+                            "limits": {"nvidia.com/gpu": 1, "cpu": 4, "memory": "8Gi"},
+                        },
+                        "image": "foo/bar:gpu",
+                        "workingDir": "{{ globals.run_artifacts_path }}/uploads/src",
+                        "command": ["python", "-u", "mnist.py"],
+                    },
+                },
+            },
+        },
+    }

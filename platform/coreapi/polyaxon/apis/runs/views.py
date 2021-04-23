@@ -59,7 +59,8 @@ class RunDetailView(RunEndpoint, RetrieveEndpoint, DestroyEndpoint, UpdateEndpoi
     AUDIT_INSTANCE = True
 
     def perform_destroy(self, instance):
-        instance.delete_in_progress()
+        if not instance.is_managed:
+            instance.delete()
 
 
 class RunCloneView(RunEndpoint, CreateEndpoint):

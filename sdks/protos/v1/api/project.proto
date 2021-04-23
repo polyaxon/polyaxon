@@ -56,7 +56,7 @@ message Project {
     string readme = 10;
 
     // Optional project definition
-    google.protobuf.Struct definition = 11;
+    repeated string excluded_runtimes = 11;
 
     // Optional project settings
     ProjectSettings settings = 12;

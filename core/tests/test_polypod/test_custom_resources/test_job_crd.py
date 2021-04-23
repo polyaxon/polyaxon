@@ -32,7 +32,7 @@ class TestJobCRD(BaseTestCase):
         termination = V1Termination(max_retries=5, ttl=10, timeout=10)
         environment = V1Environment(
             labels={"foo": "bar"},
-            annotations={"foo": "bar"},
+            annotations={"foo": "long-foo-bar" * 300},
             node_selector={"foo": "bar"},
             node_name="foo",
             restart_policy="never",
@@ -47,6 +47,7 @@ class TestJobCRD(BaseTestCase):
             volumes=[],
             environment=environment,
             labels=environment.labels,
+            annotations=environment.annotations,
         )
         custom_object = {
             "batchJobSpec": {

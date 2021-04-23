@@ -142,6 +142,55 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.version == 1.1
         assert run_config.tags is None
         assert len(run_config.run.volumes) == 1
+        assert run_config.run.environment.annotations == {
+            "tf-version.cloud-tpus.google.com": "2.2"
+        }
+        assert run_config.run.to_dict()["volumes"][0] == {
+            "name": "foo",
+            "secret": {"secretName": "mysecret"},
+        }
+        assert run_config.run.container.image == "python-with-boto3"
+        assert run_config.run.container.command == "python download-s3-bucket"
+        assert run_config.run.container.resources == {
+            "requests": {"nvidia.com/gpu": 1},
+            "limits": {"nvidia.com/gpu": 1},
+        }
+        assert run_config.run.container.volume_mounts == [
+            {"name": "foo", "mount_path": "~/.aws/credentials", "readOnly": True}
+        ]
+
+    def test_simple_file_with_run_patch_passes(self):
+        op_config = OperationSpecification.read(
+            os.path.abspath("tests/fixtures/plain/simple_job_run_patch.yml"),
+        )
+
+        assert op_config.version == 1.1
+        assert op_config.tags is None
+        assert op_config.run_patch["environment"]["annotations"] == {
+            "tf-version.cloud-tpus.google.com": "2.2"
+        }
+        assert len(op_config.component.run.volumes) == 1
+        assert op_config.component.run.to_dict()["volumes"][0] == {
+            "name": "foo",
+            "secret": {"secretName": "mysecret"},
+        }
+        assert op_config.component.run.container.image == "python-with-boto3"
+        assert op_config.component.run.container.command == "python download-s3-bucket"
+        assert op_config.component.run.container.resources == {
+            "requests": {"nvidia.com/gpu": 1},
+            "limits": {"nvidia.com/gpu": 1},
+        }
+        assert op_config.component.run.container.volume_mounts == [
+            {"name": "foo", "mount_path": "~/.aws/credentials", "readOnly": True}
+        ]
+
+        run_config = OperationSpecification.compile_operation(op_config)
+        assert run_config.version == 1.1
+        assert run_config.tags is None
+        assert len(run_config.run.volumes) == 1
+        assert run_config.run.environment.annotations == {
+            "tf-version.cloud-tpus.google.com": "2.2"
+        }
         assert run_config.run.to_dict()["volumes"][0] == {
             "name": "foo",
             "secret": {"secretName": "mysecret"},

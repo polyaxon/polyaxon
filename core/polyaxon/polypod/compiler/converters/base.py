@@ -53,6 +53,7 @@ from polyaxon.utils.fqn_utils import get_resource_name, get_run_instance
 from polyaxon.utils.host_utils import get_api_host
 from polyaxon.utils.http_utils import clean_host
 from polyaxon.utils.list_utils import to_list
+from polyaxon.utils.sanitizers import sanitize_string_dict
 from polyaxon.utils.string_utils import slugify
 
 
@@ -173,11 +174,17 @@ class BaseConverter(ConverterAbstract):
             "operation.polyaxon.com/kind": self.K8S_ANNOTATIONS_KIND,
         }
 
+    def get_annotations(self, annotations: Dict):
+        annotations = annotations or {}
+        annotations = copy.copy(annotations)
+        annotations.update(self.annotations)
+        return sanitize_string_dict(annotations)
+
     def get_labels(self, version: str, labels: Dict):
         labels = labels or {}
         labels = copy.copy(labels)
         labels.update(self.get_recommended_labels(version=version))
-        return labels
+        return sanitize_string_dict(labels)
 
     @staticmethod
     def get_by_name(values: List[Any]):
@@ -551,12 +558,14 @@ class BaseConverter(ConverterAbstract):
         )
 
         labels = self.get_labels(version=pkg.VERSION, labels=environment.labels)
+        annotations = self.get_annotations(annotations=environment.annotations)
         return ReplicaSpec(
             volumes=volumes,
             init_containers=init_containers,
             sidecar_containers=sidecar_containers,
             main_container=main_container,
             labels=labels,
+            annotations=annotations,
             environment=environment,
             num_replicas=num_replicas,
         )

@@ -16,17 +16,19 @@
 
 import polyaxon_sdk
 
-from marshmallow import fields, validate
+from marshmallow import fields, validate, validates_schema
 
 from polyaxon.k8s import k8s_schemas
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.swagger import SwaggerField
+from polyaxon.utils.sanitizers import sanitize_string_dict
+from polyaxon.utils.signal_decorators import check_partial
 
 
 class EnvironmentSchema(BaseCamelSchema):
-    labels = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
-    annotations = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
-    node_selector = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
+    labels = fields.Dict(allow_none=True)
+    annotations = fields.Dict(allow_none=True)
+    node_selector = fields.Dict(allow_none=True)
     affinity = SwaggerField(cls=k8s_schemas.V1Affinity, allow_none=True)
     tolerations = fields.List(
         SwaggerField(cls=k8s_schemas.V1Toleration), allow_none=True
@@ -52,6 +54,21 @@ class EnvironmentSchema(BaseCamelSchema):
     @staticmethod
     def schema_config():
         return V1Environment
+
+    @validates_schema
+    @check_partial
+    def validate_param(self, values, **kwargs):
+        labels = values.get("labels")
+        if labels:
+            values["labels"] = sanitize_string_dict(labels)
+        annotations = values.get("annotations")
+        if annotations:
+            values["annotations"] = sanitize_string_dict(annotations)
+        node_selector = sanitize_string_dict(values.get("nodeSelector"))
+        if node_selector:
+            values["nodeSelector"] = sanitize_string_dict(node_selector)
+
+        return values
 
 
 class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):

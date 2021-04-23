@@ -30,6 +30,7 @@ def get_pod_spec(
     init_containers: Optional[List[k8s_schemas.V1Container]],
     environment: Optional[V1Environment],
     labels: Dict[str, str],
+    annotations: Dict[str, str],
     volumes: Optional[List[k8s_schemas.V1Volume]],
 ) -> Tuple[k8s_schemas.V1ObjectMeta, k8s_schemas.V1PodSpec]:
     if not main_container:
@@ -40,7 +41,7 @@ def get_pod_spec(
         name=resource_name,
         namespace=namespace,
         labels=labels,
-        annotations=environment.annotations,
+        annotations=annotations,
     )
 
     init_containers = to_list(init_containers, check_none=True)

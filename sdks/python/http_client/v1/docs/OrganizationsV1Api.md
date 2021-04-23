@@ -784,7 +784,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_organization_settings**
-> V1Organization get_organization_settings(owner, organization_user=organization_user, organization_user_email=organization_user_email, organization_name=organization_name, organization_is_public=organization_is_public, organization_created_at=organization_created_at, organization_updated_at=organization_updated_at, organization_role=organization_role, organization_queue=organization_queue, organization_preset=organization_preset)
+> V1Organization get_organization_settings(owner, organization_user=organization_user, organization_user_email=organization_user_email, organization_name=organization_name, organization_is_public=organization_is_public, organization_created_at=organization_created_at, organization_updated_at=organization_updated_at, organization_support_revoke_at=organization_support_revoke_at, organization_expiration=organization_expiration, organization_role=organization_role, organization_queue=organization_queue, organization_preset=organization_preset, organization_is_cloud_viewable=organization_is_cloud_viewable)
 
 Get organization settings
 
@@ -829,13 +829,16 @@ organization_name = 'organization_name_example' # str | Name. (optional)
 organization_is_public = True # bool | Optional flag to tell if this organization is public. (optional)
 organization_created_at = '2013-10-20T19:20:30+01:00' # datetime | Optional time when the entity was created. (optional)
 organization_updated_at = '2013-10-20T19:20:30+01:00' # datetime | Optional last time the entity was updated. (optional)
+organization_support_revoke_at = '2013-10-20T19:20:30+01:00' # datetime | Optional time to revoke support access. (optional)
+organization_expiration = 56 # int | Optional expiration for support. (optional)
 organization_role = 'organization_role_example' # str | Current user's role in this org. (optional)
 organization_queue = 'organization_queue_example' # str | Default queue. (optional)
 organization_preset = 'organization_preset_example' # str | Default preset. (optional)
+organization_is_cloud_viewable = True # bool | Setting to enable viewable metadata on cloud. (optional)
 
     try:
         # Get organization settings
-        api_response = api_instance.get_organization_settings(owner, organization_user=organization_user, organization_user_email=organization_user_email, organization_name=organization_name, organization_is_public=organization_is_public, organization_created_at=organization_created_at, organization_updated_at=organization_updated_at, organization_role=organization_role, organization_queue=organization_queue, organization_preset=organization_preset)
+        api_response = api_instance.get_organization_settings(owner, organization_user=organization_user, organization_user_email=organization_user_email, organization_name=organization_name, organization_is_public=organization_is_public, organization_created_at=organization_created_at, organization_updated_at=organization_updated_at, organization_support_revoke_at=organization_support_revoke_at, organization_expiration=organization_expiration, organization_role=organization_role, organization_queue=organization_queue, organization_preset=organization_preset, organization_is_cloud_viewable=organization_is_cloud_viewable)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling OrganizationsV1Api->get_organization_settings: %s\n" % e)
@@ -852,9 +855,12 @@ Name | Type | Description  | Notes
  **organization_is_public** | **bool**| Optional flag to tell if this organization is public. | [optional] 
  **organization_created_at** | **datetime**| Optional time when the entity was created. | [optional] 
  **organization_updated_at** | **datetime**| Optional last time the entity was updated. | [optional] 
+ **organization_support_revoke_at** | **datetime**| Optional time to revoke support access. | [optional] 
+ **organization_expiration** | **int**| Optional expiration for support. | [optional] 
  **organization_role** | **str**| Current user&#39;s role in this org. | [optional] 
  **organization_queue** | **str**| Default queue. | [optional] 
  **organization_preset** | **str**| Default preset. | [optional] 
+ **organization_is_cloud_viewable** | **bool**| Setting to enable viewable metadata on cloud. | [optional] 
 
 ### Return type
 

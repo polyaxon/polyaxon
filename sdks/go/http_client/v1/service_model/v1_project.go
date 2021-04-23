@@ -40,11 +40,11 @@ type V1Project struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
-	// Optional project definition
-	Definition interface{} `json:"definition,omitempty"`
-
 	// Optional description
 	Description string `json:"description,omitempty"`
+
+	// Optional project definition
+	ExcludedRuntimes []string `json:"excluded_runtimes"`
 
 	// Optional flag to tell if this project is public
 	IsPublic bool `json:"is_public,omitempty"`

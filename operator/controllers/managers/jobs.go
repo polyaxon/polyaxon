@@ -80,6 +80,7 @@ func GenerateJob(
 	name string,
 	namespace string,
 	labels map[string]string,
+	annotations map[string]string,
 	backoffLimit *int32,
 	activeDeadlineSeconds *int64,
 	ttlSecondsAfterFinished *int32,
@@ -97,24 +98,32 @@ func GenerateJob(
 
 	job := &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      name,
-			Namespace: namespace,
-			Labels:    labels,
+			Name:        name,
+			Namespace:   namespace,
+			Labels:      labels,
+			Annotations: annotations,
 		},
 		Spec: batchv1.JobSpec{
 			BackoffLimit:            jobBackoffLimit,
 			ActiveDeadlineSeconds:   activeDeadlineSeconds,
 			TTLSecondsAfterFinished: ttlSecondsAfterFinished,
 			Template: corev1.PodTemplateSpec{
-				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{}},
+				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{}, Annotations: map[string]string{}},
 				Spec:       podSpec,
 			},
 		},
 	}
+
 	// copy all of the labels to the pod including poddefault related labels
 	l := &job.Spec.Template.ObjectMeta.Labels
 	for k, v := range labels {
 		(*l)[k] = v
+	}
+
+	// copy all of the annotations to the pod including poddefault related labels
+	a := &job.Spec.Template.ObjectMeta.Annotations
+	for k, v := range annotations {
+		(*a)[k] = v
 	}
 
 	return job

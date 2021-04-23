@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.8.3
+  version: 1.8.4
 servers:
 - url: /
 security:
@@ -4876,6 +4876,18 @@ paths:
         schema:
           format: date-time
           type: string
+      - description: Optional time to revoke support access.
+        in: query
+        name: organization.support_revoke_at
+        schema:
+          format: date-time
+          type: string
+      - description: Optional expiration for support.
+        in: query
+        name: organization.expiration
+        schema:
+          format: int32
+          type: integer
       - description: Current user's role in this org.
         in: query
         name: organization.role
@@ -4891,6 +4903,11 @@ paths:
         name: organization.preset
         schema:
           type: string
+      - description: Setting to enable viewable metadata on cloud.
+        in: query
+        name: organization.is_cloud_viewable
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -20355,25 +20372,31 @@ components:
         results:
         - user_email: user_email
           role: role
-          updated_at: 2000-01-23T04:56:07.000+00:00
+          support_revoke_at: 2000-01-23T04:56:07.000+00:00
           auth: '{}'
+          is_cloud_viewable: true
           usage: '{}'
-          name: name
-          is_public: true
           created_at: 2000-01-23T04:56:07.000+00:00
           preset: preset
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          is_public: true
+          expiration: 0
           user: user
           plan: '{}'
           queue: queue
         - user_email: user_email
           role: role
-          updated_at: 2000-01-23T04:56:07.000+00:00
+          support_revoke_at: 2000-01-23T04:56:07.000+00:00
           auth: '{}'
+          is_cloud_viewable: true
           usage: '{}'
-          name: name
-          is_public: true
           created_at: 2000-01-23T04:56:07.000+00:00
           preset: preset
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          is_public: true
+          expiration: 0
           user: user
           plan: '{}'
           queue: queue
@@ -20486,7 +20509,9 @@ components:
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
           is_public: true
-          definition: '{}'
+          excluded_runtimes:
+          - excluded_runtimes
+          - excluded_runtimes
         - owner: owner
           settings:
             presets:
@@ -20526,7 +20551,9 @@ components:
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
           is_public: true
-          definition: '{}'
+          excluded_runtimes:
+          - excluded_runtimes
+          - excluded_runtimes
       properties:
         count:
           format: int32
@@ -22568,13 +22595,16 @@ components:
       example:
         user_email: user_email
         role: role
-        updated_at: 2000-01-23T04:56:07.000+00:00
+        support_revoke_at: 2000-01-23T04:56:07.000+00:00
         auth: '{}'
+        is_cloud_viewable: true
         usage: '{}'
-        name: name
-        is_public: true
         created_at: 2000-01-23T04:56:07.000+00:00
         preset: preset
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        is_public: true
+        expiration: 0
         user: user
         plan: '{}'
         queue: queue
@@ -22599,6 +22629,14 @@ components:
           format: date-time
           title: Optional last time the entity was updated
           type: string
+        support_revoke_at:
+          format: date-time
+          title: Optional time to revoke support access
+          type: string
+        expiration:
+          format: int32
+          title: Optional expiration for support
+          type: integer
         role:
           title: Current user's role in this org
           type: string
@@ -22608,6 +22646,9 @@ components:
         preset:
           title: Default preset
           type: string
+        is_cloud_viewable:
+          title: Setting to enable viewable metadata on cloud
+          type: boolean
         auth:
           properties: {}
           title: Auth Settings
@@ -22966,7 +23007,9 @@ components:
         updated_at: 2000-01-23T04:56:07.000+00:00
         name: name
         is_public: true
-        definition: '{}'
+        excluded_runtimes:
+        - excluded_runtimes
+        - excluded_runtimes
       properties:
         uuid:
           title: UUID
@@ -23002,10 +23045,11 @@ components:
         readme:
           title: Optional a readme text describing this entity
           type: string
-        definition:
-          properties: {}
+        excluded_runtimes:
+          items:
+            type: string
           title: Optional project definition
-          type: object
+          type: array
         settings:
           $ref: '#/components/schemas/v1ProjectSettings'
         role:

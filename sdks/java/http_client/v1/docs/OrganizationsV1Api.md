@@ -713,7 +713,7 @@ Name | Type | Description  | Notes
 
 <a name="getOrganizationSettings"></a>
 # **getOrganizationSettings**
-> V1Organization getOrganizationSettings(owner, organizationUser, organizationUserEmail, organizationName, organizationIsPublic, organizationCreatedAt, organizationUpdatedAt, organizationRole, organizationQueue, organizationPreset)
+> V1Organization getOrganizationSettings(owner, organizationUser, organizationUserEmail, organizationName, organizationIsPublic, organizationCreatedAt, organizationUpdatedAt, organizationSupportRevokeAt, organizationExpiration, organizationRole, organizationQueue, organizationPreset, organizationIsCloudViewable)
 
 Get organization settings
 
@@ -746,11 +746,14 @@ public class Example {
     Boolean organizationIsPublic = true; // Boolean | Optional flag to tell if this organization is public.
     OffsetDateTime organizationCreatedAt = new OffsetDateTime(); // OffsetDateTime | Optional time when the entity was created.
     OffsetDateTime organizationUpdatedAt = new OffsetDateTime(); // OffsetDateTime | Optional last time the entity was updated.
+    OffsetDateTime organizationSupportRevokeAt = new OffsetDateTime(); // OffsetDateTime | Optional time to revoke support access.
+    Integer organizationExpiration = 56; // Integer | Optional expiration for support.
     String organizationRole = "organizationRole_example"; // String | Current user's role in this org.
     String organizationQueue = "organizationQueue_example"; // String | Default queue.
     String organizationPreset = "organizationPreset_example"; // String | Default preset.
+    Boolean organizationIsCloudViewable = true; // Boolean | Setting to enable viewable metadata on cloud.
     try {
-      V1Organization result = apiInstance.getOrganizationSettings(owner, organizationUser, organizationUserEmail, organizationName, organizationIsPublic, organizationCreatedAt, organizationUpdatedAt, organizationRole, organizationQueue, organizationPreset);
+      V1Organization result = apiInstance.getOrganizationSettings(owner, organizationUser, organizationUserEmail, organizationName, organizationIsPublic, organizationCreatedAt, organizationUpdatedAt, organizationSupportRevokeAt, organizationExpiration, organizationRole, organizationQueue, organizationPreset, organizationIsCloudViewable);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#getOrganizationSettings");
@@ -774,9 +777,12 @@ Name | Type | Description  | Notes
  **organizationIsPublic** | **Boolean**| Optional flag to tell if this organization is public. | [optional]
  **organizationCreatedAt** | **OffsetDateTime**| Optional time when the entity was created. | [optional]
  **organizationUpdatedAt** | **OffsetDateTime**| Optional last time the entity was updated. | [optional]
+ **organizationSupportRevokeAt** | **OffsetDateTime**| Optional time to revoke support access. | [optional]
+ **organizationExpiration** | **Integer**| Optional expiration for support. | [optional]
  **organizationRole** | **String**| Current user&#39;s role in this org. | [optional]
  **organizationQueue** | **String**| Default queue. | [optional]
  **organizationPreset** | **String**| Default preset. | [optional]
+ **organizationIsCloudViewable** | **Boolean**| Setting to enable viewable metadata on cloud. | [optional]
 
 ### Return type
 

@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import json
 
 from collections.abc import Mapping
 from typing import Dict, List
@@ -22,6 +21,7 @@ from polyaxon.containers.names import generate_container_name
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.container_resources import sanitize_resources
 from polyaxon.utils.list_utils import to_list
+from polyaxon.utils.sanitizers import sanitize_value
 
 
 def patch_container(
@@ -102,15 +102,6 @@ def sanitize_container_env(
             else sanitize_value(d_v, handle_dict=True)
             for d_k, d_v in d.items()
         }
-
-    def sanitize_value(d, handle_dict: bool = False):
-        if isinstance(d, str):
-            return d
-        if not isinstance(d, Mapping):
-            return json.dumps(d)
-        if not handle_dict:
-            return json.dumps(d)
-        return {d_k: sanitize_value(d_v, handle_dict=True) for d_k, d_v in d.items()}
 
     if container.env:
         env = []

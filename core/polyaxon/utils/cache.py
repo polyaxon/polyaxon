@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.utils.formatting import Printer
 
@@ -24,15 +24,18 @@ CACHE_ERROR = (
 )
 
 
-def get_local_project():
+def get_local_project(is_cli: bool = False):
     try:
         return ProjectConfigManager.get_config()
     except Exception:  # noqa
-        Printer.print_error(CACHE_ERROR, sys_exit=True)
+        if is_cli:
+            Printer.print_error(CACHE_ERROR, sys_exit=True)
+        else:
+            raise PolyaxonSchemaError(CACHE_ERROR)
 
 
 def _is_same_project(owner=None, project=None):
-    local_project = get_local_project()
+    local_project = get_local_project(is_cli=True)
     if project and project == local_project.name:
         return not all([owner, local_project.owner]) or owner == local_project.owner
 

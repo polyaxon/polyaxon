@@ -61,7 +61,7 @@ field                                                                      | con
 `live_state`                                                               | [value condition](/docs/core/query-language/#query-with-value-condition)
 `pipeline` (equivalent to pipeline.uuid)                                   | [value condition](/docs/core/query-language/#query-with-value-condition)
 `pipeline.*` (e.g. pipeline.kind or pipeline.runtime)                      | [value condition](/docs/core/query-language/#query-with-value-condition)
-`orginal` (equivalent to original.uuid)                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
+`original` (equivalent to original.uuid)                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
 `original.*` (e.g. original.name)                                          | [value condition](/docs/core/query-language/#query-with-value-condition)
 `cloning_kind` (cloud be one of the valid cloning kind, e.g. restart)      | [value condition](/docs/core/query-language/#query-with-value-condition)
 

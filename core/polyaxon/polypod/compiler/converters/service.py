@@ -70,7 +70,7 @@ class ServiceConverter(ServiceMixin, BaseConverter):
             sync_statuses=contexts.sync_statuses,
             notifications=plugins.notifications,
             labels=replica_spec.labels,
-            annotations=self.annotations,
+            annotations=replica_spec.annotations,
             ports=service.ports,
         )
 

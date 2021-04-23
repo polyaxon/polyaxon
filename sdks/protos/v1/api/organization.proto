@@ -41,23 +41,32 @@ message Organization {
     // Optional last time the entity was updated
     google.protobuf.Timestamp updated_at = 6;
 
+    // Optional time to revoke support access
+    google.protobuf.Timestamp support_revoke_at = 7;
+
+    // Optional expiration for support
+    int32 expiration = 8;
+
     // Current user's role in this org
-    string role = 7;
+    string role = 9;
 
     // Default queue
-    string queue = 8;
+    string queue = 10;
 
     // Default preset
-    string preset = 9;
+    string preset = 11;
+
+    // Setting to enable viewable metadata on cloud
+    bool is_cloud_viewable = 12;
 
     // Auth Settings
-    google.protobuf.Struct auth = 10;
+    google.protobuf.Struct auth = 13;
 
     // Plan settings
-    google.protobuf.Struct plan = 11;
+    google.protobuf.Struct plan = 14;
 
     // Usage info
-    google.protobuf.Struct usage = 12;
+    google.protobuf.Struct usage = 15;
 }
 
  // Request data to update organizations

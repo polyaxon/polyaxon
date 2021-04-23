@@ -131,6 +131,7 @@ class LifeCycle:
         V1Statuses.ON_SCHEDULE,
         V1Statuses.RESUMING,
         V1Statuses.RETRYING,
+        V1Statuses.AWAITING_CACHE,
     }
     RUNNING_VALUES = {
         V1Statuses.SCHEDULED,

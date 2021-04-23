@@ -47,9 +47,16 @@ def get_project_or_local(project=None, is_cli: bool = False):
             raise PolyaxonClientException(error_message)
 
     if project:
-        owner, project_name = get_entity_info(project)
+        try:
+            owner, project_name = get_entity_info(project)
+        except Exception as e:
+            if is_cli:
+                Printer.print_error("Please provide a valid project name.\n%s" % e)
+                sys.exit(1)
+            else:
+                raise e
     else:
-        project = get_local_project()
+        project = get_local_project(is_cli=is_cli)
 
         owner, project_name = project.owner, project.name
 

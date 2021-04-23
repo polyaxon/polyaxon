@@ -75,6 +75,7 @@ func (r *OperationReconciler) reconcileDeployment(ctx context.Context, instance 
 		instance.Name,
 		instance.Namespace,
 		instance.Labels,
+		instance.Annotations,
 		ports,
 		replicas,
 		instance.ServiceSpec.Template.Spec,
@@ -174,7 +175,7 @@ func (r *OperationReconciler) reconcileDeploymentStatus(instance *operationv1.Op
 func (r *OperationReconciler) reconcileBaseService(ctx context.Context, instance *operationv1.Operation, ports []int32) error {
 	log := r.Log
 
-	service := managers.GenerateService(instance.Name, instance.Namespace, instance.Labels, ports)
+	service := managers.GenerateService(instance.Name, instance.Namespace, instance.Labels, instance.Annotations, ports)
 	if err := ctrl.SetControllerReference(instance, service, r.Scheme); err != nil {
 		log.V(1).Info("generateService Error")
 		return err

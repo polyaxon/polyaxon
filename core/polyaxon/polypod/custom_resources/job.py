@@ -52,6 +52,7 @@ def get_job_custom_resource(
         volumes=volumes,
         environment=environment,
         labels=labels,
+        annotations=annotations,
     )
 
     template_spec = {

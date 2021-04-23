@@ -242,10 +242,7 @@ class TestProjectRunsDeleteViewV1(BaseTest):
         assert resp.status_code == status.HTTP_200_OK
         assert Run.objects.count() == 1
         assert Run.all.count() == 1
-        assert workers_send.call_count == 2
-        assert {c[0][0] for c in workers_send.call_args_list} == {
-            CoreSchedulerCeleryTasks.RUNS_DELETE,
-        }
+        assert workers_send.call_count == 0
 
 
 @pytest.mark.projects_resources_mark

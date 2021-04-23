@@ -78,7 +78,7 @@ func CopyServiceFields(from, to *corev1.Service) bool {
 }
 
 // GenerateService returns a service given info from a ServiceSpec
-func GenerateService(name string, namespace string, labels map[string]string, ports []int32) *corev1.Service {
+func GenerateService(name string, namespace string, labels map[string]string, annotations map[string]string, ports []int32) *corev1.Service {
 	sports := []corev1.ServicePort{}
 
 	for _, sp := range ports {
@@ -92,9 +92,10 @@ func GenerateService(name string, namespace string, labels map[string]string, po
 
 	svc := &corev1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      name,
-			Namespace: namespace,
-			Labels:    labels,
+			Name:        name,
+			Namespace:   namespace,
+			Labels:      labels,
+			Annotations: annotations,
 		},
 		Spec: corev1.ServiceSpec{
 			Type:     "ClusterIP",
