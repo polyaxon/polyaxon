@@ -65,8 +65,8 @@ This is the simplest deployment strategy possible, it consists of deploying Poly
 This deployment strategy is mostly used for trying out Polyaxon Community Edition on a user's laptop with [minikube](https://github.com/kubernetes/minikube) or [microk8s](https://microk8s.io/).
 
 > If you are using Polyaxon cloud or Polyaxon EE, you can also turn your local laptop into a worker node using Polyaxon Agent.
-By deploying Polyaxon agents to your laptop and your team members' laptops, you can use those agents for
-testing and running operations using your local GPU resources in case the main cluster is busy.
+> By deploying Polyaxon agents to your laptop and your team members' laptops, you can use those agents for
+> testing and running operations using your local GPU resources in case the main cluster is busy.
 
 ### Multi nodes deployment
 

@@ -118,11 +118,11 @@ Configuring and authenticating a client using environment variables could be use
 #### Provide a configured client:
 
 ```python
-client = PolyaxonClient(token=MY_TOKEN, config=ClientConfig(host=HOST, use_https=None, verify_ssl=None))
+client = PolyaxonClient(token=API_TOKEN, config=ClientConfig(host=HOST, use_https=None, verify_ssl=None))
 run_client = RunClient(owner="org1", project="project-name", run_uuid="uuid", client=client)
 ```
 
-> MY_TOKEN is only required for EE and Cloud
+> **Note** API_TOKEN is only required for EE and Cloud
 
 ## Reading Polyaxonfiles
 

@@ -31,7 +31,7 @@ For each run, Polyaxon creates an artifacts folder with a predefined structure t
 Users might also save content in other subpaths as they wish, for instance uploading data to `uploads` or `code`.
 
 > **Note**: during the runtime, users should only save their custom artifacts under `outputs` to leverage automatic artifact management,
- we suggest using [get_outputs_path](/docs/experimentation/tracking/client/#get_outputs_path) for getting and ensuring a new outputs subpath.
+> we suggest using [get_outputs_path](/docs/experimentation/tracking/client/#get_outputs_path) for getting and ensuring a new outputs subpath.
 
 For each run, users can get the artifacts_path and outputs_path using:
 

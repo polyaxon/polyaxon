@@ -36,5 +36,4 @@ polyaxon run -f ... --name another-name --description run-with-custom-connection
 ```
 
 
-> For more details about this command please run `polyaxon run --help`,
-or check the [command reference](/docs/core/cli/run/) 
+> For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/) 

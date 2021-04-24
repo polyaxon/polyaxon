@@ -30,7 +30,7 @@ Fernet.generate_key()
 ```
 
 > N.B. Please you should know that changing the secret will lock access to any previously saved value in the DB,
-You need to delete previous values and set new ones
+> You need to delete previous values and set new ones
 
 ## Enable encryption
 

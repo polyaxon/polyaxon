@@ -37,8 +37,7 @@ Let's run one of the public notebook components:
 $ polyaxon run --hub jupyterlab:tensorflow -w
 ```
 
-> For more details about this command please run `polyaxon run --help`,
-or check the [command reference](/docs/core/cli/run/)
+> For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/)
 
 Since the notebook is created with a Polyaxonfile, it can be customized the same way as any other job, e.g. instead of just executing `polyaxon run`
 we can create an operation to customize the resources, request GPUs ... in case the component itself is limiting, users can create their own component:
@@ -76,8 +75,7 @@ Otherwise, you need to pass a UUID
 $ polyaxon ops -uid UUID stop
 ```
 
-> For more details about this command please run `polyaxon ops --help`,
-or check the [command reference](/docs/core/cli/ops/)
+> For more details about this command please run `polyaxon ops --help`, or check the [command reference](/docs/core/cli/ops/)
 
 > You can also start and stop notebooks, and any other operation from the UI.
 

@@ -162,8 +162,8 @@ class V1EventTrigger(BaseConfig, contexts_refs.RefMixin, polyaxon_sdk.V1EventTri
     ```
 
     > **Note**: Similar to trigger in DAGs, after an operation is initiated,
-      it will still have to validate the rest of the Polyaxonfile,
-      i.e. conditions, contexts, connections, ...
+    > it will still have to validate the rest of the Polyaxonfile,
+    > i.e. conditions, contexts, connections, ...
 
     ### ref
 

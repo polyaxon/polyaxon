@@ -337,8 +337,8 @@ class Run(RunClient):
         """Sets the root artifacts_path.
 
         > **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
-            Be careful, this method is called automatically. Polyaxon has some processes
-            to automatically sync your run's artifacts and outputs.
+        > Be careful, this method is called automatically. Polyaxon has some processes
+        > to automatically sync your run's artifacts and outputs.
 
         Args:
             artifacts_path: str, optional
@@ -373,8 +373,8 @@ class Run(RunClient):
         """Sets an event logger.
 
         > **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
-            Be careful, this method is called automatically. Polyaxon has some processes
-            to automatically sync your run's artifacts and outputs.
+        > Be careful, this method is called automatically. Polyaxon has some processes
+        > to automatically sync your run's artifacts and outputs.
         """
         self._event_logger = EventFileWriter(run_path=self._artifacts_path)
 
@@ -383,8 +383,8 @@ class Run(RunClient):
         """Sets an resources logger.
 
         > **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
-            Be careful, this method is called automatically. Polyaxon has some processes
-            to automatically sync your run's artifacts and outputs.
+        > Be careful, this method is called automatically. Polyaxon has some processes
+        > to automatically sync your run's artifacts and outputs.
         """
         self._resource_logger = ResourceFileWriter(run_path=self._artifacts_path)
 
@@ -405,8 +405,8 @@ class Run(RunClient):
         ```
 
         > It's very important to log `step` as one of your metrics
-        if you want to compare experiments on the dashboard
-        and use the steps in x-axis instead of timestamps.
+        > if you want to compare experiments on the dashboard
+        > and use the steps in x-axis instead of timestamps.
 
         Args:
             name: str, metric name
@@ -441,8 +441,8 @@ class Run(RunClient):
         ```
 
         > It's very important to log `step` as one of your metrics
-        if you want to compare experiments on the dashboard
-        and use the steps in x-axis instead of timestamps.
+        > if you want to compare experiments on the dashboard
+        > and use the steps in x-axis instead of timestamps.
 
         Args:
             step: int, optional
@@ -1167,12 +1167,12 @@ class Run(RunClient):
          * several versions of the model and create an event file if the step is provided.
 
         > **Note 1**: This method does a couple things:
-          * It moves the model under the outputs or the assets directory if the step is provided
-          * If the step is provided it creates an event file
-          * It creates a lineage reference to the model or to the event file if the step is provided
+        >  * It moves the model under the outputs or the assets directory if the step is provided
+        >  * If the step is provided it creates an event file
+        >  * It creates a lineage reference to the model or to the event file if the step is provided
 
         > **Note 2**: If you need to have more control over where the model should be saved and
-        only record a lineage information of that path you can use `log_model_ref`.
+        > only record a lineage information of that path you can use `log_model_ref`.
 
         Args:
             path: str, path to the model to log
@@ -1246,12 +1246,12 @@ class Run(RunClient):
          * several versions of the artifact and create an event file if the step is provided.
 
         > **Note 1**: This method does a couple things:
-          * It moves the artifact under the outputs or the assets directory if the step is provided
-          * If the step is provided it creates an event file
-          * It creates a lineage reference to the artifact or to the event file if the step is provided
+        >  * It moves the artifact under the outputs or the assets directory if the step is provided
+        >  * If the step is provided it creates an event file
+        >  * It creates a lineage reference to the artifact or to the event file if the step is provided
 
         > **Note 2**: If you need to have more control over where the artifact should be saved and
-            only record a lineage information of that path you can use `log_artifact_ref`.
+        > only record a lineage information of that path you can use `log_artifact_ref`.
 
         Args:
             path: str, path to the artifact

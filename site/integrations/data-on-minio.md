@@ -52,12 +52,15 @@ In order to use the buckets with Polyaxon, you can follow the [S3 DataStore inte
 
 
 > **Note**: When Minio is installed via Helm with default values, it uses the following hard-wired default credentials, which you will use to login to the UI and setup access to Polyaxon:
+
 ```
 AccessKey: myaccesskey
 SecretKey: mysecretkey
 ```
+
 This means that the default secret keys should be:
-* AWS_ENDPOINT_URL: "http://plx-minio:9000"
-* AWS_ACCESS_KEY_ID: "myaccesskey",
-* AWS_SECRET_ACCESS_KEY: "mysecretkey"
+
+ * AWS_ENDPOINT_URL: "http://plx-minio:9000"
+ * AWS_ACCESS_KEY_ID: "myaccesskey",
+ * AWS_SECRET_ACCESS_KEY: "mysecretkey"
 

@@ -48,7 +48,7 @@ or that the messages may not even fit in memory.
 
 Maximum number of tasks a pool worker process can execute before it’s replaced with a new one. Default is no limit.
 
-> N.B. setting this to a low value might have a negative impact on your workers since they will be replaced often.
+> **N.B.** setting this to a low value might have a negative impact on your workers since they will be replaced often.
 
 ## workerMaxMemoryPerChild
 
@@ -57,4 +57,4 @@ Maximum number of tasks a pool worker process can execute before it’s replaced
 Maximum amount of resident memory, in kilobytes, that may be consumed by a worker before it will be replaced by a new worker.
 If a single task causes a worker to exceed this limit, the task will be completed, and the worker will be replaced afterwards.
 
-> N.B. setting this to a low value might have a negative impact on your workers since they will be replaced after a few tasks.
+> **N.B.** setting this to a low value might have a negative impact on your workers since they will be replaced after a few tasks.

@@ -59,8 +59,8 @@ When a user runs an independent operation, Polyaxon will automatically start com
 if no queue is defined in the operation, the default queue assigned to the project will be used.
 
 > To define a queue on the [component](/docs/core/specification/component/#queue),
-  on the [operation](/docs/core/specification/operation/#queue),
-  using the [CLI's](/docs/core/cli/run/) `--queue` flag, or using the [client's create methods](/docs/core/python-library/run-client/#create)
+> on the [operation](/docs/core/specification/operation/#queue),
+> using the [CLI's](/docs/core/cli/run/) `--queue` flag, or using the [client's create methods](/docs/core/python-library/run-client/#create)
 
 If a user runs a workflow with concurrency defined, e.g. parallel executions, DAGs, hyperparameter optimization,
 Polyaxon will use the right algorithm for generating any dynamic operations

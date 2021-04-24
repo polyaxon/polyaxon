@@ -127,8 +127,8 @@ class V1RandomSearch(BaseSearchConfig, polyaxon_sdk.V1RandomSearch):
     [params generators](/docs/automation/optimization-engine/params/).
 
     > The parameters generated will be validated against
-    the component's inputs/outputs definition to check that the values
-    can be passed and have valid types.
+    > the component's inputs/outputs definition to check that the values
+    > can be passed and have valid types.
 
     ```yaml
     >>> matrix:

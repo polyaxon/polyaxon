@@ -100,5 +100,5 @@ Polyaxon always assumes that conditions are parametrized and need to be resolved
 If the condition is `false` the operation will be skipped.
 
 > **Note**: Although it's possible to use conditions in an independent operation, 
-it generally makes more sense when it's running in the context of a pipeline (DAG, Matrix, or Schedule), when an operation is used as a hook, or when an operation is subscribing to events.
+> it generally makes more sense when it's running in the context of a pipeline (DAG, Matrix, or Schedule), when an operation is used as a hook, or when an operation is subscribing to events.
 

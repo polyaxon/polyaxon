@@ -36,7 +36,7 @@ and use a custom scheduling per experiment/job when needed. Please refer to this
 If you are running Polyaxon Enterprise Edition, you can also deploy the control plane in a separate namespace or even cluster than the data plane(workloads)
 
 > **Note**: make sure that Polyaxon's dependencies are not deployed on the same node where you are running your experiments and jobs,
-this way you won't impact the stability of these components if one of the runs has a high CPU/Memory consumption or being preempted.
+> this way you won't impact the stability of these components if one of the runs has a high CPU/Memory consumption or being preempted.
 
 ## Database high availability
 
@@ -48,7 +48,7 @@ Stateful applications are very hard to set up correctly on a Kubernetes cluster,
 We also recommend users to take snapshots and backups before going through a migration, this is particularly important if an upgrade contains DB or Data migrations.
 
 > **Note**: We strongly recommend that you do not deploy a production database using this chart. Although the provided database can persist data if configured, 
- you might encounter an issue in the future if we upgrade the dependency requirements or the version of the database image changes.
+> you might encounter an issue in the future if we upgrade the dependency requirements or the version of the database image changes.
 
 ## Other components high availability
 

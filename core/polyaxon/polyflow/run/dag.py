@@ -160,8 +160,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     ```
 
     > **Note**: For more information about managing the execution graph
-    and creating dependencies between operations, please check the
-    [flow dependencies section](/docs/automation/flow-engine/flow-dependencies/).
+    > and creating dependencies between operations, please check the
+    > [flow dependencies section](/docs/automation/flow-engine/flow-dependencies/).
 
     ### references
 

@@ -21,8 +21,6 @@ status: published
 
 This integration is about using [Cloud MemoryStore for Redis](https://cloud.google.com/memorystore/docs/redis/) for Polyaxon.
 
-> This integration can be used with all Polyaxon deployment types
-
 
 ## Pre-requisites
 

@@ -90,7 +90,7 @@ for instance to use `code` you should do the following:
 If your local folder is large, and several subpaths are not necessary, you can also use `-u-from/--upload-from`.
 
 > **Note**: It's possible to remove the `workingDir` altogether and put that logic in presets.
-  This will allow you to use the same polyaxonfiles and patch them based on if you are using a git repo or local code. 
+> This will allow you to use the same polyaxonfiles and patch them based on if you are using a git repo or local code. 
 
 ## Uploading after starting an experiment
 

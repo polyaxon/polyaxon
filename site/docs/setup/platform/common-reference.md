@@ -453,7 +453,7 @@ securityContext:
 
 This will enable a security context to run all containers using a UID/GID == 1111/1111.
 
-> If you are using a host path or a volume for the artifacts store, make sure to allow the UID/GID to access it.
+> **N.B.** If you are using a host path or a volume for the artifacts store, make sure to allow the UID/GID to access it.
 
 ## Resources' limit
 

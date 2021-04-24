@@ -83,15 +83,14 @@ $ helm delete <RELEASE_NAME> --purge
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 > **Warning**:
-Jobs are only deleted if they succeeded,
-sometimes if you cancel a deployment you might end up with undeleted jobs.
+> Jobs are only deleted if they succeeded,
+> sometimes if you cancel a deployment you might end up with undeleted jobs.
 
 ```bash
 $ kubectl delete job ...
 ```
 
-> **Note**:
-You can delete the chart and skip the cleaning the hooks
+> **Note**: You can delete the chart and skip the cleaning the hooks
 
 ```bash
 helm del --purge  <RELEASE_NAME>  --no-hooks
@@ -354,7 +353,7 @@ You can set the options for setting up the persistence for Polyaxon,
 or enable the nfs provisioner to provision the volumes, or some of them.
 
 > **Tip**: If you are using a multi node cluster and need to have `ReadWriteMany` volumes for trying out the platform,
-you can use the nfs provisioner provided by the platform. See later [Persistence with nfs](#persistence-with-nfs-provisioner)
+> you can use the nfs provisioner provided by the platform. See later [Persistence with nfs](#persistence-with-nfs-provisioner)
 
 For `logs` and `repos` Polyaxon by default uses the host node, in many cases this is a sufficient default,
 in other cases where Polyaxon is deployed on a multi-nodes and is replicated,

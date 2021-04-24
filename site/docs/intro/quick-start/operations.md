@@ -25,8 +25,7 @@ Let's first run this polyaxonfile:
 $ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yaml
 ```
 
-> For more details about this command please run `polyaxon run --help`,
-or check the [command reference](/docs/core/cli/run/)
+> For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/)
 
 This file `operation.yaml` also creates a new run, but its content does not include a component, it includes an operation.
 

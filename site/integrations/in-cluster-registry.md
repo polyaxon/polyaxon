@@ -32,7 +32,7 @@ A local docker registry can be used to push container images directly to the clu
  * You are iterating on new experiments and you want to test your changes before uploading the image to the official docker repository.
 
 > **Note**: Insecure registries can be used for development and trials.
- You should not use this in production. To deploy a secure registry, please consider customizing the chart or use an external registry provider.
+> You should not use this in production. To deploy a secure registry, please consider customizing the chart or use an external registry provider.
 
 ## Install the in-cluster registry
 

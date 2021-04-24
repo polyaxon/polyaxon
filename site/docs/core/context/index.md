@@ -68,8 +68,7 @@ as well as specific information, e.g. component kind and runtime.
 
 This information is available first and can be used immediately in all areas of the Polyaxonfile using the `{{ globals.* }}` prefix.
 
-> **Note**: It's very important to note that when `globals.*` is used in a param section with `ref`, 
-it will not correspond anymore to the current run, but will be resolved from the reference defined in the `param.ref`.
+> **Note**: It's very important to note that when `globals.*` is used in a param section with `ref`, it will not correspond anymore to the current run, but will be resolved from the reference defined in the `param.ref`.
 
 > **Note**: Please check the [context globals section](/docs/core/context/globals/) for more details.
 

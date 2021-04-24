@@ -18,7 +18,7 @@ Since keeping database records of your users, projects, experiments, and jobs is
 Polyaxon offers a couple of ways to set a high available database.
 
 > **Note**: We strongly recommend that you do not deploy a production database using this chart. Although the provided database can persist data if configured, 
- you might encounter an issue in the future if we upgrade the dependency requirements or the version of the database image changes.
+> you might encounter an issue in the future if we upgrade the dependency requirements or the version of the database image changes.
 
 ## Persistence
 

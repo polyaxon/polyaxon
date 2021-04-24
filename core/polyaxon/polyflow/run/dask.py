@@ -55,8 +55,8 @@ class V1Dask(BaseConfig, polyaxon_sdk.V1Dask):
     [Dask cluster](https://kubernetes.dask.org/en/latest/).
 
     > Dask Kubernetes deploys Dask workers on Kubernetes clusters using native Kubernetes APIs.
-      It is designed to dynamically launch short-lived deployments of workers
-      during the lifetime of a Python process.
+    > It is designed to dynamically launch short-lived deployments of workers
+    > during the lifetime of a Python process.
 
     The Dask job spawn a temporary adaptive Dask cluster with a
     Dask scheduler and workers to run your container.

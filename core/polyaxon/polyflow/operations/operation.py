@@ -122,29 +122,15 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         termination: [V1Termination](/docs/core/specification/termination/), optional
         plugins: [V1Plugins](/docs/core/specification/plugins/), optional
         params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
-        schedule: Union[[V1CronSchedule](/docs/automation/schedules/cron/)
-                  [V1IntervalSchedule](/docs/automation/schedules/interval/),
-                  [V1DateTimeSchedule](/docs/automation/schedules/datetime/)], optional
+        schedule: Union[[V1CronSchedule](/docs/automation/schedules/cron/), [V1IntervalSchedule](/docs/automation/schedules/interval/), [V1DateTimeSchedule](/docs/automation/schedules/datetime/)], optional  #noqa
         events: List[[V1EventTrigger](/docs/automation/events/)], optional
         hooks: List[[V1Hook](/docs/automation/hooks/)], optional
-        matrix: Union[[V1Mapping](/docs/automation/mapping/),
-                  [V1GridSearch](/docs/automation/optimization-engine/grid-search/),
-                  [V1RandomSearch](/docs/automation/optimization-engine/random-search/),
-                  [V1Hyperband](/docs/automation/optimization-engine/hyperband/),
-                  [V1Bayes](/docs/automation/optimization-engine/bayesian-optimization/),
-                  [V1Hyperopt](/docs/automation/optimization-engine/hyperopt/),
-                  [V1Iterative](/docs/automation/optimization-engine/iterative/)], optional
+        matrix: Union[[V1Mapping](/docs/automation/mapping/), [V1GridSearch](/docs/automation/optimization-engine/grid-search/), [V1RandomSearch](/docs/automation/optimization-engine/random-search/), [V1Hyperband](/docs/automation/optimization-engine/hyperband/), [V1Bayes](/docs/automation/optimization-engine/bayesian-optimization/), [V1Hyperopt](/docs/automation/optimization-engine/hyperopt/), [V1Iterative](/docs/automation/optimization-engine/iterative/)], optional
         joins: List[[V1Join](/docs/automation/joins/)], optional
-        dependencies:
-            [dependencies](/docs/automation/flow-engine/flow-dependencies/#dependencies),
-            optional
-        trigger: [trigger](/docs/automation/flow-engine/flow-dependencies/#trigger),
-                 optional
-        conditions: [conditions](/docs/core/scheduling-strategies/conditional-scheduling/#conditional-scheduling),  # noqa
-                    optional
-        skip_on_upstream_skip:
-            [skip_on_upstream_skip](/docs/automation/flow-engine/flow-dependencies/skiponupstreamskip/),  # noqa
-            optional
+        dependencies: [dependencies](/docs/automation/flow-engine/flow-dependencies/#dependencies), optional  # noqa
+        trigger: [trigger](/docs/automation/flow-engine/flow-dependencies/#trigger), optional
+        conditions: [conditions](/docs/core/scheduling-strategies/conditional-scheduling/#conditional-scheduling), optional  # noqa
+        skip_on_upstream_skip: [skip_on_upstream_skip](/docs/automation/flow-engine/flow-dependencies/skiponupstreamskip/), optional  # noqa
         run_patch: Dict, optional
         hub_ref: str, optional
         dag_ref: str, optional
@@ -268,7 +254,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     ```
 
     > **Note**: Please check this
-        [in-depth section about presets](/docs/core/scheduling-strategies/presets/).
+    > [in-depth section about presets](/docs/core/scheduling-strategies/presets/).
 
     ### name
 
@@ -398,16 +384,11 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     The run patch is a dictionary that can modify most of the runtime information and
     will be resolved against the corresponding run kind:
 
-        * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,
-                                                data processing jobs, ...
-        * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks,
-                                                        streamlit, custom services or an API.
-        * [V1TFJob](/docs/experimentation/distributed/tf-jobs/): for running distributed
-                                                                 Tensorflow training job.
-        * [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/): for running distributed
-                                                                           Pytorch training job.
-        * [V1MPIJob](/docs/experimentation/distributed/mpi-jobs/): for running distributed
-                                                                   MPI job.
+        * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments, data processing jobs, ...  # noqa
+        * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks, streamlit, custom services or an API.  # noqa
+        * [V1TFJob](/docs/experimentation/distributed/tf-jobs/): for running distributed Tensorflow training job.  # noqa
+        * [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/): for running distributed Pytorch training job.
+        * [V1MPIJob](/docs/experimentation/distributed/mpi-jobs/): for running distributed MPI job.  # noqa
         * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
         * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
         * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG/workflow.

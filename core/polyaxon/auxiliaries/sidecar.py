@@ -121,11 +121,11 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
     The interval between two consecutive checks, default 10s.
 
     > **N.B.1**: It's possible to alter this behaviour on per operation level
-        using the sidecar plugin.
+    > using the sidecar plugin.
 
     > **N.B.2**: be careful of the trade-off between a large sleep interval and a short interval,
-        you don't want the sidecar to overwhelm the API and Kuberenetes API,
-        and you don't want also the sidecar to penalize your workload with additional latency.
+    > you don't want the sidecar to overwhelm the API and Kuberenetes API,
+    > and you don't want also the sidecar to penalize your workload with additional latency.
 
     ```yaml
     >>> sidecar:
@@ -137,13 +137,13 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
     The interval between two consecutive archiving checks. default 10s.
 
     > **N.B.1**: It's possible to alter this behaviour on per operation level
-        using the sidecar plugin.
+    > using the sidecar plugin.
 
     > **N.B.2**: Only changed files since a previous check are synced.
 
     > **N.B.3**: If you don't need to access intermediate artifacts while the workload is running,
-        you might set this field to a high value, or `-1` to only trigger
-        this behavior when the workload is done.
+    > you might set this field to a high value, or `-1` to only trigger
+    > this behavior when the workload is done.
 
     ```yaml
     >>> sidecar:

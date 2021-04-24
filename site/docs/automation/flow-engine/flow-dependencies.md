@@ -53,7 +53,7 @@ run:
 `job1` and `job2` will run in parallel and job3 will wait for both jobs to finish.
 
 > Note that when a dependency is defined via the `dependencies` you can only trigger the operation 
-when all upstream operation reach a final state following the `trigger` definition.
+> when all upstream operation reach a final state following the `trigger` definition.
 
 ## Param dependencies
 
@@ -160,5 +160,4 @@ Also, since events define references, the dependency is inferred automatically a
 
 In this example `job3` will be scheduled as soon as `job2` starts running.
 
-> **Note**: For more details, please check the 
-[events section](/docs/automation/events/specification/)
+> **Note**: For more details, please check the [events section](/docs/automation/events/specification/)

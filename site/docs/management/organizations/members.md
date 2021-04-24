@@ -106,8 +106,9 @@ Unrestricted access to the organization, its data, and settings.
  * Does not have access to the organization settings. 
  * Has admin privileges on any teams of which they're a member.
  * Can admin projects and set restrictions on connections, presets, members access, agents, queues.
- * Can create new teams, projects, model registry and component hub entries.
- * Can remove teams, projects, model registry and component hub entries which they already hold membership on.
+ * Can create new projects, model registry and component hub entries.
+ * Can remove projects, model registry and component hub entries which they already hold membership on.
+ * Can manage and update settings of projects, model registry and component hub entries which they already hold membership on.
  * Can promote searches and dashboards to organization level.
  * Can promote experiments to model registry.
 

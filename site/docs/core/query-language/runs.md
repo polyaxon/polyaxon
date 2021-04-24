@@ -28,7 +28,7 @@ Several fields accept aliases:
  * inputs: in, params
  * outputs: out, metrics
 
-> N.B. the difference between `outputs` and `metrics`: `outputs.*` use [value condition](/docs/core/query-language/#query-with-value-condition) and `metrics.*` use [comparison condition](/docs/core/query-language/#query-with-comparison-condition).
+> **N.B.** the difference between `outputs` and `metrics`: `outputs.*` use [value condition](/docs/core/query-language/#query-with-value-condition) and `metrics.*` use [comparison condition](/docs/core/query-language/#query-with-comparison-condition).
 
 ## Query
 

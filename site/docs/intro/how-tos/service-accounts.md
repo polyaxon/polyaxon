@@ -44,7 +44,7 @@ For more details about providing a service account compatible with Polyaxon auxi
 please check the [service account specification](/docs/core/specification/environment/#serviceaccountname) in the environment section.
 
 > **Note**: Although you can grant any access rights to your service account, especially if you disable Polyaxon sidecar and Polyaxon init containers, 
-we suggest that you read the minimum RBAC rules used in the default [service account](/docs/core/specification/environment/#serviceaccountname). 
+> we suggest that you read the minimum RBAC rules used in the default [service account](/docs/core/specification/environment/#serviceaccountname). 
 
 ## Global configuration
 

@@ -180,5 +180,4 @@ You can create a secret with either:
 
 The secret must define the environment variable: `POLYAXON_GIT_CREDENTIALS`.
 
-> If you don't need to use the built-in initializer for pulling your code or if you decide to create your own git handler,
-you can expose any information needed for your logic inside the secret.
+> If you don't need to use the built-in initializer for pulling your code or if you decide to create your own git handler, you can expose any information needed for your logic inside the secret.

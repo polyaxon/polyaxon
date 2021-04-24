@@ -159,9 +159,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     Args:
         name: str
         description: str, optional
-        type: str, one of: [any, int, float, bool, str, dict, dict_of_dicts, uri, auth, list,
-                              gcs, s3, wasb, dockerfile, git, image, event, artifacts, path,
-                              metric, metadata, date, datetime]
+        type: str, one of: [any, int, float, bool, str, dict, dict_of_dicts, uri, auth, list, gcs, s3, wasb, dockerfile, git, image, event, artifacts, path, metric, metadata, date, datetime]  # noqa
         value: any, optional
         is_optional: bool, optional
         is_list: bool, optional

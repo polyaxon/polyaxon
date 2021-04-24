@@ -70,8 +70,7 @@ Let's run a first experiment
 $ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
 ```
 
-> For more details about this command please run `polyaxon run --help`,
-or check the [command reference](/docs/core/cli/run/)
+> For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/)
 
 The `-l` flag indicates that we want to stream the logs after starting the experiment.
 
@@ -92,8 +91,7 @@ $ polyaxon run --hub tensorboard:single-run -P uuid=UUID -w
 $ polyaxon dashboard -y
 ```
 
-> For more details about this command please run `polyaxon dashboard --help`,
-or check the [command reference](/docs/core/cli/dashboard/)
+> For more details about this command please run `polyaxon dashboard --help`, or check the [command reference](/docs/core/cli/dashboard/)
 
 We can see that Polyaxon has logged some information automatically about our run:
 

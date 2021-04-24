@@ -24,8 +24,7 @@ Projects could be `private` (default behavior) or `public`.
 $ polyaxon project create --name=mnist --description='Classification of handwritten images.'
 ```
 
-> For more details about this command please run `polyaxon project create --help`,
-or check the [command reference](/references/polyaxon-cli/project/#create)
+> For more details about this command please run `polyaxon project create --help`, or check the [command reference](/references/polyaxon-cli/project/#create)
 
 All projects are created by default `private`, you can change this behavior by adding `--public`
 

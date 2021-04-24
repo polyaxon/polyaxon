@@ -163,8 +163,8 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/)  # noqa
 
     > Labels are key/value pairs that are attached to objects, such as pods.
-      Labels are intended to be used to specify identifying attributes of objects that
-      are meaningful and relevant to users, but do not directly imply semantics to the core system.
+    > Labels are intended to be used to specify identifying attributes of objects that
+    > are meaningful and relevant to users, but do not directly imply semantics to the core system.
 
     Polyaxon injects several labels to all operations it manages,
     users can leverage those labels or extend them.
@@ -181,7 +181,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)  # noqa
 
     > You can use Kubernetes annotations to attach arbitrary non-identifying metadata to objects.
-      Clients such as tools and libraries can retrieve this metadata.
+    > Clients such as tools and libraries can retrieve this metadata.
 
     ```yaml
     >>> environment:
@@ -195,10 +195,10 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector)  # noqa
 
     > nodeSelector is the simplest recommended form of node selection constraint.
-      nodeSelector is a field of PodSpec. It specifies a map of key-value pairs.
-      For the pod to be eligible to run on a node, the node must have each of
-      the indicated key-value pairs as labels (it can have additional labels as well).
-      The most common usage is one key-value pair.
+    > nodeSelector is a field of PodSpec. It specifies a map of key-value pairs.
+    > For the pod to be eligible to run on a node, the node must have each of
+    > the indicated key-value pairs as labels (it can have additional labels as well).
+    > The most common usage is one key-value pair.
 
     ```yaml
     >>> environment:
@@ -228,7 +228,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)  # noqa
 
     > Tolerations are applied to pods, and allow (but do not require)
-      the pods to schedule onto nodes with matching taints.
+    > the pods to schedule onto nodes with matching taints.
 
     ```yaml
     >>> environment:
@@ -243,10 +243,10 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename)  # noqa
 
     > nodeName is the simplest form of node selection constraint,
-      but due to its limitations it is typically not used. nodeName is a field of PodSpec.
-      If it is non-empty, the scheduler ignores the pod and the kubelet running on the named
-      node tries to run the pod. Thus, if nodeName is provided in the PodSpec,
-      it takes precedence over the above methods for node selection.
+    > but due to its limitations it is typically not used. nodeName is a field of PodSpec.
+    > If it is non-empty, the scheduler ignores the pod and the kubelet running on the named
+    > node tries to run the pod. Thus, if nodeName is provided in the PodSpec,
+    > it takes precedence over the above methods for node selection.
 
     ```yaml
     >>> environment:
@@ -285,8 +285,8 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/)  # noqa
 
     > Adding entries to a Pod’s /etc/hosts file provides Pod-level override of hostname resolution
-      when DNS and other options are not applicable. In 1.7,
-      users can add these custom entries with the HostAliases field in PodSpec.
+    > when DNS and other options are not applicable. In 1.7,
+    > users can add these custom entries with the HostAliases field in PodSpec.
 
     ```yaml
     >>> environment:
@@ -317,9 +317,9 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod)  # noqa
 
     > ImagePullSecrets is a list of references to secrets in the same namespace
-      to use for pulling any images in pods that reference this ServiceAccount.
-      ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod,
-      but ImagePullSecrets are only accessed by the kubelet.
+    > to use for pulling any images in pods that reference this ServiceAccount.
+    > ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod,
+    > but ImagePullSecrets are only accessed by the kubelet.
 
     ```yaml
     >>> environment:
@@ -331,8 +331,8 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces)  # noqa
 
     > Controls whether the pod may use the node network namespace.
-      Doing so gives the pod access to the loopback device, services listening on localhost,
-      and could be used to snoop on network activity of other pods on the same node.
+    > Gives the pod access to the loopback device, services listening on localhost,
+    > and could be used to snoop on network activity of other pods on the same node.
 
     ```yaml
     >>> environment:
@@ -344,8 +344,8 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces)  # noqa
 
     > Controls whether the pod containers can share the host process ID namespace.
-      Note that when paired with ptrace this can be used to escalate privileges outside
-      of the container (ptrace is forbidden by default).
+    > Note that when paired with ptrace this can be used to escalate privileges outside
+    > of the container (ptrace is forbidden by default).
 
     ```yaml
     >>> environment:
@@ -357,11 +357,11 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pods-dns-policy)  # noqa
 
     > Set DNS policy for the pod.
-      Defaults to "ClusterFirst".
-      Valid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'.
-      DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.
-      To have DNS options set along with hostNetwork, you have to specify DNS policy
-      explicitly to 'ClusterFirstWithHostNet'.
+    > Defaults to "ClusterFirst".
+    > Valid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'.
+    > DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.
+    > To have DNS options set along with hostNetwork, you have to specify DNS policy
+    > explicitly to 'ClusterFirstWithHostNet'.
 
     ```yaml
     >>> environment:
@@ -393,8 +393,8 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/)  # noqa
 
     > If specified, the pod will be dispatched by the specified scheduler.
-      Or it will be dispatched by workflow scope scheduler if specified.
-      If neither specified, the pod will be dispatched by default scheduler.
+    > Or it will be dispatched by workflow scope scheduler if specified.
+    > If neither specified, the pod will be dispatched by default scheduler.
 
     ```yaml
     >>> environment:
@@ -406,9 +406,9 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/)  # noqa
 
     > Pods can have priority.
-      Priority indicates the importance of a Pod relative to other Pods.
-      If a Pod cannot be scheduled, the scheduler tries to preempt (evict)
-      lower priority Pods to make scheduling of the pending Pod possible.
+    > Priority indicates the importance of a Pod relative to other Pods.
+    > If a Pod cannot be scheduled, the scheduler tries to preempt (evict)
+    > lower priority Pods to make scheduling of the pending Pod possible.
 
     ```yaml
     >>> environment:
@@ -420,9 +420,9 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/)  # noqa
 
     > Pods can have priority.
-      Priority indicates the importance of a Pod relative to other Pods.
-      If a Pod cannot be scheduled, the scheduler tries to preempt (evict)
-      lower priority Pods to make scheduling of the pending Pod possible.
+    > Priority indicates the importance of a Pod relative to other Pods.
+    > If a Pod cannot be scheduled, the scheduler tries to preempt (evict)
+    > lower priority Pods to make scheduling of the pending Pod possible.
 
     ```yaml
     >>> environment:
@@ -434,7 +434,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy)  # noqa
 
     > A PodSpec has a restartPolicy field with possible values Always, OnFailure, and Never.
-      The default value is Always.
+    > The default value is Always.
 
 
     ```yaml

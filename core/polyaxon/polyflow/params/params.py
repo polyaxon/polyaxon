@@ -221,8 +221,8 @@ class V1Param(
     Params can be passed in several ways
         * literal values that the user sets manually.
         * a reference from a previous run, in which case
-          Polyaxon will validate during the compilation time if the user who initiated the run
-          has access to that organization/project/run.
+        Polyaxon will validate during the compilation time if the user who initiated the run
+        has access to that organization/project/run.
         * a reference from an upstream operation in the context of a DAG.
 
 
@@ -337,9 +337,9 @@ class V1Param(
     ```
 
     > **Note**: the difference between using `artifacts.lineage_name`
-    and [ArtifactsType](/docs/core/specification/types/#v1artifactstype),
-    is that the former will only expose the path based on any lineage logged during the runtime,
-    the later is a manual way of selecting specific files and dirs.
+    > and [ArtifactsType](/docs/core/specification/types/#v1artifactstype),
+    > is that the former will only expose the path based on any lineage logged during the runtime,
+    > the later is a manual way of selecting specific files and dirs.
 
     ### ref
 

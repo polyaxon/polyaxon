@@ -1107,9 +1107,9 @@ class RunClient:
 
 
         > **Note**: If you are starting a run from the CLI/UI
-            polyaxon will track all inputs from the Polyaxonfile,
-            so you generally don't need to set them manually.
-            But you can always add or reset these params/inputs once your code starts running.
+        > polyaxon will track all inputs from the Polyaxonfile,
+        > so you generally don't need to set them manually.
+        > But you can always add or reset these params/inputs once your code starts running.
 
         Args:
             reset: bool, optional, if True, it will reset the whole inputs state.
@@ -1155,7 +1155,7 @@ class RunClient:
         """Logs meta_info for the current run.
 
         > **Note**: Use carefully! The meta information is used by
-        Polyaxon internally to perform several information.
+        > Polyaxon internally to perform several information.
 
         Polyaxon Client already uses this method to log information
         about several events and artifacts, Polyaxon API/Scheduler uses
@@ -1439,10 +1439,10 @@ class RunClient:
         """Logs model reference.
 
          > **Note**: The difference between this method and the `log_model`
-         is that this one does not copy or move the asset, it only registers a lineage reference.
-         If you need the model asset to be on the `artifacts_path` or the `outputs_path`
-         you have to copy it manually using a relative path to
-         `self.get_artifacts_path` or `self.get_outputs_path`.
+         > is that this one does not copy or move the asset, it only registers a lineage reference.
+         > If you need the model asset to be on the `artifacts_path` or the `outputs_path`
+         > you have to copy it manually using a relative path to
+         > `self.get_artifacts_path` or `self.get_outputs_path`.
 
          ```python
         >>> # Get outputs artifact path
@@ -1721,7 +1721,7 @@ class RunClient:
         """Syncs all tracked events and auto-generates summaries and lineage data.
 
         > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
-            automatically, so you should not call this method manually.
+        > automatically, so you should not call this method manually.
         """
         # check if there's a path to sync
         if not os.path.exists(events_path):
@@ -1750,7 +1750,7 @@ class RunClient:
         """Persists an offline run to a local path.
 
         > **Note**: You generally do not need to call this method manually,
-            When the `offline` mode is enabled, this method is triggered automatically at the end.
+        > When the `offline` mode is enabled, this method is triggered automatically at the end.
         """
         if not self._is_offline or not self.run_data:
             logger.debug(
@@ -1789,7 +1789,7 @@ class RunClient:
         """Loads an offline run from a local path.
 
         > **Note**: When the `offline` mode is enabled, and the run uuid is provided,
-            this method is triggered automatically to load last checkpoint.
+        > this method is triggered automatically to load last checkpoint.
         """
         run_path = "{}/run_data.json".format(artifacts_path)
         if not os.path.isfile(run_path):

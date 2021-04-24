@@ -91,7 +91,7 @@ every time we run this component, Polyaxon will clone the repo and inject it in 
 In a nutshell, what Polyaxon provides is a simple way to schedule and run containerized workload.
 
 > We will [come back](/docs/intro/quick-start/building-containers/) to the docker image to learn how to build containers later,
- for now let's assume that we have an image with all requirements installed
+> for now let's assume that we have an image with all requirements installed
 
 ## The Container section
 
@@ -201,7 +201,7 @@ Furthermore, anything tracked by Polyaxon, e.g. artifacts, assets, models ... wi
 you can have a full provenance path if you decide to deploy/retire a model to/from production.
 
 > This module is optional, Polyaxon logs all your information to whatever artifacts store you configure,
-you always keep control of the assets you produce.
+> you always keep control of the assets you produce.
 
 ## Start a new experiment
 
@@ -278,7 +278,7 @@ The outputs on the other hand have a delayed validation by default, since we wil
 If you want to validate an output eagerly, you need to set `delayValidation: false`.
 
 > You don't have to define outputs or inputs, and you can still log information during the run,
-for instance we defined 2 outputs, but our program will log 4 results (val_loss and val_accuracy as well)
+> for instance we defined 2 outputs, but our program will log 4 results (val_loss and val_accuracy as well)
 
 When you run this experiment you will notice that Polyaxon will populate the inputs section in the dashboard automatically.
 
