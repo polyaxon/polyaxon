@@ -8,4 +8,4 @@ mock<4.1.0
 pyflakes<2.4.0
 pytest<6.3.0
 pytest-asyncio<0.15.0
-pylint<2.8.0
+pylint<2.9.0
