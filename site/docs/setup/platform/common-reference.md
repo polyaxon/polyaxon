@@ -401,8 +401,7 @@ hostName: polyaxon.foo.com
 Polyaxon UI comes with several flags to:
  * Disable the UI in case the API is used for submitting jobs and programmatic use with other tools.
  * Enable the admin Dashboard.
- * Enable the offline mode, by default some dependencies are loaded from CDN and require access to the internet,
-   if the end users have no access to the internet you can serve these dependencies using the offline mode.
+ * Enable the offline mode, by default some dependencies are loaded from CDN and require access to the internet, if the end users have no access to the internet you can serve these dependencies using the offline mode.
 
 ```yaml
 ui:

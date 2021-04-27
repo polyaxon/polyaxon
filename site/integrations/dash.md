@@ -12,6 +12,7 @@ author:
   github: "polyaxon"
 tags:
   - services
+  - serving
   - dashboard
 featured: false
 popularity: 1
