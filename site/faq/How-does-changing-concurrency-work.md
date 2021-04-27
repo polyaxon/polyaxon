@@ -1,9 +1,9 @@
 ---
 title: "How does changing concurrency work?"
 meta_title: "How does changing concurrency work? - FAQ"
-meta_description: "Polyaxon will try meet the new concurrency limit by applying a draining effect if the concurrency is reduced, or schedule more operations is increased."
+meta_description: "Polyaxon will try meet the new concurrency limit by applying a draining effect if the concurrency is reduced, or schedule more operations if increased."
 featured: false
-custom_excerpt: "Polyaxon will try meet the new concurrency limit by applying a draining effect if the concurrency is reduced, or schedule more operations is increased."
+custom_excerpt: "Polyaxon will try meet the new concurrency limit by applying a draining effect if the concurrency is reduced, or schedule more operations if increased."
 author:
   name: "Polyaxon"
   slug: "Polyaxon"

@@ -97,6 +97,8 @@
       link: /docs/core/scheduling-strategies/concurrency-management/
     - title: Scheduling Presets
       link: /docs/core/scheduling-strategies/presets/
+    - title: Managing a Catalog of Machines
+      link: /docs/core/scheduling-strategies/machines-catalog/
     - title: Resume & Restart
       link: /docs/core/scheduling-strategies/resume-restart/
     - title: Conditional Scheduling

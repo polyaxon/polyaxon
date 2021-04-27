@@ -43,6 +43,7 @@ There are several distinct features involved in the scheduling strategies:
  * [Concurrency management](/docs/core/scheduling-strategies/concurrency-management): A feature to limit the number of operations queued.
  * [Scheduling presets](/docs/core/scheduling-strategies/presets/): A feature for injecting certain information into operations at compilation time to preset configuration
    for node scheduling, queue routing, resources requirements and definition, connections, and access level control.
+ * [Defining a catalog of machines](/docs/core/scheduling-strategies/machine-catalog/): By combining Queues and Presets, users can expose their cluster(s) as an organized and easy-to-use catalog of machines.
  * [Resume & Restart](/docs/core/scheduling-strategies/resume-restart/): Scheduling operation by resuming, restarting, and copying previous operation runs.
  * [Conditional scheduling](/docs/core/scheduling-strategies/conditional-scheduling/): A feature to start operation on nodes or queues based on inputs data or to completely skip scheduling the operation.
  * [Manual approval](/docs/core/scheduling-strategies/manual-approval/): A feature to pause and suspend operations and pipelines and wait for human approval to resume the work.
