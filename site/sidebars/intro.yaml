@@ -53,6 +53,8 @@
       link: /docs/intro/how-tos/reconfigure-cli/
     - title: Upload artifacts
       link: /docs/intro/how-tos/upload-artifacts/
+    - title: Customize the git preset
+      link: /docs/intro/how-tos/customize-git-preset/
   - group: Features & Architecture
     items:
     - title: Features

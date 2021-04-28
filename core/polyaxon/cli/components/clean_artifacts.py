@@ -19,6 +19,7 @@ import click
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.formatting import Printer
+from polyaxon.utils.list_utils import to_list
 
 
 @click.group()
@@ -28,7 +29,7 @@ def clean_artifacts():
 
 @clean_artifacts.command()
 @click.option("--connection-name", help="The connection name.")
-@click.option("--subpath", help="The s3 subpath to clean.")
+@click.option("-sp", "--subpath", multiple=True, help="The s3 subpath to clean.")
 @click.option(
     "--is-file",
     is_flag=True,
@@ -42,21 +43,23 @@ def s3(connection_name, subpath, is_file, workers):
     """Delete an s3 subpath."""
     from polyaxon.stores.manager import delete_file_or_dir
 
-    delete_file_or_dir(
-        connection_type=V1ConnectionType(
-            name=connection_name, kind=V1ConnectionKind.S3
-        ),
-        subpath=subpath,
-        workers=workers,
-        is_file=is_file,
-    )
+    subpath = to_list(subpath, check_none=True)
+    for sp in subpath:
+        delete_file_or_dir(
+            connection_type=V1ConnectionType(
+                name=connection_name, kind=V1ConnectionKind.S3
+            ),
+            subpath=sp,
+            workers=workers,
+            is_file=is_file,
+        )
 
     Printer.print_success("S3 subpath was cleaned, subpath: `{}`".format(subpath))
 
 
 @clean_artifacts.command()
 @click.option("--connection-name", help="The connection name.")
-@click.option("--subpath", help="The gcs subpath to clean.")
+@click.option("-sp", "--subpath", multiple=True, help="The gcs subpath to clean.")
 @click.option(
     "--is-file",
     is_flag=True,
@@ -70,21 +73,23 @@ def gcs(connection_name, subpath, is_file, workers):
     """Delete a gcs subpath."""
     from polyaxon.stores.manager import delete_file_or_dir
 
-    delete_file_or_dir(
-        connection_type=V1ConnectionType(
-            name=connection_name, kind=V1ConnectionKind.GCS
-        ),
-        subpath=subpath,
-        workers=workers,
-        is_file=is_file,
-    )
+    subpath = to_list(subpath, check_none=True)
+    for sp in subpath:
+        delete_file_or_dir(
+            connection_type=V1ConnectionType(
+                name=connection_name, kind=V1ConnectionKind.GCS
+            ),
+            subpath=sp,
+            workers=workers,
+            is_file=is_file,
+        )
 
     Printer.print_success("GCS subpath was cleaned, subpath: `{}`".format(subpath))
 
 
 @clean_artifacts.command()
 @click.option("--connection-name", help="The connection name.")
-@click.option("--subpath", help="The wasb subpath to clean.")
+@click.option("-sp", "--subpath", multiple=True, help="The wasb subpath to clean.")
 @click.option(
     "--is-file",
     is_flag=True,
@@ -98,21 +103,23 @@ def wasb(connection_name, subpath, is_file, workers):
     """Delete a wasb path context."""
     from polyaxon.stores.manager import delete_file_or_dir
 
-    delete_file_or_dir(
-        connection_type=V1ConnectionType(
-            name=connection_name, kind=V1ConnectionKind.WASB
-        ),
-        subpath=subpath,
-        workers=workers,
-        is_file=is_file,
-    )
+    subpath = to_list(subpath, check_none=True)
+    for sp in subpath:
+        delete_file_or_dir(
+            connection_type=V1ConnectionType(
+                name=connection_name, kind=V1ConnectionKind.WASB
+            ),
+            subpath=sp,
+            workers=workers,
+            is_file=is_file,
+        )
 
     Printer.print_success("WASB subpath was cleaned, subpath: `{}`".format(subpath))
 
 
 @clean_artifacts.command()
 @click.option("--connection-name", help="The connection name.")
-@click.option("--subpath", help="The volume subpath to clean.")
+@click.option("-sp", "--subpath", multiple=True, help="The volume subpath to clean.")
 @click.option(
     "--is-file",
     is_flag=True,
@@ -126,21 +133,23 @@ def volume_claim(connection_name, subpath, is_file, workers):
     """Delete a volume path context."""
     from polyaxon.stores.manager import delete_file_or_dir
 
-    delete_file_or_dir(
-        connection_type=V1ConnectionType(
-            name=connection_name, kind=V1ConnectionKind.VOLUME_CLAIM
-        ),
-        subpath=subpath,
-        workers=workers,
-        is_file=is_file,
-    )
+    subpath = to_list(subpath, check_none=True)
+    for sp in subpath:
+        delete_file_or_dir(
+            connection_type=V1ConnectionType(
+                name=connection_name, kind=V1ConnectionKind.VOLUME_CLAIM
+            ),
+            subpath=sp,
+            workers=workers,
+            is_file=is_file,
+        )
 
     Printer.print_success("Volume subpath was cleaned, subpath: `{}`".format(subpath))
 
 
 @clean_artifacts.command()
 @click.option("--connection-name", help="The connection name.")
-@click.option("--subpath", help="The host subpath to clean.")
+@click.option("-sp", "--subpath", multiple=True, help="The host subpath to clean.")
 @click.option(
     "--is-file",
     is_flag=True,
@@ -154,13 +163,15 @@ def host_path(connection_name, subpath, is_file, workers):
     """Delete a host path context."""
     from polyaxon.stores.manager import delete_file_or_dir
 
-    delete_file_or_dir(
-        connection_type=V1ConnectionType(
-            name=connection_name, kind=V1ConnectionKind.HOST_PATH
-        ),
-        subpath=subpath,
-        workers=workers,
-        is_file=is_file,
-    )
+    subpath = to_list(subpath, check_none=True)
+    for sp in subpath:
+        delete_file_or_dir(
+            connection_type=V1ConnectionType(
+                name=connection_name, kind=V1ConnectionKind.HOST_PATH
+            ),
+            subpath=sp,
+            workers=workers,
+            is_file=is_file,
+        )
 
     Printer.print_success("WASB subpath was cleaned, subpath: `{}`".format(subpath))

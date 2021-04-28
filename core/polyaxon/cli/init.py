@@ -68,7 +68,7 @@ def create_polyaxonfile():
     *OPTIONS_PROJECT["args"],
     type=str,
     help="To enable local cache in this folder, "
-    "the project name to initialize, e.g. 'mnist' or 'acme/mnist'."
+    "the project name to initialize, e.g. 'mnist' or 'acme/mnist'.",
 )
 @click.option(
     "--git-connection",

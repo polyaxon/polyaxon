@@ -17,7 +17,7 @@
 import os
 
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from polyaxon import settings
 from polyaxon.connections.getter import get_connection_from_type
@@ -25,6 +25,7 @@ from polyaxon.connections.reader import get_connection_type
 from polyaxon.env_vars.getters import get_artifacts_store_name
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.schemas.types import V1ConnectionType
+from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import create_tarfile, get_files_in_path, get_path
 
 
@@ -119,7 +120,7 @@ def download_file_or_dir(
 
 
 def delete_file_or_dir(
-    subpath: str,
+    subpath: Union[str, List[str]],
     is_file: bool = False,
     workers: int = 0,
     connection_type: V1ConnectionType = None,
@@ -129,10 +130,12 @@ def delete_file_or_dir(
     validate_store(connection_type)
 
     store_manager = get_connection_from_type(connection_type=connection_type)
-    if is_file:
-        store_manager.delete_file(subpath)
-    else:
-        store_manager.delete(subpath, workers=workers)
+    subpath = to_list(subpath, check_none=True)
+    for sp in subpath:
+        if is_file:
+            store_manager.delete_file(sp)
+        else:
+            store_manager.delete(sp, workers=workers)
 
 
 def tar_dir(download_path: str) -> str:

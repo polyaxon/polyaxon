@@ -28,7 +28,7 @@ from polyaxon.schemas.fields.swagger import SwaggerField
 def get_init_resources() -> k8s_schemas.V1ResourceRequirements:
     return k8s_schemas.V1ResourceRequirements(
         limits={"cpu": "1", "memory": "200Mi"},
-        requests={"cpu": "0.1", "memory": "20Mi"},
+        requests={"cpu": "0.1", "memory": "60Mi"},
     )
 
 
@@ -136,7 +136,7 @@ def get_default_init_container(schema=True):
         "imagePullPolicy": PullPolicy.IF_NOT_PRESENT.value,
         "resources": {
             "limits": {"cpu": "1", "memory": "200Mi"},
-            "requests": {"cpu": "0.1", "memory": "20Mi"},
+            "requests": {"cpu": "0.1", "memory": "60Mi"},
         },
     }
     if schema:

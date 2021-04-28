@@ -197,10 +197,10 @@ class BaseConfigManager:
 
     @classmethod
     def read_from_path(cls, config_filepath: str):
+        if issubclass(cls.CONFIG, BaseConfig):
+            return cls.CONFIG.read(config_filepath)
         with open(config_filepath, "r") as config_file:
             config_str = config_file.read()
-        if issubclass(cls.CONFIG, BaseConfig):
-            return cls.CONFIG.from_dict(ujson.loads(config_str))
         return cls.CONFIG(**ujson.loads(config_str))
 
     @classmethod

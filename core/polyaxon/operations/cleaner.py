@@ -13,8 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import List
 
 from polyaxon.auxiliaries import get_default_cleaner_container
+from polyaxon.auxiliaries.cleaner import get_batch_cleaner_container
 from polyaxon.polyflow import (
     V1CleanerJob,
     V1Component,
@@ -43,6 +45,30 @@ def get_cleaner_operation(
             run=V1CleanerJob(
                 connections=[connection.name],
                 container=get_default_cleaner_container(connection, run_uuid, run_kind),
+            ),
+        ),
+    )
+
+
+def get_batch_cleaner_operation(
+    connection: V1ConnectionType,
+    paths: List[str],
+) -> V1Operation:
+    return V1Operation(
+        termination=V1Termination(max_retries=1),
+        component=V1Component(
+            name="cleaner",
+            plugins=V1Plugins(
+                auth=False,
+                collect_logs=False,
+                collect_artifacts=False,
+                collect_resources=False,
+                auto_resume=False,
+                sync_statuses=False,
+            ),
+            run=V1CleanerJob(
+                connections=[connection.name],
+                container=get_batch_cleaner_container(connection, paths),
             ),
         ),
     )

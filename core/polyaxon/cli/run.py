@@ -280,16 +280,6 @@ def run(
                 sys_exit=True,
             )
         git_init = GitConfigManager.get_config()
-        if git_init.git is None:
-            GitConfigManager.purge(visibility=GitConfigManager.VISIBILITY_LOCAL)
-            Printer.print_error(
-                "Polyaxon could not start a new run with the `[--git-preset] or [--git-revision]`. "
-                "The current path is initialized with "
-                "an invalid git connection or an invalid git url.\n"
-                "please run `polyaxon init [--git-connection] [--git-url]` "
-                "to properly initialize the current path.",
-                sys_exit=True,
-            )
         if git_revision:
             git_init.git.revision = git_revision
         elif code_reference.is_git_initialized(path="."):

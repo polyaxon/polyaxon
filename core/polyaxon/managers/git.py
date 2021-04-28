@@ -16,6 +16,7 @@
 
 from polyaxon.managers.base import BaseConfigManager
 from polyaxon.polyflow import V1Init
+from polyaxon.schemas.types import V1GitType
 
 
 class GitConfigManager(BaseConfigManager):
@@ -28,3 +29,11 @@ class GitConfigManager(BaseConfigManager):
     @classmethod
     def get_config_from_env(cls):
         pass
+
+    @classmethod
+    def get_config(cls, check: bool = True):
+        config = super(GitConfigManager, cls).get_config(check=check)
+        if not config.git:
+            config.git = V1GitType()
+
+        return config

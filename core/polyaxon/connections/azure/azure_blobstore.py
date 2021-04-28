@@ -387,7 +387,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         # Delete directories
         for prefix in sorted(results["prefixes"]):
             prefix = os.path.join(blob, prefix)
-            # Download files under
+            # Delete files under
             self.delete(blob=prefix, container_name=container_name)
 
         pool, future_results = self.init_pool(workers)

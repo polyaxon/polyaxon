@@ -15,6 +15,8 @@
 # limitations under the License.
 import os
 
+from typing import List
+
 from polyaxon import pkg
 from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.containers.pull_policy import PullPolicy
@@ -39,7 +41,30 @@ def get_default_cleaner_container(
         command=["/bin/bash", "-c"],
         args=["{} && {}".format(wait_args, clean_args)],
         resources=k8s_schemas.V1ResourceRequirements(
-            limits={"cpu": "0.5", "memory": "100Mi"},
-            requests={"cpu": "0.1", "memory": "20Mi"},
+            limits={"cpu": "0.5", "memory": "160Mi"},
+            requests={"cpu": "0.1", "memory": "80Mi"},
+        ),
+    )
+
+
+def get_batch_cleaner_container(
+    store: V1ConnectionType,
+    paths: List[str],
+):
+    subpaths = [os.path.join(store.store_path, subpath) for subpath in paths]
+    subpaths = " ".join(["-sp={}".format(sp) for sp in subpaths])
+
+    clean_args = "polyaxon clean-artifacts {} {}".format(
+        store.kind.replace("_", "-"), subpaths
+    )
+    return V1Container(
+        name=MAIN_JOB_CONTAINER,
+        image="polyaxon/polyaxon-init:{}".format(pkg.VERSION),
+        image_pull_policy=PullPolicy.IF_NOT_PRESENT.value,
+        command=["/bin/bash", "-c"],
+        args=[clean_args],
+        resources=k8s_schemas.V1ResourceRequirements(
+            limits={"cpu": "0.5", "memory": "160Mi"},
+            requests={"cpu": "0.1", "memory": "80Mi"},
         ),
     )

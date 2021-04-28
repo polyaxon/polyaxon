@@ -35,7 +35,7 @@ def get_default_notification_container():
             "{{params.condition.as_arg}}",
         ],
         resources=k8s_schemas.V1ResourceRequirements(
-            limits={"cpu": "0.5", "memory": "100Mi"},
-            requests={"cpu": "0.1", "memory": "20Mi"},
+            limits={"cpu": "0.5", "memory": "160Mi"},
+            requests={"cpu": "0.1", "memory": "80Mi"},
         ),
     )

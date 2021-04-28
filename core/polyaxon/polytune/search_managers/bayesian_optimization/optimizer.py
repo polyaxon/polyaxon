@@ -30,7 +30,7 @@ class BOOptimizer:
         self.num_iterations = config.utility_function.num_iterations or 10
 
     def _maximize(self):
-        """ Find argmax of the acquisition function."""
+        """Find argmax of the acquisition function."""
         if not self.space.is_observations_valid():
             return None
         y_max = self.space.y.max()

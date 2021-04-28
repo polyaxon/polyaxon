@@ -26,5 +26,5 @@ class TestInitUtils(BaseTestCase):
     def test_get_init_resources(self):
         assert get_init_resources() == k8s_schemas.V1ResourceRequirements(
             limits={"cpu": "1", "memory": "200Mi"},
-            requests={"cpu": "0.1", "memory": "20Mi"},
+            requests={"cpu": "0.1", "memory": "60Mi"},
         )

@@ -549,7 +549,7 @@ class S3Service(AWSService, StoreMixin):
         # Delete directories
         for prefix in sorted(results["prefixes"]):
             prefix = os.path.join(key, prefix)
-            # Download files under
+            # Deletes files under
             self.delete(key=prefix, bucket_name=bucket_name)
 
         pool, future_results = self.init_pool(workers)
