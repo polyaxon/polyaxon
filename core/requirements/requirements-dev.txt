@@ -10,7 +10,7 @@ nbconvert==6.0.7
 
 azure-storage-blob==12.8.1
 boto3==1.17.62
-botocore==1.20.26
+botocore==1.20.62
 google-cloud-storage==1.36.2
 
 moto==2.0.5
