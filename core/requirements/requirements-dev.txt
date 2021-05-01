@@ -30,4 +30,4 @@ moviepy==1.0.3
 plotly==4.14.3
 Pillow==8.2.0
 bokeh==2.3.1
-pandas
+pandas==1.2.4
