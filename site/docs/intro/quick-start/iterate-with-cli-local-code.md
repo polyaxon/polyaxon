@@ -97,10 +97,3 @@ If your local folder is large, and several subpaths are not necessary, you can a
 Polyaxon CLI provides a command: `polyaxon ops upload --help` which has more options that allows to upload artifacts to an already created experiment independently of its current status.
 
 This command is helpful if you need to upload some artifacts or some code, or resume a previous operation with different information.
-
-## Understanding the upload and run process
-
-The previous command `polyaxon run -f local-integration/simple.yaml -u` uses a flag [is_approved](/docs/core/specification/operation/#isapproved) that provides human validation before starting an experiment.
-This flag allows Polyaxon to create and compile an experiments or a job, and put it on hold until a human intervenes and validates it.
-In our case we are just using this process to put the experiment on hold while waiting for the upload to finish, but the flag itself has more use-cases,
-especially if you have an automated process that schedules jobs and you need to validate them before allocating resources to run them. 
