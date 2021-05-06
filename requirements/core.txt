@@ -2,7 +2,7 @@
 
 celery==5.0.5
 Django==3.1.8
-djangorestframework==3.12.2
+djangorestframework==3.12.4
 numpy<=1.21
 psycopg2-binary==2.8.6
 redis==3.5.3
