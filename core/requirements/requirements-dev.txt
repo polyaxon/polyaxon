@@ -4,7 +4,7 @@ docker
 GitPython<3.2.0
 
 numpy>=1.15.2
-scikit-learn==0.24.1
+scikit-learn==0.24.2
 hyperopt==0.2.5
 nbconvert>=5.4.0,<6.0.0
 
