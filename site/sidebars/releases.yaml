@@ -1,6 +1,8 @@
 - groups:
   - group: V1
     items:
+    - title: V1.10
+      link: /docs/releases/1-10/
     - title: V1.9
       link: /docs/releases/1-9/
     - title: V1.8
