@@ -23,6 +23,7 @@ class Sections:
     NAME = "name"
     DESCRIPTION = "description"
     TAGS = "tags"
+    IS_APPROVED = "isApproved"
     IS_PRESET = "isPreset"
     PRESETS = "presets"
     PATCH_STRATEGY = "patchStrategy"
@@ -61,6 +62,7 @@ class Sections:
         NAME,
         DESCRIPTION,
         TAGS,
+        IS_APPROVED,
         PARAMS,
         IS_PRESET,
         PRESETS,
@@ -94,6 +96,7 @@ class Sections:
     )
 
     PARSING_SECTIONS = (
+        IS_APPROVED,
         MATRIX,
         PRESETS,
         QUEUE,
@@ -105,6 +108,7 @@ class Sections:
         DEPENDENCIES,
         TRIGGER,
         CONDITIONS,
+        SKIP_ON_UPSTREAM_SKIP,
         PATCH_STRATEGY,
     )
 

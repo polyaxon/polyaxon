@@ -35,6 +35,7 @@ from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import client_handler
+from polyaxon.constants.metadata import META_COPY_ARTIFACTS
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS, CONTEXT_OFFLINE_ROOT
 from polyaxon.env_vars.getters import (
     get_artifacts_store_name,
@@ -53,6 +54,7 @@ from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.events import V1Events
 from polyaxon.polyboard.logging.streamer import get_logs_streamer
 from polyaxon.polyflow import V1Operation, V1RunKind
+from polyaxon.schemas.types import V1ArtifactsType
 from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.date_utils import file_modified_since
@@ -79,11 +81,11 @@ class RunClient:
 
     If no values are passed to this class,
     Polyaxon will try to resolve the owner, project, and run uuid from the environment:
-        * If you have a configured CLI, Polyaxon will use the configuration of the cli.
-        * If you have a cached run using the CLI,
-        the client will default to that cached run unless you override the values.
-        * If you use this client in the context of a job or a service managed by Polyaxon,
-        a configuration will be available to resolve the values based on that run.
+     * If you have a configured CLI, Polyaxon will use the configuration of the cli.
+     * If you have a cached run using the CLI,
+       the client will default to that cached run unless you override the values.
+     * If you use this client in the context of a job or a service managed by Polyaxon,
+       a configuration will be available to resolve the values based on that run.
 
     If you intend to create a new run instance or to list runs,
     only the `owner` and `project` parameters are required.
@@ -101,16 +103,16 @@ class RunClient:
 
     Args:
         owner: str, optional, the owner is the username or
-            the organization name owning this project.
+             the organization name owning this project.
         project: str, optional, project name owning the run(s).
         run_uuid: str, optional, run uuid.
         client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/), optional,
-            an instance of a configured client, if not passed,
-            a new instance will be created based on the available environment.
+             an instance of a configured client, if not passed,
+             a new instance will be created based on the available environment.
 
     Raises:
         PolyaxonClientException: If no owner and/or project are passed and Polyaxon cannot
-            resolve the values from the environment.
+             resolve the values from the environment.
     """
 
     @client_handler(check_no_op=True)
@@ -292,7 +294,7 @@ class RunClient:
         tags: Union[str, Sequence[str]] = None,
         content: Union[str, Dict, V1Operation] = None,
         is_managed: bool = True,
-        is_approved: Optional[bool] = None,
+        pending: Optional[str] = None,
         meta_info: Optional[Dict] = None,
     ) -> V1Run:
         """Creates a new run based on the data passed.
@@ -312,17 +314,18 @@ class RunClient:
         Args:
             name: str, optional, it will override the name in the operation if provided.
             description: str, optional,
-                it will override the description in the operation if provided.
+                 it will override the description in the operation if provided.
             tags: str or List[str], optional, list of tags,
-                it will override the tags in the operation if provided.
+                 it will override the tags in the operation if provided.
             content: str or Dict or V1Operation, optional.
             is_managed: bool, flag to create a managed run.
-            is_approved: bool, flag to specify if the run requires human validation.
+            pending: str, to specify if the run is pending approval (requires human validation) or pending upload.  # noqa
             meta_info: dict, meta info to create the run with.
 
         Returns:
             V1Run, run instance from the response.
         """
+        tags = validate_tags(tags)
         if self._is_offline:
             self._run_data.name = name
             self._run_data.description = description
@@ -351,7 +354,7 @@ class RunClient:
             tags=tags,
             content=content,
             is_managed=is_managed,
-            is_approved=is_approved,
+            pending=pending,
             meta_info=meta_info,
         )
         self._create(data=data, async_req=False)
@@ -379,29 +382,29 @@ class RunClient:
 
         Args:
             polyaxonfile: str, path to the polyaxonfile containing a YAML/Json specification.
-                The polyaxonfile should contain a
-                [V1Component](/docs/core/specification/component/) or an
-                [V1Operation](/docs/core/specification/operation/).
+                 The polyaxonfile should contain a
+                 [V1Component](/docs/core/specification/component/) or an
+                 [V1Operation](/docs/core/specification/operation/).
             name: str, optional,
-                it will override the name in the operation if provided.
+                 it will override the name in the operation if provided.
             description: str, optional,
-                it will override the description in the operation if provided.
+                 it will override the description in the operation if provided.
             tags: str or List[str], optional, list of tags,
-                it will override the tags in the operation if provided.
+                 it will override the tags in the operation if provided.
             params: dict, optional, a dictionary of parameters that will be
-                used to resolve the component's inputs/outputs.
+                 used to resolve the component's inputs/outputs.
             presets: List[str], optional, the name of the
-                [presets](/docs/core/scheduling-strategies/presets/).
+                 [presets](/docs/core/scheduling-strategies/presets/).
             queue: str, optional, the name of the
-                [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
+                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, simple flag to disable
-                [cache check](/docs/automation/helpers/cache/).
-                If passed and the Polyaxonfile has cache section,
-                it will be patched with `disabled: true`.
+                 [cache check](/docs/automation/helpers/cache/).
+                 If passed and the Polyaxonfile has cache section,
+                 it will be patched with `disabled: true`.
             cache: bool, optional, simple flag to enable
-                [cache check](/docs/automation/helpers/cache/).
-                If passed and the Polyaxonfile has cache section,
-                it will be patched with `disabled: false`.
+                 [cache check](/docs/automation/helpers/cache/).
+                 If passed and the Polyaxonfile has cache section,
+                 it will be patched with `disabled: false`.
 
         Returns:
             V1Run, run instance from the response.
@@ -442,28 +445,28 @@ class RunClient:
 
         Args:
             url: str, url containing a YAML/Json specification.
-                The url's polyaxonfile should contain a
-                [V1Component](/docs/core/specification/component/) or an
-                [V1Operation](/docs/core/specification/operation/).
+                 The url's polyaxonfile should contain a
+                 [V1Component](/docs/core/specification/component/) or an
+                 [V1Operation](/docs/core/specification/operation/).
             name: str, optional, it will override the name in the operation if provided.
             description: str, optional,
-                it will override the description in the operation if provided.
+                 it will override the description in the operation if provided.
             tags: str or List[str], optional, list of tags,
-                it will override the tags in the operation if provided.
+                 it will override the tags in the operation if provided.
             params: dict, optional, a dictionary of parameters that will be
-                used to resolve the component's inputs/outputs.
+                 used to resolve the component's inputs/outputs.
             presets: List[str], optional, the name of the
-                [presets](/docs/core/scheduling-strategies/presets/).
+                 [presets](/docs/core/scheduling-strategies/presets/).
             queue: str, optional, the name of the
-                [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
+                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, simple flag to disable
-                [cache check](/docs/automation/helpers/cache/).
-                If passed and the Polyaxonfile has cache section,
-                it will be patched with `disabled: true`.
+                 [cache check](/docs/automation/helpers/cache/).
+                 If passed and the Polyaxonfile has cache section,
+                 it will be patched with `disabled: true`.
             cache: bool, optional, simple flag to enable
-                [cache check](/docs/automation/helpers/cache/).
-                If passed and the Polyaxonfile has cache section,
-                it will be patched with `disabled: false`.
+                 [cache check](/docs/automation/helpers/cache/).
+                 If passed and the Polyaxonfile has cache section,
+                 it will be patched with `disabled: false`.
 
         Returns:
             V1Run, run instance from the response.
@@ -508,23 +511,23 @@ class RunClient:
             component: str, name of the hub component.
             name: str, optional, it will override the name in the component if provided.
             description: str, optional,
-                it will override the description in the component if provided.
+                 it will override the description in the component if provided.
             tags: str or List[str], optional, list of tags,
-                it will override the tags in the component if provided.
+                 it will override the tags in the component if provided.
             params: dict, optional, a dictionary of parameters that will be
-                used to resolve the component's inputs/outputs.
+                 used to resolve the component's inputs/outputs.
             presets: List[str], optional, the name of the
-                [presets](/docs/core/scheduling-strategies/presets/).
+                 [presets](/docs/core/scheduling-strategies/presets/).
             queue: str, optional, the name of the
-                [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
+                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, simple flag to disable
-                [cache check](/docs/automation/helpers/cache/).
-                If passed and the Polyaxonfile has cache section,
-                it will be patched with `disabled: true`.
+                 [cache check](/docs/automation/helpers/cache/).
+                 If passed and the Polyaxonfile has cache section,
+                 it will be patched with `disabled: true`.
             cache: bool, optional, simple flag to enable
-                [cache check](/docs/automation/helpers/cache/).
-                If passed and the Polyaxonfile has cache section,
-                it will be patched with `disabled: false`.
+                 [cache check](/docs/automation/helpers/cache/).
+                 If passed and the Polyaxonfile has cache section,
+                 it will be patched with `disabled: false`.
 
         Returns:
             V1Run, run instance from the response.
@@ -876,7 +879,8 @@ class RunClient:
         Args:
             filepath: str, the filepath to upload.
             path: str, optional, path to upload to, otherwise it will be on the run's root path.
-            untar: bool, optional, if the file uploaded is tar.gz and it should be decompressed on the artifacts store.
+            untar: bool, optional, if the file uploaded is tar.gz and
+                 it should be decompressed on the artifacts store.
             overwrite: bool, optional, if the file uploaded should overwrite any previous content.
 
         Returns:
@@ -894,7 +898,7 @@ class RunClient:
         return PolyaxonStore(client=self).upload_file(
             url=url,
             filepath=filepath,
-            path=path,
+            path=path or "",
             untar=untar,
             overwrite=overwrite,
         )
@@ -916,7 +920,7 @@ class RunClient:
             path: str, the relative path of the artifact to return.
             overwrite: bool, optional, if the file uploaded should overwrite any previous content.
             relative_to: str, optional, if the path uploaded is not the current dir,
-                and you want to cancel the relative path.
+                 and you want to cancel the relative path.
 
         Returns:
             str.
@@ -924,7 +928,7 @@ class RunClient:
         files = IgnoreConfigManager.get_unignored_filepaths(dirpath)
         return self.upload_artifacts(
             files=files,
-            path=path,
+            path=path or "",
             overwrite=overwrite,
             relative_to=relative_to,
         )
@@ -944,7 +948,7 @@ class RunClient:
             path: str, the relative path of the artifact to return.
             overwrite: bool, optional, if the file uploaded should overwrite any previous content.
             relative_to: str, optional, if the path uploaded is not the current dir,
-                and you want to cancel the relative path.
+                 and you want to cancel the relative path.
 
         Returns:
             str.
@@ -1042,19 +1046,54 @@ class RunClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
-    def restart(self, override_config=None, copy: bool = False, **kwargs):
+    def restart(
+        self,
+        override_config=None,
+        copy: bool = False,
+        copy_dirs: List[str] = None,
+        copy_files: List[str] = None,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, Sequence[str]] = None,
+        **kwargs,
+    ):
         """Restarts the current run
 
         Args:
             override_config: Dict or str, optional,
-                config to use for overriding the original run's config.
+                 config to use for overriding the original run's config.
             copy: bool, optional, default: False, to restart with copy mechanism.
+            copy_dirs: List[str], optional, default: None or all in copy mode, list of dirs to copy.
+            copy_files: List[str], optional, default: None or all in copy mode, list of files to copy.  # noqa
+            name: str, optional, default: None, name to use for the restarted run.
+            description: str, optional, default: None, description to use for the restarted run.
+            tags: list[str], optional, default: None, tags to use for the restarted run.
 
         Returns:
             V1Run instance.
         """
         body = polyaxon_sdk.V1Run(content=override_config)
-        if copy:
+        if name:
+            body.name = name
+        if description:
+            body.description = description
+        if tags:
+            tags = validate_tags(tags)
+            body.tags = tags
+        if copy or copy_dirs or copy_files:
+            if copy_dirs or copy_files:
+                copy_dirs = to_list(copy_dirs, check_none=True)
+                copy_files = to_list(copy_files, check_none=True)
+                copy_artifacts = V1ArtifactsType()
+                if copy_dirs:
+                    copy_artifacts.dirs = [
+                        "{}/{}".format(self.run_uuid, cp) for cp in copy_dirs
+                    ]
+                if copy_files:
+                    copy_artifacts.files = [
+                        "{}/{}".format(self.run_uuid, cp) for cp in copy_files
+                    ]
+                body.meta_info = {META_COPY_ARTIFACTS: copy_artifacts.to_dict()}
             return self.client.runs_v1.copy_run(
                 self.owner, self.project, self.run_uuid, body=body, **kwargs
             )
@@ -1069,7 +1108,7 @@ class RunClient:
 
         Args:
             override_config: Dict or str, optional,
-                config to use for overriding the original run's config.
+                 config to use for overriding the original run's config.
 
         Returns:
             V1Run instance.
@@ -1113,8 +1152,8 @@ class RunClient:
 
         Args:
             reset: bool, optional, if True, it will reset the whole inputs state.
-                Note that Polyaxon will automatically populate the inputs based
-                on the Polyaxonfile inputs definition and params passed.
+                 Note that Polyaxon will automatically populate the inputs based
+                 on the Polyaxonfile inputs definition and params passed.
             async_req: bool, optional, default: False, execute request asynchronously.
             inputs: **kwargs, e.g. param1=value1, param2=value2, ...
         """
@@ -1135,8 +1174,8 @@ class RunClient:
 
         Args:
             reset: bool, optional, if True, it will reset the whole outputs state.
-                Note that Polyaxon will automatically populate some outputs based
-                on the Polyaxonfile outputs definition and params passed.
+                 Note that Polyaxon will automatically populate some outputs based
+                 on the Polyaxonfile outputs definition and params passed.
             async_req: bool, optional, default: False, execute request asynchronously.
             outputs: **kwargs, e.g. output1=value1, metric2=value2, ...
         """
@@ -1196,17 +1235,16 @@ class RunClient:
         Args:
             tags: str or List[str], tag or tags to log.
             reset: bool, optional, if True, it will reset the whole tags state.
-                Note that Polyaxon will automatically populate the tags based
-                on the Polyaxonfile.
+                 Note that Polyaxon will automatically populate the tags based
+                 on the Polyaxonfile.
             async_req: bool, optional, default: False, execute request asynchronously.
         """
         tags = validate_tags(tags)
         patch_dict = {"tags": tags}
         if reset is False:
             patch_dict["merge"] = True
-            self._run_data.tags += [
-                t for t in tags if t not in (self._run_data.tags or [])
-            ]
+            self._run_data.tags = self._run_data.tags or []
+            self._run_data.tags += [t for t in tags if t not in self._run_data.tags]
         else:
             self._run_data.tags = tags
         self._update(patch_dict, async_req=async_req)
@@ -1314,7 +1352,7 @@ class RunClient:
 
         Args:
             code_ref: dict, optional, if not provided,
-                Polyaxon will detect the code reference from the git repo in the current path.
+                 Polyaxon will detect the code reference from the git repo in the current path.
             is_input: bool, if the code reference is an input or outputs.
         """
         code_ref = code_ref or get_code_reference()
@@ -1342,10 +1380,10 @@ class RunClient:
         Args:
             name: str, name of the data.
             hash: str, optional, default = None, the hash version of the data,
-                if not provided it will be calculated based on the data in the content.
+                 if not provided it will be calculated based on the data in the content.
             path: str, optional, path of where the data is coming from.
             summary: Dict, optional, additional summary information to log about data
-                in the lineage table.
+                 in the lineage table.
             is_input: bool, if the data reference is an input or outputs.
             content: the data content.
         """
@@ -1399,10 +1437,10 @@ class RunClient:
             kind: V1ArtifactKind, the artifact kind.
             name: str, if the name is passed it will be used instead of the filename from the path.
             hash: str, optional, default = None, the hash version of the file,
-                if not provided it will be calculated based on the file content.
+                 if not provided it will be calculated based on the file content.
             content: the file content.
             summary: Dict, optional, additional summary information to log about data
-                in the lineage table.
+                 in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
@@ -1459,7 +1497,7 @@ class RunClient:
             name: str, if the name is passed it will be used instead of the filename from the path.
             framework: str, optional ,name of the framework
             summary: Dict, optional, additional summary information to log about data
-                in the lineage table.
+                 in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
@@ -1492,10 +1530,10 @@ class RunClient:
             path: str, filepath, the name is extracted from the filepath.
             name: str, if the name is passed it will be used instead of the filename from the path.
             hash: str, optional, default = None, the hash version of the file,
-                if not provided it will be calculated based on the file content.
+                 if not provided it will be calculated based on the file content.
             content: the file content.
             summary: Dict, optional, additional summary information to log about data
-                in the lineage table.
+                 in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
@@ -1525,7 +1563,7 @@ class RunClient:
             path: str, dir path, the name is extracted from the path.
             name: str, if the name is passed it will be used instead of the dirname from the path.
             summary: Dict, optional, additional summary information to log about data
-                in the lineage table.
+                 in the lineage table.
             is_input: bool, if the dir reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
         """
@@ -1590,8 +1628,8 @@ class RunClient:
     ):
         """Logs an artifact lineage.
 
-        **Note**: This method can be used to log manual lineage objects, it is used internally
-            to log model/file/artifact/code refs
+        > **Note**: This method can be used to log manual lineage objects, it is used internally
+        > to log model/file/artifact/code refs
 
         Args:
             body: dict or List[dict] or V1RunArtifact or List[V1RunArtifact], body of the lineage.
@@ -1635,9 +1673,9 @@ class RunClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                [Project PQL](/docs/core/query-language/runs/#query)
+                 [Project PQL](/docs/core/query-language/runs/#query)
             sort: str, optional, fields to order by, please refer to
-                [Project PQL](/docs/core/query-language/runs/#sort)
+                 [Project PQL](/docs/core/query-language/runs/#sort)
             limit: int, optional, limit of runs to return.
             offset: int, optional, offset pages to paginate runs.
 
@@ -1659,9 +1697,9 @@ class RunClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                [Project PQL](/docs/core/query-language/runs/#query)
+                 [Project PQL](/docs/core/query-language/runs/#query)
             sort: str, optional, fields to order by, please refer to
-                [Project PQL](/docs/core/query-language/runs/#sort)
+                 [Project PQL](/docs/core/query-language/runs/#sort)
             limit: int, optional, limit of runs to return.
             offset: int, optional, offset pages to paginate runs.
 

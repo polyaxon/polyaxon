@@ -15,3 +15,4 @@
 # limitations under the License.
 
 from polyaxon.schemas.patch_strategy import V1PatchStrategy
+from polyaxon.schemas.pending import V1RunPending

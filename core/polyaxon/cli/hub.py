@@ -32,7 +32,7 @@ from polyaxon.cli.options import (
 )
 from polyaxon.cli.utils import get_entity_details
 from polyaxon.client import PolyaxonClient
-from polyaxon.constants import DEFAULT_HUB, NO_AUTH
+from polyaxon.constants.globals import DEFAULT_HUB, NO_AUTH
 from polyaxon.env_vars.getters import get_component_info
 from polyaxon.exceptions import PolyaxonException
 from polyaxon.logger import clean_outputs

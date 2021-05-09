@@ -35,9 +35,15 @@ INVALIDATED = "invalidated"
 SKIPPED = "skipped"
 SETTINGS = "settings"
 BILLING = "billing"
+SUPPORT_REQUESTED = "support_requested"
 NEW_STATUS = "new_status"
 NEW_STAGE = "new_stage"
 NEW_ARTIFACTS = "new_artifacts"
+ARCHIVED = "archived"
+RESTORED = "restored"
+GRANTED = "granted"
+REVOKED = "revoked"
+INVITED = "invited"
 
 WRITE_ACTIONS = [
     CREATED,
@@ -53,4 +59,11 @@ WRITE_ACTIONS = [
     SETTINGS,
     PROMOTED,
     INVALIDATED,
+    BILLING,
+    SUPPORT_REQUESTED,
+    ARCHIVED,
+    RESTORED,
+    GRANTED,
+    REVOKED,
+    INVITED,
 ]

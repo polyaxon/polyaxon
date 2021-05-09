@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from coredb.scheduler import manager
+from polyaxon.constants.metadata import META_EAGER_MODE
 from polyaxon.lifecycle import V1Statuses
 from polycommon import conf
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
@@ -27,7 +28,7 @@ def handle_run_created(workers_backend, event: "Event") -> None:  # noqa: F821
     if (
         event.instance
         and event.instance.status != V1Statuses.RESUMING
-        and (event.instance.meta_info or {}).get("eager")
+        and (event.instance.meta_info or {}).get(META_EAGER_MODE)
     ):
         eager = True
     if not eager:

@@ -304,6 +304,7 @@ class TestDeploymentConfig(BaseTestCase):
             "host": "35.226.163.84",
             "port": 1111,
             "pgbouncer": {"foo": "bar", "image": "test"},
+            "options": {"sslmode": "require"},
         }
 
     def test_read_deploy_config_rabbitmq_values(self):

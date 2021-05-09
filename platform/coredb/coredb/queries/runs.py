@@ -37,6 +37,6 @@ STATUS_UPDATE_COLUMNS_DEFER = [
     "readme",
     "content",
     "is_managed",
-    "is_approved",
+    "pending",
 ]
 DEFAULT_COLUMNS_DEFER = ["description", "readme", "content", "raw_content"]

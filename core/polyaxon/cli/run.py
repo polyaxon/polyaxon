@@ -263,10 +263,6 @@ def run(
         )
     if (upload_to or upload_from) and not upload:
         upload = True
-    if upload and eager:
-        Printer.print_error(
-            "You can't use `--upload` and `--eager` at the same.", sys_exit=True
-        )
 
     git_init = None
     if git_preset or git_revision:

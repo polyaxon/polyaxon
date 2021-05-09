@@ -219,11 +219,11 @@ class V1Param(
     """Params can provide values to inputs/outputs.
 
     Params can be passed in several ways
-        * literal values that the user sets manually.
-        * a reference from a previous run, in which case
-        Polyaxon will validate during the compilation time if the user who initiated the run
-        has access to that organization/project/run.
-        * a reference from an upstream operation in the context of a DAG.
+     * literal values that the user sets manually.
+     * a reference from a previous run, in which case
+       Polyaxon will validate during the compilation time if the user who initiated the run
+       has access to that organization/project/run.
+     * a reference from an upstream operation in the context of a DAG.
 
 
     When a param is passed from the CLI or directly in the YAML/Python specification,
@@ -231,11 +231,11 @@ class V1Param(
     defined in the [component](/docs/core/specification/component/)
 
     Args:
-         value: any
-         ref: str, optional
-         context_only: bool, optional
-         connection: str, optional
-         to_init: bool, optional
+        value: any
+        ref: str, optional
+        context_only: bool, optional
+        connection: str, optional
+        to_init: bool, optional
 
     ## YAML usage
 

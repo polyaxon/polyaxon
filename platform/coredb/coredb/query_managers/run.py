@@ -160,7 +160,7 @@ class RunQueryManager(BaseQueryManager):
         "artifacts_store": parse_value_operation,
         # Flags
         "is_managed": parse_value_operation,
-        "is_approved": parse_value_operation,
+        "pending": parse_value_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
@@ -238,5 +238,5 @@ class RunQueryManager(BaseQueryManager):
         "artifacts_store": ValueCondition,
         # Flags
         "is_managed": BoolCondition,
-        "is_approved": BoolCondition,
+        "pending": ValueCondition,
     }

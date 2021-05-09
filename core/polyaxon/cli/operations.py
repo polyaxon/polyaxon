@@ -26,6 +26,7 @@ from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.options import OPTIONS_PROJECT, OPTIONS_RUN_UID
 from polyaxon.client import RunClient, get_run_logs
+from polyaxon.constants.metadata import META_REWRITE_PATH
 from polyaxon.containers import contexts as container_contexts
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import (
@@ -36,7 +37,6 @@ from polyaxon.exceptions import (
 from polyaxon.lifecycle import LifeCycle, V1Statuses
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.run import RunConfigManager
-from polyaxon.metadata.keys import META_REWRITE_PATH
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1RunKind
 from polyaxon.utils import cache
@@ -524,7 +524,7 @@ def approve(ctx, project, uid):
         handle_cli_error(e, message="Could not approve run `{}`.".format(run_uuid))
         sys.exit(1)
 
-    Printer.print_success("Run is approved.")
+    Printer.print_success("Run is approved")
 
 
 @ops.command()
@@ -580,11 +580,32 @@ def stop(ctx, project, uid, yes):
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
+    "--name",
+    type=str,
+    help="Name to give to this run, must be unique within the project, could be none.",
+)
+@click.option("--tags", type=str, help="Tags of this run, comma separated values.")
+@click.option("--description", type=str, help="The description to give to this run.")
+@click.option(
     "--copy",
     "-c",
     is_flag=True,
     default=False,
     help="To copy the run before restarting.",
+)
+@click.option(
+    "--copy-dir",
+    "copy_dirs",
+    multiple=True,
+    help="To copy specific dirs from the run's artifacts before restarting, "
+    "you can pass multiple dirs to copy `--copy-dir dir1 --copy-dir path/to/dir2`.",
+)
+@click.option(
+    "--copy-file",
+    "copy_files",
+    multiple=True,
+    help="To copy specific dirs from the run's artifacts before restarting, "
+    "you can pass multiple dirs to copy `--copy-file file1 --copy-file path/to/file2`.",
 )
 @click.option(
     "-f",
@@ -596,7 +617,18 @@ def stop(ctx, project, uid, yes):
 )
 @click.pass_context
 @clean_outputs
-def restart(ctx, project, uid, copy, polyaxonfile):
+def restart(
+    ctx,
+    project,
+    uid,
+    name,
+    tags,
+    description,
+    copy,
+    copy_dirs,
+    copy_files,
+    polyaxonfile,
+):
     """Restart run.
 
     Uses /docs/core/cli/#caching
@@ -621,7 +653,15 @@ def restart(ctx, project, uid, copy, polyaxonfile):
         polyaxon_client = RunClient(
             owner=owner, project=project_name, run_uuid=run_uuid
         )
-        response = polyaxon_client.restart(override_config=content, copy=copy)
+        response = polyaxon_client.restart(
+            name=name,
+            description=description,
+            tags=tags,
+            override_config=content,
+            copy=copy,
+            copy_dirs=copy_dirs,
+            copy_files=copy_files,
+        )
         Printer.print_success(
             "Run was {} with uid {}".format(
                 "copied" if copy else "restarted", response.uuid
@@ -994,12 +1034,12 @@ def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
         if is_file:
             response = client.upload_artifact(
-                filepath=path_from, path=path_to or "", overwrite=True
+                filepath=path_from, path=path_to, overwrite=True
             )
         else:
             response = client.upload_artifacts_dir(
                 dirpath=path_from,
-                path=path_to or "",
+                path=path_to,
                 overwrite=True,
                 relative_to=path_from,
             )
@@ -1011,16 +1051,16 @@ def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
         PolyaxonClientException,
     ) as e:
         handle_cli_error(
-            e, message="Could not upload artifacts for run `{}`.".format(run_uuid)
+            e, message="Could not upload artifacts for run `{}`".format(run_uuid)
         )
         sys.exit(1)
 
     if response.status_code == 200:
-        Printer.print_success("Artifacts uploaded.")
+        Printer.print_success("Artifacts uploaded")
     else:
         if sync_failure:
             client.log_failed(
-                reason="OperationCli", message="Operation failed uploading artifacts."
+                reason="OperationCli", message="Operation failed uploading artifacts"
             )
         Printer.print_error(
             "Error uploading artifacts. "

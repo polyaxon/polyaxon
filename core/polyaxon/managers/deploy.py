@@ -192,13 +192,16 @@ class DeployConfigManager:
         if stdout:
             return
         # Create a namespace
-        click.echo("Creating {} namespace ...".format(self.deployment_namespace))
-        stdout = self.kubectl.execute(
-            args=["create", "namespace", self.deployment_namespace],
-            is_json=False,
-            stream=settings.CLIENT_CONFIG.debug,
-        )
-        click.echo(stdout)
+        try:
+            click.echo("Creating {} namespace ...".format(self.deployment_namespace))
+            stdout = self.kubectl.execute(
+                args=["create", "namespace", self.deployment_namespace],
+                is_json=False,
+                stream=settings.CLIENT_CONFIG.debug,
+            )
+            click.echo(stdout)
+        except PolyaxonOperatorException:
+            return
 
     def install_on_kubernetes(self):
         self._get_or_create_namespace()

@@ -14,13 +14,75 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.utils.memoize_decorators import memoize
+from polyaxon.utils.memoize_decorators import memoize, memoize_method
 from tests.utils import BaseTestCase
+
+
+class MemoizeTest(BaseTestCase):
+    """
+    A test case for the memoize decorator
+    """
+
+    def setUp(self):
+        self.execution_count = 0
+
+    def test_function_is_executed_on_first_request(self):
+        @memoize
+        def wrapped_function(param):
+            self.execution_count += 1
+            return param
+
+        result = wrapped_function(0)
+
+        self.assertEqual(0, result)
+        self.assertEqual(1, self.execution_count)
+
+    def test_results_are_cached(self):
+        @memoize
+        def wrapped_function(param):
+            self.execution_count += 1
+            return param
+
+        result = wrapped_function(0)
+        self.assertEqual(0, result)
+        result = wrapped_function(1)
+        self.assertEqual(1, result)
+
+        result = wrapped_function(0)
+        self.assertEqual(0, result)
+        result = wrapped_function(1)
+        self.assertEqual(1, result)
+
+        self.assertEqual(2, self.execution_count)
+
+    def test_works_with_functions_without_arguments(self):
+        @memoize
+        def wrapped_function():
+            self.execution_count += 1
+            return 42
+
+        wrapped_function()
+        result = wrapped_function()
+
+        self.assertEqual(42, result)
+        self.assertEqual(1, self.execution_count)
+
+    def test_works_with_functions_with_multiple_arguments(self):
+        @memoize
+        def wrapped_function(a, b):
+            self.execution_count += 1
+            return a ** b
+
+        wrapped_function(2, 3)
+        result = wrapped_function(2, 3)
+
+        self.assertEqual(result, 8)
+        self.assertEqual(self.execution_count, 1)
 
 
 class MemoizeMethodTest(BaseTestCase):
     """
-    A test case for the `memoize` decorator.
+    A test case for the `memoize_method` decorator.
     """
 
     def setUp(self):
@@ -32,17 +94,17 @@ class MemoizeMethodTest(BaseTestCase):
                 self.test1_execution_count = 0
                 self.test2_execution_count = 0
 
-            @memoize
+            @memoize_method
             def test0(self):
                 self.test0_execution_count += 1
                 return 42
 
-            @memoize
+            @memoize_method
             def test1(self, a):
                 self.test1_execution_count += 1
                 return a
 
-            @memoize
+            @memoize_method
             def test2(self, a, b):
                 self.test2_execution_count += 1
                 return a ** b

@@ -42,11 +42,14 @@ class PolyaxonCallback(keras.callbacks.Callback):
         log_best_prefix="best",
         mode: str = "auto",
         monitor: str = "val_loss",
+        use_store_path: bool = False,
     ):
         self.run = tracking.get_or_create_run(run)
         self.metrics = metrics
         self.log_model = log_model
-        self.filepath = self.run.get_outputs_path("model")
+        self.filepath = self.run.get_outputs_path(
+            "model", use_store_path=use_store_path
+        )
         self.log_best_prefix = log_best_prefix
         self.best = None
         self.current = None

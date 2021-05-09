@@ -21,9 +21,15 @@ class PolyaxonServiceHeaders:
     INTERNAL = "X_POLYAXON_INTERNAL"
     SERVICE = "X_POLYAXON_SERVICE"
 
+    VALUES = {CLIENT_VERSION, CLIENT_VERSION, INTERNAL, SERVICE}
+
     @staticmethod
     def get_header(header):
         return header.replace("_", "-")
+
+    @classmethod
+    def get_headers(cls):
+        return tuple(cls.VALUES | {cls.get_header(h) for h in cls.VALUES})
 
 
 class PolyaxonServices:  # noqa

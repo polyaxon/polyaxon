@@ -95,10 +95,10 @@ def approve_runs(view, request, actor, *args, **kwargs):
     queryset = (
         get_run_model()
         .objects.filter(project=view.project, uuid__in=request.data.get("uuids", []))
-        .exclude(is_approved=True)
+        .exclude(pending__isnull=True)
     )
     runs = [r for r in queryset]
-    queryset.update(is_approved=True)
+    queryset.update(pending=None)
     for run in runs:
         auditor.record(
             event_type=RUN_APPROVED_ACTOR,

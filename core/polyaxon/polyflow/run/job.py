@@ -56,10 +56,9 @@ class V1Job(BaseConfig, AddInitMixin, polyaxon_sdk.V1Job):
         environment: [V1Environment](/docs/core/specification/environment/), optional
         connections: List[str], optional
         volumes: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
-                 optional
+             optional
         init: List[[V1Init](/docs/core/specification/init/)], optional
-        sidecars: List[[sidecar containers](/docs/core/specification/sidecars/)],
-                  optional
+        sidecars: List[[sidecar containers](/docs/core/specification/sidecars/)], optional
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
 
     ## YAML usage

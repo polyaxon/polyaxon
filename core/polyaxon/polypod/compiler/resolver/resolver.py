@@ -35,6 +35,7 @@ def resolve(
     compiled_at: datetime = None,
     cloning_kind: V1CloningKind = None,
     original_uuid: str = None,
+    eager: bool = False,
 ):
     resolver_cls = resolver_cls or BaseResolver
     resolver_cls.is_kind_supported(compiled_operation)
@@ -53,6 +54,7 @@ def resolve(
         compiled_at=compiled_at,
         cloning_kind=cloning_kind,
         original_uuid=original_uuid,
+        eager=eager,
     )
     if resolver:
         return resolver, resolver.resolve()

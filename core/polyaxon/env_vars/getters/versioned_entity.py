@@ -17,7 +17,7 @@ import sys
 
 from typing import Tuple
 
-from polyaxon.constants import DEFAULT, DEFAULT_HUB
+from polyaxon.constants.globals import DEFAULT, DEFAULT_HUB
 from polyaxon.env_vars.getters.user import get_local_owner
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.utils.formatting import Printer

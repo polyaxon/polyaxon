@@ -23,17 +23,14 @@ from polycommon.config_manager import ConfigManager
 def set_cors(context, config: ConfigManager):
     # session settings
     context["CORS_ALLOW_CREDENTIALS"] = True
-    whitelist = config.get_list(
-        "POLYAXON_CORS_ORIGIN_WHITELIST", is_optional=True, default=[]
+    allowed_list = config.get_list(
+        "POLYAXON_CORS_ALLOWED_ORIGINS", is_optional=True, default=[]
     )
-    context["CORS_ORIGIN_WHITELIST"] = whitelist
-    context["CORS_ORIGIN_ALLOW_ALL"] = False if whitelist else True
+    context["CORS_ALLOWED_ORIGINS"] = allowed_list
+    context["CORS_ALLOW_ALL_ORIGINS"] = False if allowed_list else True
 
-    context["CORS_ALLOW_HEADERS"] = default_headers + (
-        PolyaxonServiceHeaders.CLI_VERSION,
-        PolyaxonServiceHeaders.CLIENT_VERSION,
-        PolyaxonServiceHeaders.INTERNAL,
-        PolyaxonServiceHeaders.SERVICE,
+    context["CORS_ALLOW_HEADERS"] = (
+        default_headers + PolyaxonServiceHeaders.get_headers()
     )
 
     ssl_enabled = config.get_boolean(

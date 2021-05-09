@@ -22,6 +22,7 @@ from typing import List
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon import settings
+from polyaxon.constants.globals import DEFAULT_UPLOADS_PATH
 from polyaxon.exceptions import (
     HTTP_ERROR_MESSAGES_MAPPING,
     PolyaxonClientException,
@@ -288,7 +289,7 @@ class PolyaxonStore(StoreMixin):
             "path": path,
             "overwrite": kwargs.get("overwrite", True),
         }
-        dirname = os.path.basename(path) if path else "uploads"
+        dirname = os.path.basename(path) if path else DEFAULT_UPLOADS_PATH
         with create_tarfile_from_path(
             files, dirname, relative_to=kwargs.get("relative_to", None)
         ) as filepath:

@@ -46,6 +46,7 @@ PROJECT_RESOURCE_ATTRIBUTES = (
     Attribute("project.uuid", is_uuid=True),
     Attribute("project.name"),
     Attribute("project.owner.name"),
+    Attribute("name", is_required=False),
 )
 
 PROJECT_RESOURCE_OWNER_ATTRIBUTES = (
@@ -54,6 +55,7 @@ PROJECT_RESOURCE_OWNER_ATTRIBUTES = (
     Attribute("project.name"),
     Attribute("project.owner.name"),
     Attribute("owner_id"),
+    Attribute("name", is_required=False),
 )
 
 PROJECT_RUN_EXECUTOR_ATTRIBUTES = (
@@ -61,6 +63,7 @@ PROJECT_RUN_EXECUTOR_ATTRIBUTES = (
     Attribute("project.uuid", is_uuid=True),
     Attribute("project.name"),
     Attribute("project.owner.name"),
+    Attribute("name", is_required=False),
     Attribute("is_managed", attr_type=bool, is_required=False),
     Attribute("pipeline_id", attr_type=int, is_required=False),
 )
@@ -71,6 +74,7 @@ PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES = (
     Attribute("project.name"),
     Attribute("owner_id"),
     Attribute("project.owner.name"),
+    Attribute("name", is_required=False),
     Attribute("is_managed", attr_type=bool, is_required=False),
     Attribute("pipeline_id", attr_type=int, is_required=False),
 )

@@ -14,16 +14,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from datetime import datetime
+from typing import List
 
 from marshmallow import ValidationError as MarshmallowValidationError
 from rest_framework.exceptions import ValidationError
 
 from coredb.abstracts.runs import BaseRun
 from coredb.managers.artifacts import set_artifacts
+from polyaxon.constants.metadata import (
+    META_COPY_ARTIFACTS,
+    META_REWRITE_PATH,
+    META_UPLOAD_ARTIFACTS,
+)
 from polyaxon.exceptions import PolyaxonCompilerError, PolyaxonSchemaError
-from polyaxon.metadata.keys import META_REWRITE_PATH
-from polyaxon.polyflow import V1CompiledOperation
+from polyaxon.polyaxonfile import OperationSpecification
+from polyaxon.polyflow import V1CompiledOperation, V1Init
 from polyaxon.polypod.compiler import resolver
+from polyaxon.polypod.compiler.lineage.artifacts_collector import (
+    collect_lineage_artifacts_path,
+)
+from polyaxon.schemas import V1RunPending
+from polyaxon.schemas.types import V1ArtifactsType
 from polycommon.exceptions import AccessNotAuthorized, AccessNotFound
 
 
@@ -41,9 +52,55 @@ class CorePlatformResolver(resolver.BaseResolver):
                 io.name: io.value for io in self.compiled_operation.outputs
             }
 
-    def _resolve_artifacts_lineage_state(self):
+    def _get_meta_artifacts_presets(self) -> List:
+        if not self.run.meta_info or META_COPY_ARTIFACTS not in self.run.meta_info:
+            return []
+
+        artifacts = self.run.meta_info.pop(META_COPY_ARTIFACTS)
+        artifacts = V1ArtifactsType.read(artifacts)
+
+        def get_relative_to_run_artifacts(v: str):
+            paths = v.split("/")[1:]
+            paths = ["{{ globals.run_artifacts_path }}"] + paths
+            return "/".join(paths)
+
+        # Populate all paths
+        if artifacts.dirs:
+            artifacts.dirs = [
+                [d, get_relative_to_run_artifacts(d)] for d in artifacts.dirs
+            ]
+        if artifacts.files:
+            artifacts.files = [
+                [d, get_relative_to_run_artifacts(d)] for d in artifacts.files
+            ]
+        init = V1Init(artifacts=artifacts)
+        return [{"runPatch": {"init": [init.to_dict()]}}]
+
+    def resolve_presets(self):
+        for preset in self._get_meta_artifacts_presets():
+            self.compiled_operation = OperationSpecification.apply_preset(
+                config=self.compiled_operation, preset=preset
+            )
+
+    def _persist_artifacts(self):
         if self.artifacts:
             set_artifacts(self.run, self.artifacts)
+
+    def _resolve_artifacts_lineage_state(self):
+        self.artifacts = self.artifacts or []
+        # Check upload and add it as a lineage
+        if self.run.meta_info and META_UPLOAD_ARTIFACTS in self.run.meta_info:
+            artifacts_path = self.run.meta_info[META_UPLOAD_ARTIFACTS]
+            if artifacts_path:
+                upload_artifact = collect_lineage_artifacts_path(artifacts_path)
+                self.artifacts.append(upload_artifact)
+        self._persist_artifacts()
+
+    def _check_approval(self):
+        if self.compiled_operation.is_approved is False:
+            self.run.pending = V1RunPending.APPROVAL
+            return True
+        return False
 
     def persist_state(self):
         self.run.content = self.compiled_operation.to_dict(dump=True)
@@ -52,11 +109,16 @@ class CorePlatformResolver(resolver.BaseResolver):
             and self.compiled_operation.run.rewrite_path
         ):
             self.run.meta_info[META_REWRITE_PATH] = True
-        self.run.save(update_fields=["content", "inputs", "outputs", "meta_info"])
+        update_fields = ["content", "inputs", "outputs", "meta_info"]
+        if self._check_approval():
+            update_fields.append("pending")
+        self.run.save(update_fields=update_fields)
         self._resolve_artifacts_lineage_state()
 
 
-def resolve(run: BaseRun, compiled_at: datetime = None, resolver_cls=None):
+def resolve(
+    run: BaseRun, compiled_at: datetime = None, eager: bool = False, resolver_cls=None
+):
     resolver_cls = resolver_cls or CorePlatformResolver
     try:
         project = run.project
@@ -75,6 +137,7 @@ def resolve(run: BaseRun, compiled_at: datetime = None, resolver_cls=None):
             created_at=run.created_at,
             cloning_kind=run.cloning_kind,
             original_uuid=run.original.uuid.hex if run.original_id else None,
+            eager=eager,
         )
     except (
         AccessNotAuthorized,

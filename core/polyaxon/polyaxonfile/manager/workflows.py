@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import copy
 
 from typing import Dict, List, Union
 
@@ -46,19 +47,18 @@ def get_ops_from_suggestions(
     compiled_operation: V1CompiledOperation,
     suggestions: List[Dict],
 ) -> List[V1Operation]:
-    ops = []
-
     def has_param(k: str):
         if not compiled_operation.matrix:
             return None
         return not compiled_operation.matrix.has_param(k)
 
+    op_content = V1Operation.read(content)
     for suggestion in suggestions:
         params = {
             k: V1Param(value=Parser.parse_expression(v, {}), context_only=has_param(k))
             for (k, v) in suggestion.items()
         }
-        op_spec = V1Operation.read(content)
+        op_spec = copy.deepcopy(op_content)
         op_spec.matrix = None
         op_spec.conditions = None
         op_spec.schedule = None
@@ -72,9 +72,7 @@ def get_ops_from_suggestions(
         op_spec.component.inputs = compiled_operation.inputs
         op_spec.component.outputs = compiled_operation.outputs
         op_spec.component.contexts = compiled_operation.contexts
-        ops.append(op_spec)
-
-    return ops
+        yield op_spec
 
 
 def get_eager_matrix_operations(
@@ -112,6 +110,8 @@ def get_eager_matrix_operations(
             "Received a bad configuration, eager mode not supported, "
             "I should not be here!"
         )
+    if is_cli:
+        Printer.print_header("Creating {} operations".format(len(suggestions)))
     return get_ops_from_suggestions(
         content=content, compiled_operation=compiled_operation, suggestions=suggestions
     )

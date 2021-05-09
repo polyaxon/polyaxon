@@ -16,7 +16,7 @@
 
 # Setting values to None means using defaults
 
-from polyaxon.constants import PLATFORM_DIST_CE
+from polyaxon.constants.globals import PLATFORM_DIST_CE
 from polycommon import pkg
 
 ENCRYPTION_BACKEND = None

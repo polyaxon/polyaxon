@@ -18,7 +18,7 @@ import random
 
 from django.db import models
 
-from coredb.managers.deleted import ArchivedManager, LiveManager
+from coredb.managers.deleted import ArchivedManager, LiveManager, RestorableManager
 from polyaxon import live_state
 
 
@@ -31,6 +31,7 @@ class LiveStateModel(models.Model):
     )
 
     objects = LiveManager()
+    restorable = RestorableManager()
     all = models.Manager()
     archived = ArchivedManager()
 

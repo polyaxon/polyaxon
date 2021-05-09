@@ -23,6 +23,7 @@ from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
 from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import copy_run, restart_run, resume_run
+from polyaxon.constants.metadata import META_COPY_ARTIFACTS, META_UPLOAD_ARTIFACTS
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
 from polyaxon.polyflow import V1CloningKind
@@ -69,10 +70,11 @@ class TestRunManager(TestCase):
         assert run.project == self.run.project
         assert run.name == self.run.name
         assert run.description == self.run.description
-        assert run.content != self.run.content
+        assert run.content == self.run.content
+        assert run.meta_info == {META_COPY_ARTIFACTS: {"dirs": [self.run.uuid.hex]}}
         config = CompiledOperationSpecification.read(run.content)
         original_config = CompiledOperationSpecification.read(self.run.content)
-        assert len(config.run.init or []) == len(original_config.run.init or []) + 1
+        assert len(config.run.init or []) == len(original_config.run.init or [])
         assert run.raw_content == self.run.raw_content
         assert run.readme == self.run.readme
         assert run.tags == self.run.tags
@@ -96,6 +98,70 @@ class TestRunManager(TestCase):
         assert run.description == "new-description"
         assert run.content != self.run.content
         assert run.raw_content == self.run.raw_content
+        assert run.meta_info == {META_COPY_ARTIFACTS: {"dirs": [self.run.uuid.hex]}}
+        assert run.readme == "new-readme"
+        assert set(run.tags) == {"tag1", "tag2"}
+        assert run.inputs == {"image": "foo/bar"}
+        assert run.cloning_kind == V1CloningKind.COPY
+        assert run.original == self.run
+
+        # Copy with uploads
+        self.run.meta_info[META_UPLOAD_ARTIFACTS] = "foo"
+        self.run.save()
+        run = copy_run(
+            run=self.run,
+            user_id=self.user2.id,
+            name="new-name",
+            description="new-description",
+            content={"trigger": "all_done"},
+            readme="new-readme",
+            tags=["tag1", "tag2"],
+        )
+        assert run.user != self.run.user
+        assert run.user == self.user2
+        assert run.project == self.project
+        assert run.name == "new-name"
+        assert run.description == "new-description"
+        assert run.content != self.run.content
+        assert run.raw_content == self.run.raw_content
+        assert run.meta_info == {
+            META_UPLOAD_ARTIFACTS: "foo",
+            META_COPY_ARTIFACTS: {"dirs": [self.run.uuid.hex]},
+        }
+        assert run.readme == "new-readme"
+        assert set(run.tags) == {"tag1", "tag2"}
+        assert run.inputs == {"image": "foo/bar"}
+        assert run.cloning_kind == V1CloningKind.COPY
+        assert run.original == self.run
+
+        # Copy with uploads and specific fields
+        self.run.meta_info[META_UPLOAD_ARTIFACTS] = "foo"
+        self.run.save()
+        run = copy_run(
+            run=self.run,
+            user_id=self.user2.id,
+            name="new-name",
+            description="new-description",
+            content={"trigger": "all_done"},
+            readme="new-readme",
+            tags=["tag1", "tag2"],
+            meta_info={
+                META_COPY_ARTIFACTS: {
+                    "dirs": ["{}/resources".format(self.run.uuid.hex)]
+                }
+            },
+        )
+        assert run.user != self.run.user
+        assert run.user == self.user2
+        assert run.project == self.project
+        assert run.name == "new-name"
+        assert run.description == "new-description"
+        assert run.content != self.run.content
+        assert run.raw_content == self.run.raw_content
+        assert run.meta_info == {
+            META_UPLOAD_ARTIFACTS: "foo",
+            META_COPY_ARTIFACTS: {"dirs": ["{}/resources".format(self.run.uuid.hex)]},
+        }
         assert run.readme == "new-readme"
         assert set(run.tags) == {"tag1", "tag2"}
         assert run.inputs == {"image": "foo/bar"}
@@ -158,6 +224,7 @@ class TestRunManager(TestCase):
         assert run.name == self.run.name
         assert run.description == self.run.description
         assert run.content == self.run.content
+        assert run.meta_info == {}
         assert run.readme == self.run.readme
         assert run.tags == self.run.tags
         assert run.cloning_kind == V1CloningKind.RESTART
@@ -181,3 +248,30 @@ class TestRunManager(TestCase):
         assert set(run.tags) == {"tag1", "tag2"}
         assert run.cloning_kind == V1CloningKind.RESTART
         assert run.original == self.run
+        assert run.meta_info == {}
+
+        # Restart with upload
+        self.run.meta_info[META_UPLOAD_ARTIFACTS] = "foo"
+        self.run.save()
+        run = restart_run(
+            run=self.run,
+            user_id=self.user.id,
+            name="new-name",
+            description="new-description",
+            content={"trigger": "all_done"},
+            readme="new-readme",
+        )
+        assert run.user == self.user
+        assert run.project == self.project
+        assert run.name == "new-name"
+        assert run.description == "new-description"
+        assert run.content != self.run.content
+        assert run.raw_content == self.run.raw_content
+        assert run.readme == "new-readme"
+        assert set(run.tags) == {"tag1", "tag2"}
+        assert run.cloning_kind == V1CloningKind.RESTART
+        assert run.original == self.run
+        assert run.meta_info == {
+            META_UPLOAD_ARTIFACTS: "foo",
+            META_COPY_ARTIFACTS: {"dirs": ["{}/foo".format(self.run.uuid.hex)]},
+        }

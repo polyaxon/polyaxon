@@ -45,9 +45,9 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
 
     Args:
         files: Union[List[str], List[[str, str]], optional,
-            list of file subpaths or a list of [path from, path to].
+             list of file subpaths or a list of [path from, path to].
         dirs: Union[List[str], List[[str, str]], optional,
-            list of directory subpaths or a list of [path from, path to].
+             list of directory subpaths or a list of [path from, path to].
         workers: int, optional, number of threads for downloading data from S3/GCS/Azure.
 
     ### YAML usage
