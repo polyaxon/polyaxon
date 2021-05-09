@@ -69,7 +69,7 @@ class V1Spark(BaseConfig, polyaxon_sdk.V1Spark):
         kind: str, should be equal `spark`
         connections: List[str], optional
         volumes: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
-                 optional
+             optional
         type: str [`JAVA`, `SCALA`, `PYTHON`, `R`]
         spark_version: str, optional
         python_version: str, optional

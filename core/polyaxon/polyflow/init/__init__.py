@@ -218,11 +218,11 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
      * A directory `data` from a GCS connection named `gcs-large-datasets`, we also
        customized the built-in init container with a new resources section.
      * Two files `data1`, `path/to/data2` from an S3 connection named `s3-datasets`,
-        and we specified that the 2 files should be initialized under
-        `/s3-path` instead of the default path that Polyaxon uses.
+       and we specified that the 2 files should be initialized under
+       `/s3-path` instead of the default path that Polyaxon uses.
      * A repo configured under the connection name `repo1` will be cloned from the default branch.
      * A repo configured under the connection name `repo2` will be cloned
-        from the branch name `branch2`.
+       from the branch name `branch2`.
      * A dockerfile will be generated with the specification that was provided.
      * A custom container will finally run our own custom code, in this case an echo command.
     """

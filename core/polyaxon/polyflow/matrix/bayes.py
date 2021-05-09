@@ -225,8 +225,7 @@ class V1Bayes(BaseSearchConfig, polyaxon_sdk.V1Bayes):
         num_initial_runs: int
         max_iterations: int
         metric: V1OptimizationMetric
-        params: List[Dict[str,
-        [params](/docs/automation/optimization-engine/params/#discrete-values)]]
+        params: List[Dict[str, [params](/docs/automation/optimization-engine/params/#discrete-values)]]  # noqa
         seed: int, optional
         concurrency: int, optional
         tuner: [V1Tuner](/docs/automation/optimization-engine/tuner/), optional
@@ -314,9 +313,9 @@ class V1Bayes(BaseSearchConfig, polyaxon_sdk.V1Bayes):
 
     A couple of acquisition functions can be used: `ucb`, `ei` or `poi`.
 
-      * `ucb`: Upper Confidence Bound,
-      * `ei`: Expected Improvement
-      * `poi`: Probability of Improvement
+     * `ucb`: Upper Confidence Bound,
+     * `ei`: Expected Improvement
+     * `poi`: Probability of Improvement
 
     When using `ucb` as acquisition function, a tunable parameter `kappa`
     is also required, to balance exploitation against exploration, increasing kappa

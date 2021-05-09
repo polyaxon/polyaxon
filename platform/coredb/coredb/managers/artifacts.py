@@ -74,7 +74,7 @@ def update_artifacts(to_update: Set, artifacts_by_keys: Dict):
     get_artifact_model().objects.bulk_update(updated, ["kind", "path", "summary"])
 
 
-def _set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
+def set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
     if not artifacts:
         return
 
@@ -110,11 +110,11 @@ def _set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
 
 
 @transaction.atomic
-def set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
+def atomic_set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
     retries = 0
     while retries < 2:
         try:
-            return _set_artifacts(run=run, artifacts=artifacts)
+            return set_artifacts(run=run, artifacts=artifacts)
         except IntegrityError:
             retries += 1
             time.sleep(0.01)

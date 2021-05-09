@@ -23,6 +23,7 @@ from coredb.executor.handlers.run import (
     handle_run_created,
     handle_run_stopped_triggered,
 )
+from polyaxon.constants.metadata import META_EAGER_MODE
 from polycommon import auditor
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from polycommon.events.registry import run as run_events
@@ -111,12 +112,16 @@ class TestExecutorHandlers(TestCase):
         assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
 
         States.workers = None
-        event = MagicMock(data=data, instance=MagicMock(meta_info={"eager": False}))
+        event = MagicMock(
+            data=data, instance=MagicMock(meta_info={META_EAGER_MODE: False})
+        )
         handle_run_created(DummyWorkers, event=event)
         assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
 
         States.workers = None
-        event = MagicMock(data=data, instance=MagicMock(meta_info={"eager": True}))
+        event = MagicMock(
+            data=data, instance=MagicMock(meta_info={META_EAGER_MODE: True})
+        )
         handle_run_created(DummyWorkers, event=event)
         assert States.workers is None
 

@@ -25,6 +25,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 
 from polyaxon import settings
+from polyaxon.constants.globals import DEFAULT_UPLOADS_PATH
 from polyaxon.stores.async_manager import upload_dir, upload_file
 from polyaxon.utils.path_utils import check_or_create_path, delete_path, untar_file
 
@@ -49,7 +50,7 @@ async def handle_posted_data(
             )
     else:
         if untar:
-            root_path = "{}/{}".format(root_path, "uploads").rstrip("/")
+            root_path = "{}/{}".format(root_path, DEFAULT_UPLOADS_PATH).rstrip("/")
         else:
             root_path = tmp_path
     if not untar:

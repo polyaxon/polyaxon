@@ -29,10 +29,12 @@ import ujson
 from polyaxon import settings
 from polyaxon.client import RunClient, get_rel_asset_path
 from polyaxon.client.decorators import client_handler
-from polyaxon.constants import UNKNOWN
+from polyaxon.connections.reader import get_connection_type
+from polyaxon.constants.globals import UNKNOWN
 from polyaxon.containers import contexts as container_contexts
 from polyaxon.containers.contexts import CONTEXTS_EVENTS_SUBPATH_FORMAT
 from polyaxon.env_vars.getters import (
+    get_artifacts_store_name,
     get_collect_artifacts,
     get_collect_resources,
     get_log_level,
@@ -60,11 +62,11 @@ class Run(RunClient):
 
     If no values are passed to this class,
     Polyaxon will try to resolve the owner, project, and run uuid from the environment:
-        * If you have a configured CLI, Polyaxon will use the configuration of the cli.
-        * If you have a cached run using the CLI,
-        the client will default to that cached run unless you override the values.
-        * If you use this client in the context of a job or a service managed by Polyaxon,
-        a configuration will be available to resolve the values based on that run.
+     * If you have a configured CLI, Polyaxon will use the configuration of the cli.
+     * If you have a cached run using the CLI, the client will default to that cached run
+       unless you override the values.
+     * If you use this client in the context of a job or a service managed by Polyaxon,
+       a configuration will be available to resolve the values based on that run.
 
     You can always access the `self.client` to execute more APIs.
 
@@ -78,43 +80,43 @@ class Run(RunClient):
         client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/)
 
     Args:
-        owner: str, optional, the owner is the username or
-            the organization name owning this project.
+        owner: str, optional,
+             the owner is the username or the organization name owning this project.
         project: str, optional, project name owning the run(s).
         run_uuid: str, optional, run uuid.
         client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/), optional,
-            an instance of a configured client, if not passed,
-            a new instance will be created based on the available environment.
+             an instance of a configured client, if not passed,
+             a new instance will be created based on the available environment.
         track_code: bool, optional, default True, to track code version.
-            Polyaxon will try to track information about any repo
-            configured in the context where this client is instantiated.
+             Polyaxon will try to track information about any repo
+             configured in the context where this client is instantiated.
         track_env: bool, optional, default True, to track information about the environment.
         refresh_data: bool, optional, default False, to refresh the run data at instantiation.
         artifacts_path: str, optional, for in-cluster runs it will be set automatically.
         collect_artifacts: bool, optional,
-            similar to the env var flag `POLYAXON_COLLECT_ARTIFACTS`, this env var is `True`
-            by default for managed runs and is controlled by the plugins section.
+             similar to the env var flag `POLYAXON_COLLECT_ARTIFACTS`, this env var is `True`
+             by default for managed runs and is controlled by the plugins section.
         collect_resources: bool, optional,
-            similar to the env var flag `POLYAXON_COLLECT_RESOURCES`, this env var is `True`
-            by default for managed runs and is controlled by the plugins section.
+             similar to the env var flag `POLYAXON_COLLECT_RESOURCES`, this env var is `True`
+             by default for managed runs and is controlled by the plugins section.
         is_offline: bool, optional,
-            To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+             To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
         is_new: bool, optional,
-                Force the creation of a new run instead of trying to discover a cached run or
-                refreshing an instance from the env var
+             Force the creation of a new run instead of trying to discover a cached run or
+             refreshing an instance from the env var
         name: str, optional,
-            When `is_new` or `is_offline` is set to true, a new instance is created and
-                you can initialize that new run with a name.
+             When `is_new` or `is_offline` is set to true, a new instance is created and
+             you can initialize that new run with a name.
         description: str, optional,
-                When `is_new` or `is_offline` is set to true, a new instance is created and
-                you can initialize that new run with a description.
+             When `is_new` or `is_offline` is set to true, a new instance is created and
+             you can initialize that new run with a description.
         tags: str or List[str], optional,
-                When `is_new` or `is_offline` is set to true, a new instance is created and
-                you can initialize that new run with tags.
+             When `is_new` or `is_offline` is set to true, a new instance is created and
+             you can initialize that new run with tags.
 
     Raises:
         PolyaxonClientException: If no owner and/or project are passed and Polyaxon cannot
-            resolve the values from the environment.
+             resolve the values from the environment.
     """
 
     @client_handler(check_no_op=True)
@@ -260,75 +262,117 @@ class Run(RunClient):
             "`create` method manually, please create a new instance of `Run` with `is_new=True`"
         )
 
+    def _get_store_path(self):
+        connection = get_connection_type(get_artifacts_store_name())
+        if not connection:
+            logger.warning("Artifacts store connection not detected.")
+        return "{}/{}".format(connection.store_path, self.run_uuid)
+
     @client_handler(check_no_op=True)
     def get_artifacts_path(
-        self, rel_path: str = None, ensure_path: bool = False, is_dir: bool = False
+        self,
+        rel_path: str = None,
+        ensure_path: bool = False,
+        is_dir: bool = False,
+        use_store_path: bool = False,
     ):
         """Get the absolute path of the specified artifact in the currently active run.
 
         If `rel_path` is specified, the artifact root path of the currently active
         run will be returned: `root_run_artifacts_path/rel_path`.
         If `rel_path` is not specified, the current root artifacts path configured
-         for this instance will be returned: `root_run_artifacts_path`.
+        for this instance will be returned: `root_run_artifacts_path`.
 
         If `ensure_path` is provided, the path will be created. By default the path will
         be created until the last part of the `rel_path` argument,
         if `is_dir` is True, the complete `rel_path` is created.
 
+        If `use_store_path` is enabled, the path returned will be relative to the artifacts
+        store path and not Polyaxon's context. Please note that,
+        the library will not ensure that the path exists when this flag is set to true.
+
         Args:
             rel_path: str, optional.
             ensure_path: bool, optional, default True.
             is_dir: bool, optional, default False.
+            use_store_path: bool, default False.
         Returns:
             str, artifacts_path
         """
+        artifacts_path = (
+            self._get_store_path() if use_store_path else self._artifacts_path
+        )
         if rel_path:
-            path = os.path.join(self._artifacts_path, rel_path)
-            if ensure_path:
+            path = os.path.join(artifacts_path, rel_path)
+            if ensure_path and not use_store_path:
                 check_or_create_path(path, is_dir=is_dir)
             return path
-        return self._artifacts_path
+        return artifacts_path
 
     @client_handler(check_no_op=True)
     def get_outputs_path(
-        self, rel_path: str = None, ensure_path: bool = True, is_dir: bool = False
+        self,
+        rel_path: str = None,
+        ensure_path: bool = True,
+        is_dir: bool = False,
+        use_store_path: bool = False,
     ):
         """Get the absolute outputs path of the specified artifact in the currently active run.
 
         If `rel_path` is specified, the outputs artifact root path of the currently active
         run will be returned: `root_run_artifacts_path/outputs/rel_path`.
         If `rel_path` is not specified, the current root artifacts path configured
-         for this instance will be returned: `root_run_artifacts_path/outputs`.
+        for this instance will be returned: `root_run_artifacts_path/outputs`.
 
         If `ensure_path` is provided, the path will be created. By default the path will
         be created until the last part of the `rel_path` argument,
         if `is_dir` is True, the complete `rel_path` is created.
 
+
+        If `use_store_path` is enabled, the path returned will be relative to the artifacts
+        store path and not Polyaxon's context. Please note that,
+        the library will not ensure that the path exists when this flag is set to true.
+
         Args:
             rel_path: str, optional.
             ensure_path: bool, optional, default True.
             is_dir: bool, optional, default False.
+            use_store_path: bool, default False.
         Returns:
             str, outputs_path
         """
+        outputs_path = (
+            container_contexts.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
+                self._get_store_path()
+            )
+            if use_store_path
+            else self._outputs_path
+        )
         if rel_path:
-            path = os.path.join(self._outputs_path, rel_path)
+            path = os.path.join(outputs_path, rel_path)
             if ensure_path:
                 check_or_create_path(path, is_dir=is_dir)
             return path
-        return self._outputs_path
+        return outputs_path
 
     @client_handler(check_no_op=True, can_log_outputs=True)
-    def get_tensorboard_path(self, rel_path: str = "tensorboard"):
+    def get_tensorboard_path(
+        self, rel_path: str = "tensorboard", use_store_path: bool = False
+    ):
         """Returns a tensorboard path for this run relative to the outputs path.
 
+        If `use_store_path` is enabled, the path returned will be relative to the artifacts
+        store path and not Polyaxon's context. Please note that,
+        the library will not ensure that the path exists when this flag is set to true.
+
         Args:
-             rel_path: str, optional, default "tensorboard",
-                       the relative path to the `outputs` context.
+            rel_path: str, optional, default "tensorboard",
+                 the relative path to the `outputs` context.
+            use_store_path: bool, default False.
         Returns:
             str, outputs_path/rel_path
         """
-        path = self.get_outputs_path(rel_path)
+        path = self.get_outputs_path(rel_path, use_store_path=use_store_path)
         self.log_tensorboard_ref(path)
         return path
 
@@ -343,7 +387,7 @@ class Run(RunClient):
         Args:
             artifacts_path: str, optional
             is_related: bool, optional,
-                To create multiple runs in-cluster in a notebook or a vscode session.
+                 To create multiple runs in-cluster in a notebook or a vscode session.
         """
         if artifacts_path:
             _artifacts_path = artifacts_path
@@ -447,7 +491,7 @@ class Run(RunClient):
         Args:
             step: int, optional
             timestamp: datetime, optional
-            **metrics: **kwargs, key: value
+            **metrics: **kwargs, key=value
         """
         self._log_has_metrics()
 
@@ -711,8 +755,8 @@ class Run(RunClient):
 
         Args:
             data: str or numpy.array, a file path or numpy array
-            name: str, name of the image,
-                  if a path is passed this can be optional and the name of the file will be used
+            name: str,
+                 name of the image, if a path is passed this can be optional and the name of the file will be used
             step: int, optional
             timestamp: datetime, optional
             rescale: int, optional
@@ -791,8 +835,8 @@ class Run(RunClient):
 
         Args:
             tensor_image: numpy.array or str: Image data or file name
-            tensor_boxes: numpy.array or str: Box data (for detected objects)
-                        box should be represented as [x1, y1, x2, y2]
+            tensor_boxes: numpy.array or str:
+                 Box data (for detected objects) box should be represented as [x1, y1, x2, y2]
             name: str, name of the image
             step: int, optional
             timestamp: datetime, optional
@@ -1257,8 +1301,8 @@ class Run(RunClient):
             path: str, path to the artifact
             name: str, optional, if not provided the name of the file will be used
             kind: optional, str
-            summary: Dict, optional, additional summary information to log about data
-                in the lineage table.
+            summary: Dict, optional,
+                 additional summary information to log about data in the lineage table.
             step: int, optional
             timestamp: datetime, optional
             rel_path: str, relative path where to store the artifacts
@@ -1458,12 +1502,13 @@ class Run(RunClient):
 
     def end(self):
         """Manually end a run and trigger post done logic (artifacts and lineage collection)."""
-        atexit.unregister(self._exit_handler)
-        self._exit_handler()
+        if self._exit_handler:
+            atexit.unregister(self._exit_handler)
+            self._exit_handler()
 
     def _register_exit_handler(self, func):
         self._exit_handler = func
-        atexit.register(func)
+        atexit.register(self._exit_handler)
 
     def _start(self):
         if self._is_offline:

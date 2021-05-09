@@ -43,6 +43,12 @@ type V1Agent struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
+	// Agent is in replica mode
+	IsReplica bool `json:"is_replica,omitempty"`
+
+	// Agent is updatable and managed from the UI
+	IsUIManaged bool `json:"is_ui_managed,omitempty"`
+
 	// Current live state
 	LiveState int32 `json:"live_state,omitempty"`
 

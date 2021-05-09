@@ -18,6 +18,8 @@ Name | Type | Description | Notes
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **status** | [**V1Statuses**](V1Statuses.md) |  |  [optional]
+**isReplica** | **Boolean** |  |  [optional]
+**isUiManaged** | **Boolean** |  |  [optional]
 **settings** | [**Object**](.md) |  |  [optional]
 
 

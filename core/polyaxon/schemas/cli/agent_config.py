@@ -201,12 +201,17 @@ class AgentConfig(BaseConfig):
         self.app_secret_name = app_secret_name
         self.agent_secret_name = agent_secret_name
         self.runs_sa = runs_sa
-        self._all_connections = self.connections[:]
-        if artifacts_store:
-            self._all_connections.append(artifacts_store)
+        self._all_connections = []
+        self.set_all_connections()
         self._secrets = None
         self._config_maps = None
         self._connections_by_names = {}
+
+    def set_all_connections(self):
+        self._all_connections = self.connections[:]
+        if self.artifacts_store:
+            self._all_connections.append(self.artifacts_store)
+            validate_agent_config(self.artifacts_store, self.connections)
 
     @property
     def all_connections(self):

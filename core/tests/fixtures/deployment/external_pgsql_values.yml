@@ -25,6 +25,8 @@ externalServices:
     host: 35.226.163.84
     port: 1111
     connMaxAge: null
+    options:
+      sslmode: require
     pgbouncer:
       foo: bar
       image: test

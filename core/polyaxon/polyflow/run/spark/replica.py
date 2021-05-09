@@ -49,8 +49,7 @@ class V1SparkReplica(BaseConfig, polyaxon_sdk.V1SparkReplica):
         replicas: str, int
         environment: [V1Environment](/docs/core/specification/environment/), optional
         init: List[[V1Init](/docs/core/specification/init/)], optional
-        sidecars: List[[sidecar containers](/docs/core/specification/sidecars/)],
-                  optional
+        sidecars: List[[sidecar containers](/docs/core/specification/sidecars/)], optional
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
 
     ## YAML usage

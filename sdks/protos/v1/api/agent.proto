@@ -61,8 +61,14 @@ message Agent {
     // Optional latest status of this entity
     Statuses status = 12;
 
+    // Agent is in replica mode
+    bool is_replica = 13;
+
+    // Agent is updatable and managed from the UI
+    bool is_ui_managed = 14;
+
     // Optional settings
-    google.protobuf.Struct settings = 13;
+    google.protobuf.Struct settings = 15;
 }
 
 // Request data to create/update agents

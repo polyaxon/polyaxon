@@ -20,8 +20,10 @@ from coredb import operations
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
 from coredb.managers.statuses import new_run_status
+from polyaxon.constants.metadata import META_COPY_ARTIFACTS, META_UPLOAD_ARTIFACTS
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyflow import V1CloningKind, V1Operation, V1RunKind
+from polyaxon.schemas.types import V1ArtifactsType
 
 
 def create_run(
@@ -116,6 +118,21 @@ def clone_run(
     **kwargs,
 ) -> BaseRun:
     op_spec = V1Operation.read(run.raw_content)
+    meta_info = kwargs.pop("meta_info", {}) or {}
+    original_meta_info = run.meta_info or {}
+    original_uuid = run.uuid.hex
+    upload_artifacts = original_meta_info.get(META_UPLOAD_ARTIFACTS)
+    if upload_artifacts:
+        meta_info[META_UPLOAD_ARTIFACTS] = upload_artifacts
+    if cloning_kind == V1CloningKind.COPY and META_COPY_ARTIFACTS not in meta_info:
+        # Handle default copy mode
+        meta_info[META_COPY_ARTIFACTS] = V1ArtifactsType(dirs=[original_uuid]).to_dict()
+    if META_COPY_ARTIFACTS not in meta_info and upload_artifacts:
+        # Handle default copy mode
+        meta_info[META_COPY_ARTIFACTS] = V1ArtifactsType(
+            dirs=["{}/{}".format(original_uuid, upload_artifacts)]
+        ).to_dict()
+
     compiled_operation, instance = operations.init_run(
         project_id=run.project_id,
         user_id=user_id or run.user_id,
@@ -124,11 +141,12 @@ def clone_run(
         readme=readme or run.readme,
         op_spec=op_spec,
         original_id=run.id,
-        original_uuid=run.uuid.hex,
+        original_uuid=original_uuid,
         cloning_kind=cloning_kind,
         tags=tags or run.tags,
         override=content,
         supported_kinds=supported_kinds,
+        meta_info=meta_info,
         **kwargs,
     )
     instance.save()

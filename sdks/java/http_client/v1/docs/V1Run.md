@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **duration** | **Integer** |  |  [optional]
 **isManaged** | **Boolean** |  |  [optional]
 **isApproved** | **Boolean** |  |  [optional]
+**pending** | [**V1RunPending**](V1RunPending.md) |  |  [optional]
 **content** | **String** |  |  [optional]
 **rawContent** | **String** |  |  [optional]
 **status** | [**V1Statuses**](V1Statuses.md) |  |  [optional]

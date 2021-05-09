@@ -18,5 +18,6 @@ from django.apps import AppConfig
 
 
 class CoreDBConfig(AppConfig):
+    default_auto_field = "django.db.models.AutoField"
     name = "coredb"
     verbose_name = "CoreDB"

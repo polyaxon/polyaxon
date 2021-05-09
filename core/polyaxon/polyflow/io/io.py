@@ -138,8 +138,8 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     the [context](/docs/core/context/).
 
     Examples:
-      * A build component may have a git repository as input and a container image as output.
-      * A training component may have a container image, data path,
+     * A build component may have a git repository as input and a container image as output.
+     * A training component may have a container image, data path,
        and some hyperparameters as input and a list of metrics and artifacts as outputs.
 
     An input/output section includes a name, a description, a type to check the value passed,
@@ -228,9 +228,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### name
 
-    The input/output name.
-
-    the name must be a valid slug, and cannot include dots `.`.
+    The input/output name. The name must be a valid slug, and cannot include dots `.`.
 
     ```yaml
     >>> inputs:
@@ -330,12 +328,12 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     A key to control how to convert an input/output to a CLI argument if the value is not null,
     the default behavior:
 
-      * For bool type: If the resolved value of the input is True,
-        `"{{ params.PARAM_NAME.as_arg }}"` will be resolved to `"--PARAM_NAME"`
-        otherwise it will be an empty string `""`.
-      * For non-bool types: If the resolved value of the input is not null,
-      `"{{ params.PARAM_NAME.as_arg }}"` will be resolved to `"--PARAM_NAME=value"`
-      otherwise it will be an empty string `""`.
+     * For bool type: If the resolved value of the input is True,
+       `"{{ params.PARAM_NAME.as_arg }}"` will be resolved to `"--PARAM_NAME"`
+       otherwise it will be an empty string `""`.
+     * For non-bool types: If the resolved value of the input is not null,
+       `"{{ params.PARAM_NAME.as_arg }}"` will be resolved to `"--PARAM_NAME=value"`
+       otherwise it will be an empty string `""`.
 
     Let's look at the flowing example:
 
@@ -488,7 +486,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     polyaxon run -f polyaxonfile.yaml -P activation=sigmoid -P dropout=0.4
     ```
 
-    this will result in a run where the params are passed and validated against the inputs' types.
+    This will generate a manifest and will replace the params passed and validated against the inputs' types.
 
     ### Required inputs
 

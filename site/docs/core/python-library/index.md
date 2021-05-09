@@ -13,7 +13,9 @@ tags:
 sidebar: "core"
 ---
 
-Use Polyaxon Python library to create Polyaxonfile specification, to interact with Polyaxon API in a programmatic way,
+Polyaxon Python library is a high level Python module.
+
+You can use the Python library to create Polyaxonfile specification, to interact with Polyaxon API in a programmatic way,
 to instrument your machine learning model and track experiments, create custom visualizations, and to extend Polyaxon's behavior.
 
 ## Install
@@ -122,7 +124,7 @@ client = PolyaxonClient(token=API_TOKEN, config=ClientConfig(host=HOST, use_http
 run_client = RunClient(owner="org1", project="project-name", run_uuid="uuid", client=client)
 ```
 
-> **Note** API_TOKEN is only required for EE and Cloud
+> **Note**: `API_TOKEN` is only required for EE and Cloud
 
 ## Reading Polyaxonfiles
 

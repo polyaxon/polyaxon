@@ -178,7 +178,7 @@ class BaseAgent:
         logger.warning(message)
 
     def log_run_stopped(self, run_owner: str, run_project: str, run_uuid: str) -> None:
-        message = "Run was not found, so we assume it was stopped."
+        message = "Run was not found. The agent assumed it was already stopped."
         self.log_run_status(
             run_owner=run_owner,
             run_project=run_project,

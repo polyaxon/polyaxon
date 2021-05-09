@@ -14,28 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, List, Optional, Set, Tuple, Union
+from typing import Dict, Optional, Set, Tuple, Union
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
-from polyaxon.lifecycle import V1StatusCondition, V1Statuses
-from polyaxon.metadata.keys import (
+from polyaxon.constants.metadata import (
     META_HAS_DAGS,
     META_HAS_HOOKS,
     META_HAS_JOBS,
     META_HAS_MATRICES,
     META_HAS_SERVICES,
 )
+from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
-from polyaxon.polyflow import (
-    V1CloningKind,
-    V1CompiledOperation,
-    V1Init,
-    V1MatrixKind,
-    V1Operation,
-    V1RunKind,
-)
-from polyaxon.schemas.types import V1ArtifactsType
+from polyaxon.polyflow import V1CompiledOperation, V1MatrixKind, V1Operation, V1RunKind
+from polyaxon.schemas import V1RunPending
 from polycommon.service_interface import Service
 
 
@@ -153,10 +146,9 @@ class OperationsService(Service):
         original_uuid: int = None,
         cloning_kind: str = None,
         is_managed: bool = True,
-        is_approved: bool = True,
+        pending: str = None,
         meta_info: Dict = None,
         supported_kinds: Set[str] = None,
-        init: Optional[List[V1Init]] = None,
         **kwargs,
     ) -> Tuple[V1CompiledOperation, BaseRun]:
         if op_spec:
@@ -174,8 +166,8 @@ class OperationsService(Service):
         kind = None
         meta_info = meta_info or {}
         if compiled_operation:
-            if is_approved and compiled_operation.is_approved is not None:
-                is_approved = compiled_operation.is_approved
+            if pending is None and compiled_operation.is_approved is False:
+                pending = V1RunPending.APPROVAL
             name = name or compiled_operation.name
             description = description or compiled_operation.description
             tags = tags or compiled_operation.tags
@@ -184,27 +176,6 @@ class OperationsService(Service):
                 compiled_operation, kind, runtime, meta_info, **kwargs
             )
             self.supports_kind(kind, runtime, supported_kinds, is_managed)
-            if cloning_kind == V1CloningKind.COPY:
-                if runtime not in {V1RunKind.JOB, V1RunKind.SERVICE}:
-                    raise ValueError(
-                        "Operation with kind `{}` does not support restart with copy mode.".format(
-                            runtime
-                        )
-                    )
-                compiled_operation.run.add_init(
-                    V1Init(
-                        artifacts=V1ArtifactsType(
-                            dirs=[[original_uuid, "{{ globals.run_artifacts_path }}"]]
-                        )
-                    )
-                )
-            if init:
-                if runtime not in {V1RunKind.JOB, V1RunKind.SERVICE}:
-                    raise ValueError(
-                        "Operation with kind `{}` does not support "
-                        "additional init containers.".format(runtime)
-                    )
-                compiled_operation.run.add_init(init)
             kwargs["content"] = compiled_operation.to_dict(dump=True)
         instance = get_run_model()(
             project_id=project_id,
@@ -221,7 +192,7 @@ class OperationsService(Service):
             original_id=original_id,
             cloning_kind=cloning_kind,
             is_managed=is_managed,
-            is_approved=is_approved,
+            pending=pending,
             status_conditions=[
                 V1StatusCondition.get_condition(
                     type=V1Statuses.CREATED,

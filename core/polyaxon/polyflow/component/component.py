@@ -327,19 +327,18 @@ class V1Component(
     ### run
 
     This is the section that defines the runtime of the component:
-        * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,
-                                                data processing jobs, ...
-        * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks,
-                                                        streamlit, custom services or an API.
-        * [V1TFJob](/docs/experimentation/distributed/tf-jobs/): for running distributed
-                                                                 Tensorflow training job.
-        * [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/): for running distributed
-                                                                           Pytorch training job.
-        * [V1MPIJob](/docs/experimentation/distributed/mpi-jobs/): for running distributed
-                                                                   MPI job.
-        * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
-        * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
-        * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG/workflow.
+     * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,
+       data processing jobs, ...
+     * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks,
+       streamlit, custom services or an API.
+     * [V1TFJob](/docs/experimentation/distributed/tf-jobs/): for running distributed
+       Tensorflow training job.
+     * [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/): for running distributed
+       Pytorch training job.
+     * [V1MPIJob](/docs/experimentation/distributed/mpi-jobs/): for running distributed MPI job.
+     * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
+     * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
+     * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG/workflow.
 
     ### isApproved
 

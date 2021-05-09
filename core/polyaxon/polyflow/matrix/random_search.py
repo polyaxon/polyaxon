@@ -53,8 +53,7 @@ class V1RandomSearch(BaseSearchConfig, polyaxon_sdk.V1RandomSearch):
 
     Args:
         kind: str, should be equal `grid`
-        params: List[Dict[str,
-        [params](/docs/automation/optimization-engine/params/)]]
+        params: List[Dict[str, [params](/docs/automation/optimization-engine/params/)]]
         concurrency: int, optional
         num_runs: int, optional
         seed: int, optional

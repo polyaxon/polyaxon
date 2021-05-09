@@ -166,7 +166,7 @@ def _read_from_public_hub(hub: str):
 
 def _read_from_polyaxon_hub(hub: str):
     from polyaxon.client import PolyaxonClient
-    from polyaxon.constants import DEFAULT_HUB, NO_AUTH
+    from polyaxon.constants.globals import DEFAULT_HUB, NO_AUTH
     from polyaxon.env_vars.getters import get_component_info
     from polyaxon.schemas.cli.client_config import ClientConfig
 

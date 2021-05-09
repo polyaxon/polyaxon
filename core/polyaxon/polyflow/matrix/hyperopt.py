@@ -59,8 +59,7 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
     Args:
         kind: hyperopt
         algorithm: str, one of tpe, rand, anneal
-        params: List[Dict[str,
-        [params](/docs/automation/optimization-engine/params/#discrete-values)]]
+        params: List[Dict[str, [params](/docs/automation/optimization-engine/params/#discrete-values)]]  # noqa
         maxIterations: int, optional
         concurrency: int, optional
         num_runs: int, optional

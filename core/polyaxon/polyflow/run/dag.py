@@ -65,18 +65,18 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     Dags are defined in Polyaxon as a [component runtime](/docs/core/specification/component/#run),
     which makes them compatible with all knowledge used for running other runtimes:
-      * They can be defined in reusable components and can be registered in the Component Hub.
-      * They get executed using operations.
-      * They can be parametrized similar to jobs and services.
-      * Since they are defined as components' runtimes, and they run a graph of other components,
-        they can be nested natively.
-      * They can leverage all [pipeline helpers](/docs/automation/helpers/).
-      * They can run in parallel and can be used with [mapping](/docs/automation/mapping/) or
-        other [optimization algorithms](/docs/automation/optimization-engine/).
-      * They can run on [schedule](/docs/automation/schedules/)
-      * They can subscribe to [events](/docs/automation/events/)
-      * They can take advantage of all scheduling strategies to route operations to nodes,
-        namespaces, and clusters even within the same DAG.
+     * They can be defined in reusable components and can be registered in the Component Hub.
+     * They get executed using operations.
+     * They can be parametrized similar to jobs and services.
+     * Since they are defined as components' runtimes, and they run a graph of other components,
+       they can be nested natively.
+     * They can leverage all [pipeline helpers](/docs/automation/helpers/).
+     * They can run in parallel and can be used with [mapping](/docs/automation/mapping/) or
+       other [optimization algorithms](/docs/automation/optimization-engine/).
+     * They can run on [schedule](/docs/automation/schedules/)
+     * They can subscribe to [events](/docs/automation/events/)
+     * They can take advantage of all scheduling strategies to route operations to nodes,
+       namespaces, and clusters even within the same DAG.
 
     Args:
         kind: str, should be equal `dag`
@@ -85,7 +85,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
         environment: [V1Environment](/docs/core/specification/environment/), optional
         connections: List[str], optional
         volumes: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
-                 optional
+             optional
         concurrency: init, optional
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
@@ -172,7 +172,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     Operations can reference components using:
         * [dagRef](/docs/core/specification/operation/#dagRef)
-            (reusable component defined inside the dag)
+             (reusable component defined inside the dag)
         * [hubRef](/docs/core/specification/operation/#hubRef)
         * [pathRef](/docs/core/specification/operation/#pathRef)
         * [urlRef](/docs/core/specification/operation/#urlRef)

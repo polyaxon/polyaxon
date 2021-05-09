@@ -50,7 +50,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.8.4";
+        version: "1.9.0";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -1402,10 +1402,18 @@ service AgentsV1 {
     };
   }
 
-  // Get agent status
-  rpc GetAgentStatuses(OwnerEntityResourceRequestByUid) returns (Status) {
+  // Get agent config
+  rpc GetAgentConfig(OwnerSubEntityResourceRequestByUid) returns (Agent) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/agents/{uuid}/statuses"
+      get: "/api/v1/orgs/{owner}/agents/{uuid}/config"
+    };
+  }
+
+  // Update agent config
+  rpc UpdateAgentConfig(AgentBodyRequest) returns (Agent) {
+    option (google.api.http) = {
+      patch: "/api/v1/orgs/{owner}/agents/{agent.uuid}/config"
+      body: "agent"
     };
   }
 

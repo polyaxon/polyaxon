@@ -115,9 +115,8 @@ class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
         metric: str
         value: float
         optimization: Union["maximize", "minimize"]
-        policy: Union[V1MedianStoppingPolicy,
-                V1TruncationStoppingPolicy,
-                V1DiffStoppingPolicy], optional
+        policy: Union[V1MedianStoppingPolicy, V1TruncationStoppingPolicy, V1DiffStoppingPolicy],
+             optional
 
     ## YAML usage
 
@@ -194,10 +193,10 @@ class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
          this policy computes running medians across all runs and stops
          those whose best performance is worse than the median of the running runs.
      * DiffStopping: Early stopping with diff factor stopping,
-        this policy computes checked runs against the best run and
-        stops those whose performance is worse than the best by the factor defined by the user.
+         this policy computes checked runs against the best run and
+         stops those whose performance is worse than the best by the factor defined by the user.
      * TruncationStopping: Early stopping with truncation stopping,
-        this policy stops a percentage of all running runs at every evaluation.
+         this policy stops a percentage of all running runs at every evaluation.
     """
 
     SCHEMA = MetricEarlyStoppingSchema

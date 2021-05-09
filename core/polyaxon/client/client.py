@@ -17,7 +17,7 @@
 import polyaxon_sdk
 
 from polyaxon import settings
-from polyaxon.constants import NO_AUTH
+from polyaxon.constants.globals import NO_AUTH
 
 
 class PolyaxonClient:
@@ -29,9 +29,9 @@ class PolyaxonClient:
 
     If no values are passed to this class,
     Polyaxon will try to resolve the configuration from the environment:
-        * If you have a configured CLI, Polyaxon will use the configuration of the cli.
-        * If you use this client in the context of a job or a service managed by Polyaxon,
-        a configuration will be available.
+     * If you have a configured CLI, Polyaxon will use the configuration of the cli.
+     * If you use this client in the context of a job or a service managed by Polyaxon,
+       a configuration will be available.
 
     > N.B. PolyaxonClient requires python >= 3.5,
     if you want to interact with Polyaxon using a client

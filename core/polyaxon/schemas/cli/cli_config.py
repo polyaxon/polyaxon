@@ -16,7 +16,7 @@
 
 from marshmallow import fields
 
-from polyaxon.constants import PLATFORM_DIST_CE
+from polyaxon.constants.globals import PLATFORM_DIST_CE
 from polyaxon.schemas.api.log_handler import LogHandlerSchema
 from polyaxon.schemas.cli.checks_config import ChecksConfig, ChecksSchema
 

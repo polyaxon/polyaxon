@@ -50,9 +50,9 @@ type ClientService interface {
 
 	GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentOK, *GetAgentNoContent, error)
 
-	GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStateOK, *GetAgentStateNoContent, error)
+	GetAgentConfig(params *GetAgentConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentConfigOK, *GetAgentConfigNoContent, error)
 
-	GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error)
+	GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStateOK, *GetAgentStateNoContent, error)
 
 	GetAgentToken(params *GetAgentTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentTokenOK, *GetAgentTokenNoContent, error)
 
@@ -67,6 +67,8 @@ type ClientService interface {
 	SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SyncAgentOK, *SyncAgentNoContent, error)
 
 	UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAgentOK, *UpdateAgentNoContent, error)
+
+	UpdateAgentConfig(params *UpdateAgentConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAgentConfigOK, *UpdateAgentConfigNoContent, error)
 
 	UpdateAgentToken(params *UpdateAgentTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAgentTokenOK, *UpdateAgentTokenNoContent, error)
 
@@ -234,6 +236,46 @@ func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInf
 }
 
 /*
+  GetAgentConfig gets agent config
+*/
+func (a *Client) GetAgentConfig(params *GetAgentConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentConfigOK, *GetAgentConfigNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetAgentConfigParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "GetAgentConfig",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetAgentConfigReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetAgentConfigOK:
+		return value, nil, nil
+	case *GetAgentConfigNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetAgentConfigDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetAgentState gets state queues runs
 */
 func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStateOK, *GetAgentStateNoContent, error) {
@@ -270,46 +312,6 @@ func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.Cli
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetAgentStateDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  GetAgentStatuses gets agent status
-*/
-func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetAgentStatusesParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "GetAgentStatuses",
-		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/statuses",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &GetAgentStatusesReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *GetAgentStatusesOK:
-		return value, nil, nil
-	case *GetAgentStatusesNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetAgentStatusesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -590,6 +592,46 @@ func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientA
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateAgentDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateAgentConfig updates agent config
+*/
+func (a *Client) UpdateAgentConfig(params *UpdateAgentConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAgentConfigOK, *UpdateAgentConfigNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateAgentConfigParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "UpdateAgentConfig",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent.uuid}/config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UpdateAgentConfigReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateAgentConfigOK:
+		return value, nil, nil
+	case *UpdateAgentConfigNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateAgentConfigDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

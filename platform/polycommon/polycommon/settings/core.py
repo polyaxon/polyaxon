@@ -43,19 +43,21 @@ def set_core(context, config: ConfigManager):
 
     db_engine = "django.db.backends.postgresql"
     context["DEFAULT_DB_ENGINE"] = db_engine
-    context["DATABASES"] = {
-        "default": {
-            "ENGINE": config.get_string(
-                "POLYAXON_DB_ENGINE", is_optional=True, default=db_engine
-            ),
-            "NAME": config.get_string("POLYAXON_DB_NAME"),
-            "USER": config.get_string("POLYAXON_DB_USER"),
-            "PASSWORD": config.get_string("POLYAXON_DB_PASSWORD", is_secret=True),
-            "HOST": config.get_string("POLYAXON_DB_HOST"),
-            "PORT": config.get_string("POLYAXON_DB_PORT"),
-            "ATOMIC_REQUESTS": True,
-            "CONN_MAX_AGE": config.get_int(
-                "POLYAXON_DB_CONN_MAX_AGE", is_optional=True, default=None
-            ),
-        }
+    db_definition = {
+        "ENGINE": config.get_string(
+            "POLYAXON_DB_ENGINE", is_optional=True, default=db_engine
+        ),
+        "NAME": config.get_string("POLYAXON_DB_NAME"),
+        "USER": config.get_string("POLYAXON_DB_USER"),
+        "PASSWORD": config.get_string("POLYAXON_DB_PASSWORD", is_secret=True),
+        "HOST": config.get_string("POLYAXON_DB_HOST"),
+        "PORT": config.get_string("POLYAXON_DB_PORT"),
+        "ATOMIC_REQUESTS": True,
+        "CONN_MAX_AGE": config.get_int(
+            "POLYAXON_DB_CONN_MAX_AGE", is_optional=True, default=None
+        ),
     }
+    db_options = config.get_dict("POLYAXON_DB_OPTIONS", is_optional=True, default={})
+    if db_options:
+        db_definition["OPTIONS"] = db_options
+    context["DATABASES"] = {"default": db_definition}

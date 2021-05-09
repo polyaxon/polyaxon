@@ -19,7 +19,7 @@ import shutil
 
 from typing import Dict, List
 
-from polyaxon.constants import UNKNOWN
+from polyaxon.constants.globals import UNKNOWN
 from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import (

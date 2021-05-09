@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 **status** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
+**is_replica** | **Boolean** |  | [optional] 
+**is_ui_managed** | **Boolean** |  | [optional] 
 **settings** | [**Object**](.md) |  | [optional] 
 
 

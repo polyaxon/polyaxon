@@ -205,12 +205,12 @@ class IgnoreConfigManager(BaseConfigManager):
         return False
 
     @classmethod
-    def _ignore_path(cls, path, ignore_list=None, white_list=None):
+    def _ignore_path(cls, path, ignore_list=None, allowed_list=None):
         """Returns a whether a path should be ignored or not."""
         ignore_list = ignore_list or []
-        white_list = white_list or []
+        allowed_list = allowed_list or []
         return cls._matches_patterns(path, ignore_list) and not cls._matches_patterns(
-            path, white_list
+            path, allowed_list
         )
 
     @classmethod

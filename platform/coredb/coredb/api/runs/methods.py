@@ -37,7 +37,14 @@ def clone_run(view, request, *args, **kwargs):
         except Exception as e:
             raise ValidationError("Cloning was not successful, error: {}".format(e))
     try:
-        new_obj = view.clone(obj=view.run, content=content)
+        new_obj = view.clone(
+            obj=view.run,
+            content=content,
+            name=request.data.get("name"),
+            description=request.data.get("description"),
+            tags=request.data.get("tags"),
+            meta_info=request.data.get("meta_info"),
+        )
     except (MarshmallowValidationError, PolyaxonException, ValueError) as e:
         raise ValidationError("Cloning was not successful, error: {}".format(e))
 
@@ -65,8 +72,8 @@ def stop_run(view, request, *args, **kwargs):
 
 
 def approve_run(view, request, *args, **kwargs):
-    if not view.run.is_approved:
-        view.run.is_approved = True
+    if view.run.pending:
+        view.run.pending = None
         view.run.save()
         view.audit(request, *args, **kwargs)
     return Response(status=status.HTTP_200_OK, data={})

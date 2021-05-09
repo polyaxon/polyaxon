@@ -18,11 +18,10 @@ import uuid
 
 from django.core.validators import validate_slug
 from django.db import models
-from django.db.models import UniqueConstraint
 
 from coredb.abstracts.catalogs import BaseLiveStateCatalog
 from coredb.abstracts.readme import ReadmeModel
-from polyaxon.constants import DEFAULT
+from polyaxon.constants.globals import DEFAULT
 from polycommon.validation.blacklist import validate_blacklist_name
 
 

@@ -39,7 +39,7 @@ class TestIgnoreConfigManager(BaseTestCase):
         return [r.pattern for r in patterns if r.is_exclude]
 
     @staticmethod
-    def get_whitelisted(patterns):
+    def get_allowed(patterns):
         return [r.pattern for r in patterns if not r.is_exclude]
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=True)
@@ -57,14 +57,14 @@ class TestIgnoreConfigManager(BaseTestCase):
             mock_file.return_value.__enter__.return_value = [pattern]
             patterns = IgnoreConfigManager.get_config()
             self.assertEqual(
-                (self.get_ignored(patterns), self.get_whitelisted(patterns)),
+                (self.get_ignored(patterns), self.get_allowed(patterns)),
                 ([pattern], []),
             )
             assert list(IgnoreConfigManager.find_matching(path, patterns)) == []
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=mock_open)
-    def test_whitelisted_lines(self, mock_file, _):
+    def test_allowed_list_lines(self, mock_file, _):
         configs = [
             ("foo.c", "*.c"),
             (".c", "*.c"),
@@ -88,7 +88,7 @@ class TestIgnoreConfigManager(BaseTestCase):
             mock_file.return_value.__enter__.return_value = [pattern]
             patterns = IgnoreConfigManager.get_config()
             self.assertEqual(
-                (self.get_ignored(patterns), self.get_whitelisted(patterns)),
+                (self.get_ignored(patterns), self.get_allowed(patterns)),
                 ([pattern], []),
             )
             assert len(list(IgnoreConfigManager.find_matching(path, patterns))) == 1
@@ -101,7 +101,7 @@ class TestIgnoreConfigManager(BaseTestCase):
 
         patterns = IgnoreConfigManager.get_config()
         self.assertEqual(
-            (self.get_ignored(patterns), self.get_whitelisted(patterns)), (["*.py"], [])
+            (self.get_ignored(patterns), self.get_allowed(patterns)), (["*.py"], [])
         )
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=True)
@@ -112,19 +112,19 @@ class TestIgnoreConfigManager(BaseTestCase):
 
         patterns = IgnoreConfigManager.get_config()
         self.assertEqual(
-            (self.get_ignored(patterns), self.get_whitelisted(patterns)),
+            (self.get_ignored(patterns), self.get_allowed(patterns)),
             (["/test"], ["/ignore"]),
         )
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=mock_open)
-    def test_properly_interprets_whitelisted_globs(self, mock_file, _):
+    def test_properly_interprets_allowed_list_globs(self, mock_file, _):
         file_data = ["", "# comment", "*.py", "!file1.py"]
         mock_file.return_value.__enter__.return_value = file_data
 
         patterns = IgnoreConfigManager.get_config()
         self.assertEqual(
-            (self.get_ignored(patterns), self.get_whitelisted(patterns)),
+            (self.get_ignored(patterns), self.get_allowed(patterns)),
             (["*.py"], ["file1.py"]),
         )
 
@@ -146,6 +146,6 @@ class TestIgnoreConfigManager(BaseTestCase):
 
         patterns = IgnoreConfigManager.get_config()
         self.assertEqual(
-            (self.get_ignored(patterns), self.get_whitelisted(patterns)),
+            (self.get_ignored(patterns), self.get_allowed(patterns)),
             (["#file1", "!file2"], []),
         )

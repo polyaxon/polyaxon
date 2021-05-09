@@ -55,17 +55,16 @@ class V1Service(BaseConfig, AddInitMixin, polyaxon_sdk.V1Service):
      and dashboards based on your models and data analysis.
 
      Args:
-         kind: str, should be equal `service`
-         environment: [V1Environment](/docs/core/specification/environment/), optional
-         connections: List[str], optional
-         volumes: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
-                  optional
-         init: List[[V1Init](/docs/core/specification/init/)], optional
-         sidecars: List[[sidecar containers](/docs/core/specification/sidecars/)],
-                   optional
-         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
-         ports: List[int], optional
-         rewrite_path: bool, optional
+        kind: str, should be equal `service`
+        environment: [V1Environment](/docs/core/specification/environment/), optional
+        connections: List[str], optional
+        volumes: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
+             optional
+        init: List[[V1Init](/docs/core/specification/init/)], optional
+        sidecars: List[[sidecar containers](/docs/core/specification/sidecars/)], optional
+        container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
+        ports: List[int], optional
+        rewrite_path: bool, optional
 
      ## YAML usage
 

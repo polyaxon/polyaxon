@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.8.4
+  version: 1.9.0
 servers:
 - url: /
 security:
@@ -1383,6 +1383,66 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
+  /api/v1/orgs/{owner}/agents/{agent.uuid}/config:
+    patch:
+      operationId: UpdateAgentConfig
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: UUID
+        in: path
+        name: agent.uuid
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1Agent'
+        description: Agent body
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Agent'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Update agent config
+      tags:
+      - AgentsV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
   /api/v1/orgs/{owner}/agents/{agent.uuid}/sync:
     patch:
       operationId: SyncAgent
@@ -2124,6 +2184,62 @@ paths:
       tags:
       - AgentsV1
       x-accepts: application/json
+  /api/v1/orgs/{owner}/agents/{uuid}/config:
+    get:
+      operationId: GetAgentConfig
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Uuid identifier of the sub-entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: 'Entity: project name, hub name, registry name, ...'
+        in: query
+        name: entity
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Agent'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get agent config
+      tags:
+      - AgentsV1
+      x-accepts: application/json
   /api/v1/orgs/{owner}/agents/{uuid}/state:
     get:
       operationId: GetAgentState
@@ -2176,56 +2292,6 @@ paths:
       - AgentsV1
       x-accepts: application/json
   /api/v1/orgs/{owner}/agents/{uuid}/statuses:
-    get:
-      operationId: GetAgentStatuses
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Uuid identifier of the entity
-        in: path
-        name: uuid
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1Status'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response.
-      summary: Get agent status
-      tags:
-      - AgentsV1
-      x-accepts: application/json
     post:
       operationId: CreateAgentStatus
       parameters:
@@ -15295,8 +15361,10 @@ components:
         description: description
         created_at: 2000-01-23T04:56:07.000+00:00
         live_state: 6
+        is_replica: true
         uuid: uuid
         version: version
+        is_ui_managed: true
         content: content
         tags:
         - tags
@@ -15346,6 +15414,12 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/v1Statuses'
+        is_replica:
+          title: Agent is in replica mode
+          type: boolean
+        is_ui_managed:
+          title: Agent is updatable and managed from the UI
+          type: boolean
         settings:
           properties: {}
           title: Optional settings
@@ -19896,8 +19970,10 @@ components:
           description: description
           created_at: 2000-01-23T04:56:07.000+00:00
           live_state: 6
+          is_replica: true
           uuid: uuid
           version: version
+          is_ui_managed: true
           content: content
           tags:
           - tags
@@ -19910,8 +19986,10 @@ components:
           description: description
           created_at: 2000-01-23T04:56:07.000+00:00
           live_state: 6
+          is_replica: true
           uuid: uuid
           version: version
+          is_ui_managed: true
           content: content
           tags:
           - tags
@@ -22538,10 +22616,8 @@ components:
           title: Optional, if the run is managed, true by default, this flag should
             be false if starting a non-managed run
           type: boolean
-        is_approved:
-          title: Optional, if the run is approved, true by default, this flag should
-            be false if a run requires human validation
-          type: boolean
+        pending:
+          $ref: '#/components/schemas/v1RunPending'
         name:
           title: Optional, only usefule if is_managed is false
           type: string
@@ -23668,9 +23744,11 @@ components:
           title: Optional flag to tell if this entity is managed by the platform
           type: boolean
         is_approved:
-          title: Optional flag to tell if this entity requires approval before it
-            should be scheduled
+          title: Deprecated flag that was replaced by "pending", and it will be completely
+            dropped after v1.15
           type: boolean
+        pending:
+          $ref: '#/components/schemas/v1RunPending'
         content:
           title: Optional content of the entity's spec
           type: string
@@ -23977,6 +24055,14 @@ components:
         Kinds: job, service, dag, matrix, schedule
         Runtime kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob
         helper kinds: tuner, watchdog, notifier, cleaner
+      type: string
+    v1RunPending:
+      default: approval
+      enum:
+      - approval
+      - upload
+      - cache
+      - build
       type: string
     v1RunReferenceCatalog:
       example:
