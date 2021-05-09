@@ -56,6 +56,7 @@ class BaseResolver:
         compiled_at: datetime = None,
         cloning_kind: V1CloningKind = None,
         original_uuid: str = None,
+        eager: bool = False,
     ):
         if not compiled_operation:
             raise PolyaxonCompilerError("A run spec is required for resolution.")
@@ -86,6 +87,7 @@ class BaseResolver:
         self.started_at = None
         self.finished_at = None
         self.duration = None
+        self.eager = eager
         self.cloning_kind = cloning_kind
         self.original_uuid = original_uuid
         self._param_spec = {}
@@ -192,7 +194,7 @@ class BaseResolver:
         pass
 
     def resolve_artifacts_lineage(self):
-        self.artifacts = resolve_artifacts_lineage(
+        self.artifacts += resolve_artifacts_lineage(
             owner_name=self.owner_name,
             project_name=self.project_name,
             project_uuid=self.project_uuid,

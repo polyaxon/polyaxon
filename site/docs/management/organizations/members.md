@@ -87,14 +87,14 @@ Unrestricted access to the organization, its data, and settings.
 
 ### Billing
 
-> **Note**: Available on EE or to organizations with **Pro features**
+> **Note**: Available on EE and Business plans 
 
  * Has access to the billing information only.
  * Can manage subscription and billing details.
 
 ### Manager
 
-> **Note**: Available on EE or to organizations with **Pro features**
+> **Note**: Available on EE and Business plans
 
  * Has similar access as an **Owner**.
  * Does not have access to `billing`.
@@ -126,7 +126,7 @@ Unrestricted access to the organization, its data, and settings.
 
 ### Outsider
 
-> **Note**: Available on EE or to organizations with **Pro features**
+> **Note**: Available on EE and Business plans
 
  * Is a person who isn't explicitly a member of your organization.
  * Can read, write, or have admin permissions to one or more projects in your organization if invited and provided with such permissions.

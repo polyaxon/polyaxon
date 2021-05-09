@@ -19,7 +19,7 @@ import polyaxon_sdk
 
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import client_handler
-from polyaxon.constants import DEFAULT
+from polyaxon.constants.globals import DEFAULT
 from polyaxon.env_vars.getters import get_entity_full_name, get_entity_info
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.utils.query_params import get_query_params
@@ -30,11 +30,11 @@ class ProjectClient:
 
     If no values are passed to this class,
     Polyaxon will try to resolve the owner and project from the environment:
-        * If you have a configured CLI, Polyaxon will use the configuration of the cli.
-        * If you have a cached project using the CLI,
-        the client will default to that cached project unless you override the values.
-        * If you use this client in the context of a job or a service managed by Polyaxon,
-        a configuration will be available to resolve the values based on that run.
+     * If you have a configured CLI, Polyaxon will use the configuration of the cli.
+     * If you have a cached project using the CLI,
+       the client will default to that cached project unless you override the values.
+     * If you use this client in the context of a job or a service managed by Polyaxon,
+       a configuration will be available to resolve the values based on that run.
 
     If you intend to create a new project instance or to list projects,
     only the `owner` parameter is required.
@@ -46,11 +46,11 @@ class ProjectClient:
 
     Args:
         owner: str, optional, the owner is the username or
-               the organization name owning this project.
+             the organization name owning this project.
         project: str, optional, project name.
         client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/), optional,
-                an instance of a configured client, if not passed,
-                a new instance will be created based on the available environment.
+             an instance of a configured client, if not passed,
+             a new instance will be created based on the available environment.
 
     Raises:
         PolyaxonClientException: If no owner is passed and Polyaxon cannot

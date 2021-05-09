@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.8.4",
+    "version": "1.9.0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -1420,6 +1420,66 @@
         ]
       }
     },
+    "/api/v1/orgs/{owner}/agents/{agent.uuid}/config": {
+      "patch": {
+        "summary": "Update agent config",
+        "operationId": "UpdateAgentConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Agent body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      }
+    },
     "/api/v1/orgs/{owner}/agents/{agent.uuid}/sync": {
       "patch": {
         "summary": "Sync agent",
@@ -2185,6 +2245,64 @@
         ]
       }
     },
+    "/api/v1/orgs/{owner}/agents/{uuid}/config": {
+      "get": {
+        "summary": "Get agent config",
+        "operationId": "GetAgentConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the sub-entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity",
+            "description": "Entity: project name, hub name, registry name, ...",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      }
+    },
     "/api/v1/orgs/{owner}/agents/{uuid}/state": {
       "get": {
         "summary": "Get State (queues/runs)",
@@ -2237,55 +2355,6 @@
       }
     },
     "/api/v1/orgs/{owner}/agents/{uuid}/statuses": {
-      "get": {
-        "summary": "Get agent status",
-        "operationId": "GetAgentStatuses",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Status"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Uuid identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "AgentsV1"
-        ]
-      },
       "post": {
         "summary": "Create new run status",
         "operationId": "CreateAgentStatus",
@@ -15797,6 +15866,14 @@
           "$ref": "#/definitions/v1Statuses",
           "title": "Optional latest status of this entity"
         },
+        "is_replica": {
+          "type": "boolean",
+          "title": "Agent is in replica mode"
+        },
+        "is_ui_managed": {
+          "type": "boolean",
+          "title": "Agent is updatable and managed from the UI"
+        },
         "settings": {
           "type": "object",
           "title": "Optional settings"
@@ -19696,8 +19773,8 @@
           "type": "boolean",
           "title": "Optional, if the run is managed, true by default, this flag should be false if starting a non-managed run"
         },
-        "is_approved": {
-          "type": "boolean",
+        "pending": {
+          "$ref": "#/definitions/v1RunPending",
           "title": "Optional, if the run is approved, true by default, this flag should be false if a run requires human validation"
         },
         "name": {
@@ -20509,7 +20586,11 @@
         },
         "is_approved": {
           "type": "boolean",
-          "title": "Optional flag to tell if this entity requires approval before it should be scheduled"
+          "title": "Deprecated flag that was replaced by \"pending\", and it will be completely dropped after v1.15"
+        },
+        "pending": {
+          "$ref": "#/definitions/v1RunPending",
+          "title": "Optional to tell if this entity requires approval before it should be scheduled"
         },
         "content": {
           "type": "string",
@@ -20717,6 +20798,16 @@
       ],
       "default": "job",
       "title": "Run kind enum\nKinds: job, service, dag, matrix, schedule\nRuntime kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob\nhelper kinds: tuner, watchdog, notifier, cleaner"
+    },
+    "v1RunPending": {
+      "type": "string",
+      "enum": [
+        "approval",
+        "upload",
+        "cache",
+        "build"
+      ],
+      "default": "approval"
     },
     "v1RunReferenceCatalog": {
       "type": "object",

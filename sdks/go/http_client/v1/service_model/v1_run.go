@@ -60,7 +60,7 @@ type V1Run struct {
 	// Optional inputs of this entity
 	Inputs interface{} `json:"inputs,omitempty"`
 
-	// Optional flag to tell if this entity requires approval before it should be scheduled
+	// Deprecated flag that was replaced by "pending", and it will be completely dropped after v1.15
 	IsApproved bool `json:"is_approved,omitempty"`
 
 	// Optional flag to tell if this entity is managed by the platform
@@ -89,6 +89,9 @@ type V1Run struct {
 
 	// Required name of owner of this entity
 	Owner string `json:"owner,omitempty"`
+
+	// Optional to tell if this entity requires approval before it should be scheduled
+	Pending *V1RunPending `json:"pending,omitempty"`
 
 	// Optional pipeline run meta information
 	Pipeline *V1Pipeline `json:"pipeline,omitempty"`
@@ -159,6 +162,10 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateOriginal(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePending(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -250,6 +257,23 @@ func (m *V1Run) validateOriginal(formats strfmt.Registry) error {
 		if err := m.Original.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("original")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) validatePending(formats strfmt.Registry) error {
+	if swag.IsZero(m.Pending) { // not required
+		return nil
+	}
+
+	if m.Pending != nil {
+		if err := m.Pending.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("pending")
 			}
 			return err
 		}
@@ -398,6 +422,10 @@ func (m *V1Run) ContextValidate(ctx context.Context, formats strfmt.Registry) er
 		res = append(res, err)
 	}
 
+	if err := m.contextValidatePending(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidatePipeline(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -444,6 +472,20 @@ func (m *V1Run) contextValidateOriginal(ctx context.Context, formats strfmt.Regi
 		if err := m.Original.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("original")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) contextValidatePending(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Pending != nil {
+		if err := m.Pending.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("pending")
 			}
 			return err
 		}

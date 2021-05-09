@@ -59,8 +59,8 @@ class RunDetailView(RunEndpoint, RetrieveEndpoint, DestroyEndpoint, UpdateEndpoi
     AUDIT_INSTANCE = True
 
     def perform_destroy(self, instance):
-        if not instance.is_managed:
-            instance.delete()
+        # Deletion managed by the handler
+        pass
 
 
 class RunCloneView(RunEndpoint, CreateEndpoint):
@@ -69,7 +69,7 @@ class RunCloneView(RunEndpoint, CreateEndpoint):
     PROJECT_RESOURCE_KEY = RUN_UUID_KEY
     AUDIT_INSTANCE = True
 
-    def clone(self, obj, content):
+    def clone(self, obj, content, **kwargs):
         pass
 
     def pre_validate(self, obj):
@@ -82,14 +82,21 @@ class RunCloneView(RunEndpoint, CreateEndpoint):
 class RunRestartView(RunCloneView):
     AUDITOR_EVENT_TYPES = {"POST": RUN_RESTARTED_ACTOR}
 
-    def clone(self, obj, content):
-        return restart_run(run=obj, user_id=self.request.user.id, content=content)
+    def clone(self, obj, content, **kwargs):
+        return restart_run(
+            run=obj,
+            user_id=self.request.user.id,
+            content=content,
+            name=kwargs.get("name"),
+            description=kwargs.get("description"),
+            tags=kwargs.get("tags"),
+        )
 
 
 class RunResumeView(RunCloneView):
     AUDITOR_EVENT_TYPES = {"POST": RUN_RESUMED_ACTOR}
 
-    def clone(self, obj, content):
+    def clone(self, obj, content, **kwargs):
         return resume_run(
             run=obj,
             user_id=self.request.user.id,
@@ -108,12 +115,20 @@ class RunResumeView(RunCloneView):
 class RunCopyView(RunCloneView):
     AUDITOR_EVENT_TYPES = {"POST": RUN_COPIED_ACTOR}
 
-    def clone(self, obj, content):
-        return copy_run(run=obj, user_id=self.request.user.id, content=content)
+    def clone(self, obj, content, **kwargs):
+        return copy_run(
+            run=obj,
+            user_id=self.request.user.id,
+            content=content,
+            name=kwargs.get("name"),
+            description=kwargs.get("description"),
+            tags=kwargs.get("tags"),
+            meta_info=kwargs.get("meta_info"),
+        )
 
 
 class RunStatusListView(RunEndpoint, RetrieveEndpoint, CreateEndpoint):
-    queryset = Run.objects.defer(*STATUS_UPDATE_COLUMNS_DEFER).select_related(
+    queryset = Run.restorable.defer(*STATUS_UPDATE_COLUMNS_DEFER).select_related(
         "project",
     )
     serializer_class = RunStatusSerializer

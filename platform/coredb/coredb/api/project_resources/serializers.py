@@ -28,6 +28,7 @@ from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import create_run
 from polyaxon.exceptions import PolyaxonException
 from polyaxon.polyaxonfile import OperationSpecification
+from polyaxon.schemas import V1RunPending
 
 
 class RunSerializer(
@@ -58,7 +59,7 @@ class RunSerializer(
             "pipeline",
             "original",
             "is_managed",
-            "is_approved",
+            "pending",
             "inputs",
             "outputs",
             "tags",
@@ -115,6 +116,7 @@ class OfflineRunSerializer(
 
 class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
     uuid = fields.UUIDField(format="hex", read_only=True)
+    is_approved = fields.BooleanField(write_only=True, allow_null=True, required=False)
 
     class Meta:
         model = get_run_model()
@@ -124,12 +126,14 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
             "description",
             "content",
             "is_managed",
-            "is_approved",
+            "pending",
             "meta_info",
             "tags",
+            "is_approved",
         )
         extra_kwargs = {
             "meta_info": {"write_only": True},
+            "pending": {"write_only": True},
             "is_approved": {"write_only": True},
         }
 
@@ -155,6 +159,12 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
         name = validated_data.get("name")
         description = validated_data.get("description")
         tags = validated_data.get("tags")
+        pending = validated_data.get("pending")
+        # Check the deprecated `is_approved` flag
+        if pending is None:
+            is_approved = validated_data.get("is_approved")
+            if is_approved is False:
+                pending = V1RunPending.UPLOAD
 
         if is_managed or content:
             try:
@@ -176,7 +186,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                     tags=tags,
                     meta_info=meta_info,
                     is_managed=is_managed,
-                    is_approved=validated_data.get("is_approved", True),
+                    pending=pending,
                     supported_kinds=validated_data.get("supported_kinds"),
                     supported_owners=validated_data.get("supported_owners"),
                 )

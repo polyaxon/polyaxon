@@ -25,7 +25,7 @@ from urllib3.exceptions import HTTPError
 from polyaxon import pkg
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import PolyaxonClient
-from polyaxon.constants import NO_AUTH
+from polyaxon.constants.globals import NO_AUTH
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.user import UserConfigManager

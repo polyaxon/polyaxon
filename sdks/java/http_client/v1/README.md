@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.8.4
+- API version: 1.9.0
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.8.4</version>
+  <version>1.9.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.8.4"
+compile "org.openapitools:openapi-java-client:1.9.0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.8.4.jar`
+* `target/openapi-java-client-1.9.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -119,8 +119,8 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**createAgentStatus**](docs/AgentsV1Api.md#createAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new run status
 *AgentsV1Api* | [**deleteAgent**](docs/AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete agent
 *AgentsV1Api* | [**getAgent**](docs/AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
+*AgentsV1Api* | [**getAgentConfig**](docs/AgentsV1Api.md#getAgentConfig) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/config | Get agent config
 *AgentsV1Api* | [**getAgentState**](docs/AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
-*AgentsV1Api* | [**getAgentStatuses**](docs/AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
 *AgentsV1Api* | [**getAgentToken**](docs/AgentsV1Api.md#getAgentToken) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/token | Get agent token
 *AgentsV1Api* | [**listAgentNames**](docs/AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
 *AgentsV1Api* | [**listAgents**](docs/AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List agents
@@ -128,6 +128,7 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**patchAgentToken**](docs/AgentsV1Api.md#patchAgentToken) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/token | Patch agent token
 *AgentsV1Api* | [**syncAgent**](docs/AgentsV1Api.md#syncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | Sync agent
 *AgentsV1Api* | [**updateAgent**](docs/AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update agent
+*AgentsV1Api* | [**updateAgentConfig**](docs/AgentsV1Api.md#updateAgentConfig) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/config | Update agent config
 *AgentsV1Api* | [**updateAgentToken**](docs/AgentsV1Api.md#updateAgentToken) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/token | Update agent token
 *ArtifactsStoresV1Api* | [**uploadArtifact**](docs/ArtifactsStoresV1Api.md#uploadArtifact) | **POST** /api/v1/catalogs/{owner}/artifacts/{uuid}/upload | Upload artifact to a store
 *AuthV1Api* | [**changePassword**](docs/AuthV1Api.md#changePassword) | **POST** /api/v1/auth/change-password | Change password
@@ -542,6 +543,7 @@ Class | Method | HTTP request | Description
  - [V1RunEdge](docs/V1RunEdge.md)
  - [V1RunEdgeKind](docs/V1RunEdgeKind.md)
  - [V1RunKind](docs/V1RunKind.md)
+ - [V1RunPending](docs/V1RunPending.md)
  - [V1RunReferenceCatalog](docs/V1RunReferenceCatalog.md)
  - [V1RunSchema](docs/V1RunSchema.md)
  - [V1RunSettings](docs/V1RunSettings.md)

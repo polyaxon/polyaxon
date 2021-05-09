@@ -32,6 +32,7 @@ from polyaxon.api import API_V1
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1RunKind
+from polyaxon.schemas import V1RunPending
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
 
@@ -103,21 +104,21 @@ class TestRunDetailViewV1(BaseTestRunApi):
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.is_managed is False
 
-        # is_approved
-        data = {"is_approved": False}
-        assert self.object.is_approved is True
+        # pending
+        data = {"pending": V1RunPending.APPROVAL}
+        assert self.object.pending is None
         resp = self.client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.is_approved is False
+        assert new_object.pending == V1RunPending.APPROVAL
 
-        # is_approved
-        data = {"is_approved": True}
-        assert new_object.is_approved is False
+        # pending
+        data = {"pending": None}
+        assert new_object.pending == V1RunPending.APPROVAL
         resp = self.client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.is_approved is True
+        assert new_object.pending is None
 
         # Update tags
         assert new_object.tags is None
@@ -581,21 +582,21 @@ class TestApproveRunViewV1(BaseTestRunApi):
     def test_approve(self):
         assert self.queryset.count() == 1
         last_run = self.queryset.last()
-        last_run.is_approved = False
+        last_run.pending = V1RunPending.APPROVAL
         last_run.save()
         with patch("polycommon.workers.send") as workers_send:
             resp = self.client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert workers_send.call_count == 1
         assert self.queryset.count() == 1
-        assert self.queryset.last().is_approved is True
+        assert self.queryset.last().pending is None
 
     def test_approve_already_approved_run(self):
         assert self.queryset.count() == 1
         last_run = self.queryset.last()
-        last_run.is_approved = False
+        last_run.pending = V1RunPending.APPROVAL
         last_run.save()
         resp = self.client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
-        assert self.queryset.last().is_approved is True
+        assert self.queryset.last().pending is None

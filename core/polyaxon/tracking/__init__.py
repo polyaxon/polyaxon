@@ -64,44 +64,44 @@ def init(
 
         Args:
             owner: str, optional, the owner is the username or
-                the organization name owning this project.
+                 the organization name owning this project.
             project: str, optional, project name owning the run(s).
             run_uuid: str, optional, run uuid.
             client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/), optional,
-                an instance of a configured client, if not passed,
-                a new instance will be created based on the available environment.
+                 an instance of a configured client, if not passed,
+                 a new instance will be created based on the available environment.
             track_code: bool, optional, default True, to track code version.
-                Polyaxon will try to track information about any repo
-                configured in the context where this client is instantiated.
+                 Polyaxon will try to track information about any repo
+                 configured in the context where this client is instantiated.
             track_env: bool, optional, default True, to track information about the environment.
             refresh_data: bool, optional, default False, to refresh the run data at instantiation.
             refresh_data: bool, optional, default False, to instruct the run to resume,
-                only useful when the run is not managed by Polyaxon.
+                 only useful when the run is not managed by Polyaxon.
             artifacts_path: str, optional, for in-cluster runs it will be set automatically.
             collect_artifacts: bool, optional,
-                similar to the env var flag `POLYAXON_COLLECT_ARTIFACTS`, this env var is `True`
-                by default for managed runs and is controlled by the plugins section.
+                 similar to the env var flag `POLYAXON_COLLECT_ARTIFACTS`, this env var is `True`
+                 by default for managed runs and is controlled by the plugins section.
             collect_resources: bool, optional,
-                similar to the env var flag `POLYAXON_COLLECT_RESOURCES`, this env var is `True`
-                by default for managed runs and is controlled by the plugins section.
+                 similar to the env var flag `POLYAXON_COLLECT_RESOURCES`, this env var is `True`
+                 by default for managed runs and is controlled by the plugins section.
             is_offline: bool, optional,
-                To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+                 To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
             is_new: bool, optional,
-                Force the creation of a new run instead of trying to discover a cached run or
-                refreshing an instance from the env var
+                 Force the creation of a new run instead of trying to discover a cached run or
+                 refreshing an instance from the env var
             name: str, optional,
-                When `is_new` or `is_offline` is set to true, a new instance is created and
-                you can initialize that new run with a name.
+                 When `is_new` or `is_offline` is set to true, a new instance is created and
+                 you can initialize that new run with a name.
             description: str, optional,
-                When `is_new` or `is_offline` is set to true, a new instance is created and
-                you can initialize that new run with a description.
+                 When `is_new` or `is_offline` is set to true, a new instance is created and
+                 you can initialize that new run with a description.
             tags: str or List[str], optional,
-                When `is_new` or `is_offline` is set to true, a new instance is created and
-                you can initialize that new run with tags.
+                 When `is_new` or `is_offline` is set to true, a new instance is created and
+                 you can initialize that new run with tags.
 
         Raises:
             PolyaxonClientException: If no owner and/or project are passed and Polyaxon cannot
-                resolve the values from the environment.
+                 resolve the values from the environment.
     """
     global TRACKING_RUN
 

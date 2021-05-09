@@ -50,6 +50,13 @@ enum RunKind {
     cleaner = 15;
 }
 
+enum RunPending {
+  approval = 0;
+  upload = 1;
+  cache = 2;
+  build = 3;
+}
+
 message Cloning {
     enum Kind {
         copy = 0;
@@ -130,53 +137,56 @@ message Run {
     // Optional flag to tell if this entity is managed by the platform
     bool is_managed = 15;
 
-    // Optional flag to tell if this entity requires approval before it should be scheduled
+    // Deprecated flag that was replaced by "pending", and it will be completely dropped after v1.15
     bool is_approved = 16;
 
-    // Optional content of the entity's spec
-    string content = 17;
+    // Optional to tell if this entity requires approval before it should be scheduled
+    RunPending pending = 17;
 
     // Optional content of the entity's spec
-    string raw_content = 18;
+    string content = 18;
+
+    // Optional content of the entity's spec
+    string raw_content = 19;
 
     // Optional latest status of this entity
-    Statuses status = 19;
+    Statuses status = 20;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 20;
+    bool bookmarked = 21;
 
     // Current live state
-    int32 live_state = 21;
+    int32 live_state = 22;
 
     // Markdown description/readme
-    string readme = 22;
+    string readme = 23;
 
     // Optional run meta info
-    google.protobuf.Struct meta_info = 23;
+    google.protobuf.Struct meta_info = 24;
 
     // Optional kind to tell the kind of this run
-    RunKind kind = 24;
+    RunKind kind = 25;
 
     // Optional meta kind to tell the nature of this run
-    RunKind runtime = 25;
+    RunKind runtime = 26;
 
     // Optional inputs of this entity
-    google.protobuf.Struct inputs = 26;
+    google.protobuf.Struct inputs = 27;
 
     // Optional outputs of this entity
-    google.protobuf.Struct outputs = 27;
+    google.protobuf.Struct outputs = 28;
 
     // Optional original run meta information
-    Cloning original = 28;
+    Cloning original = 29;
 
     // Optional pipeline run meta information
-    Pipeline pipeline = 29;
+    Pipeline pipeline = 30;
 
     // The status conditions timeline
-    repeated StatusCondition status_conditions = 30;
+    repeated StatusCondition status_conditions = 31;
 
     // Current user's role in this (org/teams)/project/runs
-    string role = 31;
+    string role = 32;
 
     // Optional settings
     RunSettings settings = 33;
@@ -197,7 +207,7 @@ message OperationBody{
     bool is_managed = 2;
 
     // Optional, if the run is approved, true by default, this flag should be false if a run requires human validation
-    bool is_approved = 3;
+    RunPending pending = 3;
 
     // Optional, only usefule if is_managed is false
     string name = 4;

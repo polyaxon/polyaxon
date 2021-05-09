@@ -186,6 +186,7 @@ export * from './V1RunConnection';
 export * from './V1RunEdge';
 export * from './V1RunEdgeKind';
 export * from './V1RunKind';
+export * from './V1RunPending';
 export * from './V1RunReferenceCatalog';
 export * from './V1RunSchema';
 export * from './V1RunSettings';

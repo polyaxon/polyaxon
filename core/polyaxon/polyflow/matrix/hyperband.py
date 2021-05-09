@@ -81,8 +81,7 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
 
     Args:
         kind: string, should be equal to `hyperband`
-        params: List[Dict[str,
-            [params](/docs/automation/optimization-engine/params/#discrete-values)]]
+        params: List[Dict[str, [params](/docs/automation/optimization-engine/params/#discrete-values)]]  # noqa
         max_iterations: int
         eta: int
         resource: V1OptimizationResource
@@ -178,8 +177,8 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
     ### eta
 
     A parameter that tunes:
-        * The downsampling factor: `number of observation/eta`
-        * The resource increase factor: `resource*eta`
+     * The downsampling factor: `number of observation/eta`
+     * The resource increase factor: `resource*eta`
 
     ```yaml
     >>> matrix:
@@ -240,7 +239,7 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
     For more details about concurrency management,
     please check the [concurrency section](/docs/automation/helpers/concurrency/).
 
-     ### seed
+    ### seed
 
     Since this algorithm uses random generators,
     if you want to control the seed for the random generator, you can pass a seed.
@@ -267,7 +266,7 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
     For more details please check the
     [early stopping section](/docs/automation/helpers/early-stopping/).
 
-     ### tuner
+    ### tuner
 
     The tuner reference (w/o a component hub reference) to use.
     The component contains the logic for creating new suggestions,

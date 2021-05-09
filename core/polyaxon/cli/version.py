@@ -34,13 +34,25 @@ def pip_upgrade(project_name=PROJECT_CLI_NAME):
     click.echo("polyaxon upgraded.")
 
 
-def get_version(package):
+def get_version(package: str, show_error: bool = True):
     import pkg_resources
 
     try:
         return pkg_resources.get_distribution(package).version
     except pkg_resources.DistributionNotFound:
-        logger.error("`%s` is not installed", package)
+        if show_error:
+            logger.error("`%s` is not installed", package)
+
+
+def check_old_packages():
+    pkg = "polyaxon-cli"
+    if get_version(package=pkg, show_error=False):
+        Printer.print_error(
+            "Legacy package `{pkg}` is installed. Please run `pip uninstall {pkg}`".format(
+                pkg=pkg
+            ),
+            sys_exit=True,
+        )
 
 
 def get_current_version():
@@ -64,7 +76,7 @@ def check_cli_version(config, is_cli: bool = True):
             return
     if LooseVersion(current_version) < LooseVersion(min_version):
         click.echo(
-            """Your version of CLI ({}) is no longer compatible with server.""".format(
+            "Your version of Polyaxon CLI ({}) is no longer supported.".format(
                 config.current_version
             )
         )
@@ -84,7 +96,7 @@ def check_cli_version(config, is_cli: bool = True):
             sys.exit(0)
     elif LooseVersion(current_version) < LooseVersion(latest_version):
         indentation.puts(
-            "New version of CLI ({}) is now available. To upgrade run:".format(
+            "New version of Polyaxon CLI ({}) is now available. To upgrade run:".format(
                 config.latest_version
             )
         )
@@ -93,7 +105,7 @@ def check_cli_version(config, is_cli: bool = True):
     elif LooseVersion(current_version) > LooseVersion(latest_version):
         indentation.puts(
             "Your version of CLI ({}) is ahead of the latest version "
-            "supported by Polyaxon Platform ({}) on your cluster, "
+            "supported by Polyaxon server ({}) on your cluster, "
             "and might be incompatible.".format(
                 config.current_version, config.latest_version
             )
@@ -107,6 +119,7 @@ def check_cli_version(config, is_cli: bool = True):
 @clean_outputs
 def version(check):
     """Print the current version of the cli and platform."""
+    check_old_packages()
     Printer.print_header("Current cli version: {}.".format(pkg.VERSION))
     if check:
         config = set_versions_config()

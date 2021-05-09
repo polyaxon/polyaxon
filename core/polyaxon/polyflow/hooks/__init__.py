@@ -60,8 +60,8 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
     not have to run on the same container, does not require specific accelerators,
     or is not specific to a single operation.
     For instance, you can build a custom hook to:
-      * run evaluation after a training operation succeeds
-      * perform data or model checks
+      * run evaluation after a training operation succeeds.
+      * perform data or model checks.
 
     Polyaxon can trigger hooks when a run reaches a final status:
 

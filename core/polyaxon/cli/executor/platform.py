@@ -30,8 +30,16 @@ from polyaxon.cli.operations import logs as run_logs
 from polyaxon.cli.operations import statuses
 from polyaxon.cli.operations import upload as run_upload
 from polyaxon.client import RunClient
+from polyaxon.constants.globals import DEFAULT_UPLOADS_PATH
+from polyaxon.constants.metadata import (
+    META_COPY_ARTIFACTS,
+    META_EAGER_MODE,
+    META_UPLOAD_ARTIFACTS,
+)
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.polyflow import V1CompiledOperation, V1Operation
+from polyaxon.schemas import V1RunPending
+from polyaxon.schemas.types import V1ArtifactsType
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
 
@@ -51,9 +59,6 @@ def run(
     watch: bool,
     eager: bool,
 ):
-    if eager and upload:
-        Printer.print_error("You can't use upload` and `eager` at the same.")
-        sys.exit(1)
 
     polyaxon_client = RunClient(owner=owner, project=project_name)
 
@@ -66,8 +71,9 @@ def run(
             project=project_name,
         )
 
-    def create_run(is_managed: bool = True, meta_info: Dict = None):
-        is_approved = False if upload else None
+    def create_run(
+        is_managed: bool = True, meta_info: Dict = None, pending: str = None
+    ):
         try:
             response = polyaxon_client.create(
                 name=name,
@@ -75,8 +81,8 @@ def run(
                 tags=tags,
                 content=op_spec,
                 is_managed=is_managed,
-                is_approved=is_approved,
                 meta_info=meta_info,
+                pending=pending,
             )
             Printer.print_success("A new run `{}` was created".format(response.uuid))
             if not eager:
@@ -90,7 +96,7 @@ def run(
                         )
                     )
                 )
-                return response.uuid
+            return response.uuid
         except (ApiException, HTTPError) as e:
             handle_cli_error(
                 e,
@@ -103,7 +109,7 @@ def run(
             )
             sys.exit(1)
 
-    def refresh():
+    def refresh_run():
         try:
             polyaxon_client.refresh_data()
         except (ApiException, HTTPError) as e:
@@ -112,31 +118,58 @@ def run(
             )
             sys.exit(1)
 
+    def delete_run():
+        try:
+            polyaxon_client.delete()
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e, message="The current eager operation does not exist anymore."
+            )
+            sys.exit(1)
+
     click.echo("Creating a new run...")
-    run_meta_info = {"eager": True} if eager or upload else None
-    run_uuid = create_run(not eager, run_meta_info)
+    run_meta_info = None
     if eager:
-        from polyaxon.polyaxonfile.manager import get_eager_matrix_operations
-
-        refresh()
-        click.echo("Starting eager mode...")
-        compiled_operation = V1CompiledOperation.read(polyaxon_client.run_data.content)
-        op_specs = get_eager_matrix_operations(
-            content=polyaxon_client.run_data.raw_content,
-            compiled_operation=compiled_operation,
-            is_cli=True,
-        )
-        click.echo("Creating {} operations".format(len(op_specs)))
-        for op_spec in op_specs:
-            create_run()
-        return
-
+        run_meta_info = {META_EAGER_MODE: True}
+    if upload:
+        run_meta_info = run_meta_info or {}
+        run_meta_info[META_UPLOAD_ARTIFACTS] = upload_to or DEFAULT_UPLOADS_PATH
+    run_uuid = create_run(
+        not eager, run_meta_info, pending=V1RunPending.UPLOAD if upload else None
+    )
     ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
+
     if upload:
         ctx.invoke(
             run_upload, path_to=upload_to, path_from=upload_from, sync_failure=True
         )
         ctx.invoke(approve)
+
+    if eager:
+        from polyaxon.polyaxonfile.manager import get_eager_matrix_operations
+
+        refresh_run()
+        # Prepare artifacts
+        if upload:
+            run_meta_info = {
+                META_UPLOAD_ARTIFACTS: upload_to or DEFAULT_UPLOADS_PATH,
+                META_COPY_ARTIFACTS: V1ArtifactsType(dirs=[run_uuid]).to_dict(),
+            }
+        compiled_operation = V1CompiledOperation.read(polyaxon_client.run_data.content)
+        matrix_content = polyaxon_client.run_data.raw_content
+        # Delete matrix placeholder
+        click.echo("Cleaning matrix run placeholder...")
+        delete_run()
+        # Suggestions
+        click.echo("Starting eager mode...")
+        for op_spec in get_eager_matrix_operations(
+            content=matrix_content,
+            compiled_operation=compiled_operation,
+            is_cli=True,
+        ):
+            create_run(meta_info=run_meta_info)
+
+        return
 
     # Check if we need to invoke logs
     if watch and not eager:

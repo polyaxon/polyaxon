@@ -23,7 +23,7 @@ from django.utils.timezone import now
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
-from coredb.managers.artifacts import set_artifacts
+from coredb.managers.artifacts import atomic_set_artifacts
 from coredb.managers.statuses import new_run_status, new_run_stop_status
 from coredb.scheduler import resolver
 from kubernetes.client.rest import ApiException
@@ -122,7 +122,9 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
 
     try:
         compiled_at = now()
-        _, compiled_operation = resolver.resolve(run=run, compiled_at=compiled_at)
+        _, compiled_operation = resolver.resolve(
+            run=run, compiled_at=compiled_at, eager=eager
+        )
     except PolyaxonCompilerError as e:
         condition = V1StatusCondition.get_condition(
             type=V1Statuses.FAILED,
@@ -151,7 +153,7 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
     )
     new_run_status(run=run, condition=condition)
 
-    if not run.is_approved:
+    if run.pending:
         return False
 
     if eager:
@@ -226,7 +228,7 @@ def runs_set_artifacts(run_id: int, run: Optional[BaseRun], artifacts: List[Dict
         return
 
     artifacts = [V1RunArtifact.from_dict(a) for a in artifacts]
-    set_artifacts(run=run, artifacts=artifacts)
+    atomic_set_artifacts(run=run, artifacts=artifacts)
 
 
 def runs_stop(

@@ -51,7 +51,7 @@ class TestRunDetailSerializer(BaseTestRunSerializer):
         "pipeline",
         "original",
         "is_managed",
-        "is_approved",
+        "pending",
         "live_state",
         "tags",
         "inputs",

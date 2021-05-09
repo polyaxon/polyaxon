@@ -74,8 +74,7 @@ class V1GridSearch(BaseSearchConfig, polyaxon_sdk.V1GridSearch):
 
     Args:
         kind: str, should be equal `grid`
-        params: List[Dict[str,
-        [params](/docs/automation/optimization-engine/params/#discrete-values)]]
+        params: List[Dict[str, [params](/docs/automation/optimization-engine/params/#discrete-values)]]  # noqa
         concurrency: int, optional
         num_runs: int, optional
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
@@ -145,8 +144,8 @@ class V1GridSearch(BaseSearchConfig, polyaxon_sdk.V1GridSearch):
     [discrete value](/docs/automation/optimization-engine/params/#discrete-values).
 
     > The parameters generated will be validated against
-    the component's inputs/outputs definition to check that the values
-    can be passed and have valid types.
+    > the component's inputs/outputs definition to check that the values
+    > can be passed and have valid types.
 
     ```yaml
     >>> matrix:

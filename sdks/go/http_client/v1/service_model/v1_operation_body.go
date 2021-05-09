@@ -22,6 +22,7 @@ package service_model
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -37,9 +38,6 @@ type V1OperationBody struct {
 	// Optional, only useful if is_managed is false
 	Description string `json:"description,omitempty"`
 
-	// Optional, if the run is approved, true by default, this flag should be false if a run requires human validation
-	IsApproved bool `json:"is_approved,omitempty"`
-
 	// Optional, if the run is managed, true by default, this flag should be false if starting a non-managed run
 	IsManaged bool `json:"is_managed,omitempty"`
 
@@ -49,17 +47,69 @@ type V1OperationBody struct {
 	// Optional, only usefule if is_managed is false
 	Name string `json:"name,omitempty"`
 
+	// Optional, if the run is approved, true by default, this flag should be false if a run requires human validation
+	Pending *V1RunPending `json:"pending,omitempty"`
+
 	// Optional, only useful if is_managed is false
 	Tags []string `json:"tags"`
 }
 
 // Validate validates this v1 operation body
 func (m *V1OperationBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validatePending(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this v1 operation body based on context it is used
+func (m *V1OperationBody) validatePending(formats strfmt.Registry) error {
+	if swag.IsZero(m.Pending) { // not required
+		return nil
+	}
+
+	if m.Pending != nil {
+		if err := m.Pending.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("pending")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 operation body based on the context it is used
 func (m *V1OperationBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidatePending(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1OperationBody) contextValidatePending(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Pending != nil {
+		if err := m.Pending.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("pending")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

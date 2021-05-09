@@ -39,6 +39,7 @@ from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.parser import parser
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1CloningKind, V1RunKind
+from polyaxon.schemas import V1RunPending
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
 
@@ -169,7 +170,9 @@ class TestProjectRunsApproveViewV1(BaseTest):
         super().setUp()
         self.project = ProjectFactory()
         self.objects = [
-            self.factory_class(project=self.project, user=self.user, is_approved=False)
+            self.factory_class(
+                project=self.project, user=self.user, pending=V1RunPending.APPROVAL
+            )
             for _ in range(4)
         ]
         self.url = "/{}/{}/{}/runs/approve/".format(
@@ -179,20 +182,21 @@ class TestProjectRunsApproveViewV1(BaseTest):
     @patch("polycommon.workers.send")
     def test_approve(self, _):
         data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
-        assert set(
-            Run.objects.only("is_approved").values_list("is_approved", flat=True)
-        ) == {False}
+        assert set(Run.objects.only("pending").values_list("pending", flat=True)) == {
+            V1RunPending.APPROVAL
+        }
         with patch("polycommon.auditor.record") as auditor_record:
             resp = self.client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert set(
             Run.objects.filter(uuid__in=data["uuids"])
-            .only("is_approved")
-            .values_list("is_approved", flat=True)
-        ) == {True}
-        assert set(
-            Run.objects.only("is_approved").values_list("is_approved", flat=True)
-        ) == {True, False}
+            .only("pending")
+            .values_list("pending", flat=True)
+        ) == {None}
+        assert set(Run.objects.only("pending").values_list("pending", flat=True)) == {
+            V1RunPending.APPROVAL,
+            None,
+        }
         assert auditor_record.call_count == 2
 
 
@@ -942,28 +946,59 @@ class TestProjectRunsCreateViewV1(BaseTest):
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Run.objects.last()
         assert xp.is_managed is False
-        assert xp.is_approved is True
+        assert xp.pending is None
 
-        data = {"is_managed": False, "is_approved": False}
+        data = {"is_managed": False, "pending": V1RunPending.APPROVAL}
         resp = self.client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Run.objects.last()
         assert xp.is_managed is False
-        assert xp.is_approved is True  # Since it's not managed
+        assert xp.pending is None  # Since it's not managed
 
-        data = {"is_managed": False, "is_approved": True}
+        data = {"is_managed": False, "pending": None}
         resp = self.client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Run.objects.last()
         assert xp.is_managed is False
-        assert xp.is_approved is True
+        assert xp.pending is None
 
         data = {"is_managed": False, "meta_info": {"foo": "bar"}}
         resp = self.client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Run.objects.last()
         assert xp.is_managed is False
-        assert xp.is_approved is True
+        assert xp.pending is None
+        assert xp.meta_info == {"foo": "bar"}
+
+    def test_create_is_managed_is_approved_and_and_meta(self):
+        # Delete after v1.15
+        data = {"is_managed": False}
+        resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Run.objects.last()
+        assert xp.is_managed is False
+        assert xp.pending is None
+
+        data = {"is_managed": False, "is_approved": False}
+        resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Run.objects.last()
+        assert xp.is_managed is False
+        assert xp.pending is None  # Since it's not managed
+
+        data = {"is_managed": False, "is_approved": True}
+        resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Run.objects.last()
+        assert xp.is_managed is False
+        assert xp.pending is None
+
+        data = {"is_managed": False, "meta_info": {"foo": "bar"}}
+        resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Run.objects.last()
+        assert xp.is_managed is False
+        assert xp.pending is None
         assert xp.meta_info == {"foo": "bar"}
 
     def test_create_with_invalid_config(self):
@@ -1013,10 +1048,10 @@ class TestProjectRunsCreateViewV1(BaseTest):
         assert Run.objects.count() == 1
         last_run = Run.objects.last()
         assert last_run.is_managed is True
-        assert last_run.is_approved is True
+        assert last_run.pending is None
 
-        # Meta and is_approved
-        data["is_approved"] = False
+        # Meta and pending
+        data["pending"] = V1RunPending.APPROVAL
         data["meta_info"] = {"test": "works"}
         with patch("polycommon.auditor.record") as auditor_record:
             resp = self.client.post(self.url, data)
@@ -1026,7 +1061,23 @@ class TestProjectRunsCreateViewV1(BaseTest):
         assert Run.objects.count() == 2
         last_run = Run.objects.last()
         assert last_run.is_managed is True
-        assert last_run.is_approved is False
+        assert last_run.pending == V1RunPending.APPROVAL
+        assert last_run.meta_info == {"test": "works"}
+
+        # Meta and is_approved
+        # Delete after v1.15
+        data["is_approved"] = False
+        data.pop("pending")
+        data["meta_info"] = {"test": "works"}
+        with patch("polycommon.auditor.record") as auditor_record:
+            resp = self.client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert auditor_record.call_count == 1
+        assert Run.objects.count() == 3
+        last_run = Run.objects.last()
+        assert last_run.is_managed is True
+        assert last_run.pending == V1RunPending.UPLOAD
         assert last_run.meta_info == {"test": "works"}
 
 

@@ -118,6 +118,16 @@ class Parser:
             parsed_data[Sections.CONDITIONS], str
         ):
             parsed_data[Sections.CONDITIONS] = str(parsed_data[Sections.CONDITIONS])
+        if Sections.SKIP_ON_UPSTREAM_SKIP in parsed_data and not isinstance(
+            parsed_data[Sections.SKIP_ON_UPSTREAM_SKIP], str
+        ):
+            parsed_data[Sections.SKIP_ON_UPSTREAM_SKIP] = str(
+                parsed_data[Sections.SKIP_ON_UPSTREAM_SKIP]
+            )
+        if Sections.IS_APPROVED in parsed_data and not isinstance(
+            parsed_data[Sections.IS_APPROVED], str
+        ):
+            parsed_data[Sections.IS_APPROVED] = str(parsed_data[Sections.IS_APPROVED])
         return parsed_data
 
     @classmethod

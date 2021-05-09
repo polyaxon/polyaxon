@@ -16,7 +16,7 @@
 
 import sys
 
-from polyaxon.constants import DEFAULT
+from polyaxon.constants.globals import DEFAULT
 from polyaxon.env_vars.getters.user import get_local_owner
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.utils.formatting import Printer

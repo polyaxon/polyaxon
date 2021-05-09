@@ -30,7 +30,7 @@ from bokeh.plotting import figure
 from plotly import figure_factory
 
 from polyaxon import settings
-from polyaxon.constants import DEFAULT, PLATFORM_DIST_CE
+from polyaxon.constants.globals import DEFAULT, PLATFORM_DIST_CE
 from polyaxon.containers.contexts import (
     CONTEXT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,

@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **duration** | **int** |  | [optional] 
 **is_managed** | **bool** |  | [optional] 
 **is_approved** | **bool** |  | [optional] 
+**pending** | [**V1RunPending**](V1RunPending.md) |  | [optional] 
 **content** | **str** |  | [optional] 
 **raw_content** | **str** |  | [optional] 
 **status** | [**V1Statuses**](V1Statuses.md) |  | [optional] 

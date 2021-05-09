@@ -30,6 +30,7 @@ from coredb.abstracts.tag import TagModel
 from coredb.abstracts.uid import UuidModel
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow import V1CloningKind, V1RunKind
+from polyaxon.schemas import V1RunPending
 from polyaxon.utils.enums_utils import values_to_choices
 
 
@@ -71,8 +72,13 @@ class BaseRun(
     is_managed = models.BooleanField(
         default=True, help_text="If this entity is managed by the platform."
     )
-    is_approved = models.BooleanField(
-        default=True, help_text="If this entity requires approval before it should run."
+    pending = models.CharField(
+        max_length=8,
+        null=True,
+        blank=True,
+        db_index=True,
+        choices=values_to_choices(V1RunPending.allowable_values),
+        help_text="If this entity requires approval before it should run.",
     )
     meta_info = models.JSONField(null=True, blank=True, default=dict)
     params = models.JSONField(null=True, blank=True)
