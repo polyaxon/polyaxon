@@ -78,8 +78,8 @@ routes = [
         methods=["POST"]
     ),
     Route(
-        URLS_RUNS_MULTI_EVENTS, endpoints.get_multi_runs_events,
-        name="multi_events",
+        URLS_RUNS_MULTI_EVENTS, endpoints.get_multi_run_events,
+        name="multi_run_events",
         methods=["GET"]
     ),
     Route(

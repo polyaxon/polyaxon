@@ -49,8 +49,8 @@ These operators require [Helm](https://helm.sh/docs/intro/install/) to be instal
 We are also distributing these charts directly on our official Helm charts repo [https://charts.polyaxon.com](https://charts.polyaxon.com)
 
 ```bash
-$ helm repo add polyaxon https://charts.polyaxon.com
-$ helm repo update
+helm repo add polyaxon https://charts.polyaxon.com
+helm repo update
 ```
 
 ## Deploying/Deleting TFJob

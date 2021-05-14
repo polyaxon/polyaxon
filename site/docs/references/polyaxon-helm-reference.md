@@ -45,8 +45,8 @@ without the need to create your own volumes. Please see [polyaxon-nfs-provisione
 ## Add polyaxon charts
 
 ```bash
-$ helm repo add polyaxon https://charts.polyaxon.com
-$ helm repo update
+helm repo add polyaxon https://charts.polyaxon.com
+helm repo update
 ```
 
 ## Installing the Chart
@@ -54,7 +54,7 @@ $ helm repo update
 To install the chart with the release name `<RELEASE_NAME>`:
 
 ```bash
-$ helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> polyaxon/polyaxon
+helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> polyaxon/polyaxon
 ```
 
 Please do not use the `--wait` flag, otherwise the deployment will not succeed.
@@ -71,13 +71,13 @@ The [configuration](#configuration) section lists the parameters that can be con
 To uninstall/delete the `<RELEASE_NAME>` deployment:
 
 ```bash
-$ helm delete <RELEASE_NAME>
+helm delete <RELEASE_NAME>
 ```
 
 or with `--purge` flag
 
 ```bash
-$ helm delete <RELEASE_NAME> --purge
+helm delete <RELEASE_NAME> --purge
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
@@ -87,7 +87,7 @@ The command removes all the Kubernetes components associated with the chart and 
 > sometimes if you cancel a deployment you might end up with undeleted jobs.
 
 ```bash
-$ kubectl delete job ...
+kubectl delete job ...
 ```
 
 > **Note**: You can delete the chart and skip the cleaning the hooks
@@ -103,7 +103,7 @@ This can be particularly useful if your deployment is not working, because the h
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 
 ```bash
-$ helm install --name=<RELEASE_NAME> \
+helm install --name=<RELEASE_NAME> \
     --namespace=<NAMESPACE>\
     --set persistence.enabled=false,email.host=email \
     polyaxon
@@ -112,7 +112,7 @@ $ helm install --name=<RELEASE_NAME> \
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example:
 
 ```bash
-$ helm install --name my-release -f values.yaml polyaxon
+helm install --name my-release -f values.yaml polyaxon
 ```
 
 ## DeploymentType

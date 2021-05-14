@@ -1,7 +1,7 @@
 ---
 title: "Streamlit"
-meta_title: "Streamlit"
-meta_description: "Polyaxon integrates with Streamlit to run and publish custom ML apps."
+meta_title: "Serving ML models with Streamlit on Kubernetes"
+meta_description: "Polyaxon integrates with Streamlit to run and publish custom ML apps on Kubernetes."
 custom_excerpt: "Streamlit’s open-source app framework is the easiest way for data scientists and machine learning engineers to create beautiful, performant apps in only a few hours!  All in pure Python."
 image: "../../content/images/integrations/streamlit.png"
 author:

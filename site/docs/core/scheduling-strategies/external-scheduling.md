@@ -1,7 +1,7 @@
 ---
 title: "Scheduling operations from an external system"
 sub_link: "scheduling-strategies/external-scheduling"
-meta_title: "A guide on scheduling and submitting operations from external systems - Core Concepts"
+meta_title: "A guide on scheduling and submitting operations from external systems - scheduling strategies"
 meta_description: "Automating, scheduling, and submitting operations from external systems."
 is_index: true
 visibility: public

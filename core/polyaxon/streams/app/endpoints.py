@@ -159,7 +159,7 @@ async def collect_logs(request: Request) -> Response:
     return Response(status_code=status.HTTP_200_OK)
 
 
-async def get_multi_runs_events(request: Request) -> UJSONResponse:
+async def get_multi_run_events(request: Request) -> UJSONResponse:
     event_kind = request.path_params["event_kind"]
     force = to_bool(request.query_params.get("force"), handle_none=True)
     if event_kind not in V1ArtifactKind.allowable_values:

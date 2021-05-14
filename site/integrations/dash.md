@@ -1,7 +1,7 @@
 ---
 title: "Plotly Dash"
-meta_title: "dash"
-meta_description: "Polyaxon integrates with Plotly Dash to run and publish custom ML apps."
+meta_title: "Serving ML models with Plotly Dash on Kubernetes"
+meta_description: "Polyaxon integrates with Plotly Dash to run and publish custom ML apps on Kubernetes."
 custom_excerpt: "Written on top of Flask, Plotly.js, and React.js, Dash is a user framework for creating interactive analytical web applications for data visualization in pure Python or R. It provides 100's of charts, graphs, and UI controls, so you can build highly custom analytic apps in just a few lines of code."
 image: "../../content/images/integrations/dash.png"
 author:

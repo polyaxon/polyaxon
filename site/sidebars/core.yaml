@@ -109,3 +109,7 @@
       link: /docs/core/scheduling-strategies/operations-caching/
     - title: External Scheduling
       link: /docs/core/scheduling-strategies/external-scheduling/
+    - title: Handling Termination
+      link: /docs/core/scheduling-strategies/handling-termination/
+    - title: Managing Priority
+      link: /docs/core/scheduling-strategies/managing-priority/

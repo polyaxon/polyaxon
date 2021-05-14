@@ -3,6 +3,8 @@ title: "Polyaxon Security"
 sub_link: "security"
 meta_title: "Polyaxon Security - Core Concepts"
 meta_description: "Polyaxon is committed to developing secure, reliable products utilizing all modern security best practices. Find out more!"
+visibility: public
+status: published
 tags:
   - reference
   - polyaxon

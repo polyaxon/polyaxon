@@ -19,7 +19,7 @@ If you did not see the previous section of this tutorial, please visit [this lin
 Before creating new experiments, let's first try to understand what happened when we executed this command:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
+polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
 ```
 
 ## The run command
@@ -35,9 +35,9 @@ The run command consumes configuration files, also called Polyaxonfile, from dif
     * `polyaxon run -pm path/to/pythonfile.py` in this case Polyaxon will look for a variable `main` which will contain your component.
     * `polyaxon run -pm path/to/pythonfile.py:component-name` if you have multiple components in your Python file you can specify which one to run.
  * From urls using the `--url` flag:
-    * `polyaxon run --url=https://public-site.com/polyaxonfile.yaml` this is the command we used to avoid cloning the project locally.
+    * `polyaxon run --url=https://public-site.com/polyaxonfile.yaml` this is the command that we used to avoid cloning the project locally.
  * From a registry `--hub` flag:
-    * `polyaxon run --hub=tensorboard:single-run` this is the command we used to run the Tensorboard.
+    * `polyaxon run --hub=tensorboard:single-run` this is the command that we used to run the Tensorboard.
       Oftentimes, components can be reusable and generic, some of these components are distributed in a public registry.
       Polyaxon also provides a managed registry integrated with our auth, access management, and team management abstraction. Please check [Component Hub docs](/docs/management/component-hub/).
 
@@ -64,9 +64,7 @@ run:
     command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/model.py"]
 ```
 
-This is a simple Polyaxonfile.
-
-the file can be made simpler by removing the optional fields `name`, `description`, and `tags`,
+This is a simple Polyaxonfile, the file can be made simpler by removing the optional fields `name`, `description`, and `tags`,
 and if the docker image had an entry point, the file would have looked like this:
 
 ```yaml
@@ -79,7 +77,7 @@ run:
 ```
 
 Every Polyaxonfile must have a kind [component](/docs/core/specification/component/) or [operation](/docs/core/specification/operation/).
-In this section, we will explore the component, and in the next part of the tutorial we will dive into the operation kind.
+In this section, we will explore the component kind, and in the next part of the tutorial we will dive into the operation kind.
 
 
 This simple file runs a container with a custom image `polyaxon/polyaxon-quick-start`, the image is based on Tensorflow, and a command that executes our custom code.
@@ -191,9 +189,9 @@ In this Python file you can see that we are importing some information from `pol
  * We are importing a tracking module
  * We are loading some Keras callbacks
 
-You can also see that this is a simple TF.Keras model and we have a small section where we use `polyaxon.tracking` module to track information about the run.
-In this case the keras callbacks, and one line for getting a path for logging Tensorboard information. Polyaxon will take care of archiving the assets, outputs,
-logs to the artifacts store (NFS, S3, GCS, Azure, ...) you configured in an async way without impacting your model training.
+You can also see that this is a simple TF.Keras model and we have a small section where we use the `tracking` module to track information about the run.
+In this case `KerasCallback` and one line for getting a path for logging Tensorboard information. Polyaxon will take care of archiving the assets, outputs,
+logs to the artifacts store (NFS, S3, GCS, Azure, ...), you configured, in an async way without impacting your model training.
 
 This module allows Polyaxon to track several information about the experiment,
 and it also provides a workflow for organizing outputs and logs.
@@ -208,7 +206,7 @@ you can have a full provenance path if you decide to deploy/retire a model to/fr
 Let's start a new experiment, we can just run the same command as before.
 But we might want to change some parameters, e.g. the learning rate or the dropout for instance.
 
-This component does not provide inputs/outputs definition,
+This component does not provide an inputs/outputs definition,
 so the only way to change the parameters is by changing the Python
 file and pushing a new commit, then starting a new experiment, which is not ideal, especially that our program has arguments.
 
@@ -261,17 +259,17 @@ run:
     ]
 ```
 
-The difference between this file and the previous one, is that we introduced some inputs/outputs, and added arguments to the container.
+The difference between this file and the previous one is that we introduced some inputs/outputs and added arguments to the container.
 We also made one input `epochs` required.
 
 <blockquote class="light">
-The required input is just for demonstration, if we try to run this component without passing a parameter for the "epochs" the CLI will raise an error.
+The required input is just for demonstration, if we try to run this component without passing a parameter for the "epochs" input the CLI will raise an error.
 </blockquote>
 
 We need to pass an `epochs` param:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P epochs=10 -l
+polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P epochs=10 -l
 ```
 
 The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
@@ -282,7 +280,7 @@ If you want to validate an output eagerly, you need to set `delayValidation: fal
 
 When you run this experiment you will notice that Polyaxon will populate the inputs section in the dashboard automatically.
 
-> An important thing to notice is that we use `"--epochs={{ epochs }}"` to expose the param to our program/command, this can be exposed by using `"{{ params.epochs.as_arg }}"` as well.
+> An important thing to notice is that we use `"--epochs={{ epochs }}"` to expose the param to our program/command, this can be exposed as well by using `"{{ params.epochs.as_arg }}"`.
 
 ## List the operations
 
@@ -291,13 +289,13 @@ Let's check the list of experiments we've created so far:
 If you initialized a folder run
 
 ```bash
-$ polyaxon ops ls
+polyaxon ops ls
 ```
 
 Otherwise, you need to run
 
 ```bash
-$ polyaxon ops ls -p quick-start
+polyaxon ops ls -p quick-start
 ```
 
 ## Check the logs
@@ -305,13 +303,13 @@ $ polyaxon ops ls -p quick-start
 If the operation is cached you can run:
 
 ```bash
-$ polyaxon ops logs
+polyaxon ops logs
 ```
 
 This will return the results for the last operation you executed, otherwise, you need to pass a UUID to get the logs for a specific run:
 
 ```bash
-$ polyaxon ops logs -p quick-start -uuid UUID
+polyaxon ops logs -p quick-start -uuid UUID
 ```
 
 ## Start another experiment with different params
@@ -319,7 +317,7 @@ $ polyaxon ops logs -p quick-start -uuid UUID
 We can start another run based on the same component, but this time we will pass some more params to modify the default inputs' values:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P lr=0.005 -P epochs=8
+polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P lr=0.005 -P epochs=8
 ```
 
 
@@ -335,6 +333,6 @@ And we can also start a tensorboard for multiple runs:
 
 ## Congratulations
 
-You made your component more generic and you can use parameters to run different versions effortlessly.
+You made your component more generic and you used parameters to run different versions effortlessly.
 
-The next section of [this tutorial](/docs/intro/quick-start/operations/) we will explore what happens when we run an experiment or when we pass a param.
+In the next section of [this tutorial](/docs/intro/quick-start/operations/) we will explore what happens when we run an experiment or when we pass a param.

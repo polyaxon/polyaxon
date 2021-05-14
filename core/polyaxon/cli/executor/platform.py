@@ -150,6 +150,7 @@ def run(
 
         refresh_run()
         # Prepare artifacts
+        run_meta_info = {}
         if upload:
             run_meta_info = {
                 META_UPLOAD_ARTIFACTS: upload_to or DEFAULT_UPLOADS_PATH,

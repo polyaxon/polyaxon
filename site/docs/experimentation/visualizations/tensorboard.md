@@ -17,7 +17,7 @@ sidebar: "experimentation"
 Tensorboard is a tool that is used by data scientists to visualize and debug deep learning models. Polyaxon provides several ways for using tensorboard:
 
  * Tensorboard for a single run
- * Tensorboard for a multi-runs
+ * Tensorboard for a multi-run
  * Tensorboard based on metric(s) performance or a search
 
 ## Single run

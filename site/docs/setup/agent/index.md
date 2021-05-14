@@ -34,9 +34,9 @@ Agents are deployed and use a namespace to run operations
 independently of other applications running on your cluster.
 
 ```bash
-$ kubectl create namespace polyaxon
+kubectl create namespace polyaxon
 
-namespace "polyaxon" created
+# namespace "polyaxon" created
 ```
 
 If you would like to use a different value, you must keep in mind to update the `namespace` value in your config.
@@ -196,11 +196,11 @@ This deletes any disks that may have been created to store user’s logs,
 and any IP addresses that may have been provisioned.
 
 ```bash
-$ kubectl delete namespace <your-namespace>
+kubectl delete namespace <your-namespace>
 ```
 
 If you used the default values, the command should be,
 
 ```bash
-$ kubectl delete namespace polyaxon
+kubectl delete namespace polyaxon
 ```

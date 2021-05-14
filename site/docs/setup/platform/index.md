@@ -35,9 +35,9 @@ Polyaxon is deployed on and uses a namespace to run operations
 independently of other applications running on your cluster, we recommend using `polyaxon`.
 
 ```bash
-$ kubectl create namespace polyaxon
+kubectl create namespace polyaxon
 
-namespace "polyaxon" created
+# namespace "polyaxon" created
 ```
 
 If you would like to use a different value, you must keep in mind to update the `namespace` value in your config.
@@ -186,7 +186,7 @@ The general method to modify your Kubernetes deployment is to:
  2. Run a `polyaxon admin upgrade -f config.yaml` or `helm upgrade`:
 
     ```bash
-    $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yaml
+    helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yaml
     ```
 
     Where `<RELEASE_NAME>` is the parameter you passed to `--name` when installing Polyaxon with `helm install`.
@@ -225,20 +225,20 @@ unless you prefer not to trigger the pre-delete hooks, in that case you should c
 Delete the helm release. This deletes all resources that were created by helm during the deployment.
 
 ```bash
-$ helm delete <RELEASE_NAME> --purge
+helm delete <RELEASE_NAME> --purge
 ```
 
 If you used the default values, the command should be,
 
 ```bash
-$ helm delete polyaxon --purge
+helm delete polyaxon --purge
 ```
 
 If for some reason, your deployment did not succeed,
 you might need to delete Polyaxon with this command instead, to avoid triggering pre-delete hooks
 
 ```bash
-$ helm delete polyaxon --purge --no-hooks
+helm delete polyaxon --purge --no-hooks
 ```
 
 ### Delete the namespace
@@ -248,11 +248,11 @@ This deletes any disks that may have been created to store user’s logs|databas
 and any IP addresses that may have been provisioned.
 
 ```bash
-$ kubectl delete namespace <your-namespace>
+kubectl delete namespace <your-namespace>
 ```
 
 If you used the default values, the command should be,
 
 ```bash
-$ kubectl delete namespace polyaxon
+kubectl delete namespace polyaxon
 ```

@@ -31,10 +31,10 @@ To install the nfs-provisioner, make sure you have [Helm](https://helm.sh/docs/i
 
 If you are using this chart with Polyaxon, please install the chart on the same namespace where you installed Polyaxon.
 
-```yaml
-$ kubectl create namespace polyaxon
+```bash
+kubectl create namespace polyaxon
 
-namespace "polyaxon" created
+# namespace "polyaxon" created
 ```
 
 ## Install the nfs provisioner

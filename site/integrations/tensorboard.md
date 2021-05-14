@@ -38,7 +38,7 @@ The `UUID` is the uuid of the experiment to start a tensorboard for.
 To provide a specific tag:
 
 ```bash
- polyaxon run --hub tensorboard:multi-runs -P uuids=UUID1,UUID2
+ polyaxon run --hub tensorboard:multi-run -P uuids=UUID1,UUID2
 ```
 
 To start the session on a different project
@@ -74,7 +74,7 @@ polyaxon ops service --external [-uid] [-p]
 
 ![run-dashboards-tensorboard-histo](../../content/images/dashboard/runs/dashboards-tensorboard-histo.png)
 
- * Multi-runs tensorboard
+ * Multi-run tensorboard
 
 ![run-dashboards-tensorboard](../../content/images/dashboard/comparison/tensorboard.png)
 

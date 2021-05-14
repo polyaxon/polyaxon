@@ -145,13 +145,17 @@ def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
 
 
 def get_artifacts_path(
-    rel_path: str = None, ensure_path: bool = False, is_dir: bool = False
+    rel_path: str = None,
+    ensure_path: bool = False,
+    is_dir: bool = False,
+    use_store_path: bool = False,
 ):
     global TRACKING_RUN
     return TRACKING_RUN.get_artifacts_path(
         rel_path=rel_path,
         ensure_path=ensure_path,
         is_dir=is_dir,
+        use_store_path=use_store_path,
     )
 
 
@@ -159,22 +163,31 @@ get_artifacts_path.__doc__ = Run.get_artifacts_path.__doc__
 
 
 def get_outputs_path(
-    rel_path: str = None, ensure_path: bool = True, is_dir: bool = False
+    rel_path: str = None,
+    ensure_path: bool = True,
+    is_dir: bool = False,
+    use_store_path: bool = False,
 ):
     global TRACKING_RUN
     return TRACKING_RUN.get_outputs_path(
         rel_path=rel_path,
         ensure_path=ensure_path,
         is_dir=is_dir,
+        use_store_path=use_store_path,
     )
 
 
 get_outputs_path.__doc__ = Run.get_outputs_path.__doc__
 
 
-def get_tensorboard_path(rel_path: str = "tensorboard"):
+def get_tensorboard_path(
+    rel_path: str = "tensorboard",
+    use_store_path: bool = False,
+):
     global TRACKING_RUN
-    return TRACKING_RUN.get_tensorboard_path(rel_path=rel_path)
+    return TRACKING_RUN.get_tensorboard_path(
+        rel_path=rel_path, use_store_path=use_store_path
+    )
 
 
 get_tensorboard_path.__doc__ = Run.get_tensorboard_path.__doc__

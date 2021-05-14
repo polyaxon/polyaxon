@@ -19,7 +19,7 @@ Let’s look at an example of how you can use Polyaxon for running deep learning
 
 This example assumes a functional [Polyaxon Deployment](/docs/setup/).
 If you have Polyaxon already deployed and running, you can skip this section and proceed to [create a project](/docs/intro/quick-start/#create-a-project).
-Otherwise, this section will help you deploy a local Polyaxon cluster with default values.
+Otherwise, this section will help you deploy a local Polyaxon cluster with the default values.
 
 > **Note**: Minikube is not meant to be a production environment.
 
@@ -67,7 +67,7 @@ for hosting the project and the Polyaxonfile manifests, similar results can be a
 Let's run a first experiment
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
+polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
 ```
 
 > For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/)
@@ -80,7 +80,7 @@ The `-l` flag indicates that we want to stream the logs after starting the exper
 Let's start a tensorboard to see the results:
 
 ```bash
-$ polyaxon run --hub tensorboard:single-run -P uuid=UUID -w
+polyaxon run --hub tensorboard:single-run -P uuid=UUID -w
 ```
 
 ![run-dashboards](../../../../content/images/dashboard/runs/dashboards-tensorboard.png)
@@ -88,7 +88,7 @@ $ polyaxon run --hub tensorboard:single-run -P uuid=UUID -w
 ## Let's check the results on the dashboard as well
 
 ```bash
-$ polyaxon dashboard -y
+polyaxon dashboard -y
 ```
 
 > For more details about this command please run `polyaxon dashboard --help`, or check the [command reference](/docs/core/cli/dashboard/)
@@ -108,9 +108,9 @@ You've trained your first experiments with Polyaxon, visualized the results in T
 Behind the scene a couple of things have happened:
 
  * You synced your GitHub project and used the last commit.
- * You ran a container with a custom image and command to train a model.
+ * You ran a container with a custom image and a custom command to train a model.
  * You persisted your logs and outputs.
  * You visualized the results using Polyaxon's native dashboard and Tensorboard.
 
-To gain a deeper understanding of what happened and how Polyaxon can help you iterate faster with your experimentation,
+To gain a deeper understanding of what happened and how Polyaxon can help you iterate faster with your experiments,
 please check the next section of [this tutorial](/docs/intro/quick-start/components/)

@@ -1,6 +1,6 @@
 ---
-title: "Introduction"
-sub_link: "introduction"
+title: "Welcome"
+sub_link: ""
 meta_title: "Introduction to Polyaxon - Core Concepts"
 meta_description: "Polyaxon is an open-source platform for managing deep learning and machine learning lifecycle for teams who need power, flexibility, and performance."
 is_index: true
@@ -43,6 +43,7 @@ feel free to reach out at the
 or [contact us](mailto:contact@polyaxon.com).
 
 Please check our [quick start guide](/docs/intro/quick-start/) to start training your first experiment.
+After finishing the quick-start guide, you can learn about specific aspects of the platform by exploring other introduction guides.
 
 To gain a deeper understanding of how Polyaxon can help you iterate faster with your experiments,
 please take some time to familiarize yourself with Polyaxon's [concepts](/docs/intro/concepts/organization-concepts/)
@@ -83,9 +84,9 @@ The first question most people have is, of course, how is Polyaxon different fro
 
 ## Ecosystem
 
-There is a broad range of tools, resources and, helpful tutorials for working with Polyaxon available to help you get started.
+There is a broad range of tools, resources, and helpful tutorials for working with Polyaxon available to help you get started.
 
-Before diving into Polyaxon's Features in the next section, it's useful to give you a high-level overview of where to find things!
+Before diving into Polyaxon's features in the next section, it's useful to give to get a high-level overview of where to find things!
 
 ### The blog
 

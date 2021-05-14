@@ -265,7 +265,7 @@ class V1Service(BaseConfig, AddInitMixin, polyaxon_sdk.V1Service):
      ### rewritePath
 
      By default, Polyaxon exposes services with a base url following this pattern:
-      `/services/v1/test/user/project/runs/uuid`
+      `/services/v1/namespace/owner/project/runs/uuid`
 
      This default behavior works very well for Tensorboards and Notebooks,
      but if you are exposing an API that doesn't handle base urls, you can enable

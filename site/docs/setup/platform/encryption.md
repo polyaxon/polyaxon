@@ -14,7 +14,7 @@ sidebar: "setup"
 Polyaxon might need to save some sensitive information in the database, such as keys.
 
 By default Polyaxon uses Kubernetes secrets for accessing all user's provided secrets,
-but sometime it might need to also store some additional information.
+but sometimes it might need to also store some additional information.
 The way Polyaxon does it is by obfuscating the data and then applying an encryption
 to the values based on Fernet before saving the information.
 

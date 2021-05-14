@@ -21,7 +21,7 @@ to instrument your machine learning model and track experiments, create custom v
 ## Install
 
 ```bash
-$ pip install -U polyaxon
+pip install -U polyaxon
 ```
 
 N.B. `polyaxon` library is Python 3.5+ package, if you are still using Python 2 `polyaxon-sdk` is python 2/3 compatible.

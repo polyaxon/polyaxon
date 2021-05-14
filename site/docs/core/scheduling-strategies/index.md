@@ -36,7 +36,6 @@ There are several distinct features involved in the scheduling strategies:
 
  * [Node scheduling](/docs/core/scheduling-strategies/node-scheduling/): A feature that leverages the Kubernetes API to select nodes for running your operations.
  * [Resources scheduling](/docs/core/scheduling-strategies/resources-scheduling/): A feature that leverages the Kubernetes API to enable GPU/TPU, or other special resources for your operations.
- * [Queue priority](/docs/core/scheduling-strategies/queue-routing/#priority): A feature to prioritize operations on a queue.
  * [Queue concurrency](/docs/core/scheduling-strategies/queue-routing/#concurrency): A feature to throttle the number of operations on a queue based on parallelism.
  * Queue Resources (**Roadmap**): A feature to throttle the number of operations on a queue based on resources (CPU/Memory/GPU/...).
  * [Queue agent](/docs/core/scheduling-strategies/queue-routing/#agent): A feature to route operations on a queue to a namespace or cluster.
@@ -49,3 +48,5 @@ There are several distinct features involved in the scheduling strategies:
  * [Manual approval](/docs/core/scheduling-strategies/manual-approval/): A feature to pause and suspend operations and pipelines and wait for human approval to resume the work.
  * [Operation cache layer](/docs/core/scheduling-strategies/operations-caching/): A feature to reduce the cost and execution time by avoiding and skipping similar work.
  * [External scheduling](/docs/core/scheduling-strategies/external-scheduling/): A feature to schedule and submit operations from external systems.
+ * [Handling termination](/docs/core/scheduling-strategies/handling-termination/): A feature to handle failures and termination and enforcing SLAs.
+ * [Managing Priority](/docs/core/scheduling-strategies/managing-priority/): A feature to prioritize important operations and enforcing preemption.

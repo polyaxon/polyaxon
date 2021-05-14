@@ -22,7 +22,7 @@ In this sections we will look at what happened when we run a component w/o param
 Let's first run this polyaxonfile:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yaml
+polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yaml
 ```
 
 > For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/)
@@ -68,7 +68,7 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/e
 
 Using the operation we will keep the options to use other resources or no resources at all, you can also patch the environment, init, sidecars ...
 
-Sometime you might want to create a component with predefined values or sometimes the values might not need to change often,
+Sometimes you might want to create a component with predefined values or sometimes the values might not need to change often,
 in that case it will make sense to push more information to the component.
 
 ## Referencing a component
@@ -85,5 +85,3 @@ Operations can reference components in several ways:
 ## Conclusion
 
 Operations are how you execute components. To learn more about operations, please check the [specification section](/docs/core/specification/operation/)
-
-The next section of [this tutorial](/docs/intro/quick-start/iterate-in-notebooks/) we will explore how to use notebooks to run an interactive process for scheduling experiments.

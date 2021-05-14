@@ -14,7 +14,7 @@ sidebar: "experimentation"
 
 ## Overview
 
-Polyaxon has a programmatic experience for generating visualizations for single runs or multi-runs:
+Polyaxon has a programmatic experience for generating visualizations for single runs or multi-run:
 
 ## Single run
 

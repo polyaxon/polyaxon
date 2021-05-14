@@ -749,7 +749,7 @@ class RunClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
-    def get_multi_runs_events(
+    def get_multi_run_events(
         self,
         kind: V1ArtifactKind,
         runs: List[str],
@@ -757,7 +757,21 @@ class RunClient:
         orient: str = None,
         force: bool = False,
     ):
-        """Gets multi-runs events.
+        logger.warning("This method is deprecated in favor of `get_multi_run_events`")
+        return self.get_multi_run_events(
+            kind=kind, runs=runs, names=names, orient=orient, force=force
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_multi_run_events(
+        self,
+        kind: V1ArtifactKind,
+        runs: List[str],
+        names: List[str],
+        orient: str = None,
+        force: bool = False,
+    ):
+        """Gets multi-run events.
 
         Args:
             kind: str, a valid `V1ArtifactKind`.

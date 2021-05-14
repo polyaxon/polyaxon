@@ -25,19 +25,19 @@ To install Polyaxon CLI please refer to the [installation documentation](/docs/s
 To list all commands and get information about Polyaxon CLI, you can run the following
 
 ```bash
-$ polyaxon --help
+polyaxon --help
 ```
 
 To get help for any Polyaxon CLI Command, you can run the following
 
 ```bash
-$ polyaxon command --help
+polyaxon command --help
 ```
 
 Some commands have sub-commands, you can also get help for these sub-commands by running
 
 ```bash
-$ polyaxon command sub-command --help
+polyaxon command sub-command --help
 ```
 
 ## Deprecated behavior
@@ -60,8 +60,8 @@ polyaxon ops get -p PROJECT -uid UID --more-args
 When using Polyaxon CLI to run a command requiring a project or a run,
 you can always specify the values for these options, for example:
 
- * `$ polyaxon project get --project=user_1/project_10`
- * `$ polyaxon ops get --project=user_1/project_10 --uid=UUID`
+ * `polyaxon project get --project=user_1/project_10`
+ * `polyaxon ops get --project=user_1/project_10 --uid=UUID`
 
 
 Polyaxon CLI allows also you to omit these options for projects and runs, the CLI does the following:
@@ -73,11 +73,11 @@ Polyaxon CLI allows also you to omit these options for projects and runs, the CL
 
 All commands and sub-command of `project` and `ops` support this caching mechanism:
 
- * `$ polyaxon project ls`
- * `$ polyaxon project get`
- * `$ polyaxon ops ls`
- * `$ polyaxon ops get`
- * `$ polyaxon ops logs`
+ * `polyaxon project ls`
+ * `polyaxon project get`
+ * `polyaxon ops ls`
+ * `polyaxon ops get`
+ * `polyaxon ops logs`
  * ...
 
 ## Updating the cached configuration
@@ -101,7 +101,7 @@ without the need to pass the `-uid UUID`, e.g. `polyaxon ops logs` will use the 
 By default, Polyaxon will cache all information on Polyaxon's global path, if you want to enable caching on local project folder(s), you can use the init command:
 
 ```bash
-$ polyaxon init -p PROJECT_NAME
+polyaxon init -p PROJECT_NAME
 ```
 
 This will create a local cache folder for the project and its runs.

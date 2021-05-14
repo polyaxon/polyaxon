@@ -43,11 +43,11 @@ environment:
   nodeSelector:
 ```
 
-For example, if you have some GPU nodes, you might want to only use them for training your experiments.
+For example, if you have some GPU nodes, you may want to only use them for training your experiments.
 In this case you should label your nodes:
 
 ```bash
-$ kubectl label nodes <node-name> <label-key>=<label-value>
+kubectl label nodes <node-name> <label-key>=<label-value>
 ```
 
 And use that label for running experiments.

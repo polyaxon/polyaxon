@@ -7,54 +7,106 @@
       link: /docs/intro/quick-start/components/
     - title: Operations
       link: /docs/intro/quick-start/operations/
+    - title: Where to go from here
+      link: /docs/intro/quick-start/where-to-go-from-here/
+  - group: Iterative Process
+    items:
     - title: Iterate in Notebooks
-      link: /docs/intro/quick-start/iterate-in-notebooks/
-    - title: Iterate with local code
-      link: /docs/intro/quick-start/iterate-with-cli-local-code/
-    - title: Iterate with remote code
-      link: /docs/intro/quick-start/iterate-with-cli-git-code/
-    - title: Iterate With Presets
-      link: /docs/intro/quick-start/iterate-with-presets/
+      link: /docs/intro/iterative-process/iterate-in-notebooks/
+    - title: Iterate with Local Code
+      link: /docs/intro/iterative-process/iterate-with-cli-local-code/
+    - title: Iterate with Remote Code
+      link: /docs/intro/iterative-process/iterate-with-cli-git-code/
+    - title: Iterate with Presets
+      link: /docs/intro/iterative-process/iterate-with-presets/
     - title: Iterate Programatically
-      link: /docs/intro/quick-start/iterate-programmatically/
+      link: /docs/intro/iterative-process/iterate-programmatically/
+    - title: Iterate with Inline Scripts
+      link: /docs/intro/iterative-process/iterate-with-inline-scripts/
+  - group: Passing Params
+    items:
+    - title: With Args
+      link: /docs/intro/passing-params/with-args/
+    - title: With Env Vars
+      link: /docs/intro/passing-params/with-env-vars/
+    - title: With the Python Library
+      link: /docs/intro/passing-params/with-python-library/
+#    - title: As Dictionaries
+#      link: /docs/intro/passing-params/as-dictionaries/
+  - group: Scaling Operations
+    items:
     - title: Distributed Training
-      link: /docs/intro/quick-start/distributed-training/
+      link: /docs/intro/scaling/distributed-training/
     - title: Hyperparameter Tuning
-      link: /docs/intro/quick-start/hyperparameter-tuning/
-    - title: Automation
-      link: /docs/intro/quick-start/automation/
-    - title: Running on schedule
-      link: /docs/intro/quick-start/running-on-schedule/
-    - title: Deploying ML apps
-      link: /docs/intro/quick-start/deploying-ml-apps/
-    - title: Building Containers
-      link: /docs/intro/quick-start/building-containers/
-    - title: Running Inline Scripts
-      link: /docs/intro/quick-start/running-inline-scripts/
-  - group: How-Tos
+      link: /docs/intro/scaling/hyperparameter-tuning/
+    - title: Mapping
+      link: /docs/intro/scaling/mapping/
+  - group: Tensorboard
+    items:
+    - title: Single Run Tensorboard
+      link: /docs/intro/tensorboard/single-tensorboard/
+    - title: Comparing runs with Tensorboard
+      link: /docs/intro/tensorboard/comparing-runs-tensorboard/
+    - title: Performance-based Tensorboard
+      link: /docs/intro/tensorboard/performance-based-tensorboard/
+    - title: Path-based Tensorboard
+      link: /docs/intro/tensorboard/path-based-tensorboard/
+  - group: Automation
+    items:
+    - title: Automation with DAGs
+      link: /docs/intro/automation/automation-dag/
+    - title: Running on Schedule
+      link: /docs/intro/automation/running-on-schedule/
+    - title: Executing Hooks
+      link: /docs/intro/automation/executing-hooks/
+  - group: Serving and ML Apps
+    items:
+    - title: Preparing the Model
+      link: /docs/intro/serving/preparing-model/
+    - title: Deploying Streamlit ML Apps
+      link: /docs/intro/serving/deploying-ml-apps/
+    - title: Serving Flask REST APIs
+      link: /docs/intro/serving/serving-flask-rest-apis/
+    - title: Serving FastAPI REST APIs
+      link: /docs/intro/serving/serving-fastapi-rest-apis/
+    - title: Batch Scoring
+      link: /docs/intro/serving/batch-scoring/
+  - group: Building Containers
     items:
     - title: Introduction
-      link: /docs/intro/how-tos/
-    - title: Using service accounts
-      link: /docs/intro/how-tos/service-accounts/
-    - title: Configuring pod security context
-      link: /docs/intro/how-tos/security-context/
-    - title: Mounting volumes manually
-      link: /docs/intro/how-tos/mounting-volumes/
-    - title: Mounting secrets manually
-      link: /docs/intro/how-tos/mounting-secrets/
-    - title: Mounting configmaps manually
-      link: /docs/intro/how-tos/mounting-configmaps/
-    - title: Handling Termination
-      link: /docs/intro/how-tos/handling-termination/
-    - title: Start runs with different names
-      link: /docs/intro/how-tos/run-with-different-names
+      link: /docs/intro/builds/introduction/
+    - title: Building Containers with Init Dockerfile
+      link: /docs/intro/builds/building-containers-init/
+    - title: Building Containers with Custom Dockerfiles
+      link: /docs/intro/builds/building-containers-custom-dockerfiles/
+    - title: Automatic Build Process
+      link: /docs/intro/builds/automatic-build-process/
+  - group: CLI Guides
+    items:
     - title: Reconfiguring the CLI
-      link: /docs/intro/how-tos/reconfigure-cli/
-    - title: Upload artifacts
-      link: /docs/intro/how-tos/upload-artifacts/
-    - title: Customize the git preset
-      link: /docs/intro/how-tos/customize-git-preset/
+      link: /docs/intro/cli/reconfigure-cli/
+    - title: Authenticating the CLI
+      link: /docs/intro/cli/authenticate/
+    - title: Uploading artifacts
+      link: /docs/intro/cli/upload-artifacts/
+    - title: Customizing the git preset
+      link: /docs/intro/cli/customize-git-preset/
+    - title: Starting runs with different names
+      link: /docs/intro/cli/run-with-different-names/
+    - title: Restarting runs with different names
+      link: /docs/intro/cli/restart-with-different-names/
+  - group: Kubernetes Guides
+    items:
+    - title: Using service accounts
+      link: /docs/intro/k8s-guides/service-accounts/
+    - title: Configuring pod security context
+      link: /docs/intro/k8s-guides/security-context/
+    - title: Mounting volumes manually
+      link: /docs/intro/k8s-guides/mounting-volumes/
+    - title: Mounting secrets manually
+      link: /docs/intro/k8s-guides/mounting-secrets/
+    - title: Mounting configmaps manually
+      link: /docs/intro/k8s-guides/mounting-configmaps/
   - group: Features & Architecture
     items:
     - title: Features
@@ -71,4 +123,3 @@
       link: /docs/intro/concepts/scheduling-concepts/
     - title: Reproducibility Concepts
       link: /docs/intro/concepts/reproducibility-concepts/
-

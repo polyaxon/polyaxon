@@ -72,7 +72,10 @@ def copy_file_or_dir_path(from_path: str, asset_path: str, use_basename: bool = 
         )
     check_or_create_path(asset_path, is_dir=False)
     if os.path.isfile(from_path):
-        shutil.copy(from_path, asset_path)
+        try:
+            shutil.copy(from_path, asset_path)
+        except shutil.SameFileError:
+            pass
     else:
         shutil.copytree(from_path, asset_path)
 

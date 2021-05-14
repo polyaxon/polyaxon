@@ -236,7 +236,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     For instance a user might want to define a scheduling
     behavior that applies to several operations.
     One way to do that is to set the environment section on every operation.
-    But sometime the same scheduling behavior makes sense for several operations and components.
+    But sometimes the same scheduling behavior makes sense for several operations and components.
     In that case, the user can define an operation preset to extract that logic:
 
     ```yaml

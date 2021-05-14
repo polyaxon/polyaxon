@@ -91,9 +91,9 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
 
     ### io
 
-    Sometime you might want to discard an input/output from being considered for
+    You may want to discard an input/output from being considered for
     the cache state calculation,
-    or you might want to cache a component's run irrespective of the params you pass to some io.
+    or you may want to cache a component's run irrespective of the params you pass to some io.
 
     This field gives you full control to define how you want to calculate the cache state.
 

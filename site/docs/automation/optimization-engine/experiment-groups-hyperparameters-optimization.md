@@ -106,7 +106,7 @@ You can check all the options available in the [matrix section reference](/refer
 To make sure that the Polyaxon file is valid, and creates multiple values for `lr`, we can run the following
 
 ```bash
-$ polyaxon check -f polyaxonfile.yaml --definition
+polyaxon check -f polyaxonfile.yaml --definition
 
 Polyaxonfile valid
 
@@ -130,7 +130,7 @@ This command validate the polyaxonfile, and the option `-def` returns the group 
 To run this polyaxonfile execute
 
 ```bash
-$ polyaxon run
+polyaxon run
 
 Creating an experiment group with 5 experiments.
 
@@ -158,7 +158,7 @@ Create a new file, let's call it polyaxonfile_override.yaml
 > If you call your files differently or want to override values, you need to use the option `-f`
 
 ```bash
-$ vi polyaxonfile_override.yaml
+vi polyaxonfile_override.yaml
 ```
 
 And past the following hptuning section.
@@ -189,7 +189,7 @@ Experiment to create  5
 Let's run our new version
 
 ```bash
-$  polyaxon run -f polyaxonfile.yaml -f polyaxonfile_override.yaml
+ polyaxon run -f polyaxonfile.yaml -f polyaxonfile_override.yaml
 
 Creating an experiment group with 5 experiments.
 
@@ -254,7 +254,7 @@ First, we can double check that our groups were created.
 For that, you can use the Polyaxon dashboard or Polyaxon CLI.
 
 ```bash
-$ polyaxon project groups
+polyaxon project groups
 
 Experiment groups for project `admin/mnist`.
 

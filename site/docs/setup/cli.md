@@ -35,7 +35,7 @@ Those steps ensures that, you configure Polyaxon to connect to the correct host 
 After installing the CLI you can view the commands supported using the `--help` option.
 
 ```bash
-$ polyaxon --help
+polyaxon --help
 ```
 
 For more information please have a look [Polyaxon CLI section](/docs/core/cli/).
@@ -46,5 +46,5 @@ For more information please have a look [Polyaxon CLI section](/docs/core/cli/).
 If you are using **Polyaxon Cloud or Polyaxon EE**, you can authenticate your CLI by running the following command
 
 ```bash
-$ polyaxon login --username=<USERNAME>
+polyaxon login --username=<USERNAME>
 ```
