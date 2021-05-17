@@ -1,8 +1,8 @@
 ---
-title: "Serving a Flask REST APIs"
+title: "Serving REST APIs with Flask"
 sub_link: "serving/serving-flask-rest-apis"
-meta_title: "Serving a Flask REST APIs - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Serving a Flask REST APIs - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+meta_title: "Serving REST APIs with Flask - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Serving REST APIs with Flask - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:

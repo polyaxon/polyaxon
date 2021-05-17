@@ -1,8 +1,8 @@
 ---
-title: "Serving a FastAPI REST APIs"
+title: "Serving REST APIs with FastAPI"
 sub_link: "serving/serving-fastapi-rest-apis"
-meta_title: "Serving a FastAPI REST APIs - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Serving a FastAPI REST APIs - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+meta_title: "Serving REST APIs with FastAPI - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Serving REST APIs with FastAPI - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:

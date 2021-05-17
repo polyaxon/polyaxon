@@ -1,8 +1,8 @@
 ---
-title: "Building Containers"
-sub_link: "builds/building-containers"
-meta_title: "Building Containers - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Building Containers - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+title: "Building containers with the init section"
+sub_link: "builds/building-containers-init"
+meta_title: "Building containers with the init section - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Building containers with the init section - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:

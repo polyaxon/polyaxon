@@ -1,8 +1,8 @@
 ---
-title: "Building Containers"
-sub_link: "builds/building-containers"
-meta_title: "Building Containers - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Building Containers - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+title: "Building containers with custom dockerfile"
+sub_link: "builds/building-containers-custom-dockerfile"
+meta_title: "Building containers with custom dockerfile - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Building containers with custom dockerfile - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:
@@ -14,9 +14,7 @@ sidebar: "intro"
 
 ## Overview
 
-In the previous tutorial we showed how to create a the docker image docker image `polyaxon/polyaxon-quick-start`,
-which was built using a Polyaxonfile using an init Dockerfile.
-
+In the previous tutorial we showed how to create the docker image `polyaxon/polyaxon-quick-start` using the init Dockerfile. 
 In this tutorial we will show how to use a custom Dockerfile from a local folder or a remote repo.
 
 > **Note**: You can build docker images outside of Polyaxon, or use your own system.
@@ -90,4 +88,4 @@ runPatch:
 hubRef: kaniko
 ```
 
-You can notice that the context value is not pointing to where the repo is being cloned using the git initializer.
+You can notice that the context value is now pointing to where the repo is being cloned using the git initializer.

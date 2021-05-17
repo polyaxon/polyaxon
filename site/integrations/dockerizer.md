@@ -74,14 +74,15 @@ This operation will initialize a dockerfile automatically under `{{ globals.arti
 
 Assuming you have this local folder structure:
 
-```bash
+```
 local-repo
-  -- Dockerfile
-  -- file1
-  -- file2
-  -- folder1
-       -- file11
-       -- file12 
+└──Dockerfile
+└──file1
+└──file2
+└──folder1
+    ├──...
+    └──file1
+    └──file2
 ```
 
 You can create an operation that expects code to be uploaded:
@@ -110,14 +111,15 @@ Since we are setting the context to the uploads path, `Dockerizer` will look for
 
 Assuming you have this folder structure in your repo:
 
-```bash
+```
 repo
-  -- Dockerfile
-  -- file1
-  -- file2
-  -- folder1
-       -- file11
-       -- file12 
+└──Dockerfile
+└──file1
+└──file2
+└──folder1
+    ├──...
+    └──file1
+    └──file2
 ```
 
 You can create an operation that expects an git initializer

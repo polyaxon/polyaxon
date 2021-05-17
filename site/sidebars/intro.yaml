@@ -78,7 +78,9 @@
     - title: Building Containers with Init Dockerfile
       link: /docs/intro/builds/building-containers-init/
     - title: Building Containers with Custom Dockerfiles
-      link: /docs/intro/builds/building-containers-custom-dockerfiles/
+      link: /docs/intro/builds/building-containers-custom-dockerfile/
+    - title: Building Containers with Custom Contexts
+      link: /docs/intro/builds/building-containers-custom-context/
     - title: Automatic Build Process
       link: /docs/intro/builds/automatic-build-process/
   - group: CLI Guides
