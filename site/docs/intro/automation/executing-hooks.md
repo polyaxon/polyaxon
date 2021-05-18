@@ -14,12 +14,12 @@ sidebar: "intro"
 
 > **Note**: This section of the tutorial can only run on Polyaxon EE and Polyaxon Cloud.
 
-Hooks are a simpler abstraction than a DAG, and allows to trigger post-done component, like sending notifications or triggering a logic in response to the final state of an operation.
-You can use any component as a hook, as long as it's registered in the public component hub or a private hub in your organization.
+Hooks are a simpler abstraction compared to a DAG. It allows to trigger post-done operations, like sending notifications or triggering a logic in response to the final state of an operation.
+You can use any component as a hook, as long as it's registered in the public component hub or in a private hub in your organization.
 
 ## Using the public components
 
-Polyaxon provides several public components where the main purpose if to be used as a hook, like notifiers, for instance you can notify a slack channel about the state of your jobs:
+Polyaxon provides several public components where the main purpose is to be used as a hook, like notifiers. For instance you can notify a slack channel about the state of your jobs:
 
 ```yaml
 hooks:
@@ -28,7 +28,7 @@ hooks:
     connection: slack-notification
 ```
 
-If you need to receive notification for all done statuses:
+If you need to send notifications for all done statuses:
 
 ```yaml
 hooks:

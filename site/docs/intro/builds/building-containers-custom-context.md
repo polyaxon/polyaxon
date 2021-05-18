@@ -43,7 +43,7 @@ repo
 
 ## Local repo 
 
-In this order to trigger 2 builds based on on `Dockerfile.1` and `Dockerfile.2` and only consider the paths under context:
+In order to trigger 2 builds based on on `Dockerfile.1` and `Dockerfile.2` and only consider the paths under context:
 
  * Operation 1:
 

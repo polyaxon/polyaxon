@@ -15,7 +15,7 @@ sidebar: "intro"
 
 ## Overview
 
-In the previous guide we trained several models, in this section we will learn how to deploy a model as an interactive dashboard.
+In the previous guide we trained several models. In this section we will learn how to deploy a model as an interactive dashboard.
 This is an example of creating a parametrized app that you can host using Polyaxon.
 The same principles in this guides can be used to deploy similar apps using other projects like Dash, Voila, custom front-end service, ...
 

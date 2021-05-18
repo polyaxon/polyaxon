@@ -15,7 +15,7 @@ sidebar: "intro"
 
 ## Overview
 
-In the previous guide we trained several models, in this section we will learn how to deploy a serving REST API with FastAPI.
+In the previous guide we trained several models. In this section we will learn how to deploy a serving REST API with FastAPI.
 This is an example of creating a REST API that you can host using Polyaxon, this type of APIs are intended for internal use or for testing purposes 
 before moving to a platform that specializes in serving or inference. 
 

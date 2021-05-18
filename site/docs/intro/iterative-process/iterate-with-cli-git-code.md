@@ -72,17 +72,19 @@ polyaxon init -p quick-start --git-url https://github.com/polyaxon/polyaxon-quic
 
 In the previous section of this tutorial we were using a hard-coded git initializer, the git initializer did not have any fixed revision, 
 which means that every time we submit a job, Polyaxon will pull the latest commit from the remote repo, the commit could be made by us or by another user. 
-By initializing a local folder we can now run operations with changes based on changes made by us, because the CLI will patch the polyaxonfile with a code version before submitting an operation:
+By initializing a local folder we can now run operations based on changes made by us, because the CLI will patch the polyaxonfile with a code version before submitting new operations:
 
 ```bash
-git commit -am "Update"; git push orgin master; polyaxon run -f simple.yaml --git-preset
+git commit -am "Update" 
+git push orgin master
+polyaxon run -f simple.yaml --git-preset
 ```
 
-This will tell Polyaxon to look for the git configuration that we initialized earlier in this folder and detect the latest commit and inject it as a [preset](/docs/core/scheduling-strategies/presets/).
+The last command will tell Polyaxon to look for the git configuration that we initialized earlier in this folder and detect the latest commit and inject it as a [preset](/docs/core/scheduling-strategies/presets/).
 
 ## Scheduling experiments with specific commits or branches
 
-We can also schedule experiments with specific git commit, branch, or a valid tree-ish:
+We can also schedule experiments with a specific git commit, a specific branch, or a valid tree-ish:
 
 ```bash
 polyaxon run -f simple.yaml --git-preset --git-revision="dev"

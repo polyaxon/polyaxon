@@ -58,7 +58,7 @@ ingress:
 
 ## Annotations
 
-> NOTE Depending on your version of nginx ingress you might need to prepend `nginx.` to the annotations. E.g.:
+> **Note**: Depending on your version of nginx ingress you may need to prepend `nginx.` to the annotations. E.g.:
 > ```yaml
 >       nginx.ingress.kubernetes.io/proxy-body-size: 4G
 >       # instead of
@@ -104,7 +104,7 @@ ingress:
 
 ## ConfigMap for the controller
 
-In addition to the previous annotations, you might need to update the controller's config map:
+In addition to the previous annotations, you may need to update the controller's config map:
 
 ```yaml
 data:

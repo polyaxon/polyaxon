@@ -15,7 +15,7 @@ sidebar: "intro"
 
 We briefly went through one aspect of the programmatic experience in the guide [iterate-in-notebooks](/docs/intro/iterative-process/iterate-in-notebooks/).
 
-In this sections we will learn more how to drive the complete workflow: creating valid manifests (Polyaxonfiles) and performing API calls using the Python client.
+In this sections we will learn how to drive the complete workflow, i.e. creating valid manifests (Polyaxonfiles) and performing API calls using the Python client.
 
 In this guide we will recreate the manifests that we used before using Polyaxon's Python library.
 
@@ -64,7 +64,7 @@ run:
     ]
 ```
 
-This component does not use all primitive that Polyaxon exposes, but the same logic should be used to include additional sections.
+This component does not use all sections that Polyaxon exposes, but similar logic should be used to include additional sections.
 
 ```python
 from polyaxon import types
@@ -154,7 +154,7 @@ client.create(content=operation)
 
 Since the component has one input that is not optional, we should pass at least one param `"epochs": V1Param(value=1)`.
 
-It's possible to pass all extra operation information or override the component information:
+It's possible to pass additional override information with the operation:
 
 ```python
 from polyaxon.client import RunClient
@@ -223,12 +223,11 @@ client.create(content=operation)
  
 ## Running the python manifests with the CLI 
 
-By using `V1Component` and `V1Operation` it's possible to extend Polyaxon beyond the interfaces exposed via the CLI, hence allowing users to create new workflows.
+By using `V1Component` and `V1Operation` it's possible to extend Polyaxon beyond the interfaces exposed via the CLI, hence allowing users to create custom workflows.
 
-Another point of using Python to define the component is not to start operations programmatically, but rather to introduce testing to the components and pipelines.
-In this case, executing the component programmatically is not the main purpose.
+Another case for defining the component with Python, other than the programmatic execution, is to introduce testing.
 
-Polyaxon CLI can start new execution based on python files as well as YAML files. If we save the component definition in a python file `path/to/typed_experiment.py`.
+Polyaxon CLI can also start new executions based on Python files similar to the YAML files. If we save the component definition in a python file `path/to/typed_experiment.py`.
 
 We can start a new experiment by running the following command:
 
@@ -237,8 +236,8 @@ polyaxon run -pm path/to/typed_experiment.py:component -P epochs=10 -l
 ``` 
 
 You probably noticed that we passed the name of the variable `component` in `typed_experiment.py:component`.
-This is how we tell the CLI to execute that component by providing a variable name, by default the CLI looks for a component named `main` otherwise it raises, 
-so we pass the name to tell the CLI to look for the specific variable, this is also useful if the Python module has more than one component.
+This is how we tell the CLI to execute that component by providing a variable name, by default the CLI looks for a component named `main` otherwise it raises an error. 
+So we need to pass a name to indicate to point to a specific variable, which is also useful if the Python module has more than one component.
 
 For instance, if we have a Python file with 3 components:
 

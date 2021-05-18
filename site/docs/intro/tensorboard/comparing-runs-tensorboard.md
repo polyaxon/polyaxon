@@ -36,7 +36,7 @@ polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metric
 
 The flags `--query/-q`, `--sort/s`, and `--limit/-l` allows to restrict the list based on the query specification, order by fields, and a limit. 
 
-As you can notice the list does not show important columns like metrics or params, we can add `-io` flag to show all inputs and outputs:
+You may notice that the list does not show important columns like metrics or params, we can add `-io` flag to show all inputs and outputs:
 
 ```bash
 polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 5 -io
@@ -68,13 +68,13 @@ When one or multiple experiments are still running the previous command is not v
 If you deployed Polyaxon with S3/GCS/Volume artifacts store, you can also point the Tensorboard directly to the artifacts store path instead of the Polyaxon's context.
 
 ```bash
-polyaxon run --hub tensorboard:multi-run-storepath -P uuid=UUID -w
+polyaxon run --hub tensorboard:multi-run-storepath -P uuids=UUID1,UUID2,UUID3,UUID4,UUID5
 ```
 
-> **Note**: This component version will not work with Azure or other artifacts store backend, because Tensorboard does not load natively the outputs from those services.   
+> **Note**: This component version will not work with Azure or other artifacts store backend, because Tensorboard does not load the outputs natively from those services.   
 
 
 ## Starting a Tensorboard for multiple runs from the UI
 
-On Polyaxon Cloud or Polyaxon EE, when a user select several runs in the comparison table, a button called `custom action` appears, it allows to provide a component to run based on the selection.
-Users can use `tensorboard:multi-run` to start a Tensorboard based on that selection.
+On Polyaxon Cloud or Polyaxon EE, when a user selects several runs in the comparison table, a button called `custom action` appears, it allows to provide a component to run based on the selection.
+Users can use `tensorboard:multi-run` or `tensorboard:multi-run-storepath` to start a new Tensorboard based on that selection.

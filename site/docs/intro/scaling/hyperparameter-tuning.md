@@ -14,7 +14,7 @@ sidebar: "intro"
 
 Polyaxon provides several features for running hyperparameter tuning.
 
-Oftentimes you may want to create many experiments with different parameters and automatically manage their execution.
+Oftentimes you may want to create many experiments with different parameters and automatically manage the execution.
 
 In order to make this tutorial usable for all Polyaxon users, 
 we will run several configurations in parallel using the **eager mode**, and we will use algorithms supported in all Polyaxon distributions:
@@ -54,15 +54,15 @@ matrix:
 urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
-This is an operation based on the same component.
+This is an operation based on the same component used in the previous quick-start guides.
 Instead of defining a single set of params, similar to what we did in previous sections of this tutorial,
 this file defines a matrix, in this case, with the grid search algorithm.
 
-It uses the same component, Polyaxon validates the space search generated against
+It uses the same component, Polyaxon validates the search space generated against
 the inputs and outputs defined in the component.
-Polyaxon will generate multiple operations based on the search space, and it will manage their execution using a pipeline.
+It then generates multiple operations based on the search space anw it will manage their execution using a pipeline.
 
-Starting a hyperparameter tuning is similar to any other operation:
+Running an operation with a hyperparameter tuning matrix is similar to any other operation:
 
 ```bash
 polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_grid.yaml --eager
@@ -116,8 +116,8 @@ Polyaxon provides several generators for defining a [search space](/docs/automat
 [search algorithms for hyperparameter tuning](/docs/automation/optimization-engine/).
 
 For users with Polyaxon EE or Polyaxon Cloud access,
-there are also tools to [control the caching](/docs/automation/helpers/cache/) for experiments with similar configurations,
-and [concurrency](/docs/automation/helpers/concurrency/) for managing the number of parallel jobs.
-And every pipeline in Polyaxon can also define [early stopping strategies](/docs/automation/helpers/early-stopping/).
+there are also tools to [control caching](/docs/automation/helpers/cache/) of executions with similar configurations,
+and [concurrency](/docs/automation/helpers/concurrency/) for enforcing of parallelism.
+Finally, every pipeline in Polyaxon can also define [early stopping strategies](/docs/automation/helpers/early-stopping/).
 
 The repo contains more hyperparameter tuning examples in the automation folder.

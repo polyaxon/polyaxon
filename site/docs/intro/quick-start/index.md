@@ -55,9 +55,17 @@ polyaxon port-forward -t minikube
 
 > **Tip**: You can learn more about how to customize your Polyaxon Deployment in the [setup section](/docs/setup/).
 
-## Create a project
+## Create a new project
 
 You can create a project using [Polyaxon UI](/docs/management/projects/general/) or with [Polyaxon CLI](/docs/core/cli/project/#project-create)
+
+For this tutorial you can run this command to a create a new project, 
+this will also set this project in the global cache so that we can run subsequent commands without passing the name of the project.
+We will also learn in a future tutorial how to initialize a local folder with a specific project.
+
+```bash
+polyaxon project create --name=quick-start --description='Polyaxon quick start examples.' --tags=examples
+```
 
 This example uses a [public Github repo](https://github.com/polyaxon/polyaxon-quick-start)
 for hosting the project and the Polyaxonfile manifests, similar results can be achieved using a local folder or other platforms, e.g. GitLab, Bitbucket, ...
@@ -112,5 +120,5 @@ Behind the scene a couple of things have happened:
  * You persisted your logs and outputs.
  * You visualized the results using Polyaxon's native dashboard and Tensorboard.
 
-To gain a deeper understanding of what happened and how Polyaxon can help you iterate faster with your experiments,
+To gain a deeper understanding of what happened and how Polyaxon can help you iterate faster with your experimentation process,
 please check the next section of [this tutorial](/docs/intro/quick-start/components/)

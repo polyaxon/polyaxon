@@ -39,7 +39,8 @@ The run command consumes configuration files, also called Polyaxonfile, from dif
  * From a registry `--hub` flag:
     * `polyaxon run --hub=tensorboard:single-run` this is the command that we used to run the Tensorboard.
       Oftentimes, components can be reusable and generic, some of these components are distributed in a public registry.
-      Polyaxon also provides a managed registry integrated with our auth, access management, and team management abstraction. Please check [Component Hub docs](/docs/management/component-hub/).
+      Polyaxon also provides a managed registry integrated with our auth, access management, and team management abstraction.
+      Please check the [Component Hub docs](/docs/management/component-hub/).
 
 
 ## Understanding the Polyaxonfile
@@ -187,14 +188,14 @@ model.fit(x=X_train,
 In this Python file you can see that we are importing some information from `polyaxon library`.
 
  * We are importing a tracking module
- * We are loading some Keras callbacks
+ * We are loading a Keras callback
 
 You can also see that this is a simple TF.Keras model and we have a small section where we use the `tracking` module to track information about the run.
-In this case `KerasCallback` and one line for getting a path for logging Tensorboard information. Polyaxon will take care of archiving the assets, outputs,
-logs to the artifacts store (NFS, S3, GCS, Azure, ...), you configured, in an async way without impacting your model training.
+In this case `KerasCallback` and one line for getting a path for logging Tensorboard's outputs. Polyaxon will take care of archiving the assets, outputs,
+logs to the artifacts store (NFS, S3, GCS, Azure, ... that was configured during the deployment) in an async way without impacting your model training.
 
 This module allows Polyaxon to track several information about the experiment,
-and it also provides a workflow for organizing outputs and logs.
+and it also provides a workflow for organizing the outputs and logs.
 Furthermore, anything tracked by Polyaxon, e.g. artifacts, assets, models ... will build a lineage graph so that
 you can have a full provenance path if you decide to deploy/retire a model to/from production.
 
@@ -208,7 +209,7 @@ But we might want to change some parameters, e.g. the learning rate or the dropo
 
 This component does not provide an inputs/outputs definition,
 so the only way to change the parameters is by changing the Python
-file and pushing a new commit, then starting a new experiment, which is not ideal, especially that our program has arguments.
+file and pushing a new commit then starting a new experiment, which is not ideal especially that our program has arguments.
 
 ## Inputs / Outputs
 
@@ -275,8 +276,8 @@ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-sta
 The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
 If you want to validate an output eagerly, you need to set `delayValidation: false`.
 
-> You don't have to define outputs or inputs, and you can still log information during the run,
-> for instance we defined 2 outputs, but our program will log 4 results (val_loss and val_accuracy as well)
+You don't have to define inputs or outputs and you can still log that information during the run.
+For instance we defined 2 outputs, but our program will log 4 results (val_loss and val_accuracy as well)
 
 When you run this experiment you will notice that Polyaxon will populate the inputs section in the dashboard automatically.
 

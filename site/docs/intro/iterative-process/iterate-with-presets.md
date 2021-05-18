@@ -20,15 +20,15 @@ We previously learned how to configure the CLI to iterate with:
  * [git repo](/docs/intro/iterative-process/iterate-with-cli-git-code/)
 
 In both guides, we had to adjust the polyaxonfile to fit a specific workflow.
-Often, users will probably need to use both workflows to iterate on their experiments, for quick changes they will need to upload code directly before to starting a run, 
-and after committing the changes, users might want to trigger a run as well, 
-finally, they will need to have the manifest ready to be triggered and automatically clone a a fork of the main repo or a repo that is named differently.    
+Often, users will probably need to use both workflows to iterate on their experiments, for quick changes they will need to upload code directly before starting a run, 
+and after committing the changes they will need to trigger based on the git repo, 
+finally, they might need to have the manifest compatible with a fork of their main repo or a repo that is named differently.    
 
 In this guide, we will learn how to improve our polyaxonfile to adapt it to different situations with presets.
 
-## Remove git initializer from the component
+## Remove the git initializer from the component
 
-In order to make the component work and adapt to different situations, i.e. get executed based on an initialized git repo or from local code, we will start by removing the git initializer and the `conrainer.workingDir` section:
+In order to make the component work in different situations, i.e. get executed based on an initialized git repo or from local code, we will start by removing the git initializer and the `conrainer.workingDir` section:
 
 ```yaml
 version: 1.1
@@ -69,14 +69,14 @@ run:
     ]
 ```
 
-You can view this file under `presets/`, we also have other files under that folder that we will see how we can use with this component.
+You can view this file under `presets/`, we also have other files under that folder that we will use with this component.
 
-If we try to execute this component, it will fail, since the container will have no way of resolving the file `model.py`.
+If we try to execute this component, it will fail, since the container cannot resolve the file `model.py`.
 
 We can additionally make this manifest fail fast at the CLI level, in other terms, 
 we can prevent users from attempting to submit this file, wait for the operation to be scheduled, 
-and then check the logs to find that the container is missing the code. 
-Polyaxon's specification has a section called `template` that we can added to any polyaxonfile to prevent running it without proper initialization:
+and then check the logs to find out that the container is missing the code. 
+Polyaxon's specification has a section called `template` that we can add to any polyaxonfile to prevent running it without proper initialization:
 
 ```yaml
 template:
@@ -143,7 +143,7 @@ runPatch:
 ## More presets
 
 In this guide we only extracted the logic for initializing/uploading the code and for setting the `workingDir`, but presets are a very powerful feature in Polyaxon, 
-it should allow you to define several reusable configurations, e.g. complex node selectors, resources requirements, ...
+it allows users to define several reusable configurations, e.g. complex node selectors, resources requirements, ...
 
 You can check the folder [helpers](https://github.com/polyaxon/polyaxon-quick-start/tree/master/helpers) which contains additional preset examples. 
 

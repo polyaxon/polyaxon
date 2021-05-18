@@ -15,7 +15,7 @@ sidebar: "intro"
 
 ## Overview
 
-In the previous guide we trained several models, in this section we will demonstrate how to deploy a batch scoring job.
+In the previous guide we trained several models. In this section we will demonstrate how to deploy a batch scoring job.
 This type of jobs can be used for batch inference or data processing workloads, 
 it can be used also for running ML models using a variety of frameworks such as: PyTorch, ONNX, scikit-learn, XGBoost, TensorFlow (if not using SavedModels), etc.
 
@@ -34,7 +34,7 @@ tracking.log_model(model_path, name="iris-model", framework="scikit-learn", vers
 
 We will deploy a simple job that will load the best model based on accuracy as and run a scoring logic on a dataset loaded from a CSV file.
 In order to make this example simple and runnable, we decided to host the CSV file directly on the repo, however the provenance of the dataset can be an S3/GCS bucket, a URL, or mounted path.
-The job itself expects a csv filepath and a model path, which we can be exposed on the job component as well.
+The job itself expects a csv filepath and a model path, which can be exposed on the job component as well.
 
 
 ```python

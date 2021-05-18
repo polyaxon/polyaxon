@@ -45,7 +45,7 @@ If you would like to use a different value, you must keep in mind to update the 
 
 This section will help you create a configuration file to deploy an agent.
 Polyaxon Agent ships with [default values](/docs/setup/agent/reference/), however and depending on your use case
-you might need to override some of these values.
+you may need to override some of these values.
 To do so, you need to create a configuration file and we recommend to save it somewhere safe so that you can reuse it in the future.
 
 Create a config file `config.yaml` or `polyaxon_config.yaml`,

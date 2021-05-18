@@ -18,7 +18,7 @@ sidebar: "intro"
 We previously learned how to run operations with Polyaxonfiles hosted on Github using the `--url` argument.
 But during a rapid development, users will want to iterate on their code and submit operations with those changes.
 
-In this sections we will learn how to initialize a local folder and run interactive experimentation by uploading code to the experiment's path on the artifacts store.
+In this sections we will learn how to initialize a local folder and run ab interactive experimentation process by uploading the code to the experiment's path on the artifacts store.
 
 > **Note**: To integrate an external git repo with the CLI, please check the next section of this guide. 
 
@@ -71,7 +71,7 @@ For instance to make the upload optimized and fast you should not upload your `.
 
 In the previous section of this tutorial we were using a hard-coded git initializer, which requires a git push and a connection to handle the pull if the repo is private.
  
-In this section we will upload the local code instead before submitting an operation:
+In this section we will upload the local code instead before starting an operation:
 
 ```bash
 polyaxon run -f local-integration/simple.yaml -u
@@ -96,4 +96,4 @@ If your local folder is large, and several subpaths are not necessary, you can a
 
 Polyaxon CLI provides a command: `polyaxon ops upload --help` which has more options that allows to upload artifacts to an already created experiment independently of its current status.
 
-This command is helpful if you need to upload some artifacts or some code, or resume a previous operation with different information.
+This command is helpful if you need to upload some artifacts or some code, or resume a previous operation with different artifacts.

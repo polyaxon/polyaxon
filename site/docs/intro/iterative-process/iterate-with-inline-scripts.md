@@ -12,7 +12,7 @@ tags:
 sidebar: "intro"
 ---
 
-Often, users want to just execute a script in their operation or to generate a file that can be used as an input for an init container or the main container, without cloning a repo.
+Sometime users may want to execute a script in their operation or to generate a file that can be used as an input for an init container or the main container without cloning a repo.
 
 
 ## Running a python script
@@ -35,7 +35,7 @@ run:
     command: [python3, -u, script.py]
 ```
 
-This example create a file under filename `script.py` in the init section and executes the script in the main container.
+This example creates a file `script.py` in the init section and executes it in the main container.
 
 Similar to all other init containers, we could provide a custom path where the file should be initializer:
 

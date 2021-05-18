@@ -15,7 +15,7 @@ sidebar: "intro"
 Polyaxon provides a feature for running parallel executions based on a list of configurations called [mapping](/docs/automation/mapping/)
 
 One major difference between mapping and other hyperparameter search options, is that the user is responsible for providing the list of configurations.
-The mapping can be leveraged to receive a list of configurations based on an external service that make suggestions. 
+The mapping can be used to receive a list of configurations based on an external service that generates suggestions. 
 
 In order to make this tutorial usable for all Polyaxon users, 
 we will run several configurations in parallel using the **eager mode**.
@@ -33,9 +33,9 @@ pip install "polyaxon[numpy]"
 Sometimes you may want to run parallel executions and provide your own suggestions instead of using an algorithm provided by Polyaxon.
 Mapping is how you can provide a predefined space or a list of inputs.
 
-Mapping can be also used to parallelize a job for fetching data, or loading information from a source to a destination concurrently.
+Mapping can be used as well to parallelize a job for fetching data or loading information from a source to a destination concurrently.
 
-The `mapping.yaml` polyaxonfile defines all the values that we want to use for running our component:
+The `mapping.yaml` polyaxonfile defines all the values we want to try:
 
 ```yaml
 version: 1.1
@@ -54,7 +54,7 @@ matrix:
 urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
-Starting a mapping is also similar to any other operation:
+Running an operation with a mapping is also similar to any other operation:
 
 ```bash
 polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/mapping.yaml --eager
@@ -64,7 +64,8 @@ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-sta
 
 ## Learn More
 
+
 For users with Polyaxon EE or Polyaxon Cloud access,
-there are also tools to [control the caching](/docs/automation/helpers/cache/) for experiments with similar configurations,
-and [concurrency](/docs/automation/helpers/concurrency/) for managing the number of parallel jobs.
-And every pipeline in Polyaxon can also define [early stopping strategies](/docs/automation/helpers/early-stopping/).
+there are also tools to [control caching](/docs/automation/helpers/cache/) of executions with similar configurations,
+and [concurrency](/docs/automation/helpers/concurrency/) for enforcing of parallelism.
+Finally, every pipeline in Polyaxon can also define [early stopping strategies](/docs/automation/helpers/early-stopping/).

@@ -14,7 +14,7 @@ sidebar: "intro"
 
 > **Note**: This section of the tutorial can only run on Polyaxon EE and Polyaxon Cloud.
 
-In the previous tutorial, we learned how to compare runs using a Tensorboard component that expects multiple run uuids.
+In the previous tutorial, we learned how to list and filter runs and how to compare them using a Tensorboard component that expects multiple run uuids.
 In this tutorial we will automate the complete process of querying runs, sorting based on the loss metric, limiting the results to 5 records, and then starting the Tensorboard.
 
 ## Querying runs with a Join

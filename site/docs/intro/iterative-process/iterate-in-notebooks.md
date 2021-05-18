@@ -18,18 +18,17 @@ sidebar: "intro"
 We previously learned how to create components and how to have more control over the scheduling process using operations.
 In this sections we will learn how to run components interactively inside a Jupyter notebook.
 
-> Same principle applies to running other interactive environments, e.g. zeppelin, or any other service.
+> Same principle applies to running other interactive environments, e.g. vscode session, zeppelin, or any other service.
 
 ## Overview
 
 [Notebooks](https://jupyter.org/) allow users to create and share documents that contain live code,
-visualizations and explanatory texts.
-
+visualizations and explanatory texts. 
 Notebooks are great for interactively writing and debugging your code and visualizing your results and data.
 
 ## Start a notebook
 
-Starting a notebook is similar to running any other Polyaxon components, i.e. we need to define Polyaxonfile or use a public component.
+Starting a notebook is similar to running any other Polyaxon components, i.e. we need to define a Polyaxonfile or use a public component.
 
 Let's run one of the public notebook components:
 
@@ -39,8 +38,8 @@ polyaxon run --hub jupyterlab:tensorflow -w
 
 > For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/)
 
-Since the notebook is created with a Polyaxonfile, it can be customized the same way as any other job, e.g. instead of just executing `polyaxon run`
-we can create an operation to customize the resources, request GPUs ... in case the component itself is limiting, users can create their own component:
+Since the notebook is created with a Polyaxonfile, it can be customized similar to as any other job or service, e.g. instead of just executing `polyaxon run`
+we can create an operation to customize the environment, request GPUs, define termination ... when a predefined public component is limiting users can create their own component:
 
 ```yaml
 version: 1.1
@@ -77,7 +76,7 @@ polyaxon ops -uid UUID stop
 
 > For more details about this command please run `polyaxon ops --help`, or check the [command reference](/docs/core/cli/ops/)
 
-> You can also start and stop notebooks, and any other operation from the UI.
+You can also start and stop notebooks, and any other operation from the UI.
 
 
 ## Resume a notebook
@@ -100,7 +99,7 @@ polyaxon ops -uid UUID resume
 ## Start experiments
 
 We will programmatically schedule some experiments from the notebook, all experiments that we schedule from the notebook will run inside isolated pods in the Kubernetes cluster.
-Each one of those experiments will be managed separately by Polyaxon and will all create a new record under the runs table.
+Each one of those experiments will be managed separately by Polyaxon and will create a new record under the runs table in the database.
 
 ```python
 from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager
@@ -169,7 +168,7 @@ Example in notebook:
 
 ![run-dashboards-hiplot1](../../../../content/images/dashboard/runs/programmatic-plotly-metric.png)
 
-Let's compare runs:
+Let's compare several runs:
 
 ```python
 from polyaxon.polyplot import MultiRunPlot

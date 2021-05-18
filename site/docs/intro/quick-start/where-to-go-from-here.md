@@ -14,9 +14,9 @@ sidebar: "intro"
 
 ## Additional guides
 
-In the previous quick-start guides we learned what a Polyaxonfile is and how to execute it using the CLI.
+In this introductory quick-start guides we learned what a Polyaxonfile is and how to execute it using the CLI.
 
-The intro section provides several more guides and tutorials that answer common questions and scenarios that users of Polyaxon face when interacting with the platform.
+The intro section provides several more guides and tutorials that answer common questions and scenarios that users face when using Polyaxon.
 
  * We recommend that users should check the other guides in this section to get to know other concepts, recurrent use-cases, and best practices for working with Polyaxon and for taking advantage of their Kubernetes cluster(s).
  * For in-depth documentation on using specific interfaces or tools, we suggest looking at the [references page](/docs/references/).

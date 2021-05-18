@@ -16,7 +16,7 @@ sidebar: "intro"
 
 All pods managed by Polyaxon use the default service account created during the deployment of Polyaxon CE or Polyaxon Agent.
 This service account provides the necessary access to run operations using the default configuration, 
-however, you might need to use a specific service account for some operations.
+however, you may need to use a specific service account for some operations.
 
 The amount of access which an operation need is dependent on what you need to achieve.
 For example, if you need to create a component that creates other Kubernetes resources, a volume claim or a config map, 

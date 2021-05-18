@@ -164,7 +164,7 @@ params:
     contextOnly: True
 ```
 
-This is not different from setting the values directly, but sometimes you might need to use a variable several times without using magic strings.
+This is not different from setting the values directly, but sometimes you may need to use a variable several times without using magic strings.
 
 To take this to the next level, the params can come from an input definition:
 
@@ -183,7 +183,7 @@ component:
   - {name: max_loss, type: float, value: 0.01, isOptional: true, description: "maximum loss."}
 ```
 
-Another use case is running a map reduce style DAG, in which case you might need to filter for operation coming from an upstream matrix:
+Another use case is running a map reduce style DAG, in which case you may need to filter for operation coming from an upstream matrix:
 
 ```yaml
 version: 1.1

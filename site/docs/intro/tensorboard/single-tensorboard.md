@@ -26,7 +26,7 @@ To start a Tensorboard for a specific run:
 polyaxon run --hub tensorboard:single-run -P uuid=UUID
 ```
 
-This component version will load the outputs and prepare them for a Tensorboard service. This is usually useful for finished experiments.
+This component version will download the outputs and prepare them for a Tensorboard service, usually this version is useful for finished experiments.
 
 ## Start Tensorboard directly from the artifacts store
 
@@ -40,7 +40,7 @@ If you deployed Polyaxon with S3/GCS/Volume artifacts store, you can also point 
 polyaxon run --hub tensorboard:single-run-storepath -P uuid=UUID -w
 ```
 
-> **Note**: This component version will not work with Azure or other artifacts store backend, because Tensorboard does not load natively the outputs from those services.   
+> **Note**: This component version will not work with Azure or other artifacts store backend, because Tensorboard does not load the outputs natively from those services.   
 
 ## Start Tensorboard from the UI
 

@@ -2,7 +2,7 @@
 title: "Passing params with the Python library"
 sub_link: "passing-params/with-python-library"
 meta_title: "Passing params with the python library - Core Concepts"
-meta_description: "Sometimes you might need to handle or request the parameters directly from the API or using the Python library."
+meta_description: "Sometimes you may need to handle or request the parameters directly from the API or using the Python library."
 visibility: public
 status: published
 tags:
@@ -12,7 +12,7 @@ tags:
 sidebar: "intro"
 ---
 
-Sometimes you might need to handle or request the resolved inputs and outputs directly from the API or using the Python library.
+Sometimes you may need to handle or request the resolved inputs and outputs directly from the API or using the Python library.
 
 ## Overview
 

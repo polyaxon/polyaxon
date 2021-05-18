@@ -49,7 +49,7 @@ When a user runs the command `polyaxon run`, Polyaxon checks if the file contain
 But why create a file when we can just run the command with parameters and some flags?
 Creating a file with an operation allows to define more complex executables for our components,
 for instance if we want to run the same component with GPU, we have 2 options:
- * We can parametrize the resource section and Add inputs to define the number of GPUs. This not ideal because the number of inputs will grow fast every time we need to pass an information.
+ * We can parametrize the resource section and add inputs to define the number of GPUs. This not ideal because the number of inputs will grow fast every time we need to pass an information.
  * Use an operation to patch the component with all information required to run it in the environment of our choice without changing the component itself.
 
 ```yaml
@@ -66,21 +66,19 @@ runPatch:
 urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
-Using the operation we will keep the options to use other resources or no resources at all, you can also patch the environment, init, sidecars ...
+Using the operation users can have the choice to use other resources or no resources at all. Operations allow also to patch the environment, init, sidecars ...
 
-Sometimes you might want to create a component with predefined values or sometimes the values might not need to change often,
-in that case it will make sense to push more information to the component.
+Sometimes you might want to create a component with predefined values, sometimes the values might not need to change often,
+in those cases it make sense to push more information to the component itself.
 
 ## Referencing a component
 
-Since operations don't define a runtime, they need to reference components to run.
-
-Operations can reference components in several ways:
+Since operations don't define a runtime, they need to reference components to run. Operations can reference components in several ways:
 
  * `urlRef`: This is what we used earlier to resolve the component to run, basically Polyaxon will fetch the content of the component based on a url.
  * `pathRef`: If we were to clone the repo we could replace the `urlRef` with a simple `pathRef: ./typed.yaml` since both files are on the same folder.
  * `hubRef`: This is similar to what we did for running Tensorboard with the `--hub` argument, in fact the CLI just injects this option using that flag.
- * `component`: It's possible to pass the component inline directly inside the operation, this use case is generally useful when running DAGs.
+ * `component`: It's possible to pass the component inline directly inside the operation, this use case is generally useful when running DAGs, and that's what Polyaxon does during the compilation time to generate a fully resolved executable.
 
 ## Conclusion
 

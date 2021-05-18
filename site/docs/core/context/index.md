@@ -81,7 +81,7 @@ This is the information coming from the params passed via CLI or one of the para
  * matrix params
 
 This information appears at the top level of the context and can be used without a prefix. 
-However, you might need to access the meta-information about your inputs and outputs and not just the values, in which case you can use the `{{ params.* }}` prefix.
+However, you may need to access the meta-information about your inputs and outputs and not just the values, in which case you can use the `{{ params.* }}` prefix.
 
 It's also possible to convert all params to a list of args: `{{ params.as_args }}` which is equivalent to `["--input1={{ input1 }}", "--input2={{ input2 }}", "--input3={{ input3 }}", ...]` or `["{{ params.input1.as_arg }}", "{{ params.input2.as_arg }}", "{{ params.input3.as_arg }}", ...]`.
 

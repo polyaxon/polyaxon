@@ -15,11 +15,11 @@ sidebar: "intro"
 > **Note**: This section of the tutorial can only run on Polyaxon EE and Polyaxon Cloud.
 
 Now that our component works, we want to be able to run it continuously.
-Polyaxon provides an abstraction to put operations on a [schedule](/docs/automation/schedules/):
+Polyaxon provides an abstraction to put operations on a [schedule](/docs/automation/schedules/).
 
 ## Running components on schedule
 
-Schedules operate at the operation level, and similar to the matrix section, they create a pipeline to follow the scheduling of a component or an operation.
+Schedules can be used at the operation level, and similar to the matrix section, they create a pipeline to follow the scheduling of a component or an operation.
 
 The file `schedules/recurrent_training.yaml` contains an operation definition with a schedule attached:
 
@@ -37,7 +37,7 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/e
 ```
 
 This schedule is of kind `cron`, and it will start an experiment every monday. 
-If you need to start date this schedule at a specific date you can set the `startAt` field, and to provide a stopping condition you can provide `endAt` or `maxRuns`.
+If you need to start this schedule at a specific date you can set the `startAt` field, and to provide a stopping condition you can provide `endAt` or `maxRuns`.
 
 It's also possible to put the complete [DAG](/docs/intro/automation/automation/) that we created in the previous guide on schedule, similarly to this operation, 
 you can add a valid schedule section, this way, not only you automate the journey of creating, training, and validating a model, but also you do it continuously, 

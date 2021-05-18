@@ -46,7 +46,7 @@ If you would like to use a different value, you must keep in mind to update the 
 
 This section will help you create a configuration file to deploy Polyaxon.
 Polyaxon ships with [default values](/docs/setup/platform/common-reference/), however and depending on your use case
-you might need to override some of these values.
+you may need to override some of these values.
 To do so, you need to create a configuration file and we recommend to save it somewhere safe so that you can reuse it in the future.
 
 Create a config file `config.yaml` or `polyaxon_config.yaml`,
@@ -235,7 +235,7 @@ helm delete polyaxon --purge
 ```
 
 If for some reason, your deployment did not succeed,
-you might need to delete Polyaxon with this command instead, to avoid triggering pre-delete hooks
+you can delete Polyaxon with this command instead, to avoid triggering the pre-delete hooks
 
 ```bash
 helm delete polyaxon --purge --no-hooks

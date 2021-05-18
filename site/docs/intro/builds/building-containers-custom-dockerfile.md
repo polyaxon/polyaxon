@@ -62,7 +62,7 @@ The [docker-connection](/docs/setup/connections/registry/) is a [connection](/do
 that we configured to authenticate Kaniko to push images.
 
 
-You can notice that the difference between this polyaxonfile and the previous polyaxonfile is that we are passing a context value to point to where Kaniko should find the dockerfile.
+You amy notice that the difference between this polyaxonfile and the previous polyaxonfile is that we are passing a context value to point to where Kaniko should find the dockerfile.
 In our case it should look at the root of the uploads folder.
 
 

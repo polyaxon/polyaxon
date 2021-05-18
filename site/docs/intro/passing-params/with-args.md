@@ -14,12 +14,12 @@ sidebar: "intro"
 
 Passing the parameters as args requires that you create and expose your programs as simple command-line applications.
 
-Creating command-line applications is a powerful way for exposing your work, it forces users to think about how to structure and organize programs.
-It provides documentation for the expected inputs and performs checks that other users can benefit from when interacting with a program. 
+Creating command-line applications is a powerful way of exposing work, it forces users to think about how to structure and organize programs, 
+it provides documentation for the expected inputs and performs checks that other users can benefit from when interacting with a program. 
 
 ## Passing params to a simple program
 
-Your program can be written in any language, the only requirements to use this method for passing configurations (inputs/outputs), it that you need to provide an interface to consume arguments. 
+Your program can be written in any language, the only requirements to use this method for passing configurations (inputs/outputs), is that you need to provide an interface to consume arguments. 
 
 Let's consider the `echo` command, you can past this content directly to Polyaxon UI or you can save it under `echo.yaml`:
 
@@ -33,7 +33,7 @@ run:
     command: ["echo", "This is a test"]
 ```
 
-This is a simple program that prints information. You can run it using Polyaxon CLI:
+This is a simple program that prints information, you can run it using Polyaxon CLI:
 
 ```bash
 polyaxon run -f echo.yaml -l
@@ -65,7 +65,7 @@ polyaxon run -f echo.yaml -P message="test 2" -l
 ```
 
 
-One thing that you will notice is that Polyaxon will track the input and will show it in the UI and the CLI:
+You can also notice that Polyaxon will track the input and will show it in the UI and the CLI:
 
 ```bash
 polyaxon ops get -uid UUID
@@ -83,7 +83,7 @@ message  test 1
 
 Since most Polyaxon's users are data-scientists or machine learning engineers, they generally write their programs in Python, so the content of these tutorials will be in Python as well.
 
-This is a simple application that prints your inputs, in this example we will use the `argparse` package to consume parameters, 
+This is a simple application that prints your inputs, in this example we will use the `argparse` package to consume the parameters, 
 but the same logic can be used with [python-fire](https://github.com/google/python-fire), [click](https://github.com/pallets/click), or any other library of your choice.
 
 ```python
@@ -206,7 +206,7 @@ In that case we could have used the `--upload/-u` flag to upload the code necess
 polyaxon run -u -f echo.yaml -P message="test 1" -l
 ```
 
-> **Note**: You can learn more about how to iterate with upload, git, and inline scripts in the [iteration section](/docs/intro/iterative-process/iterate-in-notebooks/). 
+> **Note**: You can learn more about how to iterate with upload, git, and inline scripts in the [iterative process introduction section](/docs/intro/iterative-process/iterate-in-notebooks/). 
 
 ## Multiple params
 
