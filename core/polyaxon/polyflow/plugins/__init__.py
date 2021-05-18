@@ -27,6 +27,7 @@ class PluginsSchema(BaseCamelSchema):
     auth = fields.Bool(allow_none=True)
     docker = fields.Bool(allow_none=True)
     shm = fields.Bool(allow_none=True)
+    mount_artifacts_store = fields.Bool(allow_none=True)
     collect_artifacts = fields.Bool(allow_none=True)
     collect_logs = fields.Bool(allow_none=True)
     collect_resources = fields.Bool(allow_none=True)
@@ -57,6 +58,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         auth: bool, optional, default: True
         docker: bool, optional, default: False
         shm: bool, optional, default: True
+        mount_artifacts_store: bool, optional, default: True
         collect_artifacts: bool, optional, default: True
         collect_logs: bool, optional, default: True
         collect_resources: bool, optional, default: True
@@ -72,6 +74,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   auth:
     >>>   docker:
     >>>   shm:
+    >>>   mountArtifactsStore:
     >>>   collectArtifacts:
     >>>   collectLogs:
     >>>   collectResources:
@@ -90,6 +93,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>     auth=False,
     >>>     docker=True,
     >>>     shm=True.
+    >>>     mount_artifacts_store=True,
     >>>     collect_artifacts=False,
     >>>     collect_logs=False,
     >>>     collect_resources=False
@@ -162,6 +166,16 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>> plugins:
     >>>   shm: false
     ```
+
+    ### mountArtifactsStore
+
+    <blockquote class="light">This plugin is disabled by default.</blockquote>
+
+    this plugin allows to request the default artifacts store and mount it to the main container
+    without adding the connection reference name to the `connections` section.
+
+    This is usually very useful than setting the `connections` section as it make the component
+    more generic and will not break if the artifacts store name changes.
 
     ### collectArtifacts
 
@@ -306,6 +320,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         "auth",
         "docker",
         "shm",
+        "mountArtifactsStore",
         "collectArtifacts",
         "collectLogs",
         "collectResources",

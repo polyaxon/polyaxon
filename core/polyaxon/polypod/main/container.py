@@ -58,9 +58,12 @@ def get_main_container(
     if artifacts_store and not run_path:
         raise PolypodException("Run path is required for main container.")
 
-    if artifacts_store and not contexts.collect_artifacts:
+    if artifacts_store and (
+        not contexts.collect_artifacts or contexts.mount_artifacts_store
+    ):
         if artifacts_store.name not in connection_by_names:
             connection_by_names[artifacts_store.name] = artifacts_store
+        if artifacts_store.name not in connections:
             connections.append(artifacts_store.name)
 
     requested_connections = [connection_by_names[c] for c in connections]

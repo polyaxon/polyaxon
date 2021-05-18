@@ -130,6 +130,12 @@ class TestConfigManager(BaseTestCase):
         value = self.config.get_int("int_key_2")
         self.assertEqual(value, 123)
 
+        value = self.config.get_int(key="float_int_key_1")
+        self.assertEqual(value, 12)
+
+        value = self.config.get_int(key="float_int_key_2")
+        self.assertEqual(value, 12)
+
         value = self.config.get_int("int_list_key_1", is_list=True)
         self.assertEqual(value, [123, 124, 125, 125])
 
@@ -138,6 +144,12 @@ class TestConfigManager(BaseTestCase):
 
         with self.assertRaises(PolyaxonSchemaError):
             self.config.get_int("int_error_key_2")
+
+        with self.assertRaises(PolyaxonSchemaError):
+            self.config.get_int(key="float_key_1")
+
+        with self.assertRaises(PolyaxonSchemaError):
+            self.config.get_int(key="float_key_2")
 
         with self.assertRaises(PolyaxonSchemaError):
             self.config.get_int("int_error_key_3")

@@ -67,7 +67,7 @@ from polyaxon.tracking.contrib.xgboost import polyaxon_callback
 # ...
 tracking.init()
 #...
-model.train(params, data, callbacks=[polyaxon_callback()])
+model.train(params, data, callbacks=[polyaxon_callback(log_importance=True)])
 ```
 
 ## Customizing the callback
@@ -80,7 +80,7 @@ from polyaxon.tracking.contrib.xgboost import polyaxon_callback
 
 run = Run(...)
 
-model.train(params, data, callbacks=[polyaxon_callback(run=run)])
+model.train(params, data, callbacks=[polyaxon_callback(run=run, log_importance=True)])
 ```
 
 ## Manual logging
@@ -195,8 +195,9 @@ if __name__ == '__main__':
     dtest = xgb.DMatrix(X_test, label=y_test)
 
     if args.cross_validate:
-        xgb.cv(params, dtrain, num_boost_round=20, nfold=7, callbacks=[polyaxon_callback()])
+        xgb.cv(params, dtrain, num_boost_round=20, nfold=7,
+               callbacks=[polyaxon_callback(log_importance=True)])
     else:
         xgb.train(params, dtrain, 20, [(dtest, 'eval'), (dtrain, 'train')],
-                  callbacks=[polyaxon_callback()])
+                  callbacks=[polyaxon_callback(log_importance=True)])
 ```

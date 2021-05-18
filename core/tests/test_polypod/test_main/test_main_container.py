@@ -247,6 +247,42 @@ class TestMainContainer(BaseTestCase):
         assert container.resources is None
         assert len(container.volume_mounts) == 1
 
+        # Mount store
+        container = get_main_container(
+            container_id="test",
+            main_container=k8s_schemas.V1Container(name="main"),
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    mount_artifacts_store=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                    collect_resources=True,
+                )
+            ),
+            volume_mounts=None,
+            log_level=None,
+            artifacts_store=None,
+            init=[V1Init(connection=self.claim_store.name)],
+            connections=None,
+            connection_by_names={self.claim_store.name: self.claim_store},
+            secrets=None,
+            config_maps=None,
+            kv_env_vars=None,
+            env=None,
+            ports=None,
+            run_path="run_path",
+        )
+
+        assert container.name == "test"
+        assert container.image is None
+        assert container.image_pull_policy is None
+        assert container.command is None
+        assert container.args is None
+        assert container.ports == []
+        assert container.env_from == []
+        assert container.resources is None
+        assert len(container.volume_mounts) == 1  # store not passed
+
         container = get_main_container(
             container_id="",
             main_container=k8s_schemas.V1Container(name="main"),
@@ -308,6 +344,44 @@ class TestMainContainer(BaseTestCase):
         assert container.resources is None
         assert len(container.volume_mounts) == 1
 
+        # Mount store
+        container = get_main_container(
+            container_id="main-job",
+            main_container=k8s_schemas.V1Container(name="main"),
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    mount_artifacts_store=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                    collect_resources=True,
+                )
+            ),
+            volume_mounts=None,
+            log_level=None,
+            artifacts_store=self.claim_store,
+            init=None,
+            connections=[],
+            connection_by_names={self.claim_store.name: self.claim_store},
+            secrets=None,
+            config_maps=None,
+            kv_env_vars=None,
+            env=None,
+            ports=None,
+            run_path="run_path",
+        )
+
+        assert container.name == "main-job"
+        assert container.image is None
+        assert container.image_pull_policy is None
+        assert container.command is None
+        assert container.args is None
+        assert container.ports == []
+        # One from the artifacts store name env var and the schema
+        assert len(container.env) == 2 + 1 + 1
+        assert container.env_from == []
+        assert container.resources is None
+        assert len(container.volume_mounts) == 2
+
     def test_get_main_container_with_bucket_artifacts_store(self):
         container = get_main_container(
             container_id="main",
@@ -341,6 +415,43 @@ class TestMainContainer(BaseTestCase):
         assert container.env_from == []
         assert container.resources is None
         assert len(container.volume_mounts) == 1  # mount context
+
+        # Mount store
+        container = get_main_container(
+            container_id="main",
+            main_container=k8s_schemas.V1Container(name="main"),
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    mount_artifacts_store=True,
+                    collect_artifacts=False,
+                    collect_logs=False,
+                    collect_resources=False,
+                )
+            ),
+            volume_mounts=None,
+            log_level=None,
+            artifacts_store=self.gcs_store,
+            init=None,
+            connections=None,
+            connection_by_names={self.gcs_store.name: self.gcs_store},
+            secrets=None,
+            config_maps=None,
+            kv_env_vars=None,
+            env=None,
+            ports=None,
+            run_path="run_path",
+        )
+
+        assert container.name == "main"
+        assert container.image is None
+        assert container.image_pull_policy is None
+        assert container.command is None
+        assert container.args is None
+        assert container.ports == []
+        assert len(container.env) == 2 + 1  # One from the artifacts store name env var
+        assert container.env_from == []
+        assert container.resources is None
+        assert len(container.volume_mounts) == 1  # mount resource
 
         container = get_main_container(
             container_id="main1",
@@ -526,6 +637,7 @@ class TestMainContainer(BaseTestCase):
             auth=True,
             docker=False,
             shm=False,
+            mount_artifacts_store=False,
             collect_logs=True,
             collect_artifacts=True,
             collect_resources=True,

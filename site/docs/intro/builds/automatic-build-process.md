@@ -14,4 +14,4 @@ sidebar: "intro"
 
 <blockquote class="commercial">This is currently available on Polyaxon Cloud only.</blockquote>
 
-> **Note**: Requires Polyaxon v1.9.1 or higher.
+> **Note**: Requires Polyaxon v1.9.2 or higher.

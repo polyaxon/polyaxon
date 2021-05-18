@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.9.0
+  version: 1.9.1
 servers:
 - url: /
 security:
@@ -15852,10 +15852,15 @@ components:
           ttl: 0
         kind: kind
         plugins:
-          collectArtifacts: true
+          mountArtifactsStore: true
           syncStatuses: true
-          logLevel: logLevel
           auth: true
+          collectResources: collectResources
+          collectLogs: true
+          externalHost: true
+          docker: true
+          collectArtifacts: true
+          logLevel: logLevel
           autoResume: true
           sidecar:
             sleepInterval: 3
@@ -15866,9 +15871,6 @@ components:
             monitorLogs: true
             imageTag: imageTag
           shm: true
-          collectResources: collectResources
-          collectLogs: true
-          externalHost: true
           notifications:
           - connections:
             - connections
@@ -15876,7 +15878,6 @@ components:
           - connections:
             - connections
             - connections
-          docker: true
         inputs:
         - delayValidation: true
           isFlag: true
@@ -16139,10 +16140,15 @@ components:
           ttl: 0
         kind: kind
         plugins:
-          collectArtifacts: true
+          mountArtifactsStore: true
           syncStatuses: true
-          logLevel: logLevel
           auth: true
+          collectResources: collectResources
+          collectLogs: true
+          externalHost: true
+          docker: true
+          collectArtifacts: true
+          logLevel: logLevel
           autoResume: true
           sidecar:
             sleepInterval: 3
@@ -16153,9 +16159,6 @@ components:
             monitorLogs: true
             imageTag: imageTag
           shm: true
-          collectResources: collectResources
-          collectLogs: true
-          externalHost: true
           notifications:
           - connections:
             - connections
@@ -16163,7 +16166,6 @@ components:
           - connections:
             - connections
             - connections
-          docker: true
         inputs:
         - delayValidation: true
           isFlag: true
@@ -16721,10 +16723,15 @@ components:
             ttl: 0
           kind: kind
           plugins:
-            collectArtifacts: true
+            mountArtifactsStore: true
             syncStatuses: true
-            logLevel: logLevel
             auth: true
+            collectResources: collectResources
+            collectLogs: true
+            externalHost: true
+            docker: true
+            collectArtifacts: true
+            logLevel: logLevel
             autoResume: true
             sidecar:
               sleepInterval: 3
@@ -16735,9 +16742,6 @@ components:
               monitorLogs: true
               imageTag: imageTag
             shm: true
-            collectResources: collectResources
-            collectLogs: true
-            externalHost: true
             notifications:
             - connections:
               - connections
@@ -16745,7 +16749,6 @@ components:
             - connections:
               - connections
               - connections
-            docker: true
           inputs:
           - delayValidation: true
             isFlag: true
@@ -16865,10 +16868,15 @@ components:
             ttl: 0
           kind: kind
           plugins:
-            collectArtifacts: true
+            mountArtifactsStore: true
             syncStatuses: true
-            logLevel: logLevel
             auth: true
+            collectResources: collectResources
+            collectLogs: true
+            externalHost: true
+            docker: true
+            collectArtifacts: true
+            logLevel: logLevel
             autoResume: true
             sidecar:
               sleepInterval: 3
@@ -16879,9 +16887,6 @@ components:
               monitorLogs: true
               imageTag: imageTag
             shm: true
-            collectResources: collectResources
-            collectLogs: true
-            externalHost: true
             notifications:
             - connections:
               - connections
@@ -16889,7 +16894,6 @@ components:
             - connections:
               - connections
               - connections
-            docker: true
           inputs:
           - delayValidation: true
             isFlag: true
@@ -17012,10 +17016,15 @@ components:
             enabled: true
           dagRef: dagRef
           plugins:
-            collectArtifacts: true
+            mountArtifactsStore: true
             syncStatuses: true
-            logLevel: logLevel
             auth: true
+            collectResources: collectResources
+            collectLogs: true
+            externalHost: true
+            docker: true
+            collectArtifacts: true
+            logLevel: logLevel
             autoResume: true
             sidecar:
               sleepInterval: 3
@@ -17026,9 +17035,6 @@ components:
               monitorLogs: true
               imageTag: imageTag
             shm: true
-            collectResources: collectResources
-            collectLogs: true
-            externalHost: true
             notifications:
             - connections:
               - connections
@@ -17036,7 +17042,6 @@ components:
             - connections:
               - connections
               - connections
-            docker: true
           hubRef: hubRef
           description: description
           matrix: '{}'
@@ -17156,10 +17161,15 @@ components:
               ttl: 0
             kind: kind
             plugins:
-              collectArtifacts: true
+              mountArtifactsStore: true
               syncStatuses: true
-              logLevel: logLevel
               auth: true
+              collectResources: collectResources
+              collectLogs: true
+              externalHost: true
+              docker: true
+              collectArtifacts: true
+              logLevel: logLevel
               autoResume: true
               sidecar:
                 sleepInterval: 3
@@ -17170,9 +17180,6 @@ components:
                 monitorLogs: true
                 imageTag: imageTag
               shm: true
-              collectResources: collectResources
-              collectLogs: true
-              externalHost: true
               notifications:
               - connections:
                 - connections
@@ -17180,7 +17187,6 @@ components:
               - connections:
                 - connections
                 - connections
-              docker: true
             inputs:
             - delayValidation: true
               isFlag: true
@@ -17284,10 +17290,15 @@ components:
             enabled: true
           dagRef: dagRef
           plugins:
-            collectArtifacts: true
+            mountArtifactsStore: true
             syncStatuses: true
-            logLevel: logLevel
             auth: true
+            collectResources: collectResources
+            collectLogs: true
+            externalHost: true
+            docker: true
+            collectArtifacts: true
+            logLevel: logLevel
             autoResume: true
             sidecar:
               sleepInterval: 3
@@ -17298,9 +17309,6 @@ components:
               monitorLogs: true
               imageTag: imageTag
             shm: true
-            collectResources: collectResources
-            collectLogs: true
-            externalHost: true
             notifications:
             - connections:
               - connections
@@ -17308,7 +17316,6 @@ components:
             - connections:
               - connections
               - connections
-            docker: true
           hubRef: hubRef
           description: description
           matrix: '{}'
@@ -17428,10 +17435,15 @@ components:
               ttl: 0
             kind: kind
             plugins:
-              collectArtifacts: true
+              mountArtifactsStore: true
               syncStatuses: true
-              logLevel: logLevel
               auth: true
+              collectResources: collectResources
+              collectLogs: true
+              externalHost: true
+              docker: true
+              collectArtifacts: true
+              logLevel: logLevel
               autoResume: true
               sidecar:
                 sleepInterval: 3
@@ -17442,9 +17454,6 @@ components:
                 monitorLogs: true
                 imageTag: imageTag
               shm: true
-              collectResources: collectResources
-              collectLogs: true
-              externalHost: true
               notifications:
               - connections:
                 - connections
@@ -17452,7 +17461,6 @@ components:
               - connections:
                 - connections
                 - connections
-              docker: true
             inputs:
             - delayValidation: true
               isFlag: true
@@ -22251,10 +22259,15 @@ components:
           enabled: true
         dagRef: dagRef
         plugins:
-          collectArtifacts: true
+          mountArtifactsStore: true
           syncStatuses: true
-          logLevel: logLevel
           auth: true
+          collectResources: collectResources
+          collectLogs: true
+          externalHost: true
+          docker: true
+          collectArtifacts: true
+          logLevel: logLevel
           autoResume: true
           sidecar:
             sleepInterval: 3
@@ -22265,9 +22278,6 @@ components:
             monitorLogs: true
             imageTag: imageTag
           shm: true
-          collectResources: collectResources
-          collectLogs: true
-          externalHost: true
           notifications:
           - connections:
             - connections
@@ -22275,7 +22285,6 @@ components:
           - connections:
             - connections
             - connections
-          docker: true
         hubRef: hubRef
         description: description
         matrix: '{}'
@@ -22395,10 +22404,15 @@ components:
             ttl: 0
           kind: kind
           plugins:
-            collectArtifacts: true
+            mountArtifactsStore: true
             syncStatuses: true
-            logLevel: logLevel
             auth: true
+            collectResources: collectResources
+            collectLogs: true
+            externalHost: true
+            docker: true
+            collectArtifacts: true
+            logLevel: logLevel
             autoResume: true
             sidecar:
               sleepInterval: 3
@@ -22409,9 +22423,6 @@ components:
               monitorLogs: true
               imageTag: imageTag
             shm: true
-            collectResources: collectResources
-            collectLogs: true
-            externalHost: true
             notifications:
             - connections:
               - connections
@@ -22419,7 +22430,6 @@ components:
             - connections:
               - connections
               - connections
-            docker: true
           inputs:
           - delayValidation: true
             isFlag: true
@@ -22871,10 +22881,15 @@ components:
       type: string
     v1Plugins:
       example:
-        collectArtifacts: true
+        mountArtifactsStore: true
         syncStatuses: true
-        logLevel: logLevel
         auth: true
+        collectResources: collectResources
+        collectLogs: true
+        externalHost: true
+        docker: true
+        collectArtifacts: true
+        logLevel: logLevel
         autoResume: true
         sidecar:
           sleepInterval: 3
@@ -22885,9 +22900,6 @@ components:
           monitorLogs: true
           imageTag: imageTag
         shm: true
-        collectResources: collectResources
-        collectLogs: true
-        externalHost: true
         notifications:
         - connections:
           - connections
@@ -22895,7 +22907,6 @@ components:
         - connections:
           - connections
           - connections
-        docker: true
       properties:
         auth:
           title: Optional flag to tell Polyaxon if it should set an auth context for
@@ -22908,6 +22919,9 @@ components:
         shm:
           title: Optional flag to tell Polyaxon if it should set a shm context for
             the run, default false
+          type: boolean
+        mountArtifactsStore:
+          title: Optional flag to mount the artifacts store to the main container
           type: boolean
         collectArtifacts:
           title: Optional flag to tell Polyaxon to collect articats and outputs
@@ -24996,10 +25010,15 @@ components:
               ttl: 0
             kind: kind
             plugins:
-              collectArtifacts: true
+              mountArtifactsStore: true
               syncStatuses: true
-              logLevel: logLevel
               auth: true
+              collectResources: collectResources
+              collectLogs: true
+              externalHost: true
+              docker: true
+              collectArtifacts: true
+              logLevel: logLevel
               autoResume: true
               sidecar:
                 sleepInterval: 3
@@ -25010,9 +25029,6 @@ components:
                 monitorLogs: true
                 imageTag: imageTag
               shm: true
-              collectResources: collectResources
-              collectLogs: true
-              externalHost: true
               notifications:
               - connections:
                 - connections
@@ -25020,7 +25036,6 @@ components:
               - connections:
                 - connections
                 - connections
-              docker: true
             inputs:
             - delayValidation: true
               isFlag: true
@@ -25140,10 +25155,15 @@ components:
               ttl: 0
             kind: kind
             plugins:
-              collectArtifacts: true
+              mountArtifactsStore: true
               syncStatuses: true
-              logLevel: logLevel
               auth: true
+              collectResources: collectResources
+              collectLogs: true
+              externalHost: true
+              docker: true
+              collectArtifacts: true
+              logLevel: logLevel
               autoResume: true
               sidecar:
                 sleepInterval: 3
@@ -25154,9 +25174,6 @@ components:
                 monitorLogs: true
                 imageTag: imageTag
               shm: true
-              collectResources: collectResources
-              collectLogs: true
-              externalHost: true
               notifications:
               - connections:
                 - connections
@@ -25164,7 +25181,6 @@ components:
               - connections:
                 - connections
                 - connections
-              docker: true
             inputs:
             - delayValidation: true
               isFlag: true
@@ -25287,10 +25303,15 @@ components:
               enabled: true
             dagRef: dagRef
             plugins:
-              collectArtifacts: true
+              mountArtifactsStore: true
               syncStatuses: true
-              logLevel: logLevel
               auth: true
+              collectResources: collectResources
+              collectLogs: true
+              externalHost: true
+              docker: true
+              collectArtifacts: true
+              logLevel: logLevel
               autoResume: true
               sidecar:
                 sleepInterval: 3
@@ -25301,9 +25322,6 @@ components:
                 monitorLogs: true
                 imageTag: imageTag
               shm: true
-              collectResources: collectResources
-              collectLogs: true
-              externalHost: true
               notifications:
               - connections:
                 - connections
@@ -25311,7 +25329,6 @@ components:
               - connections:
                 - connections
                 - connections
-              docker: true
             hubRef: hubRef
             description: description
             matrix: '{}'
@@ -25431,10 +25448,15 @@ components:
                 ttl: 0
               kind: kind
               plugins:
-                collectArtifacts: true
+                mountArtifactsStore: true
                 syncStatuses: true
-                logLevel: logLevel
                 auth: true
+                collectResources: collectResources
+                collectLogs: true
+                externalHost: true
+                docker: true
+                collectArtifacts: true
+                logLevel: logLevel
                 autoResume: true
                 sidecar:
                   sleepInterval: 3
@@ -25445,9 +25467,6 @@ components:
                   monitorLogs: true
                   imageTag: imageTag
                 shm: true
-                collectResources: collectResources
-                collectLogs: true
-                externalHost: true
                 notifications:
                 - connections:
                   - connections
@@ -25455,7 +25474,6 @@ components:
                 - connections:
                   - connections
                   - connections
-                docker: true
               inputs:
               - delayValidation: true
                 isFlag: true
@@ -25559,10 +25577,15 @@ components:
               enabled: true
             dagRef: dagRef
             plugins:
-              collectArtifacts: true
+              mountArtifactsStore: true
               syncStatuses: true
-              logLevel: logLevel
               auth: true
+              collectResources: collectResources
+              collectLogs: true
+              externalHost: true
+              docker: true
+              collectArtifacts: true
+              logLevel: logLevel
               autoResume: true
               sidecar:
                 sleepInterval: 3
@@ -25573,9 +25596,6 @@ components:
                 monitorLogs: true
                 imageTag: imageTag
               shm: true
-              collectResources: collectResources
-              collectLogs: true
-              externalHost: true
               notifications:
               - connections:
                 - connections
@@ -25583,7 +25603,6 @@ components:
               - connections:
                 - connections
                 - connections
-              docker: true
             hubRef: hubRef
             description: description
             matrix: '{}'
@@ -25703,10 +25722,15 @@ components:
                 ttl: 0
               kind: kind
               plugins:
-                collectArtifacts: true
+                mountArtifactsStore: true
                 syncStatuses: true
-                logLevel: logLevel
                 auth: true
+                collectResources: collectResources
+                collectLogs: true
+                externalHost: true
+                docker: true
+                collectArtifacts: true
+                logLevel: logLevel
                 autoResume: true
                 sidecar:
                   sleepInterval: 3
@@ -25717,9 +25741,6 @@ components:
                   monitorLogs: true
                   imageTag: imageTag
                 shm: true
-                collectResources: collectResources
-                collectLogs: true
-                externalHost: true
                 notifications:
                 - connections:
                   - connections
@@ -25727,7 +25748,6 @@ components:
                 - connections:
                   - connections
                   - connections
-                docker: true
               inputs:
               - delayValidation: true
                 isFlag: true
@@ -27619,10 +27639,15 @@ components:
                 ttl: 0
               kind: kind
               plugins:
-                collectArtifacts: true
+                mountArtifactsStore: true
                 syncStatuses: true
-                logLevel: logLevel
                 auth: true
+                collectResources: collectResources
+                collectLogs: true
+                externalHost: true
+                docker: true
+                collectArtifacts: true
+                logLevel: logLevel
                 autoResume: true
                 sidecar:
                   sleepInterval: 3
@@ -27633,9 +27658,6 @@ components:
                   monitorLogs: true
                   imageTag: imageTag
                 shm: true
-                collectResources: collectResources
-                collectLogs: true
-                externalHost: true
                 notifications:
                 - connections:
                   - connections
@@ -27643,7 +27665,6 @@ components:
                 - connections:
                   - connections
                   - connections
-                docker: true
               inputs:
               - delayValidation: true
                 isFlag: true
@@ -27763,10 +27784,15 @@ components:
                 ttl: 0
               kind: kind
               plugins:
-                collectArtifacts: true
+                mountArtifactsStore: true
                 syncStatuses: true
-                logLevel: logLevel
                 auth: true
+                collectResources: collectResources
+                collectLogs: true
+                externalHost: true
+                docker: true
+                collectArtifacts: true
+                logLevel: logLevel
                 autoResume: true
                 sidecar:
                   sleepInterval: 3
@@ -27777,9 +27803,6 @@ components:
                   monitorLogs: true
                   imageTag: imageTag
                 shm: true
-                collectResources: collectResources
-                collectLogs: true
-                externalHost: true
                 notifications:
                 - connections:
                   - connections
@@ -27787,7 +27810,6 @@ components:
                 - connections:
                   - connections
                   - connections
-                docker: true
               inputs:
               - delayValidation: true
                 isFlag: true
@@ -27910,10 +27932,15 @@ components:
                 enabled: true
               dagRef: dagRef
               plugins:
-                collectArtifacts: true
+                mountArtifactsStore: true
                 syncStatuses: true
-                logLevel: logLevel
                 auth: true
+                collectResources: collectResources
+                collectLogs: true
+                externalHost: true
+                docker: true
+                collectArtifacts: true
+                logLevel: logLevel
                 autoResume: true
                 sidecar:
                   sleepInterval: 3
@@ -27924,9 +27951,6 @@ components:
                   monitorLogs: true
                   imageTag: imageTag
                 shm: true
-                collectResources: collectResources
-                collectLogs: true
-                externalHost: true
                 notifications:
                 - connections:
                   - connections
@@ -27934,7 +27958,6 @@ components:
                 - connections:
                   - connections
                   - connections
-                docker: true
               hubRef: hubRef
               description: description
               matrix: '{}'
@@ -28054,10 +28077,15 @@ components:
                   ttl: 0
                 kind: kind
                 plugins:
-                  collectArtifacts: true
+                  mountArtifactsStore: true
                   syncStatuses: true
-                  logLevel: logLevel
                   auth: true
+                  collectResources: collectResources
+                  collectLogs: true
+                  externalHost: true
+                  docker: true
+                  collectArtifacts: true
+                  logLevel: logLevel
                   autoResume: true
                   sidecar:
                     sleepInterval: 3
@@ -28068,9 +28096,6 @@ components:
                     monitorLogs: true
                     imageTag: imageTag
                   shm: true
-                  collectResources: collectResources
-                  collectLogs: true
-                  externalHost: true
                   notifications:
                   - connections:
                     - connections
@@ -28078,7 +28103,6 @@ components:
                   - connections:
                     - connections
                     - connections
-                  docker: true
                 inputs:
                 - delayValidation: true
                   isFlag: true
@@ -28182,10 +28206,15 @@ components:
                 enabled: true
               dagRef: dagRef
               plugins:
-                collectArtifacts: true
+                mountArtifactsStore: true
                 syncStatuses: true
-                logLevel: logLevel
                 auth: true
+                collectResources: collectResources
+                collectLogs: true
+                externalHost: true
+                docker: true
+                collectArtifacts: true
+                logLevel: logLevel
                 autoResume: true
                 sidecar:
                   sleepInterval: 3
@@ -28196,9 +28225,6 @@ components:
                   monitorLogs: true
                   imageTag: imageTag
                 shm: true
-                collectResources: collectResources
-                collectLogs: true
-                externalHost: true
                 notifications:
                 - connections:
                   - connections
@@ -28206,7 +28232,6 @@ components:
                 - connections:
                   - connections
                   - connections
-                docker: true
               hubRef: hubRef
               description: description
               matrix: '{}'
@@ -28326,10 +28351,15 @@ components:
                   ttl: 0
                 kind: kind
                 plugins:
-                  collectArtifacts: true
+                  mountArtifactsStore: true
                   syncStatuses: true
-                  logLevel: logLevel
                   auth: true
+                  collectResources: collectResources
+                  collectLogs: true
+                  externalHost: true
+                  docker: true
+                  collectArtifacts: true
+                  logLevel: logLevel
                   autoResume: true
                   sidecar:
                     sleepInterval: 3
@@ -28340,9 +28370,6 @@ components:
                     monitorLogs: true
                     imageTag: imageTag
                   shm: true
-                  collectResources: collectResources
-                  collectLogs: true
-                  externalHost: true
                   notifications:
                   - connections:
                     - connections
@@ -28350,7 +28377,6 @@ components:
                   - connections:
                     - connections
                     - connections
-                  docker: true
                 inputs:
                 - delayValidation: true
                   isFlag: true
@@ -29543,10 +29569,15 @@ components:
             enabled: true
           dagRef: dagRef
           plugins:
-            collectArtifacts: true
+            mountArtifactsStore: true
             syncStatuses: true
-            logLevel: logLevel
             auth: true
+            collectResources: collectResources
+            collectLogs: true
+            externalHost: true
+            docker: true
+            collectArtifacts: true
+            logLevel: logLevel
             autoResume: true
             sidecar:
               sleepInterval: 3
@@ -29557,9 +29588,6 @@ components:
               monitorLogs: true
               imageTag: imageTag
             shm: true
-            collectResources: collectResources
-            collectLogs: true
-            externalHost: true
             notifications:
             - connections:
               - connections
@@ -29567,7 +29595,6 @@ components:
             - connections:
               - connections
               - connections
-            docker: true
           hubRef: hubRef
           description: description
           matrix: '{}'
@@ -29687,10 +29714,15 @@ components:
               ttl: 0
             kind: kind
             plugins:
-              collectArtifacts: true
+              mountArtifactsStore: true
               syncStatuses: true
-              logLevel: logLevel
               auth: true
+              collectResources: collectResources
+              collectLogs: true
+              externalHost: true
+              docker: true
+              collectArtifacts: true
+              logLevel: logLevel
               autoResume: true
               sidecar:
                 sleepInterval: 3
@@ -29701,9 +29733,6 @@ components:
                 monitorLogs: true
                 imageTag: imageTag
               shm: true
-              collectResources: collectResources
-              collectLogs: true
-              externalHost: true
               notifications:
               - connections:
                 - connections
@@ -29711,7 +29740,6 @@ components:
               - connections:
                 - connections
                 - connections
-              docker: true
             inputs:
             - delayValidation: true
               isFlag: true
@@ -29849,10 +29877,15 @@ components:
             ttl: 0
           kind: kind
           plugins:
-            collectArtifacts: true
+            mountArtifactsStore: true
             syncStatuses: true
-            logLevel: logLevel
             auth: true
+            collectResources: collectResources
+            collectLogs: true
+            externalHost: true
+            docker: true
+            collectArtifacts: true
+            logLevel: logLevel
             autoResume: true
             sidecar:
               sleepInterval: 3
@@ -29863,9 +29896,6 @@ components:
               monitorLogs: true
               imageTag: imageTag
             shm: true
-            collectResources: collectResources
-            collectLogs: true
-            externalHost: true
             notifications:
             - connections:
               - connections
@@ -29873,7 +29903,6 @@ components:
             - connections:
               - connections
               - connections
-            docker: true
           inputs:
           - delayValidation: true
             isFlag: true

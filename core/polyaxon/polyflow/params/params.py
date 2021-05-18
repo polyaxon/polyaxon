@@ -19,7 +19,6 @@ from collections.abc import Mapping
 from typing import Dict, Optional
 
 import polyaxon_sdk
-import ujson
 
 from marshmallow import ValidationError, fields, validates_schema
 
@@ -437,9 +436,7 @@ class ParamSpec(
         return self.get_typed_param_value()
 
     def __repr__(self):
-        if self.is_flag:
-            return self.get_display_value()
-        return ujson.dumps(self.param.value) if self.param.value is not None else ""
+        return str(self.get_display_value())
 
     def as_str(self):
         return str(self)

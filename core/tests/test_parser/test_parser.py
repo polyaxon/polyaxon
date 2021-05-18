@@ -151,6 +151,18 @@ class TestParser(BaseTestCase):
         value = parser.get_int(key="int_key_2", value="123")
         self.assertEqual(value, 123)
 
+        value = parser.get_int(key="float_key_1", value=12.0)
+        self.assertEqual(value, 12)
+
+        value = parser.get_int(key="float_key_1", value="12.")
+        self.assertEqual(value, 12)
+
+        value = parser.get_int(key="float_key_1", value=12.0)
+        self.assertEqual(value, 12)
+
+        value = parser.get_int(key="float_key_1", value="12.0")
+        self.assertEqual(value, 12)
+
         value = parser.get_int(
             key="int_list_key_1", value=["123", 124, 125, "125"], is_list=True
         )
@@ -169,6 +181,12 @@ class TestParser(BaseTestCase):
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_int(key="int_error_key_2", value="")
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_int(key="float_error_key_3", value=12.1)
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_int(key="float_error_key_3", value="12.1")
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_int(key="int_error_key_3", value="foo")

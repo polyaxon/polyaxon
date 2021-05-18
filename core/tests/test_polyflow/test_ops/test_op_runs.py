@@ -276,6 +276,38 @@ class TestCompiledOperationsConfigs(BaseTestCase):
             outputs=config.outputs,
             is_template=False,
         )
+        ops_params.validate_params(
+            params={"param1": {"value": "-11"}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param1": {"value": 12.0}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+
+        ops_params.validate_params(
+            params={"param1": {"value": "12.0"}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param1": {"value": 12.0}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+
+        ops_params.validate_params(
+            params={"param1": {"value": "12."}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
         # Passing wrong type
         with self.assertRaises(ValidationError):
             ops_params.validate_params(
@@ -288,6 +320,14 @@ class TestCompiledOperationsConfigs(BaseTestCase):
         with self.assertRaises(ValidationError):
             ops_params.validate_params(
                 params={"param1": {"value": 12.1}},
+                inputs=config.inputs,
+                outputs=config.outputs,
+                is_template=False,
+            )
+
+        with self.assertRaises(ValidationError):
+            ops_params.validate_params(
+                params={"param1": {"value": "12.1"}},
                 inputs=config.inputs,
                 outputs=config.outputs,
                 is_template=False,
@@ -396,6 +436,12 @@ class TestCompiledOperationsConfigs(BaseTestCase):
         # Passing correct param
         ops_params.validate_params(
             params={"param1": {"value": 1}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param1": {"value": 12.0}},
             inputs=config.inputs,
             outputs=config.outputs,
             is_template=False,

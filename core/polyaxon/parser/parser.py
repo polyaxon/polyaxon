@@ -34,6 +34,7 @@ from polyaxon.schemas.types import (
     V1ArtifactsType,
     V1AuthType,
     V1DockerfileType,
+    V1EventType,
     V1FileType,
     V1GcsType,
     V1GitType,
@@ -41,7 +42,6 @@ from polyaxon.schemas.types import (
     V1UriType,
     V1WasbType,
 )
-from polyaxon.schemas.types.event import V1EventType
 from polyaxon.utils.bool_utils import strtobool
 
 
@@ -60,25 +60,55 @@ def get_int(key, value, is_list=False, is_optional=False, default=None, options=
     Returns:
          `int`: value corresponding to the key.
     """
+
+    def to_int(in_value):
+        if isinstance(in_value, int):
+            return in_value
+        if isinstance(in_value, float):
+            new_value = int(in_value)
+            if new_value != in_value:
+                raise PolyaxonSchemaError(
+                    f"{key} expects an int value, received the value {in_value} of type float."
+                )
+            return new_value
+        if isinstance(in_value, str):
+            try:
+                return int(in_value)
+            except (ValueError, TypeError):
+                pass
+
+            float_value = float(in_value)
+            new_value = int(float_value)
+            if new_value != float_value:
+                raise PolyaxonSchemaError(
+                    f"{key} expects an int value, received the value {in_value} of type float."
+                )
+            return new_value
+        raise PolyaxonSchemaError(
+            f"{key} expects an int value, received the value {in_value} with the wrong type."
+        )
+
     if is_list:
         return _get_typed_list_value(
             key=key,
             value=value,
             target_type=int,
-            type_convert=int,
+            type_convert=to_int,
             is_optional=is_optional,
             default=default,
             options=options,
+            base_types=(str, float),
         )
 
     return _get_typed_value(
         key=key,
         value=value,
         target_type=int,
-        type_convert=int,
+        type_convert=to_int,
         is_optional=is_optional,
         default=default,
         options=options,
+        base_types=(str, float),
     )
 
 
@@ -1019,8 +1049,9 @@ def _get_typed_value(
     if isinstance(value, base_types):
         try:
             # _add_key(key, is_secret=is_secret, is_local=is_local)
-            _check_options(key=key, value=value, options=options)
-            return type_convert(value)
+            new_value = type_convert(value)
+            _check_options(key=key, value=new_value, options=options)
+            return new_value
         except (ValueError, ValidationError):
             raise PolyaxonSchemaError(
                 "Cannot convert value `{}` (key: `{}`) "

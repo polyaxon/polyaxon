@@ -41,30 +41,33 @@ message Plugins {
     // Optional flag to tell Polyaxon if it should set a shm context for the run, default false
     bool shm = 3;
 
+    // Optional flag to mount the artifacts store to the main container
+    bool mountArtifactsStore = 4;
+
     // Optional flag to tell Polyaxon to collect articats and outputs
-    bool collectArtifacts = 4;
+    bool collectArtifacts = 5;
 
     // Optional flag to tell Polyaxon to collect logs
-    bool collectLogs = 5;
+    bool collectLogs = 6;
 
     // Optional flag to tell Polyaxon to collect container resouces (cpu/memory/gpu)
-    string collectResources = 6;
+    string collectResources = 7;
 
     // Optional flag to tell Polyaxon to sync statuses
-    bool syncStatuses = 7;
+    bool syncStatuses = 8;
 
     // Auto resume a run's artifacts (applies to resume and retries), works if collects_artifacts is enabled
-    bool autoResume = 8;
+    bool autoResume = 9;
 
     // Optional log level
-    string logLevel = 9;
+    string logLevel = 10;
 
     // Optional flag to tell Polyaxon to connect to the control plan via the external host
-    bool externalHost = 10;
+    bool externalHost = 11;
 
     // Optional to override the sidecar's default config
-    PolyaxonSidecarContainer sidecar = 11;
+    PolyaxonSidecarContainer sidecar = 12;
 
     // Option Notifications: Deprecated
-    repeated Notification notifications = 12;
+    repeated Notification notifications = 13;
 }

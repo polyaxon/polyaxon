@@ -25,7 +25,7 @@ except ImportError:
 
 def polyaxon_callback(
     log_model: bool = True,
-    log_importance: bool = True,
+    log_importance: bool = False,
     max_num_features: int = None,
     run=None,
 ):

@@ -93,6 +93,7 @@ def resolve_globals_contexts(
             contexts_keys.DURATION: duration,
             contexts_keys.CLONING_KIND: cloning_kind,
             contexts_keys.ORIGINAL_UUID: original_uuid,
+            contexts_keys.STORE_PATH: "",
         },
     }
 
@@ -117,6 +118,10 @@ def resolve_globals_contexts(
             contexts_keys.RUN_OUTPUTS_PATH
         ] = run_outputs_path
 
+    if contexts_spec.mount_artifacts_store and artifacts_store:
+        resolved_contexts[contexts_sections.GLOBALS][
+            contexts_keys.STORE_PATH
+        ] = artifacts_store.store_path
     return resolved_contexts
 
 

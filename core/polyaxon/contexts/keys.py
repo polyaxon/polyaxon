@@ -23,6 +23,7 @@ ARTIFACTS_PATH = "artifacts_path"
 ITERATION = "iteration"
 NAMESPACE = "namespace"
 BASE = "base"
+STORE_PATH = "store_path"
 
 RUN_ARTIFACTS_PATH = "run_artifacts_path"
 RUN_OUTPUTS_PATH = "run_outputs_path"

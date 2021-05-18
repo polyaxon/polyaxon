@@ -20,6 +20,8 @@
   "int_list_error_key_1": ["123", 124, 125, "125", null],
   "int_list_error_key_2": ["123", 1.24, 125, "125"],
   "int_list_error_key_3": ["123", 1.24, 125, "foo"],
+  "float_int_key_1": 12.0,
+  "float_int_key_2": "12.",
   "float_key_1": 1.23,
   "float_key_2": "1.23",
   "float_key_3": "123",

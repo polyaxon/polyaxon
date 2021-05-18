@@ -46,6 +46,11 @@ The following information can be accessed by all Polyaxon sections:
  * `{{ globals.original_uuid }}`: The original operation's uuid when the current operation was cloned from.
  * `{{ globals.iteration }}`
 
+## Artifacts store
+
+If the artifacts store is requested via the `plugins.mount_artifacts_store` section, Polyaxon will expose the context variable `{{ globals.store_path }}` which is
+the value of the volume path or the bucket url if the artifacts store is a blob storage.
+
 ## Services
 
 If the Polyaxonfile contains a service runtime, the globals prefix will include additionally these information:

@@ -57,6 +57,9 @@ type V1Plugins struct {
 	// Optional log level
 	LogLevel string `json:"logLevel,omitempty"`
 
+	// Optional flag to mount the artifacts store to the main container
+	MountArtifactsStore bool `json:"mountArtifactsStore,omitempty"`
+
 	// Option Notifications: Deprecated
 	Notifications []*V1Notification `json:"notifications"`
 

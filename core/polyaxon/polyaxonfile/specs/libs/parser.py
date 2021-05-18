@@ -55,12 +55,15 @@ class Parser:
     @staticmethod
     def get_parsed_params(param_spec: Dict[str, ParamSpec]) -> Dict:
         parsed_params = {"params": {}}
+        as_arg = []
         for param in param_spec or {}:
             parsed_params[param] = param_spec[param].get_display_value()
             # Add params level
             if not param_spec[param].is_context:
+                as_arg.append(param_spec[param].as_arg())
                 parsed_params["params"][param] = param_spec[param].to_parsed_param()
 
+        parsed_params["params"]["as_args"] = [a for a in as_arg if a]
         return parsed_params
 
     @classmethod
@@ -245,7 +248,14 @@ class Parser:
 
     @classmethod
     def _evaluate_expression(cls, expression, params, check_operators):
-        result = cls.engine.from_string(expression).render(**params)
+        try:
+            result = cls.engine.from_string(expression).render(**params)
+        except (ValueError, TypeError) as e:
+            raise PolyaxonSchemaError(
+                "Encountered a problem parsing the template, "
+                "please make sure your variables are resolvable. "
+                "Error: {}".format(repr(e))
+            )
         if result == expression:
             try:
                 return ast.literal_eval(result)

@@ -33,6 +33,7 @@ class TestPluginsContextsSpec(BaseTestCase):
                 "plugins": {
                     "auth": False,
                     "shm": False,
+                    "mountArtifactsStore": False,
                     "collectLogs": False,
                     "collectArtifacts": False,
                     "syncStatuses": False,
@@ -45,6 +46,7 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.auth is False
         assert spec.docker is False
         assert spec.shm is False
+        assert spec.mount_artifacts_store is False
         assert spec.collect_artifacts is False
         assert spec.collect_logs is False
         assert spec.sync_statuses is False
@@ -55,6 +57,7 @@ class TestPluginsContextsSpec(BaseTestCase):
             auth=True,
             shm=True,
             docker=True,
+            mount_artifacts_store=True,
             collect_artifacts=True,
             collect_logs=True,
             sync_statuses=True,
@@ -64,6 +67,7 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.auth is True
         assert spec.docker is True
         assert spec.shm is True
+        assert spec.mount_artifacts_store is True
         assert spec.collect_artifacts is True
         assert spec.collect_logs is True
         assert spec.sync_statuses is True
@@ -74,6 +78,7 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.auth is True
         assert spec.docker is False
         assert spec.shm is True
+        assert spec.mount_artifacts_store is False
         assert spec.collect_artifacts is True
         assert spec.collect_logs is True
         assert spec.sync_statuses is True
@@ -83,6 +88,7 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.auth is False
         assert spec.docker is False
         assert spec.shm is True
+        assert spec.mount_artifacts_store is False
         assert spec.collect_artifacts is True
         assert spec.collect_logs is True
         assert spec.sync_statuses is True

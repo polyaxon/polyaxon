@@ -85,6 +85,7 @@ class TestResolveContexts(BaseTestCase):
                 "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
+                "store_path": "",
             },
             "init": {},
             "connections": {},
@@ -107,6 +108,7 @@ class TestResolveContexts(BaseTestCase):
                 "plugins": {
                     "auth": False,
                     "shm": False,
+                    "mountArtifactsStore": True,
                     "collectLogs": False,
                     "collectArtifacts": False,
                     "collectResources": False,
@@ -160,6 +162,7 @@ class TestResolveContexts(BaseTestCase):
                 "duration": None,
                 "cloning_kind": V1CloningKind.COPY,
                 "original_uuid": "uuid-copy",
+                "store_path": "/claim/path",
             },
             "init": {"test_claim": store.schema.to_dict()},
             "connections": {"test_claim": store.schema.to_dict()},
@@ -181,6 +184,7 @@ class TestResolveContexts(BaseTestCase):
                 "plugins": {
                     "auth": False,
                     "shm": False,
+                    "mountArtifactsStore": False,
                     "collectLogs": False,
                     "collectArtifacts": True,
                     "collectResources": True,
@@ -231,6 +235,80 @@ class TestResolveContexts(BaseTestCase):
                 "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
+                "store_path": "",
+            },
+            "init": {"test_claim": store.schema.to_dict()},
+            "connections": {"test_claim": store.schema.to_dict()},
+        }
+
+    def test_resolver_mount_artifacts_store(self):
+        context_root = container_contexts.CONTEXT_ROOT
+        store = V1ConnectionType(
+            name="test_claim",
+            kind=V1ConnectionKind.VOLUME_CLAIM,
+            schema=V1ClaimConnection(
+                mount_path="/claim/path", volume_claim="claim", read_only=True
+            ),
+        )
+        compiled_operation = V1CompiledOperation.read(
+            {
+                "version": 1.1,
+                "kind": kinds.COMPILED_OPERATION,
+                "plugins": {
+                    "auth": False,
+                    "shm": False,
+                    "mountArtifactsStore": True,
+                    "collectLogs": False,
+                    "collectArtifacts": True,
+                    "collectResources": True,
+                },
+                "run": {
+                    "kind": V1RunKind.JOB,
+                    "container": {"image": "test"},
+                    "connections": [store.name],
+                    "init": [{"connection": store.name}],
+                },
+            }
+        )
+        spec = resolve_contexts(
+            namespace="test",
+            owner_name="user",
+            project_name="project",
+            project_uuid="uuid",
+            run_uuid="uuid",
+            run_name="run",
+            run_path="test",
+            compiled_operation=compiled_operation,
+            artifacts_store=store,
+            connection_by_names={store.name: store},
+            iteration=12,
+            created_at=None,
+            compiled_at=None,
+        )
+        assert spec == {
+            "globals": {
+                "owner_name": "user",
+                "project_name": "project",
+                "project_unique_name": "user.project",
+                "project_uuid": "uuid",
+                "name": "run",
+                "uuid": "uuid",
+                "run_info": "user.project.runs.uuid",
+                "context_path": context_root,
+                "artifacts_path": "{}/artifacts".format(context_root),
+                "run_artifacts_path": "{}/artifacts/test".format(context_root),
+                "run_outputs_path": "{}/artifacts/test/outputs".format(context_root),
+                "namespace": "test",
+                "iteration": 12,
+                "created_at": None,
+                "compiled_at": None,
+                "schedule_at": None,
+                "started_at": None,
+                "finished_at": None,
+                "duration": None,
+                "cloning_kind": None,
+                "original_uuid": None,
+                "store_path": "/claim/path",
             },
             "init": {"test_claim": store.schema.to_dict()},
             "connections": {"test_claim": store.schema.to_dict()},
@@ -296,6 +374,7 @@ class TestResolveContexts(BaseTestCase):
                 "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
+                "store_path": "",
             },
             "init": {},
             "connections": {},

@@ -86,7 +86,6 @@ Since most Polyaxon's users are data-scientists or machine learning engineers, t
 This is a simple application that prints your inputs, in this example we will use the `argparse` package to consume parameters, 
 but the same logic can be used with [python-fire](https://github.com/google/python-fire), [click](https://github.com/pallets/click), or any other library of your choice.
 
-
 ```python
 import argparse
 
@@ -208,3 +207,84 @@ polyaxon run -u -f echo.yaml -P message="test 1" -l
 ```
 
 > **Note**: You can learn more about how to iterate with upload, git, and inline scripts in the [iteration section](/docs/intro/iterative-process/iterate-in-notebooks/). 
+
+## Multiple params
+
+Let's extend the previous example to require multiple parameters:
+
+
+```python
+import argparse
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        '--message1',
+        type=str,
+        default="Default message1")
+        
+    parser.add_argument(
+        '--message2',
+        type=str,
+        default="Default message2")
+        
+    parser.add_argument(
+        '--message3',
+        type=str,
+        default="Default message3")
+    
+    args = parser.parse_args()
+    
+    print(args.message1)
+    print(args.message2)
+    print(args.message3)
+```
+
+
+And the `echo.yaml` component:
+
+```yaml
+version: 1.1
+kind: component
+inputs:
+- name: message1
+  type: str
+- name: message2
+  type: str
+- name: message3
+  type: str
+run:
+  kind: job
+  container:
+    image: polyaxon/polyaxon-quick-start
+    workingDir: "{{ globals.artifacts_path }}"
+    command: [python3, -u, echo.py]
+    args: ["{{ params.message1.as_arg }}", "{{ params.message2.as_arg }}", "{{ params.message3.as_arg }}"]
+```
+
+The updated component now has a longer `args` section, and based on the logic your building the args list could be longer.
+If you are running Polyaxon v1.9.1 or higher, you can request all params as args in a single line:
+
+
+```yaml
+version: 1.1
+kind: component
+inputs:
+- name: message1
+  type: str
+- name: message2
+  type: str
+- name: message3
+  type: str
+run:
+  kind: job
+  container:
+    image: polyaxon/polyaxon-quick-start
+    workingDir: "{{ globals.artifacts_path }}"
+    command: [python3, -u, echo.py]
+    args: "{{ params.as_args }}"
+```
+
+The value `"{{ params.as_args }}"` is equivalent to `["{{ params.message1.as_arg }}", "{{ params.message2.as_arg }}", "{{ params.message3.as_arg }}"]`.

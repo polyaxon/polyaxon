@@ -45,6 +45,27 @@ run:
     ]
 ```
 
+## Getting all params
+
+The params prefix allows to convert all params to a list of arguments:
+
+```yaml
+version: 1.1
+kind: component
+inputs:
+- name: intput1
+  type: str
+- name: input2
+  type: str
+
+run:
+  kind: job
+  container:
+    image: "image:test"
+    command: ["command"]
+    args: "{{ params.as_args }}"
+```
+
 ## Params prefix
 
 Sometimes users will need to access the meta-information about their inputs and outputs and not just the values, 

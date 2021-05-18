@@ -26,6 +26,7 @@ class PluginsContextsSpec(
         "auth "
         "docker "
         "shm "
+        "mount_artifacts_store "
         "collect_logs "
         "collect_artifacts "
         "collect_resources "
@@ -42,6 +43,7 @@ class PluginsContextsSpec(
         auth = default_auth
         docker = False
         shm = True
+        mount_artifacts_store = False
         collect_logs = True
         collect_artifacts = True
         collect_resources = True
@@ -50,6 +52,8 @@ class PluginsContextsSpec(
         external_host = False
         sidecar = None
         if config:
+            if config.mount_artifacts_store is not None:
+                mount_artifacts_store = config.mount_artifacts_store
             if config.collect_logs is not None:
                 collect_logs = config.collect_logs
             if config.collect_artifacts is not None:
@@ -80,6 +84,7 @@ class PluginsContextsSpec(
             auth=auth,
             docker=docker,
             shm=shm,
+            mount_artifacts_store=mount_artifacts_store,
             collect_logs=collect_logs,
             collect_artifacts=collect_artifacts,
             collect_resources=collect_resources,

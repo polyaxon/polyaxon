@@ -8774,6 +8774,10 @@
           "title": "Optional log level",
           "type": "string"
         },
+        "mountArtifactsStore": {
+          "title": "Optional flag to mount the artifacts store to the main container",
+          "type": "boolean"
+        },
         "notifications": {
           "items": {
             "$ref": "#/definitions/v1Notification"

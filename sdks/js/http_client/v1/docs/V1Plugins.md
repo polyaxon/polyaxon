@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **auth** | **Boolean** |  | [optional] 
 **docker** | **Boolean** |  | [optional] 
 **shm** | **Boolean** |  | [optional] 
+**mountArtifactsStore** | **Boolean** |  | [optional] 
 **collectArtifacts** | **Boolean** |  | [optional] 
 **collectLogs** | **Boolean** |  | [optional] 
 **collectResources** | **String** |  | [optional] 

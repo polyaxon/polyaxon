@@ -13,12 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
 import pytest
 import uuid
 
 from collections import OrderedDict
-
-import ujson
 
 from marshmallow import ValidationError
 
@@ -710,7 +709,7 @@ class TestV1IOs(BaseTestCase):
                     arg_format=None,
                 )
             )
-            == ujson.dumps({"key": "value"})
+            == json.dumps({"key": "value"})
         )
 
         # Regex validation runs: invalid params

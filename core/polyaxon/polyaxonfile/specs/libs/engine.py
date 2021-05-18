@@ -19,7 +19,9 @@ import jinja2
 from markupsafe import soft_str
 
 
-def map_format(value, pattern):
+def map_format(value, pattern, variable_name: str = None):
+    if variable_name:
+        return soft_str(pattern) % {variable_name: value}
     return soft_str(pattern) % value
 
 

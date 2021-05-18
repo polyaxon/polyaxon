@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **auth** | **bool** |  | [optional] 
 **docker** | **bool** |  | [optional] 
 **shm** | **bool** |  | [optional] 
+**mount_artifacts_store** | **bool** |  | [optional] 
 **collect_artifacts** | **bool** |  | [optional] 
 **collect_logs** | **bool** |  | [optional] 
 **collect_resources** | **str** |  | [optional] 

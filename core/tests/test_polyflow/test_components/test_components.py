@@ -265,6 +265,36 @@ class TestComponentsConfigs(BaseTestCase):
             outputs=config.outputs,
             is_template=False,
         )
+        ops_params.validate_params(
+            params={"param1": {"value": "-1"}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param1": {"value": 12.0}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param1": {"value": "12."}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param1": {"value": 12.0}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+        ops_params.validate_params(
+            params={"param1": {"value": "12.0"}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
         # Passing wrong type
         with self.assertRaises(ValidationError):
             ops_params.validate_params(
@@ -277,6 +307,14 @@ class TestComponentsConfigs(BaseTestCase):
         with self.assertRaises(ValidationError):
             ops_params.validate_params(
                 params={"param1": {"value": 12.1}},
+                inputs=config.inputs,
+                outputs=config.outputs,
+                is_template=False,
+            )
+
+        with self.assertRaises(ValidationError):
+            ops_params.validate_params(
+                params={"param1": {"value": "12.1"}},
                 inputs=config.inputs,
                 outputs=config.outputs,
                 is_template=False,
@@ -394,6 +432,13 @@ class TestComponentsConfigs(BaseTestCase):
             outputs=config.outputs,
             is_template=False,
         )
+        ops_params.validate_params(
+            params={"param1": {"value": 12.0}},
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+        )
+
         # Passing wrong type
         with self.assertRaises(ValidationError):
             ops_params.validate_params(
