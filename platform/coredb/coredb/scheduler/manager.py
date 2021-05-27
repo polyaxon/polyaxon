@@ -106,7 +106,12 @@ def runs_delete(run_id: int, run: Optional[BaseRun]):
     run.delete()
 
 
-def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bool:
+def runs_prepare(
+    run_id: int,
+    run: Optional[BaseRun],
+    eager: bool = False,
+    extra_message: str = None,
+) -> bool:
     run = get_run(run_id=run_id, run=run)
     if not run:
         return False
@@ -144,11 +149,14 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
         new_run_status(run=run, condition=condition)
         return False
 
+    message = "Run is compiled"
+    if extra_message:
+        message = f"{message} ({extra_message})."
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.COMPILED,
         status="True",
         reason="SchedulerPrepare",
-        message="Run is compiled",
+        message=message,
         last_update_time=compiled_at,
     )
     new_run_status(run=run, condition=condition)

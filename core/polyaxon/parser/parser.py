@@ -192,10 +192,8 @@ def get_boolean(
 
 def parse_string(v):
     base_types = (int, float, Mapping, list, tuple, set)
-    if isinstance(v, base_types):
+    if v is None or isinstance(v, base_types):
         return json.dumps(v)
-    if v is None:
-        return v
     return str(v)
 
 

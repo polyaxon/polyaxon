@@ -14,12 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 from polyaxon import settings
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyaxonfile import CompiledOperationSpecification
-from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1RunKind
+from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1Operation, V1RunKind
 from polyaxon.polypod.compiler.config import PolypodConfig
 from polyaxon.polypod.compiler.contexts import (
     resolve_contexts,
@@ -93,7 +93,8 @@ class BaseResolver:
         self._param_spec = {}
 
     @classmethod
-    def is_kind_supported(cls, compiled_operation: V1CompiledOperation):
+    def is_valid(cls, compiled_operation: V1CompiledOperation):
+        compiled_operation.validate_build()
         run_kind = compiled_operation.get_run_kind()
         if run_kind not in cls.KINDS:
             raise PolyaxonCompilerError(
@@ -251,6 +252,16 @@ class BaseResolver:
 
     def persist_state(self):
         pass
+
+    def resolve_build(self):
+        raise PolyaxonCompilerError(
+            "Build resolution is not supported in this Polyaxon distribution"
+        )
+
+    def resolve_hooks(self) -> List[V1Operation]:
+        raise PolyaxonCompilerError(
+            "Hooks resolution is not supported in this Polyaxon distribution"
+        )
 
     def resolve(self) -> V1CompiledOperation:
         self.resolve_edges()

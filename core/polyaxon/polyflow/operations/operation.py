@@ -19,6 +19,7 @@ import polyaxon_sdk
 
 from marshmallow import ValidationError, fields, validate, validates_schema
 
+from polyaxon.polyflow.builds import BuildSchema, V1Build
 from polyaxon.polyflow.component.component import ComponentSchema
 from polyaxon.polyflow.hooks import V1Hook
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
@@ -35,6 +36,7 @@ class OperationSchema(BaseOpSchema, TemplateMixinSchema):
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(ParamSchema), allow_none=True
     )
+    build = fields.Nested(BuildSchema, allow_none=True)
     run_patch = fields.Dict(keys=fields.Str(), values=fields.Raw(), allow_none=True)
     hub_ref = fields.Str(allow_none=True)
     dag_ref = fields.Str(allow_none=True)
@@ -110,7 +112,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     Args:
         version: str
         kind: str, should be equal to `operation`
-        patch_strategy: str, optional, defaults to post_merge.
+        patch_strategy: str, optional, defaults to post_merge
         is_preset: bool, optional
         is_approved: bool, optional
         name: str, optional
@@ -124,6 +126,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
         schedule: Union[[V1CronSchedule](/docs/automation/schedules/cron/), [V1IntervalSchedule](/docs/automation/schedules/interval/), [V1DateTimeSchedule](/docs/automation/schedules/datetime/)], optional  # noqa
         events: List[[V1EventTrigger](/docs/automation/events/)], optional
+        build: [V1Build](/docs/automation/builds/), optional
         hooks: List[[V1Hook](/docs/automation/hooks/)], optional
         matrix: Union[[V1Mapping](/docs/automation/mapping/), [V1GridSearch](/docs/automation/optimization-engine/grid-search/), [V1RandomSearch](/docs/automation/optimization-engine/random-search/), [V1Hyperband](/docs/automation/optimization-engine/hyperband/), [V1Bayes](/docs/automation/optimization-engine/bayesian-optimization/), [V1Hyperopt](/docs/automation/optimization-engine/hyperopt/), [V1Iterative](/docs/automation/optimization-engine/iterative/)], optional  # noqa
         joins: List[[V1Join](/docs/automation/joins/)], optional
@@ -160,6 +163,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     >>>   actions:
     >>>   hooks:
     >>>   params:
+    >>>   build:
     >>>   runPatch:
     >>>   hubRef:
     >>>   dagRef:
@@ -172,7 +176,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
 
     ```python
     >>> from polyaxon.polyflow import (
-    >>>     V1Cache, V1Component, V1Hook, V1Param, V1Plugins, V1Operation, V1Termination
+    >>>     V1Build, V1Cache, V1Component, V1Hook, V1Param, V1Plugins, V1Operation, V1Termination
     >>> )
     >>> from polyaxon.schemas import V1PatchStrategy
     >>> operation = V1Operation(
@@ -186,9 +190,9 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     >>>     termination=V1Termination(...),
     >>>     plugins=V1Plugins(...),
     >>>     events=["event-ref1", "event-ref2"],
-    >>>     actions=[V1Action(...)],
     >>>     hooks=[V1Hook(...)],
     >>>     outputs={"param1": V1Param(...), ...},
+    >>>     build=V1Build(...),
     >>>     component=V1Component(...),
     >>> )
     ```
@@ -375,6 +379,22 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     >>>     param3: {ref: ops.upstream-operation, value: outputs.metric}
     >>>   ...
     ```
+
+    ### build
+
+    > **Note**: Please check [V1Build](/docs/automation/builds/) for more details.
+
+    This section defines if this operation should build a container before starting the main logic.
+    If the build section is provided, Polyaxon will set the main operation to a pending state
+    until the build is done and then it will use the resulting docker image
+    for starting the main container.
+
+    ```yaml
+    >>> operation:
+    >>>   ...
+    >>>   build:
+    >>>     hubRef: kaniko
+    >>>   ...
 
     ### runPatch
 
@@ -651,5 +671,31 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
             run_patch=run_patch,
             hub_ref=hook.hub_ref,
             presets=hook.presets,
+            queue=hook.queue,
+            params=params,
+        )
+
+    @classmethod
+    def from_build(cls, build: V1Build, contexts: Dict = None):
+        # Extend params with
+        contexts = contexts or {}
+        params = build.params or {}
+        for k, v in contexts.items():
+            params[k] = V1Param(value=v, context_only=True)
+
+        destination = params.get("destination") or V1Param()
+        if not destination.value:
+            destination.value = "{{ globals.project_name }}:{{ globals.uuid }}"
+        if not destination.connection or build.connection:
+            destination.connection = build.connection
+        params["destination"] = destination
+
+        return cls(
+            run_patch=build.run_patch,
+            patch_strategy=build.patch_strategy,
+            hub_ref=build.hub_ref,
+            presets=build.presets,
+            queue=build.queue,
+            cache=build.cache,
             params=params,
         )

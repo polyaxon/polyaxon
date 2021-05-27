@@ -33,6 +33,9 @@ import (
 // swagger:model v1Component
 type V1Component struct {
 
+	// Optional build process
+	Build *V1Build `json:"build,omitempty"`
+
 	// Optional flag to disable cache validation and force run this component
 	Cache *V1Cache `json:"cache,omitempty"`
 
@@ -86,6 +89,10 @@ type V1Component struct {
 func (m *V1Component) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateBuild(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateCache(formats); err != nil {
 		res = append(res, err)
 	}
@@ -117,6 +124,23 @@ func (m *V1Component) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *V1Component) validateBuild(formats strfmt.Registry) error {
+	if swag.IsZero(m.Build) { // not required
+		return nil
+	}
+
+	if m.Build != nil {
+		if err := m.Build.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("build")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -264,6 +288,10 @@ func (m *V1Component) validateTermination(formats strfmt.Registry) error {
 func (m *V1Component) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateBuild(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateCache(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -295,6 +323,20 @@ func (m *V1Component) ContextValidate(ctx context.Context, formats strfmt.Regist
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *V1Component) contextValidateBuild(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Build != nil {
+		if err := m.Build.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("build")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

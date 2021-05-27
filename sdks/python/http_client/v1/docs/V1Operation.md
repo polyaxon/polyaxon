@@ -28,10 +28,11 @@ Name | Type | Description | Notes
 **is_preset** | **bool** |  | [optional] 
 **is_approved** | **bool** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
-**url_ref** | **str** |  | [optional] 
+**build** | [**V1Build**](V1Build.md) |  | [optional] 
 **path_ref** | **str** |  | [optional] 
 **hub_ref** | **str** |  | [optional] 
 **dag_ref** | **str** |  | [optional] 
+**url_ref** | **str** |  | [optional] 
 **component** | [**V1Component**](V1Component.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -22,6 +22,7 @@ from coredb.api.base.tags import TagsMixin
 from coredb.managers.statuses import bulk_new_run_status
 from polyaxon import live_state
 from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
+from polyaxon.schemas import V1RunPending
 from polycommon import auditor
 from polycommon.events.registry.run import (
     RUN_APPROVED_ACTOR,
@@ -92,10 +93,10 @@ def stop_runs(view, request, actor, *args, **kwargs):
 
 
 def approve_runs(view, request, actor, *args, **kwargs):
-    queryset = (
-        get_run_model()
-        .objects.filter(project=view.project, uuid__in=request.data.get("uuids", []))
-        .exclude(pending__isnull=True)
+    queryset = get_run_model().objects.filter(
+        project=view.project,
+        uuid__in=request.data.get("uuids", []),
+        pending__in={V1RunPending.APPROVAL, V1RunPending.CACHE},
     )
     runs = [r for r in queryset]
     queryset.update(pending=None)

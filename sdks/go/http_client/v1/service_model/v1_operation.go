@@ -34,6 +34,9 @@ import (
 // swagger:model v1Operation
 type V1Operation struct {
 
+	// Optional build process
+	Build *V1Build `json:"build,omitempty"`
+
 	// Optional flag to disable cache validation and force run this operation
 	Cache *V1Cache `json:"cache,omitempty"`
 
@@ -97,7 +100,7 @@ type V1Operation struct {
 	// Optional queue to use for running this operation
 	Queue string `json:"queue,omitempty"`
 
-	// Optional a run section to override  the content of the run in the template
+	// Optional a run section to override the content of the run in the template
 	// should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
 	RunPatch interface{} `json:"runPatch,omitempty"`
 
@@ -129,6 +132,10 @@ type V1Operation struct {
 // Validate validates this v1 operation
 func (m *V1Operation) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateBuild(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateCache(formats); err != nil {
 		res = append(res, err)
@@ -177,6 +184,23 @@ func (m *V1Operation) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *V1Operation) validateBuild(formats strfmt.Registry) error {
+	if swag.IsZero(m.Build) { // not required
+		return nil
+	}
+
+	if m.Build != nil {
+		if err := m.Build.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("build")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -393,6 +417,10 @@ func (m *V1Operation) validateTrigger(formats strfmt.Registry) error {
 func (m *V1Operation) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateBuild(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateCache(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -440,6 +468,20 @@ func (m *V1Operation) ContextValidate(ctx context.Context, formats strfmt.Regist
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *V1Operation) contextValidateBuild(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Build != nil {
+		if err := m.Build.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("build")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

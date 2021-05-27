@@ -16,7 +16,7 @@
 
 from django.conf import settings
 
-from coredb.operations.service import OperationsService
+from coredb.operations.service import OperationInitSpec, OperationsService
 from polycommon.service_interface import LazyServiceWrapper
 
 

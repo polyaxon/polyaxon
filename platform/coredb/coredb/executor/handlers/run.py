@@ -41,6 +41,9 @@ def handle_run_created(workers_backend, event: "Event") -> None:  # noqa: F821
     # Run is managed by a pipeline
     if event.data.get("pipeline_id") is not None:
         return
+    # Run is pending
+    if event.instance.pending is not None:
+        return
 
     if conf.get(SCHEDULER_ENABLED) and not eager:
         workers_backend.send(
@@ -59,6 +62,19 @@ def handle_run_approved_triggered(
     if not run:
         return
 
+    # Check if it should prepare
+    if run.status == V1Statuses.CREATED:
+        if conf.get(SCHEDULER_ENABLED):
+            workers_backend.send(
+                CoreSchedulerCeleryTasks.RUNS_PREPARE,
+                kwargs={"run_id": event.instance_id},
+            )
+            return
+
+        # Eager mode
+        manager.runs_prepare(run_id=event.instance_id, run=event.instance, eager=True)
+
+    # Should start
     if run.is_managed and conf.get(SCHEDULER_ENABLED):
         workers_backend.send(
             CoreSchedulerCeleryTasks.RUNS_START, kwargs={"run_id": event.instance_id}

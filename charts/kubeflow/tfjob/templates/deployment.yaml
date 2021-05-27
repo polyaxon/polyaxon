@@ -35,6 +35,7 @@ spec:
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: IfNotPresent
         env:
         - name: MY_POD_NAMESPACE
           valueFrom:

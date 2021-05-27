@@ -68,6 +68,21 @@ class TestPatchSpecifications(BaseTestCase):
                     "collectArtifacts": False,
                     "collectResources": False,
                 },
+                "build": {
+                    "params": {
+                        "patch-key1": {"value": "{}2".format(self.DEFAULT_STR_VALUE)},
+                        "patch-key2": {"value": "{}1".format(self.DEFAULT_STR_VALUE)},
+                    },
+                    "runPatch": {
+                        "init": [
+                            {
+                                "connection": self.DEFAULT_STR_VALUE,
+                                "git": {"revision": self.DEFAULT_STR_VALUE},
+                            }
+                        ],
+                    },
+                    "hubRef": self.DEFAULT_STR_VALUE,
+                },
                 "hooks": [
                     {
                         "hubRef": "{}1".format(self.DEFAULT_STR_VALUE),
@@ -198,6 +213,21 @@ class TestPatchSpecifications(BaseTestCase):
                     "collectArtifacts": True,
                     "collectResources": True,
                 },
+                "build": {
+                    "params": {
+                        "patch-key1": {"value": "{}2".format(self.PATCH_STR_VALUE)},
+                        "patch-key2": {"value": "{}1".format(self.PATCH_STR_VALUE)},
+                    },
+                    "runPatch": {
+                        "init": [
+                            {
+                                "connection": self.PATCH_STR_VALUE,
+                                "git": {"revision": self.PATCH_STR_VALUE},
+                            }
+                        ],
+                    },
+                    "hubRef": self.PATCH_STR_VALUE,
+                },
                 "hooks": [
                     {
                         "hubRef": "{}1".format(self.PATCH_STR_VALUE),
@@ -296,6 +326,7 @@ class TestPatchSpecifications(BaseTestCase):
                 "cache": {},
                 "termination": {},
                 "plugins": {},
+                "build": None,
                 "hooks": [],
                 "params": {},
                 "runPatch": {
@@ -370,6 +401,7 @@ class TestPatchSpecifications(BaseTestCase):
         assert result_dict.pop("cache") == operation.cache.to_dict()
         assert result_dict.pop("plugins") == operation.plugins.to_dict()
         assert result_dict.pop("termination") == operation.termination.to_dict()
+        assert result_dict.pop("build", None) is not None
         expected = preset.to_dict()
         expected.pop("isPreset")
         expected.pop("cache")

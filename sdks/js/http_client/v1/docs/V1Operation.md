@@ -29,10 +29,11 @@ Name | Type | Description | Notes
 **isPreset** | **Boolean** |  | [optional] 
 **isApproved** | **Boolean** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
-**urlRef** | **String** |  | [optional] 
+**build** | [**V1Build**](V1Build.md) |  | [optional] 
 **pathRef** | **String** |  | [optional] 
 **hubRef** | **String** |  | [optional] 
 **dagRef** | **String** |  | [optional] 
+**urlRef** | **String** |  | [optional] 
 **component** | [**V1Component**](V1Component.md) |  | [optional] 
 
 

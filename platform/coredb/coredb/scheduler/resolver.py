@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 from marshmallow import ValidationError as MarshmallowValidationError
 from rest_framework.exceptions import ValidationError
@@ -23,12 +23,13 @@ from coredb.abstracts.runs import BaseRun
 from coredb.managers.artifacts import set_artifacts
 from polyaxon.constants.metadata import (
     META_COPY_ARTIFACTS,
+    META_DESTINATION_IMAGE,
     META_REWRITE_PATH,
     META_UPLOAD_ARTIFACTS,
 )
 from polyaxon.exceptions import PolyaxonCompilerError, PolyaxonSchemaError
 from polyaxon.polyaxonfile import OperationSpecification
-from polyaxon.polyflow import V1CompiledOperation, V1Init
+from polyaxon.polyflow import V1CompiledOperation, V1Init, V1Operation
 from polyaxon.polypod.compiler import resolver
 from polyaxon.polypod.compiler.lineage.artifacts_collector import (
     collect_lineage_artifacts_path,
@@ -76,6 +77,12 @@ class CorePlatformResolver(resolver.BaseResolver):
         init = V1Init(artifacts=artifacts)
         return [{"runPatch": {"init": [init.to_dict()]}}]
 
+    def _get_meta_destination_image(self) -> Optional[str]:
+        if not self.run.meta_info or META_DESTINATION_IMAGE not in self.run.meta_info:
+            return None
+
+        return self.run.meta_info.pop(META_DESTINATION_IMAGE)
+
     def resolve_presets(self):
         for preset in self._get_meta_artifacts_presets():
             self.compiled_operation = OperationSpecification.apply_preset(
@@ -97,7 +104,7 @@ class CorePlatformResolver(resolver.BaseResolver):
         self._persist_artifacts()
 
     def _check_approval(self):
-        if self.compiled_operation.is_approved is False:
+        if self.compiled_operation.is_approved is False and self.run.pending is None:
             self.run.pending = V1RunPending.APPROVAL
             return True
         return False
@@ -121,10 +128,11 @@ def resolve(
 ):
     resolver_cls = resolver_cls or CorePlatformResolver
     try:
+        compiled_operation = V1CompiledOperation.read(run.content)
         project = run.project
         return resolver.resolve(
             run=run,
-            compiled_operation=V1CompiledOperation.read(run.content),
+            compiled_operation=compiled_operation,
             owner_name=project.owner.name,
             project_name=project.name,
             project_uuid=project.uuid.hex,
@@ -138,6 +146,42 @@ def resolve(
             cloning_kind=run.cloning_kind,
             original_uuid=run.original.uuid.hex if run.original_id else None,
             eager=eager,
+        )
+    except (
+        AccessNotAuthorized,
+        AccessNotFound,
+    ) as e:
+        raise PolyaxonCompilerError("Access Error: %s" % e) from e
+    except (
+        AccessNotAuthorized,
+        AccessNotFound,
+        MarshmallowValidationError,
+        PolyaxonSchemaError,
+        ValidationError,
+    ) as e:
+        raise PolyaxonCompilerError("Compilation Error: %s" % e) from e
+
+
+def resolve_hooks(run: BaseRun, resolver_cls=None) -> List[V1Operation]:
+    resolver_cls = resolver_cls or CorePlatformResolver
+    try:
+        compiled_operation = V1CompiledOperation.read(run.content)
+        project = run.project
+        return resolver.resolve_hooks(
+            run=run,
+            compiled_operation=compiled_operation,
+            owner_name=project.owner.name,
+            project_name=project.name,
+            project_uuid=project.uuid.hex,
+            run_uuid=run.uuid.hex,
+            run_name=run.name,
+            run_path=run.subpath,
+            resolver_cls=resolver_cls,
+            params=None,
+            compiled_at=None,
+            created_at=run.created_at,
+            cloning_kind=run.cloning_kind,
+            original_uuid=run.original.uuid.hex if run.original_id else None,
         )
     except (
         AccessNotAuthorized,

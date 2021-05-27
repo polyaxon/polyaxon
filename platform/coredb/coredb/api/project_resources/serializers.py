@@ -19,12 +19,12 @@ from rest_framework.exceptions import ValidationError
 
 from django.db import IntegrityError
 
+from coredb import operations
 from coredb.abstracts.getter import get_run_model
 from coredb.api.base.cloning import CloningMixin
 from coredb.api.base.is_managed import IsManagedMixin
 from coredb.api.base.pipeline import PipelineMixin
 from coredb.api.base.settings import SettingsMixin
-from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import create_run
 from polyaxon.exceptions import PolyaxonException
 from polyaxon.polyaxonfile import OperationSpecification
@@ -132,8 +132,6 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
             "is_approved",
         )
         extra_kwargs = {
-            "meta_info": {"write_only": True},
-            "pending": {"write_only": True},
             "is_approved": {"write_only": True},
         }
 
@@ -177,7 +175,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                     "Please customize the specification or disable the template."
                 )
             try:
-                return compile_operation_run(
+                return operations.init_and_save_run(
                     project_id=project_id,
                     user_id=user.id if user else None,
                     op_spec=op_spec,

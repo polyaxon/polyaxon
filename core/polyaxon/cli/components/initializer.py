@@ -91,7 +91,7 @@ def file(file_context, filepath, copy_path, track):
 
 @initializer.command()
 @click.option("--url", help="The git url to pull.")
-@click.option("--revision", help="The revision(commint/branch/treeish) to pull.")
+@click.option("--revision", help="The revision(commit/branch/treeish) to pull.")
 @click.option("--repo-path", help="The path to where to pull the repos.")
 @click.option("--connection", help="The connection used for pulling this repo.")
 @click.option("--flags", help="Additional flags for pulling this repo.")

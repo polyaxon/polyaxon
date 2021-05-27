@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.9.1
+  version: 1.9.2
 servers:
 - url: /
 security:
@@ -15697,6 +15697,59 @@ components:
           type: string
       title: Bucket connection schema validation specification
       type: object
+    v1Build:
+      example:
+        cache:
+          disable: true
+          io:
+          - io
+          - io
+          ttl: 0
+        presets:
+        - presets
+        - presets
+        runPatch: '{}'
+        hubRef: hubRef
+        connection: connection
+        params:
+          key:
+            ref: ref
+            contextOnly: true
+            connection: connection
+            toInit: true
+            value: '{}'
+        queue: queue
+      properties:
+        hubRef:
+          title: Component name to use
+          type: string
+        connection:
+          title: Connection to use
+          type: string
+        queue:
+          title: Optional queue to use for scheduling the tuner
+          type: string
+        presets:
+          items:
+            type: string
+          title: Optional list of presets to use for running this tuner
+          type: array
+        cache:
+          $ref: '#/components/schemas/v1Cache'
+        params:
+          additionalProperties:
+            $ref: '#/components/schemas/v1Param'
+          title: Optional dict of params
+          type: object
+        runPatch:
+          properties: {}
+          title: Optional a run section to override the content of the run in the
+            template
+          type: object
+        patchStrategy:
+          $ref: '#/components/schemas/v1PatchStrategy'
+      title: Build definition
+      type: object
     v1Cache:
       example:
         disable: true
@@ -15798,10 +15851,6 @@ components:
       type: object
     v1CompiledOperation:
       example:
-        termination:
-          maxRetries: 4
-          ttl: 8
-          timeout: 7
         joins:
           key:
             ref: ref
@@ -15844,13 +15893,6 @@ components:
           type: type
           value: '{}'
           isList: true
-        cache:
-          disable: true
-          io:
-          - io
-          - io
-          ttl: 0
-        kind: kind
         plugins:
           mountArtifactsStore: true
           syncStatuses: true
@@ -15939,20 +15981,6 @@ components:
           value: '{}'
           isList: true
         matrix: '{}'
-        version: 0.87740767
-        tags:
-        - tags
-        - tags
-        dependencies:
-        - dependencies
-        - dependencies
-        schedule: '{}'
-        presets:
-        - presets
-        - presets
-        skipOnUpstreamSkip: true
-        name: name
-        conditions: conditions
         isApproved: true
         hooks:
         - presets:
@@ -15985,7 +16013,6 @@ components:
               toInit: true
               value: '{}'
           queue: queue
-        queue: queue
         events:
         - ref: ref
           kinds:
@@ -15995,6 +16022,53 @@ components:
           kinds:
           - null
           - null
+        termination:
+          maxRetries: 4
+          ttl: 8
+          timeout: 7
+        cache:
+          disable: true
+          io:
+          - io
+          - io
+          ttl: 0
+        kind: kind
+        version: 0.87740767
+        tags:
+        - tags
+        - tags
+        dependencies:
+        - dependencies
+        - dependencies
+        schedule: '{}'
+        presets:
+        - presets
+        - presets
+        skipOnUpstreamSkip: true
+        build:
+          cache:
+            disable: true
+            io:
+            - io
+            - io
+            ttl: 0
+          presets:
+          - presets
+          - presets
+          runPatch: '{}'
+          hubRef: hubRef
+          connection: connection
+          params:
+            key:
+              ref: ref
+              contextOnly: true
+              connection: connection
+              toInit: true
+              value: '{}'
+          queue: queue
+        name: name
+        conditions: conditions
+        queue: queue
       properties:
         version:
           format: float
@@ -16038,6 +16112,8 @@ components:
           title: Optional events section, must be a valid List of EventTrigger option
             (Run/Git/Alert/Webhook/Dataset)
           type: array
+        build:
+          $ref: '#/components/schemas/v1Build'
         hooks:
           items:
             $ref: '#/components/schemas/v1Hook'
@@ -16204,6 +16280,27 @@ components:
         presets:
         - presets
         - presets
+        build:
+          cache:
+            disable: true
+            io:
+            - io
+            - io
+            ttl: 0
+          presets:
+          - presets
+          - presets
+          runPatch: '{}'
+          hubRef: hubRef
+          connection: connection
+          params:
+            key:
+              ref: ref
+              contextOnly: true
+              connection: connection
+              toInit: true
+              value: '{}'
+          queue: queue
         name: name
         isApproved: true
         hooks:
@@ -16287,6 +16384,8 @@ components:
             $ref: '#/components/schemas/v1IO'
           title: Optional outputs definition
           type: array
+        build:
+          $ref: '#/components/schemas/v1Build'
         run:
           properties: {}
           title: 'Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag'
@@ -16787,6 +16886,27 @@ components:
           presets:
           - presets
           - presets
+          build:
+            cache:
+              disable: true
+              io:
+              - io
+              - io
+              ttl: 0
+            presets:
+            - presets
+            - presets
+            runPatch: '{}'
+            hubRef: hubRef
+            connection: connection
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           name: name
           isApproved: true
           hooks:
@@ -16932,6 +17052,27 @@ components:
           presets:
           - presets
           - presets
+          build:
+            cache:
+              disable: true
+              io:
+              - io
+              - io
+              ttl: 0
+            presets:
+            - presets
+            - presets
+            runPatch: '{}'
+            hubRef: hubRef
+            connection: connection
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           name: name
           isApproved: true
           hooks:
@@ -17225,6 +17366,27 @@ components:
             presets:
             - presets
             - presets
+            build:
+              cache:
+                disable: true
+                io:
+                - io
+                - io
+                ttl: 0
+              presets:
+              - presets
+              - presets
+              runPatch: '{}'
+              hubRef: hubRef
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             name: name
             isApproved: true
             hooks:
@@ -17264,6 +17426,27 @@ components:
           - presets
           skipOnUpstreamSkip: true
           runPatch: '{}'
+          build:
+            cache:
+              disable: true
+              io:
+              - io
+              - io
+              ttl: 0
+            presets:
+            - presets
+            - presets
+            runPatch: '{}'
+            hubRef: hubRef
+            connection: connection
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           name: name
           urlRef: urlRef
           conditions: conditions
@@ -17499,6 +17682,27 @@ components:
             presets:
             - presets
             - presets
+            build:
+              cache:
+                disable: true
+                io:
+                - io
+                - io
+                ttl: 0
+              presets:
+              - presets
+              - presets
+              runPatch: '{}'
+              hubRef: hubRef
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             name: name
             isApproved: true
             hooks:
@@ -17538,6 +17742,27 @@ components:
           - presets
           skipOnUpstreamSkip: true
           runPatch: '{}'
+          build:
+            cache:
+              disable: true
+              io:
+              - io
+              - io
+              ttl: 0
+            presets:
+            - presets
+            - presets
+            runPatch: '{}'
+            hubRef: hubRef
+            connection: connection
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           name: name
           urlRef: urlRef
           conditions: conditions
@@ -18455,7 +18680,6 @@ components:
       - run_status_on_schedule
       - run_status_queued
       - run_status_scheduled
-      - run_status_awaiting_cache
       - run_status_starting
       - run_status_running
       - run_status_processing
@@ -18752,14 +18976,14 @@ components:
             value: '{}'
         queue: queue
       properties:
-        connection:
-          title: Optional connection
-          type: string
-        trigger:
-          $ref: '#/components/schemas/v1Statuses'
         hubRef:
           title: Component name to use
           type: string
+        connection:
+          title: Connection to use
+          type: string
+        trigger:
+          $ref: '#/components/schemas/v1Statuses'
         conditions:
           title: An optional template containing conditions to check before starting
             the run
@@ -18778,7 +19002,7 @@ components:
           title: Optional preset to use for running this operation
           type: array
         disableDefaults:
-          title: Optional preset to use for running this operation
+          title: Optional params context from the main operation
           type: boolean
       title: Hook definition
       type: object
@@ -20796,6 +21020,7 @@ components:
                 name: name
                 uuid: uuid
               tensorboard: '{}'
+              build: '{}'
               namespace: namespace
               artifacts_store:
                 name: name
@@ -20864,6 +21089,7 @@ components:
                 name: name
                 uuid: uuid
               tensorboard: '{}'
+              build: '{}'
               namespace: namespace
               artifacts_store:
                 name: name
@@ -20934,6 +21160,7 @@ components:
                 name: name
                 uuid: uuid
               tensorboard: '{}'
+              build: '{}'
               namespace: namespace
               artifacts_store:
                 name: name
@@ -21002,6 +21229,7 @@ components:
                 name: name
                 uuid: uuid
               tensorboard: '{}'
+              build: '{}'
               namespace: namespace
               artifacts_store:
                 name: name
@@ -21095,6 +21323,7 @@ components:
               name: name
               uuid: uuid
             tensorboard: '{}'
+            build: '{}'
             namespace: namespace
             artifacts_store:
               name: name
@@ -21161,6 +21390,7 @@ components:
               name: name
               uuid: uuid
             tensorboard: '{}'
+            build: '{}'
             namespace: namespace
             artifacts_store:
               name: name
@@ -22468,6 +22698,27 @@ components:
           presets:
           - presets
           - presets
+          build:
+            cache:
+              disable: true
+              io:
+              - io
+              - io
+              ttl: 0
+            presets:
+            - presets
+            - presets
+            runPatch: '{}'
+            hubRef: hubRef
+            connection: connection
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           name: name
           isApproved: true
           hooks:
@@ -22507,6 +22758,27 @@ components:
         - presets
         skipOnUpstreamSkip: true
         runPatch: '{}'
+        build:
+          cache:
+            disable: true
+            io:
+            - io
+            - io
+            ttl: 0
+          presets:
+          - presets
+          - presets
+          runPatch: '{}'
+          hubRef: hubRef
+          connection: connection
+          params:
+            key:
+              ref: ref
+              contextOnly: true
+              connection: connection
+              toInit: true
+              value: '{}'
+          queue: queue
         name: name
         urlRef: urlRef
         conditions: conditions
@@ -22591,7 +22863,7 @@ components:
         runPatch:
           properties: {}
           title: |-
-            Optional a run section to override  the content of the run in the template
+            Optional a run section to override the content of the run in the template
             should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
           type: object
         patchStrategy:
@@ -22605,13 +22877,15 @@ components:
           type: boolean
         template:
           $ref: '#/components/schemas/v1Template'
-        urlRef:
-          type: string
+        build:
+          $ref: '#/components/schemas/v1Build'
         pathRef:
           type: string
         hubRef:
           type: string
         dagRef:
+          type: string
+        urlRef:
           type: string
         component:
           $ref: '#/components/schemas/v1Component'
@@ -23655,6 +23929,7 @@ components:
             name: name
             uuid: uuid
           tensorboard: '{}'
+          build: '{}'
           namespace: namespace
           artifacts_store:
             name: name
@@ -23899,6 +24174,7 @@ components:
               name: name
               uuid: uuid
             tensorboard: '{}'
+            build: '{}'
             namespace: namespace
             artifacts_store:
               name: name
@@ -23967,6 +24243,7 @@ components:
               name: name
               uuid: uuid
             tensorboard: '{}'
+            build: '{}'
             namespace: namespace
             artifacts_store:
               name: name
@@ -24044,6 +24321,7 @@ components:
       - join
       - run
       - tb
+      - build
       type: string
     v1RunKind:
       default: job
@@ -24064,11 +24342,12 @@ components:
       - watchdog
       - notifier
       - cleaner
+      - builder
       title: |-
         Run kind enum
         Kinds: job, service, dag, matrix, schedule
         Runtime kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob
-        helper kinds: tuner, watchdog, notifier, cleaner
+        helper kinds: tuner, watchdog, notifier, cleaner, build
       type: string
     v1RunPending:
       default: approval
@@ -25074,6 +25353,27 @@ components:
             presets:
             - presets
             - presets
+            build:
+              cache:
+                disable: true
+                io:
+                - io
+                - io
+                ttl: 0
+              presets:
+              - presets
+              - presets
+              runPatch: '{}'
+              hubRef: hubRef
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             name: name
             isApproved: true
             hooks:
@@ -25219,6 +25519,27 @@ components:
             presets:
             - presets
             - presets
+            build:
+              cache:
+                disable: true
+                io:
+                - io
+                - io
+                ttl: 0
+              presets:
+              - presets
+              - presets
+              runPatch: '{}'
+              hubRef: hubRef
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             name: name
             isApproved: true
             hooks:
@@ -25512,6 +25833,27 @@ components:
               presets:
               - presets
               - presets
+              build:
+                cache:
+                  disable: true
+                  io:
+                  - io
+                  - io
+                  ttl: 0
+                presets:
+                - presets
+                - presets
+                runPatch: '{}'
+                hubRef: hubRef
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    contextOnly: true
+                    connection: connection
+                    toInit: true
+                    value: '{}'
+                queue: queue
               name: name
               isApproved: true
               hooks:
@@ -25551,6 +25893,27 @@ components:
             - presets
             skipOnUpstreamSkip: true
             runPatch: '{}'
+            build:
+              cache:
+                disable: true
+                io:
+                - io
+                - io
+                ttl: 0
+              presets:
+              - presets
+              - presets
+              runPatch: '{}'
+              hubRef: hubRef
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             name: name
             urlRef: urlRef
             conditions: conditions
@@ -25786,6 +26149,27 @@ components:
               presets:
               - presets
               - presets
+              build:
+                cache:
+                  disable: true
+                  io:
+                  - io
+                  - io
+                  ttl: 0
+                presets:
+                - presets
+                - presets
+                runPatch: '{}'
+                hubRef: hubRef
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    contextOnly: true
+                    connection: connection
+                    toInit: true
+                    value: '{}'
+                queue: queue
               name: name
               isApproved: true
               hooks:
@@ -25825,6 +26209,27 @@ components:
             - presets
             skipOnUpstreamSkip: true
             runPatch: '{}'
+            build:
+              cache:
+                disable: true
+                io:
+                - io
+                - io
+                ttl: 0
+              presets:
+              - presets
+              - presets
+              runPatch: '{}'
+              hubRef: hubRef
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             name: name
             urlRef: urlRef
             conditions: conditions
@@ -26605,6 +27010,7 @@ components:
           name: name
           uuid: uuid
         tensorboard: '{}'
+        build: '{}'
         namespace: namespace
         artifacts_store:
           name: name
@@ -26633,6 +27039,10 @@ components:
         tensorboard:
           properties: {}
           title: Latest Tensorboard reference, if it exists
+          type: object
+        build:
+          properties: {}
+          title: Build reference, if it exists
           type: object
         component_version:
           $ref: '#/components/schemas/v1RunReferenceCatalog'
@@ -27703,6 +28113,27 @@ components:
               presets:
               - presets
               - presets
+              build:
+                cache:
+                  disable: true
+                  io:
+                  - io
+                  - io
+                  ttl: 0
+                presets:
+                - presets
+                - presets
+                runPatch: '{}'
+                hubRef: hubRef
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    contextOnly: true
+                    connection: connection
+                    toInit: true
+                    value: '{}'
+                queue: queue
               name: name
               isApproved: true
               hooks:
@@ -27848,6 +28279,27 @@ components:
               presets:
               - presets
               - presets
+              build:
+                cache:
+                  disable: true
+                  io:
+                  - io
+                  - io
+                  ttl: 0
+                presets:
+                - presets
+                - presets
+                runPatch: '{}'
+                hubRef: hubRef
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    contextOnly: true
+                    connection: connection
+                    toInit: true
+                    value: '{}'
+                queue: queue
               name: name
               isApproved: true
               hooks:
@@ -28141,6 +28593,27 @@ components:
                 presets:
                 - presets
                 - presets
+                build:
+                  cache:
+                    disable: true
+                    io:
+                    - io
+                    - io
+                    ttl: 0
+                  presets:
+                  - presets
+                  - presets
+                  runPatch: '{}'
+                  hubRef: hubRef
+                  connection: connection
+                  params:
+                    key:
+                      ref: ref
+                      contextOnly: true
+                      connection: connection
+                      toInit: true
+                      value: '{}'
+                  queue: queue
                 name: name
                 isApproved: true
                 hooks:
@@ -28180,6 +28653,27 @@ components:
               - presets
               skipOnUpstreamSkip: true
               runPatch: '{}'
+              build:
+                cache:
+                  disable: true
+                  io:
+                  - io
+                  - io
+                  ttl: 0
+                presets:
+                - presets
+                - presets
+                runPatch: '{}'
+                hubRef: hubRef
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    contextOnly: true
+                    connection: connection
+                    toInit: true
+                    value: '{}'
+                queue: queue
               name: name
               urlRef: urlRef
               conditions: conditions
@@ -28415,6 +28909,27 @@ components:
                 presets:
                 - presets
                 - presets
+                build:
+                  cache:
+                    disable: true
+                    io:
+                    - io
+                    - io
+                    ttl: 0
+                  presets:
+                  - presets
+                  - presets
+                  runPatch: '{}'
+                  hubRef: hubRef
+                  connection: connection
+                  params:
+                    key:
+                      ref: ref
+                      contextOnly: true
+                      connection: connection
+                      toInit: true
+                      value: '{}'
+                  queue: queue
                 name: name
                 isApproved: true
                 hooks:
@@ -28454,6 +28969,27 @@ components:
               - presets
               skipOnUpstreamSkip: true
               runPatch: '{}'
+              build:
+                cache:
+                  disable: true
+                  io:
+                  - io
+                  - io
+                  ttl: 0
+                presets:
+                - presets
+                - presets
+                runPatch: '{}'
+                hubRef: hubRef
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    contextOnly: true
+                    connection: connection
+                    toInit: true
+                    value: '{}'
+                queue: queue
               name: name
               urlRef: urlRef
               conditions: conditions
@@ -29778,6 +30314,27 @@ components:
             presets:
             - presets
             - presets
+            build:
+              cache:
+                disable: true
+                io:
+                - io
+                - io
+                ttl: 0
+              presets:
+              - presets
+              - presets
+              runPatch: '{}'
+              hubRef: hubRef
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  contextOnly: true
+                  connection: connection
+                  toInit: true
+                  value: '{}'
+              queue: queue
             name: name
             isApproved: true
             hooks:
@@ -29817,16 +30374,33 @@ components:
           - presets
           skipOnUpstreamSkip: true
           runPatch: '{}'
+          build:
+            cache:
+              disable: true
+              io:
+              - io
+              - io
+              ttl: 0
+            presets:
+            - presets
+            - presets
+            runPatch: '{}'
+            hubRef: hubRef
+            connection: connection
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
           name: name
           urlRef: urlRef
           conditions: conditions
           pathRef: pathRef
           queue: queue
         compiledOperation:
-          termination:
-            maxRetries: 4
-            ttl: 8
-            timeout: 7
           joins:
             key:
               ref: ref
@@ -29869,13 +30443,6 @@ components:
             type: type
             value: '{}'
             isList: true
-          cache:
-            disable: true
-            io:
-            - io
-            - io
-            ttl: 0
-          kind: kind
           plugins:
             mountArtifactsStore: true
             syncStatuses: true
@@ -29964,20 +30531,6 @@ components:
             value: '{}'
             isList: true
           matrix: '{}'
-          version: 0.87740767
-          tags:
-          - tags
-          - tags
-          dependencies:
-          - dependencies
-          - dependencies
-          schedule: '{}'
-          presets:
-          - presets
-          - presets
-          skipOnUpstreamSkip: true
-          name: name
-          conditions: conditions
           isApproved: true
           hooks:
           - presets:
@@ -30010,7 +30563,6 @@ components:
                 toInit: true
                 value: '{}'
             queue: queue
-          queue: queue
           events:
           - ref: ref
             kinds:
@@ -30020,6 +30572,53 @@ components:
             kinds:
             - null
             - null
+          termination:
+            maxRetries: 4
+            ttl: 8
+            timeout: 7
+          cache:
+            disable: true
+            io:
+            - io
+            - io
+            ttl: 0
+          kind: kind
+          version: 0.87740767
+          tags:
+          - tags
+          - tags
+          dependencies:
+          - dependencies
+          - dependencies
+          schedule: '{}'
+          presets:
+          - presets
+          - presets
+          skipOnUpstreamSkip: true
+          build:
+            cache:
+              disable: true
+              io:
+              - io
+              - io
+              ttl: 0
+            presets:
+            - presets
+            - presets
+            runPatch: '{}'
+            hubRef: hubRef
+            connection: connection
+            params:
+              key:
+                ref: ref
+                contextOnly: true
+                connection: connection
+                toInit: true
+                value: '{}'
+            queue: queue
+          name: name
+          conditions: conditions
+          queue: queue
         k8sResource:
           schema:
             mountPath: mountPath

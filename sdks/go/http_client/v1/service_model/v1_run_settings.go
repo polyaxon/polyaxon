@@ -39,6 +39,9 @@ type V1RunSettings struct {
 	// Artifacts Store
 	ArtifactsStore *V1SettingsCatalog `json:"artifacts_store,omitempty"`
 
+	// Build reference, if it exists
+	Build interface{} `json:"build,omitempty"`
+
 	// Component version reference
 	ComponentVersion *V1RunReferenceCatalog `json:"component_version,omitempty"`
 

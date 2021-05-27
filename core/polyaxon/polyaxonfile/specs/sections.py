@@ -31,6 +31,7 @@ class Sections:
     QUEUE = "queue"
     CACHE = "cache"
     PLUGINS = "plugins"
+    BUILD = "build"
     HOOKS = "hooks"
     EVENTS = "events"
     TERMINATION = "termination"
@@ -71,6 +72,7 @@ class Sections:
         CACHE,
         QUEUE,
         PLUGINS,
+        BUILD,
         HOOKS,
         EVENTS,
         TERMINATION,

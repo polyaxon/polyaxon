@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.9.1",
+    "version": "1.9.2",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -16109,6 +16109,50 @@
       },
       "title": "Bucket connection schema validation specification"
     },
+    "v1Build": {
+      "type": "object",
+      "properties": {
+        "hubRef": {
+          "type": "string",
+          "title": "Component name to use"
+        },
+        "connection": {
+          "type": "string",
+          "title": "Connection to use"
+        },
+        "queue": {
+          "type": "string",
+          "title": "Optional queue to use for scheduling the tuner"
+        },
+        "presets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional list of presets to use for running this tuner"
+        },
+        "cache": {
+          "$ref": "#/definitions/v1Cache",
+          "title": "Optional flag to disable cache validation and force run this operation"
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Param"
+          },
+          "title": "Optional dict of params"
+        },
+        "runPatch": {
+          "type": "object",
+          "title": "Optional a run section to override the content of the run in the template"
+        },
+        "patchStrategy": {
+          "$ref": "#/definitions/v1PatchStrategy",
+          "title": "Optional patch strategy, default post_merge"
+        }
+      },
+      "title": "Build definition"
+    },
     "v1Cache": {
       "type": "object",
       "properties": {
@@ -16266,6 +16310,10 @@
           },
           "title": "Optional events section, must be a valid List of EventTrigger option (Run/Git/Alert/Webhook/Dataset)"
         },
+        "build": {
+          "$ref": "#/definitions/v1Build",
+          "title": "Optional build process"
+        },
         "hooks": {
           "type": "array",
           "items": {
@@ -16405,6 +16453,10 @@
             "$ref": "#/definitions/v1IO"
           },
           "title": "Optional outputs definition"
+        },
+        "build": {
+          "$ref": "#/definitions/v1Build",
+          "title": "Optional build process"
         },
         "run": {
           "type": "object",
@@ -17516,7 +17568,6 @@
         "run_status_on_schedule",
         "run_status_queued",
         "run_status_scheduled",
-        "run_status_awaiting_cache",
         "run_status_starting",
         "run_status_running",
         "run_status_processing",
@@ -17789,17 +17840,17 @@
     "v1Hook": {
       "type": "object",
       "properties": {
+        "hubRef": {
+          "type": "string",
+          "title": "Component name to use"
+        },
         "connection": {
           "type": "string",
-          "title": "Optional connection"
+          "title": "Connection to use"
         },
         "trigger": {
           "$ref": "#/definitions/v1Statuses",
           "title": "Optional trigger policy, default done"
-        },
-        "hubRef": {
-          "type": "string",
-          "title": "Component name to use"
         },
         "conditions": {
           "type": "string",
@@ -17825,7 +17876,7 @@
         },
         "disableDefaults": {
           "type": "boolean",
-          "title": "Optional preset to use for running this operation"
+          "title": "Optional params context from the main operation"
         }
       },
       "title": "Hook definition"
@@ -19726,7 +19777,7 @@
         },
         "runPatch": {
           "type": "object",
-          "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
+          "title": "Optional a run section to override the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
         },
         "patchStrategy": {
           "$ref": "#/definitions/v1PatchStrategy",
@@ -19744,8 +19795,9 @@
           "$ref": "#/definitions/v1Template",
           "title": "Optional to mark this specification as template with instructions"
         },
-        "urlRef": {
-          "type": "string"
+        "build": {
+          "$ref": "#/definitions/v1Build",
+          "title": "Optional build process"
         },
         "pathRef": {
           "type": "string"
@@ -19754,6 +19806,9 @@
           "type": "string"
         },
         "dagRef": {
+          "type": "string"
+        },
+        "urlRef": {
           "type": "string"
         },
         "component": {
@@ -20776,7 +20831,8 @@
         "dag",
         "join",
         "run",
-        "tb"
+        "tb",
+        "build"
       ],
       "default": "action"
     },
@@ -20798,10 +20854,11 @@
         "tuner",
         "watchdog",
         "notifier",
-        "cleaner"
+        "cleaner",
+        "builder"
       ],
       "default": "job",
-      "title": "Run kind enum\nKinds: job, service, dag, matrix, schedule\nRuntime kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob\nhelper kinds: tuner, watchdog, notifier, cleaner"
+      "title": "Run kind enum\nKinds: job, service, dag, matrix, schedule\nRuntime kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob\nhelper kinds: tuner, watchdog, notifier, cleaner, build"
     },
     "v1RunPending": {
       "type": "string",
@@ -20884,6 +20941,10 @@
         "tensorboard": {
           "type": "object",
           "title": "Latest Tensorboard reference, if it exists"
+        },
+        "build": {
+          "type": "object",
+          "title": "Build reference, if it exists"
         },
         "component_version": {
           "$ref": "#/definitions/v1RunReferenceCatalog",

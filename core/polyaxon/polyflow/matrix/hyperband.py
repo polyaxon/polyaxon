@@ -353,7 +353,7 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
 
     SCHEMA = HyperbandSchema
     IDENTIFIER = V1MatrixKind.HYPERBAND
-    REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping", "tuner"]
+    REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping", "tuner", "resume"]
 
     def set_tuning_params(self):
         # Maximum iterations per configuration: max_iterations

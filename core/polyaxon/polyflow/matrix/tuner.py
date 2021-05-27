@@ -50,7 +50,7 @@ class V1Tuner(BaseConfig, polyaxon_sdk.V1Tuner):
     To override the complete behavior users can provide their own component.
 
     Args:
-        hub_ref: str, optional
+        hub_ref: str
         queue: List[str], optional
         presets: List[str], optional
         params: Dict[str, [V1Param](/docs/core/specification/params/)], optional

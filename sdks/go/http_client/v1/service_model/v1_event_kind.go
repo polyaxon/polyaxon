@@ -58,9 +58,6 @@ const (
 	// V1EventKindRunStatusScheduled captures enum value "run_status_scheduled"
 	V1EventKindRunStatusScheduled V1EventKind = "run_status_scheduled"
 
-	// V1EventKindRunStatusAwaitingCache captures enum value "run_status_awaiting_cache"
-	V1EventKindRunStatusAwaitingCache V1EventKind = "run_status_awaiting_cache"
-
 	// V1EventKindRunStatusStarting captures enum value "run_status_starting"
 	V1EventKindRunStatusStarting V1EventKind = "run_status_starting"
 
@@ -145,7 +142,7 @@ var v1EventKindEnum []interface{}
 
 func init() {
 	var res []V1EventKind
-	if err := json.Unmarshal([]byte(`["run_status_created","run_status_resuming","run_status_compiled","run_status_on_schedule","run_status_queued","run_status_scheduled","run_status_awaiting_cache","run_status_starting","run_status_running","run_status_processing","run_status_stopping","run_status_failed","run_status_stopped","run_status_succeeded","run_status_skipped","run_status_warning","run_status_unschedulable","run_status_upstream_failed","run_status_retrying","run_status_unknown","run_status_done","run_approved_actor","run_invalidated_actor","run_new_artifacts","connection_git_commit","connection_dataset_version","connection_registry_image","alert_info","alert_warning","alert_critical","model_version_new_metric","project_custom_event","org_custom_event"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["run_status_created","run_status_resuming","run_status_compiled","run_status_on_schedule","run_status_queued","run_status_scheduled","run_status_starting","run_status_running","run_status_processing","run_status_stopping","run_status_failed","run_status_stopped","run_status_succeeded","run_status_skipped","run_status_warning","run_status_unschedulable","run_status_upstream_failed","run_status_retrying","run_status_unknown","run_status_done","run_approved_actor","run_invalidated_actor","run_new_artifacts","connection_git_commit","connection_dataset_version","connection_registry_image","alert_info","alert_warning","alert_critical","model_version_new_metric","project_custom_event","org_custom_event"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

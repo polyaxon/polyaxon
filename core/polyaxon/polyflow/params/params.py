@@ -436,7 +436,10 @@ class ParamSpec(
         return self.get_typed_param_value()
 
     def __repr__(self):
-        return str(self.get_display_value())
+        value = self.get_display_value()
+        if value is None:
+            return ""
+        return parser.parse_string(value)
 
     def as_str(self):
         return str(self)
@@ -455,7 +458,7 @@ class ParamSpec(
         if self.type == types.BOOL:
             return "--{}".format(self.name) if self.param.value else ""
         return (
-            "--{}={}".format(self.name.replace("_", "-"), self.as_str())
+            "--{}={}".format(self.name, self.as_str())
             if self.param.value is not None
             else ""
         )

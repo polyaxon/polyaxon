@@ -36,10 +36,10 @@ type V1Hook struct {
 	// An optional template containing conditions to check before starting the run
 	Conditions string `json:"conditions,omitempty"`
 
-	// Optional connection
+	// Connection to use
 	Connection string `json:"connection,omitempty"`
 
-	// Optional preset to use for running this operation
+	// Optional params context from the main operation
 	DisableDefaults bool `json:"disableDefaults,omitempty"`
 
 	// Component name to use

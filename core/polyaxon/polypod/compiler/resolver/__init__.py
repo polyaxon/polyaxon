@@ -15,4 +15,4 @@
 # limitations under the License.
 
 from polyaxon.polypod.compiler.resolver.base import BaseResolver
-from polyaxon.polypod.compiler.resolver.resolver import resolve
+from polyaxon.polypod.compiler.resolver.resolver import resolve, resolve_hooks

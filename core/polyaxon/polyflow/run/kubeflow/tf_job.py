@@ -18,9 +18,11 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
+from polyaxon.k8s.k8s_schemas import V1Container
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema
+from polyaxon.polyflow.run.utils import DestinationImageMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
@@ -39,7 +41,7 @@ class TFJobSchema(BaseCamelSchema):
         return V1TFJob
 
 
-class V1TFJob(BaseConfig, polyaxon_sdk.V1TFJob):
+class V1TFJob(BaseConfig, DestinationImageMixin, polyaxon_sdk.V1TFJob):
     """Kubeflow TF-Job provides an interface to train distributed experiments with TensorFlow.
 
     Args:
@@ -172,3 +174,17 @@ class V1TFJob(BaseConfig, polyaxon_sdk.V1TFJob):
         "worker",
         "evaluator",
     ]
+
+    def apply_image_destination(self, image: str):
+        if self.chief:
+            self.chief.container = self.chief.container or V1Container()
+            self.chief.container.image = image
+        if self.ps:
+            self.ps.container = self.ps.container or V1Container()
+            self.ps.container.image = image
+        if self.worker:
+            self.worker.container = self.worker.container or V1Container()
+            self.worker.container.image = image
+        if self.evaluator:
+            self.evaluator.container = self.evaluator.container or V1Container()
+            self.evaluator.container.image = image

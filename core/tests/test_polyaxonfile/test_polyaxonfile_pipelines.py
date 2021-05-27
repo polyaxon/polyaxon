@@ -272,6 +272,48 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         assert run_config.run.concurrency == 3
         assert run_config.schedule is None
 
+    def test_dag_pipeline_with_builds(self):
+        run_config = V1CompiledOperation.read(
+            [
+                os.path.abspath(
+                    "tests/fixtures/pipelines/simple_dag_pipeline_with_builds.yml"
+                ),
+                {"kind": "compiled_operation"},
+            ]
+        )
+
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        assert run_config.build.hub_ref == "kaniko"
+        assert run_config.build.connection == "docker-connection"
+        assert len(run_config.build.params) == 1
+        assert len(run_config.build.run_patch["init"]) == 2
+        assert len(run_config.run.components) == 2
+        assert run_config.run.components[0].build.hub_ref == "kaniko"
+        assert run_config.run.components[0].build.connection == "docker-connection2"
+        assert len(run_config.run.components[0].build.params) == 1
+        assert len(run_config.run.components[0].build.run_patch["init"]) == 1
+        assert len(run_config.run.operations) == 5
+        assert run_config.run.operations[0].name == "job1"
+        assert run_config.run.operations[1].name == "experiment1"
+        assert run_config.run.operations[1].dependencies == ["job1"]
+        assert run_config.run.operations[2].name == "experiment2"
+        assert run_config.run.operations[2].dependencies == ["job1"]
+        assert run_config.run.operations[3].name == "experiment3"
+        assert run_config.run.operations[3].dependencies == ["job1"]
+        assert run_config.run.operations[4].name == "job2"
+        assert run_config.run.operations[4].dependencies == [
+            "experiment1",
+            "experiment2",
+            "experiment3",
+        ]
+        dag_strategy = run_config.run
+        sorted_dag = dag_strategy.sort_topologically(dag_strategy.dag)
+        assert sorted_dag[0] == ["job1"]
+        assert set(sorted_dag[1]) == {"experiment1", "experiment2", "experiment3"}
+        assert sorted_dag[2] == ["job2"]
+        assert run_config.run.concurrency == 3
+        assert run_config.schedule is None
+
     def test_build_run_pipeline(self):
         run_config = V1CompiledOperation.read(
             [

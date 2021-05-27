@@ -366,6 +366,52 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.matrix.kind == V1Hyperband.IDENTIFIER
         assert run_config.matrix.early_stopping is None
 
+        # With build
+        plx_file = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
+                "tests/fixtures/plain/matrix_job_file_build.yml"
+            ),
+            is_cli=False,
+        )
+        run_config = OperationSpecification.compile_operation(plx_file)
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        assert run_config.version == 1.1
+        assert run_config.build.hub_ref == "kaniko"
+        assert run_config.build.connection == "docker-connection"
+        assert run_config.build.params is None
+        assert len(run_config.build.run_patch["init"]) == 2
+        assert isinstance(run_config.matrix, V1Hyperband)
+        assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
+        assert isinstance(run_config.matrix.params["loss"], V1HpChoice)
+        assert run_config.matrix.params["lr"].to_dict() == {
+            "kind": "linspace",
+            "value": {"start": 0.01, "stop": 0.1, "num": 5},
+        }
+        assert run_config.matrix.params["loss"].to_dict() == {
+            "kind": "choice",
+            "value": ["MeanSquaredError", "AbsoluteDifference"],
+        }
+        assert run_config.matrix.params["normal_rate"].to_dict() == {
+            "kind": "normal",
+            "value": {"loc": 0, "scale": 0.9},
+        }
+        assert run_config.matrix.params["dropout"].to_dict() == {
+            "kind": "qloguniform",
+            "value": {"high": 0.8, "low": 0, "q": 0.1},
+        }
+        assert run_config.matrix.params["activation"].to_dict() == {
+            "kind": "pchoice",
+            "value": [["relu", 0.1], ["sigmoid", 0.8]],
+        }
+        assert run_config.matrix.params["model"].to_dict() == {
+            "kind": "choice",
+            "value": ["CDNA", "DNA", "STP"],
+        }
+        assert run_config.matrix.concurrency == 2
+        assert isinstance(run_config.matrix, V1Hyperband)
+        assert run_config.matrix.kind == V1Hyperband.IDENTIFIER
+        assert run_config.matrix.early_stopping is None
+
     def test_matrix_file_passes_int_float_types(self):
         plx_file = check_polyaxonfile(
             polyaxonfile=os.path.abspath(
@@ -458,6 +504,42 @@ class TestPolyaxonfiles(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        assert run_config.build is None
+        assert run_config.version == 1.1
+        assert run_config.termination is not None
+        assert run_config.termination.ttl == 12
+        assert run_config.is_tf_job_run
+        assert run_config.run.worker.replicas == 5
+        assert run_config.run.worker.environment.affinity is not None
+        assert run_config.run.worker.environment.restart_policy == "OnFailure"
+        assert run_config.run.worker.container.resources == {
+            "requests": {"memory": "300Mi"},
+            "limits": {"memory": "300Mi"},
+        }
+        assert run_config.run.ps.replicas == 10
+        assert run_config.run.ps.environment.affinity is None
+        assert isinstance(run_config.run.ps.environment.tolerations, list)
+        assert run_config.run.ps.environment.restart_policy == "OnFailure"
+        assert run_config.run.ps.container.resources == {
+            "requests": {"cpu": 3, "memory": "256Mi"},
+            "limits": {"cpu": 3, "memory": "256Mi"},
+        }
+
+        # With build
+        run_config = CompiledOperationSpecification.read(
+            [
+                os.path.abspath(
+                    "tests/fixtures/plain/distributed_tensorflow_file_build.yml"
+                ),
+                {"kind": "compiled_operation"},
+            ]
+        )
+
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        assert run_config.build.hub_ref == "kaniko"
+        assert run_config.build.connection == "docker-connection"
+        assert len(run_config.build.params) == 1
+        assert len(run_config.build.run_patch["init"]) == 2
         assert run_config.version == 1.1
         assert run_config.termination is not None
         assert run_config.termination.ttl == 12

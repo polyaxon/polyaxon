@@ -20,6 +20,7 @@ from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
+from coredb.managers.runs import base_approve_run
 from coredb.managers.statuses import new_run_status, new_run_stopping_status
 from polyaxon.exceptions import PolyaxonException
 from polyaxon.lifecycle import V1StatusCondition
@@ -72,8 +73,8 @@ def stop_run(view, request, *args, **kwargs):
 
 
 def approve_run(view, request, *args, **kwargs):
-    if view.run.pending:
-        view.run.pending = None
-        view.run.save()
+    pending = view.run.pending
+    if pending:
+        base_approve_run(view.run)
         view.audit(request, *args, **kwargs)
     return Response(status=status.HTTP_200_OK, data={})

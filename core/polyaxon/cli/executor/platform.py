@@ -16,6 +16,7 @@
 
 import sys
 
+from collections import namedtuple
 from typing import Dict, List
 
 import click
@@ -42,6 +43,10 @@ from polyaxon.schemas import V1RunPending
 from polyaxon.schemas.types import V1ArtifactsType
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
+
+
+class RunWatchSpec(namedtuple("RunWatchSpec", "uuid name")):
+    pass
 
 
 def run(
@@ -96,7 +101,7 @@ def run(
                         )
                     )
                 )
-            return response.uuid
+            return response
         except (ApiException, HTTPError) as e:
             handle_cli_error(
                 e,
@@ -127,6 +132,21 @@ def run(
             )
             sys.exit(1)
 
+    def watch_run_statuses(run_uuid: str):
+        ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
+        ctx.invoke(statuses, watch=True)
+
+    def watch_run_logs(run_uuid: str):
+        ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
+        ctx.invoke(run_logs)
+
+    def upload_run(run_uuid: str):
+        ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
+        ctx.invoke(
+            run_upload, path_to=upload_to, path_from=upload_from, sync_failure=True
+        )
+        ctx.invoke(approve)
+
     click.echo("Creating a new run...")
     run_meta_info = None
     if eager:
@@ -134,16 +154,20 @@ def run(
     if upload:
         run_meta_info = run_meta_info or {}
         run_meta_info[META_UPLOAD_ARTIFACTS] = upload_to or DEFAULT_UPLOADS_PATH
-    run_uuid = create_run(
+    run_instance = create_run(
         not eager, run_meta_info, pending=V1RunPending.UPLOAD if upload else None
     )
-    ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
+
+    runs_to_watch = [RunWatchSpec(run_instance.uuid, run_instance.name)]
+
+    build_uuid = None
+    if run_instance.pending == V1RunPending.BUILD and run_instance.settings.build:
+        build_uuid = run_instance.settings.build.get("uuid")
+        build_name = run_instance.settings.build.get("name")
+        runs_to_watch.insert(0, RunWatchSpec(build_uuid, build_name))
 
     if upload:
-        ctx.invoke(
-            run_upload, path_to=upload_to, path_from=upload_from, sync_failure=True
-        )
-        ctx.invoke(approve)
+        upload_run(build_uuid or run_instance.uuid)
 
     if eager:
         from polyaxon.polyaxonfile.manager import get_eager_matrix_operations
@@ -154,7 +178,9 @@ def run(
         if upload:
             run_meta_info = {
                 META_UPLOAD_ARTIFACTS: upload_to or DEFAULT_UPLOADS_PATH,
-                META_COPY_ARTIFACTS: V1ArtifactsType(dirs=[run_uuid]).to_dict(),
+                META_COPY_ARTIFACTS: V1ArtifactsType(
+                    dirs=[run_instance.uuid]
+                ).to_dict(),
             }
         compiled_operation = V1CompiledOperation.read(polyaxon_client.run_data.content)
         matrix_content = polyaxon_client.run_data.raw_content
@@ -168,14 +194,23 @@ def run(
             compiled_operation=compiled_operation,
             is_cli=True,
         ):
-            create_run(meta_info=run_meta_info)
+            i_run_instance = create_run(meta_info=run_meta_info)
+            runs_to_watch.append(RunWatchSpec(i_run_instance.uuid, i_run_instance.name))
 
         return
 
     # Check if we need to invoke logs
     if watch and not eager:
-        ctx.invoke(statuses, watch=True)
+        for instance in runs_to_watch:
+            Printer.print_success(
+                f"Starting watch for run: <Name: {instance.name}> - <uuid: {instance.uuid}>"
+            )
+            watch_run_statuses(instance.uuid)
 
     # Check if we need to invoke logs
     if log and not eager:
-        ctx.invoke(run_logs)
+        for instance in runs_to_watch:
+            Printer.print_success(
+                f"Starting logs for run: <Name: {instance.name}> - <uuid: {instance.uuid}>"
+            )
+            watch_run_logs(instance.uuid)

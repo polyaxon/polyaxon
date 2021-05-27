@@ -20,11 +20,11 @@ from unittest.mock import patch
 
 from rest_framework import status
 
+from coredb import operations
 from coredb.api.project_resources.serializers import RunSerializer
 from coredb.api.runs.serializers import RunDetailSerializer, RunStatusSerializer
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
-from coredb.managers.operations import compile_operation_run
 from coredb.managers.statuses import new_run_status, new_run_stop_status
 from coredb.models.runs import Run
 from polyaxon import live_state
@@ -248,7 +248,7 @@ class BaseRerunRunApi(BaseTestRunApi):
             },
         }
         op_spec = OperationSpecification.read(values=values)
-        self.object = compile_operation_run(
+        self.object = operations.init_and_save_run(
             project_id=self.project.id, op_spec=op_spec, user_id=self.user.id
         )
         self.url = "/{}/{}/{}/runs/{}/".format(
@@ -590,6 +590,115 @@ class TestApproveRunViewV1(BaseTestRunApi):
         assert workers_send.call_count == 1
         assert self.queryset.count() == 1
         assert self.queryset.last().pending is None
+
+    def test_approve_compiled(self):
+        assert self.queryset.count() == 1
+        last_run = self.queryset.last()
+        last_run.pending = V1RunPending.APPROVAL
+        last_run.status = V1Statuses.COMPILED
+        last_run.save()
+        with patch("polycommon.workers.send") as workers_send:
+            resp = self.client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert workers_send.call_count == 1
+        assert self.queryset.count() == 1
+        assert self.queryset.last().pending is None
+
+    def test_approve_build(self):
+        assert self.queryset.count() == 1
+        last_run = self.queryset.last()
+        last_run.pending = V1RunPending.BUILD
+        last_run.content = None
+        last_run.save()
+        with patch("polycommon.workers.send") as workers_send:
+            resp = self.client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert workers_send.call_count == 1
+        assert self.queryset.count() == 1
+        assert self.queryset.last().pending is None
+
+    def test_approve_build_approve(self):
+        assert self.queryset.count() == 1
+        last_run = self.queryset.last()
+        values = {
+            "version": 1.1,
+            "kind": "operation",
+            "name": "foo",
+            "description": "a description",
+            "params": {"image": {"value": "foo/bar"}},
+            "isApproved": False,
+            "component": {
+                "name": "build-template",
+                "inputs": [{"name": "image", "type": "str"}],
+                "tags": ["tag1", "tag2"],
+                "run": {
+                    "kind": V1RunKind.JOB,
+                    "container": {"image": "{{ image }}"},
+                    "init": [{"connection": "foo", "git": {"revision": "dev"}}],
+                },
+            },
+        }
+        op_spec = OperationSpecification.read(values=values)
+        instance = operations.init_run(
+            project_id=self.project.id, op_spec=op_spec, user_id=self.user.id
+        ).instance
+        last_run.content = instance.content
+        last_run.pending = V1RunPending.BUILD
+        last_run.save()
+        with patch("polycommon.workers.send") as workers_send:
+            resp = self.client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert workers_send.call_count == 1
+        assert self.queryset.count() == 1
+        assert self.queryset.last().pending == V1RunPending.APPROVAL
+
+    def test_approve_upload(self):
+        assert self.queryset.count() == 1
+        last_run = self.queryset.last()
+        last_run.pending = V1RunPending.UPLOAD
+        last_run.content = None
+        last_run.save()
+        with patch("polycommon.workers.send") as workers_send:
+            resp = self.client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert workers_send.call_count == 1
+        assert self.queryset.count() == 1
+        assert self.queryset.last().pending is None
+
+    def test_approve_build_upload(self):
+        assert self.queryset.count() == 1
+        last_run = self.queryset.last()
+        values = {
+            "version": 1.1,
+            "kind": "operation",
+            "name": "foo",
+            "description": "a description",
+            "params": {"image": {"value": "foo/bar"}},
+            "isApproved": False,
+            "component": {
+                "name": "build-template",
+                "inputs": [{"name": "image", "type": "str"}],
+                "tags": ["tag1", "tag2"],
+                "run": {
+                    "kind": V1RunKind.JOB,
+                    "container": {"image": "{{ image }}"},
+                    "init": [{"connection": "foo", "git": {"revision": "dev"}}],
+                },
+            },
+        }
+        op_spec = OperationSpecification.read(values=values)
+        instance = operations.init_run(
+            project_id=self.project.id, op_spec=op_spec, user_id=self.user.id
+        ).instance
+        last_run.content = instance.content
+        last_run.pending = V1RunPending.UPLOAD
+        last_run.save()
+        with patch("polycommon.workers.send") as workers_send:
+            resp = self.client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert workers_send.call_count == 1
+        assert self.queryset.count() == 1
+        assert self.queryset.last().pending == V1RunPending.APPROVAL
 
     def test_approve_already_approved_run(self):
         assert self.queryset.count() == 1

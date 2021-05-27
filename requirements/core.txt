@@ -1,6 +1,6 @@
 -r base.txt
 
-celery==5.0.5
+celery==5.1.0
 Django==3.2.3
 djangorestframework==3.12.4
 numpy<=1.21

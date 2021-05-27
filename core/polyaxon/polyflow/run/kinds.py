@@ -31,6 +31,7 @@ class V1RunKind(polyaxon_sdk.V1RunKind):
         polyaxon_sdk.V1RunKind.WATCHDOG,
         polyaxon_sdk.V1RunKind.TUNER,
         polyaxon_sdk.V1RunKind.CLEANER,
+        polyaxon_sdk.V1RunKind.BUILDER,
     }
 
 

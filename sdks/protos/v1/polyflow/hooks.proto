@@ -19,19 +19,18 @@ syntax = "proto3";
 package v1;
 
 import "v1/polyflow/io.proto";
-import "v1/polyflow/patch_strategy.proto";
 import "v1/polyflow/status.proto";
 
 // Hook definition
 message Hook {
-    // Optional connection
-    string connection = 1;
+    // Component name to use
+    string hubRef = 1;
+
+    // Connection to use
+    string connection = 2;
 
     // Optional trigger policy, default done
-    Statuses trigger = 2;
-
-    // Component name to use
-    string hubRef = 3;
+    Statuses trigger = 3;
 
     // An optional template containing conditions to check before starting the run
     string conditions = 4;
@@ -45,6 +44,6 @@ message Hook {
     // Optional preset to use for running this operation
     repeated string presets = 7;
 
-    // Optional preset to use for running this operation
+    // Optional params context from the main operation
     bool disableDefaults = 8;
 }

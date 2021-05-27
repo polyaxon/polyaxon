@@ -20,6 +20,7 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
+import "v1/polyflow/build.proto";
 import "v1/polyflow/cache.proto";
 import "v1/polyflow/hooks.proto";
 import "v1/polyflow/io.proto";
@@ -68,12 +69,15 @@ message Component {
     // Optional outputs definition
     repeated IO outputs = 13;
 
+    // Optional build process
+    Build build = 14;
+
     // Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 14;
+    google.protobuf.Struct run = 15;
 
     // Optional flag to mark this specification as template
-    Template template = 15;
+    Template template = 16;
 
     // Optional flag to mark this specification requires approval before running
-    bool isApproved = 16;
+    bool isApproved = 17;
 }

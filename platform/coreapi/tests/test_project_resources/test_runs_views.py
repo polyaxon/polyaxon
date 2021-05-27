@@ -169,35 +169,69 @@ class TestProjectRunsApproveViewV1(BaseTest):
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()
+        # Approval
         self.objects = [
             self.factory_class(
                 project=self.project, user=self.user, pending=V1RunPending.APPROVAL
             )
-            for _ in range(4)
+            for _ in range(3)
         ]
+        # Cache
+        self.objects.append(
+            self.factory_class(
+                project=self.project, user=self.user, pending=V1RunPending.CACHE
+            )
+        )
+        # Upload
+        self.objects.append(
+            self.factory_class(
+                project=self.project, user=self.user, pending=V1RunPending.UPLOAD
+            )
+        )
+        # Build
+        self.objects.append(
+            self.factory_class(
+                project=self.project, user=self.user, pending=V1RunPending.BUILD
+            )
+        )
         self.url = "/{}/{}/{}/runs/approve/".format(
             API_V1, self.user.username, self.project.name
         )
 
     @patch("polycommon.workers.send")
     def test_approve(self, _):
-        data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
+        assert Run.objects.filter(pending__isnull=True).count() == 0
+        data = {
+            "uuids": [
+                self.objects[0].uuid.hex,
+                self.objects[1].uuid.hex,
+                self.objects[3].uuid.hex,
+                self.objects[4].uuid.hex,
+                self.objects[5].uuid.hex,
+            ]
+        }
         assert set(Run.objects.only("pending").values_list("pending", flat=True)) == {
-            V1RunPending.APPROVAL
+            V1RunPending.APPROVAL,
+            V1RunPending.CACHE,
+            V1RunPending.UPLOAD,
+            V1RunPending.BUILD,
         }
         with patch("polycommon.auditor.record") as auditor_record:
             resp = self.client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
+        assert Run.objects.filter(pending__isnull=True).count() == 3
         assert set(
             Run.objects.filter(uuid__in=data["uuids"])
             .only("pending")
             .values_list("pending", flat=True)
-        ) == {None}
+        ) == {None, V1RunPending.UPLOAD, V1RunPending.BUILD}
         assert set(Run.objects.only("pending").values_list("pending", flat=True)) == {
             V1RunPending.APPROVAL,
+            V1RunPending.UPLOAD,
+            V1RunPending.BUILD,
             None,
         }
-        assert auditor_record.call_count == 2
+        assert auditor_record.call_count == 3
 
 
 @pytest.mark.projects_resources_mark

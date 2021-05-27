@@ -16,35 +16,30 @@
 
 from django.test import TestCase
 
+from coredb import operations
 from coredb.factories.projects import ProjectFactory
-from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
-from coredb.managers.operations import compile_operation_run
+from coredb.models.runs import Run
 from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
 from polyaxon.polyflow import V1RunKind
-from polycommon.test_cases.fixtures.jobs import get_fxt_job, get_fxt_job_with_inputs
-from polycommon.test_cases.fixtures.services import (
-    get_fxt_service,
-    get_fxt_service_with_inputs,
-)
+from polycommon.test_cases.fixtures import get_fxt_job, get_fxt_job_with_inputs
 
 
-class TestCreateRunManager(TestCase):
+class TestCreateJobs(TestCase):
     def setUp(self):
         super().setUp()
         self.user = UserFactory()
         self.project = ProjectFactory()
 
-    def test_create_run_without_spec(self):
-        run = RunFactory(project=self.project, user=self.user)
-        assert run.name is None
-
     def test_create_run_with_job_spec(self):
+        count = Run.objects.count()
         config_dict = get_fxt_job()
         spec = OperationSpecification.read(values=config_dict)
-        run = compile_operation_run(
+        run = operations.init_and_save_run(
             project_id=self.project.id, user_id=self.user.id, op_spec=spec
         )
+        assert Run.objects.count() == count + 1
+        assert run.pending is None
         assert run.kind == V1RunKind.JOB
         assert run.name == "foo"
         assert run.description == "a description"
@@ -62,11 +57,14 @@ class TestCreateRunManager(TestCase):
         assert job_spec.run.container.image == "test"
 
     def test_create_run_with_templated_job_spec(self):
+        count = Run.objects.count()
         config_dict = get_fxt_job_with_inputs()
         spec = OperationSpecification.read(values=config_dict)
-        run = compile_operation_run(
+        run = operations.init_and_save_run(
             project_id=self.project.id, user_id=self.user.id, op_spec=spec
         )
+        assert Run.objects.count() == count + 1
+        assert run.pending is None
         assert run.kind == V1RunKind.JOB
         assert run.name == "foo"
         assert run.description == "a description"
@@ -83,44 +81,5 @@ class TestCreateRunManager(TestCase):
         run.save(update_fields=["content"])
         job_spec = CompiledOperationSpecification.read(run.content)
         assert job_spec.run.container.image == "{{ image }}"
-        job_spec = CompiledOperationSpecification.apply_runtime_contexts(job_spec)
-        assert job_spec.run.container.image == "foo/bar"
-
-    def test_create_run_with_service_spec(self):
-        config_dict = get_fxt_service()
-        spec = OperationSpecification.read(values=config_dict)
-        run = compile_operation_run(
-            project_id=self.project.id, user_id=self.user.id, op_spec=spec
-        )
-        assert run.kind == V1RunKind.SERVICE
-        assert run.name == "foo"
-        assert run.description == "a description"
-        assert set(run.tags) == {"backend", "lab", "tag1", "tag2"}
-        service_spec = CompiledOperationSpecification.read(run.content)
-        assert service_spec.run.container.image == "jupyter"
-
-    def test_create_run_with_templated_service_spec(self):
-        config_dict = get_fxt_service_with_inputs()
-        spec = OperationSpecification.read(values=config_dict)
-        run = compile_operation_run(
-            project_id=self.project.id, user_id=self.user.id, op_spec=spec
-        )
-        assert run.kind == V1RunKind.SERVICE
-        assert run.name == "foo"
-        assert run.description == "a description"
-        assert set(run.tags) == {"backend", "lab"}
-        job_spec = CompiledOperationSpecification.read(run.content)
-        assert job_spec.run.container.image == "{{ image }}"
-        compiled_operation = CompiledOperationSpecification.read(run.content)
-        compiled_operation = CompiledOperationSpecification.apply_params(
-            compiled_operation, params=spec.params
-        )
-        compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
-            compiled_operation
-        )
-        CompiledOperationSpecification.apply_runtime_contexts(compiled_operation)
-        run.content = compiled_operation.to_dict(dump=True)
-        run.save(update_fields=["content"])
-        job_spec = CompiledOperationSpecification.read(run.content)
         job_spec = CompiledOperationSpecification.apply_runtime_contexts(job_spec)
         assert job_spec.run.container.image == "foo/bar"

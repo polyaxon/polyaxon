@@ -19,6 +19,7 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyflow.io import V1IO, IOSchema
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
 from polyaxon.polyflow.params import ParamSpec, ops_params
@@ -129,6 +130,15 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
         set_io(self.outputs)
         self.contexts = set_contexts()
 
+    def apply_image_destination(self, image: str):
+        self.run.apply_image_destination(image)
+
     @property
     def has_pipeline(self):
         return self.is_dag_run or self.matrix or self.schedule
+
+    def validate_build(self):
+        if self.build and self.is_dag_run:
+            raise PolyaxonSchemaError(
+                "Operations with dag runtime do not support the `build` section."
+            )
