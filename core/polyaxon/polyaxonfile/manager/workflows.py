@@ -33,12 +33,14 @@ def get_op_from_schedule(
     op_spec.events = None
     op_spec.dependencies = None
     op_spec.trigger = None
+    op_spec.build = None
     op_spec.skip_on_upstream_skip = None
     op_spec.cache = compiled_operation.cache
     op_spec.queue = compiled_operation.queue
     op_spec.component.inputs = compiled_operation.inputs
     op_spec.component.outputs = compiled_operation.outputs
     op_spec.component.contexts = compiled_operation.contexts
+    op_spec.component.run = compiled_operation.run
     return op_spec
 
 
@@ -65,6 +67,7 @@ def get_ops_from_suggestions(
         op_spec.events = None
         op_spec.dependencies = None
         op_spec.trigger = None
+        op_spec.build = None
         op_spec.skip_on_upstream_skip = None
         op_spec.cache = compiled_operation.cache
         op_spec.queue = compiled_operation.queue
@@ -72,6 +75,7 @@ def get_ops_from_suggestions(
         op_spec.component.inputs = compiled_operation.inputs
         op_spec.component.outputs = compiled_operation.outputs
         op_spec.component.contexts = compiled_operation.contexts
+        op_spec.component.run = compiled_operation.run
         yield op_spec
 
 

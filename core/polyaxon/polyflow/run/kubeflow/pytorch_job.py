@@ -18,9 +18,11 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
+from polyaxon.k8s.k8s_schemas import V1Container
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema
+from polyaxon.polyflow.run.utils import DestinationImageMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
@@ -37,7 +39,7 @@ class PytorchJobSchema(BaseCamelSchema):
         return V1PytorchJob
 
 
-class V1PytorchJob(BaseConfig, polyaxon_sdk.V1PytorchJob):
+class V1PytorchJob(BaseConfig, DestinationImageMixin, polyaxon_sdk.V1PytorchJob):
     """Kubeflow Pytorch-Job provides an interface to train distributed experiments with Pytorch.
 
     Args:
@@ -128,3 +130,11 @@ class V1PytorchJob(BaseConfig, polyaxon_sdk.V1PytorchJob):
     SCHEMA = PytorchJobSchema
     IDENTIFIER = V1RunKind.PYTORCHJOB
     REDUCED_ATTRIBUTES = ["cleanPodPolicy", "master", "worker"]
+
+    def apply_image_destination(self, image: str):
+        if self.master:
+            self.master.container = self.master.container or V1Container()
+            self.master.container.image = image
+        if self.worker:
+            self.worker.container = self.worker.container or V1Container()
+            self.worker.container.image = image

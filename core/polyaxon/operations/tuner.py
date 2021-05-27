@@ -34,7 +34,7 @@ def get_tuner(
     bracket_iteration: int = None,
 ) -> V1Operation:
     params = {
-        "matrix": V1Param(value=matrix.to_dict()),
+        "matrix": V1Param(value=matrix.to_light_dict()),
         "iteration": V1Param(value=iteration),
     }
     if bracket_iteration is not None:

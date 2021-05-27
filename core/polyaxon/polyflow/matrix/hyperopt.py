@@ -226,6 +226,8 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
     SCHEMA = HyperoptSchema
     IDENTIFIER = V1MatrixKind.HYPEROPT
     REDUCED_ATTRIBUTES = [
+        "maxIterations",
+        "algorithm",
         "numRuns",
         "seed",
         "concurrency",

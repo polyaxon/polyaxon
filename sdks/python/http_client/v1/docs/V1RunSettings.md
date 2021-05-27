@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **queue** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  | [optional] 
 **artifacts_store** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  | [optional] 
 **tensorboard** | [**object**](.md) |  | [optional] 
+**build** | [**object**](.md) |  | [optional] 
 **component_version** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  | [optional] 
 **model_versions** | [**list[V1RunReferenceCatalog]**](V1RunReferenceCatalog.md) |  | [optional] 
 

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **queue** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  |  [optional]
 **artifactsStore** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  |  [optional]
 **tensorboard** | [**Object**](.md) |  |  [optional]
+**build** | [**Object**](.md) |  |  [optional]
 **componentVersion** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  |  [optional]
 **modelVersions** | [**List&lt;V1RunReferenceCatalog&gt;**](V1RunReferenceCatalog.md) |  |  [optional]
 

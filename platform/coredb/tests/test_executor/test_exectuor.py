@@ -24,6 +24,7 @@ from coredb.executor.handlers.run import (
     handle_run_stopped_triggered,
 )
 from polyaxon.constants.metadata import META_EAGER_MODE
+from polyaxon.schemas import V1RunPending
 from polycommon import auditor
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from polycommon.events.registry import run as run_events
@@ -88,39 +89,64 @@ class TestExecutorHandlers(TestCase):
     def test_create_run_handler(self):
         States.workers = None
         data = {"id": 1, "is_managed": True, "pipeline_id": None}
-        event = MagicMock(data=data, instance=MagicMock(meta_info=None))
+        event = MagicMock(data=data, instance=MagicMock(meta_info=None, pending=None))
         handle_run_created(DummyWorkers, event=event)
         assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
 
         States.workers = None
-        event = MagicMock(data=data, instance=MagicMock(meta_info={}))
+        event = MagicMock(data=data, instance=MagicMock(meta_info={}, pending=None))
         handle_run_created(DummyWorkers, event=event)
         assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
 
         States.workers = None
         event = MagicMock(
-            data=data, instance=MagicMock(meta_info={"is_approved": False})
+            data=data,
+            instance=MagicMock(
+                meta_info={"is_approved": False}, pending=V1RunPending.APPROVAL
+            ),
+        )
+        handle_run_created(DummyWorkers, event=event)
+        assert States.workers is None
+
+        States.workers = None
+        event = MagicMock(
+            data=data,
+            instance=MagicMock(
+                meta_info={"is_approved": False}, pending=V1RunPending.UPLOAD
+            ),
+        )
+        handle_run_created(DummyWorkers, event=event)
+        assert States.workers is None
+
+        States.workers = None
+        event = MagicMock(
+            data=data,
+            instance=MagicMock(
+                meta_info={"is_approved": False}, pending=V1RunPending.BUILD
+            ),
+        )
+        handle_run_created(DummyWorkers, event=event)
+        assert States.workers is None
+
+        States.workers = None
+        event = MagicMock(
+            data=data, instance=MagicMock(meta_info={"is_approved": True}, pending=None)
         )
         handle_run_created(DummyWorkers, event=event)
         assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
 
         States.workers = None
         event = MagicMock(
-            data=data, instance=MagicMock(meta_info={"is_approved": True})
+            data=data,
+            instance=MagicMock(meta_info={META_EAGER_MODE: False}, pending=None),
         )
         handle_run_created(DummyWorkers, event=event)
         assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
 
         States.workers = None
         event = MagicMock(
-            data=data, instance=MagicMock(meta_info={META_EAGER_MODE: False})
-        )
-        handle_run_created(DummyWorkers, event=event)
-        assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
-
-        States.workers = None
-        event = MagicMock(
-            data=data, instance=MagicMock(meta_info={META_EAGER_MODE: True})
+            data=data,
+            instance=MagicMock(meta_info={META_EAGER_MODE: True}, pending=None),
         )
         handle_run_created(DummyWorkers, event=event)
         assert States.workers is None

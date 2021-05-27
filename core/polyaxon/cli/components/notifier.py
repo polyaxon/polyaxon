@@ -42,10 +42,11 @@ import click
 )
 @click.option(
     "--status",
-    help="The run wait_time.",
+    help="The run status.",
 )
 @click.option(
     "--wait-time",
+    "--wait_time",
     help="The run wait_time.",
 )
 @click.option(

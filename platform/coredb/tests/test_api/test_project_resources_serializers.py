@@ -104,7 +104,16 @@ class TestOperationCreateSerializer(BaseTestRunSerializer):
     serializer_class = OperationCreateSerializer
     model_class = Run
     factory_class = RunFactory
-    expected_keys = {"uuid", "name", "description", "content", "is_managed", "tags"}
+    expected_keys = {
+        "uuid",
+        "name",
+        "description",
+        "content",
+        "is_managed",
+        "tags",
+        "pending",
+        "meta_info",
+    }
     query = Run.objects
 
     def create_one(self):

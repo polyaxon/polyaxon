@@ -37,6 +37,12 @@ def runs_start(run_id):
     manager.runs_start(run_id=run_id, run=None)
 
 
+@workers.app.task(name=CoreSchedulerCeleryTasks.RUNS_BUILT, ignore_result=True)
+def runs_built(run_id):
+    # Move to CE
+    return run_id
+
+
 @workers.app.task(name=CoreSchedulerCeleryTasks.RUNS_SET_ARTIFACTS, ignore_result=True)
 def runs_set_artifacts(run_id, artifacts: List[Dict]):
     manager.runs_set_artifacts(run_id=run_id, run=None, artifacts=artifacts)

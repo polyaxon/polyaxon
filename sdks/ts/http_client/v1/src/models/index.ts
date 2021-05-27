@@ -31,6 +31,7 @@ export * from './V1AuthType';
 export * from './V1AverageStoppingPolicy';
 export * from './V1Bayes';
 export * from './V1BucketConnection';
+export * from './V1Build';
 export * from './V1Cache';
 export * from './V1ClaimConnection';
 export * from './V1CleanPodPolicy';

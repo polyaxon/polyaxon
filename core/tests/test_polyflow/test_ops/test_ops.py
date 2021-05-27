@@ -18,7 +18,7 @@ import pytest
 
 from marshmallow import ValidationError
 
-from polyaxon.polyflow import V1EventKind, V1Hook, V1Param, V1RunKind
+from polyaxon.polyflow import V1Build, V1EventKind, V1Hook, V1Param, V1RunKind
 from polyaxon.polyflow.operations import V1Operation
 from tests.utils import BaseTestCase
 
@@ -327,6 +327,74 @@ class TestV1Operations(BaseTestCase):
         config = V1Operation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
+    def test_op_and_build(self):
+        config_dict = {
+            "build": {
+                "params": {
+                    "context": {"value": "/path/context"},
+                },
+                "runPatch": {
+                    "init": [
+                        {
+                            "git": {"revision": "branch2"},
+                            "connection": "connection-repo",
+                        }
+                    ]
+                },
+                "connection": "registry-connection",
+            },
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1Operation.from_dict(config_dict)
+
+        config_dict = {
+            "build": {
+                "params": {
+                    "context": {"value": "/path/context"},
+                },
+                "runPatch": {
+                    "init": [
+                        {
+                            "git": {"revision": "branch2"},
+                            "connection": "connection-repo",
+                        }
+                    ]
+                },
+                "hubRef": "kaniko",
+            },
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        config = V1Operation.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
+        config_dict = {
+            "build": {
+                "params": {
+                    "context": {"value": "/path/context"},
+                },
+                "runPatch": {
+                    "init": [
+                        {
+                            "git": {"revision": "branch2"},
+                            "connection": "connection-repo",
+                        }
+                    ]
+                },
+                "connection": "registry-connection",
+                "hubRef": "kaniko",
+            },
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        config = V1Operation.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
     def test_op_and_joins(self):
         config_dict = {
             "joins": [
@@ -467,6 +535,7 @@ class TestV1Operations(BaseTestCase):
             "conditions": "foo > bar",
             "params": {"param1": {"value": "foo"}, "param2": {"value": "bar"}},
             "presets": ["pre1", "pre2"],
+            "queue": "agent/queue",
         }
         hook = V1Hook.from_dict(config_dict)
 
@@ -475,6 +544,7 @@ class TestV1Operations(BaseTestCase):
         assert op.hub_ref == hook.hub_ref
         assert op.params == hook.params
         assert op.presets == hook.presets
+        assert op.queue == hook.queue
 
         op = V1Operation.from_hook(
             hook,
@@ -493,3 +563,127 @@ class TestV1Operations(BaseTestCase):
             "condition": V1Param(value={"c1": "v1"}, context_only=True),
         }
         assert op.presets == hook.presets
+        assert op.queue == hook.queue
+
+    def test_from_build(self):
+        config_dict = {
+            "connection": "test-connection",
+            "hubRef": "foo",
+            "params": {"param1": {"value": "foo"}, "param2": {"value": "bar"}},
+            "presets": ["pre1", "pre2"],
+            "queue": "agent/queue",
+            "cache": {
+                "disable": False,
+                "ttl": 100,
+            },
+            "patchStrategy": "post_merge",
+            "runPatch": {
+                "init": [
+                    {
+                        "connection": "git-connection",
+                        "git": {"revision": "branch"},
+                    }
+                ],
+            },
+        }
+        build = V1Build.from_dict(config_dict)
+        op = V1Operation.from_build(build)
+        assert op.params.pop("destination") == V1Param(
+            connection=build.connection,
+            value="{{ globals.project_name }}:{{ globals.uuid }}",
+        )
+        assert op.hub_ref == build.hub_ref
+        assert op.params == build.params
+        assert op.presets == build.presets
+        assert op.queue == build.queue
+        assert op.cache == build.cache
+        assert op.run_patch == build.run_patch
+        assert op.patch_strategy == build.patch_strategy
+
+        op = V1Operation.from_build(build, {"moo": "foo", "foo": "bar"})
+        assert op.params.pop("destination") == V1Param(
+            connection=build.connection,
+            value="{{ globals.project_name }}:{{ globals.uuid }}",
+        )
+        assert op.hub_ref == build.hub_ref
+        assert op.params == {
+            **build.params,
+            "moo": V1Param(value="foo", context_only=True),
+            "foo": V1Param(value="bar", context_only=True),
+        }
+        assert op.presets == build.presets
+        assert op.queue == build.queue
+        assert op.cache == build.cache
+        assert op.run_patch == build.run_patch
+        assert op.patch_strategy == build.patch_strategy
+
+        config_dict = {
+            "hubRef": "foo",
+            "params": {
+                "destination": {"value": "foo/bar", "connection": "provided"},
+                "param2": {"value": "bar"},
+            },
+            "presets": ["pre1", "pre2"],
+            "queue": "agent/queue",
+            "cache": {
+                "disable": False,
+                "ttl": 100,
+            },
+            "runPatch": {
+                "init": [
+                    {
+                        "connection": "git-connection",
+                        "git": {"revision": "branch"},
+                    }
+                ],
+            },
+        }
+        build = V1Build.from_dict(config_dict)
+        op = V1Operation.from_build(build)
+        assert op.params.pop("destination") == V1Param(
+            connection="provided",
+            value="foo/bar",
+        )
+        assert op.hub_ref == build.hub_ref
+        assert op.params == build.params
+        assert op.presets == build.presets
+        assert op.queue == build.queue
+        assert op.cache == build.cache
+        assert op.run_patch == build.run_patch
+        assert op.patch_strategy == build.patch_strategy
+
+        config_dict = {
+            "connection": "test-connection",
+            "hubRef": "foo",
+            "params": {
+                "destination": {"value": "foo/bar", "connection": "test"},
+                "param2": {"value": "bar"},
+            },
+            "presets": ["pre1", "pre2"],
+            "queue": "agent/queue",
+            "cache": {
+                "disable": False,
+                "ttl": 100,
+            },
+            "runPatch": {
+                "init": [
+                    {
+                        "connection": "git-connection",
+                        "git": {"revision": "branch"},
+                    }
+                ],
+            },
+        }
+        build = V1Build.from_dict(config_dict)
+        op = V1Operation.from_build(build)
+        assert op.params.pop("destination") == V1Param(
+            connection=build.connection,
+            value="foo/bar",
+        )
+        assert op.hub_ref == build.hub_ref
+        assert op.params == build.params
+        assert op.presets == build.presets
+        assert op.queue == build.queue
+        assert op.cache == build.cache
+        assert op.run_patch == build.run_patch
+        assert op.patch_strategy == build.patch_strategy

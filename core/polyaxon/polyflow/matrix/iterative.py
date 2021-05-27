@@ -258,7 +258,14 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
 
     IDENTIFIER = V1MatrixKind.ITERATIVE
     SCHEMA = IterativeSchema
-    REDUCED_ATTRIBUTES = ["params", "seed", "tuner", "earlyStopping", "concurrency"]
+    REDUCED_ATTRIBUTES = [
+        "maxIterations",
+        "params",
+        "seed",
+        "tuner",
+        "earlyStopping",
+        "concurrency",
+    ]
 
     def create_iteration(self, iteration: int = None) -> int:
         if iteration is None:

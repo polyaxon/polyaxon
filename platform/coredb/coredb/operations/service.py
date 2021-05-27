@@ -14,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from collections import namedtuple
 from typing import Dict, Optional, Set, Tuple, Union
 
 from coredb.abstracts.getter import get_run_model
-from coredb.abstracts.runs import BaseRun
 from polyaxon.constants.metadata import (
     META_HAS_DAGS,
     META_HAS_HOOKS,
@@ -32,9 +32,23 @@ from polyaxon.schemas import V1RunPending
 from polycommon.service_interface import Service
 
 
+class OperationInitSpec(
+    namedtuple(
+        "OperationInitSpec",
+        "compiled_operation instance related_instance",
+    )
+):
+    def update(self, compiled_operation=None, instance=None, related_instance=None):
+        compiled_operation = compiled_operation or self.compiled_operation
+        instance = instance or self.instance
+        related_instance = related_instance or self.related_instance
+        return OperationInitSpec(compiled_operation, instance, related_instance)
+
+
 class OperationsService(Service):
+    SUPPORTS_OP_BUILD = False
     DEFAULT_KINDS = V1RunKind.default_runtime_values
-    __all__ = ("init_run",)
+    __all__ = ("init_run", "init_and_save_run", "resolve_build", "save_build_relation")
 
     @staticmethod
     def set_spec(spec: V1Operation, **kwargs) -> Tuple[V1Operation, Dict]:
@@ -130,6 +144,32 @@ class OperationsService(Service):
 
         return results
 
+    def is_valid(self, compiled_operation: V1CompiledOperation):
+        compiled_operation.validate_build()
+        if compiled_operation.build and not self.SUPPORTS_OP_BUILD:
+            raise ValueError(
+                "You cannot create this operation. "
+                "The build section is not supported in your plan."
+            )
+
+    def resolve_build(
+        self,
+        project_id: int,
+        user_id: int,
+        compiled_operation: V1CompiledOperation,
+        inputs: Dict,
+        pending: str = None,
+        **kwargs,
+    ):
+        raise ValueError(
+            "You cannot create this operation. "
+            "The build section is not supported in your plan."
+        )
+
+    @staticmethod
+    def save_build_relation(run_init_spec: OperationInitSpec):
+        pass
+
     def init_run(
         self,
         project_id: int,
@@ -143,14 +183,13 @@ class OperationsService(Service):
         params: Dict = None,
         readme: str = None,
         original_id: int = None,
-        original_uuid: int = None,
         cloning_kind: str = None,
         is_managed: bool = True,
         pending: str = None,
         meta_info: Dict = None,
         supported_kinds: Set[str] = None,
         **kwargs,
-    ) -> Tuple[V1CompiledOperation, BaseRun]:
+    ) -> OperationInitSpec:
         if op_spec:
             op_spec, kwargs = self.set_spec(op_spec, **kwargs)
         if op_spec:
@@ -165,7 +204,24 @@ class OperationsService(Service):
         params = {p: pv.to_dict() for p, pv in params.items()}
         kind = None
         meta_info = meta_info or {}
+        build_instance = None
+        runtime = None
         if compiled_operation:
+            self.is_valid(compiled_operation)
+            # If the user is uploading we need to check the build process immediately
+            if pending == V1RunPending.UPLOAD and compiled_operation.build:
+                build_instance = self.resolve_build(
+                    project_id=project_id,
+                    user_id=user_id,
+                    compiled_operation=compiled_operation,
+                    inputs=inputs,
+                    pending=V1RunPending.UPLOAD,
+                    **kwargs,
+                )
+                # Change the pending logic to wait to build and remove build requirements
+                compiled_operation.build = None
+                pending = V1RunPending.BUILD
+
             if pending is None and compiled_operation.is_approved is False:
                 pending = V1RunPending.APPROVAL
             name = name or compiled_operation.name
@@ -203,4 +259,48 @@ class OperationsService(Service):
             ],
             **self.sanitize_kwargs(**kwargs),
         )
-        return compiled_operation, instance
+        return OperationInitSpec(compiled_operation, instance, build_instance)
+
+    def init_and_save_run(
+        self,
+        project_id: int,
+        user_id: int,
+        op_spec: V1Operation = None,
+        compiled_operation: V1CompiledOperation = None,
+        name: str = None,
+        description: str = None,
+        tags: str = None,
+        override: Union[str, Dict] = None,
+        params: Dict = None,
+        readme: str = None,
+        is_managed: bool = True,
+        pending: str = None,
+        meta_info: Dict = None,
+        pipeline_id: int = None,
+        controller_id: int = None,
+        supported_kinds: Set[str] = None,
+        supported_owners: Set[str] = None,
+    ):
+        run_init_spec = self.init_run(
+            project_id=project_id,
+            user_id=user_id,
+            name=name,
+            description=description,
+            op_spec=op_spec,
+            compiled_operation=compiled_operation,
+            override=override,
+            params=params,
+            readme=readme,
+            pipeline_id=pipeline_id,
+            controller_id=controller_id,
+            tags=tags,
+            is_managed=is_managed,
+            pending=pending,
+            meta_info=meta_info,
+            supported_kinds=supported_kinds,
+            supported_owners=supported_owners,
+        )
+        run_init_spec.instance.save()
+        if run_init_spec.related_instance:
+            self.save_build_relation(run_init_spec)
+        return run_init_spec.instance

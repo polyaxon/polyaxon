@@ -64,7 +64,7 @@ class TestHooksConfigs(BaseTestCase):
         config = V1Hook.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # Add conditions
+        # Add presets
         config_dict["presets"] = ["p1", "p2"]
         config = V1Hook.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())

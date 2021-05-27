@@ -99,7 +99,10 @@ def bayes(matrix, configs, metrics, iteration):
 )
 @click.option("--iteration", type=int, help="The current hyperband iteration.")
 @click.option(
-    "--bracket-iteration", type=int, help="The current hyperband bracket iteration."
+    "--bracket-iteration",
+    "--bracket_iteration",
+    type=int,
+    help="The current hyperband bracket iteration.",
 )
 def hyperband(matrix, configs, metrics, iteration, bracket_iteration):
     """Create suggestions based on hyperband."""

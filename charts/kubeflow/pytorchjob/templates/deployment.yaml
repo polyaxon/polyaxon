@@ -49,3 +49,4 @@ spec:
               fieldPath: metadata.name
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         name: pytorch-operator
+        imagePullPolicy: IfNotPresent

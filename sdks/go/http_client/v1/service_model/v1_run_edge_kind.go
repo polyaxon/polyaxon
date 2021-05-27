@@ -60,6 +60,9 @@ const (
 
 	// V1RunEdgeKindTb captures enum value "tb"
 	V1RunEdgeKindTb V1RunEdgeKind = "tb"
+
+	// V1RunEdgeKindBuild captures enum value "build"
+	V1RunEdgeKindBuild V1RunEdgeKind = "build"
 )
 
 // for schema
@@ -67,7 +70,7 @@ var v1RunEdgeKindEnum []interface{}
 
 func init() {
 	var res []V1RunEdgeKind
-	if err := json.Unmarshal([]byte(`["action","event","hook","dag","join","run","tb"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["action","event","hook","dag","join","run","tb","build"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

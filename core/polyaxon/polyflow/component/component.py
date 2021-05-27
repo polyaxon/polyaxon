@@ -18,6 +18,7 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
+from polyaxon.polyflow import BuildSchema
 from polyaxon.polyflow.component.base import BaseComponent, BaseComponentSchema
 from polyaxon.polyflow.io import IOSchema
 from polyaxon.polyflow.references import RefMixin
@@ -29,6 +30,7 @@ class ComponentSchema(BaseComponentSchema, TemplateMixinSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("component"))
     inputs = fields.List(fields.Nested(IOSchema), allow_none=True)
     outputs = fields.List(fields.Nested(IOSchema), allow_none=True)
+    build = fields.Nested(BuildSchema, allow_none=True)
     run = fields.Nested(RunSchema, required=True)
 
     @staticmethod
@@ -67,6 +69,7 @@ class V1Component(
         cache: [V1Cache](/docs/automation/helpers/cache/), optional
         termination: [V1Termination](/docs/core/specification/termination/), optional
         plugins: [V1Plugins](/docs/core/specification/plugins/), optional
+        build: [V1Build](/docs/automation/builds/), optional
         hooks: List[[V1Hook](/docs/automation/hooks/)], optional
         inputs: [V1IO](/docs/core/specification/io/), optional
         outputs: [V1IO](/docs/core/specification/io/), optional
@@ -91,6 +94,7 @@ class V1Component(
     >>>   hooks:
     >>>   inputs:
     >>>   outputs:
+    >>>   build:
     >>>   run:
     >>>   isApproved:
     >>>   template:
@@ -99,7 +103,9 @@ class V1Component(
     ## Python usage
 
     ```python
-    >>> from polyaxon.polyflow import V1Cache, V1Component, V1IO, V1Plugins, V1Termination
+    >>> from polyaxon.polyflow import (
+    >>>     V1Build, V1Cache, V1Component, V1Hook, V1IO, V1Plugins, V1Termination
+    >>> )
     >>> component = V1Component(
     >>>     name="test",
     >>>     description="test",
@@ -109,10 +115,10 @@ class V1Component(
     >>>     cache=V1Cache(...),
     >>>     termination=V1Termination(...),
     >>>     plugins=V1Plugins(...),
-    >>>     actions=[V1Action(...)],
     >>>     hooks=[V1Hook(...)],
     >>>     inputs=[V1IO(...)],
     >>>     outputs=[V1IO(...)],
+    >>>     build=V1Build(...),
     >>>     run=...
     >>> )
     ```
@@ -321,6 +327,23 @@ class V1Component(
     >>>     - name: image
     >>>       type: str
     >>>       delayValidation: false
+    >>>   ...
+    ```
+
+    ### build
+
+    > **Note**: Please check [V1Build](/docs/automation/builds/) for more details.
+
+    This section defines if this component should build a container before starting the main logic.
+    If the build section is provided, Polyaxon will set the main operation to a pending state
+    until the build is done and then it will use the resulting docker image
+    for starting the main container.
+
+    ```yaml
+    >>> component:
+    >>>   ...
+    >>>   build:
+    >>>     hubRef: kaniko
     >>>   ...
     ```
 

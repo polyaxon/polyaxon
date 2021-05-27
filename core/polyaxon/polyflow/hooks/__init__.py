@@ -81,7 +81,7 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
     Args:
         trigger: str
         connection: str
-        hub_ref: str, optional
+        hub_ref: str
         conditions: str, optional
         queue: str, optional
         presets: List[str], optional
@@ -150,7 +150,7 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
 
     ```yaml
     >>> hook:
-    >>>   hubRef:  my-component:dev
+    >>>   hubRef: my-component:dev
     ...
     ```
 
@@ -200,7 +200,7 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
 
     One major difference between hooks and normal operations,
     is that hooks will be initialized automatically with:
-    'uuid', 'kind', `name`, `inputs`, `outputs`, `status`, and `condition` as
+    `uuid`, `kind`, `name`, `inputs`, `outputs`, `status`, and `condition` of the main operation as
     context only params, to reduce the boilerplate and the need to request usual information
     required for most notification operations.
 

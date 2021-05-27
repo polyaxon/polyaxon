@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **plugins** | [**V1Plugins**](V1Plugins.md) |  | [optional] 
 **schedule** | [**object**](.md) |  | [optional] 
 **events** | [**list[V1EventTrigger]**](V1EventTrigger.md) |  | [optional] 
+**build** | [**V1Build**](V1Build.md) |  | [optional] 
 **hooks** | [**list[V1Hook]**](V1Hook.md) |  | [optional] 
 **dependencies** | **list[str]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 

@@ -35,6 +35,7 @@ spec:
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: IfNotPresent
         command: ["/opt/mpi-operator.v1"]
         args: [
           "-alsologtostderr",

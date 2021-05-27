@@ -30,7 +30,7 @@ import "v1/api/status.proto";
 // Run kind enum
 // Kinds: job, service, dag, matrix, schedule
 // Runtime kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob
-// helper kinds: tuner, watchdog, notifier, cleaner
+// helper kinds: tuner, watchdog, notifier, cleaner, build
 enum RunKind {
     job = 0;
     service = 1;
@@ -48,6 +48,7 @@ enum RunKind {
     watchdog = 13;
     notifier = 14;
     cleaner = 15;
+    builder = 16;
 }
 
 enum RunPending {
@@ -287,11 +288,14 @@ message RunSettings {
     // Latest Tensorboard reference, if it exists
     google.protobuf.Struct tensorboard = 5;
 
+    // Build reference, if it exists
+    google.protobuf.Struct build = 6;
+
     // Component version reference
-    RunReferenceCatalog component_version = 6;
+    RunReferenceCatalog component_version = 7;
 
     // Model registry version references
-    repeated RunReferenceCatalog model_versions = 7;
+    repeated RunReferenceCatalog model_versions = 8;
 }
 
 
@@ -331,6 +335,7 @@ message RunEdge {
       join = 4;
       run = 5;
       tb = 6;  // tensorboard
+      build = 7;
   }
 
   // Optional uuid of the edge run

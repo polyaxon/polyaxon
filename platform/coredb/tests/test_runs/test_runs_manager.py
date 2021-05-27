@@ -18,17 +18,17 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
+from coredb import operations
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
-from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import copy_run, restart_run, resume_run
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS, META_UPLOAD_ARTIFACTS
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
 from polyaxon.polyflow import V1CloningKind
 from polycommon.events.registry import run as run_events
-from polycommon.test_cases.fixtures.jobs import get_fxt_job_with_inputs
+from polycommon.test_cases.fixtures import get_fxt_job_with_inputs
 
 
 class TestRunManager(TestCase):
@@ -38,7 +38,7 @@ class TestRunManager(TestCase):
         self.user2 = UserFactory()
         self.project = ProjectFactory()
         op_spec = OperationSpecification.read(values=get_fxt_job_with_inputs())
-        self.run = compile_operation_run(
+        self.run = operations.init_and_save_run(
             project_id=self.project.id, op_spec=op_spec, user_id=self.user.id
         )
 

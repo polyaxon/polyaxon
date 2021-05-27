@@ -383,6 +383,7 @@ class Migration(migrations.Migration):
                     "kind",
                     models.CharField(
                         choices=[
+                            ("builder", "builder"),
                             ("cleaner", "cleaner"),
                             ("dag", "dag"),
                             ("dask", "dask"),

@@ -37,5 +37,7 @@
 
 * `CLEANER` (value: `"cleaner"`)
 
+* `BUILDER` (value: `"builder"`)
+
 
 

@@ -109,6 +109,9 @@ class Parser:
         config_section = cls._get_section(config, Sections.RUN)
         if config_section:
             parsed_data[Sections.RUN] = config_section
+        config_section = cls._get_section(config, Sections.BUILD)
+        if config_section:
+            parsed_data[Sections.BUILD] = config_section
         config_section = cls._get_section(config, Sections.HOOKS)
         if config_section:
             parsed_data[Sections.HOOKS] = config_section

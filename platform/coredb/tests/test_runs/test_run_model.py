@@ -34,6 +34,10 @@ class TestRunModel(TestCase):
         self.project = ProjectFactory()
         self.run = RunFactory(project=self.project)
 
+    def test_create_run_without_spec(self):
+        run = RunFactory(project=self.project, user=self.user)
+        assert run.name is None
+
     def test_create_run_with_no_spec_or_params(self):
         assert self.run.tags is None
         assert self.run.inputs is None

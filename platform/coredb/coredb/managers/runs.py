@@ -22,7 +22,8 @@ from coredb.abstracts.runs import BaseRun
 from coredb.managers.statuses import new_run_status
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS, META_UPLOAD_ARTIFACTS
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
-from polyaxon.polyflow import V1CloningKind, V1Operation, V1RunKind
+from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1Operation, V1RunKind
+from polyaxon.schemas import V1RunPending
 from polyaxon.schemas.types import V1ArtifactsType
 
 
@@ -72,7 +73,7 @@ def resume_run(
     **kwargs,
 ) -> BaseRun:
     op_spec = V1Operation.read(run.raw_content)
-    compiled_operation, instance = operations.init_run(
+    instance = operations.init_run(
         project_id=run.project_id,
         user_id=user_id or run.user_id,
         name=name or run.name,
@@ -83,7 +84,7 @@ def resume_run(
         override=content,
         supported_kinds=supported_kinds,
         **kwargs,
-    )
+    ).instance
 
     run.user_id = instance.user_id
     run.name = instance.name
@@ -133,7 +134,7 @@ def clone_run(
             dirs=["{}/{}".format(original_uuid, upload_artifacts)]
         ).to_dict()
 
-    compiled_operation, instance = operations.init_run(
+    instance = operations.init_run(
         project_id=run.project_id,
         user_id=user_id or run.user_id,
         name=name or run.name,
@@ -141,14 +142,13 @@ def clone_run(
         readme=readme or run.readme,
         op_spec=op_spec,
         original_id=run.id,
-        original_uuid=original_uuid,
         cloning_kind=cloning_kind,
         tags=tags or run.tags,
         override=content,
         supported_kinds=supported_kinds,
         meta_info=meta_info,
         **kwargs,
-    )
+    ).instance
     instance.save()
     return instance
 
@@ -201,3 +201,18 @@ def copy_run(
         supported_kinds=supported_kinds,
         **kwargs,
     )
+
+
+def base_approve_run(run: BaseRun):
+    pending = run.pending
+    if pending:
+        new_pending = None
+        if (
+            (pending == V1RunPending.BUILD and run.status == V1Statuses.CREATED)
+            or pending == V1RunPending.UPLOAD
+        ) and run.content:
+            compiled_operation = V1CompiledOperation.read(run.content)
+            if compiled_operation.is_approved is False:
+                new_pending = V1RunPending.APPROVAL
+        run.pending = new_pending
+        run.save(update_fields=["pending", "updated_at"])

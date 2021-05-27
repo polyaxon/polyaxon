@@ -87,6 +87,12 @@ class GaussianProcessSchema(BaseCamelSchema):
 class GaussianProcessConfig(BaseConfig):
     SCHEMA = GaussianProcessSchema
     IDENTIFIER = "gaussian_process"
+    REDUCED_ATTRIBUTES = [
+        "kernel",
+        "lengthScale",
+        "nu",
+        "numRestartsOptimizer",
+    ]
 
     def __init__(
         self,
@@ -147,7 +153,14 @@ class UtilityFunctionSchema(BaseCamelSchema):
 class UtilityFunctionConfig(BaseConfig):
     SCHEMA = UtilityFunctionSchema
     IDENTIFIER = "utility_function"
-    REDUCED_ATTRIBUTES = ["numWarmup", "numIterations"]
+    REDUCED_ATTRIBUTES = [
+        "acquisitionFunction",
+        "eps",
+        "gaussianProcess",
+        "kappa",
+        "numWarmup",
+        "numIterations",
+    ]
 
     def __init__(
         self,
@@ -510,7 +523,13 @@ class V1Bayes(BaseSearchConfig, polyaxon_sdk.V1Bayes):
 
     SCHEMA = BayesSchema
     IDENTIFIER = V1MatrixKind.BAYES
-    REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping", "tuner"]
+    REDUCED_ATTRIBUTES = [
+        "seed",
+        "concurrency",
+        "earlyStopping",
+        "tuner",
+        "utilityFunction",
+    ]
 
     def create_iteration(self, iteration: int = None) -> int:
         if iteration is None:

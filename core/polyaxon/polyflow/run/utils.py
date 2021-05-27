@@ -13,16 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from typing import List
-
-from polyaxon.utils.list_utils import to_list
+from polyaxon.k8s.k8s_schemas import V1Container
 
 
-class AddInitMixin:
-    def add_init(self, init: List):
-        init = to_list(init, check_none=True)
-        if self.init:
-            self.init += init
-        else:
-            self.init = init
+class DestinationImageMixin:
+    def apply_image_destination(self, image: str):
+        self.container = self.container or V1Container()
+        self.container.image = image

@@ -16,6 +16,7 @@
 
 from marshmallow import fields, validate
 
+from polyaxon.polyflow.builds import BuildSchema
 from polyaxon.polyflow.cache import CacheSchema
 from polyaxon.polyflow.hooks import HookSchema
 from polyaxon.polyflow.plugins import PluginsSchema
@@ -35,6 +36,7 @@ class BaseComponentSchema(BaseCamelSchema):
     cache = fields.Nested(CacheSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     plugins = fields.Nested(PluginsSchema, allow_none=True)
+    build = fields.Nested(BuildSchema, allow_none=True)
     hooks = fields.List(fields.Nested(HookSchema), allow_none=True)
     is_approved = fields.Bool(allow_none=True)
 
@@ -56,6 +58,7 @@ class BaseComponent(BaseConfig):
         "cache",
         "termination",
         "plugins",
+        "build",
         "hooks",
         "isApproved",
     ]

@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from polyaxon.polyflow.builds import BuildSchema, V1Build
 from polyaxon.polyflow.cache import CacheSchema, V1Cache
 from polyaxon.polyflow.component import ComponentSchema, V1Component
 from polyaxon.polyflow.dags import DagOpSpec

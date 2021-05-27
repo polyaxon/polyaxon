@@ -1,0 +1,57 @@
+---
+version:  1.1
+
+kind: operation
+
+matrix:
+  kind: hyperband
+  concurrency: 2
+  maxIterations: 10
+  eta: 3
+  resource:
+    name: steps
+    type: int
+  resume: False
+  metric:
+    name: loss
+    optimization: minimize
+  params:
+    lr:
+      kind: linspace
+      value: 0.01:0.1:5
+    loss:
+      kind: choice
+      value: [MeanSquaredError, AbsoluteDifference]
+    normal_rate:
+      kind: normal
+      value: [0, 0.9]
+    dropout:
+      kind: qloguniform
+      value: [0, 0.8, 0.1]
+    activation:
+      kind: pchoice
+      value: [[relu, 0.1], [sigmoid, 0.8]]
+    model:
+      kind: choice
+      value: [CDNA, DNA, STP]
+
+build:
+  runPatch:
+    init:
+    - git:
+        revision: branch2
+      connection: repo2
+    - dockerfile:
+        image: test
+        run: ["pip install package1"]
+        env: {'KEY1': 'en_US.UTF-8', 'KEY2':2}
+  connection: docker-connection
+  hubRef: kaniko
+
+component:
+  run:
+    kind: job
+    container:
+      image: foo:latest
+      command: train --lr={{ lr }} --loss={{ loss }}
+...

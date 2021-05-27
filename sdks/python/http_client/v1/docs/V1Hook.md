@@ -3,9 +3,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**hub_ref** | **str** |  | [optional] 
 **connection** | **str** |  | [optional] 
 **trigger** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
-**hub_ref** | **str** |  | [optional] 
 **conditions** | **str** |  | [optional] 
 **params** | [**dict(str, V1Param)**](V1Param.md) |  | [optional] 
 **queue** | **str** |  | [optional] 

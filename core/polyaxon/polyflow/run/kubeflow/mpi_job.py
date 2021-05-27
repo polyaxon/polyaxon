@@ -18,9 +18,11 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
+from polyaxon.k8s.k8s_schemas import V1Container
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema
+from polyaxon.polyflow.run.utils import DestinationImageMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
@@ -38,7 +40,7 @@ class MPIJobSchema(BaseCamelSchema):
         return V1MPIJob
 
 
-class V1MPIJob(BaseConfig, polyaxon_sdk.V1MPIJob):
+class V1MPIJob(BaseConfig, DestinationImageMixin, polyaxon_sdk.V1MPIJob):
     """Kubeflow MPI-Job provides an interface to train distributed experiments with Pytorch.
 
     Args:
@@ -136,3 +138,11 @@ class V1MPIJob(BaseConfig, polyaxon_sdk.V1MPIJob):
         "launcher",
         "worker",
     ]
+
+    def apply_image_destination(self, image: str):
+        if self.launcher:
+            self.launcher.container = self.launcher.container or V1Container()
+            self.launcher.container.image = image
+        if self.worker:
+            self.worker.container = self.worker.container or V1Container()
+            self.worker.container.image = image

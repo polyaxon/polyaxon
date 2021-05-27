@@ -23,10 +23,11 @@ SCHEDULER_CORE_ROUTES = {
         "queue": CeleryCoreQueues.SCHEDULER_HEALTH
     },
     # compiler
-    CoreSchedulerCeleryTasks.RUNS_START: {"queue": CeleryCoreQueues.SCHEDULER_COMPILER},
     CoreSchedulerCeleryTasks.RUNS_PREPARE: {
         "queue": CeleryCoreQueues.SCHEDULER_COMPILER
     },
+    CoreSchedulerCeleryTasks.RUNS_START: {"queue": CeleryCoreQueues.SCHEDULER_COMPILER},
+    CoreSchedulerCeleryTasks.RUNS_BUILT: {"queue": CeleryCoreQueues.SCHEDULER_COMPILER},
     # Scheduler runs
     CoreSchedulerCeleryTasks.RUNS_STOP: {"queue": CeleryCoreQueues.SCHEDULER_RUNS},
     CoreSchedulerCeleryTasks.RUNS_DELETE: {"queue": CeleryCoreQueues.SCHEDULER_RUNS},

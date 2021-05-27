@@ -43,7 +43,6 @@ class TestStatusesTransition(BaseTestCase):
             V1Statuses.CREATED,
             V1Statuses.RESUMING,
             V1Statuses.ON_SCHEDULE,
-            V1Statuses.AWAITING_CACHE,
         }
 
     def test_running_statuses(self):
