@@ -44,6 +44,7 @@ class BaseAgent:
     def __init__(self, sleep_interval=None):
         self.sleep_interval = sleep_interval
         self.spawner = Spawner()
+        self._spawner_refreshed_at = now()
         self.client = PolyaxonClient()
         self._graceful_shutdown = False
         self.content = settings.AGENT_CONFIG.to_dict(dump=True)
@@ -79,6 +80,14 @@ class BaseAgent:
             return False
         return not config.should_check(interval=interval)
 
+    def refresh_spawner(self):
+        if (
+            now() - self._spawner_refreshed_at
+        ).total_seconds() > settings.AGENT_CONFIG.get_spawner_refresh_interval():
+            logger.debug("Refreshing spawner ... ")
+            self.spawner.refresh()
+            self._spawner_refreshed_at = now()
+
     def start(self) -> None:
         try:
             with exit_context() as exit_event:
@@ -90,6 +99,7 @@ class BaseAgent:
                     timeout = self.sleep_interval or get_wait(index)
                     while not exit_event.wait(timeout=timeout):
                         index += 1
+                        self.refresh_spawner()
                         agent_state = self.process(pool)
                         self._check_status(agent_state)
                         if agent_state.state.full:

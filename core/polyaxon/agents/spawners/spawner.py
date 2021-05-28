@@ -32,6 +32,10 @@ class Spawner(BaseSpawner):
             )
         return self._k8s_manager
 
+    def refresh(self):
+        self._k8s_manager = None
+        return self.k8s_manager
+
     def create(self, run_uuid: str, run_kind: str, resource: Dict) -> Dict:
         mixin = self._get_mixin_for_kind(kind=run_kind)
         resource_name = get_resource_name(run_uuid)

@@ -25,6 +25,7 @@ from polyaxon.containers.contexts import CONTEXT_ARTIFACTS_ROOT
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
     POLYAXON_KEYS_AGENT_COMPRESSED_LOGS,
+    POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
     POLYAXON_KEYS_AGENT_CONNECTIONS,
     POLYAXON_KEYS_AGENT_INIT,
     POLYAXON_KEYS_AGENT_IS_REPLICA,
@@ -96,6 +97,11 @@ class AgentSchema(BaseSchema):
     runs_sa = fields.Str(
         allow_none=True,
         data_key=POLYAXON_KEYS_AGENT_RUNS_SA,
+    )
+    # This refresh logic will mitigate several issues with AKS's numerous networking problems
+    spawner_refresh_interval = fields.Integer(
+        allow_none=True,
+        data_key=POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
     )
 
     @staticmethod
@@ -175,6 +181,7 @@ class AgentConfig(BaseConfig):
         POLYAXON_KEYS_K8S_APP_SECRET_NAME,
         POLYAXON_KEYS_AGENT_SECRET_NAME,
         POLYAXON_KEYS_AGENT_RUNS_SA,
+        POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
     ]
 
     def __init__(
@@ -189,6 +196,7 @@ class AgentConfig(BaseConfig):
         app_secret_name=None,
         agent_secret_name=None,
         runs_sa=None,
+        spawner_refresh_interval=None,
         **kwargs
     ):
         self.namespace = namespace
@@ -201,11 +209,15 @@ class AgentConfig(BaseConfig):
         self.app_secret_name = app_secret_name
         self.agent_secret_name = agent_secret_name
         self.runs_sa = runs_sa
+        self.spawner_refresh_interval = spawner_refresh_interval
         self._all_connections = []
         self.set_all_connections()
         self._secrets = None
         self._config_maps = None
         self._connections_by_names = {}
+
+    def get_spawner_refresh_interval(self):
+        return self.spawner_refresh_interval or 60 * 5
 
     def set_all_connections(self):
         self._all_connections = self.connections[:]
