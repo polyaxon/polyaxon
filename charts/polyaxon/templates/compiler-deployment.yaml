@@ -57,7 +57,7 @@ spec:
           periodSeconds: 60
           successThreshold: 1
           failureThreshold: 10
-          timeoutSeconds: 2
+          timeoutSeconds: 10
         resources:
           requests:
 {{ toYaml .Values.compiler.resources.requests | indent 12 }}

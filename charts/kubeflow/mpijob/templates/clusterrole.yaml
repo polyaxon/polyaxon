@@ -25,7 +25,7 @@ rules:
   - create
   - list
   - watch
-# This is needed for the launcher Role.
+  - update
 - apiGroups:
   - ""
   resources:
@@ -73,6 +73,24 @@ rules:
   - policy
   resources:
   - poddisruptionbudgets
+  verbs:
+  - create
+  - list
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - create
+  - list
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
   verbs:
   - create
   - list

@@ -36,27 +36,25 @@ spec:
           properties:
             tfReplicaSpecs:
               properties:
-                # The validation works when the configuration contains
-                # `Worker`, `PS` , `Chief` or `Evaluator`. Otherwise it will not be validated.
-                Worker:
-                  properties:
-                    replicas:
-                      type: integer
-                      minimum: 1
-                PS:
-                  properties:
-                    replicas:
-                      type: integer
-                      minimum: 1
                 Chief:
                   properties:
                     replicas:
-                      type: integer
-                      minimum: 1
                       maximum: 1
+                      minimum: 1
+                      type: integer
+                PS:
+                  properties:
+                    replicas:
+                      minimum: 1
+                      type: integer
+                Worker:
+                  properties:
+                    replicas:
+                      minimum: 1
+                      type: integer
                 Evaluator:
                   properties:
                     replicas:
-                      type: integer
                       minimum: 0
+                      type: integer
 {{- end }}

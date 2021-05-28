@@ -38,6 +38,8 @@ spec:
 {{ include "config.envFrom.secret" . | indent 8 }}
 {{ include "config.envFrom.platform" . | indent 8 }}
         env:
+        - name: POLYAXON_IS_BEAT
+          value: "true"
 {{ include "config.envs" . | indent 8 }}
         livenessProbe:
           exec:
@@ -54,7 +56,7 @@ spec:
           periodSeconds: 60
           successThreshold: 1
           failureThreshold: 10
-          timeoutSeconds: 2
+          timeoutSeconds: 10
         resources:
           requests:
 {{ toYaml .Values.beat.resources.requests | indent 12 }}
