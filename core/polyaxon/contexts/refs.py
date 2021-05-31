@@ -73,6 +73,14 @@ def get_entity_value(value: str) -> str:
     return value_parts[-1]
 
 
+def parse_ref_value(value: str) -> str:
+    """Returns value without {{ }}"""
+    value_parts = PARAM_REGEX.search(value)
+    if value_parts:
+        return value_parts.group(1)
+    return value
+
+
 class RefMixin:
     @property
     def is_literal(self):

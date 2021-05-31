@@ -467,12 +467,22 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
         during tests with hub_ref.
         """
         inputs = inputs or []
-        self._context["dag.name"] = V1IO(
-            name="name", type=types.STR, value="", is_optional=True
+
+        for g_context in contexts_sections.GLOBALS_CONTEXTS:
+            self._context[
+                "dag.{}.{}".format(contexts_sections.GLOBALS, g_context)
+            ] = V1IO(name=g_context, type=types.STR, value="", is_optional=True)
+
+        self._context["dag.{}".format(contexts_sections.INPUTS)] = V1IO(
+            name="inputs", type=types.DICT, value={}, is_optional=True
         )
-        self._context["dag.uuid"] = V1IO(
-            name="uuid", type=types.STR, value="", is_optional=True
+        self._context["dag.{}".format(contexts_sections.GLOBALS)] = V1IO(
+            name="globals", type=types.STR, value="", is_optional=True
         )
+        self._context["dag.{}".format(contexts_sections.ARTIFACTS)] = V1IO(
+            name="artifacts", type=types.STR, value="", is_optional=True
+        )
+
         for _input in inputs:
             self._context["dag.inputs.{}".format(_input.name)] = _input
 
@@ -526,26 +536,34 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             if outputs:
                 for output in outputs:
                     self._context[
-                        "ops.{}.outputs.{}".format(op_name, output.name)
+                        "ops.{}.{}.{}".format(
+                            op_name, contexts_sections.OUTPUTS, output.name
+                        )
                     ] = output
                     if output.type == types.ARTIFACTS:
                         self._context[
-                            "ops.{}.artifacts.{}".format(op_name, output.name)
+                            "ops.{}.{}.{}".format(
+                                op_name, contexts_sections.ARTIFACTS, output.name
+                            )
                         ] = output
 
             if inputs:
                 for cinput in inputs:
                     self._context[
-                        "ops.{}.inputs.{}".format(op_name, cinput.name)
+                        "ops.{}.{}.{}".format(
+                            op_name, contexts_sections.INPUTS, cinput.name
+                        )
                     ] = cinput
                     if cinput.type == types.ARTIFACTS:
                         self._context[
-                            "ops.{}.artifacts.{}".format(op_name, cinput.name)
+                            "ops.{}.{}.{}".format(
+                                op_name, contexts_sections.ARTIFACTS, cinput.name
+                            )
                         ] = cinput
             for g_context in contexts_sections.GLOBALS_CONTEXTS:
-                self._context["ops.{}.globals.{}".format(op_name, g_context)] = V1IO(
-                    name=g_context, type=types.STR, value="", is_optional=True
-                )
+                self._context[
+                    "ops.{}.{}.{}".format(op_name, contexts_sections.GLOBALS, g_context)
+                ] = V1IO(name=g_context, type=types.STR, value="", is_optional=True)
 
             # We allow to resolve name, status, project, all outputs/inputs, iteration
             self._context["ops.{}.{}".format(op_name, contexts_sections.INPUTS)] = V1IO(

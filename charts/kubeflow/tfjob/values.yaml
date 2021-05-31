@@ -1,3 +1,3 @@
-image: public.ecr.aws/j1r0q0g6/training/tf-operator
+image: ghcr.io/kubeflow-incubator/tf-operator
 imageTag: latest
 skipCRD: false

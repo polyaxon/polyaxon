@@ -301,10 +301,17 @@ async def handle_artifact(request: Request) -> Response:
         return await upload_artifact(request)
 
 
-async def download_artifact(request: Request) -> Response:
+async def ro_artifact(request: Request) -> Response:
+    path = request.path_params["path"]
+    return await download_artifact(request, path, True)
+
+
+async def download_artifact(
+    request: Request, path: str = None, stream: bool = None
+) -> Response:
     run_uuid = request.path_params["run_uuid"]
-    filepath = request.query_params.get("path", "")
-    stream = to_bool(request.query_params.get("stream"), handle_none=True)
+    filepath = request.query_params.get("path", path or "")
+    stream = to_bool(request.query_params.get("stream", stream), handle_none=True)
     force = to_bool(request.query_params.get("force"), handle_none=True)
     render = to_bool(request.query_params.get("render"), handle_none=True)
     if not filepath:

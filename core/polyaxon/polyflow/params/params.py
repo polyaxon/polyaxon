@@ -88,7 +88,7 @@ class ParamValueMixin:
     def searchable_ref(self) -> str:
         if not self.is_ref or self.is_join_ref:
             return ""
-        return "{}.{}".format(self.ref, self.value)
+        return "{}.{}".format(self.ref, contexts_refs.parse_ref_value(self.value))
 
     def get_spec(
         self,
@@ -531,7 +531,7 @@ class ParamSpec(
             if not self.is_list and self.type != types.ARTIFACTS:
                 raise ValidationError(
                     "Param `{}` has a an input type `{}`"
-                    "and it does not expect a list of values from the join.".format(
+                    "and it does not expect a list of values from the join".format(
                         self.name,
                         self.param.value,
                     )
@@ -550,7 +550,7 @@ class ParamSpec(
             raise ValidationError(
                 "Param `{}` has a ref value `{}`, "
                 "but reference with name `{}` has no such information, "
-                "please check that your dag defines the correct template.".format(
+                "please check that your polyaxonfile defines the correct template".format(
                     self.name, self.param.value, self.param.ref
                 )
             )
@@ -558,15 +558,20 @@ class ParamSpec(
         if not types.are_compatible(self.type, context[self.param.searchable_ref].type):
             raise ValidationError(
                 "Param `{}` has a an input type `{}` "
-                "and it does not correspond to the type of ref `{}.".format(
-                    self.name, self.param.value, self.param.ref
+                "and it does not correspond to the type of the value `{}` "
+                "received from `{}` with type `{}`".format(
+                    self.name,
+                    self.type,
+                    self.param.value,
+                    self.param.ref,
+                    context[self.param.searchable_ref].type,
                 )
             )
 
         if self.is_list != context[self.param.searchable_ref].is_list:
             raise ValidationError(
                 "Param `{}` has a an input type List[`{}`]"
-                "and it does not correspond to the output type of ref `{}`.".format(
-                    self.name, self.param.value, self.param.ref
+                "and it does not correspond to the output value `{}` received from `{}`".format(
+                    self.name, self.type, self.param.value, self.param.ref
                 )
             )

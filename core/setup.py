@@ -104,7 +104,7 @@ setup(
         ],
         "streams": [
             "kubernetes_asyncio==12.0.1",
-            "starlette==0.14.1",
+            "starlette==0.14.2",
             "aiofiles==0.6.0",
             "uvicorn==0.13.3",
             "uvloop==0.14.0",
