@@ -81,7 +81,7 @@ def collect_references(config: V1Operation, path_context: str = None):
         )
     config.component = component
     if component.is_dag_run:
-        component.run.collect_components()
+        collect_dag_components(component.run)
     return config
 
 

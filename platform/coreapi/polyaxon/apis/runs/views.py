@@ -18,13 +18,13 @@ from rest_framework.response import Response
 
 from django.http import Http404
 
+from coredb import operations
 from coredb.api.runs import methods
 from coredb.api.runs.serializers import (
     RunDetailSerializer,
     RunSerializer,
     RunStatusSerializer,
 )
-from coredb.managers.runs import copy_run, restart_run, resume_run
 from coredb.models.runs import Run
 from coredb.queries.runs import STATUS_UPDATE_COLUMNS_DEFER
 from endpoints.run import RunEndpoint
@@ -83,7 +83,7 @@ class RunRestartView(RunCloneView):
     AUDITOR_EVENT_TYPES = {"POST": RUN_RESTARTED_ACTOR}
 
     def clone(self, obj, content, **kwargs):
-        return restart_run(
+        return operations.restart_run(
             run=obj,
             user_id=self.request.user.id,
             content=content,
@@ -97,7 +97,7 @@ class RunResumeView(RunCloneView):
     AUDITOR_EVENT_TYPES = {"POST": RUN_RESUMED_ACTOR}
 
     def clone(self, obj, content, **kwargs):
-        return resume_run(
+        return operations.resume_run(
             run=obj,
             user_id=self.request.user.id,
             content=content,
@@ -116,7 +116,7 @@ class RunCopyView(RunCloneView):
     AUDITOR_EVENT_TYPES = {"POST": RUN_COPIED_ACTOR}
 
     def clone(self, obj, content, **kwargs):
-        return copy_run(
+        return operations.copy_run(
             run=obj,
             user_id=self.request.user.id,
             content=content,

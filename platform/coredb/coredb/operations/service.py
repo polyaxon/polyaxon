@@ -15,20 +15,32 @@
 # limitations under the License.
 
 from collections import namedtuple
-from typing import Dict, Optional, Set, Tuple, Union
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 from coredb.abstracts.getter import get_run_model
+from coredb.abstracts.runs import BaseRun
+from coredb.managers.statuses import new_run_status
 from polyaxon.constants.metadata import (
+    META_COPY_ARTIFACTS,
+    META_DESTINATION_IMAGE,
     META_HAS_DAGS,
     META_HAS_HOOKS,
     META_HAS_JOBS,
     META_HAS_MATRICES,
     META_HAS_SERVICES,
+    META_UPLOAD_ARTIFACTS,
 )
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
-from polyaxon.polyflow import V1CompiledOperation, V1MatrixKind, V1Operation, V1RunKind
+from polyaxon.polyflow import (
+    V1CloningKind,
+    V1CompiledOperation,
+    V1MatrixKind,
+    V1Operation,
+    V1RunKind,
+)
 from polyaxon.schemas import V1RunPending
+from polyaxon.schemas.types import V1ArtifactsType
 from polycommon.service_interface import Service
 
 
@@ -48,7 +60,15 @@ class OperationInitSpec(
 class OperationsService(Service):
     SUPPORTS_OP_BUILD = False
     DEFAULT_KINDS = V1RunKind.default_runtime_values
-    __all__ = ("init_run", "init_and_save_run", "resolve_build", "save_build_relation")
+    __all__ = (
+        "init_run",
+        "init_and_save_run",
+        "resolve_build",
+        "save_build_relation",
+        "resume_run",
+        "restart_run",
+        "copy_run",
+    )
 
     @staticmethod
     def set_spec(spec: V1Operation, **kwargs) -> Tuple[V1Operation, Dict]:
@@ -158,6 +178,7 @@ class OperationsService(Service):
         user_id: int,
         compiled_operation: V1CompiledOperation,
         inputs: Dict,
+        meta_info: Dict = None,
         pending: str = None,
         **kwargs,
     ):
@@ -208,19 +229,26 @@ class OperationsService(Service):
         runtime = None
         if compiled_operation:
             self.is_valid(compiled_operation)
-            # If the user is uploading we need to check the build process immediately
+            # If the is ab upload we need to check the build process immediately
             if pending == V1RunPending.UPLOAD and compiled_operation.build:
+                upload_artifacts = meta_info.pop(META_UPLOAD_ARTIFACTS, None)
                 build_instance = self.resolve_build(
                     project_id=project_id,
                     user_id=user_id,
                     compiled_operation=compiled_operation,
                     inputs=inputs,
+                    meta_info={META_UPLOAD_ARTIFACTS: upload_artifacts}
+                    if upload_artifacts
+                    else None,
                     pending=V1RunPending.UPLOAD,
                     **kwargs,
                 )
                 # Change the pending logic to wait to build and remove build requirements
                 compiled_operation.build = None
                 pending = V1RunPending.BUILD
+            # If the is a clone/resume we need to check the build process and remove it
+            if cloning_kind and compiled_operation.build:
+                compiled_operation.build = None
 
             if pending is None and compiled_operation.is_approved is False:
                 pending = V1RunPending.APPROVAL
@@ -304,3 +332,157 @@ class OperationsService(Service):
         if run_init_spec.related_instance:
             self.save_build_relation(run_init_spec)
         return run_init_spec.instance
+
+    def resume_run(
+        self,
+        run: BaseRun,
+        user_id: int = None,
+        name: str = None,
+        description: str = None,
+        content: str = None,
+        readme: str = None,
+        tags: List[str] = None,
+        supported_kinds: Set[str] = None,
+        message=None,
+        **kwargs,
+    ):
+        op_spec = V1Operation.read(run.raw_content)
+        instance = self.init_run(
+            project_id=run.project_id,
+            user_id=user_id or run.user_id,
+            name=name or run.name,
+            description=description or run.description,
+            readme=readme or run.readme,
+            op_spec=op_spec,
+            tags=tags or run.tags,
+            override=content,
+            supported_kinds=supported_kinds,
+            cloning_kind=V1CloningKind.RESTART,  # To clean the build if any
+            **kwargs,
+        ).instance
+
+        run.user_id = instance.user_id
+        run.name = instance.name
+        run.description = instance.description
+        run.readme = instance.readme
+        run.content = instance.content
+        run.raw_content = instance.raw_content
+        run.tags = instance.tags
+        run.save()
+        new_run_status(
+            run,
+            condition=V1StatusCondition.get_condition(
+                type=V1Statuses.RESUMING,
+                status=True,
+                reason="ResumeManager",
+                message=message,
+            ),
+        )
+        return run
+
+    def _clone_build(self, original_run: BaseRun, run: BaseRun):
+        pass
+
+    def _clone_run(
+        self,
+        run: BaseRun,
+        cloning_kind: str,
+        user_id: int = None,
+        name: str = None,
+        description: str = None,
+        content: str = None,
+        readme: str = None,
+        tags: List[int] = None,
+        supported_kinds: Set[str] = None,
+        **kwargs,
+    ) -> BaseRun:
+        op_spec = V1Operation.read(run.raw_content)
+        meta_info = kwargs.pop("meta_info", {}) or {}
+        original_meta_info = run.meta_info or {}
+        original_uuid = run.uuid.hex
+        upload_artifacts = original_meta_info.get(META_UPLOAD_ARTIFACTS)
+        build_destination = original_meta_info.get(META_DESTINATION_IMAGE)
+        if build_destination:
+            meta_info[META_DESTINATION_IMAGE] = build_destination
+        if upload_artifacts:
+            meta_info[META_UPLOAD_ARTIFACTS] = upload_artifacts
+        if cloning_kind == V1CloningKind.COPY and META_COPY_ARTIFACTS not in meta_info:
+            # Handle default copy mode
+            meta_info[META_COPY_ARTIFACTS] = V1ArtifactsType(
+                dirs=[original_uuid]
+            ).to_dict()
+        if META_COPY_ARTIFACTS not in meta_info and upload_artifacts:
+            # Handle default copy mode
+            meta_info[META_COPY_ARTIFACTS] = V1ArtifactsType(
+                dirs=["{}/{}".format(original_uuid, upload_artifacts)]
+            ).to_dict()
+
+        instance = self.init_run(
+            project_id=run.project_id,
+            user_id=user_id or run.user_id,
+            name=name or run.name,
+            description=description or run.description,
+            readme=readme or run.readme,
+            op_spec=op_spec,
+            original_id=run.id,
+            cloning_kind=cloning_kind,
+            tags=tags or run.tags,
+            override=content,
+            supported_kinds=supported_kinds,
+            meta_info=meta_info,
+            **kwargs,
+        ).instance
+        instance.save()
+        if build_destination:
+            self._clone_build(original_run=run, run=instance)
+        return instance
+
+    def restart_run(
+        self,
+        run: BaseRun,
+        user_id: int = None,
+        name: str = None,
+        description: str = None,
+        content: str = None,
+        readme: str = None,
+        tags: List[int] = None,
+        supported_kinds: Set[str] = None,
+        **kwargs,
+    ) -> BaseRun:
+        return self._clone_run(
+            run=run,
+            cloning_kind=V1CloningKind.RESTART,
+            user_id=user_id,
+            name=name,
+            description=description,
+            content=content,
+            readme=readme,
+            tags=tags,
+            supported_kinds=supported_kinds,
+            **kwargs,
+        )
+
+    def copy_run(
+        self,
+        run: BaseRun,
+        user_id: int = None,
+        name: str = None,
+        description: str = None,
+        content: str = None,
+        readme: str = None,
+        tags: List[int] = None,
+        supported_kinds: Set[str] = None,
+        **kwargs,
+    ) -> BaseRun:
+        return self._clone_run(
+            run=run,
+            cloning_kind=V1CloningKind.COPY,
+            user_id=user_id,
+            name=name,
+            description=description,
+            content=content,
+            readme=readme,
+            tags=tags,
+            supported_kinds=supported_kinds,
+            **kwargs,
+        )

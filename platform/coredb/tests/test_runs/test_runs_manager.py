@@ -22,7 +22,6 @@ from coredb import operations
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
-from coredb.managers.runs import copy_run, restart_run, resume_run
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS, META_UPLOAD_ARTIFACTS
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
@@ -61,7 +60,7 @@ class TestRunManager(TestCase):
 
     @patch("polycommon.auditor.record")
     def test_copy_run(self, auditor_record):
-        run = copy_run(run=self.run)
+        run = operations.copy_run(run=self.run)
         assert auditor_record.call_count == 1
         call_args, call_kwargs = auditor_record.call_args
         assert call_kwargs["event_type"] == run_events.RUN_CREATED
@@ -82,7 +81,7 @@ class TestRunManager(TestCase):
         assert run.original == self.run
         assert run.inputs == {"image": "foo/bar"}
 
-        run = copy_run(
+        run = operations.copy_run(
             run=self.run,
             user_id=self.user2.id,
             name="new-name",
@@ -108,7 +107,7 @@ class TestRunManager(TestCase):
         # Copy with uploads
         self.run.meta_info[META_UPLOAD_ARTIFACTS] = "foo"
         self.run.save()
-        run = copy_run(
+        run = operations.copy_run(
             run=self.run,
             user_id=self.user2.id,
             name="new-name",
@@ -137,7 +136,7 @@ class TestRunManager(TestCase):
         # Copy with uploads and specific fields
         self.run.meta_info[META_UPLOAD_ARTIFACTS] = "foo"
         self.run.save()
-        run = copy_run(
+        run = operations.copy_run(
             run=self.run,
             user_id=self.user2.id,
             name="new-name",
@@ -170,7 +169,7 @@ class TestRunManager(TestCase):
 
     @patch("polycommon.auditor.record")
     def test_resume_run(self, auditor_record):
-        run = resume_run(run=self.run)
+        run = operations.resume_run(run=self.run)
         assert auditor_record.call_count == 2
         call_args_list = auditor_record.call_args_list
         assert call_args_list[0][0] == ()
@@ -192,7 +191,7 @@ class TestRunManager(TestCase):
         assert run.inputs == {"image": "foo/bar"}
 
         user = UserFactory()
-        run = resume_run(
+        run = operations.resume_run(
             run=self.run,
             user_id=user.id,
             name="new-name",
@@ -214,7 +213,7 @@ class TestRunManager(TestCase):
 
     @patch("polycommon.auditor.record")
     def test_restart_run(self, auditor_record):
-        run = restart_run(run=self.run)
+        run = operations.restart_run(run=self.run)
         assert auditor_record.call_count == 1
         call_args, call_kwargs = auditor_record.call_args
         assert call_kwargs["event_type"] == run_events.RUN_CREATED
@@ -230,7 +229,7 @@ class TestRunManager(TestCase):
         assert run.cloning_kind == V1CloningKind.RESTART
         assert run.original == self.run
 
-        run = restart_run(
+        run = operations.restart_run(
             run=self.run,
             user_id=self.user.id,
             name="new-name",
@@ -253,7 +252,7 @@ class TestRunManager(TestCase):
         # Restart with upload
         self.run.meta_info[META_UPLOAD_ARTIFACTS] = "foo"
         self.run.save()
-        run = restart_run(
+        run = operations.restart_run(
             run=self.run,
             user_id=self.user.id,
             name="new-name",

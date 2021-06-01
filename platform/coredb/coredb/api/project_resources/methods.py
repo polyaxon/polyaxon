@@ -118,6 +118,8 @@ def delete_runs(view, request, actor, *args, **kwargs):
     runs = get_run_model().objects.filter(
         project=view.project, uuid__in=request.data.get("uuids", [])
     )
+    # Delete non managed immediately
+    runs.filter(is_managed=False).delete()
     for run in runs:
         auditor.record(
             event_type=RUN_DELETED_ACTOR,
@@ -128,8 +130,6 @@ def delete_runs(view, request, actor, *args, **kwargs):
             owner_name=view.owner_name,
             project_name=view.project_name,
         )
-    # Delete non managed immediately
-    runs.filter(is_managed=False).delete()
     # Deletion in progress
     runs.filter(is_managed=True).update(
         live_state=live_state.STATE_DELETION_PROGRESSING

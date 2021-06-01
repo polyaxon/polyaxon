@@ -259,7 +259,7 @@ class TestProjectRunsDeleteViewV1(BaseTest):
         assert resp.status_code == status.HTTP_200_OK
         assert Run.objects.count() == 1
         assert Run.all.count() == 1
-        assert auditor_record.call_count == 2
+        assert auditor_record.call_count == 0
 
     def test_delete_managed_auditor(self):
         Run.objects.all().update(is_managed=True)
@@ -273,14 +273,15 @@ class TestProjectRunsDeleteViewV1(BaseTest):
         assert auditor_record.call_count == 2
 
     def test_delete_worker_send(self):
+        Run.objects.all().update(is_managed=True)
         data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
         assert Run.objects.count() == 3
         with patch("polycommon.workers.send") as workers_send:
             resp = self.client.delete(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert Run.objects.count() == 1
-        assert Run.all.count() == 1
-        assert workers_send.call_count == 0
+        assert Run.all.count() == 3
+        assert workers_send.call_count == 2
 
 
 @pytest.mark.projects_resources_mark

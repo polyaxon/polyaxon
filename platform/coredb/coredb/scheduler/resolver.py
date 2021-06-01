@@ -78,10 +78,8 @@ class CorePlatformResolver(resolver.BaseResolver):
         return [{"runPatch": {"init": [init.to_dict()]}}]
 
     def _get_meta_destination_image(self) -> Optional[str]:
-        if not self.run.meta_info or META_DESTINATION_IMAGE not in self.run.meta_info:
-            return None
-
-        return self.run.meta_info.pop(META_DESTINATION_IMAGE)
+        meta_info = self.run.meta_info or {}
+        return meta_info.get(META_DESTINATION_IMAGE)
 
     def resolve_presets(self):
         for preset in self._get_meta_artifacts_presets():

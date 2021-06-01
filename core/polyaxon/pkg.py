@@ -15,7 +15,7 @@
 # limitations under the License.
 
 NAME = "polyaxon"
-VERSION = "1.9.3"
+VERSION = "1.9.4"
 SCHEMA_VERSION = 1.1
 DESC = "Command Line Interface (CLI) and client to interact with Polyaxon API."
 URL = "https://github.com/polyaxon/polyaxon"
