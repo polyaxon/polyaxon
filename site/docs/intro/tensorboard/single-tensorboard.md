@@ -46,3 +46,13 @@ polyaxon run --hub tensorboard:single-run-storepath -P uuid=UUID -w
 
 If you are using Polyaxon Cloud or Polyaxon EE, you can perform the same actions using the UI.
 Polyaxon tracks runs that have Tensorboard as one of their artifacts and shows a button to start or resume a Tensorboard service for those runs.
+
+![ui-tensorboard](../../../../content/images/dashboard/runs/start-ui-tensorboard.png) 
+
+Running the Tensorboard:
+
+![ui-running-tensorboard](../../../../content/images/dashboard/runs/single-run-tensorboard.png)
+
+Shortcut to the Tensorboard:
+
+![ui-shortcut-tensorboard](../../../../content/images/dashboard/runs/shortcut-ui-tensorboard.png)

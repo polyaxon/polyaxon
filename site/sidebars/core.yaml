@@ -41,8 +41,6 @@
       link: /docs/core/context/references/
   - group: Python Library
     items:
-    - title: Overview
-      link: /docs/core/python-library/
     - title: Polyaxon Client
       link: /docs/core/python-library/polyaxon-client/
     - title: Run Client

@@ -27,6 +27,10 @@ class TestV1Terminations(BaseTestCase):
         config = V1Termination.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        config_dict["maxRetries"] = "{{ fs }}"
+        config = V1Termination.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
         # Add max_retries
         config_dict["maxRetries"] = 4
         config = V1Termination.from_dict(config_dict)

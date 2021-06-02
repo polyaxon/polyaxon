@@ -19,12 +19,13 @@ import polyaxon_sdk
 from marshmallow import fields
 
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
 class TerminationSchema(BaseCamelSchema):
-    max_retries = fields.Int(allow_none=True)
-    ttl = fields.Int(allow_none=True)
-    timeout = fields.Int(allow_none=True)
+    max_retries = RefOrObject(fields.Int(allow_none=True))
+    ttl = RefOrObject(fields.Int(allow_none=True))
+    timeout = RefOrObject(fields.Int(allow_none=True))
 
     @staticmethod
     def schema_config():

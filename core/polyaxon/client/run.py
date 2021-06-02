@@ -666,7 +666,7 @@ class RunClient:
         Otherwise, it will wait until the user interrupts the function or
         when the run reaches a final status.
 
-        N.B. if you want to watch the statuses and and receive the status/conditions,
+        N.B. if you want to watch the statuses and receive the status/conditions,
         please use `watch_statuses` instead which yields the results.
         """
         for status, conditions in self._wait_for_condition(statuses):

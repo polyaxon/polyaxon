@@ -63,6 +63,7 @@ def collect_references(config: V1Operation, path_context: str = None):
                 os.path.dirname(os.path.abspath(path_context)), path_ref
             )
         component = ConfigSpec.get_from(path_ref).read()
+        path_context = path_ref
     else:
         raise PolyaxonfileError("Operation found without component")
 
@@ -81,7 +82,7 @@ def collect_references(config: V1Operation, path_context: str = None):
         )
     config.component = component
     if component.is_dag_run:
-        collect_dag_components(component.run)
+        collect_dag_components(component.run, path_context)
     return config
 
 

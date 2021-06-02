@@ -83,6 +83,26 @@
       link: /docs/intro/builds/building-containers-custom-context/
     - title: Automatic Build Process
       link: /docs/intro/builds/automatic-build-process/
+  - group: Python Library Guides
+    items:
+    - title: Introduction
+      link: /docs/intro/client/introduction/
+    - title: Instantiation
+      link: /docs/intro/client/instantiate/
+    - title: Exception handling
+      link: /docs/intro/client/exception-handling/
+    - title: NO-OP mode
+      link: /docs/intro/client/no-op/
+    - title: Reading Polyaxonfiles
+      link: /docs/intro/client/reading-polyaxonfiles/
+    - title: Tracking in-cluster
+      link: /docs/intro/client/tracking-in-cluster/
+    - title: Tracking in-notebooks
+      link: /docs/intro/client/tracking-in-notebooks/
+    - title: Tracking artifacts
+      link: /docs/intro/client/tracking-artifacts/
+    - title: Tracking offline
+      link: /docs/intro/client/tracking-offline/
   - group: CLI Guides
     items:
     - title: Reconfiguring the CLI

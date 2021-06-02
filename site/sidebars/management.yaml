@@ -1,8 +1,4 @@
 - groups:
-  - group: Management
-    items:
-    - title: Overview
-      link: /docs/management/
   - group: Organizations
     items:
     - title: Overview

@@ -60,8 +60,11 @@ def client_handler(
                 return None
             if check_offline:
                 self_arg = args[0] if args else None
-                if settings.CLIENT_CONFIG.is_offline or getattr(
-                    self_arg, "_is_offline", False
+                is_offline = getattr(self_arg, "_is_offline", None)
+                if (
+                    is_offline
+                    if is_offline is not None
+                    else settings.CLIENT_CONFIG.is_offline
                 ):
                     logger.debug("Using IS_OFFLINE mode")
                     return None
