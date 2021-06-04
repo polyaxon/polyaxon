@@ -10,7 +10,7 @@ require (
 	github.com/onsi/ginkgo v1.14.2
 	github.com/onsi/gomega v1.10.4
 	github.com/pkg/errors v0.9.1
-	github.com/polyaxon/polyaxon/sdks v0.0.0-20210422065545-e43c48aa42d9
+	github.com/polyaxon/polyaxon/sdks v0.0.0-20210601103100-33fbb196a280
 	github.com/prometheus/client_golang v1.7.1
 	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
 	k8s.io/api v0.19.2

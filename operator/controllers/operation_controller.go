@@ -79,6 +79,13 @@ func (r *OperationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		return ctrl.Result{}, utils.IgnoreNotFound(err)
 	}
 
+	// Set StartTime
+	if instance.Status.StartTime == nil {
+		if err := r.AddStartTime(ctx, instance); err != nil {
+			return ctrl.Result{}, err
+		}
+	}
+
 	// Finalizer
 	if instance.IsBeingDeleted() {
 		return ctrl.Result{}, r.handleFinalizers(ctx, instance)

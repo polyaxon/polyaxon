@@ -20,16 +20,15 @@ from marshmallow import fields, validate
 
 from polyaxon.polyflow.schedules.kinds import V1ScheduleKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
-from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
 class CronScheduleSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1ScheduleKind.CRON))
-    start_at = RefOrObject(fields.DateTime(allow_none=True))
-    end_at = RefOrObject(fields.DateTime(allow_none=True))
-    cron = RefOrObject(fields.String(required=True))
-    max_runs = RefOrObject(fields.Int(allow_none=True, validate=validate.Range(min=1)))
-    depends_on_past = RefOrObject(fields.Bool(allow_none=True))
+    start_at = fields.DateTime(allow_none=True)
+    end_at = fields.DateTime(allow_none=True)
+    cron = fields.String(required=True)
+    max_runs = fields.Int(allow_none=True, validate=validate.Range(min=1))
+    depends_on_past = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():

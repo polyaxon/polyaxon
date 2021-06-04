@@ -32,3 +32,8 @@ data:
   {{- if .Values.includeChartRevision }}
   POLYAXON_CHART_REVISION: {{ .Release.Revision | quote }}
   {{- end }}
+  # Security Context
+  {{- if and .Values.securityContext.enabled }}
+  POLYAXON_SECURITY_CONTEXT_USER: {{ .Values.securityContext.user | quote }}
+  POLYAXON_SECURITY_CONTEXT_GROUP: {{ .Values.securityContext.group | quote }}
+  {{- end }}
