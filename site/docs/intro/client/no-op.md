@@ -16,9 +16,9 @@ sidebar: "intro"
 ## Overview
 
 The no-op mode allows users to turn off all API calls and silently pass through all function calls. this behavior is generally useful if a user needs to debug or test
-a script without the need to connect to a Polyaxon Cluster. 
+a script without the need to connect to a Polyaxon Cluster.
 
-## Disabling Polyaxon clients without changing the code
+## Disabling Polyaxon clients without changing code
 
 Since using the Polyaxon client and the tracking API requires code change, e.g.
 

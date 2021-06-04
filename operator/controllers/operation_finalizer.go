@@ -47,7 +47,7 @@ func (r *OperationReconciler) handleFinalizers(ctx context.Context, instance *op
 				operationv1.OperationStopped,
 				corev1.ConditionTrue,
 				"OperatorFinalizer",
-				"Job stopped in finalizer",
+				"Operation stopped in finalizer",
 			),
 		)
 	}

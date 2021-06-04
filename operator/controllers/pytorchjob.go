@@ -86,7 +86,7 @@ func (r *OperationReconciler) reconcilePytorchJob(ctx context.Context, instance 
 	}
 
 	// Update the job object and write the result back if there are any changes
-	if !justCreated && managers.CopyPytorchJobFields(job, foundJob) {
+	if !justCreated && !instance.IsDone() && managers.CopyPytorchJobFields(job, foundJob) {
 		log.V(1).Info("Updating PytorchJob", "namespace", instance.Namespace, "name", instance.Name)
 		err = r.Update(ctx, foundJob)
 		if err != nil {

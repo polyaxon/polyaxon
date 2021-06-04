@@ -85,7 +85,7 @@ func (r *OperationReconciler) reconcileTFJob(ctx context.Context, instance *oper
 	}
 
 	// Update the job object and write the result back if there are any changes
-	if !justCreated && managers.CopyTFJobFields(job, foundJob) {
+	if !justCreated && !instance.IsDone() && managers.CopyTFJobFields(job, foundJob) {
 		log.V(1).Info("Updating TFJob", "namespace", instance.Namespace, "name", instance.Name)
 		err = r.Update(ctx, foundJob)
 		if err != nil {

@@ -85,7 +85,7 @@ func (r *OperationReconciler) reconcileMPIJob(ctx context.Context, instance *ope
 	}
 
 	// Update the job object and write the result back if there are any changes
-	if !justCreated && managers.CopyMPIJobFields(job, foundJob) {
+	if !justCreated && !instance.IsDone() && managers.CopyMPIJobFields(job, foundJob) {
 		log.V(1).Info("Updating MPIJob", "namespace", instance.Namespace, "name", instance.Name)
 		err = r.Update(ctx, foundJob)
 		if err != nil {

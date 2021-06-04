@@ -40,10 +40,10 @@ func (r *OperationReconciler) delete(ctx context.Context, instance *operationv1.
 
 	err := r.Delete(ctx, instance)
 	if err != nil {
-		log.V(1).Info("Cleanup Job", "Error", err)
+		log.V(1).Info("Cleanup Operation", "Error", err)
 		return err
 	}
-	log.V(1).Info("Job is done, cleanup", "namespace", instance.Namespace, "name", instance.Name)
+	log.V(1).Info("Operation is done, cleanup", "namespace", instance.Namespace, "name", instance.Name)
 	return nil
 }
 
@@ -83,6 +83,13 @@ func (r *OperationReconciler) handlePastActiveDeadline(ctx context.Context, inst
 	allowedDuration := time.Second * time.Duration(*activeDeadlineSeconds)
 	if duration >= allowedDuration {
 		log.V(1).Info("Cleanup triggered based on ActiveDeadlineSeconds")
+		if updated := instance.LogStopped("DeadlineExceeded", "Cleanup triggered based on ActiveDeadlineSeconds, operation was active longer than specified deadline"); updated {
+			log.V(1).Info("Operation Logging Status Stopped")
+			if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
+				return nil, statusErr
+			}
+			r.instanceSyncStatus(instance)
+		}
 		return nil, r.delete(ctx, instance)
 	}
 

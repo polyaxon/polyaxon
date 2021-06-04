@@ -116,7 +116,7 @@ func (r *OperationReconciler) reconcileDeployment(ctx context.Context, instance 
 		return err
 	}
 	// Update the deployment object and write the result back if there are any changes
-	if !justCreated && managers.CopyDeploymentFields(deployment, foundDeployment) {
+	if !justCreated && !instance.IsDone() && managers.CopyDeploymentFields(deployment, foundDeployment) {
 		log.V(1).Info("Updating Service Deployment", "namespace", deployment.Namespace, "name", deployment.Name)
 		err = r.Update(ctx, foundDeployment)
 		if err != nil {

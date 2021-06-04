@@ -63,7 +63,7 @@ func (r *OperationReconciler) reconcileJob(ctx context.Context, instance *operat
 		log.V(1).Info("Creating Job", "namespace", job.Namespace, "name", job.Name)
 		err = r.Create(ctx, job)
 		if err != nil {
-			if updated := instance.LogWarning("OperatprCreateJob", err.Error()); updated {
+			if updated := instance.LogWarning("OperatorCreateJob", err.Error()); updated {
 				log.V(1).Info("Warning unable to create Job")
 				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
 					return statusErr
@@ -80,7 +80,7 @@ func (r *OperationReconciler) reconcileJob(ctx context.Context, instance *operat
 		return err
 	}
 	// Update the job object and write the result back if there are any changes
-	if !justCreated && managers.CopyJobFields(job, foundJob) {
+	if !justCreated && !instance.IsDone() && managers.CopyJobFields(job, foundJob) {
 		log.V(1).Info("Updating Job", "namespace", job.Namespace, "name", job.Name)
 		err = r.Update(ctx, foundJob)
 		if err != nil {
@@ -116,7 +116,7 @@ func (r *OperationReconciler) reconcileJobStatus(instance *operationv1.Operation
 		return false
 	}
 
-	if podStatus == operationv1.OperationStarting {
+	if podStatus == operationv1.OperationStarting && job.Status.CompletionTime == nil {
 		return false
 	}
 
