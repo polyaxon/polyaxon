@@ -3,7 +3,6 @@ title: "How to reconfigure Polyaxon CLI"
 sub_link: "cli/reconfigure-cli"
 meta_title: "A guide on how to reconfigure Polyaxon CLI - Core Concepts"
 meta_description: "Polyaxon CLI can connect to many deployments."
-is_index: true
 visibility: public
 status: published
 tags:

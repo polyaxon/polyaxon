@@ -133,7 +133,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         dependencies: [dependencies](/docs/automation/flow-engine/flow-dependencies/#dependencies), optional  # noqa
         trigger: [trigger](/docs/automation/flow-engine/flow-dependencies/#trigger), optional
         conditions: [conditions](/docs/core/scheduling-strategies/conditional-scheduling/#conditional-scheduling), optional  # noqa
-        skip_on_upstream_skip: [skip_on_upstream_skip](/docs/automation/flow-engine/flow-dependencies/skiponupstreamskip/), optional  # noqa
+        skip_on_upstream_skip: [skip_on_upstream_skip](/docs/automation/flow-engine/flow-dependencies/#skiponupstreamskip), optional  # noqa
         run_patch: Dict, optional
         hub_ref: str, optional
         dag_ref: str, optional
@@ -258,7 +258,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     ```
 
     > **Note**: Please check this
-    > [in-depth section about presets](/docs/core/scheduling-strategies/presets/).
+    > [in-depth section about presets](/docs/core/scheduling-presets/).
 
     ### name
 

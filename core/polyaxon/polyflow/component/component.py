@@ -192,7 +192,7 @@ class V1Component(
 
     ### presets
 
-    The default component [presets](/docs/core/scheduling-strategies/presets/).
+    The default component [presets](/docs/core/scheduling-presets/).
 
     These presets will be passed as the default value to all operations using this component,
     unless the operations override the presets or `--presets`

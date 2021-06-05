@@ -3,7 +3,6 @@ title: "How to mount configmaps manually"
 sub_link: "k8s-guides/mounting-configmaps"
 meta_title: "A guide on mounting configmaps manually - Core Concepts"
 meta_description: "While we generally recommend that users should leverage the connection interface to configure and abstract requesting and mounting configmaps, it's possible to mount configmaps manually."
-is_index: true
 visibility: public
 status: published
 tags:

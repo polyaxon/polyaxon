@@ -3,7 +3,6 @@ title: "How to install Polyaxon CLI"
 sub_link: "cli/install"
 meta_title: "A guide on how to install Polyaxon CLI - Core Concepts"
 meta_description: "Polyaxon CLI is a Python command-line interface to interact with Polyaxon API."
-is_index: true
 visibility: public
 status: published
 tags:

@@ -5,7 +5,6 @@ meta_title: "Introduction to Polyaxon tracking in a notebook session- Python Cli
 meta_description: "Polyaxon's Python library provides utilities and modules for logging and tracking of your machine learning code, artifacts, and results, and allows to perform multi-run tracking inside a single notebook session."
 visibility: public
 status: published
-is_index: true
 tags:
   - specifications
   - polyaxon

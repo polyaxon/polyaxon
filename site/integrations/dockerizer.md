@@ -45,7 +45,7 @@ Please see the [component's definition](https://cloud.polyaxon.com/ui/polyaxon/h
 
 Before you can use this component, you need to make sure to declare a registry connection in your connections catalog.
 
-Please read this introduction to [registry connections](/setup/connections/registry/) to understand the process, and this list of [registry integrations](/integrations/registries/) that you can use.
+Please read this introduction to [registry connections](/docs/setup/connections/registry/) to understand the process, and this list of [registry integrations](/integrations/registries/) that you can use.
 
 ## Creating containers 
 

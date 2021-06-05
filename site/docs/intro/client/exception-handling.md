@@ -5,7 +5,6 @@ meta_title: "Exception handling - Python Client References"
 meta_description: "Polyaxon's Python library raises some of its own exceptions as well as standard Python exceptions."
 visibility: public
 status: published
-is_index: true
 tags:
   - specifications
   - polyaxon

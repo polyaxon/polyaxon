@@ -147,4 +147,4 @@ it allows users to define several reusable configurations, e.g. complex node sel
 
 You can check the folder [helpers](https://github.com/polyaxon/polyaxon-quick-start/tree/master/helpers) which contains additional preset examples. 
 
-> For mode details about using presets please check the [scheduling presets guide](/docs/core/scheduling-strategies/presets/) 
+> For mode details about using presets please check the [scheduling presets guide](/docs/core/scheduling-presets/) 

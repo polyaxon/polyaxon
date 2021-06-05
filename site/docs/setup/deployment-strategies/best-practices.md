@@ -26,7 +26,7 @@ This ensures that experiments, jobs, dashboards, and apps, won't consume CPU and
 In order to achieve such behavior, please check:
  * The [node and deployment manipulation](/docs/setup/platform/common-reference/#node-and-deployment-manipulation/) section to configure its core services.
  * The [node scheduling](/docs/core/scheduling-strategies/node-scheduling/) section to configure scheduling for the data scientist's workload.
- * The [presets](/docs/core/scheduling-strategies/presets/) section to create common configuration for your experiments, jobs, builds, scheduling, resources requesting, and other use-cases you need to solve.
+ * The [presets](/docs/core/scheduling-presets/) section to create common configuration for your experiments, jobs, builds, scheduling, resources requesting, and other use-cases you need to solve.
 
 You can also decide to just use at a minimum 2 selectors one for core components and one for the workload to keep them separated.
 

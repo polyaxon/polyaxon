@@ -5,7 +5,6 @@ meta_title: "Introduction to Polyaxon tracking offline - Python Client Reference
 meta_description: "Polyaxon's Python library enables users to perform all API calls and artifacts tracking logic offline."
 visibility: public
 status: published
-is_index: true
 tags:
   - specifications
   - polyaxon

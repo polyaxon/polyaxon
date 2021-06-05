@@ -3,7 +3,6 @@ title: "Scheduling operations from an external system"
 sub_link: "scheduling-strategies/external-scheduling"
 meta_title: "A guide on scheduling and submitting operations from external systems - scheduling strategies"
 meta_description: "Automating, scheduling, and submitting operations from external systems."
-is_index: true
 visibility: public
 status: published
 tags:
@@ -23,7 +22,7 @@ There are several examples of integrating Polyaxon with some well known [orchest
 If you are using Polyaxon Cloud or Polyaxon EE and you want to automate and submit operations using Polyaxon API, clients, or CLI via an external system, 
 we suggest that you create a token specific to those systems.  
 
-Please check the [token management section](/docs/management/organizations/users/#token-management) for more details.
+Please check the [token management section](/docs/management/organizations/user_profile/#token-management) for more details.
 
 ## Accessible API
 

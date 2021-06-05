@@ -31,6 +31,8 @@
       link: /docs/automation/optimization-engine/iterative/
     - title: Params
       link: /docs/automation/optimization-engine/params/
+    - title: Tuner
+      link: /docs/automation/optimization-engine/tuner/
   - group: Mapping
     items:
     - title: Overview

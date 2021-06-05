@@ -22,7 +22,7 @@ visibility: public
 status: published
 ---
 
-Polyaxon provides a rich [Python library](/docs/core/python-library/) that can be used with
+Polyaxon provides a rich [Python library](/docs/core/python-library/polyaxon-client/) that can be used with
 scheduling tools such as Airflow to submit jobs to Polyaxon.
 
 ## Creating a custom operator

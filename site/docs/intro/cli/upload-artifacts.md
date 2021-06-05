@@ -3,7 +3,6 @@ title: "How to upload artifacts"
 sub_link: "cli/upload-artifacts"
 meta_title: "How to upload artifacts - Core Concepts"
 meta_description: "Polyaxon run and ops allow to upload artifacts in a completely versioned way."
-is_index: true
 visibility: public
 status: published
 tags:

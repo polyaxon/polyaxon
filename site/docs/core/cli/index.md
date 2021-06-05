@@ -1,6 +1,6 @@
 ---
 title: "Polyaxon CLI"
-sub_link: "polyaxon-cli"
+sub_link: "cli"
 meta_title: "Polyaxon Command Line Interface Specification - Polyaxon References"
 meta_description: "Polyaxon Command Line Interface Specification."
 visibility: public

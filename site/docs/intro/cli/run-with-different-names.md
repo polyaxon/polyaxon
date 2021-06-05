@@ -3,7 +3,6 @@ title: "How to start runs with different names"
 sub_link: "cli/run-with-different-names"
 meta_title: "How to start runs with different names - Core Concepts"
 meta_description: "A guide on ow to use Polyaxon CLI to schedule runs with different names, descriptions and tags."
-is_index: true
 visibility: public
 status: published
 tags:

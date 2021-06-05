@@ -3,7 +3,6 @@ title: "How to authenticate Polyaxon CLI"
 sub_link: "cli/authenticate"
 meta_title: "A guide on how to authenticate Polyaxon CLI - Core Concepts"
 meta_description: "Polyaxon login command allows to authenticate your CLI and creates a context for future interactions with the API."
-is_index: true
 visibility: public
 status: published
 tags:

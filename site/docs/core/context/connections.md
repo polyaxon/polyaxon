@@ -1,6 +1,6 @@
 ---
 title: "Context Connections"
-sub_link: "context/context"
+sub_link: "context/connections"
 meta_title: "Context Connections- Polyaxon Specification"
 meta_description: "All connections requested by the main container and init containers will be exposed to the context as well along with theirs schemas."
 visibility: public

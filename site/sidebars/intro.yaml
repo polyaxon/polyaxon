@@ -105,10 +105,14 @@
       link: /docs/intro/client/tracking-offline/
   - group: CLI Guides
     items:
+    - title: Install the CLI
+      link: /docs/intro/cli/install/
     - title: Reconfiguring the CLI
       link: /docs/intro/cli/reconfigure-cli/
     - title: Authenticating the CLI
       link: /docs/intro/cli/authenticate/
+    - title: Understanding the CLI cache behavior
+      link: /docs/intro/cli/cache/
     - title: Uploading artifacts
       link: /docs/intro/cli/upload-artifacts/
     - title: Customizing the git preset

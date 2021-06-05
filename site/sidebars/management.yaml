@@ -67,7 +67,7 @@
       link: /docs/management/component-hub/components/
     - title: Versions
       link: /docs/management/component-hub/versions/
-  - group: Models registry
+  - group: Model registry
     items:
     - title: Overview
       link: /docs/management/model-registry/

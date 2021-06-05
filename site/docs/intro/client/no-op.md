@@ -5,7 +5,6 @@ meta_title: "Introduction to no-op mode - Python Client References"
 meta_description: "Polyaxon's Python library allows to turn off all API calls and silently pass through all function calls."
 visibility: public
 status: published
-is_index: true
 tags:
   - specifications
   - polyaxon

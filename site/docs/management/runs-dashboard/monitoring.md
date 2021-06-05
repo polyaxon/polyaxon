@@ -1,6 +1,6 @@
 ---
 title: "Run Resources"
-sub_link: "runs-dashboard/resources"
+sub_link: "runs-dashboard/monitoring"
 meta_title: "Polyaxon management tools and UI - Runs dashboard - Run Resources"
 meta_description: "Polyaxon runs dashboard for Machine learning experiment tracking and visualizations."
 tags:

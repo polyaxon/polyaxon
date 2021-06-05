@@ -1,9 +1,10 @@
 ---
-title: "Scheduling with Presets"
-sub_link: "scheduling-strategies/resume-restart"
-meta_title: "Presets allows to define configurations that should be injected into operation at compilation time - scheduling strategies"
+title: "Scheduling Presets"
+sub_link: "scheduling-presets"
+meta_title: "Presets allows to define configurations that should be injected into operation at compilation time - scheduling presets"
 meta_description: "A feature for injecting certain information into operations at compilation time to extract repetitive configuration for node scheduling, resources requirements and definition, connections, 
 but also for queue routing and access level control."
+is_index: true
 tags:
   - namespace
   - queueing
@@ -69,7 +70,6 @@ Each one of these files can define the node labels, annotations, tolerations and
 For example The `gpu_experiments.yaml` can contain the following specification:
 
 ```yaml
-isPreset: true
 runPatch:
   environment:
     nodeSelector:

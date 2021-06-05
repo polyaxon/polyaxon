@@ -80,7 +80,7 @@ git push orgin master
 polyaxon run -f simple.yaml --git-preset
 ```
 
-The last command will tell Polyaxon to look for the git configuration that we initialized earlier in this folder and detect the latest commit and inject it as a [preset](/docs/core/scheduling-strategies/presets/).
+The last command will tell Polyaxon to look for the git configuration that we initialized earlier in this folder and detect the latest commit and inject it as a [preset](/docs/core/scheduling-presets/).
 
 ## Scheduling experiments with specific commits or branches
 

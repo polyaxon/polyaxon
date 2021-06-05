@@ -1,7 +1,7 @@
 ---
 title: "Managing and exposing a catalog of machines"
-sub_link: "scheduling-strategies/machines-catalog"
-meta_title: "Organizing your cluster(s) as a catalog of machines or environments - scheduling strategies"
+sub_link: "scheduling-presets/machines-catalog"
+meta_title: "Organizing your cluster(s) as a catalog of machines or environments - scheduling presets"
 meta_description: "By combining Queues and Presets, users can expose their cluster(s) as an organized and easy-to-use catalog of machines."
 tags:
   - namespace
@@ -29,7 +29,6 @@ We first need to create a queue on the agent where we would like to expose the G
 After creating the queue, we can include it in the preset definition.
 
 ```yaml
-isPreset: true
 queue: agent-name/queue-with-2-concurrency
 runPatch:
   environment:

@@ -1,6 +1,6 @@
 ---
 title: "Features"
-sub_link: "introduction/features"
+sub_link: "information/features"
 meta_title: "Polyaxon Features - Core Concepts"
 meta_description: "Polyaxon comes with powerful features built directly into the core software which are customizable and extensible to suit your needs."
 visibility: public

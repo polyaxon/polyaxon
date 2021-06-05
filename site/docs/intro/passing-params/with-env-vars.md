@@ -1,6 +1,6 @@
 ---
 title: "Passing params with environment variables"
-sub_link: "passing-params/with-environment-variables"
+sub_link: "passing-params/with-env-vars"
 meta_title: "Passing parameters to your programs as environment variables - Core Concepts"
 meta_description: "Passing parameters to your programs as environment variables requires that you set the proper handling of environment variables in your programs."
 visibility: public

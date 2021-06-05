@@ -16,7 +16,7 @@ Sometimes you may need to handle or request the resolved inputs and outputs dire
 
 ## Overview
 
-Polyaxon provides a [Python Library](/docs/core/python-library/) that exposes several methods to fetch information about a run or the currently running operation. 
+Polyaxon provides a [Python Library](/docs/core/python-library/polyaxon-client/) that exposes several methods to fetch information about a run or the currently running operation. 
 
 Users can use the library to request the full resolved params (inputs and outputs) and use it during the runtime of their programs. They can additionally add, update, 
 or reset the inputs or outputs programmatically.

@@ -76,4 +76,4 @@ Polyaxon provides several interfaces designed to achieve fairness when a limited
 so that the entities they create, i.e. builds/jobs/experiments/notebooks, cannot exceed the parallelism and may not consume more
 resources than the quota specification allows.
 
-<blockquote class="light">Please refer to <a href="/docs/core/scheduling-strategies/presets/">scheduling-strategies/presets</a> and <a href="/docs/management/organizations/presets/">management/presets</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/core/scheduling-presets/">scheduling-presets</a> and <a href="/docs/management/organizations/presets/">management/presets</a> for more details.</blockquote>

@@ -1,6 +1,6 @@
 ---
 title: "Common Helm Reference"
-sub_link: "platform/reference"
+sub_link: "platform/common-reference"
 meta_title: "Common Helm Reference For Polyaxon CE and EE - Polyaxon References"
 meta_description: "Polyaxon Common Helm Reference For Polyaxon CE and EE charts."
 visibility: public

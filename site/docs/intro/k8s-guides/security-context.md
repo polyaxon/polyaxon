@@ -1,9 +1,8 @@
 ---
 title: "How to configure a security context"
-sub_link: "k8s-guides/security-config"
+sub_link: "k8s-guides/security-context"
 meta_title: "A guide on configuring a security context for operations - Core Concepts"
-meta_description: "By default, Polyaxon operations run without security context, and pods run as root."
-is_index: true
+meta_description: "By default, Polyaxon operations run without a security context, and pods run as root."
 visibility: public
 status: published
 tags:
@@ -14,7 +13,7 @@ sidebar: "intro"
 
 ## Overview
 
-By default, Polyaxon operations run without security context, and pods run as root. 
+By default, Polyaxon operations run without a security context, and pods run as root. 
 Sometimes you might even need to run pods with privileged security, for examples the `dockerizer` component.
 
 ## Usage
@@ -37,5 +36,5 @@ If you are running a distributed operation, you can provide a security context p
 
 ## Global configuration
 
-If you to define a security context globally, we suggest creating a [preset](/docs/core/scheduling-strategies/presets/).
+If you to define a security context globally, we suggest creating a [preset](/docs/core/scheduling-presets/).
 If you are using Polyaxon Cloud or Polyaxon EE, you can add the security context definition to the default organization's preset or the default project's preset.  

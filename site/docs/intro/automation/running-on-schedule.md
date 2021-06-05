@@ -39,7 +39,7 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/e
 This schedule is of kind `cron`, and it will start an experiment every monday. 
 If you need to start this schedule at a specific date you can set the `startAt` field, and to provide a stopping condition you can provide `endAt` or `maxRuns`.
 
-It's also possible to put the complete [DAG](/docs/intro/automation/automation/) that we created in the previous guide on schedule, similarly to this operation, 
+It's also possible to put the complete [DAG](/docs/intro/automation/automation-dag/) that we created in the previous guide on schedule, similarly to this operation, 
 you can add a valid schedule section, this way, not only you automate the journey of creating, training, and validating a model, but also you do it continuously, 
 the file `schedules/recurrent_dag.yaml` contains an example of such operation:
 

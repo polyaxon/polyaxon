@@ -3,7 +3,6 @@ title: "How to customize git preset"
 sub_link: "cli/customize-git-preset"
 meta_title: "A guide on how to customize the remote git preset integration - Core Concepts"
 meta_description: "Polyaxon allows to iterate with Polyaxon CLI and a remote git repo, this guide shows how users can extend or create their own polyaxongit.yaml file."
-is_index: true
 visibility: public
 status: published
 tags:
@@ -40,7 +39,7 @@ polyaxon init -p PROJECT_NAME --connection CONNECTION_NAME --git-url https://git
 
 > **Note**: For more information, please run `polyaxon init --help`
 
-When executing one of the above commands, Polyaxon will create a file `polyaxongit.yaml` that contains a [preset](/docs/core/scheduling-strategies/presets/).
+When executing one of the above commands, Polyaxon will create a file `polyaxongit.yaml` that contains a [preset](/docs/core/scheduling-presets/).
 
 ### Using the git-preset argument
 

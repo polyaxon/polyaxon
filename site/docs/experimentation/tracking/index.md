@@ -1,6 +1,6 @@
 ---
 title: "Polyaxon Tracking API"
-sub_link: "tracking/introduction"
+sub_link: "tracking"
 is_index: true
 meta_title: "Polyaxon Tracking API Specification - Experimentation"
 meta_description: "Polyaxon Tracking API is a high-level API for logging parameters, code versions, metrics, and outputs when running your machine learning code, both on a Polyaxon deployment or on a different platform/environment."
@@ -19,7 +19,7 @@ Polyaxon tracking is a high-level API for logging parameters,
 code versions, metrics, and outputs when running your machine learning code,
 both on a Polyaxon deployment or on a different platform/environment.
 
-The tracked information will be later visualized and compared using [Polyaxon's UI](/docs/management/runs-dashboard/) or using other tools such as [Tensorboard](/docs/experimentation/services/tensorboard/).
+The tracked information will be later visualized and compared using [Polyaxon's UI](/docs/management/runs-dashboard/) or using other tools such as [Tensorboard](/docs/intro/tensorboard/single-tensorboard/).
 
 Polyaxon tracking lets you log and interact with the REST API in a very convenient way,
 the tracking module is an extension of the [Python client](/docs/core/python-library/run-client/)

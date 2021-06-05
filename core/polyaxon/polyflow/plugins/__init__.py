@@ -63,7 +63,6 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         collect_logs: bool, optional, default: True
         collect_resources: bool, optional, default: True
         auto_resume: bool, optional, default: True
-        sync_statuses: bool, optional, default: True
         log_level: str, optional
         sidecar: V1PolyaxonSidecarContainer, optional
 
@@ -79,7 +78,6 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   collectLogs:
     >>>   collectResources:
     >>>   autoResume:
-    >>>   syncStatuses:
     >>>   externalHost:
     >>>   logLevel:
     >>>   sidecar:
@@ -98,7 +96,6 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>     collect_logs=False,
     >>>     collect_resources=False
     >>>     auto_resume=False,
-    >>>     sync_statuses=False,
     >>>     external_host=False,
     >>>     log_level="INFO",
     >>> )
@@ -259,22 +256,6 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     ```yaml
     >>> plugins:
     >>>   autoResume: false
-    ```
-
-    ### syncStatuses
-
-    <blockquote class="light">This plugin is enabled by default.</blockquote>
-
-    Every job that is scheduled on Kubernetes by Polyaxon will be tracked to notify the user about
-    it's progress and in case of warnings.
-
-    You will most probably never have to disable this plugin.
-
-    To disable this plugin:
-
-    ```yaml
-    >>> plugins:
-    >>>   syncStatuses: false
     ```
 
     ### externalHost

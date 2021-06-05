@@ -5,7 +5,6 @@ meta_title: "A guide on how to instantiate the Python Client - Core Concepts"
 meta_description: "Polyaxon's Python library tries to detect a context automatically, users can also change this behavior by providing auth, organization, project, and run references."
 visibility: public
 status: published
-is_index: true
 tags:
   - specifications
   - polyaxon

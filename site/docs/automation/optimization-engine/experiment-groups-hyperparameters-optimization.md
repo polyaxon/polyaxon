@@ -120,7 +120,7 @@ Early stopping    deactivated
 
 This command validate the polyaxonfile, and the option `-def` returns the group definition.
 
-> For more details about this command please run `polyaxon check --help`, or check the [command reference](/references/polyaxon-cli/check/)
+> For more details about this command please run `polyaxon check --help`, or check the [command reference](/docs/core/cli/check/)
 
 > Polyaxon merges the combination values from matrix for a single experiment with the values from params and export under the environment variable name `POLYAXON_DECLARATIONS`.
 > Check how you can [get the experiment params](/docs/experimentation/tracking/in-cluster/#hyperparams) to use them with your models.
@@ -137,7 +137,7 @@ Creating an experiment group with 5 experiments.
 Experiment group was created
 ```
 
-> For more details about this command please run `polyaxon run --help`, or check the [command reference](/references/polyaxon-cli/run/)
+> For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/)
 
 Now one thing we did not discuss is how many experiments we want to run in parallel,
 and how we want to perform the hyperparameters search. Be default, Polyaxon
@@ -316,7 +316,7 @@ Polyaxon supports, in addition to [grid search](/references/polyaxon-optimizatio
 For more information on hyperparameter tuning and optimization please go to [Optimization Engine Reference](/references/polyaxon-optimization-engine/).
 
 
-> For more details about this command please run `polyaxon group --help`, or check the [command reference](/references/polyaxon-cli/experiment-group/)
+> For more details about this command please run `polyaxon group --help`, or check the [command reference](/docs/core/cli/run/)
 
 
 To check the logs, resources, jobs, and statuses of a specific experiment, please go to [experiments](/concepts/experiments/).

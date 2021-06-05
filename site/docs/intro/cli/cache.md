@@ -3,7 +3,6 @@ title: "Understanding the CLI cache behavior"
 sub_link: "cli/cache"
 meta_title: "A guide to understanding how Polyaxon CLI cache information - Core Concepts"
 meta_description: "Polyaxon CLI creates a cache context to improve the user experience and avoid passing arguments for static information like owner, project, and last run."
-is_index: true
 visibility: public
 status: published
 tags:

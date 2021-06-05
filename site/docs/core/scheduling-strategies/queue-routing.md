@@ -1,6 +1,6 @@
 ---
 title: "Queue Routing"
-sub_link: "scheduling-strategies/route-queuing"
+sub_link: "scheduling-strategies/queue-routing"
 meta_title: "Queue routing in Polyaxon - Scheduling strategies"
 meta_description: "Polyaxon provides a queue abstraction to prioritize operations on a queue,
 to throttle the number of operations on a queue,

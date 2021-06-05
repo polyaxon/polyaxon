@@ -21,7 +21,7 @@ with more details in pages dedicated to each concept.
 
 A `User` is the entity that creates projects, starts experiments, creates jobs and pipelines, manages teams and clusters.
 
-<blockquote class="light">Please refer to <a href="/docs/management/organizations/users/">management/users</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/management/organizations/user_profile/">management/users</a> for more details.</blockquote>
 
 ### Organization
 
@@ -29,7 +29,7 @@ An `Organization` is the entity that enables several users to collaborate across
 Owners and managers can manage member access to the organization's data and projects with sophisticated security and administrative features. 
 They can also delegate project, registry, and hub management to admins. 
 
-<blockquote class="light">Please refer to <a href="/docs/management/organizations/organizations/">management/organizations</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/management/organizations/">management/organizations</a> for more details.</blockquote>
 
 ### Team
 

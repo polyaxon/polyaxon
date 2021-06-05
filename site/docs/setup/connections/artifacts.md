@@ -107,7 +107,7 @@ connections:
 
 If you are using a persistent volume with one node access you need to be aware that you can only use it with experiment/jobs running on that same node at the same time.
 
-There are some options that support multi-nodes access, e.g. a PVC backed with an [NFS](/integrations/outputs-on-nfs/)/Glusterfs server,
+There are some options that support multi-nodes access, e.g. a PVC backed with an [NFS](/integrations/artifacts-on-nfs/)/Glusterfs server,
 where you can use multiple nodes and schedule experiments on all the nodes to access the artifacts/datasets.
 Please refer to [this section](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to learn more about access modes.
 

@@ -3,7 +3,6 @@ title: "Where to go from here"
 sub_link: "quick-start/where-to-go-from-here"
 meta_title: "How to guides - Core Concepts"
 meta_description: "This section includes an orientation for the next guides to explore."
-is_index: true
 visibility: public
 status: published
 tags:

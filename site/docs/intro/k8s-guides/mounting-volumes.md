@@ -3,7 +3,6 @@ title: "How to mount volumes manually"
 sub_link: "k8s-guides/mounting-volumes"
 meta_title: "A guide on mounting volumes manually - Core Concepts"
 meta_description: "While we generally recommend that users should leverage the connection interface to configure and abstract requesting and mounting volumes, it's possible to mount volumes manually."
-is_index: true
 visibility: public
 status: published
 tags:

@@ -93,10 +93,6 @@
       link: /docs/core/scheduling-strategies/queue-routing/
     - title: Concurrency Management
       link: /docs/core/scheduling-strategies/concurrency-management/
-    - title: Scheduling Presets
-      link: /docs/core/scheduling-strategies/presets/
-    - title: Managing a Catalog of Machines
-      link: /docs/core/scheduling-strategies/machines-catalog/
     - title: Resume & Restart
       link: /docs/core/scheduling-strategies/resume-restart/
     - title: Conditional Scheduling
@@ -111,3 +107,15 @@
       link: /docs/core/scheduling-strategies/handling-termination/
     - title: Managing Priority
       link: /docs/core/scheduling-strategies/managing-priority/
+  - group: Scheduling Presets
+    items:
+    - title: Overview
+      link: /docs/core/scheduling-presets/
+    - title: Organizing Workload
+      link: /docs/core/scheduling-presets/organizing-workload/
+    - title: Managing a Catalog of Machines
+      link: /docs/core/scheduling-presets/machines-catalog/
+    - title: Services Timeout
+      link: /docs/core/scheduling-presets/services-timeout/
+    - title: Workload Security Context
+      link: /docs/core/scheduling-presets/workload-security-context/

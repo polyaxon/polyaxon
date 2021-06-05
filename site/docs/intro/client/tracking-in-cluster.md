@@ -5,7 +5,6 @@ meta_title: "Introduction to Polyaxon tracking - Python Client References"
 meta_description: "Polyaxon's Python library provides utilities and modules for logging and tracking of your machine learning code, artifacts, and results."
 visibility: public
 status: published
-is_index: true
 tags:
   - specifications
   - polyaxon

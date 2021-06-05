@@ -17,7 +17,7 @@ Polyaxon exposes a section for handling failure and managing [termination](/docs
 
 You can set a default termination on the component level and override the values for each operation, 
 or you can only define termination on some operation without setting too much information on the component.
-You can also use the [scheduling presets](/docs/core/scheduling-strategies/presets/)
+You can also use the [scheduling presets](/docs/core/scheduling-presets/)
 to define one or multiple termination configurations that you can use with one or several of your operations.
 
 ## Handling failures with max retries

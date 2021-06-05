@@ -3,7 +3,6 @@ title: "How to restart runs with different names"
 sub_link: "cli/restart-with-different-names"
 meta_title: "How to restart runs with different names - Core Concepts"
 meta_description: "A guide on how to use Polyaxon CLI to restart runs with different names, descriptions and tags."
-is_index: true
 visibility: public
 status: published
 tags:

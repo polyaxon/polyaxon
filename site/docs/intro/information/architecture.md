@@ -1,6 +1,6 @@
 ---
 title: "Architecture"
-sub_link: "introduction/architecture"
+sub_link: "information/architecture"
 meta_title: "Polyaxon Architecture - Core Concepts"
 meta_description: "Polyaxon is structured as a modern, decoupled, micro-services oriented platform. Discover how things fit together at Polyaxon."
 visibility: public

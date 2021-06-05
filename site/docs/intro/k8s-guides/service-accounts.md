@@ -3,7 +3,6 @@ title: "How to use a custom service account"
 sub_link: "k8s-guides/service-accounts"
 meta_title: "A guide on using a custom service for running operations - Core Concepts"
 meta_description: "All pods managed by Polyaxon use the default service account created during the deployment of Polyaxon CE or Polyaxon Agent, however you can use specific service accounts on per operation level."
-is_index: true
 visibility: public
 status: published
 tags:
@@ -48,5 +47,5 @@ please check the [service account specification](/docs/core/specification/enviro
 
 ## Global configuration
 
-If you to define a service account globally, we suggest creating a [preset](/docs/core/scheduling-strategies/presets/).
+If you to define a service account globally, we suggest creating a [preset](/docs/core/scheduling-presets/).
 If you are using Polyaxon Cloud or Polyaxon EE, you can add the service account name to the default organization's preset or the default project's preset.
