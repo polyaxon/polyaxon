@@ -396,7 +396,7 @@ class RunClient:
             presets: List[str], optional, the name of the
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
-                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
+                 [queue](/docs/core/scheduling-strategies/queues/) to assign the run to.
             nocache: bool, optional, simple flag to disable
                  [cache check](/docs/automation/helpers/cache/).
                  If passed and the Polyaxonfile has cache section,
@@ -458,7 +458,7 @@ class RunClient:
             presets: List[str], optional, the name of the
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
-                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
+                 [queue](/docs/core/scheduling-strategies/queues/) to assign the run to.
             nocache: bool, optional, simple flag to disable
                  [cache check](/docs/automation/helpers/cache/).
                  If passed and the Polyaxonfile has cache section,
@@ -519,7 +519,7 @@ class RunClient:
             presets: List[str], optional, the name of the
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
-                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
+                 [queue](/docs/core/scheduling-strategies/queues/) to assign the run to.
             nocache: bool, optional, simple flag to disable
                  [cache check](/docs/automation/helpers/cache/).
                  If passed and the Polyaxonfile has cache section,

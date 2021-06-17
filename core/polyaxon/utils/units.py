@@ -13,27 +13,104 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Union
 
 
-def to_unit_memory(number):
+def to_cpu_value(cpu_definition: Union[str, int, float]) -> float:
+    try:
+        return float(cpu_definition)
+    except (ValueError, TypeError):
+        pass
+
+    cpu_definition = cpu_definition.lower()
+    cpu_unit = cpu_definition[-1]
+    cpu_value = cpu_definition[:-1]
+    if cpu_unit == "m":
+        cpu = int(cpu_value) / 1000
+    elif cpu_unit == "u":
+        cpu = int(cpu_value) / 1000 ** 2
+    elif cpu_unit == "n":
+        cpu = int(cpu_value) / 1000 ** 3
+    else:
+        cpu = cpu_definition
+    return float(cpu)
+
+
+def to_memory_bytes(mem_definition: Union[str, int, float]) -> int:
+    try:
+        return int(float(mem_definition))
+    except (ValueError, TypeError):
+        pass
+
+    def _get_value(unit, value, multiplier):
+        if unit in multiplier.keys():
+            return int(value) * multiplier.get(unit, 1)
+
+    fixed_point_unit_multiplier = {
+        "k": 1000,
+        "m": 1000 ** 2,
+        "g": 1000 ** 3,
+        "t": 1000 ** 4,
+        "p": 1000 ** 5,
+        "e": 1000 ** 6,
+    }
+
+    power_two_unit_multiplier = {
+        "ki": 1024,
+        "mi": 1024 ** 2,
+        "gi": 1024 ** 3,
+        "ti": 1024 ** 4,
+        "pi": 1024 ** 5,
+        "ei": 1024 ** 6,
+    }
+
+    mem_definition = mem_definition.lower()
+
+    mem_unit = mem_definition[-2:]
+    mem_value = mem_definition[:-2]
+    memory = _get_value(mem_unit, mem_value, power_two_unit_multiplier)
+    if memory is not None:
+        return memory
+
+    mem_unit = mem_definition[-1:]
+    mem_value = mem_definition[:-1]
+    memory = _get_value(mem_unit, mem_value, fixed_point_unit_multiplier)
+    if memory is not None:
+        return memory
+
+    return 0
+
+
+def to_unit_memory(number, precision: int = 2):
     """Creates a string representation of memory size given `number`."""
     kb = 1024
 
     number /= kb
 
     if number < 100:
-        return "{} Kb".format(round(number, 2))
+        return "{} Ki".format(round(number, precision))
 
     number /= kb
     if number < 300:
-        return "{} Mb".format(round(number, 2))
+        return "{} Mi".format(round(number, precision))
 
     number /= kb
+    if number < 900:
+        return "{} Gi".format(round(number, precision))
 
-    return "{} Gb".format(round(number, 2))
+    number /= kb
+    if number < 900:
+        return "{} Ti".format(round(number, precision))
+
+    number /= kb
+    if number < 900:
+        return "{} Pi".format(round(number, precision))
+
+    number /= kb
+    return "{} Ei".format(round(number, precision))
 
 
-def to_percentage(number, rounding=2):
+def to_percentage(number, rounding: int = 2):
     """Creates a percentage string representation from the given `number`. The
     number is multiplied by 100 before adding a '%' character.
 

@@ -23,6 +23,7 @@ from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.environment import EnvironmentSchema
 from polyaxon.polyflow.init import InitSchema
 from polyaxon.polyflow.run.kinds import V1RunKind
+from polyaxon.polyflow.run.resources import V1RunResources
 from polyaxon.polyflow.run.utils import DestinationImageMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -291,3 +292,6 @@ class V1Service(BaseConfig, DestinationImageMixin, polyaxon_sdk.V1Service):
         "ports",
         "rewritePath",
     ]
+
+    def get_resources(self):
+        return V1RunResources.from_container(self.container)

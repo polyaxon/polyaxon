@@ -36,9 +36,9 @@ There are several distinct features involved in the scheduling strategies:
 
  * [Node scheduling](/docs/core/scheduling-strategies/node-scheduling/): A feature that leverages the Kubernetes API to select nodes for running your operations.
  * [Resources scheduling](/docs/core/scheduling-strategies/resources-scheduling/): A feature that leverages the Kubernetes API to enable GPU/TPU, or other special resources for your operations.
- * [Queue concurrency](/docs/core/scheduling-strategies/queue-routing/#concurrency): A feature to throttle the number of operations on a queue based on parallelism.
- * Queue Resources (**Roadmap**): A feature to throttle the number of operations on a queue based on resources (CPU/Memory/GPU/...).
- * [Queue agent](/docs/core/scheduling-strategies/queue-routing/#agent): A feature to route operations on a queue to a namespace or cluster.
+ * [Queue concurrency](/docs/core/scheduling-strategies/queues/#concurrency): A feature to throttle the number of operations on a queue based on parallelism.
+ * [Queue resources and cost quota](/docs/core/scheduling-strategies/queues/#quota): A feature to throttle the number of operations on a queue based on resources (CPU/Memory/GPU/...) or operations' costs.
+ * [Queue agent](/docs/core/scheduling-strategies/queues/#agent): A feature to route operations on a queue to a namespace or cluster.
  * [Concurrency management](/docs/core/scheduling-strategies/concurrency-management): A feature to limit the number of operations queued.
  * [Resume & Restart](/docs/core/scheduling-strategies/resume-restart/): Scheduling operation by resuming, restarting, and copying previous operation runs.
  * [Conditional scheduling](/docs/core/scheduling-strategies/conditional-scheduling/): A feature to start operation on nodes or queues based on inputs data or to completely skip scheduling the operation.
@@ -47,3 +47,4 @@ There are several distinct features involved in the scheduling strategies:
  * [External scheduling](/docs/core/scheduling-strategies/external-scheduling/): A feature to schedule and submit operations from external systems.
  * [Handling termination](/docs/core/scheduling-strategies/handling-termination/): A feature to handle failures and termination and enforcing SLAs.
  * [Managing Priority](/docs/core/scheduling-strategies/managing-priority/): A feature to prioritize important operations and enforcing preemption.
+ * [Cost estimation](/docs/core/scheduling-strategies/estimating-cost/): A feature to estimate the cost of running operations or to enforce quota based on complex environment definitions. 

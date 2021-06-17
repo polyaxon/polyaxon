@@ -39,6 +39,7 @@ class BaseComponentSchema(BaseCamelSchema):
     build = fields.Nested(BuildSchema, allow_none=True)
     hooks = fields.List(fields.Nested(HookSchema), allow_none=True)
     is_approved = fields.Bool(allow_none=True)
+    cost = fields.Float(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -61,4 +62,5 @@ class BaseComponent(BaseConfig):
         "build",
         "hooks",
         "isApproved",
+        "cost",
     ]

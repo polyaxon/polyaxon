@@ -34,7 +34,7 @@ Queues can be used for several use cases: routing, prioritization, and paralleli
 Additionally, if you need to limit the parallelism of a component globally, you can attach a queue to that component, 
 so whenever a new operation is referencing that component, it will be automatically throttled by the concurrency defined on that queue.
 
-> for more details, please check the [Queues section](/docs/core/scheduling-strategies/queue-routing/).
+> for more details, please check the [Queues section](/docs/core/scheduling-strategies/queues/).
 
 ## Pipeline concurrency
 

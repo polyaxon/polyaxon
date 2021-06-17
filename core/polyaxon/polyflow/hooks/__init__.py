@@ -169,7 +169,7 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
 
     ### queue
 
-    The [queue](/docs/core/scheduling-strategies/queue-routing/) to use.
+    The [queue](/docs/core/scheduling-strategies/queues/) to use.
     If not provided, the default queue will be used.
 
     ```yaml

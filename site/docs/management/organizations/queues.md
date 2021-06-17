@@ -23,10 +23,15 @@ Every agent comes with a default queue.
 
 ## Create queues
 
-If you have admin access you can create new queues.
+If you have admin access you can create new queues
 
 ![queue-create](../../../../content/images/dashboard/queues/create.png)
 
+You can also attach a quota to a queue
+
+![queue-create](../../../../content/images/dashboard/queues/create-quota.png)
+
+> **Note**: You can set the quota field accepts any resource format supported by Kubernetes e.g. (5Gi, 0.5m, 1000, ...)
 
 ## Manage queues
 
@@ -51,3 +56,20 @@ Users without admin or owner rights can view the table of available queues in yo
 They can also view details on how to use them in their workload.
 
 ![queue-definition.png](../../../../content/images/dashboard/queues/definition.png)
+
+
+## Global or per project queues
+
+Managers and Admins of Polyaxon organizations and projects can set a default queue that gets applied to all runs under the organization or the project.
+
+Setting the organization's default queue:
+
+![default-org-preset](../../../../content/images/dashboard/queues/default-org-queue.png)
+
+Setting a project's default queue:
+
+![default-project-preset](../../../../content/images/dashboard/queues/default-project-queue.png) 
+
+Restricting queues accessible by a project:
+
+![default-project-preset](../../../../content/images/dashboard/queues/queues-restrictions.png)

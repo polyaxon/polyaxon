@@ -22,6 +22,7 @@ from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.environment import EnvironmentSchema
 from polyaxon.polyflow.init import InitSchema
+from polyaxon.polyflow.run.resources import V1RunResources
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.swagger import SwaggerField
 
@@ -244,3 +245,10 @@ class V1KFReplica(BaseConfig, polyaxon_sdk.V1KFReplica):
         "sidecars",
         "container",
     ]
+
+    def get_resources(self):
+        resources = V1RunResources()
+        for i in range(self.replicas or 1):
+            resources += V1RunResources.from_container(self.container)
+
+        return resources

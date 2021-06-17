@@ -205,7 +205,7 @@ class V1Component(
 
     ### queue
 
-    The default component [queue](/docs/core/scheduling-strategies/queue-routing/).
+    The default component [queue](/docs/core/scheduling-strategies/queues/).
 
     This queue will be passed as the default value to all operations using this component,
     unless the operations override the queue or `--queue`
@@ -372,6 +372,16 @@ class V1Component(
 
     ```yaml
     >>> isApproved: false
+    ```
+
+    ### Cost
+
+    A field to define the cost of running the operation, the value is a float and should map to a
+    convention of a cost estimation in your team or
+    it can map directly to the cost of using the environment where the operation is running.
+
+    ```yaml
+    >>> cost: 2.2
     ```
     """
 

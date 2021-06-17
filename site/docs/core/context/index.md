@@ -18,9 +18,14 @@ sidebar: "core"
 
 ## Overview
 
-Polyaxon provides a context to Polyaxonfiles to resolve information about params, id, project, ...
+Polyaxon provides a context used by Polyaxonfiles to resolve information about params, ids, project, ...
 
 Users can use the `{{}}` to inject information that will be provided to the context when the operation is fully resolved.
+
+Polyaxon uses [jinja](https://jinja.palletsprojects.com) to inject variables and params in the context and resolve the content defined inside `{{}}`, here are some useful links about [jinja](https://jinja.palletsprojects.com) that you can use in your Polyaxonfiles:
+ * [Template](https://jinja.palletsprojects.com/en/3.0.x/templates)
+ * [Builtin filters](https://jinja.palletsprojects.com/en/3.0.x/templates/#builtin-filters)
+ * [Types examples](https://jinja.palletsprojects.com/en/3.0.x/nativetypes/#examples) 
 
 ## Compiler
 

@@ -40,6 +40,7 @@ class RunQueryManager(BaseQueryManager):
         "upstream",
         "downstream",
         "pipeline",
+        "controller",
         "agent",
         "queue",
         "artifacts_store",
@@ -113,6 +114,8 @@ class RunQueryManager(BaseQueryManager):
         "original": parse_value_operation,
         # Pipeline
         "pipeline": parse_value_operation,
+        # Controller
+        "controller": parse_value_operation,
         # Upstream
         "upstream": parse_value_operation,
         # Downstream
@@ -187,6 +190,8 @@ class RunQueryManager(BaseQueryManager):
         "original": ValueCondition,
         # Pipeline
         "pipeline": ValueCondition,
+        # Controller
+        "controller": ValueCondition,
         # Upstream
         "upstream": ValueCondition,
         # Downstream

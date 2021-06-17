@@ -32,6 +32,7 @@ from polyaxon.polyflow.run.kubeflow.tf_job import TFJobSchema, V1TFJob
 from polyaxon.polyflow.run.notifier import NotifierJobSchema, V1NotifierJob
 from polyaxon.polyflow.run.patch import validate_run_patch
 from polyaxon.polyflow.run.ray import RaySchema, V1Ray
+from polyaxon.polyflow.run.resources import V1RunResources
 from polyaxon.polyflow.run.service import ServiceSchema, V1Service
 from polyaxon.polyflow.run.spark.replica import SparkReplicaSchema, V1SparkReplica
 from polyaxon.polyflow.run.spark.spark import (

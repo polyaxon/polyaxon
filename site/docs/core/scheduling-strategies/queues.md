@@ -1,6 +1,6 @@
 ---
-title: "Queue Routing"
-sub_link: "scheduling-strategies/queue-routing"
+title: "Queues"
+sub_link: "scheduling-strategies/queues"
 meta_title: "Queue routing in Polyaxon - Scheduling strategies"
 meta_description: "Polyaxon provides a queue abstraction to prioritize operations on a queue,
 to throttle the number of operations on a queue,
@@ -24,6 +24,7 @@ sidebar: "core"
 Polyaxon provides a queue abstraction to:
   * Prioritize operations on a queue.
   * Throttle the number of operations on a queue.
+  * Setting quota and restrictions on resources (CPU/Memory/GPU/TPU/Custom/...) or on cost.
   * Route operations on a queue to a namespace or cluster.
   * Limit the number of operations queued from a single workflow or nested workflows.
 
@@ -50,6 +51,8 @@ In that case, if a queue is created with the default configuration it will be us
  * Concurrency: By default, each queue is created with the maximum concurrency limit, unless the user sets a concurrency limit [-1, ...].
 
  * Priority: By default, each queue is created with the highest priority, unless the user sets a priority level [-1, ...].
+ 
+ * Quota: By default, each queues is created withtout any quota and allows any amount of resources.
 
 > To manage queues please check the [management section](/docs/management/organizations/queues/)
 
@@ -73,9 +76,9 @@ Once the operations are queued, Polyaxon will follow the routing process defined
 
 ## Routing
 
-Polyaxon uses the priority and concurrency definitions on the queues, the concurrency limits defined by the queues are summed and then the sum is divided
-up among the priority levels.
-Polyaxon will dispatch and schedule operations based on the queue priority they belong to until each queue reaches the concurrency limit allowed.
+Polyaxon uses the priority, concurrency, and quota definitions on the queues to organize and schedule your operations.
+The concurrency limits defined by the queues are summed and then the sum is divided up among the priority levels.
+Polyaxon will dispatch and schedule operations based on the queue priority they belong to until each queue reaches the concurrency limit allowed or the resource/cost quota allowed.
 
 Each namespace (same cluster or different cluster) will receive operations from the queues they are subscribed to via the agent managing the namespace.
 
@@ -83,6 +86,22 @@ Each namespace (same cluster or different cluster) will receive operations from 
 
 Once the operation is on the namespace/cluster, the agent will execute final resolutions required to start the operation,
 if the operation defines node scheduling it will be further scheduled on the requested node(s).
+
+## Global or per project queues
+
+Managers and Admins of Polyaxon organizations and projects can set a default queue that gets applied to all runs under the organization or the project.
+
+Setting the organization's default queue:
+
+![default-org-preset](../../../../content/images/dashboard/queues/default-org-queue.png)
+
+Setting a project's default queue:
+
+![default-project-preset](../../../../content/images/dashboard/queues/default-project-queue.png) 
+
+Restricting queues accessible by a project:
+
+![default-project-preset](../../../../content/images/dashboard/queues/queues-restrictions.png)
 
 ## Observability
 

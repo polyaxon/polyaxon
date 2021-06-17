@@ -465,7 +465,7 @@ class TestV1Container(BaseTestCase):
         config = k8s_schemas.V1Container(**config_dict)
         assert get_container_command_args(config) == (["foo"], ["foo"])
 
-    def test_config_list__command_args(self):
+    def test_config_list_command_args(self):
         config_dict = {
             "name": "foo",
             "image": "foo/bar:latest",
