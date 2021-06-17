@@ -92,7 +92,7 @@ class V1Tuner(BaseConfig, polyaxon_sdk.V1Tuner):
 
     ### queue
 
-    The [queue](/docs/core/scheduling-strategies/queue-routing/) to use.
+    The [queue](/docs/core/scheduling-strategies/queues/) to use.
     If not provided, the default queue will be used.
 
     ```yaml

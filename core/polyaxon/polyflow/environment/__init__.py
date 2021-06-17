@@ -126,6 +126,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
 
     ```python
     >>> from polyaxon.polyflow import V1Environment
+    >>> from polyaxon.k8s import k8s_schemas
     >>> environment = V1Environment(
     >>>     labels={
     >>>         "key1" : "value1",
@@ -138,17 +139,17 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     >>>     node_selector={
     >>>         "node_label": "node_value"
     >>>     },
-    >>>     affinity=V1Affinity(...),
-    >>>     tolerations=V1Affinity(...),
+    >>>     affinity=k8s_schemas.V1Affinity(...),
+    >>>     tolerations=k8s_schemas.V1Affinity(...),
     >>>     node_name="name",
     >>>     service_account_name="name",
-    >>>     host_aliases=V1HostAlias(...),
-    >>>     security_context=V1SecurityContext(...),
+    >>>     host_aliases=k8s_schemas.V1HostAlias(...),
+    >>>     security_context=k8s_schemas.V1SecurityContext(...),
     >>>     image_pull_secrets=["secret1", "secret2", ...],
     >>>     host_network=False,
     >>>     host_pid=False,
     >>>     dns_policy="Default",
-    >>>     dns_config=V1PodDNSConfig(...),
+    >>>     dns_config=k8s_schemas.V1PodDNSConfig(...),
     >>>     scheduler_name="name",
     >>>     priority_class_name="name",
     >>>     priority=0,

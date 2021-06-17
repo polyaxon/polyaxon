@@ -23,6 +23,7 @@ from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon import settings
 from polyaxon.constants.globals import DEFAULT_UPLOADS_PATH
+from polyaxon.env_vars.keys import POLYAXON_KEYS_UPLOAD_SIZE
 from polyaxon.exceptions import (
     HTTP_ERROR_MESSAGES_MAPPING,
     PolyaxonClientException,
@@ -112,9 +113,18 @@ class PolyaxonStore(StoreMixin):
         headers=None,
         session=None,
     ):
-        upload_size_warn = os.environ.get("POLYAXON_UPLOAD_SIZE_MAX", 1024 * 1024 * 50)
-        upload_size_max = os.environ.get("POLYAXON_UPLOAD_SIZE_MAX", 1024 * 1024 * 500)
-        if files_size > upload_size_warn:
+        upload_size_max = os.environ.get(POLYAXON_KEYS_UPLOAD_SIZE)
+        if not upload_size_max:
+            # Backwards compatibility
+            upload_size_max = os.environ.get("POLYAXON_UPLOAD_SIZE_MAX")
+        if not upload_size_max:
+            upload_size_max = 1024 * 1024 * 500
+        try:
+            upload_size_max = int(upload_size_max)
+        except Exception as e:
+            raise PolyaxonClientException("Could not parse max upload size") from e
+
+        if files_size > 1024 * 1024 * 50:
             logger.warning(
                 "You are uploading %s, there's a hard limit of %s.\n"
                 "If you have data files in the current directory, "

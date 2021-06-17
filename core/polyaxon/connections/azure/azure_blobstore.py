@@ -338,7 +338,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         try:
             check_dirname_exists(local_path, is_dir=True)
         except PolyaxonPathException:
-            os.makedirs(local_path)
+            os.makedirs(local_path, exist_ok=True)
 
         results = self.list(container_name=container_name, key=blob, delimiter="/")
 

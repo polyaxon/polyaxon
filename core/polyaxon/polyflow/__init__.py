@@ -138,6 +138,7 @@ from polyaxon.polyflow.run import (
     V1PytorchJob,
     V1RunEdgeKind,
     V1RunKind,
+    V1RunResources,
     V1Service,
     V1Spark,
     V1SparkDeploy,

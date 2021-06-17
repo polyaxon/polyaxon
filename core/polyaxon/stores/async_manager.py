@@ -83,7 +83,11 @@ async def download_file(subpath: str, check_cache=True) -> Optional[str]:
         else:
             os.remove(path_to)
 
-    check_or_create_path(path_to, is_dir=False)
+    try:
+        check_or_create_path(path_to, is_dir=False)
+    except Exception as e:
+        logger.warning("Error during async dir creation. Error %s" % (path_from, e))
+        pass
     try:
         return manager.download_file_or_dir(
             connection_type=settings.AGENT_CONFIG.artifacts_store,

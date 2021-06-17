@@ -28,6 +28,6 @@ altair==4.1.0
 matplotlib==3.2.1
 moviepy==1.0.2
 plotly==4.6.0
-Pillow==8.1.1
+Pillow==8.2.0
 bokeh==2.0.2
 pandas

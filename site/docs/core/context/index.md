@@ -18,9 +18,14 @@ sidebar: "core"
 
 ## Overview
 
-Polyaxon provides a context to Polyaxonfiles to resolve information about params, id, project, ...
+Polyaxon provides a context used by Polyaxonfiles to resolve information about params, ids, project, ...
 
 Users can use the `{{}}` to inject information that will be provided to the context when the operation is fully resolved.
+
+Polyaxon uses [jinja](https://jinja.palletsprojects.com) to inject variables and params in the context and resolve the content defined inside `{{}}`, here are some useful links about [jinja](https://jinja.palletsprojects.com) that you can use in your Polyaxonfiles:
+ * [Template](https://jinja.palletsprojects.com/en/3.0.x/templates)
+ * [Builtin filters](https://jinja.palletsprojects.com/en/3.0.x/templates/#builtin-filters)
+ * [Types examples](https://jinja.palletsprojects.com/en/3.0.x/nativetypes/#examples) 
 
 ## Compiler
 
@@ -49,19 +54,16 @@ It collects all variables and references coming from the inputs and outputs, con
 If an operation is running in the context of a pipeline, DAG, Matrix, Mapping, ..., it will also collect information from the pipeline controller, the upstream and downstream runs.
 
 If during the resolution, the compiler detects a missing reference or that the user initiating the operation does not have access to a specific resource, it will raise a compilation error.
-
 After collecting all required information, it will start resolving the context and re-injecting additional information to be used in following steps.
 
 ## Context information
 
-A resolved context will have several types of information collected during the compilation pipeline steps.
-
+A resolved context will have several types of information collected during the compilation pipeline steps. 
 It's very important to understand the order of these steps to build valid Polyaxonfiles.
 
 ### Global information
 
 This is the information that is unique to each run.
-
 Each run in Polyaxon has metadata about a project, an owner, and a user.
 It has, as well, several metadata, e.g. time of creation, 
 as well as specific information, e.g. component kind and runtime.

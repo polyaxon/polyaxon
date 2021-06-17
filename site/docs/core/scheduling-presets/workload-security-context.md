@@ -50,8 +50,8 @@ Managers and Admins of Polyaxon organizations and projects can set the security 
 
 Setting the organization's default preset:
 
-![default-org-preset](../../../../content/images/dashboard/instances/default-org-preset.png)
+![default-org-preset](../../../../content/images/dashboard/presets/default-org-preset.png)
 
 Setting a project's default preset:
 
-![default-project-preset](../../../../content/images/dashboard/instances/default-project-preset.png) 
+![default-project-preset](../../../../content/images/dashboard/presets/default-project-preset.png) 

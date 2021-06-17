@@ -306,7 +306,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
 
     ### queue
 
-    The [queue](/docs/core/scheduling-strategies/queue-routing/) to use for this operation run,
+    The [queue](/docs/core/scheduling-strategies/queues/) to use for this operation run,
     if provided, it will override the component's queue otherwise
     the queue of the component will be used if it exists.
 
@@ -537,6 +537,16 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
 
     ```yaml
     >>> isApproved: false
+    ```
+
+    ### Cost
+
+    A field to define the cost of running the operation, the value is a float and should map to a
+    convention of a cost estimation in your team or
+    it can map directly to the cost of using the environment where the operation is running.
+
+    ```yaml
+    >>> cost: 2.2
     ```
     """
 

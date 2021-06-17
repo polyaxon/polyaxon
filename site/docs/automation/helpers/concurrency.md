@@ -31,7 +31,7 @@ Polyaxon can manage concurrency on any workflow that runs more than one operatio
 There are several ways to manage concurrency:
 
  * Directly on the workflow using the `concurrency` field.
- * Globally using a [queue](/docs/core/scheduling-strategies/queue-routing/).
+ * Globally using a [queue](/docs/core/scheduling-strategies/queues/).
  * Both.
 
 ## Control flow
@@ -52,7 +52,7 @@ This how Polyaxon checks when to queue and execute an operation:
  * Check if the queue can schedule more operations based on their priority and concurrency definitions.
  * Schedule and run the operation.
 
-Please check this guide for more details about [scheduling with queues](/docs/core/scheduling-strategies/queue-routing/)
+Please check this guide for more details about [scheduling with queues](/docs/core/scheduling-strategies/queues/)
 
 ## Nested flows
 

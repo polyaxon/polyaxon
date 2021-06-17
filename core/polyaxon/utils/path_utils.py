@@ -37,7 +37,7 @@ def check_or_create_path(path: str = None, is_dir=False) -> None:
     if not is_dir:
         path = os.path.dirname(os.path.abspath(path))
     if not os.path.exists(path):
-        os.makedirs(path)
+        os.makedirs(path, exist_ok=True)
 
 
 def delete_path(path: str) -> None:

@@ -89,8 +89,8 @@
       link: /docs/core/scheduling-strategies/node-scheduling/
     - title: Resources Scheduling
       link: /docs/core/scheduling-strategies/resources-scheduling/
-    - title: Routing with Queues
-      link: /docs/core/scheduling-strategies/queue-routing/
+    - title: Queues Scheduling
+      link: /docs/core/scheduling-strategies/queues/
     - title: Concurrency Management
       link: /docs/core/scheduling-strategies/concurrency-management/
     - title: Resume & Restart
@@ -107,6 +107,8 @@
       link: /docs/core/scheduling-strategies/handling-termination/
     - title: Managing Priority
       link: /docs/core/scheduling-strategies/managing-priority/
+    - title: Estimating Cost
+      link: /docs/core/scheduling-strategies/estimating-cost/
   - group: Scheduling Presets
     items:
     - title: Overview

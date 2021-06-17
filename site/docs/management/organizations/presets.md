@@ -45,3 +45,16 @@ You can update or delete a scheduling preset.
 Users without admin or owner rights can view the table of available presets in your organization and how they can use them.
 
 ![presets-usage](../../../../content/images/dashboard/presets/usage.png)
+
+
+## Global or per project default preset
+
+Managers and Admins of Polyaxon organizations and projects can set a default preset that gets applied to all runs under the organization or the project.
+
+Setting the organization's default preset:
+
+![default-org-preset](../../../../content/images/dashboard/presets/default-org-preset.png)
+
+Setting a project's default preset:
+
+![default-project-preset](../../../../content/images/dashboard/presets/default-project-preset.png) 

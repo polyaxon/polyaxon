@@ -499,7 +499,7 @@ class S3Service(AWSService, StoreMixin):
         try:
             check_dirname_exists(local_path, is_dir=True)
         except PolyaxonPathException:
-            os.makedirs(local_path)
+            os.makedirs(local_path, exist_ok=True)
 
         results = self.list(bucket_name=bucket_name, prefix=key, delimiter="/")
 

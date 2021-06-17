@@ -98,7 +98,7 @@ At first, you might think that all these params will have the same value, but th
 
  * The value of `param1` will be the `uuid` of the run currently being compiled, meaning that each time you execute this Polyaxonfile, `param1` will take the `uuid` of that run.
  * The value of `param2` will be the `uuid` of the upstream run defined in the reference, ony if that run with `UUID` exists and is accessible to the current operation (mostly running in the same project).
-   * this param is of course not necessary, since the `UUID` is already known to use it as a reference, but it could be any other value, for example `globals.started_at` which the user might not at the time of creating the manifest.
+   * this param is of course not necessary, since the `UUID` is already known to use it as a reference, but it could be any other value, for example `globals.started_at` which is a value that the user might not know at the time of creating the manifest.
  * If an operation is running in the context of a DAG, the value of `param3` will be the `uuid` of the pipeline managing the execution graph.
  * If an operation is running in the context of a DAG, the value of `param4` will be the `uuid` of the upstream operation that the current operation depends on.
 
