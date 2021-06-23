@@ -62,9 +62,9 @@ class PolyaxonClient:
     def __init__(self, config=None, token=None):
 
         self._config = config or settings.CLIENT_CONFIG
-        if not token:
+        if not token and not self._config.token:
             self._config.token = settings.AUTH_CONFIG.token
-        elif token != NO_AUTH:
+        elif token and token != NO_AUTH:
             self._config.token = token
 
         self._transport = None
