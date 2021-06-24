@@ -65,7 +65,9 @@ class PolyaxonClient:
         token = token or self._config.token
         if not token:
             self._config.token = settings.AUTH_CONFIG.token
-        elif token != NO_AUTH:
+        elif token == NO_AUTH:
+            self._config.token = None
+        else
             self._config.token = token
 
         self._transport = None
