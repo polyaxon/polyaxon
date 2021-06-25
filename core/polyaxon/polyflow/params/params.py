@@ -455,7 +455,7 @@ class ParamSpec(
                 if self.param.value is not None
                 else ""
             )
-        if self.type == types.BOOL:
+        if self.is_flag:
             return "--{}".format(self.name) if self.param.value else ""
         return (
             "--{}={}".format(self.name, self.as_str())

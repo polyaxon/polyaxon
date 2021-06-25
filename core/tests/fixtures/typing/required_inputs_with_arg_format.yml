@@ -10,6 +10,7 @@ inputs:
     type: str
   - name: flag
     type: bool
+    isFlag: true
 
 run:
   kind: job
