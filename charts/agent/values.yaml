@@ -144,7 +144,7 @@ sidecar:
 agent:
   token:
   instance:
-  compressedLogs: true
+  compressedLogs: false
   enabled: true
   image: polyaxon/polyaxon-agent
   imageTag: 1.9.5
