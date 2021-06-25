@@ -1,5 +1,14 @@
 [
   {
+    "user_name": "onilton",
+    "repo_owner": "polyaxon",
+    "gist_name": "polyaxon_cla",
+    "gist_url": "https://gist.github.com/58e3ebc579441f7f6f1426b4573ceb4c",
+    "gist_version": "31e113de1dea51861ff601a3187c00d407412f33",
+    "signed_at": "2021-06-17T18:12:43.033Z",
+    "org_cla": true
+  },
+  {
     "user_name": "AdamHillier",
     "repo_owner": "polyaxon",
     "gist_name": "polyaxon_cla",

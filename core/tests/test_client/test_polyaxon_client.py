@@ -21,6 +21,7 @@ import polyaxon_sdk
 
 from polyaxon import settings
 from polyaxon.client.client import PolyaxonClient
+from polyaxon.constants.globals import NO_AUTH
 from polyaxon.schemas.cli.client_config import ClientConfig
 from tests.utils import BaseTestCase
 
@@ -59,3 +60,25 @@ class TestPolyaxonClient(BaseTestCase):
         assert client.config.host == "api_host"
         assert client.config.token == "token"
         assert client.config.base_url == "api_host/api/v1"
+
+    def test_load_token(self):
+        settings.CLIENT_CONFIG.host = "localhost"
+        client = PolyaxonClient(config=ClientConfig(token="test"))
+        assert client.config.is_managed is False
+        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.token == "test"
+
+        client = PolyaxonClient(config=ClientConfig(token="test"), token="test2")
+        assert client.config.is_managed is False
+        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.token == "test2"
+
+        client = PolyaxonClient(config=ClientConfig(token="test"), token=NO_AUTH)
+        assert client.config.is_managed is False
+        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.token is None
+
+        client = PolyaxonClient(config=ClientConfig(token=NO_AUTH), token="test2")
+        assert client.config.is_managed is False
+        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.token == "test2"
