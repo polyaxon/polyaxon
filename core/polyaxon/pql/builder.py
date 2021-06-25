@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import datetime
 
 from collections import namedtuple
 from typing import Any, Callable, Optional
@@ -182,9 +183,10 @@ class BoolCondition(EqualityCondition):
 
 
 class ComparisonCondition(EqualityCondition):
-    VALUES = EqualityCondition.VALUES | {"lt", "lte", "gt", "gte"}
-    REPRESENTATIONS = EqualityCondition.REPRESENTATIONS | {"<", "<=", ">", ">="}
+    VALUES = EqualityCondition.VALUES | {"in", "lt", "lte", "gt", "gte"}
+    REPRESENTATIONS = EqualityCondition.REPRESENTATIONS | {"|", "<", "<=", ">", ">="}
     REPRESENTATION_MAPPING = EqualityCondition.REPRESENTATION_MAPPING + (
+        ("|", "in"),
         ("<", "lt"),
         ("<=", "lte"),
         (">", "gt"),
@@ -220,6 +222,11 @@ class ComparisonCondition(EqualityCondition):
                 return cls._lt_operator
             return cls._gte_operator
 
+        if op == "in" or op == "|":
+            if negation:
+                return cls._nin_operator
+            return cls._in_operator
+
     @staticmethod
     def _lt_operator(name: str, params: Any, query_backend: Any, timezone: str) -> Any:
         name = "{}__lt".format(name)
@@ -240,6 +247,18 @@ class ComparisonCondition(EqualityCondition):
         name = "{}__gte".format(name)
         return query_backend(**{name: params})
 
+    @staticmethod
+    def _in_operator(name: str, params: Any, query_backend: Any, timezone: str) -> Any:
+        assert isinstance(params, (list, tuple))
+        name = "{}__in".format(name)
+        return query_backend(**{name: params})
+
+    @classmethod
+    def _nin_operator(
+        cls, name: str, params: Any, query_backend: Any, timezone: str
+    ) -> Any:
+        return ~cls._in_operator(name, params, query_backend, timezone)
+
 
 class DateTimeCondition(ComparisonCondition):
     VALUES = ComparisonCondition.VALUES | {"range"}
@@ -253,6 +272,11 @@ class DateTimeCondition(ComparisonCondition):
         if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
             return None
 
+        # handle eq in from current class
+        if op == "eq" or op == "=":
+            if negation:
+                return cls._neq_operator
+            return cls._eq_operator
         _op = ComparisonCondition._get_operator(op, negation)
         if _op:
             return _op
@@ -260,6 +284,20 @@ class DateTimeCondition(ComparisonCondition):
         if negation:
             return cls._nrange_operator
         return cls._range_operator
+
+    @staticmethod
+    def _eq_operator(name: str, params: Any, query_backend: Any, timezone: str) -> Any:
+        try:
+            # Check If params is date
+            DateTimeFormatter.extract_timestamp(
+                params,
+                dt_format=DateTimeFormatter.DATE_FORMAT,
+                timezone=timezone,
+            )
+            return query_backend(**{f"{name}__date": params})
+        except (TypeError, ValueError):
+            pass
+        return query_backend(**{name: params})
 
     @staticmethod
     def _range_operator(

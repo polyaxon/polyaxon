@@ -178,13 +178,13 @@ class TestParser(BaseTestCase):
             parse_scalar_operation("~ > bbb ")
 
         with self.assertRaises(PQLException):
-            parse_datetime_operation("")
+            parse_scalar_operation("")
 
         with self.assertRaises(PQLException):
-            parse_datetime_operation("~")
+            parse_scalar_operation("~")
 
         with self.assertRaises(PQLException):
-            parse_datetime_operation(">")
+            parse_scalar_operation(">")
 
         # Comparison
         assert parse_scalar_operation(">=1") == (QueryOpSpec(">=", False, 1))
@@ -207,13 +207,7 @@ class TestParser(BaseTestCase):
         with self.assertRaises(PQLException):
             parse_datetime_operation("~")
 
-        # Raises for comparison
-        with self.assertRaises(PQLException):
-            parse_value_operation(">=f")
-
-        with self.assertRaises(PQLException):
-            parse_value_operation(" ~ <=f1 ")
-
+        # Raises
         with self.assertRaises(PQLException):
             parse_value_operation("~|")
 
@@ -238,6 +232,9 @@ class TestParser(BaseTestCase):
         assert parse_value_operation("~tag1 | tag2| tag23") == (
             QueryOpSpec("|", True, ["tag1", "tag2", "tag23"])
         )
+        # Comparison
+        assert parse_value_operation(">0.3") == (QueryOpSpec(">", False, 0.3))
+        assert parse_value_operation(" ~ <=1 ") == (QueryOpSpec("<=", True, 1))
 
     def test_split_query(self):
         with self.assertRaises(PQLException):

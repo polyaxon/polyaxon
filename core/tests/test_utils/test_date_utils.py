@@ -63,6 +63,21 @@ class TestDateTimeFormatter(BaseTestCase):
         self.assertEqual(result.minute, 17)
         self.assertEqual(result.second, 18)
 
+    def test_extract_datetime_works_as_expected_for_given_timestamp(self):
+        try:
+            result = DateTimeFormatter.extract_datetime(
+                "2012-12-24T16:17:18-02:00", timezone="Europe/Berlin"
+            )
+        except PolyaxonDateTimeFormatterException:
+            # Python 3.6 does not support this
+            return
+        self.assertEqual(result.year, 2012)
+        self.assertEqual(result.month, 12)
+        self.assertEqual(result.day, 24)
+        self.assertEqual(result.hour, 16)
+        self.assertEqual(result.minute, 17)
+        self.assertEqual(result.second, 18)
+
     def test_extract_datetime_accepts_raises_for_none(self):
         with self.assertRaises(PolyaxonDateTimeFormatterException):
             DateTimeFormatter.extract_datetime(None, timezone="Europe/Berlin")

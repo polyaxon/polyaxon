@@ -114,7 +114,12 @@ class DateTimeFormatter:
             )
 
         try:
-            return cls._extract_timestamp(date_str, cls.DATE_FORMAT, timezone=timezone)
+            return cls.extract_iso_timestamp(date_str, timezone=timezone)
+        except (TypeError, ValueError, AttributeError):
+            pass
+
+        try:
+            return cls.extract_timestamp(date_str, cls.DATE_FORMAT, timezone=timezone)
         except (TypeError, ValueError):
             raise PolyaxonDateTimeFormatterException(
                 "Invalid date string {}.".format(date_str)
@@ -137,7 +142,12 @@ class DateTimeFormatter:
             )
 
         try:
-            return cls._extract_timestamp(
+            return cls.extract_iso_timestamp(datetime_str, timezone=timezone)
+        except (TypeError, ValueError, AttributeError):
+            pass
+
+        try:
+            return cls.extract_timestamp(
                 datetime_str, cls.DATETIME_FORMAT, timezone=timezone
             )
         except (TypeError, ValueError):
@@ -161,7 +171,12 @@ class DateTimeFormatter:
             )
 
         try:
-            return cls._extract_timestamp(
+            return cls.extract_iso_timestamp(datetime_str, timezone=timezone)
+        except (TypeError, ValueError, AttributeError):
+            pass
+
+        try:
+            return cls.extract_timestamp(
                 datetime_str, cls.DATETIME_HOUR_FORMAT, timezone=timezone
             )
         except (TypeError, ValueError):
@@ -205,7 +220,14 @@ class DateTimeFormatter:
         return cls.extract_date(timestamp_str, timezone=timezone)
 
     @staticmethod
-    def _extract_timestamp(timestamp_str, dt_format, timezone):
+    def extract_iso_timestamp(timestamp_str, timezone):
+        timestamp = datetime.fromisoformat(timestamp_str)
+        if not timestamp.tzinfo and timezone:
+            timestamp = timestamp.replace(tzinfo=pytz.timezone(timezone))
+        return timestamp
+
+    @staticmethod
+    def extract_timestamp(timestamp_str, dt_format, timezone):
         timestamp = datetime.strptime(timestamp_str, dt_format)
         timestamp = timestamp.replace(tzinfo=pytz.timezone(timezone))
         return timestamp

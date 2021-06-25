@@ -75,6 +75,11 @@ class RunQueryManager(BaseQueryManager):
         "duration",
         "wait_time",
         "status",
+        "cost",
+        "cpu",
+        "memory",
+        "gpu",
+        "custom",
     )
     FIELDS_ORDERING_PROXY = {
         "metrics": {"field": "outputs", "annotate": True},
@@ -164,6 +169,12 @@ class RunQueryManager(BaseQueryManager):
         # Flags
         "is_managed": parse_value_operation,
         "pending": parse_value_operation,
+        # Resources
+        "cost": parse_scalar_operation,
+        "cpu": parse_scalar_operation,
+        "memory": parse_scalar_operation,
+        "gpu": parse_scalar_operation,
+        "custom": parse_scalar_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
@@ -216,12 +227,12 @@ class RunQueryManager(BaseQueryManager):
         # Meta Kind
         "runtime": ValueCondition,
         # Params
-        "params": ValueCondition,
-        "inputs": ValueCondition,
-        "in": ValueCondition,
+        "params": ComparisonCondition,
+        "inputs": ComparisonCondition,
+        "in": ComparisonCondition,
         # Results
-        "outputs": ValueCondition,
-        "out": ValueCondition,
+        "outputs": ComparisonCondition,
+        "out": ComparisonCondition,
         # Metrics
         "metrics": ComparisonCondition,
         # Meta
@@ -244,4 +255,10 @@ class RunQueryManager(BaseQueryManager):
         # Flags
         "is_managed": BoolCondition,
         "pending": ValueCondition,
+        # Resources
+        "cost": ComparisonCondition,
+        "cpu": ComparisonCondition,
+        "memory": ComparisonCondition,
+        "gpu": ComparisonCondition,
+        "custom": ComparisonCondition,
     }

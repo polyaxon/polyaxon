@@ -39,6 +39,7 @@ class TestQueryManager(BaseTestQuery):
     def setUp(self):
         super().setUp()
         self.query1 = "updated_at:<=2020-10-10,started_at:>2010-10-10,started_at:~2016-10-01 10:10"
+        self.query12 = "created_at:2020-10-10"
         self.query2 = "metrics.loss:<=0.8, status:starting|running"
         self.query3 = "finished_at:2012-12-12..2042-12-12"
         self.query4 = "tags:~tag1|tag2,tags:tag3"
@@ -54,6 +55,10 @@ class TestQueryManager(BaseTestQuery):
         assert dict(tokenized_query.items()) == {
             "updated_at": ["<=2020-10-10"],
             "started_at": [">2010-10-10", "~2016-10-01 10:10"],
+        }
+        tokenized_query = RunQueryManager.tokenize(self.query12)
+        assert dict(tokenized_query.items()) == {
+            "created_at": ["2020-10-10"],
         }
 
         tokenized_query = RunQueryManager.tokenize(self.query2)
@@ -89,6 +94,11 @@ class TestQueryManager(BaseTestQuery):
                 QueryOpSpec(op=">", negation=False, params="2010-10-10"),
                 QueryOpSpec(op="=", negation=True, params="2016-10-01 10:10"),
             ],
+        }
+        tokenized_query = RunQueryManager.tokenize(self.query12)
+        parsed_query = RunQueryManager.parse(tokenized_query)
+        assert parsed_query == {
+            "created_at": [QueryOpSpec(op="=", negation=False, params="2020-10-10")],
         }
 
         tokenized_query = RunQueryManager.tokenize(self.query2)
@@ -141,6 +151,17 @@ class TestQueryManager(BaseTestQuery):
                 QueryCondSpec(
                     DateTimeCondition(op="=", negation=True), params="2016-10-01 10:10"
                 ),
+            ],
+        }
+
+        tokenized_query = RunQueryManager.tokenize(self.query12)
+        parsed_query = RunQueryManager.parse(tokenized_query)
+        built_query = RunQueryManager.build(parsed_query)
+        assert built_query == {
+            "created_at": [
+                QueryCondSpec(
+                    DateTimeCondition(op="=", negation=False), params="2020-10-10"
+                )
             ],
         }
 
@@ -213,6 +234,11 @@ class TestQueryManager(BaseTestQuery):
         built_query = RunQueryManager.build(parsed_query)
         assert built_query == RunQueryManager.handle_query(self.query1)
 
+        tokenized_query = RunQueryManager.tokenize(self.query12)
+        parsed_query = RunQueryManager.parse(tokenized_query)
+        built_query = RunQueryManager.build(parsed_query)
+        assert built_query == RunQueryManager.handle_query(self.query12)
+
     @pytest.mark.filterwarnings("ignore::RuntimeWarning")
     @flaky(max_runs=3)
     def test_apply(self):
@@ -224,6 +250,16 @@ class TestQueryManager(BaseTestQuery):
                 Q(updated_at__lte="2020-10-10"),
                 Q(started_at__gt="2010-10-10"),
                 ~Q(started_at="2016-10-01 10:10"),
+            ).query
+        )
+        assert str(result_queryset.query) == expected_query
+
+        result_queryset = RunQueryManager.apply(
+            query_spec=self.query12, queryset=Run.objects
+        )
+        expected_query = str(
+            Run.objects.filter(
+                Q(created_at__date="2020-10-10"),
             ).query
         )
         assert str(result_queryset.query) == expected_query

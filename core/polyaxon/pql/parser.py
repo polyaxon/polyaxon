@@ -202,7 +202,7 @@ def parse_value_operation(operation: str) -> "QueryOpSpec":
      * multiple values: tag1:foo|bar|moo
      * negation multiple values: tag1:~foo|bar|moo
 
-    This parser does not allow `..`, '>', '<', '>=', and '<='.
+    This parser does not allow `..`.
     """
     _operation = operation.strip()
     if not _operation:
@@ -222,14 +222,6 @@ def parse_value_operation(operation: str) -> "QueryOpSpec":
     # Check negation
     negation, _operation = parse_negation_operation(_operation)
 
-    # Check comparison not allowed
-    op, _operation = parse_comparison_operation(_operation)
-    if op:
-        raise PQLException(
-            "`{}` is not allowed for value conditions, "
-            "Operation: {}".format(op, operation)
-        )
-
     # Early return
     if _operation is not None and not isinstance(_operation, str):
         return QueryOpSpec("=", negation, _operation)
@@ -248,14 +240,19 @@ def parse_value_operation(operation: str) -> "QueryOpSpec":
             )
         return QueryOpSpec(op, negation, params)
 
-    if not _operation:
+    # Check comparison operators
+    op, _operation = parse_comparison_operation(_operation)
+    if not op:
+        # Now the operation must be an equality param
+        op = "="
+
+    if _operation is None:
         raise PQLException(
             "Expression is not valid, it must be formatted as "
             "name:operation, "
             "Operation: {}".format(operation)
         )
-    # Now the operation must be an equality param param
-    return QueryOpSpec("=", negation, _operation)
+    return QueryOpSpec(op, negation, _operation)
 
 
 def parse_search_operation(operation: str) -> "QueryOpSpec":
