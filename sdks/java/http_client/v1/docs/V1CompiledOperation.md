@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **outputs** | [**List&lt;V1IO&gt;**](V1IO.md) |  |  [optional]
 **contexts** | [**List&lt;V1IO&gt;**](V1IO.md) |  |  [optional]
 **isApproved** | **Boolean** |  |  [optional]
+**cost** | **Float** |  |  [optional]
 **run** | [**Object**](.md) |  |  [optional]
 
 

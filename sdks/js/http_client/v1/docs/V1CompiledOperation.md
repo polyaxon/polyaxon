@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **outputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **contexts** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **isApproved** | **Boolean** |  | [optional] 
+**cost** | **Number** |  | [optional] 
 **run** | [**Object**](.md) |  | [optional] 
 
 

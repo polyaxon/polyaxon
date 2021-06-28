@@ -80,4 +80,7 @@ message Component {
 
     // Optional flag to mark this specification requires approval before running
     bool isApproved = 17;
+
+    // Optional field to assign cost to this Component
+    float cost = 18;
 }

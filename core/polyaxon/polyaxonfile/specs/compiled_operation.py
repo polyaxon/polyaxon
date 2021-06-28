@@ -63,7 +63,7 @@ class CompiledOperationSpecification(BaseSpecification):
     ) -> Dict[str, ParamSpec]:
         param_spec = config.validate_params(
             is_template=False,
-            check_runs=True,
+            check_all_refs=True,
             parse_values=True,
             parse_joins=not should_be_resolved,
         )

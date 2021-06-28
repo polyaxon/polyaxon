@@ -21,5 +21,6 @@ Name | Type | Description | Notes
 **run** | [**Object**](.md) |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
 **isApproved** | **Boolean** |  | [optional] 
+**cost** | **Number** |  | [optional] 
 
 

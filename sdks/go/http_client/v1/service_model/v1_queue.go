@@ -52,6 +52,12 @@ type V1Queue struct {
 	// The queue priority
 	Priority int32 `json:"priority,omitempty"`
 
+	// Optional queue quota
+	Quota string `json:"quota,omitempty"`
+
+	// Optional queue resource
+	Resource string `json:"resource,omitempty"`
+
 	// Optional tags of this entity
 	Tags []string `json:"tags"`
 

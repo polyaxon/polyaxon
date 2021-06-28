@@ -114,12 +114,15 @@ message Operation {
     // Optional build process
     Build build = 26;
 
+    // Optional field to assign cost to this Component
+    float cost = 27;
+
     // Component template specification
     oneof definition {
-      string pathRef = 27;
-      string hubRef = 28;
-      string dagRef = 29;
-      string urlRef = 30;
-      Component component = 31;
+      string pathRef = 28;
+      string hubRef = 29;
+      string dagRef = 30;
+      string urlRef = 31;
+      Component component = 32;
     }
 }

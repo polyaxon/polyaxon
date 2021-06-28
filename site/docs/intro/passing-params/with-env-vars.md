@@ -12,7 +12,7 @@ tags:
 sidebar: "intro"
 ---
 
-Passing parameters to your programs as environment variables requires that you set the proper handling of environment variables in your programs.
+Passing parameters as environment variables requires that you set the proper handling of environment variables in your programs.
 
 ## Overview
 

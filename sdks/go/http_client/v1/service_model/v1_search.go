@@ -58,6 +58,9 @@ type V1Search struct {
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
+
+	// Optional dashboard level
+	View *SearchView `json:"view,omitempty"`
 }
 
 // Validate validates this v1 search
@@ -73,6 +76,10 @@ func (m *V1Search) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateView(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -123,11 +130,32 @@ func (m *V1Search) validateUpdatedAt(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Search) validateView(formats strfmt.Registry) error {
+	if swag.IsZero(m.View) { // not required
+		return nil
+	}
+
+	if m.View != nil {
+		if err := m.View.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("view")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this v1 search based on the context it is used
 func (m *V1Search) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateSpec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateView(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -143,6 +171,20 @@ func (m *V1Search) contextValidateSpec(ctx context.Context, formats strfmt.Regis
 		if err := m.Spec.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("spec")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Search) contextValidateView(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.View != nil {
+		if err := m.View.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("view")
 			}
 			return err
 		}

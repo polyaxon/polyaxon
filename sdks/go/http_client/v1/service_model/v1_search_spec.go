@@ -22,6 +22,7 @@ package service_model
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -31,14 +32,29 @@ import (
 // swagger:model v1SearchSpec
 type V1SearchSpec struct {
 
+	// Optional analytics specification
+	Analytics *V1AnalyticsSpec `json:"analytics,omitempty"`
+
 	// Search columns
 	Columns string `json:"columns,omitempty"`
+
+	// Optional events specification
+	Events *V1DashboardSpec `json:"events,omitempty"`
 
 	// Search group bys
 	Groupby string `json:"groupby,omitempty"`
 
+	// Optional histograms specification
+	Histograms interface{} `json:"histograms,omitempty"`
+
+	// Widgets layout
+	Layout string `json:"layout,omitempty"`
+
 	// Limit size
 	Limit int32 `json:"limit,omitempty"`
+
+	// Offset value
+	Offset int32 `json:"offset,omitempty"`
 
 	// Search pins
 	Pins string `json:"pins,omitempty"`
@@ -46,17 +62,111 @@ type V1SearchSpec struct {
 	// Search query
 	Query string `json:"query,omitempty"`
 
+	// Widgets layout
+	Sections string `json:"sections,omitempty"`
+
 	// Search sort
 	Sort string `json:"sort,omitempty"`
+
+	// Optional trends specification
+	Trends interface{} `json:"trends,omitempty"`
 }
 
 // Validate validates this v1 search spec
 func (m *V1SearchSpec) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateAnalytics(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateEvents(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this v1 search spec based on context it is used
+func (m *V1SearchSpec) validateAnalytics(formats strfmt.Registry) error {
+	if swag.IsZero(m.Analytics) { // not required
+		return nil
+	}
+
+	if m.Analytics != nil {
+		if err := m.Analytics.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("analytics")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1SearchSpec) validateEvents(formats strfmt.Registry) error {
+	if swag.IsZero(m.Events) { // not required
+		return nil
+	}
+
+	if m.Events != nil {
+		if err := m.Events.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("events")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 search spec based on the context it is used
 func (m *V1SearchSpec) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAnalytics(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateEvents(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1SearchSpec) contextValidateAnalytics(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Analytics != nil {
+		if err := m.Analytics.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("analytics")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1SearchSpec) contextValidateEvents(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Events != nil {
+		if err := m.Events.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("events")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

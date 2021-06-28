@@ -16,10 +16,10 @@
 
 
 def clean_version_for_compatibility(version: str):
-    return version.lstrip("v").replace(".", "-")[:5]
+    return "-".join(version.lstrip("v").replace(".", "-").split("-")[:3])
 
 
 def clean_version_for_check(version: str):
     if not version:
         return version
-    return version.lstrip("v").replace("-", ".")[:5]
+    return ".".join(version.lstrip("v").replace("-", ".").split(".")[:3])

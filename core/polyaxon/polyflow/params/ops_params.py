@@ -33,7 +33,7 @@ def validate_params(
     joins: List[V1Join] = None,
     context: Dict = None,
     is_template: bool = True,
-    check_runs: bool = False,
+    check_all_refs: bool = False,
     extra_info: str = None,
     parse_values: bool = False,
 ) -> List[ParamSpec]:
@@ -114,8 +114,8 @@ def validate_params(
                 is_context=False,
                 arg_format=inp.arg_format,
             )
-            if param_spec.param.is_ref:
-                param_spec.validate_ref(context, is_template, check_runs)
+            if param_spec.param.is_ref or param_spec.param.is_template_ref:
+                param_spec.validate_ref(context, is_template, check_all_refs)
             else:
                 parsed_value = inp.validate_value(param_value.value)
                 if parse_values:
@@ -129,7 +129,7 @@ def validate_params(
                 processed_params.append(inp.name)
         elif matrix and validate_matrix(inp):
             pass
-        elif not inp.is_optional and not is_template:
+        elif not (inp.is_optional or inp.delay_validation or is_template):
             message = "Input {} is required, no param was passed.".format(inp.name)
             if extra_info:
                 message += " Please check: {}".format(extra_info)
@@ -160,8 +160,10 @@ def validate_params(
                 is_context=False,
                 arg_format=out.arg_format,
             )
-            if param_spec.param.is_ref:
-                param_spec.validate_ref(None, is_template=False, check_runs=check_runs)
+            if param_spec.param.is_ref or param_spec.param.is_template_ref:
+                param_spec.validate_ref(
+                    None, is_template=False, check_all_refs=check_all_refs
+                )
             else:  # Plain value
                 parsed_value = out.validate_value(param_value.value)
                 if parse_values:
@@ -174,7 +176,7 @@ def validate_params(
             if not param_spec.param.context_only:
                 processed_params.append(out.name)
         # No validation for outputs we assume that the op might populate a context or send a metric
-        else:
+        elif out.delay_validation is not False:
             validated_params.append(
                 ParamSpec(
                     name=out.name,

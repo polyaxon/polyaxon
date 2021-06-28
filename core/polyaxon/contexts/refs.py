@@ -53,7 +53,7 @@ def get_entity_ref(ref: str) -> Optional[str]:
 def get_entity_type(value: str) -> str:
     value_parts = PARAM_REGEX.search(value)
     if value_parts:
-        value_parts = value_parts.group(1)
+        value_parts = value_parts.group(1).strip()
     else:
         value_parts = value
 
@@ -63,7 +63,7 @@ def get_entity_type(value: str) -> str:
 def get_entity_value(value: str) -> str:
     value_parts = PARAM_REGEX.search(value)
     if value_parts:
-        value_parts = value_parts.group(1)
+        value_parts = value_parts.group(1).strip()
     else:
         value_parts = value
 
@@ -77,7 +77,7 @@ def parse_ref_value(value: str) -> str:
     """Returns value without {{ }}"""
     value_parts = PARAM_REGEX.search(value)
     if value_parts:
-        return value_parts.group(1)
+        return value_parts.group(1).strip()
     return value
 
 
@@ -89,6 +89,16 @@ class RefMixin:
     @property
     def is_ref(self):
         return self.ref is not None
+
+    @property
+    def is_template_ref(self):
+        try:
+            value_parts = PARAM_REGEX.search(self.value)
+            if value_parts:
+                return True
+        except Exception:  # noqa
+            pass
+        return False
 
     @property
     def is_runs_ref(self):

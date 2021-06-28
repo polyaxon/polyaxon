@@ -18,8 +18,9 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+
+import "v1/api/reports.proto";
 
 // Dashboard specification
 message Dashboard {
@@ -38,28 +39,14 @@ message Dashboard {
     // Current live state
     int32 live_state = 5;
 
-    // Dashboard view
-    enum View {
-      // Any view
-      any = 0;
-
-      // Single run dashboard
-      single = 1;
-
-      // Compare runs dashboard
-      compare = 2;
-    }
-    // Optional dashboard level
-    View view = 6;
-
     // Optional dashboard specification
-    google.protobuf.Struct spec = 7;
+    DashboardSpec spec = 6;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 7;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 8;
 }
 
  // Request data to create/update dashboard

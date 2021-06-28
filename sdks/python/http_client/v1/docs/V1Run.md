@@ -36,6 +36,7 @@ Name | Type | Description | Notes
 **status_conditions** | [**list[V1StatusCondition]**](V1StatusCondition.md) |  | [optional] 
 **role** | **str** |  | [optional] 
 **settings** | [**V1RunSettings**](V1RunSettings.md) |  | [optional] 
+**resources** | [**V1RunResources**](V1RunResources.md) |  | [optional] 
 **graph** | [**object**](.md) |  | [optional] 
 **merge** | **bool** |  | [optional] 
 

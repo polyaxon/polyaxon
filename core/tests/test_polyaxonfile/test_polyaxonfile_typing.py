@@ -58,14 +58,40 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         with self.assertRaises(ValidationError):
             CompiledOperationSpecification.apply_operation_contexts(run_config)
 
+        # Outputs have delayed validation by default
         run_config = V1CompiledOperation.read(
             [
                 os.path.abspath("tests/fixtures/typing/required_outputs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
-        # Outputs have delayed validation by default
         CompiledOperationSpecification.apply_operation_contexts(run_config)
+
+    def test_delayed_inputs_validation(self):
+        # Inputs with delayed validation
+        plxfile = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
+                "tests/fixtures/typing/inputs_delayed_validation.yml"
+            ),
+            is_cli=False,
+        )
+
+        # Get compiled_operation data
+        run_config = OperationSpecification.compile_operation(plxfile)
+        assert run_config.inputs[0].value is None
+        assert run_config.inputs[1].value is None
+
+        plxfile = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
+                "tests/fixtures/typing/auto_delayed_validation_with_jinja.yml"
+            ),
+            is_cli=False,
+        )
+
+        # Get compiled_operation data
+        run_config = OperationSpecification.compile_operation(plxfile)
+        assert run_config.inputs[0].value is None
+        assert run_config.inputs[1].value is None
 
     def test_validation_for_required_inputs_outputs_raises(self):
         # Get compiled_operation data
@@ -77,16 +103,16 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         )
         # Inputs don't have delayed validation by default
         with self.assertRaises(ValidationError):
-            run_config.validate_params(is_template=False, check_runs=True)
+            run_config.validate_params(is_template=False, check_all_refs=True)
 
+        # Outputs have delayed validation by default
         run_config = V1CompiledOperation.read(
             [
                 os.path.abspath("tests/fixtures/typing/required_outputs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
-        # Outputs have delayed validation by default
-        run_config.validate_params(is_template=False, check_runs=True)
+        run_config.validate_params(is_template=False, check_all_refs=True)
 
     def test_required_inputs_with_params(self):
         run_config = V1CompiledOperation.read(

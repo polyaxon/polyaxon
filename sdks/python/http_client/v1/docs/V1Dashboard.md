@@ -8,8 +8,7 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
 **live_state** | **int** |  | [optional] 
-**view** | [**DashboardView**](DashboardView.md) |  | [optional] 
-**spec** | [**object**](.md) |  | [optional] 
+**spec** | [**V1DashboardSpec**](V1DashboardSpec.md) |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

@@ -1,0 +1,22 @@
+---
+version:  1.1
+
+kind: operation
+
+params:
+  loss: {value: "{{ future_context_value }}"}
+  steps: {value: "{{ future_context_value }}"}
+
+component:
+  tags: [foo, bar]
+  inputs:
+    - name: loss
+      type: str
+    - name: steps
+      type: int
+  run:
+    kind: job
+    container:
+      image: my_image
+      command: ["/bin/sh", "-c"]
+      args: video_prediction_train --loss={{loss}} --steps={{steps}}

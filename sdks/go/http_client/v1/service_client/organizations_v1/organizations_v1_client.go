@@ -82,6 +82,8 @@ type ClientService interface {
 
 	PatchOrganizationSettings(params *PatchOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchOrganizationSettingsOK, *PatchOrganizationSettingsNoContent, error)
 
+	ResendOrganizationInvitation(params *ResendOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResendOrganizationInvitationOK, *ResendOrganizationInvitationNoContent, error)
+
 	UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error)
 
 	UpdateOrganizationInvitation(params *UpdateOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationInvitationOK, *UpdateOrganizationInvitationNoContent, error)
@@ -890,6 +892,46 @@ func (a *Client) PatchOrganizationSettings(params *PatchOrganizationSettingsPara
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*PatchOrganizationSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ResendOrganizationInvitation resends organization invitation
+*/
+func (a *Client) ResendOrganizationInvitation(params *ResendOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResendOrganizationInvitationOK, *ResendOrganizationInvitationNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewResendOrganizationInvitationParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ResendOrganizationInvitation",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/invitations",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ResendOrganizationInvitationReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ResendOrganizationInvitationOK:
+		return value, nil, nil
+	case *ResendOrganizationInvitationNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ResendOrganizationInvitationDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

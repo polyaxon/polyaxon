@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **isApproved** | **Boolean** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
 **build** | [**V1Build**](V1Build.md) |  | [optional] 
+**cost** | **Number** |  | [optional] 
 **pathRef** | **String** |  | [optional] 
 **hubRef** | **String** |  | [optional] 
 **dagRef** | **String** |  | [optional] 

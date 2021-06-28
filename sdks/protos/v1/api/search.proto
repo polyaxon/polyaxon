@@ -20,26 +20,7 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
-// Search spec definition
-message SearchSpec {
-    // Search query
-    string query = 1;
-
-    // Search sort
-    string sort = 2;
-
-    // Limit size
-    int32 limit = 3;
-
-    // Search group bys
-    string groupby = 4;
-
-    // Search columns
-    string columns = 5;
-
-    // Search pins
-    string pins = 6;
-}
+import "v1/api/reports.proto";
 
 // Search specification
 message Search {
@@ -58,14 +39,32 @@ message Search {
     // Current live state
     int32 live_state = 5;
 
+    // Search view
+    enum View {
+      // Any view
+      any = 0;
+
+      // Runs view
+      runs = 1;
+
+      // Analytics view
+      analytics = 2;
+
+      // Projects view
+      projects = 3;
+    }
+
+    // Optional dashboard level
+    View view = 6;
+
     // Search spec
-    SearchSpec spec = 6;
+    SearchSpec spec = 7;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp created_at = 8;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 8;
+    google.protobuf.Timestamp updated_at = 9;
 }
 
  // Request data to create/update search

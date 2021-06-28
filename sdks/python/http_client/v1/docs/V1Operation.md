@@ -29,6 +29,7 @@ Name | Type | Description | Notes
 **is_approved** | **bool** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
 **build** | [**V1Build**](V1Build.md) |  | [optional] 
+**cost** | **float** |  | [optional] 
 **path_ref** | **str** |  | [optional] 
 **hub_ref** | **str** |  | [optional] 
 **dag_ref** | **str** |  | [optional] 

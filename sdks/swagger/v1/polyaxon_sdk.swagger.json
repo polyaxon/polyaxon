@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.9.4",
+    "version": "1.10.0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -3449,6 +3449,64 @@
             "required": false,
             "type": "string",
             "format": "date-time"
+          },
+          {
+            "name": "email",
+            "description": "Optional email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "post": {
+        "summary": "Resend organization invitation",
+        "operationId": "ResendOrganizationInvitation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
           },
           {
             "name": "email",
@@ -15702,16 +15760,17 @@
         }
       }
     },
-    "DashboardView": {
+    "SearchView": {
       "type": "string",
       "enum": [
         "any",
-        "single",
-        "compare"
+        "runs",
+        "analytics",
+        "projects"
       ],
       "default": "any",
-      "description": "- any: Any view\n - single: Single run dashboard\n - compare: Compare runs dashboard",
-      "title": "Dashboard view"
+      "description": "- any: Any view\n - runs: Runs view\n - analytics: Analytics view\n - projects: Projects view",
+      "title": "Search view"
     },
     "SparkDeployMode": {
       "type": "string",
@@ -15917,6 +15976,28 @@
         }
       },
       "title": "Request data to create/update agent status"
+    },
+    "v1AnalyticsSpec": {
+      "type": "object",
+      "properties": {
+        "view": {
+          "type": "string",
+          "title": "View"
+        },
+        "trunc": {
+          "type": "string",
+          "title": "Trunc field"
+        },
+        "groupby": {
+          "type": "string",
+          "title": "Groupby field"
+        },
+        "frequency": {
+          "type": "string",
+          "title": "Stats frequency"
+        }
+      },
+      "title": "Analytics spec definition"
     },
     "v1ArtifactKind": {
       "type": "string",
@@ -16376,6 +16457,11 @@
           "type": "boolean",
           "title": "Optional flag to mark this specification requires approval before running"
         },
+        "cost": {
+          "type": "number",
+          "format": "float",
+          "title": "Optional field to assign cost to this Component"
+        },
         "run": {
           "type": "object",
           "title": "Run definition, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag"
@@ -16469,6 +16555,11 @@
         "isApproved": {
           "type": "boolean",
           "title": "Optional flag to mark this specification requires approval before running"
+        },
+        "cost": {
+          "type": "number",
+          "format": "float",
+          "title": "Optional field to assign cost to this Component"
         }
       },
       "title": "Component specification"
@@ -16916,12 +17007,8 @@
           "format": "int32",
           "title": "Current live state"
         },
-        "view": {
-          "$ref": "#/definitions/DashboardView",
-          "title": "Optional dashboard level"
-        },
         "spec": {
-          "type": "object",
+          "$ref": "#/definitions/v1DashboardSpec",
           "title": "Optional dashboard specification"
         },
         "created_at": {
@@ -16936,6 +17023,19 @@
         }
       },
       "title": "Dashboard specification"
+    },
+    "v1DashboardSpec": {
+      "type": "object",
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SectionSpec"
+          },
+          "title": "Section Spec"
+        }
+      },
+      "title": "Dashboard spec definition"
     },
     "v1Dask": {
       "type": "object",
@@ -19799,6 +19899,11 @@
           "$ref": "#/definitions/v1Build",
           "title": "Optional build process"
         },
+        "cost": {
+          "type": "number",
+          "format": "float",
+          "title": "Optional field to assign cost to this Component"
+        },
         "pathRef": {
           "type": "string"
         },
@@ -20471,6 +20576,14 @@
           "format": "int32",
           "title": "The queue concurrency"
         },
+        "resource": {
+          "type": "string",
+          "title": "Optional queue resource"
+        },
+        "quota": {
+          "type": "string",
+          "title": "Optional queue quota"
+        },
         "created_at": {
           "type": "string",
           "format": "date-time",
@@ -20719,9 +20832,13 @@
           "$ref": "#/definitions/v1RunSettings",
           "title": "Optional settings"
         },
+        "resources": {
+          "$ref": "#/definitions/v1RunResources",
+          "title": "Options resources"
+        },
         "graph": {
           "type": "object",
-          "title": "Optional graph defintion"
+          "title": "Optional graph definition"
         },
         "merge": {
           "type": "boolean",
@@ -20883,6 +21000,32 @@
         }
       },
       "title": "Run Settings catalog specification"
+    },
+    "v1RunResources": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": "number",
+          "format": "float"
+        },
+        "memory": {
+          "type": "number",
+          "format": "float"
+        },
+        "gpu": {
+          "type": "number",
+          "format": "float"
+        },
+        "custom": {
+          "type": "number",
+          "format": "float"
+        },
+        "cost": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "title": "Run Resources specification"
     },
     "v1RunSchema": {
       "type": "object",
@@ -21102,6 +21245,10 @@
           "format": "int32",
           "title": "Current live state"
         },
+        "view": {
+          "$ref": "#/definitions/SearchView",
+          "title": "Optional dashboard level"
+        },
         "spec": {
           "$ref": "#/definitions/v1SearchSpec",
           "title": "Search spec"
@@ -21135,6 +21282,11 @@
           "format": "int32",
           "title": "Limit size"
         },
+        "offset": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Offset value"
+        },
         "groupby": {
           "type": "string",
           "title": "Search group bys"
@@ -21146,9 +21298,64 @@
         "pins": {
           "type": "string",
           "title": "Search pins"
+        },
+        "layout": {
+          "type": "string",
+          "title": "Widgets layout"
+        },
+        "sections": {
+          "type": "string",
+          "title": "Widgets layout"
+        },
+        "events": {
+          "$ref": "#/definitions/v1DashboardSpec",
+          "title": "Optional events specification"
+        },
+        "histograms": {
+          "type": "object",
+          "title": "Optional histograms specification"
+        },
+        "trends": {
+          "type": "object",
+          "title": "Optional trends specification"
+        },
+        "analytics": {
+          "$ref": "#/definitions/v1AnalyticsSpec",
+          "title": "Optional analytics specification"
         }
       },
       "title": "Search spec definition"
+    },
+    "v1SectionSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Section name"
+        },
+        "is_minimized": {
+          "type": "boolean",
+          "title": "Minimize"
+        },
+        "columns": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of columns"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Height"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Section's widgets"
+        }
+      },
+      "title": "Dashboard section definition"
     },
     "v1Service": {
       "type": "object",

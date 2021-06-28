@@ -605,7 +605,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 matrix=op.matrix,
                 joins=op.joins,
                 is_template=False,
-                check_runs=False,
+                check_all_refs=False,
                 extra_info="<op {}>.<component {}>".format(op.name, component_ref),
             )
 

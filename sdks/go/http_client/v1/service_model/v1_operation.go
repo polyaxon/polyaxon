@@ -46,6 +46,9 @@ type V1Operation struct {
 	// An optional template containing conditions to check before starting the run
 	Conditions string `json:"conditions,omitempty"`
 
+	// Optional field to assign cost to this Component
+	Cost float32 `json:"cost,omitempty"`
+
 	// dag ref
 	DagRef string `json:"dagRef,omitempty"`
 

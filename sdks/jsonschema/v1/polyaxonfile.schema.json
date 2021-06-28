@@ -43,15 +43,16 @@
       },
       "type": "object"
     },
-    "DashboardView": {
+    "SearchView": {
       "default": "any",
-      "description": "- any: Any view\n - single: Single run dashboard\n - compare: Compare runs dashboard",
+      "description": "- any: Any view\n - runs: Runs view\n - analytics: Analytics view\n - projects: Projects view",
       "enum": [
         "any",
-        "single",
-        "compare"
+        "runs",
+        "analytics",
+        "projects"
       ],
-      "title": "Dashboard view",
+      "title": "Search view",
       "type": "string"
     },
     "SparkDeployMode": {
@@ -4381,6 +4382,28 @@
       "title": "Request data to create/update agent status",
       "type": "object"
     },
+    "v1AnalyticsSpec": {
+      "properties": {
+        "frequency": {
+          "title": "Stats frequency",
+          "type": "string"
+        },
+        "groupby": {
+          "title": "Groupby field",
+          "type": "string"
+        },
+        "trunc": {
+          "title": "Trunc field",
+          "type": "string"
+        },
+        "view": {
+          "title": "View",
+          "type": "string"
+        }
+      },
+      "title": "Analytics spec definition",
+      "type": "object"
+    },
     "v1ArtifactKind": {
       "default": "model",
       "description": "- model: Model asset/event\n - audio: Audio asset/event\n - video: Vidio asset/event\n - histogram: Histogram asset/event\n - image: Image asset/event\n - tensor: Tensor asset/event\n - dataframe: Dataframe asset/event\n - chart: plotly/bokeh/vega chart\n - csv: Comma separated values\n - tsv: Tab separated values\n - psv: Pipe separated values\n - ssv: Space separated values\n - metric: Metric asset/event\n - env: Env file\n - html: HTML asset/event\n - text: Text asset/event\n - file: File asset/lineage\n - dir: Dir asset/lineage\n - dockerfile: Dockerfile asset\n - docker_image: Docker image\n - data: Data asset/event\n - coderef: Coderef lineage\n - table: Table asset/event\n - tensorboard: Tensorboard lineage\n - curve: Curve event\n - analysis: Analysis lineage\n - iteration: Iteration lineage\n - markdown: Mardown event",
@@ -4748,6 +4771,11 @@
           "title": "Optional outputs definition",
           "type": "array"
         },
+        "cost": {
+          "format": "float",
+          "title": "Optional field to assign cost to this Component",
+          "type": "number"
+        },
         "dependencies": {
           "items": {
             "type": "string"
@@ -4936,6 +4964,11 @@
         "cache": {
           "$ref": "#/definitions/v1Cache",
           "title": "Optional flag to disable cache validation and force run this component"
+        },
+        "cost": {
+          "format": "float",
+          "title": "Optional field to assign cost to this Component",
+          "type": "number"
         },
         "description": {
           "title": "Optional component description",
@@ -5494,8 +5527,8 @@
           "type": "string"
         },
         "spec": {
-          "title": "Optional dashboard specification",
-          "type": "object"
+          "$ref": "#/definitions/v1DashboardSpec",
+          "title": "Optional dashboard specification"
         },
         "tags": {
           "items": {
@@ -5512,13 +5545,22 @@
         "uuid": {
           "title": "UUID",
           "type": "string"
-        },
-        "view": {
-          "$ref": "#/definitions/DashboardView",
-          "title": "Optional dashboard level"
         }
       },
       "title": "Dashboard specification",
+      "type": "object"
+    },
+    "v1DashboardSpec": {
+      "properties": {
+        "sections": {
+          "items": {
+            "$ref": "#/definitions/v1SectionSpec"
+          },
+          "title": "Section Spec",
+          "type": "array"
+        }
+      },
+      "title": "Dashboard spec definition",
       "type": "object"
     },
     "v1Dask": {
@@ -8312,6 +8354,11 @@
           "title": "An optional template containing conditions to check before starting the run",
           "type": "string"
         },
+        "cost": {
+          "format": "float",
+          "title": "Optional field to assign cost to this Component",
+          "type": "number"
+        },
         "dagRef": {
           "type": "string"
         },
@@ -9155,6 +9202,14 @@
           "title": "The queue priority",
           "type": "integer"
         },
+        "quota": {
+          "title": "Optional queue quota",
+          "type": "string"
+        },
+        "resource": {
+          "title": "Optional queue resource",
+          "type": "string"
+        },
         "tags": {
           "items": {
             "type": "string"
@@ -9299,7 +9354,7 @@
           "type": "string"
         },
         "graph": {
-          "title": "Optional graph defintion",
+          "title": "Optional graph definition",
           "type": "object"
         },
         "inputs": {
@@ -9366,6 +9421,10 @@
         "readme": {
           "title": "Markdown description/readme",
           "type": "string"
+        },
+        "resources": {
+          "$ref": "#/definitions/v1RunResources",
+          "title": "Options resources"
         },
         "role": {
           "title": "Current user's role in this (org/teams)/project/runs",
@@ -9581,6 +9640,32 @@
         }
       },
       "title": "Run Settings catalog specification",
+      "type": "object"
+    },
+    "v1RunResources": {
+      "properties": {
+        "cost": {
+          "format": "float",
+          "type": "number"
+        },
+        "cpu": {
+          "format": "float",
+          "type": "number"
+        },
+        "custom": {
+          "format": "float",
+          "type": "number"
+        },
+        "gpu": {
+          "format": "float",
+          "type": "number"
+        },
+        "memory": {
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "title": "Run Resources specification",
       "type": "object"
     },
     "v1RunSchema": {
@@ -9813,6 +9898,10 @@
         "uuid": {
           "title": "UUID",
           "type": "string"
+        },
+        "view": {
+          "$ref": "#/definitions/SearchView",
+          "title": "Optional dashboard level"
         }
       },
       "title": "Search specification",
@@ -9820,17 +9909,38 @@
     },
     "v1SearchSpec": {
       "properties": {
+        "analytics": {
+          "$ref": "#/definitions/v1AnalyticsSpec",
+          "title": "Optional analytics specification"
+        },
         "columns": {
           "title": "Search columns",
           "type": "string"
+        },
+        "events": {
+          "$ref": "#/definitions/v1DashboardSpec",
+          "title": "Optional events specification"
         },
         "groupby": {
           "title": "Search group bys",
           "type": "string"
         },
+        "histograms": {
+          "title": "Optional histograms specification",
+          "type": "object"
+        },
+        "layout": {
+          "title": "Widgets layout",
+          "type": "string"
+        },
         "limit": {
           "format": "int32",
           "title": "Limit size",
+          "type": "integer"
+        },
+        "offset": {
+          "format": "int32",
+          "title": "Offset value",
           "type": "integer"
         },
         "pins": {
@@ -9841,12 +9951,51 @@
           "title": "Search query",
           "type": "string"
         },
+        "sections": {
+          "title": "Widgets layout",
+          "type": "string"
+        },
         "sort": {
           "title": "Search sort",
           "type": "string"
+        },
+        "trends": {
+          "title": "Optional trends specification",
+          "type": "object"
         }
       },
       "title": "Search spec definition",
+      "type": "object"
+    },
+    "v1SectionSpec": {
+      "properties": {
+        "columns": {
+          "format": "int32",
+          "title": "Number of columns",
+          "type": "integer"
+        },
+        "height": {
+          "format": "int32",
+          "title": "Height",
+          "type": "integer"
+        },
+        "is_minimized": {
+          "title": "Minimize",
+          "type": "boolean"
+        },
+        "name": {
+          "title": "Section name",
+          "type": "string"
+        },
+        "widgets": {
+          "items": {
+            "type": "object"
+          },
+          "title": "Section's widgets",
+          "type": "array"
+        }
+      },
+      "title": "Dashboard section definition",
       "type": "object"
     },
     "v1Service": {

@@ -49,6 +49,10 @@ class V1JoinParam(BaseConfig, ParamValueMixin, polyaxon_sdk.V1JoinParam):
         return True
 
     @property
+    def is_template_ref(self):
+        return False
+
+    @property
     def is_join_ref(self):
         return True
 

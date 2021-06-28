@@ -47,7 +47,7 @@ type V1Dashboard struct {
 	Name string `json:"name,omitempty"`
 
 	// Optional dashboard specification
-	Spec interface{} `json:"spec,omitempty"`
+	Spec *V1DashboardSpec `json:"spec,omitempty"`
 
 	// Optional tags of this entity
 	Tags []string `json:"tags"`
@@ -58,9 +58,6 @@ type V1Dashboard struct {
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
-
-	// Optional dashboard level
-	View *DashboardView `json:"view,omitempty"`
 }
 
 // Validate validates this v1 dashboard
@@ -71,11 +68,11 @@ func (m *V1Dashboard) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateUpdatedAt(formats); err != nil {
+	if err := m.validateSpec(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateView(formats); err != nil {
+	if err := m.validateUpdatedAt(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -97,6 +94,23 @@ func (m *V1Dashboard) validateCreatedAt(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Dashboard) validateSpec(formats strfmt.Registry) error {
+	if swag.IsZero(m.Spec) { // not required
+		return nil
+	}
+
+	if m.Spec != nil {
+		if err := m.Spec.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("spec")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Dashboard) validateUpdatedAt(formats strfmt.Registry) error {
 	if swag.IsZero(m.UpdatedAt) { // not required
 		return nil
@@ -109,28 +123,11 @@ func (m *V1Dashboard) validateUpdatedAt(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Dashboard) validateView(formats strfmt.Registry) error {
-	if swag.IsZero(m.View) { // not required
-		return nil
-	}
-
-	if m.View != nil {
-		if err := m.View.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("view")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 // ContextValidate validate this v1 dashboard based on the context it is used
 func (m *V1Dashboard) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateView(ctx, formats); err != nil {
+	if err := m.contextValidateSpec(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -140,12 +137,12 @@ func (m *V1Dashboard) ContextValidate(ctx context.Context, formats strfmt.Regist
 	return nil
 }
 
-func (m *V1Dashboard) contextValidateView(ctx context.Context, formats strfmt.Registry) error {
+func (m *V1Dashboard) contextValidateSpec(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.View != nil {
-		if err := m.View.ContextValidate(ctx, formats); err != nil {
+	if m.Spec != nil {
+		if err := m.Spec.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("view")
+				return ve.ValidateName("spec")
 			}
 			return err
 		}

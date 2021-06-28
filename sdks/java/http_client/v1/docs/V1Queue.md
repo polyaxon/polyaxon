@@ -13,6 +13,8 @@ Name | Type | Description | Notes
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **priority** | **Integer** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]
+**resource** | **String** |  |  [optional]
+**quota** | **String** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 

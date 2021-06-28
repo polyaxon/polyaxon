@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.9.4
+  version: 1.10.0
 servers:
 - url: /
 security:
@@ -3412,6 +3412,64 @@ paths:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
       summary: Patch organization invitation
+      tags:
+      - OrganizationsV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    post:
+      operationId: ResendOrganizationInvitation
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Optional email.
+        in: query
+        name: email
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1OrganizationMember'
+        description: Organization body
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1OrganizationMember'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Resend organization invitation
       tags:
       - OrganizationsV1
       x-codegen-request-body-name: body
@@ -15146,17 +15204,19 @@ components:
           title: A flag to tell the agent that the queues are still full
           type: boolean
       type: object
-    DashboardView:
+    SearchView:
       default: any
       description: |-
         - any: Any view
-         - single: Single run dashboard
-         - compare: Compare runs dashboard
+         - runs: Runs view
+         - analytics: Analytics view
+         - projects: Projects view
       enum:
       - any
-      - single
-      - compare
-      title: Dashboard view
+      - runs
+      - analytics
+      - projects
+      title: Search view
       type: string
     SparkDeployMode:
       default: cluster
@@ -15464,6 +15524,27 @@ components:
         condition:
           $ref: '#/components/schemas/v1StatusCondition'
       title: Request data to create/update agent status
+      type: object
+    v1AnalyticsSpec:
+      example:
+        view: view
+        trunc: trunc
+        groupby: groupby
+        frequency: frequency
+      properties:
+        view:
+          title: View
+          type: string
+        trunc:
+          title: Trunc field
+          type: string
+        groupby:
+          title: Groupby field
+          type: string
+        frequency:
+          title: Stats frequency
+          type: string
+      title: Analytics spec definition
       type: object
     v1ArtifactKind:
       default: model
@@ -16032,8 +16113,9 @@ components:
           - io
           - io
           ttl: 0
+        cost: 7.933507
         kind: kind
-        version: 0.87740767
+        version: 0.5199002
         tags:
         - tags
         - tags
@@ -16161,6 +16243,10 @@ components:
           title: Optional flag to mark this specification requires approval before
             running
           type: boolean
+        cost:
+          format: float
+          title: Optional field to assign cost to this Component
+          type: number
         run:
           properties: {}
           title: 'Run definition, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag'
@@ -16214,6 +16300,7 @@ components:
           - io
           - io
           ttl: 0
+        cost: 0.20253241
         kind: kind
         plugins:
           mountArtifactsStore: true
@@ -16273,7 +16360,7 @@ components:
           isList: true
         description: description
         run: '{}'
-        version: 3.2588565
+        version: 4.078846
         tags:
         - tags
         - tags
@@ -16396,6 +16483,10 @@ components:
           title: Optional flag to mark this specification requires approval before
             running
           type: boolean
+        cost:
+          format: float
+          title: Optional field to assign cost to this Component
+          type: number
       title: Component specification
       type: object
     v1ComponentHub:
@@ -16690,7 +16781,7 @@ components:
         schema: '{}'
         configMap:
           mountPath: mountPath
-          defaultMode: 5
+          defaultMode: 8
           name: name
           items:
           - items
@@ -16699,7 +16790,7 @@ components:
         description: description
         secret:
           mountPath: mountPath
-          defaultMode: 5
+          defaultMode: 8
           name: name
           items:
           - items
@@ -16743,7 +16834,7 @@ components:
       example:
         cron: cron
         dependsOnPast: true
-        maxRuns: 9
+        maxRuns: 5
         kind: cron
         endAt: 2000-01-23T04:56:07.000+00:00
         startAt: 2000-01-23T04:56:07.000+00:00
@@ -16820,6 +16911,7 @@ components:
             - io
             - io
             ttl: 0
+          cost: 0.20253241
           kind: kind
           plugins:
             mountArtifactsStore: true
@@ -16879,7 +16971,7 @@ components:
             isList: true
           description: description
           run: '{}'
-          version: 3.2588565
+          version: 4.078846
           tags:
           - tags
           - tags
@@ -16986,6 +17078,7 @@ components:
             - io
             - io
             ttl: 0
+          cost: 0.20253241
           kind: kind
           plugins:
             mountArtifactsStore: true
@@ -17045,7 +17138,7 @@ components:
             isList: true
           description: description
           run: '{}'
-          version: 3.2588565
+          version: 4.078846
           tags:
           - tags
           - tags
@@ -17237,6 +17330,7 @@ components:
             - io
             - io
             ttl: 0
+          cost: 3.2588565
           kind: kind
           isPreset: true
           params:
@@ -17300,6 +17394,7 @@ components:
               - io
               - io
               ttl: 0
+            cost: 0.20253241
             kind: kind
             plugins:
               mountArtifactsStore: true
@@ -17359,7 +17454,7 @@ components:
               isList: true
             description: description
             run: '{}'
-            version: 3.2588565
+            version: 4.078846
             tags:
             - tags
             - tags
@@ -17553,6 +17648,7 @@ components:
             - io
             - io
             ttl: 0
+          cost: 3.2588565
           kind: kind
           isPreset: true
           params:
@@ -17616,6 +17712,7 @@ components:
               - io
               - io
               ttl: 0
+            cost: 0.20253241
             kind: kind
             plugins:
               mountArtifactsStore: true
@@ -17675,7 +17772,7 @@ components:
               isList: true
             description: description
             run: '{}'
-            version: 3.2588565
+            version: 4.078846
             tags:
             - tags
             - tags
@@ -17778,7 +17875,7 @@ components:
         connections:
         - connections
         - connections
-        concurrency: 4
+        concurrency: 6
       properties:
         kind:
           default: dag
@@ -17840,7 +17937,22 @@ components:
         created_at: 2000-01-23T04:56:07.000+00:00
         live_state: 6
         uuid: uuid
-        spec: '{}'
+        spec:
+          sections:
+          - is_minimized: true
+            columns: 1
+            name: name
+            widgets:
+            - '{}'
+            - '{}'
+            height: 5
+          - is_minimized: true
+            columns: 1
+            name: name
+            widgets:
+            - '{}'
+            - '{}'
+            height: 5
         tags:
         - tags
         - tags
@@ -17863,12 +17975,8 @@ components:
           format: int32
           title: Current live state
           type: integer
-        view:
-          $ref: '#/components/schemas/DashboardView'
         spec:
-          properties: {}
-          title: Optional dashboard specification
-          type: object
+          $ref: '#/components/schemas/v1DashboardSpec'
         created_at:
           format: date-time
           title: Optional time when the entity was created
@@ -17878,6 +17986,31 @@ components:
           title: Optional last time the entity was updated
           type: string
       title: Dashboard specification
+      type: object
+    v1DashboardSpec:
+      example:
+        sections:
+        - is_minimized: true
+          columns: 1
+          name: name
+          widgets:
+          - '{}'
+          - '{}'
+          height: 5
+        - is_minimized: true
+          columns: 1
+          name: name
+          widgets:
+          - '{}'
+          - '{}'
+          height: 5
+      properties:
+        sections:
+          items:
+            $ref: '#/components/schemas/v1SectionSpec'
+          title: Section Spec
+          type: array
+      title: Dashboard spec definition
       type: object
     v1Dask:
       example:
@@ -17994,15 +18127,15 @@ components:
           schedulerName: schedulerName
           affinity: '{}'
           hostPID: hostPID
-        adaptMax: 7
+        adaptMax: 0
         kind: dask
-        adaptMin: 4
+        adaptMin: 9
         adaptInterval: adaptInterval
         volumes:
         - null
         - null
         threads: 4
-        scale: 1
+        scale: 7
         connections:
         - connections
         - connections
@@ -18420,33 +18553,33 @@ components:
       example:
         image:
           path: path
-          colorspace: 3
-          width: 4
-          height: 8
+          colorspace: 1
+          width: 2
+          height: 0
         curve:
           annotation: annotation
           x:
-          - 1.8268702
-          - 1.8268702
+          - 8.761433
+          - 8.761433
           y:
-          - 3.5026577
-          - 3.5026577
+          - 0.4182561
+          - 0.4182561
         video:
           path: path
           content_type: content_type
           colorspace: 9
-          width: 8
-          height: 4
+          width: 3
+          height: 1
         histogram:
           counts:
-          - 2.9409642974827896
-          - 2.9409642974827896
+          - 6.623518433804886
+          - 6.623518433804886
           values:
-          - 0.43431398824148815
-          - 0.43431398824148815
+          - 8.28965939814297
+          - 8.28965939814297
         artifact:
           path: path
-        metric: 6.0738983
+        metric: 3.9015453
         step: 4
         html: html
         model:
@@ -18456,8 +18589,8 @@ components:
         audio:
           num_channels: 8
           path: path
-          length_frames: 6
-          sample_rate: 1.7325933
+          length_frames: 9
+          sample_rate: 4.5739365
           content_type: content_type
         text: text
         dataframe:
@@ -18517,8 +18650,8 @@ components:
       example:
         num_channels: 8
         path: path
-        length_frames: 6
-        sample_rate: 1.7325933
+        length_frames: 9
+        sample_rate: 4.5739365
         content_type: content_type
       properties:
         sample_rate:
@@ -18569,11 +18702,11 @@ components:
       example:
         annotation: annotation
         x:
-        - 1.8268702
-        - 1.8268702
+        - 8.761433
+        - 8.761433
         y:
-        - 3.5026577
-        - 3.5026577
+        - 0.4182561
+        - 0.4182561
       properties:
         kind:
           $ref: '#/components/schemas/v1EventCurveKind'
@@ -18622,11 +18755,11 @@ components:
     v1EventHistogram:
       example:
         counts:
-        - 2.9409642974827896
-        - 2.9409642974827896
+        - 6.623518433804886
+        - 6.623518433804886
         values:
-        - 0.43431398824148815
-        - 0.43431398824148815
+        - 8.28965939814297
+        - 8.28965939814297
       properties:
         values:
           items:
@@ -18643,9 +18776,9 @@ components:
     v1EventImage:
       example:
         path: path
-        colorspace: 3
-        width: 4
-        height: 8
+        colorspace: 1
+        width: 2
+        height: 0
       properties:
         height:
           description: Height of the image.
@@ -18758,8 +18891,8 @@ components:
         path: path
         content_type: content_type
         colorspace: 9
-        width: 8
-        height: 4
+        width: 3
+        height: 1
       properties:
         height:
           description: Height of the video.
@@ -19647,11 +19780,11 @@ components:
     v1IntervalSchedule:
       example:
         dependsOnPast: true
-        maxRuns: 0
+        maxRuns: 4
         kind: interval
         endAt: 2000-01-23T04:56:07.000+00:00
         startAt: 2000-01-23T04:56:07.000+00:00
-        frequency: 7
+        frequency: 6
       properties:
         kind:
           default: interval
@@ -19956,7 +20089,7 @@ components:
     v1K8sResourceSchema:
       example:
         mountPath: mountPath
-        defaultMode: 5
+        defaultMode: 8
         name: name
         items:
         - items
@@ -19979,7 +20112,7 @@ components:
       example:
         schema:
           mountPath: mountPath
-          defaultMode: 5
+          defaultMode: 8
           name: name
           items:
           - items
@@ -20112,7 +20245,7 @@ components:
           schedulerName: schedulerName
           affinity: '{}'
           hostPID: hostPID
-        replicas: 0
+        replicas: 4
         volumes:
         - null
         - null
@@ -20464,7 +20597,22 @@ components:
           created_at: 2000-01-23T04:56:07.000+00:00
           live_state: 6
           uuid: uuid
-          spec: '{}'
+          spec:
+            sections:
+            - is_minimized: true
+              columns: 1
+              name: name
+              widgets:
+              - '{}'
+              - '{}'
+              height: 5
+            - is_minimized: true
+              columns: 1
+              name: name
+              widgets:
+              - '{}'
+              - '{}'
+              height: 5
           tags:
           - tags
           - tags
@@ -20474,7 +20622,22 @@ components:
           created_at: 2000-01-23T04:56:07.000+00:00
           live_state: 6
           uuid: uuid
-          spec: '{}'
+          spec:
+            sections:
+            - is_minimized: true
+              columns: 1
+              name: name
+              widgets:
+              - '{}'
+              - '{}'
+              height: 5
+            - is_minimized: true
+              columns: 1
+              name: name
+              widgets:
+              - '{}'
+              - '{}'
+              height: 5
           tags:
           - tags
           - tags
@@ -20890,6 +21053,8 @@ components:
         results:
         - agent: agent
           updated_at: 2000-01-23T04:56:07.000+00:00
+          resource: resource
+          quota: quota
           name: name
           description: description
           created_at: 2000-01-23T04:56:07.000+00:00
@@ -20901,6 +21066,8 @@ components:
           concurrency: 6
         - agent: agent
           updated_at: 2000-01-23T04:56:07.000+00:00
+          resource: resource
+          quota: quota
           name: name
           description: description
           created_at: 2000-01-23T04:56:07.000+00:00
@@ -21043,6 +21210,12 @@ components:
             wait_time: 6
             schedule_at: 2000-01-23T04:56:07.000+00:00
             bookmarked: true
+            resources:
+              memory: 2.302136
+              cost: 3.6160767
+              custom: 9.301444
+              cpu: 5.637377
+              gpu: 7.0614014
             live_state: 5
             readme: readme
             graph: '{}'
@@ -21112,6 +21285,12 @@ components:
             wait_time: 6
             schedule_at: 2000-01-23T04:56:07.000+00:00
             bookmarked: true
+            resources:
+              memory: 2.302136
+              cost: 3.6160767
+              custom: 9.301444
+              cpu: 5.637377
+              gpu: 7.0614014
             live_state: 5
             readme: readme
             graph: '{}'
@@ -21183,6 +21362,12 @@ components:
             wait_time: 6
             schedule_at: 2000-01-23T04:56:07.000+00:00
             bookmarked: true
+            resources:
+              memory: 2.302136
+              cost: 3.6160767
+              custom: 9.301444
+              cpu: 5.637377
+              gpu: 7.0614014
             live_state: 5
             readme: readme
             graph: '{}'
@@ -21252,6 +21437,12 @@ components:
             wait_time: 6
             schedule_at: 2000-01-23T04:56:07.000+00:00
             bookmarked: true
+            resources:
+              memory: 2.302136
+              cost: 3.6160767
+              custom: 9.301444
+              cpu: 5.637377
+              gpu: 7.0614014
             live_state: 5
             readme: readme
             graph: '{}'
@@ -21346,6 +21537,12 @@ components:
           wait_time: 6
           schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
+          resources:
+            memory: 2.302136
+            cost: 3.6160767
+            custom: 9.301444
+            cpu: 5.637377
+            gpu: 7.0614014
           live_state: 5
           readme: readme
           graph: '{}'
@@ -21413,6 +21610,12 @@ components:
           wait_time: 6
           schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
+          resources:
+            memory: 2.302136
+            cost: 3.6160767
+            custom: 9.301444
+            cpu: 5.637377
+            gpu: 7.0614014
           live_state: 5
           readme: readme
           graph: '{}'
@@ -21469,12 +21672,38 @@ components:
           live_state: 6
           uuid: uuid
           spec:
+            histograms: '{}'
+            offset: 5
             columns: columns
             query: query
-            limit: 1
             pins: pins
             sort: sort
             groupby: groupby
+            sections: sections
+            layout: layout
+            analytics:
+              view: view
+              trunc: trunc
+              groupby: groupby
+              frequency: frequency
+            limit: 1
+            events:
+              sections:
+              - is_minimized: true
+                columns: 1
+                name: name
+                widgets:
+                - '{}'
+                - '{}'
+                height: 5
+              - is_minimized: true
+                columns: 1
+                name: name
+                widgets:
+                - '{}'
+                - '{}'
+                height: 5
+            trends: '{}'
           tags:
           - tags
           - tags
@@ -21485,12 +21714,38 @@ components:
           live_state: 6
           uuid: uuid
           spec:
+            histograms: '{}'
+            offset: 5
             columns: columns
             query: query
-            limit: 1
             pins: pins
             sort: sort
             groupby: groupby
+            sections: sections
+            layout: layout
+            analytics:
+              view: view
+              trunc: trunc
+              groupby: groupby
+              frequency: frequency
+            limit: 1
+            events:
+              sections:
+              - is_minimized: true
+                columns: 1
+                name: name
+                widgets:
+                - '{}'
+                - '{}'
+                height: 5
+              - is_minimized: true
+                columns: 1
+                name: name
+                widgets:
+                - '{}'
+                - '{}'
+                height: 5
+            trends: '{}'
           tags:
           - tags
           - tags
@@ -21758,7 +22013,7 @@ components:
       type: object
     v1MPIJob:
       example:
-        slotsPerWorker: 6
+        slotsPerWorker: 1
         kind: mpi_job
         worker:
           container: '{}'
@@ -21874,7 +22129,7 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          replicas: 0
+          replicas: 4
           volumes:
           - null
           - null
@@ -21995,7 +22250,7 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          replicas: 0
+          replicas: 4
           volumes:
           - null
           - null
@@ -22569,6 +22824,7 @@ components:
           - io
           - io
           ttl: 0
+        cost: 3.2588565
         kind: kind
         isPreset: true
         params:
@@ -22632,6 +22888,7 @@ components:
             - io
             - io
             ttl: 0
+          cost: 0.20253241
           kind: kind
           plugins:
             mountArtifactsStore: true
@@ -22691,7 +22948,7 @@ components:
             isList: true
           description: description
           run: '{}'
-          version: 3.2588565
+          version: 4.078846
           tags:
           - tags
           - tags
@@ -22879,6 +23136,10 @@ components:
           $ref: '#/components/schemas/v1Template'
         build:
           $ref: '#/components/schemas/v1Build'
+        cost:
+          format: float
+          title: Optional field to assign cost to this Component
+          type: number
         pathRef:
           type: string
         hubRef:
@@ -23623,7 +23884,7 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          replicas: 0
+          replicas: 4
           volumes:
           - null
           - null
@@ -23744,7 +24005,7 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          replicas: 0
+          replicas: 4
           volumes:
           - null
           - null
@@ -23768,6 +24029,8 @@ components:
       example:
         agent: agent
         updated_at: 2000-01-23T04:56:07.000+00:00
+        resource: resource
+        quota: quota
         name: name
         description: description
         created_at: 2000-01-23T04:56:07.000+00:00
@@ -23803,6 +24066,12 @@ components:
           format: int32
           title: The queue concurrency
           type: integer
+        resource:
+          title: Optional queue resource
+          type: string
+        quota:
+          title: Optional queue quota
+          type: string
         created_at:
           format: date-time
           title: Optional time when the entity was created
@@ -23952,6 +24221,12 @@ components:
         wait_time: 6
         schedule_at: 2000-01-23T04:56:07.000+00:00
         bookmarked: true
+        resources:
+          memory: 2.302136
+          cost: 3.6160767
+          custom: 9.301444
+          cpu: 5.637377
+          gpu: 7.0614014
         live_state: 5
         readme: readme
         graph: '{}'
@@ -24086,9 +24361,11 @@ components:
           type: string
         settings:
           $ref: '#/components/schemas/v1RunSettings'
+        resources:
+          $ref: '#/components/schemas/v1RunResources'
         graph:
           properties: {}
-          title: Optional graph defintion
+          title: Optional graph definition
           type: object
         merge:
           title: Optional merge flag
@@ -24197,6 +24474,12 @@ components:
           wait_time: 6
           schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
+          resources:
+            memory: 2.302136
+            cost: 3.6160767
+            custom: 9.301444
+            cpu: 5.637377
+            gpu: 7.0614014
           live_state: 5
           readme: readme
           graph: '{}'
@@ -24266,6 +24549,12 @@ components:
           wait_time: 6
           schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
+          resources:
+            memory: 2.302136
+            cost: 3.6160767
+            custom: 9.301444
+            cpu: 5.637377
+            gpu: 7.0614014
           live_state: 5
           readme: readme
           graph: '{}'
@@ -24369,6 +24658,31 @@ components:
           title: Name
           type: string
       title: Run Settings catalog specification
+      type: object
+    v1RunResources:
+      example:
+        memory: 2.302136
+        cost: 3.6160767
+        custom: 9.301444
+        cpu: 5.637377
+        gpu: 7.0614014
+      properties:
+        cpu:
+          format: float
+          type: number
+        memory:
+          format: float
+          type: number
+        gpu:
+          format: float
+          type: number
+        custom:
+          format: float
+          type: number
+        cost:
+          format: float
+          type: number
+      title: Run Resources specification
       type: object
     v1RunSchema:
       example:
@@ -24869,7 +25183,7 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            replicas: 0
+            replicas: 4
             volumes:
             - null
             - null
@@ -24991,7 +25305,7 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            replicas: 0
+            replicas: 4
             volumes:
             - null
             - null
@@ -25112,7 +25426,7 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            replicas: 0
+            replicas: 4
             volumes:
             - null
             - null
@@ -25233,7 +25547,7 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            replicas: 0
+            replicas: 4
             volumes:
             - null
             - null
@@ -25287,6 +25601,7 @@ components:
               - io
               - io
               ttl: 0
+            cost: 0.20253241
             kind: kind
             plugins:
               mountArtifactsStore: true
@@ -25346,7 +25661,7 @@ components:
               isList: true
             description: description
             run: '{}'
-            version: 3.2588565
+            version: 4.078846
             tags:
             - tags
             - tags
@@ -25453,6 +25768,7 @@ components:
               - io
               - io
               ttl: 0
+            cost: 0.20253241
             kind: kind
             plugins:
               mountArtifactsStore: true
@@ -25512,7 +25828,7 @@ components:
               isList: true
             description: description
             run: '{}'
-            version: 3.2588565
+            version: 4.078846
             tags:
             - tags
             - tags
@@ -25704,6 +26020,7 @@ components:
               - io
               - io
               ttl: 0
+            cost: 3.2588565
             kind: kind
             isPreset: true
             params:
@@ -25767,6 +26084,7 @@ components:
                 - io
                 - io
                 ttl: 0
+              cost: 0.20253241
               kind: kind
               plugins:
                 mountArtifactsStore: true
@@ -25826,7 +26144,7 @@ components:
                 isList: true
               description: description
               run: '{}'
-              version: 3.2588565
+              version: 4.078846
               tags:
               - tags
               - tags
@@ -26020,6 +26338,7 @@ components:
               - io
               - io
               ttl: 0
+            cost: 3.2588565
             kind: kind
             isPreset: true
             params:
@@ -26083,6 +26402,7 @@ components:
                 - io
                 - io
                 ttl: 0
+              cost: 0.20253241
               kind: kind
               plugins:
                 mountArtifactsStore: true
@@ -26142,7 +26462,7 @@ components:
                 isList: true
               description: description
               run: '{}'
-              version: 3.2588565
+              version: 4.078846
               tags:
               - tags
               - tags
@@ -26245,7 +26565,7 @@ components:
           connections:
           - connections
           - connections
-          concurrency: 4
+          concurrency: 6
         pytorchJob:
           kind: pytorch_job
           worker:
@@ -26362,7 +26682,7 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            replicas: 0
+            replicas: 4
             volumes:
             - null
             - null
@@ -26483,7 +26803,7 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            replicas: 0
+            replicas: 4
             volumes:
             - null
             - null
@@ -26604,15 +26924,15 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          adaptMax: 7
+          adaptMax: 0
           kind: dask
-          adaptMin: 4
+          adaptMin: 9
           adaptInterval: adaptInterval
           volumes:
           - null
           - null
           threads: 4
-          scale: 1
+          scale: 7
           connections:
           - connections
           - connections
@@ -26738,7 +27058,7 @@ components:
           - connections
           - connections
         mpiJob:
-          slotsPerWorker: 6
+          slotsPerWorker: 1
           kind: mpi_job
           worker:
             container: '{}'
@@ -26854,7 +27174,7 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            replicas: 0
+            replicas: 4
             volumes:
             - null
             - null
@@ -26975,7 +27295,7 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            replicas: 0
+            replicas: 4
             volumes:
             - null
             - null
@@ -27071,7 +27391,7 @@ components:
         cron:
           cron: cron
           dependsOnPast: true
-          maxRuns: 9
+          maxRuns: 5
           kind: cron
           endAt: 2000-01-23T04:56:07.000+00:00
           startAt: 2000-01-23T04:56:07.000+00:00
@@ -27080,11 +27400,11 @@ components:
           startAt: 2000-01-23T04:56:07.000+00:00
         interval:
           dependsOnPast: true
-          maxRuns: 0
+          maxRuns: 4
           kind: interval
           endAt: 2000-01-23T04:56:07.000+00:00
           startAt: 2000-01-23T04:56:07.000+00:00
-          frequency: 7
+          frequency: 6
       properties:
         cron:
           $ref: '#/components/schemas/v1CronSchedule'
@@ -27629,7 +27949,7 @@ components:
                 schedulerName: schedulerName
                 affinity: '{}'
                 hostPID: hostPID
-              replicas: 0
+              replicas: 4
               volumes:
               - null
               - null
@@ -27751,7 +28071,7 @@ components:
                 schedulerName: schedulerName
                 affinity: '{}'
                 hostPID: hostPID
-              replicas: 0
+              replicas: 4
               volumes:
               - null
               - null
@@ -27872,7 +28192,7 @@ components:
                 schedulerName: schedulerName
                 affinity: '{}'
                 hostPID: hostPID
-              replicas: 0
+              replicas: 4
               volumes:
               - null
               - null
@@ -27993,7 +28313,7 @@ components:
                 schedulerName: schedulerName
                 affinity: '{}'
                 hostPID: hostPID
-              replicas: 0
+              replicas: 4
               volumes:
               - null
               - null
@@ -28047,6 +28367,7 @@ components:
                 - io
                 - io
                 ttl: 0
+              cost: 0.20253241
               kind: kind
               plugins:
                 mountArtifactsStore: true
@@ -28106,7 +28427,7 @@ components:
                 isList: true
               description: description
               run: '{}'
-              version: 3.2588565
+              version: 4.078846
               tags:
               - tags
               - tags
@@ -28213,6 +28534,7 @@ components:
                 - io
                 - io
                 ttl: 0
+              cost: 0.20253241
               kind: kind
               plugins:
                 mountArtifactsStore: true
@@ -28272,7 +28594,7 @@ components:
                 isList: true
               description: description
               run: '{}'
-              version: 3.2588565
+              version: 4.078846
               tags:
               - tags
               - tags
@@ -28464,6 +28786,7 @@ components:
                 - io
                 - io
                 ttl: 0
+              cost: 3.2588565
               kind: kind
               isPreset: true
               params:
@@ -28527,6 +28850,7 @@ components:
                   - io
                   - io
                   ttl: 0
+                cost: 0.20253241
                 kind: kind
                 plugins:
                   mountArtifactsStore: true
@@ -28586,7 +28910,7 @@ components:
                   isList: true
                 description: description
                 run: '{}'
-                version: 3.2588565
+                version: 4.078846
                 tags:
                 - tags
                 - tags
@@ -28780,6 +29104,7 @@ components:
                 - io
                 - io
                 ttl: 0
+              cost: 3.2588565
               kind: kind
               isPreset: true
               params:
@@ -28843,6 +29168,7 @@ components:
                   - io
                   - io
                   ttl: 0
+                cost: 0.20253241
                 kind: kind
                 plugins:
                   mountArtifactsStore: true
@@ -28902,7 +29228,7 @@ components:
                   isList: true
                 description: description
                 run: '{}'
-                version: 3.2588565
+                version: 4.078846
                 tags:
                 - tags
                 - tags
@@ -29005,7 +29331,7 @@ components:
             connections:
             - connections
             - connections
-            concurrency: 4
+            concurrency: 6
           pytorchJob:
             kind: pytorch_job
             worker:
@@ -29122,7 +29448,7 @@ components:
                 schedulerName: schedulerName
                 affinity: '{}'
                 hostPID: hostPID
-              replicas: 0
+              replicas: 4
               volumes:
               - null
               - null
@@ -29243,7 +29569,7 @@ components:
                 schedulerName: schedulerName
                 affinity: '{}'
                 hostPID: hostPID
-              replicas: 0
+              replicas: 4
               volumes:
               - null
               - null
@@ -29364,15 +29690,15 @@ components:
               schedulerName: schedulerName
               affinity: '{}'
               hostPID: hostPID
-            adaptMax: 7
+            adaptMax: 0
             kind: dask
-            adaptMin: 4
+            adaptMin: 9
             adaptInterval: adaptInterval
             volumes:
             - null
             - null
             threads: 4
-            scale: 1
+            scale: 7
             connections:
             - connections
             - connections
@@ -29498,7 +29824,7 @@ components:
             - connections
             - connections
           mpiJob:
-            slotsPerWorker: 6
+            slotsPerWorker: 1
             kind: mpi_job
             worker:
               container: '{}'
@@ -29614,7 +29940,7 @@ components:
                 schedulerName: schedulerName
                 affinity: '{}'
                 hostPID: hostPID
-              replicas: 0
+              replicas: 4
               volumes:
               - null
               - null
@@ -29735,7 +30061,7 @@ components:
                 schedulerName: schedulerName
                 affinity: '{}'
                 hostPID: hostPID
-              replicas: 0
+              replicas: 4
               volumes:
               - null
               - null
@@ -29950,7 +30276,7 @@ components:
           cron:
             cron: cron
             dependsOnPast: true
-            maxRuns: 9
+            maxRuns: 5
             kind: cron
             endAt: 2000-01-23T04:56:07.000+00:00
             startAt: 2000-01-23T04:56:07.000+00:00
@@ -29959,11 +30285,11 @@ components:
             startAt: 2000-01-23T04:56:07.000+00:00
           interval:
             dependsOnPast: true
-            maxRuns: 0
+            maxRuns: 4
             kind: interval
             endAt: 2000-01-23T04:56:07.000+00:00
             startAt: 2000-01-23T04:56:07.000+00:00
-            frequency: 7
+            frequency: 6
         polyaxonSidecarContainer:
           sleepInterval: 3
           image: image
@@ -29987,7 +30313,7 @@ components:
           schema: '{}'
           configMap:
             mountPath: mountPath
-            defaultMode: 5
+            defaultMode: 8
             name: name
             items:
             - items
@@ -29996,7 +30322,7 @@ components:
           description: description
           secret:
             mountPath: mountPath
-            defaultMode: 5
+            defaultMode: 8
             name: name
             items:
             - items
@@ -30010,33 +30336,33 @@ components:
         event:
           image:
             path: path
-            colorspace: 3
-            width: 4
-            height: 8
+            colorspace: 1
+            width: 2
+            height: 0
           curve:
             annotation: annotation
             x:
-            - 1.8268702
-            - 1.8268702
+            - 8.761433
+            - 8.761433
             y:
-            - 3.5026577
-            - 3.5026577
+            - 0.4182561
+            - 0.4182561
           video:
             path: path
             content_type: content_type
             colorspace: 9
-            width: 8
-            height: 4
+            width: 3
+            height: 1
           histogram:
             counts:
-            - 2.9409642974827896
-            - 2.9409642974827896
+            - 6.623518433804886
+            - 6.623518433804886
             values:
-            - 0.43431398824148815
-            - 0.43431398824148815
+            - 8.28965939814297
+            - 8.28965939814297
           artifact:
             path: path
-          metric: 6.0738983
+          metric: 3.9015453
           step: 4
           html: html
           model:
@@ -30046,8 +30372,8 @@ components:
           audio:
             num_channels: 8
             path: path
-            length_frames: 6
-            sample_rate: 1.7325933
+            length_frames: 9
+            sample_rate: 4.5739365
             content_type: content_type
           text: text
           dataframe:
@@ -30185,6 +30511,7 @@ components:
             - io
             - io
             ttl: 0
+          cost: 3.2588565
           kind: kind
           isPreset: true
           params:
@@ -30248,6 +30575,7 @@ components:
               - io
               - io
               ttl: 0
+            cost: 0.20253241
             kind: kind
             plugins:
               mountArtifactsStore: true
@@ -30307,7 +30635,7 @@ components:
               isList: true
             description: description
             run: '{}'
-            version: 3.2588565
+            version: 4.078846
             tags:
             - tags
             - tags
@@ -30582,8 +30910,9 @@ components:
             - io
             - io
             ttl: 0
+          cost: 7.933507
           kind: kind
-          version: 0.87740767
+          version: 0.5199002
           tags:
           - tags
           - tags
@@ -30622,7 +30951,7 @@ components:
         k8sResource:
           schema:
             mountPath: mountPath
-            defaultMode: 5
+            defaultMode: 8
             name: name
             items:
             - items
@@ -30688,12 +31017,38 @@ components:
         live_state: 6
         uuid: uuid
         spec:
+          histograms: '{}'
+          offset: 5
           columns: columns
           query: query
-          limit: 1
           pins: pins
           sort: sort
           groupby: groupby
+          sections: sections
+          layout: layout
+          analytics:
+            view: view
+            trunc: trunc
+            groupby: groupby
+            frequency: frequency
+          limit: 1
+          events:
+            sections:
+            - is_minimized: true
+              columns: 1
+              name: name
+              widgets:
+              - '{}'
+              - '{}'
+              height: 5
+            - is_minimized: true
+              columns: 1
+              name: name
+              widgets:
+              - '{}'
+              - '{}'
+              height: 5
+          trends: '{}'
         tags:
         - tags
         - tags
@@ -30716,6 +31071,8 @@ components:
           format: int32
           title: Current live state
           type: integer
+        view:
+          $ref: '#/components/schemas/SearchView'
         spec:
           $ref: '#/components/schemas/v1SearchSpec'
         created_at:
@@ -30730,12 +31087,38 @@ components:
       type: object
     v1SearchSpec:
       example:
+        histograms: '{}'
+        offset: 5
         columns: columns
         query: query
-        limit: 1
         pins: pins
         sort: sort
         groupby: groupby
+        sections: sections
+        layout: layout
+        analytics:
+          view: view
+          trunc: trunc
+          groupby: groupby
+          frequency: frequency
+        limit: 1
+        events:
+          sections:
+          - is_minimized: true
+            columns: 1
+            name: name
+            widgets:
+            - '{}'
+            - '{}'
+            height: 5
+          - is_minimized: true
+            columns: 1
+            name: name
+            widgets:
+            - '{}'
+            - '{}'
+            height: 5
+        trends: '{}'
       properties:
         query:
           title: Search query
@@ -30747,6 +31130,10 @@ components:
           format: int32
           title: Limit size
           type: integer
+        offset:
+          format: int32
+          title: Offset value
+          type: integer
         groupby:
           title: Search group bys
           type: string
@@ -30756,7 +31143,57 @@ components:
         pins:
           title: Search pins
           type: string
+        layout:
+          title: Widgets layout
+          type: string
+        sections:
+          title: Widgets layout
+          type: string
+        events:
+          $ref: '#/components/schemas/v1DashboardSpec'
+        histograms:
+          properties: {}
+          title: Optional histograms specification
+          type: object
+        trends:
+          properties: {}
+          title: Optional trends specification
+          type: object
+        analytics:
+          $ref: '#/components/schemas/v1AnalyticsSpec'
       title: Search spec definition
+      type: object
+    v1SectionSpec:
+      example:
+        is_minimized: true
+        columns: 1
+        name: name
+        widgets:
+        - '{}'
+        - '{}'
+        height: 5
+      properties:
+        name:
+          title: Section name
+          type: string
+        is_minimized:
+          title: Minimize
+          type: boolean
+        columns:
+          format: int32
+          title: Number of columns
+          type: integer
+        height:
+          format: int32
+          title: Height
+          type: integer
+        widgets:
+          items:
+            properties: {}
+            type: object
+          title: Section's widgets
+          type: array
+      title: Dashboard section definition
       type: object
     v1Service:
       example:
@@ -31670,7 +32107,7 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          replicas: 0
+          replicas: 4
           volumes:
           - null
           - null
@@ -31792,7 +32229,7 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          replicas: 0
+          replicas: 4
           volumes:
           - null
           - null
@@ -31913,7 +32350,7 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          replicas: 0
+          replicas: 4
           volumes:
           - null
           - null
@@ -32034,7 +32471,7 @@ components:
             schedulerName: schedulerName
             affinity: '{}'
             hostPID: hostPID
-          replicas: 0
+          replicas: 4
           volumes:
           - null
           - null

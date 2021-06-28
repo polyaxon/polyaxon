@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **tags** | **list[str]** |  | [optional] 
 **priority** | **int** |  | [optional] 
 **concurrency** | **int** |  | [optional] 
+**resource** | **str** |  | [optional] 
+**quota** | **str** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

@@ -56,7 +56,7 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
         params: Dict = None,
         context: Dict = None,
         is_template: bool = True,
-        check_runs: bool = False,
+        check_all_refs: bool = False,
         parse_values: bool = False,
         parse_joins: bool = True,
     ) -> List[ParamSpec]:
@@ -69,7 +69,7 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
             joins=self.joins if parse_joins else None,
             context=context,
             is_template=is_template,
-            check_runs=check_runs,
+            check_all_refs=check_all_refs,
             parse_values=parse_values,
         )
 
@@ -79,7 +79,7 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
             params=params,
             context=context,
             is_template=False,
-            check_runs=True,
+            check_all_refs=True,
             parse_values=True,
         )
         if not validated_params:

@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **tags** | **[String]** |  | [optional] 
 **priority** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
+**resource** | **String** |  | [optional] 
+**quota** | **String** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 

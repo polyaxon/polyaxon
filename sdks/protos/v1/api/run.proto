@@ -192,11 +192,14 @@ message Run {
     // Optional settings
     RunSettings settings = 33;
 
-    // Optional graph defintion
-    google.protobuf.Struct graph = 34;
+    // Options resources
+    RunResources resources = 34;
+
+    // Optional graph definition
+    google.protobuf.Struct graph = 35;
 
     // Optional merge flag
-    bool merge = 35;
+    bool merge = 36;
 }
 
 // Operation creation
@@ -269,6 +272,15 @@ message RunReferenceCatalog {
 
   // Name
   string version = 2;
+}
+
+// Run Resources specification
+message RunResources {
+  float cpu = 1;
+  float memory = 2;
+  float gpu = 3;
+  float custom = 4;
+  float cost = 5;
 }
 
 // Run Settings specification

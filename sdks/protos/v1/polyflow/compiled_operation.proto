@@ -104,6 +104,9 @@ message CompiledOperation {
     // Optional flag to mark this specification requires approval before running
     bool isApproved = 24;
 
+    // Optional field to assign cost to this Component
+    float cost = 25;
+
     // Run definition, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 25;
+    google.protobuf.Struct run = 26;
 }

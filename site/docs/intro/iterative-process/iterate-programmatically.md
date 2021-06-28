@@ -237,7 +237,7 @@ polyaxon run -pm path/to/typed_experiment.py:component -P epochs=10 -l
 
 You probably noticed that we passed the name of the variable `component` in `typed_experiment.py:component`.
 This is how we tell the CLI to execute that component by providing a variable name, by default the CLI looks for a component named `main` otherwise it raises an error. 
-So we need to pass a name to indicate to point to a specific variable, which is also useful if the Python module has more than one component.
+So we need to pass a name to point to a specific variable, which is also useful if the Python module has more than one component.
 
 For instance, if we have a Python file with 3 components:
 

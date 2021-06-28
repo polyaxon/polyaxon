@@ -46,6 +46,9 @@ type V1CompiledOperation struct {
 	// Optional outputs definition
 	Contexts []*V1IO `json:"contexts"`
 
+	// Optional field to assign cost to this Component
+	Cost float32 `json:"cost,omitempty"`
+
 	// Optional graph dependencies of this op
 	Dependencies []string `json:"dependencies"`
 

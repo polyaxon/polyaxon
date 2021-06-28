@@ -54,7 +54,7 @@ type V1Run struct {
 	// Format: date-time
 	FinishedAt strfmt.DateTime `json:"finished_at,omitempty"`
 
-	// Optional graph defintion
+	// Optional graph definition
 	Graph interface{} `json:"graph,omitempty"`
 
 	// Optional inputs of this entity
@@ -104,6 +104,9 @@ type V1Run struct {
 
 	// Markdown description/readme
 	Readme string `json:"readme,omitempty"`
+
+	// Options resources
+	Resources *V1RunResources `json:"resources,omitempty"`
 
 	// Current user's role in this (org/teams)/project/runs
 	Role string `json:"role,omitempty"`
@@ -170,6 +173,10 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validatePipeline(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateResources(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -291,6 +298,23 @@ func (m *V1Run) validatePipeline(formats strfmt.Registry) error {
 		if err := m.Pipeline.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pipeline")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateResources(formats strfmt.Registry) error {
+	if swag.IsZero(m.Resources) { // not required
+		return nil
+	}
+
+	if m.Resources != nil {
+		if err := m.Resources.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("resources")
 			}
 			return err
 		}
@@ -430,6 +454,10 @@ func (m *V1Run) ContextValidate(ctx context.Context, formats strfmt.Registry) er
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateResources(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateRuntime(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -500,6 +528,20 @@ func (m *V1Run) contextValidatePipeline(ctx context.Context, formats strfmt.Regi
 		if err := m.Pipeline.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pipeline")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) contextValidateResources(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Resources != nil {
+		if err := m.Resources.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("resources")
 			}
 			return err
 		}

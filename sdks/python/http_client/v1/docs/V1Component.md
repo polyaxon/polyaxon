@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **run** | [**object**](.md) |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
 **is_approved** | **bool** |  | [optional] 
+**cost** | **float** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

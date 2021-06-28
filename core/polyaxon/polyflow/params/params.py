@@ -49,6 +49,10 @@ class ParamValueMixin:
         raise NotImplementedError
 
     @property
+    def is_template_ref(self):
+        raise NotImplementedError
+
+    @property
     def is_join_ref(self):
         raise NotImplementedError
 
@@ -111,7 +115,7 @@ class ParamValueMixin:
             # value validation is the same for search and ref
             value_parts = PARAM_REGEX.search(self.value)
             if value_parts:
-                value_parts = value_parts.group(1)
+                value_parts = value_parts.group(1).strip()
             else:
                 value_parts = self.value
 
@@ -521,7 +525,7 @@ class ParamSpec(
         self,
         context: Optional[Dict],
         is_template: bool = False,
-        check_runs: bool = False,
+        check_all_refs: bool = False,
     ):
         """
         Given a param reference to an operation, we check that the operation exists in the context,
@@ -538,7 +542,11 @@ class ParamSpec(
                 )
             return
 
-        if is_template or (self.param.is_runs_ref and not check_runs):
+        if (
+            is_template
+            or self.param.is_template_ref
+            or (self.param.is_runs_ref and not check_all_refs)
+        ):
             return
 
         context = context or {}

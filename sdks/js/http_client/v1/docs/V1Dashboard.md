@@ -9,8 +9,7 @@ Name | Type | Description | Notes
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
 **live_state** | **Number** |  | [optional] 
-**view** | [**DashboardView**](DashboardView.md) |  | [optional] 
-**spec** | [**Object**](.md) |  | [optional] 
+**spec** | [**V1DashboardSpec**](V1DashboardSpec.md) |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 

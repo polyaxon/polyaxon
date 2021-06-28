@@ -120,11 +120,17 @@ message Queue {
     // The queue concurrency
     int32 concurrency = 7;
 
+    // Optional queue resource
+    string resource = 8;
+
+    // Optional queue quota
+    string quota = 9;
+
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 10;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 11;
 
 }
 

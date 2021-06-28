@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.9.4
+- API version: 1.10.0
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.9.4</version>
+  <version>1.10.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.9.4"
+compile "org.openapitools:openapi-java-client:1.10.0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.9.4.jar`
+* `target/openapi-java-client-1.10.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -219,6 +219,7 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**patchOrganizationInvitation**](docs/OrganizationsV1Api.md#patchOrganizationInvitation) | **PATCH** /api/v1/orgs/{owner}/invitations | Patch organization invitation
 *OrganizationsV1Api* | [**patchOrganizationMember**](docs/OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
 *OrganizationsV1Api* | [**patchOrganizationSettings**](docs/OrganizationsV1Api.md#patchOrganizationSettings) | **PATCH** /api/v1/orgs/{owner}/settings | Patch oranization settings
+*OrganizationsV1Api* | [**resendOrganizationInvitation**](docs/OrganizationsV1Api.md#resendOrganizationInvitation) | **POST** /api/v1/orgs/{owner}/invitations | Resend organization invitation
 *OrganizationsV1Api* | [**updateOrganization**](docs/OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | Update organization
 *OrganizationsV1Api* | [**updateOrganizationInvitation**](docs/OrganizationsV1Api.md#updateOrganizationInvitation) | **PUT** /api/v1/orgs/{owner}/invitations | Update organization invitation
 *OrganizationsV1Api* | [**updateOrganizationMember**](docs/OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Update organization member
@@ -370,15 +371,16 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [AgentStateResponseAgentState](docs/AgentStateResponseAgentState.md)
- - [DashboardView](docs/DashboardView.md)
  - [ProtobufAny](docs/ProtobufAny.md)
  - [ProtobufNullValue](docs/ProtobufNullValue.md)
  - [RuntimeError](docs/RuntimeError.md)
+ - [SearchView](docs/SearchView.md)
  - [SparkDeployMode](docs/SparkDeployMode.md)
  - [V1Activity](docs/V1Activity.md)
  - [V1Agent](docs/V1Agent.md)
  - [V1AgentStateResponse](docs/V1AgentStateResponse.md)
  - [V1AgentStatusBodyRequest](docs/V1AgentStatusBodyRequest.md)
+ - [V1AnalyticsSpec](docs/V1AnalyticsSpec.md)
  - [V1ArtifactKind](docs/V1ArtifactKind.md)
  - [V1ArtifactTree](docs/V1ArtifactTree.md)
  - [V1ArtifactsMount](docs/V1ArtifactsMount.md)
@@ -409,6 +411,7 @@ Class | Method | HTTP request | Description
  - [V1Dag](docs/V1Dag.md)
  - [V1DagRef](docs/V1DagRef.md)
  - [V1Dashboard](docs/V1Dashboard.md)
+ - [V1DashboardSpec](docs/V1DashboardSpec.md)
  - [V1Dask](docs/V1Dask.md)
  - [V1DateTimeSchedule](docs/V1DateTimeSchedule.md)
  - [V1DiffStoppingPolicy](docs/V1DiffStoppingPolicy.md)
@@ -546,6 +549,7 @@ Class | Method | HTTP request | Description
  - [V1RunKind](docs/V1RunKind.md)
  - [V1RunPending](docs/V1RunPending.md)
  - [V1RunReferenceCatalog](docs/V1RunReferenceCatalog.md)
+ - [V1RunResources](docs/V1RunResources.md)
  - [V1RunSchema](docs/V1RunSchema.md)
  - [V1RunSettings](docs/V1RunSettings.md)
  - [V1S3Type](docs/V1S3Type.md)
@@ -554,6 +558,7 @@ Class | Method | HTTP request | Description
  - [V1Schemas](docs/V1Schemas.md)
  - [V1Search](docs/V1Search.md)
  - [V1SearchSpec](docs/V1SearchSpec.md)
+ - [V1SectionSpec](docs/V1SectionSpec.md)
  - [V1Service](docs/V1Service.md)
  - [V1SettingsCatalog](docs/V1SettingsCatalog.md)
  - [V1Spark](docs/V1Spark.md)

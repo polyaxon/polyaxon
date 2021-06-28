@@ -39,6 +39,9 @@ type V1Component struct {
 	// Optional flag to disable cache validation and force run this component
 	Cache *V1Cache `json:"cache,omitempty"`
 
+	// Optional field to assign cost to this Component
+	Cost float32 `json:"cost,omitempty"`
+
 	// Optional component description
 	Description string `json:"description,omitempty"`
 
