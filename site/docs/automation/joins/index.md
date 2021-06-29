@@ -25,8 +25,8 @@ Joins in Polyaxon allow to filter, aggregate, and annotate inputs/outputs/artifa
 
 ## Use cases
 
-Using joins, users can dynamically initialize operations based on the inputs, outputs, and artifacts of runs based on a search specification.
-
- * Generate automatic reports based on query.
+Using joins users can:
+ * Dynamically initialize operations based on the inputs, outputs, and artifacts of runs based on a search specification.
+ * Generate automatic reports based on a query.
  * Start a tensorboard based on the top performing experiments in a project or a hyperparameter tuning pipeline.
- * Derive some analytics based on runs meeting some specific conditions or accessing some specific connection. 
+ * Derive some analytics based on runs meeting some specific conditions or accessing some specific condition. 

@@ -51,8 +51,6 @@ public enum V1Statuses {
   
   COMPILED("compiled"),
   
-  AWAITING_CACHE("awaiting_cache"),
-  
   QUEUED("queued"),
   
   SCHEDULED("scheduled"),

@@ -1,6 +1,6 @@
 [![License: Apache 2](https://img.shields.io/badge/License-apache2-blue.svg?style=flat&longCache=true)](LICENSE)
 [![Polyaxon API](https://img.shields.io/docker/pulls/polyaxon/polyaxon-api)](https://hub.docker.com/r/polyaxon/polyaxon-api)
-[![Slack](https://img.shields.io/badge/Slack-1.2k%20members-blue.svg?style=flat&logo=slack&longCache=true)](https://polyaxon.com/slack/)
+[![Slack](https://img.shields.io/badge/Slack-1.3k%20members-blue.svg?style=flat&logo=slack&longCache=true)](https://polyaxon.com/slack/)
 
 [![Docs](https://img.shields.io/badge/docs-stable-brightgreen.svg?style=flat&longCache=true)](https://polyaxon.com/docs/)
 [![Release](https://img.shields.io/badge/release-v1.10.0-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/v1.10.0)

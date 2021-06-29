@@ -30,7 +30,7 @@ class Entity:
 
 class TestStatusesTransition(BaseTestCase):
     def test_values(self):
-        assert len(V1Statuses.allowable_values) == 21
+        assert len(V1Statuses.allowable_values) == 20
 
     def test_warning_statuses(self):
         assert LifeCycle.WARNING_VALUES == {

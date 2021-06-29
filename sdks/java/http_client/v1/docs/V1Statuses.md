@@ -13,8 +13,6 @@
 
 * `COMPILED` (value: `"compiled"`)
 
-* `AWAITING_CACHE` (value: `"awaiting_cache"`)
-
 * `QUEUED` (value: `"queued"`)
 
 * `SCHEDULED` (value: `"scheduled"`)

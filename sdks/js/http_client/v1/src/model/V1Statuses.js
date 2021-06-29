@@ -62,13 +62,6 @@ export default class V1Statuses {
 
     
         /**
-         * value: "awaiting_cache"
-         * @const
-         */
-        "awaiting_cache" = "awaiting_cache";
-
-    
-        /**
          * value: "queued"
          * @const
          */

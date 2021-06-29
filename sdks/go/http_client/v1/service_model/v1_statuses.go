@@ -52,9 +52,6 @@ const (
 	// V1StatusesCompiled captures enum value "compiled"
 	V1StatusesCompiled V1Statuses = "compiled"
 
-	// V1StatusesAwaitingCache captures enum value "awaiting_cache"
-	V1StatusesAwaitingCache V1Statuses = "awaiting_cache"
-
 	// V1StatusesQueued captures enum value "queued"
 	V1StatusesQueued V1Statuses = "queued"
 
@@ -109,7 +106,7 @@ var v1StatusesEnum []interface{}
 
 func init() {
 	var res []V1Statuses
-	if err := json.Unmarshal([]byte(`["created","resuming","on_schedule","compiled","awaiting_cache","queued","scheduled","starting","running","processing","stopping","failed","stopped","succeeded","skipped","warning","unschedulable","upstream_failed","retrying","unknown","done"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["created","resuming","on_schedule","compiled","queued","scheduled","starting","running","processing","stopping","failed","stopped","succeeded","skipped","warning","unschedulable","upstream_failed","retrying","unknown","done"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

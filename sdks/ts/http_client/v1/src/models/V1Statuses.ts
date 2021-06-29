@@ -36,7 +36,6 @@ export enum V1Statuses {
     Resuming = 'resuming',
     OnSchedule = 'on_schedule',
     Compiled = 'compiled',
-    AwaitingCache = 'awaiting_cache',
     Queued = 'queued',
     Scheduled = 'scheduled',
     Starting = 'starting',

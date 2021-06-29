@@ -10323,7 +10323,6 @@
         "resuming",
         "on_schedule",
         "compiled",
-        "awaiting_cache",
         "queued",
         "scheduled",
         "starting",
