@@ -26,7 +26,7 @@ spec:
 {{ include "config.labels.roles.coreWorker" . | indent 8 }}
     spec:
 {{ include "securityContext" . | indent 6 }}
-{{ include "config.scheduling" . | indent 6 }}
+{{ include "config.celeryScheduling" . | indent 6 }}
 {{ include "config.imagePullSecrets" . | indent 6}}
       containers:
       - name: {{ .Chart.Name }}-beat

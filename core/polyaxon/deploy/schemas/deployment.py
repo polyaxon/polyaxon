@@ -222,6 +222,9 @@ class DeploymentSchema(BaseCamelSchema):
     node_selector = fields.Dict(allow_none=True)
     tolerations = fields.List(fields.Dict(allow_none=True), allow_none=True)
     affinity = fields.Dict(allow_none=True)
+    celery_node_selector = fields.Dict(allow_none=True)
+    celery_tolerations = fields.List(fields.Dict(allow_none=True), allow_none=True)
+    celery_affinity = fields.Dict(allow_none=True)
     limit_resources = fields.Bool(allow_none=True)
     global_replicas = fields.Int(allow_none=True)
     global_concurrency = fields.Int(allow_none=True)
@@ -351,6 +354,9 @@ class DeploymentConfig(BaseConfig):
         node_selector=None,
         tolerations=None,
         affinity=None,
+        celery_node_selector=None,
+        celery_tolerations=None,
+        celery_affinity=None,
         limit_resources=None,
         global_replicas=None,
         global_concurrency=None,
@@ -434,6 +440,9 @@ class DeploymentConfig(BaseConfig):
         self.node_selector = node_selector
         self.tolerations = tolerations
         self.affinity = affinity
+        self.celery_node_selector = celery_node_selector
+        self.celery_tolerations = celery_tolerations
+        self.celery_affinity = celery_affinity
         self.limit_resources = limit_resources
         self.global_replicas = global_replicas
         self.global_concurrency = global_concurrency
