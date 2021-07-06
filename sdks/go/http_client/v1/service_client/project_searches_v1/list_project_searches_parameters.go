@@ -84,7 +84,7 @@ type ListProjectSearchesParams struct {
 
 	/* Mode.
 
-	   Mode the search.
+	   Mode of the search.
 	*/
 	Mode *string
 
@@ -93,6 +93,12 @@ type ListProjectSearchesParams struct {
 	   Entity managing the resource
 	*/
 	Name string
+
+	/* NoPage.
+
+	   No pagination.
+	*/
+	NoPage *bool
 
 	/* Offset.
 
@@ -206,6 +212,17 @@ func (o *ListProjectSearchesParams) SetName(name string) {
 	o.Name = name
 }
 
+// WithNoPage adds the noPage to the list project searches params
+func (o *ListProjectSearchesParams) WithNoPage(noPage *bool) *ListProjectSearchesParams {
+	o.SetNoPage(noPage)
+	return o
+}
+
+// SetNoPage adds the noPage to the list project searches params
+func (o *ListProjectSearchesParams) SetNoPage(noPage *bool) {
+	o.NoPage = noPage
+}
+
 // WithOffset adds the offset to the list project searches params
 func (o *ListProjectSearchesParams) WithOffset(offset *int32) *ListProjectSearchesParams {
 	o.SetOffset(offset)
@@ -295,6 +312,23 @@ func (o *ListProjectSearchesParams) WriteToRequest(r runtime.ClientRequest, reg 
 	// path param name
 	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
+	}
+
+	if o.NoPage != nil {
+
+		// query param no_page
+		var qrNoPage bool
+
+		if o.NoPage != nil {
+			qrNoPage = *o.NoPage
+		}
+		qNoPage := swag.FormatBool(qrNoPage)
+		if qNoPage != "" {
+
+			if err := r.SetQueryParam("no_page", qNoPage); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Offset != nil {

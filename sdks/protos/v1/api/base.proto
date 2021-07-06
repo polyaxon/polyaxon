@@ -145,6 +145,9 @@ message ResourceListRequest {
 
   // Query filter the search
   string query = 4;
+
+  // No pagination
+  bool no_page = 5;
 }
 
 // Request list data with user namespace
@@ -163,6 +166,9 @@ message UserResourceListRequest {
 
     // Query filter the search
     string query = 5;
+
+    // No pagination
+    bool no_page = 6;
 }
 
 // Request list data with owner namespace
@@ -181,6 +187,9 @@ message OwnerResourceListRequest {
 
     // Query filter the search
     string query = 5;
+
+    // No pagination
+    bool no_page = 6;
 }
 
 
@@ -234,8 +243,11 @@ message OwnerEntityResourceListRequestByName {
     // Query filter the search
     string query = 6;
 
-    // Mode the search
+    // Mode of the search
     string mode = 7;
+
+    // No pagination
+    bool no_page = 8;
 }
 
 // Request stats with owner/entity namespace
@@ -293,6 +305,9 @@ message OwnerSubEntityResourceListRequestByUid {
 
      // Query filter the search
     string query = 7;
+
+    // No pagination
+    bool no_page = 8;
 }
 
 // Request list data with owner/project/entity namespace
@@ -317,6 +332,9 @@ message OwnerSubEntityResourceListRequestByName {
 
    // Query filter the search
   string query = 7;
+
+  // No pagination
+  bool no_page = 8;
 }
 
 // Request stats with owner/project/entity namespace

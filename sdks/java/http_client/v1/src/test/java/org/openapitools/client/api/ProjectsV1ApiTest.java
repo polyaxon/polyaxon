@@ -188,7 +188,8 @@ public class ProjectsV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListActivitiesResponse response = api.getProjectActivities(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListActivitiesResponse response = api.getProjectActivities(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -250,7 +251,8 @@ public class ProjectsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listArchivedProjects(user, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListProjectsResponse response = api.listArchivedProjects(user, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -270,7 +272,8 @@ public class ProjectsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListBookmarksResponse response = api.listBookmarkedProjects(user, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListBookmarksResponse response = api.listBookmarkedProjects(user, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -290,7 +293,8 @@ public class ProjectsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listProjectNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListProjectsResponse response = api.listProjectNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -310,7 +314,8 @@ public class ProjectsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listProjects(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListProjectsResponse response = api.listProjects(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

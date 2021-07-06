@@ -66,6 +66,7 @@ export interface ListProjectSearchNamesRequest {
     sort?: string;
     query?: string;
     mode?: string;
+    noPage?: boolean;
 }
 
 export interface ListProjectSearchesRequest {
@@ -76,6 +77,7 @@ export interface ListProjectSearchesRequest {
     sort?: string;
     query?: string;
     mode?: string;
+    noPage?: boolean;
 }
 
 export interface PatchProjectSearchRequest {
@@ -265,6 +267,10 @@ export class ProjectSearchesV1Api extends runtime.BaseAPI {
             queryParameters['mode'] = requestParameters.mode;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -321,6 +327,10 @@ export class ProjectSearchesV1Api extends runtime.BaseAPI {
 
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

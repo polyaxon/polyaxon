@@ -84,7 +84,7 @@ type GetRunsArtifactsLineageParams struct {
 
 	/* Mode.
 
-	   Mode the search.
+	   Mode of the search.
 	*/
 	Mode *string
 
@@ -93,6 +93,12 @@ type GetRunsArtifactsLineageParams struct {
 	   Entity managing the resource
 	*/
 	Name string
+
+	/* NoPage.
+
+	   No pagination.
+	*/
+	NoPage *bool
 
 	/* Offset.
 
@@ -206,6 +212,17 @@ func (o *GetRunsArtifactsLineageParams) SetName(name string) {
 	o.Name = name
 }
 
+// WithNoPage adds the noPage to the get runs artifacts lineage params
+func (o *GetRunsArtifactsLineageParams) WithNoPage(noPage *bool) *GetRunsArtifactsLineageParams {
+	o.SetNoPage(noPage)
+	return o
+}
+
+// SetNoPage adds the noPage to the get runs artifacts lineage params
+func (o *GetRunsArtifactsLineageParams) SetNoPage(noPage *bool) {
+	o.NoPage = noPage
+}
+
 // WithOffset adds the offset to the get runs artifacts lineage params
 func (o *GetRunsArtifactsLineageParams) WithOffset(offset *int32) *GetRunsArtifactsLineageParams {
 	o.SetOffset(offset)
@@ -295,6 +312,23 @@ func (o *GetRunsArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest, 
 	// path param name
 	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
+	}
+
+	if o.NoPage != nil {
+
+		// query param no_page
+		var qrNoPage bool
+
+		if o.NoPage != nil {
+			qrNoPage = *o.NoPage
+		}
+		qNoPage := swag.FormatBool(qrNoPage)
+		if qNoPage != "" {
+
+			if err := r.SetQueryParam("no_page", qNoPage); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Offset != nil {

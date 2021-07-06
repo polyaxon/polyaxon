@@ -1760,7 +1760,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifacts_lineage**
-> V1ListRunArtifactsResponse get_run_artifacts_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunArtifactsResponse get_run_artifacts_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 Get run artifacts lineage
 
@@ -1805,10 +1805,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # Get run artifacts lineage
-        api_response = api_instance.get_run_artifacts_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.get_run_artifacts_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_artifacts_lineage: %s\n" % e)
@@ -1825,6 +1826,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -1851,7 +1853,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifacts_lineage_names**
-> V1ListRunArtifactsResponse get_run_artifacts_lineage_names(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunArtifactsResponse get_run_artifacts_lineage_names(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 Get run artifacts lineage names
 
@@ -1896,10 +1898,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # Get run artifacts lineage names
-        api_response = api_instance.get_run_artifacts_lineage_names(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.get_run_artifacts_lineage_names(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_artifacts_lineage_names: %s\n" % e)
@@ -1916,6 +1919,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -2029,7 +2033,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_clones_lineage**
-> V1ListRunsResponse get_run_clones_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunsResponse get_run_clones_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 Get run clones lineage
 
@@ -2074,10 +2078,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # Get run clones lineage
-        api_response = api_instance.get_run_clones_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.get_run_clones_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_clones_lineage: %s\n" % e)
@@ -2094,6 +2099,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -2120,7 +2126,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_connections_lineage**
-> V1ListRunConnectionsResponse get_run_connections_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunConnectionsResponse get_run_connections_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 Get run connections lineage
 
@@ -2165,10 +2171,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # Get run connections lineage
-        api_response = api_instance.get_run_connections_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.get_run_connections_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_connections_lineage: %s\n" % e)
@@ -2185,6 +2192,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -2211,7 +2219,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_downstream_lineage**
-> V1ListRunEdgesResponse get_run_downstream_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunEdgesResponse get_run_downstream_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 Get run downstream lineage
 
@@ -2256,10 +2264,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # Get run downstream lineage
-        api_response = api_instance.get_run_downstream_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.get_run_downstream_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_downstream_lineage: %s\n" % e)
@@ -2276,6 +2285,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -2925,7 +2935,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_upstream_lineage**
-> V1ListRunEdgesResponse get_run_upstream_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunEdgesResponse get_run_upstream_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 Get run upstream lineage
 
@@ -2970,10 +2980,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # Get run upstream lineage
-        api_response = api_instance.get_run_upstream_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.get_run_upstream_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_upstream_lineage: %s\n" % e)
@@ -2990,6 +3001,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -3016,7 +3028,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_runs_artifacts_lineage**
-> V1ListRunArtifactsResponse get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+> V1ListRunArtifactsResponse get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
 
 Get runs artifacts lineage
 
@@ -3060,11 +3072,12 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
-mode = 'mode_example' # str | Mode the search. (optional)
+mode = 'mode_example' # str | Mode of the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # Get runs artifacts lineage
-        api_response = api_instance.get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+        api_response = api_instance.get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_runs_artifacts_lineage: %s\n" % e)
@@ -3080,7 +3093,8 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
- **mode** | **str**| Mode the search. | [optional] 
+ **mode** | **str**| Mode of the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -3354,7 +3368,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_archived_runs**
-> V1ListRunsResponse list_archived_runs(user, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListRunsResponse list_archived_runs(user, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 List archived runs for user
 
@@ -3397,10 +3411,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # List archived runs for user
-        api_response = api_instance.list_archived_runs(user, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_archived_runs(user, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->list_archived_runs: %s\n" % e)
@@ -3415,6 +3430,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -3441,7 +3457,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_bookmarked_runs**
-> V1ListBookmarksResponse list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListBookmarksResponse list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 List bookmarked runs for user
 
@@ -3484,10 +3500,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # List bookmarked runs for user
-        api_response = api_instance.list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->list_bookmarked_runs: %s\n" % e)
@@ -3502,6 +3519,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -3528,7 +3546,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runs**
-> V1ListRunsResponse list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+> V1ListRunsResponse list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
 
 List runs
 
@@ -3572,11 +3590,12 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
-mode = 'mode_example' # str | Mode the search. (optional)
+mode = 'mode_example' # str | Mode of the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # List runs
-        api_response = api_instance.list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+        api_response = api_instance.list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->list_runs: %s\n" % e)
@@ -3592,7 +3611,8 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
- **mode** | **str**| Mode the search. | [optional] 
+ **mode** | **str**| Mode of the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 

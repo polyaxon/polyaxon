@@ -475,7 +475,8 @@ export default class ComponentHubV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
-     * @param {String} opts.mode Mode the search.
+     * @param {String} opts.mode Mode of the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ComponentHubV1Api~getComponentHubActivitiesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListActivitiesResponse}
      */
@@ -500,7 +501,8 @@ export default class ComponentHubV1Api {
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],
-        'mode': opts['mode']
+        'mode': opts['mode'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -690,6 +692,7 @@ export default class ComponentHubV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ComponentHubV1Api~listComponentHubNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListComponentHubsResponse}
      */
@@ -708,7 +711,8 @@ export default class ComponentHubV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -742,6 +746,7 @@ export default class ComponentHubV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ComponentHubV1Api~listComponentHubsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListComponentHubsResponse}
      */
@@ -760,7 +765,8 @@ export default class ComponentHubV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -795,7 +801,8 @@ export default class ComponentHubV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
-     * @param {String} opts.mode Mode the search.
+     * @param {String} opts.mode Mode of the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ComponentHubV1Api~listComponentVersionNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListComponentVersionsResponse}
      */
@@ -820,7 +827,8 @@ export default class ComponentHubV1Api {
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],
-        'mode': opts['mode']
+        'mode': opts['mode'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -855,7 +863,8 @@ export default class ComponentHubV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
-     * @param {String} opts.mode Mode the search.
+     * @param {String} opts.mode Mode of the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ComponentHubV1Api~listComponentVersionsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListComponentVersionsResponse}
      */
@@ -880,7 +889,8 @@ export default class ComponentHubV1Api {
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],
-        'mode': opts['mode']
+        'mode': opts['mode'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };

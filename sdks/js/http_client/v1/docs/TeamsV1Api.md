@@ -359,7 +359,8 @@ let opts = {
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
-  'mode': "mode_example" // String | Mode the search.
+  'mode': "mode_example", // String | Mode of the search.
+  'no_page': true // Boolean | No pagination.
 };
 apiInstance.listTeamMembers(owner, name, opts, (error, data, response) => {
   if (error) {
@@ -381,7 +382,8 @@ Name | Type | Description  | Notes
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
- **mode** | **String**| Mode the search. | [optional] 
+ **mode** | **String**| Mode of the search. | [optional] 
+ **no_page** | **Boolean**| No pagination. | [optional] 
 
 ### Return type
 
@@ -420,7 +422,8 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search.
+  'query': "query_example", // String | Query filter the search.
+  'no_page': true // Boolean | No pagination.
 };
 apiInstance.listTeamNames(owner, opts, (error, data, response) => {
   if (error) {
@@ -441,6 +444,7 @@ Name | Type | Description  | Notes
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
+ **no_page** | **Boolean**| No pagination. | [optional] 
 
 ### Return type
 
@@ -479,7 +483,8 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search.
+  'query': "query_example", // String | Query filter the search.
+  'no_page': true // Boolean | No pagination.
 };
 apiInstance.listTeams(owner, opts, (error, data, response) => {
   if (error) {
@@ -500,6 +505,7 @@ Name | Type | Description  | Notes
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
+ **no_page** | **Boolean**| No pagination. | [optional] 
 
 ### Return type
 

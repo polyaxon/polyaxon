@@ -247,6 +247,7 @@ export interface GetRunArtifactsLineageRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface GetRunArtifactsLineageNamesRequest {
@@ -257,6 +258,7 @@ export interface GetRunArtifactsLineageNamesRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface GetRunArtifactsTreeRequest {
@@ -275,6 +277,7 @@ export interface GetRunClonesLineageRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface GetRunConnectionsLineageRequest {
@@ -285,6 +288,7 @@ export interface GetRunConnectionsLineageRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface GetRunDownstreamLineageRequest {
@@ -295,6 +299,7 @@ export interface GetRunDownstreamLineageRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface GetRunEventsRequest {
@@ -368,6 +373,7 @@ export interface GetRunUpstreamLineageRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface GetRunsArtifactsLineageRequest {
@@ -378,6 +384,7 @@ export interface GetRunsArtifactsLineageRequest {
     sort?: string;
     query?: string;
     mode?: string;
+    noPage?: boolean;
 }
 
 export interface ImpersonateTokenRequest {
@@ -404,6 +411,7 @@ export interface ListArchivedRunsRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListBookmarkedRunsRequest {
@@ -412,6 +420,7 @@ export interface ListBookmarkedRunsRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListRunsRequest {
@@ -422,6 +431,7 @@ export interface ListRunsRequest {
     sort?: string;
     query?: string;
     mode?: string;
+    noPage?: boolean;
 }
 
 export interface NotifyRunStatusRequest {
@@ -1515,6 +1525,10 @@ export class RunsV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -1571,6 +1585,10 @@ export class RunsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.query !== undefined) {
             queryParameters['query'] = requestParameters.query;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1681,6 +1699,10 @@ export class RunsV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -1739,6 +1761,10 @@ export class RunsV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -1795,6 +1821,10 @@ export class RunsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.query !== undefined) {
             queryParameters['query'] = requestParameters.query;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2233,6 +2263,10 @@ export class RunsV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -2289,6 +2323,10 @@ export class RunsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2468,6 +2506,10 @@ export class RunsV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -2516,6 +2558,10 @@ export class RunsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.query !== undefined) {
             queryParameters['query'] = requestParameters.query;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2574,6 +2620,10 @@ export class RunsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

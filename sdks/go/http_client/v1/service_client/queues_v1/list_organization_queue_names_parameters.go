@@ -82,6 +82,12 @@ type ListOrganizationQueueNamesParams struct {
 	*/
 	Limit *int32
 
+	/* NoPage.
+
+	   No pagination.
+	*/
+	NoPage *bool
+
 	/* Offset.
 
 	   Pagination offset.
@@ -172,6 +178,17 @@ func (o *ListOrganizationQueueNamesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithNoPage adds the noPage to the list organization queue names params
+func (o *ListOrganizationQueueNamesParams) WithNoPage(noPage *bool) *ListOrganizationQueueNamesParams {
+	o.SetNoPage(noPage)
+	return o
+}
+
+// SetNoPage adds the noPage to the list organization queue names params
+func (o *ListOrganizationQueueNamesParams) SetNoPage(noPage *bool) {
+	o.NoPage = noPage
+}
+
 // WithOffset adds the offset to the list organization queue names params
 func (o *ListOrganizationQueueNamesParams) WithOffset(offset *int32) *ListOrganizationQueueNamesParams {
 	o.SetOffset(offset)
@@ -236,6 +253,23 @@ func (o *ListOrganizationQueueNamesParams) WriteToRequest(r runtime.ClientReques
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NoPage != nil {
+
+		// query param no_page
+		var qrNoPage bool
+
+		if o.NoPage != nil {
+			qrNoPage = *o.NoPage
+		}
+		qNoPage := swag.FormatBool(qrNoPage)
+		if qNoPage != "" {
+
+			if err := r.SetQueryParam("no_page", qNoPage); err != nil {
 				return err
 			}
 		}

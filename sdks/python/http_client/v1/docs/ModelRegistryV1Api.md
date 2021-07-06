@@ -684,7 +684,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_model_registry_activities**
-> V1ListActivitiesResponse get_model_registry_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+> V1ListActivitiesResponse get_model_registry_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
 
 Get model activities
 
@@ -728,11 +728,12 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
-mode = 'mode_example' # str | Mode the search. (optional)
+mode = 'mode_example' # str | Mode of the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # Get model activities
-        api_response = api_instance.get_model_registry_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+        api_response = api_instance.get_model_registry_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->get_model_registry_activities: %s\n" % e)
@@ -748,7 +749,8 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
- **mode** | **str**| Mode the search. | [optional] 
+ **mode** | **str**| Mode of the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -1022,7 +1024,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_model_registries**
-> V1ListModelRegistriesResponse list_model_registries(owner, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListModelRegistriesResponse list_model_registries(owner, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 List registry models
 
@@ -1065,10 +1067,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # List registry models
-        api_response = api_instance.list_model_registries(owner, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_model_registries(owner, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->list_model_registries: %s\n" % e)
@@ -1083,6 +1086,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -1109,7 +1113,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_model_registry_names**
-> V1ListModelRegistriesResponse list_model_registry_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListModelRegistriesResponse list_model_registry_names(owner, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
 
 List registry model names
 
@@ -1152,10 +1156,11 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # List registry model names
-        api_response = api_instance.list_model_registry_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_model_registry_names(owner, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->list_model_registry_names: %s\n" % e)
@@ -1170,6 +1175,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -1196,7 +1202,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_model_version_names**
-> V1ListModelVersionsResponse list_model_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+> V1ListModelVersionsResponse list_model_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
 
 List model versions names
 
@@ -1240,11 +1246,12 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
-mode = 'mode_example' # str | Mode the search. (optional)
+mode = 'mode_example' # str | Mode of the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # List model versions names
-        api_response = api_instance.list_model_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+        api_response = api_instance.list_model_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->list_model_version_names: %s\n" % e)
@@ -1260,7 +1267,8 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
- **mode** | **str**| Mode the search. | [optional] 
+ **mode** | **str**| Mode of the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
@@ -1287,7 +1295,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_model_versions**
-> V1ListModelVersionsResponse list_model_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+> V1ListModelVersionsResponse list_model_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
 
 List model versions
 
@@ -1331,11 +1339,12 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
-mode = 'mode_example' # str | Mode the search. (optional)
+mode = 'mode_example' # str | Mode of the search. (optional)
+no_page = True # bool | No pagination. (optional)
 
     try:
         # List model versions
-        api_response = api_instance.list_model_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode)
+        api_response = api_instance.list_model_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->list_model_versions: %s\n" % e)
@@ -1351,7 +1360,8 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
- **mode** | **str**| Mode the search. | [optional] 
+ **mode** | **str**| Mode of the search. | [optional] 
+ **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 

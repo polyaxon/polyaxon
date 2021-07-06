@@ -114,7 +114,8 @@ public class DashboardsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListDashboardsResponse response = api.listDashboardNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListDashboardsResponse response = api.listDashboardNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -134,7 +135,8 @@ public class DashboardsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListDashboardsResponse response = api.listDashboards(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListDashboardsResponse response = api.listDashboards(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

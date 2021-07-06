@@ -422,6 +422,7 @@ export default class AgentsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/AgentsV1Api~listAgentNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListAgentsResponse}
      */
@@ -440,7 +441,8 @@ export default class AgentsV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -474,6 +476,7 @@ export default class AgentsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/AgentsV1Api~listAgentsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListAgentsResponse}
      */
@@ -492,7 +495,8 @@ export default class AgentsV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };

@@ -1068,6 +1068,7 @@ public class AgentsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1081,7 +1082,7 @@ public class AgentsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listAgentNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listAgentNamesCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1106,6 +1107,10 @@ public class AgentsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -1128,7 +1133,7 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listAgentNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listAgentNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1136,7 +1141,7 @@ public class AgentsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listAgentNamesCall(owner, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = listAgentNamesCall(owner, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -1149,6 +1154,7 @@ public class AgentsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListAgentsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1161,8 +1167,8 @@ public class AgentsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListAgentsResponse listAgentNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListAgentsResponse> localVarResp = listAgentNamesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListAgentsResponse listAgentNames(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListAgentsResponse> localVarResp = listAgentNamesWithHttpInfo(owner, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -1174,6 +1180,7 @@ public class AgentsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListAgentsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1186,8 +1193,8 @@ public class AgentsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListAgentsResponse> listAgentNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = listAgentNamesValidateBeforeCall(owner, offset, limit, sort, query, null);
+    public ApiResponse<V1ListAgentsResponse> listAgentNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listAgentNamesValidateBeforeCall(owner, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListAgentsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1200,6 +1207,7 @@ public class AgentsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1213,9 +1221,9 @@ public class AgentsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listAgentNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAgentsResponse> _callback) throws ApiException {
+    public okhttp3.Call listAgentNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListAgentsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listAgentNamesValidateBeforeCall(owner, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = listAgentNamesValidateBeforeCall(owner, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListAgentsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1227,6 +1235,7 @@ public class AgentsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1240,7 +1249,7 @@ public class AgentsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listAgentsCall(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listAgentsCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1265,6 +1274,10 @@ public class AgentsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -1287,7 +1300,7 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listAgentsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listAgentsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1295,7 +1308,7 @@ public class AgentsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listAgentsCall(owner, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = listAgentsCall(owner, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -1308,6 +1321,7 @@ public class AgentsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListAgentsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1320,8 +1334,8 @@ public class AgentsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListAgentsResponse listAgents(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListAgentsResponse> localVarResp = listAgentsWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListAgentsResponse listAgents(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListAgentsResponse> localVarResp = listAgentsWithHttpInfo(owner, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -1333,6 +1347,7 @@ public class AgentsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListAgentsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1345,8 +1360,8 @@ public class AgentsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListAgentsResponse> listAgentsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = listAgentsValidateBeforeCall(owner, offset, limit, sort, query, null);
+    public ApiResponse<V1ListAgentsResponse> listAgentsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listAgentsValidateBeforeCall(owner, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListAgentsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1359,6 +1374,7 @@ public class AgentsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1372,9 +1388,9 @@ public class AgentsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listAgentsAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAgentsResponse> _callback) throws ApiException {
+    public okhttp3.Call listAgentsAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListAgentsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listAgentsValidateBeforeCall(owner, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = listAgentsValidateBeforeCall(owner, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListAgentsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

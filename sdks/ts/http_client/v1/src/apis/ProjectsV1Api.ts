@@ -92,6 +92,7 @@ export interface GetProjectActivitiesRequest {
     sort?: string;
     query?: string;
     mode?: string;
+    noPage?: boolean;
 }
 
 export interface GetProjectSettingsRequest {
@@ -118,6 +119,7 @@ export interface ListArchivedProjectsRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListBookmarkedProjectsRequest {
@@ -126,6 +128,7 @@ export interface ListBookmarkedProjectsRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListProjectNamesRequest {
@@ -134,6 +137,7 @@ export interface ListProjectNamesRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListProjectsRequest {
@@ -142,6 +146,7 @@ export interface ListProjectsRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface PatchProjectRequest {
@@ -490,6 +495,10 @@ export class ProjectsV1Api extends runtime.BaseAPI {
             queryParameters['mode'] = requestParameters.mode;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -648,6 +657,10 @@ export class ProjectsV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -696,6 +709,10 @@ export class ProjectsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.query !== undefined) {
             queryParameters['query'] = requestParameters.query;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -748,6 +765,10 @@ export class ProjectsV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -796,6 +817,10 @@ export class ProjectsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.query !== undefined) {
             queryParameters['query'] = requestParameters.query;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

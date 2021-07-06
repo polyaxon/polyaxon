@@ -63,6 +63,7 @@ export interface ListPresetNamesRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListPresetsRequest {
@@ -71,6 +72,7 @@ export interface ListPresetsRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface PatchPresetRequest {
@@ -240,6 +242,10 @@ export class PresetsV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -288,6 +294,10 @@ export class PresetsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.query !== undefined) {
             queryParameters['query'] = requestParameters.query;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

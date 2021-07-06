@@ -117,7 +117,8 @@ public class QueuesV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListQueuesResponse response = api.listOrganizationQueueNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListQueuesResponse response = api.listOrganizationQueueNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -137,7 +138,8 @@ public class QueuesV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListQueuesResponse response = api.listOrganizationQueues(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListQueuesResponse response = api.listOrganizationQueues(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -159,7 +161,8 @@ public class QueuesV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListQueuesResponse response = api.listQueueNames(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListQueuesResponse response = api.listQueueNames(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -181,7 +184,8 @@ public class QueuesV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListQueuesResponse response = api.listQueues(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListQueuesResponse response = api.listQueues(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }

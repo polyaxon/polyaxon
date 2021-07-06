@@ -621,7 +621,7 @@ Name | Type | Description  | Notes
 
 <a name="getModelRegistryActivities"></a>
 # **getModelRegistryActivities**
-> V1ListActivitiesResponse getModelRegistryActivities(owner, name, offset, limit, sort, query, mode)
+> V1ListActivitiesResponse getModelRegistryActivities(owner, name, offset, limit, sort, query, mode, noPage)
 
 Get model activities
 
@@ -653,9 +653,10 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
-    String mode = "mode_example"; // String | Mode the search.
+    String mode = "mode_example"; // String | Mode of the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListActivitiesResponse result = apiInstance.getModelRegistryActivities(owner, name, offset, limit, sort, query, mode);
+      V1ListActivitiesResponse result = apiInstance.getModelRegistryActivities(owner, name, offset, limit, sort, query, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ModelRegistryV1Api#getModelRegistryActivities");
@@ -678,7 +679,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
- **mode** | **String**| Mode the search. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -927,7 +929,7 @@ Name | Type | Description  | Notes
 
 <a name="listModelRegistries"></a>
 # **listModelRegistries**
-> V1ListModelRegistriesResponse listModelRegistries(owner, offset, limit, sort, query)
+> V1ListModelRegistriesResponse listModelRegistries(owner, offset, limit, sort, query, noPage)
 
 List registry models
 
@@ -958,8 +960,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListModelRegistriesResponse result = apiInstance.listModelRegistries(owner, offset, limit, sort, query);
+      V1ListModelRegistriesResponse result = apiInstance.listModelRegistries(owner, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ModelRegistryV1Api#listModelRegistries");
@@ -981,6 +984,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -1006,7 +1010,7 @@ Name | Type | Description  | Notes
 
 <a name="listModelRegistryNames"></a>
 # **listModelRegistryNames**
-> V1ListModelRegistriesResponse listModelRegistryNames(owner, offset, limit, sort, query)
+> V1ListModelRegistriesResponse listModelRegistryNames(owner, offset, limit, sort, query, noPage)
 
 List registry model names
 
@@ -1037,8 +1041,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListModelRegistriesResponse result = apiInstance.listModelRegistryNames(owner, offset, limit, sort, query);
+      V1ListModelRegistriesResponse result = apiInstance.listModelRegistryNames(owner, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ModelRegistryV1Api#listModelRegistryNames");
@@ -1060,6 +1065,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -1085,7 +1091,7 @@ Name | Type | Description  | Notes
 
 <a name="listModelVersionNames"></a>
 # **listModelVersionNames**
-> V1ListModelVersionsResponse listModelVersionNames(owner, name, offset, limit, sort, query, mode)
+> V1ListModelVersionsResponse listModelVersionNames(owner, name, offset, limit, sort, query, mode, noPage)
 
 List model versions names
 
@@ -1117,9 +1123,10 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
-    String mode = "mode_example"; // String | Mode the search.
+    String mode = "mode_example"; // String | Mode of the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListModelVersionsResponse result = apiInstance.listModelVersionNames(owner, name, offset, limit, sort, query, mode);
+      V1ListModelVersionsResponse result = apiInstance.listModelVersionNames(owner, name, offset, limit, sort, query, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ModelRegistryV1Api#listModelVersionNames");
@@ -1142,7 +1149,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
- **mode** | **String**| Mode the search. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -1168,7 +1176,7 @@ Name | Type | Description  | Notes
 
 <a name="listModelVersions"></a>
 # **listModelVersions**
-> V1ListModelVersionsResponse listModelVersions(owner, name, offset, limit, sort, query, mode)
+> V1ListModelVersionsResponse listModelVersions(owner, name, offset, limit, sort, query, mode, noPage)
 
 List model versions
 
@@ -1200,9 +1208,10 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
-    String mode = "mode_example"; // String | Mode the search.
+    String mode = "mode_example"; // String | Mode of the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListModelVersionsResponse result = apiInstance.listModelVersions(owner, name, offset, limit, sort, query, mode);
+      V1ListModelVersionsResponse result = apiInstance.listModelVersions(owner, name, offset, limit, sort, query, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ModelRegistryV1Api#listModelVersions");
@@ -1225,7 +1234,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
- **mode** | **String**| Mode the search. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 

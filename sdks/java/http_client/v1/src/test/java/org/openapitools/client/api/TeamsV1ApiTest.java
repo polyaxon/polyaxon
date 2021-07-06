@@ -172,7 +172,8 @@ public class TeamsV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListTeamMembersResponse response = api.listTeamMembers(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListTeamMembersResponse response = api.listTeamMembers(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -192,7 +193,8 @@ public class TeamsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListTeamsResponse response = api.listTeamNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListTeamsResponse response = api.listTeamNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -212,7 +214,8 @@ public class TeamsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListTeamsResponse response = api.listTeams(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListTeamsResponse response = api.listTeams(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

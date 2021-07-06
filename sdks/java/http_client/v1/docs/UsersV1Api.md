@@ -297,7 +297,7 @@ This endpoint does not need any parameter.
 
 <a name="listTokens"></a>
 # **listTokens**
-> V1ListTokenResponse listTokens(offset, limit, sort, query)
+> V1ListTokenResponse listTokens(offset, limit, sort, query, noPage)
 
 List tokens
 
@@ -327,8 +327,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListTokenResponse result = apiInstance.listTokens(offset, limit, sort, query);
+      V1ListTokenResponse result = apiInstance.listTokens(offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling UsersV1Api#listTokens");
@@ -349,6 +350,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 

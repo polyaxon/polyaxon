@@ -126,7 +126,8 @@ public class UsersV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListTokenResponse response = api.listTokens(offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListTokenResponse response = api.listTokens(offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

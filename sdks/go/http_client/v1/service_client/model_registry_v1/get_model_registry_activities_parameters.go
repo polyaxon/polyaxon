@@ -84,7 +84,7 @@ type GetModelRegistryActivitiesParams struct {
 
 	/* Mode.
 
-	   Mode the search.
+	   Mode of the search.
 	*/
 	Mode *string
 
@@ -93,6 +93,12 @@ type GetModelRegistryActivitiesParams struct {
 	   Entity managing the resource
 	*/
 	Name string
+
+	/* NoPage.
+
+	   No pagination.
+	*/
+	NoPage *bool
 
 	/* Offset.
 
@@ -206,6 +212,17 @@ func (o *GetModelRegistryActivitiesParams) SetName(name string) {
 	o.Name = name
 }
 
+// WithNoPage adds the noPage to the get model registry activities params
+func (o *GetModelRegistryActivitiesParams) WithNoPage(noPage *bool) *GetModelRegistryActivitiesParams {
+	o.SetNoPage(noPage)
+	return o
+}
+
+// SetNoPage adds the noPage to the get model registry activities params
+func (o *GetModelRegistryActivitiesParams) SetNoPage(noPage *bool) {
+	o.NoPage = noPage
+}
+
 // WithOffset adds the offset to the get model registry activities params
 func (o *GetModelRegistryActivitiesParams) WithOffset(offset *int32) *GetModelRegistryActivitiesParams {
 	o.SetOffset(offset)
@@ -295,6 +312,23 @@ func (o *GetModelRegistryActivitiesParams) WriteToRequest(r runtime.ClientReques
 	// path param name
 	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
+	}
+
+	if o.NoPage != nil {
+
+		// query param no_page
+		var qrNoPage bool
+
+		if o.NoPage != nil {
+			qrNoPage = *o.NoPage
+		}
+		qNoPage := swag.FormatBool(qrNoPage)
+		if qNoPage != "" {
+
+			if err := r.SetQueryParam("no_page", qNoPage); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Offset != nil {

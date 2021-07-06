@@ -174,7 +174,8 @@ public class OrganizationsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListActivitiesResponse response = api.getOrganizationActivities(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListActivitiesResponse response = api.getOrganizationActivities(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -285,7 +286,8 @@ public class OrganizationsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListOrganizationMembersResponse response = api.listOrganizationMemberNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListOrganizationMembersResponse response = api.listOrganizationMemberNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -305,7 +307,8 @@ public class OrganizationsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListOrganizationMembersResponse response = api.listOrganizationMembers(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListOrganizationMembersResponse response = api.listOrganizationMembers(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

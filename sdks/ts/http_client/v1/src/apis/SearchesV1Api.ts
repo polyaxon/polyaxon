@@ -61,6 +61,7 @@ export interface ListSearchNamesRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListSearchesRequest {
@@ -69,6 +70,7 @@ export interface ListSearchesRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface PatchSearchRequest {
@@ -230,6 +232,10 @@ export class SearchesV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -278,6 +284,10 @@ export class SearchesV1Api extends runtime.BaseAPI {
 
         if (requestParameters.query !== undefined) {
             queryParameters['query'] = requestParameters.query;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

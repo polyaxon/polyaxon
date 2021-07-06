@@ -88,6 +88,12 @@ type GetRunArtifactsLineageNamesParams struct {
 	*/
 	Limit *int32
 
+	/* NoPage.
+
+	   No pagination.
+	*/
+	NoPage *bool
+
 	/* Offset.
 
 	   Pagination offset.
@@ -195,6 +201,17 @@ func (o *GetRunArtifactsLineageNamesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithNoPage adds the noPage to the get run artifacts lineage names params
+func (o *GetRunArtifactsLineageNamesParams) WithNoPage(noPage *bool) *GetRunArtifactsLineageNamesParams {
+	o.SetNoPage(noPage)
+	return o
+}
+
+// SetNoPage adds the noPage to the get run artifacts lineage names params
+func (o *GetRunArtifactsLineageNamesParams) SetNoPage(noPage *bool) {
+	o.NoPage = noPage
+}
+
 // WithOffset adds the offset to the get run artifacts lineage names params
 func (o *GetRunArtifactsLineageNamesParams) WithOffset(offset *int32) *GetRunArtifactsLineageNamesParams {
 	o.SetOffset(offset)
@@ -275,6 +292,23 @@ func (o *GetRunArtifactsLineageNamesParams) WriteToRequest(r runtime.ClientReque
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NoPage != nil {
+
+		// query param no_page
+		var qrNoPage bool
+
+		if o.NoPage != nil {
+			qrNoPage = *o.NoPage
+		}
+		qNoPage := swag.FormatBool(qrNoPage)
+		if qNoPage != "" {
+
+			if err := r.SetQueryParam("no_page", qNoPage); err != nil {
 				return err
 			}
 		}

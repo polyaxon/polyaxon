@@ -234,7 +234,7 @@ Name | Type | Description  | Notes
 
 <a name="listDashboardNames"></a>
 # **listDashboardNames**
-> V1ListDashboardsResponse listDashboardNames(owner, offset, limit, sort, query)
+> V1ListDashboardsResponse listDashboardNames(owner, offset, limit, sort, query, noPage)
 
 List dashboard names
 
@@ -265,8 +265,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListDashboardsResponse result = apiInstance.listDashboardNames(owner, offset, limit, sort, query);
+      V1ListDashboardsResponse result = apiInstance.listDashboardNames(owner, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling DashboardsV1Api#listDashboardNames");
@@ -288,6 +289,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -313,7 +315,7 @@ Name | Type | Description  | Notes
 
 <a name="listDashboards"></a>
 # **listDashboards**
-> V1ListDashboardsResponse listDashboards(owner, offset, limit, sort, query)
+> V1ListDashboardsResponse listDashboards(owner, offset, limit, sort, query, noPage)
 
 List dashboards
 
@@ -344,8 +346,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListDashboardsResponse result = apiInstance.listDashboards(owner, offset, limit, sort, query);
+      V1ListDashboardsResponse result = apiInstance.listDashboards(owner, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling DashboardsV1Api#listDashboards");
@@ -367,6 +370,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 

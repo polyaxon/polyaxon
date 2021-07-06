@@ -470,7 +470,8 @@ public class RunsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunArtifactsResponse response = api.getRunArtifactsLineage(owner, entity, uuid, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListRunArtifactsResponse response = api.getRunArtifactsLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -492,7 +493,8 @@ public class RunsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunArtifactsResponse response = api.getRunArtifactsLineageNames(owner, entity, uuid, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListRunArtifactsResponse response = api.getRunArtifactsLineageNames(owner, entity, uuid, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -534,7 +536,8 @@ public class RunsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunsResponse response = api.getRunClonesLineage(owner, entity, uuid, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListRunsResponse response = api.getRunClonesLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -556,7 +559,8 @@ public class RunsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunConnectionsResponse response = api.getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListRunConnectionsResponse response = api.getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -578,7 +582,8 @@ public class RunsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunEdgesResponse response = api.getRunDownstreamLineage(owner, entity, uuid, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListRunEdgesResponse response = api.getRunDownstreamLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -747,7 +752,8 @@ public class RunsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunEdgesResponse response = api.getRunUpstreamLineage(owner, entity, uuid, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListRunEdgesResponse response = api.getRunUpstreamLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -769,7 +775,8 @@ public class RunsV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListRunArtifactsResponse response = api.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListRunArtifactsResponse response = api.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -843,7 +850,8 @@ public class RunsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunsResponse response = api.listArchivedRuns(user, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListRunsResponse response = api.listArchivedRuns(user, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -863,7 +871,8 @@ public class RunsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListBookmarksResponse response = api.listBookmarkedRuns(user, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListBookmarksResponse response = api.listBookmarkedRuns(user, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -885,7 +894,8 @@ public class RunsV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListRunsResponse response = api.listRuns(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListRunsResponse response = api.listRuns(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }

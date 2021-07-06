@@ -401,7 +401,8 @@ export default class ProjectsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
-     * @param {String} opts.mode Mode the search.
+     * @param {String} opts.mode Mode of the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectsV1Api~getProjectActivitiesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListActivitiesResponse}
      */
@@ -426,7 +427,8 @@ export default class ProjectsV1Api {
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],
-        'mode': opts['mode']
+        'mode': opts['mode'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -574,6 +576,7 @@ export default class ProjectsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectsV1Api~listArchivedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
@@ -592,7 +595,8 @@ export default class ProjectsV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -626,6 +630,7 @@ export default class ProjectsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectsV1Api~listBookmarkedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListBookmarksResponse}
      */
@@ -644,7 +649,8 @@ export default class ProjectsV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -678,6 +684,7 @@ export default class ProjectsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectsV1Api~listProjectNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
@@ -696,7 +703,8 @@ export default class ProjectsV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -730,6 +738,7 @@ export default class ProjectsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectsV1Api~listProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
@@ -748,7 +757,8 @@ export default class ProjectsV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };

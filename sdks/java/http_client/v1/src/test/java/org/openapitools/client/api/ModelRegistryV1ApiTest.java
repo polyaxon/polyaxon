@@ -211,7 +211,8 @@ public class ModelRegistryV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListActivitiesResponse response = api.getModelRegistryActivities(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListActivitiesResponse response = api.getModelRegistryActivities(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -284,7 +285,8 @@ public class ModelRegistryV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListModelRegistriesResponse response = api.listModelRegistries(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListModelRegistriesResponse response = api.listModelRegistries(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -304,7 +306,8 @@ public class ModelRegistryV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListModelRegistriesResponse response = api.listModelRegistryNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListModelRegistriesResponse response = api.listModelRegistryNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -326,7 +329,8 @@ public class ModelRegistryV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListModelVersionsResponse response = api.listModelVersionNames(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListModelVersionsResponse response = api.listModelVersionNames(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -348,7 +352,8 @@ public class ModelRegistryV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListModelVersionsResponse response = api.listModelVersions(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListModelVersionsResponse response = api.listModelVersions(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }

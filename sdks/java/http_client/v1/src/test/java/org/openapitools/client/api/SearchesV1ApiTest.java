@@ -114,7 +114,8 @@ public class SearchesV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListSearchesResponse response = api.listSearchNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListSearchesResponse response = api.listSearchNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -134,7 +135,8 @@ public class SearchesV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListSearchesResponse response = api.listSearches(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListSearchesResponse response = api.listSearches(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

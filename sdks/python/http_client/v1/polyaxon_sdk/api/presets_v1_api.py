@@ -444,6 +444,7 @@ class PresetsV1Api(object):
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
+        :param bool no_page: No pagination.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -472,6 +473,7 @@ class PresetsV1Api(object):
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
+        :param bool no_page: No pagination.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -493,7 +495,8 @@ class PresetsV1Api(object):
             'offset',
             'limit',
             'sort',
-            'query'
+            'query',
+            'no_page'
         ]
         all_params.extend(
             [
@@ -532,6 +535,8 @@ class PresetsV1Api(object):
             query_params.append(('sort', local_var_params['sort']))  # noqa: E501
         if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
             query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if 'no_page' in local_var_params and local_var_params['no_page'] is not None:  # noqa: E501
+            query_params.append(('no_page', local_var_params['no_page']))  # noqa: E501
 
         header_params = {}
 
@@ -576,6 +581,7 @@ class PresetsV1Api(object):
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
+        :param bool no_page: No pagination.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -604,6 +610,7 @@ class PresetsV1Api(object):
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
+        :param bool no_page: No pagination.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -625,7 +632,8 @@ class PresetsV1Api(object):
             'offset',
             'limit',
             'sort',
-            'query'
+            'query',
+            'no_page'
         ]
         all_params.extend(
             [
@@ -664,6 +672,8 @@ class PresetsV1Api(object):
             query_params.append(('sort', local_var_params['sort']))  # noqa: E501
         if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
             query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if 'no_page' in local_var_params and local_var_params['no_page'] is not None:  # noqa: E501
+            query_params.append(('no_page', local_var_params['no_page']))  # noqa: E501
 
         header_params = {}
 

@@ -114,7 +114,8 @@ public class ConnectionsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListConnectionsResponse response = api.listConnectionNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListConnectionsResponse response = api.listConnectionNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -134,7 +135,8 @@ public class ConnectionsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListConnectionsResponse response = api.listConnections(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListConnectionsResponse response = api.listConnections(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

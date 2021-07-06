@@ -110,6 +110,7 @@ export interface GetComponentHubActivitiesRequest {
     sort?: string;
     query?: string;
     mode?: string;
+    noPage?: boolean;
 }
 
 export interface GetComponentHubSettingsRequest {
@@ -135,6 +136,7 @@ export interface ListComponentHubNamesRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListComponentHubsRequest {
@@ -143,6 +145,7 @@ export interface ListComponentHubsRequest {
     limit?: number;
     sort?: string;
     query?: string;
+    noPage?: boolean;
 }
 
 export interface ListComponentVersionNamesRequest {
@@ -153,6 +156,7 @@ export interface ListComponentVersionNamesRequest {
     sort?: string;
     query?: string;
     mode?: string;
+    noPage?: boolean;
 }
 
 export interface ListComponentVersionsRequest {
@@ -163,6 +167,7 @@ export interface ListComponentVersionsRequest {
     sort?: string;
     query?: string;
     mode?: string;
+    noPage?: boolean;
 }
 
 export interface PatchComponentHubRequest {
@@ -577,6 +582,10 @@ export class ComponentHubV1Api extends runtime.BaseAPI {
             queryParameters['mode'] = requestParameters.mode;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -749,6 +758,10 @@ export class ComponentHubV1Api extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -797,6 +810,10 @@ export class ComponentHubV1Api extends runtime.BaseAPI {
 
         if (requestParameters.query !== undefined) {
             queryParameters['query'] = requestParameters.query;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -857,6 +874,10 @@ export class ComponentHubV1Api extends runtime.BaseAPI {
             queryParameters['mode'] = requestParameters.mode;
         }
 
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -913,6 +934,10 @@ export class ComponentHubV1Api extends runtime.BaseAPI {
 
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
+        }
+
+        if (requestParameters.noPage !== undefined) {
+            queryParameters['no_page'] = requestParameters.noPage;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

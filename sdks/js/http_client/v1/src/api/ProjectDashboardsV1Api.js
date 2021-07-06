@@ -228,7 +228,8 @@ export default class ProjectDashboardsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
-     * @param {String} opts.mode Mode the search.
+     * @param {String} opts.mode Mode of the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectDashboardsV1Api~listProjectDashboardNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListDashboardsResponse}
      */
@@ -253,7 +254,8 @@ export default class ProjectDashboardsV1Api {
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],
-        'mode': opts['mode']
+        'mode': opts['mode'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -288,7 +290,8 @@ export default class ProjectDashboardsV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
-     * @param {String} opts.mode Mode the search.
+     * @param {String} opts.mode Mode of the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectDashboardsV1Api~listProjectDashboardsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListDashboardsResponse}
      */
@@ -313,7 +316,8 @@ export default class ProjectDashboardsV1Api {
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],
-        'mode': opts['mode']
+        'mode': opts['mode'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };

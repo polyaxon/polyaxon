@@ -84,7 +84,7 @@ type ListQueueNamesParams struct {
 
 	/* Mode.
 
-	   Mode the search.
+	   Mode of the search.
 	*/
 	Mode *string
 
@@ -93,6 +93,12 @@ type ListQueueNamesParams struct {
 	   Entity managing the resource
 	*/
 	Name string
+
+	/* NoPage.
+
+	   No pagination.
+	*/
+	NoPage *bool
 
 	/* Offset.
 
@@ -206,6 +212,17 @@ func (o *ListQueueNamesParams) SetName(name string) {
 	o.Name = name
 }
 
+// WithNoPage adds the noPage to the list queue names params
+func (o *ListQueueNamesParams) WithNoPage(noPage *bool) *ListQueueNamesParams {
+	o.SetNoPage(noPage)
+	return o
+}
+
+// SetNoPage adds the noPage to the list queue names params
+func (o *ListQueueNamesParams) SetNoPage(noPage *bool) {
+	o.NoPage = noPage
+}
+
 // WithOffset adds the offset to the list queue names params
 func (o *ListQueueNamesParams) WithOffset(offset *int32) *ListQueueNamesParams {
 	o.SetOffset(offset)
@@ -295,6 +312,23 @@ func (o *ListQueueNamesParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 	// path param name
 	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
+	}
+
+	if o.NoPage != nil {
+
+		// query param no_page
+		var qrNoPage bool
+
+		if o.NoPage != nil {
+			qrNoPage = *o.NoPage
+		}
+		qNoPage := swag.FormatBool(qrNoPage)
+		if qNoPage != "" {
+
+			if err := r.SetQueryParam("no_page", qNoPage); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Offset != nil {

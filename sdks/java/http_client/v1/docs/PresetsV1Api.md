@@ -238,7 +238,7 @@ Name | Type | Description  | Notes
 
 <a name="listPresetNames"></a>
 # **listPresetNames**
-> V1ListPresetsResponse listPresetNames(owner, offset, limit, sort, query)
+> V1ListPresetsResponse listPresetNames(owner, offset, limit, sort, query, noPage)
 
 List scheduling presets names
 
@@ -269,8 +269,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListPresetsResponse result = apiInstance.listPresetNames(owner, offset, limit, sort, query);
+      V1ListPresetsResponse result = apiInstance.listPresetNames(owner, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling PresetsV1Api#listPresetNames");
@@ -292,6 +293,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -317,7 +319,7 @@ Name | Type | Description  | Notes
 
 <a name="listPresets"></a>
 # **listPresets**
-> V1ListPresetsResponse listPresets(owner, offset, limit, sort, query)
+> V1ListPresetsResponse listPresets(owner, offset, limit, sort, query, noPage)
 
 List scheduling presets
 
@@ -348,8 +350,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListPresetsResponse result = apiInstance.listPresets(owner, offset, limit, sort, query);
+      V1ListPresetsResponse result = apiInstance.listPresets(owner, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling PresetsV1Api#listPresets");
@@ -371,6 +374,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 

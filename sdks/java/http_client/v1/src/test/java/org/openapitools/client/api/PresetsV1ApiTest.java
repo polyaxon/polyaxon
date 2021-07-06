@@ -116,7 +116,8 @@ public class PresetsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListPresetsResponse response = api.listPresetNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListPresetsResponse response = api.listPresetNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -136,7 +137,8 @@ public class PresetsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListPresetsResponse response = api.listPresets(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListPresetsResponse response = api.listPresets(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

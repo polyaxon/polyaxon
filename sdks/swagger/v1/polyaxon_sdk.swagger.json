@@ -88,6 +88,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -162,6 +169,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -497,6 +511,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -571,6 +592,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -1096,6 +1124,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -1170,6 +1205,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -1295,6 +1337,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -2035,10 +2084,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -2123,10 +2179,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -2531,6 +2594,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -2656,6 +2726,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -2945,6 +3022,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -3070,6 +3154,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -3704,6 +3795,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -3836,6 +3934,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -4192,6 +4297,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -4317,6 +4429,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -4620,6 +4739,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -4694,6 +4820,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -4768,6 +4901,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -4893,6 +5033,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -5518,6 +5665,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -5643,6 +5797,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -5824,10 +5985,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -6437,6 +6605,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -6795,6 +6970,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -6869,6 +7051,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -7711,10 +7900,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -8042,10 +8238,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -8130,10 +8333,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -8261,6 +8471,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -8335,6 +8552,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -8462,6 +8686,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -8536,6 +8767,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -9378,10 +9616,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -9709,10 +9954,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -9797,10 +10049,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -10444,6 +10703,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -10532,6 +10798,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -10620,6 +10893,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -10708,6 +10988,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -10796,6 +11083,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -10884,6 +11178,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -11804,10 +12105,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -12082,10 +12390,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -12170,10 +12485,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -12306,10 +12628,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -12394,10 +12723,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -12482,10 +12818,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -12570,10 +12913,17 @@
           },
           {
             "name": "mode",
-            "description": "Mode the search.",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [

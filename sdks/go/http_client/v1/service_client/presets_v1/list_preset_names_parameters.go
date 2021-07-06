@@ -82,6 +82,12 @@ type ListPresetNamesParams struct {
 	*/
 	Limit *int32
 
+	/* NoPage.
+
+	   No pagination.
+	*/
+	NoPage *bool
+
 	/* Offset.
 
 	   Pagination offset.
@@ -172,6 +178,17 @@ func (o *ListPresetNamesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithNoPage adds the noPage to the list preset names params
+func (o *ListPresetNamesParams) WithNoPage(noPage *bool) *ListPresetNamesParams {
+	o.SetNoPage(noPage)
+	return o
+}
+
+// SetNoPage adds the noPage to the list preset names params
+func (o *ListPresetNamesParams) SetNoPage(noPage *bool) {
+	o.NoPage = noPage
+}
+
 // WithOffset adds the offset to the list preset names params
 func (o *ListPresetNamesParams) WithOffset(offset *int32) *ListPresetNamesParams {
 	o.SetOffset(offset)
@@ -236,6 +253,23 @@ func (o *ListPresetNamesParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NoPage != nil {
+
+		// query param no_page
+		var qrNoPage bool
+
+		if o.NoPage != nil {
+			qrNoPage = *o.NoPage
+		}
+		qNoPage := swag.FormatBool(qrNoPage)
+		if qNoPage != "" {
+
+			if err := r.SetQueryParam("no_page", qNoPage); err != nil {
 				return err
 			}
 		}

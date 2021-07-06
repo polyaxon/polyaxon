@@ -119,7 +119,8 @@ public class ProjectSearchesV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListSearchesResponse response = api.listProjectSearchNames(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListSearchesResponse response = api.listProjectSearchNames(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -141,7 +142,8 @@ public class ProjectSearchesV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListSearchesResponse response = api.listProjectSearches(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListSearchesResponse response = api.listProjectSearches(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }

@@ -3200,6 +3200,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3213,7 +3214,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunArtifactsLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunArtifactsLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3240,6 +3241,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -3262,7 +3267,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunArtifactsLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunArtifactsLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -3280,7 +3285,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunArtifactsLineageCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunArtifactsLineageCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -3295,6 +3300,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunArtifactsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3307,8 +3313,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunArtifactsResponse getRunArtifactsLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunArtifactsResponse> localVarResp = getRunArtifactsLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query);
+    public V1ListRunArtifactsResponse getRunArtifactsLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunArtifactsResponse> localVarResp = getRunArtifactsLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -3322,6 +3328,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunArtifactsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3334,8 +3341,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunArtifactsResponse> getRunArtifactsLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = getRunArtifactsLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, null);
+    public ApiResponse<V1ListRunArtifactsResponse> getRunArtifactsLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = getRunArtifactsLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3350,6 +3357,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3363,9 +3371,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunArtifactsLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunArtifactsResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunArtifactsLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListRunArtifactsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunArtifactsLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunArtifactsLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3379,6 +3387,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3392,7 +3401,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunArtifactsLineageNamesCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunArtifactsLineageNamesCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3419,6 +3428,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -3441,7 +3454,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunArtifactsLineageNamesValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunArtifactsLineageNamesValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -3459,7 +3472,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunArtifactsLineageNamesCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunArtifactsLineageNamesCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -3474,6 +3487,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunArtifactsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3486,8 +3500,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunArtifactsResponse getRunArtifactsLineageNames(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunArtifactsResponse> localVarResp = getRunArtifactsLineageNamesWithHttpInfo(owner, entity, uuid, offset, limit, sort, query);
+    public V1ListRunArtifactsResponse getRunArtifactsLineageNames(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunArtifactsResponse> localVarResp = getRunArtifactsLineageNamesWithHttpInfo(owner, entity, uuid, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -3501,6 +3515,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunArtifactsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3513,8 +3528,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunArtifactsResponse> getRunArtifactsLineageNamesWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = getRunArtifactsLineageNamesValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, null);
+    public ApiResponse<V1ListRunArtifactsResponse> getRunArtifactsLineageNamesWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = getRunArtifactsLineageNamesValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3529,6 +3544,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3542,9 +3558,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunArtifactsLineageNamesAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunArtifactsResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunArtifactsLineageNamesAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListRunArtifactsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunArtifactsLineageNamesValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunArtifactsLineageNamesValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3723,6 +3739,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3736,7 +3753,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunClonesLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunClonesLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3763,6 +3780,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -3785,7 +3806,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunClonesLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunClonesLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -3803,7 +3824,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunClonesLineageCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunClonesLineageCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -3818,6 +3839,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3830,8 +3852,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunsResponse getRunClonesLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> localVarResp = getRunClonesLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query);
+    public V1ListRunsResponse getRunClonesLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunsResponse> localVarResp = getRunClonesLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -3845,6 +3867,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3857,8 +3880,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunsResponse> getRunClonesLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = getRunClonesLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, null);
+    public ApiResponse<V1ListRunsResponse> getRunClonesLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = getRunClonesLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3873,6 +3896,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3886,9 +3910,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunClonesLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunClonesLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListRunsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunClonesLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunClonesLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3902,6 +3926,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3915,7 +3940,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunConnectionsLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunConnectionsLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3942,6 +3967,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -3964,7 +3993,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunConnectionsLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunConnectionsLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -3982,7 +4011,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunConnectionsLineageCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunConnectionsLineageCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -3997,6 +4026,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunConnectionsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4009,8 +4039,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunConnectionsResponse getRunConnectionsLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunConnectionsResponse> localVarResp = getRunConnectionsLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query);
+    public V1ListRunConnectionsResponse getRunConnectionsLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunConnectionsResponse> localVarResp = getRunConnectionsLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -4024,6 +4054,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunConnectionsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4036,8 +4067,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunConnectionsResponse> getRunConnectionsLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = getRunConnectionsLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, null);
+    public ApiResponse<V1ListRunConnectionsResponse> getRunConnectionsLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = getRunConnectionsLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunConnectionsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -4052,6 +4083,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4065,9 +4097,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunConnectionsLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunConnectionsResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunConnectionsLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListRunConnectionsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunConnectionsLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunConnectionsLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunConnectionsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -4081,6 +4113,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -4094,7 +4127,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunDownstreamLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunDownstreamLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -4121,6 +4154,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -4143,7 +4180,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunDownstreamLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunDownstreamLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -4161,7 +4198,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunDownstreamLineageCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunDownstreamLineageCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -4176,6 +4213,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunEdgesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4188,8 +4226,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunEdgesResponse getRunDownstreamLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunEdgesResponse> localVarResp = getRunDownstreamLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query);
+    public V1ListRunEdgesResponse getRunDownstreamLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunEdgesResponse> localVarResp = getRunDownstreamLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -4203,6 +4241,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunEdgesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4215,8 +4254,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunEdgesResponse> getRunDownstreamLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = getRunDownstreamLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, null);
+    public ApiResponse<V1ListRunEdgesResponse> getRunDownstreamLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = getRunDownstreamLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunEdgesResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -4231,6 +4270,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4244,9 +4284,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunDownstreamLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunEdgesResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunDownstreamLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListRunEdgesResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunDownstreamLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunDownstreamLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunEdgesResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -5465,6 +5505,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -5478,7 +5519,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunUpstreamLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunUpstreamLineageCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -5505,6 +5546,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -5527,7 +5572,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunUpstreamLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunUpstreamLineageValidateBeforeCall(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -5545,7 +5590,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunUpstreamLineageCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunUpstreamLineageCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -5560,6 +5605,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunEdgesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -5572,8 +5618,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunEdgesResponse getRunUpstreamLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunEdgesResponse> localVarResp = getRunUpstreamLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query);
+    public V1ListRunEdgesResponse getRunUpstreamLineage(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunEdgesResponse> localVarResp = getRunUpstreamLineageWithHttpInfo(owner, entity, uuid, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -5587,6 +5633,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunEdgesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -5599,8 +5646,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunEdgesResponse> getRunUpstreamLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = getRunUpstreamLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, null);
+    public ApiResponse<V1ListRunEdgesResponse> getRunUpstreamLineageWithHttpInfo(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = getRunUpstreamLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunEdgesResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -5615,6 +5662,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -5628,9 +5676,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunUpstreamLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunEdgesResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunUpstreamLineageAsync(String owner, String entity, String uuid, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListRunEdgesResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunUpstreamLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = getRunUpstreamLineageValidateBeforeCall(owner, entity, uuid, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunEdgesResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -5643,7 +5691,8 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
-     * @param mode Mode the search. (optional)
+     * @param mode Mode of the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -5657,7 +5706,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunsArtifactsLineageCall(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunsArtifactsLineageCall(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -5687,6 +5736,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -5709,7 +5762,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunsArtifactsLineageValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunsArtifactsLineageValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -5722,7 +5775,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunsArtifactsLineageCall(owner, name, offset, limit, sort, query, mode, _callback);
+        okhttp3.Call localVarCall = getRunsArtifactsLineageCall(owner, name, offset, limit, sort, query, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -5736,7 +5789,8 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
-     * @param mode Mode the search. (optional)
+     * @param mode Mode of the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunArtifactsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -5749,8 +5803,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunArtifactsResponse getRunsArtifactsLineage(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode) throws ApiException {
-        ApiResponse<V1ListRunArtifactsResponse> localVarResp = getRunsArtifactsLineageWithHttpInfo(owner, name, offset, limit, sort, query, mode);
+    public V1ListRunArtifactsResponse getRunsArtifactsLineage(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunArtifactsResponse> localVarResp = getRunsArtifactsLineageWithHttpInfo(owner, name, offset, limit, sort, query, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -5763,7 +5817,8 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
-     * @param mode Mode the search. (optional)
+     * @param mode Mode of the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunArtifactsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -5776,8 +5831,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunArtifactsResponse> getRunsArtifactsLineageWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode) throws ApiException {
-        okhttp3.Call localVarCall = getRunsArtifactsLineageValidateBeforeCall(owner, name, offset, limit, sort, query, mode, null);
+    public ApiResponse<V1ListRunArtifactsResponse> getRunsArtifactsLineageWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = getRunsArtifactsLineageValidateBeforeCall(owner, name, offset, limit, sort, query, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -5791,7 +5846,8 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
-     * @param mode Mode the search. (optional)
+     * @param mode Mode of the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -5805,9 +5861,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunsArtifactsLineageAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, final ApiCallback<V1ListRunArtifactsResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunsArtifactsLineageAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage, final ApiCallback<V1ListRunArtifactsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunsArtifactsLineageValidateBeforeCall(owner, name, offset, limit, sort, query, mode, _callback);
+        okhttp3.Call localVarCall = getRunsArtifactsLineageValidateBeforeCall(owner, name, offset, limit, sort, query, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -6251,6 +6307,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -6264,7 +6321,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listArchivedRunsCall(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listArchivedRunsCall(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -6289,6 +6346,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -6311,7 +6372,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listArchivedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listArchivedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'user' is set
         if (user == null) {
@@ -6319,7 +6380,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listArchivedRunsCall(user, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = listArchivedRunsCall(user, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -6332,6 +6393,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -6344,8 +6406,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunsResponse listArchivedRuns(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> localVarResp = listArchivedRunsWithHttpInfo(user, offset, limit, sort, query);
+    public V1ListRunsResponse listArchivedRuns(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunsResponse> localVarResp = listArchivedRunsWithHttpInfo(user, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -6357,6 +6419,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -6369,8 +6432,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunsResponse> listArchivedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = listArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, null);
+    public ApiResponse<V1ListRunsResponse> listArchivedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -6383,6 +6446,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -6396,9 +6460,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listArchivedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> _callback) throws ApiException {
+    public okhttp3.Call listArchivedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListRunsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = listArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -6410,6 +6474,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -6423,7 +6488,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listBookmarkedRunsCall(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listBookmarkedRunsCall(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -6448,6 +6513,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("query", query));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -6470,7 +6539,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listBookmarkedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listBookmarkedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'user' is set
         if (user == null) {
@@ -6478,7 +6547,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listBookmarkedRunsCall(user, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = listBookmarkedRunsCall(user, offset, limit, sort, query, noPage, _callback);
         return localVarCall;
 
     }
@@ -6491,6 +6560,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListBookmarksResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -6503,8 +6573,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListBookmarksResponse listBookmarkedRuns(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListBookmarksResponse> localVarResp = listBookmarkedRunsWithHttpInfo(user, offset, limit, sort, query);
+    public V1ListBookmarksResponse listBookmarkedRuns(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListBookmarksResponse> localVarResp = listBookmarkedRunsWithHttpInfo(user, offset, limit, sort, query, noPage);
         return localVarResp.getData();
     }
 
@@ -6516,6 +6586,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListBookmarksResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -6528,8 +6599,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListBookmarksResponse> listBookmarkedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        okhttp3.Call localVarCall = listBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, null);
+    public ApiResponse<V1ListBookmarksResponse> listBookmarkedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListBookmarksResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -6542,6 +6613,7 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -6555,9 +6627,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listBookmarkedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListBookmarksResponse> _callback) throws ApiException {
+    public okhttp3.Call listBookmarkedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, Boolean noPage, final ApiCallback<V1ListBookmarksResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, _callback);
+        okhttp3.Call localVarCall = listBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListBookmarksResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -6570,7 +6642,8 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
-     * @param mode Mode the search. (optional)
+     * @param mode Mode of the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -6584,7 +6657,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listRunsCall(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listRunsCall(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -6614,6 +6687,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
 
+        if (noPage != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("no_page", noPage));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -6636,7 +6713,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listRunsValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listRunsValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -6649,7 +6726,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listRunsCall(owner, name, offset, limit, sort, query, mode, _callback);
+        okhttp3.Call localVarCall = listRunsCall(owner, name, offset, limit, sort, query, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -6663,7 +6740,8 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
-     * @param mode Mode the search. (optional)
+     * @param mode Mode of the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -6676,8 +6754,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunsResponse listRuns(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode) throws ApiException {
-        ApiResponse<V1ListRunsResponse> localVarResp = listRunsWithHttpInfo(owner, name, offset, limit, sort, query, mode);
+    public V1ListRunsResponse listRuns(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunsResponse> localVarResp = listRunsWithHttpInfo(owner, name, offset, limit, sort, query, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -6690,7 +6768,8 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
-     * @param mode Mode the search. (optional)
+     * @param mode Mode of the search. (optional)
+     * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -6703,8 +6782,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunsResponse> listRunsWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode) throws ApiException {
-        okhttp3.Call localVarCall = listRunsValidateBeforeCall(owner, name, offset, limit, sort, query, mode, null);
+    public ApiResponse<V1ListRunsResponse> listRunsWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listRunsValidateBeforeCall(owner, name, offset, limit, sort, query, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -6718,7 +6797,8 @@ public class RunsV1Api {
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
-     * @param mode Mode the search. (optional)
+     * @param mode Mode of the search. (optional)
+     * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -6732,9 +6812,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listRunsAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, final ApiCallback<V1ListRunsResponse> _callback) throws ApiException {
+    public okhttp3.Call listRunsAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, String mode, Boolean noPage, final ApiCallback<V1ListRunsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listRunsValidateBeforeCall(owner, name, offset, limit, sort, query, mode, _callback);
+        okhttp3.Call localVarCall = listRunsValidateBeforeCall(owner, name, offset, limit, sort, query, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

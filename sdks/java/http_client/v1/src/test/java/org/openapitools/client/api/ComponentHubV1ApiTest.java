@@ -211,7 +211,8 @@ public class ComponentHubV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListActivitiesResponse response = api.getComponentHubActivities(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListActivitiesResponse response = api.getComponentHubActivities(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -284,7 +285,8 @@ public class ComponentHubV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListComponentHubsResponse response = api.listComponentHubNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListComponentHubsResponse response = api.listComponentHubNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -304,7 +306,8 @@ public class ComponentHubV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListComponentHubsResponse response = api.listComponentHubs(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListComponentHubsResponse response = api.listComponentHubs(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -326,7 +329,8 @@ public class ComponentHubV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListComponentVersionsResponse response = api.listComponentVersionNames(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListComponentVersionsResponse response = api.listComponentVersionNames(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -348,7 +352,8 @@ public class ComponentHubV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListComponentVersionsResponse response = api.listComponentVersions(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListComponentVersionsResponse response = api.listComponentVersions(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }

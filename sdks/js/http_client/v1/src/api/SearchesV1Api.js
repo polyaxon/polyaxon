@@ -209,6 +209,7 @@ export default class SearchesV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/SearchesV1Api~listSearchNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListSearchesResponse}
      */
@@ -227,7 +228,8 @@ export default class SearchesV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };
@@ -261,6 +263,7 @@ export default class SearchesV1Api {
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
+     * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/SearchesV1Api~listSearchesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListSearchesResponse}
      */
@@ -279,7 +282,8 @@ export default class SearchesV1Api {
         'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
-        'query': opts['query']
+        'query': opts['query'],
+        'no_page': opts['no_page']
       };
       let headerParams = {
       };

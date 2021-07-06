@@ -82,6 +82,12 @@ type ListComponentHubsParams struct {
 	*/
 	Limit *int32
 
+	/* NoPage.
+
+	   No pagination.
+	*/
+	NoPage *bool
+
 	/* Offset.
 
 	   Pagination offset.
@@ -172,6 +178,17 @@ func (o *ListComponentHubsParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithNoPage adds the noPage to the list component hubs params
+func (o *ListComponentHubsParams) WithNoPage(noPage *bool) *ListComponentHubsParams {
+	o.SetNoPage(noPage)
+	return o
+}
+
+// SetNoPage adds the noPage to the list component hubs params
+func (o *ListComponentHubsParams) SetNoPage(noPage *bool) {
+	o.NoPage = noPage
+}
+
 // WithOffset adds the offset to the list component hubs params
 func (o *ListComponentHubsParams) WithOffset(offset *int32) *ListComponentHubsParams {
 	o.SetOffset(offset)
@@ -236,6 +253,23 @@ func (o *ListComponentHubsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NoPage != nil {
+
+		// query param no_page
+		var qrNoPage bool
+
+		if o.NoPage != nil {
+			qrNoPage = *o.NoPage
+		}
+		qNoPage := swag.FormatBool(qrNoPage)
+		if qNoPage != "" {
+
+			if err := r.SetQueryParam("no_page", qNoPage); err != nil {
 				return err
 			}
 		}

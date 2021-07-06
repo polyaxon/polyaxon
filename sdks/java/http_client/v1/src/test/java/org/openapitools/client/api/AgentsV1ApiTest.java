@@ -190,7 +190,8 @@ public class AgentsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListAgentsResponse response = api.listAgentNames(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListAgentsResponse response = api.listAgentNames(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }
@@ -210,7 +211,8 @@ public class AgentsV1ApiTest {
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListAgentsResponse response = api.listAgents(owner, offset, limit, sort, query);
+        Boolean noPage = null;
+        V1ListAgentsResponse response = api.listAgents(owner, offset, limit, sort, query, noPage);
 
         // TODO: test validations
     }

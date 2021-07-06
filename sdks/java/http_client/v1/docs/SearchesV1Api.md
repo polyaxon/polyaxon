@@ -234,7 +234,7 @@ Name | Type | Description  | Notes
 
 <a name="listSearchNames"></a>
 # **listSearchNames**
-> V1ListSearchesResponse listSearchNames(owner, offset, limit, sort, query)
+> V1ListSearchesResponse listSearchNames(owner, offset, limit, sort, query, noPage)
 
 List search names
 
@@ -265,8 +265,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListSearchesResponse result = apiInstance.listSearchNames(owner, offset, limit, sort, query);
+      V1ListSearchesResponse result = apiInstance.listSearchNames(owner, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SearchesV1Api#listSearchNames");
@@ -288,6 +289,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -313,7 +315,7 @@ Name | Type | Description  | Notes
 
 <a name="listSearches"></a>
 # **listSearches**
-> V1ListSearchesResponse listSearches(owner, offset, limit, sort, query)
+> V1ListSearchesResponse listSearches(owner, offset, limit, sort, query, noPage)
 
 List searches
 
@@ -344,8 +346,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListSearchesResponse result = apiInstance.listSearches(owner, offset, limit, sort, query);
+      V1ListSearchesResponse result = apiInstance.listSearches(owner, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SearchesV1Api#listSearches");
@@ -367,6 +370,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 

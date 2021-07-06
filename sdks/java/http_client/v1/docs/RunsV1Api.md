@@ -1601,7 +1601,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactsLineage"></a>
 # **getRunArtifactsLineage**
-> V1ListRunArtifactsResponse getRunArtifactsLineage(owner, entity, uuid, offset, limit, sort, query)
+> V1ListRunArtifactsResponse getRunArtifactsLineage(owner, entity, uuid, offset, limit, sort, query, noPage)
 
 Get run artifacts lineage
 
@@ -1634,8 +1634,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineage(owner, entity, uuid, offset, limit, sort, query);
+      V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineage");
@@ -1659,6 +1660,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -1684,7 +1686,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactsLineageNames"></a>
 # **getRunArtifactsLineageNames**
-> V1ListRunArtifactsResponse getRunArtifactsLineageNames(owner, entity, uuid, offset, limit, sort, query)
+> V1ListRunArtifactsResponse getRunArtifactsLineageNames(owner, entity, uuid, offset, limit, sort, query, noPage)
 
 Get run artifacts lineage names
 
@@ -1717,8 +1719,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineageNames(owner, entity, uuid, offset, limit, sort, query);
+      V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineageNames(owner, entity, uuid, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineageNames");
@@ -1742,6 +1745,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -1846,7 +1850,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunClonesLineage"></a>
 # **getRunClonesLineage**
-> V1ListRunsResponse getRunClonesLineage(owner, entity, uuid, offset, limit, sort, query)
+> V1ListRunsResponse getRunClonesLineage(owner, entity, uuid, offset, limit, sort, query, noPage)
 
 Get run clones lineage
 
@@ -1879,8 +1883,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunsResponse result = apiInstance.getRunClonesLineage(owner, entity, uuid, offset, limit, sort, query);
+      V1ListRunsResponse result = apiInstance.getRunClonesLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunClonesLineage");
@@ -1904,6 +1909,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -1929,7 +1935,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunConnectionsLineage"></a>
 # **getRunConnectionsLineage**
-> V1ListRunConnectionsResponse getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query)
+> V1ListRunConnectionsResponse getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query, noPage)
 
 Get run connections lineage
 
@@ -1962,8 +1968,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunConnectionsResponse result = apiInstance.getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query);
+      V1ListRunConnectionsResponse result = apiInstance.getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunConnectionsLineage");
@@ -1987,6 +1994,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -2012,7 +2020,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunDownstreamLineage"></a>
 # **getRunDownstreamLineage**
-> V1ListRunEdgesResponse getRunDownstreamLineage(owner, entity, uuid, offset, limit, sort, query)
+> V1ListRunEdgesResponse getRunDownstreamLineage(owner, entity, uuid, offset, limit, sort, query, noPage)
 
 Get run downstream lineage
 
@@ -2045,8 +2053,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunEdgesResponse result = apiInstance.getRunDownstreamLineage(owner, entity, uuid, offset, limit, sort, query);
+      V1ListRunEdgesResponse result = apiInstance.getRunDownstreamLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunDownstreamLineage");
@@ -2070,6 +2079,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -2662,7 +2672,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunUpstreamLineage"></a>
 # **getRunUpstreamLineage**
-> V1ListRunEdgesResponse getRunUpstreamLineage(owner, entity, uuid, offset, limit, sort, query)
+> V1ListRunEdgesResponse getRunUpstreamLineage(owner, entity, uuid, offset, limit, sort, query, noPage)
 
 Get run upstream lineage
 
@@ -2695,8 +2705,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunEdgesResponse result = apiInstance.getRunUpstreamLineage(owner, entity, uuid, offset, limit, sort, query);
+      V1ListRunEdgesResponse result = apiInstance.getRunUpstreamLineage(owner, entity, uuid, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunUpstreamLineage");
@@ -2720,6 +2731,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -2745,7 +2757,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunsArtifactsLineage"></a>
 # **getRunsArtifactsLineage**
-> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode)
+> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode, noPage)
 
 Get runs artifacts lineage
 
@@ -2777,9 +2789,10 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
-    String mode = "mode_example"; // String | Mode the search.
+    String mode = "mode_example"; // String | Mode of the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode);
+      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunsArtifactsLineage");
@@ -2802,7 +2815,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
- **mode** | **String**| Mode the search. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -3051,7 +3065,7 @@ null (empty response body)
 
 <a name="listArchivedRuns"></a>
 # **listArchivedRuns**
-> V1ListRunsResponse listArchivedRuns(user, offset, limit, sort, query)
+> V1ListRunsResponse listArchivedRuns(user, offset, limit, sort, query, noPage)
 
 List archived runs for user
 
@@ -3082,8 +3096,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunsResponse result = apiInstance.listArchivedRuns(user, offset, limit, sort, query);
+      V1ListRunsResponse result = apiInstance.listArchivedRuns(user, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#listArchivedRuns");
@@ -3105,6 +3120,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -3130,7 +3146,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedRuns"></a>
 # **listBookmarkedRuns**
-> V1ListBookmarksResponse listBookmarkedRuns(user, offset, limit, sort, query)
+> V1ListBookmarksResponse listBookmarkedRuns(user, offset, limit, sort, query, noPage)
 
 List bookmarked runs for user
 
@@ -3161,8 +3177,9 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListBookmarksResponse result = apiInstance.listBookmarkedRuns(user, offset, limit, sort, query);
+      V1ListBookmarksResponse result = apiInstance.listBookmarkedRuns(user, offset, limit, sort, query, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#listBookmarkedRuns");
@@ -3184,6 +3201,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
@@ -3209,7 +3227,7 @@ Name | Type | Description  | Notes
 
 <a name="listRuns"></a>
 # **listRuns**
-> V1ListRunsResponse listRuns(owner, name, offset, limit, sort, query, mode)
+> V1ListRunsResponse listRuns(owner, name, offset, limit, sort, query, mode, noPage)
 
 List runs
 
@@ -3241,9 +3259,10 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
-    String mode = "mode_example"; // String | Mode the search.
+    String mode = "mode_example"; // String | Mode of the search.
+    Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query, mode);
+      V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#listRuns");
@@ -3266,7 +3285,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
- **mode** | **String**| Mode the search. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
+ **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 

@@ -119,7 +119,8 @@ public class ProjectDashboardsV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListDashboardsResponse response = api.listProjectDashboardNames(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListDashboardsResponse response = api.listProjectDashboardNames(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }
@@ -141,7 +142,8 @@ public class ProjectDashboardsV1ApiTest {
         String sort = null;
         String query = null;
         String mode = null;
-        V1ListDashboardsResponse response = api.listProjectDashboards(owner, name, offset, limit, sort, query, mode);
+        Boolean noPage = null;
+        V1ListDashboardsResponse response = api.listProjectDashboards(owner, name, offset, limit, sort, query, mode, noPage);
 
         // TODO: test validations
     }

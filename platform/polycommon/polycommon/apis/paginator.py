@@ -16,11 +16,30 @@
 
 from rest_framework.pagination import LimitOffsetPagination
 
-
-class LargeLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 100000
+from polyaxon.utils.bool_utils import to_bool
 
 
-class PolyaxonPagination(LimitOffsetPagination):
+class NoPageMixin:
+    no_page_query_param = 'no_page'
+
+    def paginate_queryset(self, queryset, request, view=None):
+        try:
+            no_page = to_bool(
+                request.query_params.get(self.no_page_query_param),
+                handle_none=True,
+            )
+            if no_page:
+                return None
+        except (KeyError, ValueError):
+            pass
+
+        return super().paginate_queryset(queryset, request, view)
+
+
+class LargeLimitOffsetPagination(LimitOffsetPagination, NoPageMixin):
+    default_limit = 1000
+
+
+class PolyaxonPagination(LimitOffsetPagination, NoPageMixin):
     max_limit = 100
     default_limit = 20

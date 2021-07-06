@@ -44,6 +44,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -111,6 +116,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -445,6 +455,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -512,6 +527,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -1042,6 +1062,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -1109,6 +1134,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -1229,6 +1259,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -1958,11 +1993,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -2036,11 +2076,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -2433,6 +2478,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -2553,6 +2603,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -2837,6 +2892,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -2957,6 +3017,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -3565,6 +3630,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -3690,6 +3760,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -4038,6 +4113,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -4158,6 +4238,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -4452,6 +4537,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -4519,6 +4609,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -4586,6 +4681,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -4706,6 +4806,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -5292,6 +5397,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -5412,6 +5522,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -5583,11 +5698,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -6197,6 +6317,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -6557,6 +6682,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -6624,6 +6754,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -7459,11 +7594,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -7780,11 +7920,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -7858,11 +8003,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -7984,6 +8134,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -8051,6 +8206,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -8172,6 +8332,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -8239,6 +8404,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -9074,11 +9244,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -9395,11 +9570,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -9473,11 +9653,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -10104,6 +10289,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -10183,6 +10373,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -10262,6 +10457,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -10341,6 +10541,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -10420,6 +10625,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -10499,6 +10709,11 @@ paths:
         name: query
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -11382,11 +11597,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -11651,11 +11871,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -11729,11 +11954,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -11855,11 +12085,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -11933,11 +12168,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -12011,11 +12251,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -12089,11 +12334,16 @@ paths:
         name: query
         schema:
           type: string
-      - description: Mode the search.
+      - description: Mode of the search.
         in: query
         name: mode
         schema:
           type: string
+      - description: No pagination.
+        in: query
+        name: no_page
+        schema:
+          type: boolean
       responses:
         "200":
           content:
