@@ -54,7 +54,7 @@ def stop_runs(view, request, actor, *args, **kwargs):
     # Immediate stop
     queryset = (
         get_run_model()
-        .objects.filter(project=view.project, uuid__in=request.data.get("uuids", []))
+        .restorable.filter(project=view.project, uuid__in=request.data.get("uuids", []))
         .filter(status__in=LifeCycle.SAFE_STOP_VALUES)
     )
     condition = V1StatusCondition.get_condition(
@@ -67,7 +67,7 @@ def stop_runs(view, request, actor, *args, **kwargs):
 
     queryset = (
         get_run_model()
-        .objects.filter(project=view.project, uuid__in=request.data.get("uuids", []))
+        .restorable.filter(project=view.project, uuid__in=request.data.get("uuids", []))
         .exclude(status__in=LifeCycle.DONE_OR_IN_PROGRESS_VALUES)
     )
     runs = [r for r in queryset]
@@ -115,7 +115,7 @@ def approve_runs(view, request, actor, *args, **kwargs):
 
 
 def delete_runs(view, request, actor, *args, **kwargs):
-    runs = get_run_model().objects.filter(
+    runs = get_run_model().restorable.filter(
         project=view.project, uuid__in=request.data.get("uuids", [])
     )
     # Delete non managed immediately

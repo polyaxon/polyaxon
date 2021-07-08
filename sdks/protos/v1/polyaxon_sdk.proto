@@ -50,7 +50,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.10.0";
+        version: "1.10.1";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -258,10 +258,26 @@ service RunsV1 {
     };
   }
 
+  // Archive runs
+  rpc ArchiveRuns(ProjectResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/{project}/runs/archive"
+      body: "uuids"
+    };
+  }
+
   // Restore run
   rpc RestoreRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/api/v1/{owner}/{entity}/runs/{uuid}/restore"
+    };
+  }
+
+  // Archive runs
+  rpc RestoreRuns(ProjectResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/{project}/runs/restore"
+      body: "uuids"
     };
   }
 

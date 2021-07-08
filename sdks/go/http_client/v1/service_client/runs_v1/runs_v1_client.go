@@ -50,6 +50,8 @@ type ClientService interface {
 
 	ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveRunOK, *ArchiveRunNoContent, error)
 
+	ArchiveRuns(params *ArchiveRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveRunsOK, *ArchiveRunsNoContent, error)
+
 	BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkRunOK, *BookmarkRunNoContent, error)
 
 	BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkRunsOK, *BookmarkRunsNoContent, error)
@@ -133,6 +135,8 @@ type ClientService interface {
 	RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestartRunOK, *RestartRunNoContent, error)
 
 	RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreRunOK, *RestoreRunNoContent, error)
+
+	RestoreRuns(params *RestoreRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreRunsOK, *RestoreRunsNoContent, error)
 
 	ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResumeRunOK, *ResumeRunNoContent, error)
 
@@ -276,6 +280,46 @@ func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAut
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ArchiveRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ArchiveRuns archives runs
+*/
+func (a *Client) ArchiveRuns(params *ArchiveRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveRunsOK, *ArchiveRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewArchiveRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ArchiveRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/archive",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ArchiveRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ArchiveRunsOK:
+		return value, nil, nil
+	case *ArchiveRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ArchiveRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1956,6 +2000,46 @@ func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAut
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*RestoreRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  RestoreRuns archives runs
+*/
+func (a *Client) RestoreRuns(params *RestoreRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreRunsOK, *RestoreRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRestoreRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "RestoreRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/restore",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &RestoreRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *RestoreRunsOK:
+		return value, nil, nil
+	case *RestoreRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*RestoreRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
