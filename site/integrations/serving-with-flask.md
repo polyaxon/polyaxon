@@ -17,7 +17,7 @@ featured: false
 popularity: 0
 class_name: instruction
 visibility: public
-status: published
+status: examples
 ---
 
 Polyaxon users can use the service abstraction to move from trained ML models to internal production-grade prediction APIs or to test their APIs before moving to a production framework. 
