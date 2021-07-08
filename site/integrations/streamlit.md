@@ -17,7 +17,7 @@ tags:
 featured: false
 popularity: 1
 visibility: public
-status: published
+status: examples
 ---
 
 Polyaxon allows you to extend it's native dashboarding capabilities and integrates with Streamlit to run and publish custom ML apps.
