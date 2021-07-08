@@ -18,7 +18,7 @@ Owners on Polyaxon can update and manage their billing information under the set
 
 ## Update billing information and email
 
-The first step is to have your company name and billing email correct correctly on Polyaxon:
+The first step is to have your company name and billing email correctly on Polyaxon:
 
 ![billing-details](../../../../content/images/dashboard/billing/billing-details.png)
 
@@ -32,7 +32,7 @@ If you are on Polyaxon Cloud you need to set a correct payment method:
 
 ## Set or update you plan
 
-The first time configure your plan, you will need to click `Confirm Payment` button, you will be prompted to configure (set number of seats, cycle, ...) and confirm your plan:
+The first time you configure your plan, you will need to click `Confirm Payment` button, you will be prompted to configure (set number of seats, cycle, ...) and confirm your plan:
 
 ![billing-payment](../../../../content/images/dashboard/billing/billing-payment.png)
 

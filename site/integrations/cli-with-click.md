@@ -16,7 +16,7 @@ featured: false
 popularity: 0
 class_name: instruction
 visibility: public
-status: published
+status: examples
 ---
 
 Polyaxon schedules containers using typed components with inputs and outputs, oftentimes users will need to create and expose their programs as command-line applications.
