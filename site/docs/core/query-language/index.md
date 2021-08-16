@@ -72,8 +72,8 @@ operator               | example
 `x is not None`        | `name: ~nil` will match all entities that have a non null name
 `x = y`                | `status: running` will match all entities that have the status running
 `x != y`               | `status: ~running` will match all entities that have the status not running
-`x in {a, b, c}`       | `status: started|building|running` will match all entities that have the status in one of the values started, building, or running
-`x not in {a, b, c}`   | `status: ~started|building|running` will match all entities that have the status not in one of the values started, building, or running
+`x in {a, b, c}`       | <code>status: started &#124; building &#124; running</code> will match all entities that have the status in one of the values started, building, or running
+`x not in {a, b, c}`   | <code>status: ~started &#124; building &#124; running</code> will match all entities that have the status not in one of the values started, building, or running
 
 
 ## Query with bool condition
@@ -120,8 +120,8 @@ operator                    | example
 ----------------------------|------------------
 `x = y`                     | `status: running` will match all entities that have the status running
 `x != y`                    | `status: ~running` will match all entities that have the status not running
-`x in {a, b, c}`            | `status: started|building|running` will match all entities that have the status in one of the values started, building, or running
-`x not in {a, b, c}`        | `status: ~started|building|running` will match all entities that have the status not in one of the values started, building, or running
+`x in {a, b, c}`            | <code>status: started &#124; building &#124; running</code> will match all entities that have the status in one of the values started, building, or running
+`x not in {a, b, c}`        | <code>status: ~started &#124; building &#124; running</code> will match all entities that have the status not in one of the values started, building, or running
 `x ends with foo`           | `x: %foo` will match all entities that have the value ending with foo
 `x starts with foo`         | `x: foo%` will match all entities that have the value starting with foo
 `x starts/ends with foo`    | `x: %foo%` will match all entities that have the value starting/ending with foo
