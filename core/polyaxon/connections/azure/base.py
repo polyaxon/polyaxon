@@ -13,60 +13,103 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
+
+import logging
 
 from typing import List, Optional, Union
 
-from polyaxon.connections.base import BaseService
 from polyaxon.connections.reader import read_keys
+
+logging.getLogger("azure").setLevel(logging.WARNING)
+logging.getLogger("azure.storage").setLevel(logging.WARNING)
+logging.getLogger("azure.storage.blob").setLevel(logging.WARNING)
 
 
 def get_account_name(
-    keys: Optional[Union[str, List[str]]] = None, context_path: Optional[str] = None
+    keys: Optional[Union[str, List[str]]] = None,
+    context_path: Optional[str] = None,
+    **kwargs
 ):
+    # Check kwargs
+    value = kwargs.get("account_name") or kwargs.get("AZURE_ACCOUNT_NAME")
+    if value:
+        return value
+    # Check env/path keys
     keys = keys or ["AZURE_ACCOUNT_NAME"]
     return read_keys(context_path=context_path, keys=keys)
 
 
 def get_account_key(
-    keys: Optional[Union[str, List[str]]] = None, context_path: Optional[str] = None
+    keys: Optional[Union[str, List[str]]] = None,
+    context_path: Optional[str] = None,
+    **kwargs
 ):
+    value = kwargs.get("account_key") or kwargs.get("AZURE_ACCOUNT_KEY")
+    if value:
+        return value
     keys = keys or ["AZURE_ACCOUNT_KEY"]
     return read_keys(context_path=context_path, keys=keys)
 
 
 def get_connection_string(
-    keys: Optional[Union[str, List[str]]] = None, context_path: Optional[str] = None
+    keys: Optional[Union[str, List[str]]] = None,
+    context_path: Optional[str] = None,
+    **kwargs
 ):
+    value = kwargs.get("connection_string") or kwargs.get("AZURE_CONNECTION_STRING")
+    if value:
+        return value
     keys = keys or ["AZURE_CONNECTION_STRING"]
     return read_keys(context_path=context_path, keys=keys)
 
 
-class AzureService(BaseService):
-    def __init__(self, connection=None, **kwargs):
-        super().__init__(connection=connection, **kwargs)
-        self._account_name = kwargs.get("account_name") or kwargs.get(
-            "AZURE_ACCOUNT_NAME"
-        )
-        self._account_key = kwargs.get("account_key") or kwargs.get("AZURE_ACCOUNT_KEY")
-        self._connection_string = kwargs.get("connection_string") or kwargs.get(
-            "AZURE_CONNECTION_STRING"
-        )
+def get_sas_token(
+    keys: Optional[Union[str, List[str]]] = None,
+    context_path: Optional[str] = None,
+    **kwargs
+):
+    value = (
+        kwargs.get("sas_token")
+        or kwargs.get("AZURE_SAS_TOKEN")
+        or kwargs.get("AZURE_STORAGE_SAS_TOKEN")
+    )
+    if value:
+        return value
+    keys = keys or ["AZURE_SAS_TOKEN", "AZURE_STORAGE_SAS_TOKEN"]
+    return read_keys(context_path=context_path, keys=keys)
 
-    def set_connection(
-        self,
-        connection=None,
-        connection_name=None,
-        account_name=None,
-        account_key=None,
-        connection_string=None,
-    ):
-        raise NotImplementedError
 
-    def set_env_vars(self):
-        if self._account_name:
-            os.environ["AZURE_ACCOUNT_NAME"] = self._account_name
-        if self._account_key:
-            os.environ["AZURE_ACCOUNT_KEY"] = self._account_key
-        if self._connection_string:
-            os.environ["AZURE_CONNECTION_STRING"] = self._connection_string
+def get_tenant_id(
+    keys: Optional[Union[str, List[str]]] = None,
+    context_path: Optional[str] = None,
+    **kwargs
+):
+    value = kwargs.get("tenant_id") or kwargs.get("AZURE_TENANT_ID")
+    if value:
+        return value
+    keys = keys or ["AZURE_TENANT_ID"]
+    return read_keys(context_path=context_path, keys=keys)
+
+
+def get_client_id(
+    keys: Optional[Union[str, List[str]]] = None,
+    context_path: Optional[str] = None,
+    **kwargs
+):
+    value = kwargs.get("client_id") or kwargs.get("AZURE_CLIENT_ID")
+    if value:
+        return value
+    keys = keys or ["AZURE_CLIENT_ID"]
+    return read_keys(context_path=context_path, keys=keys)
+
+
+def get_client_secret(
+    keys: Optional[Union[str, List[str]]] = None,
+    context_path: Optional[str] = None,
+    **kwargs
+):
+    value = kwargs.get("client_secret") or kwargs.get("AZURE_CLIENT_SECRET")
+    if value:
+        return value
+    keys = keys or ["AZURE_CLIENT_SECRET"]
+    return read_keys(context_path=context_path, keys=keys)

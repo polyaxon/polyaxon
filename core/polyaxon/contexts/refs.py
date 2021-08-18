@@ -144,7 +144,7 @@ def validate_ref(ref: str, name: str):
     if len(ref_parts) == 2 and ref_parts[0] not in ENTITIES:
         raise ValidationError(
             "Could not parse ref `{}` for param `{}`. "
-            "Ref must be one of `{}`".format(ref_parts[0], name, ENTITIES)
+            "Operation ref must be one of `{}`".format(ref_parts[0], name, ENTITIES)
         )
     if ref_parts[0] == RUNS:
         try:

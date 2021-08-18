@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import List, Union
 
 import click
 
@@ -27,6 +28,29 @@ def clean_artifacts():
     pass
 
 
+def _delete(
+    subpath: Union[str, List[str]],
+    connection_name: str,
+    connection_kind: str,
+    is_file: bool,
+):
+    from polyaxon.fs.fs import get_sync_fs_from_type
+    from polyaxon.fs.manager import delete_file_or_dir
+
+    subpath = to_list(subpath, check_none=True)
+    connection_type = V1ConnectionType(name=connection_name, kind=connection_kind)
+    fs = get_sync_fs_from_type(connection_type=connection_type)
+    for sp in subpath:
+        delete_file_or_dir(
+            fs=fs,
+            subpath=sp,
+            is_file=is_file,
+        )
+    Printer.print_success(
+        "{} subpath was cleaned, subpath: `{}`".format(connection_kind, subpath)
+    )
+
+
 @clean_artifacts.command()
 @click.option("--connection-name", help="The connection name.")
 @click.option("-sp", "--subpath", multiple=True, help="The s3 subpath to clean.")
@@ -36,25 +60,14 @@ def clean_artifacts():
     default=False,
     help="whether or not to use the basename of the key.",
 )
-@click.option(
-    "--workers", type=int, default=50, help="Number of worker threads to use."
-)
-def s3(connection_name, subpath, is_file, workers):
+def s3(connection_name, subpath, is_file):
     """Delete an s3 subpath."""
-    from polyaxon.stores.manager import delete_file_or_dir
-
-    subpath = to_list(subpath, check_none=True)
-    for sp in subpath:
-        delete_file_or_dir(
-            connection_type=V1ConnectionType(
-                name=connection_name, kind=V1ConnectionKind.S3
-            ),
-            subpath=sp,
-            workers=workers,
-            is_file=is_file,
-        )
-
-    Printer.print_success("S3 subpath was cleaned, subpath: `{}`".format(subpath))
+    _delete(
+        subpath=subpath,
+        connection_name=connection_name,
+        connection_kind=V1ConnectionKind.S3,
+        is_file=is_file,
+    )
 
 
 @clean_artifacts.command()
@@ -66,25 +79,14 @@ def s3(connection_name, subpath, is_file, workers):
     default=False,
     help="whether or not to use the basename of the key.",
 )
-@click.option(
-    "--workers", type=int, default=50, help="Number of worker threads to use."
-)
-def gcs(connection_name, subpath, is_file, workers):
+def gcs(connection_name, subpath, is_file):
     """Delete a gcs subpath."""
-    from polyaxon.stores.manager import delete_file_or_dir
-
-    subpath = to_list(subpath, check_none=True)
-    for sp in subpath:
-        delete_file_or_dir(
-            connection_type=V1ConnectionType(
-                name=connection_name, kind=V1ConnectionKind.GCS
-            ),
-            subpath=sp,
-            workers=workers,
-            is_file=is_file,
-        )
-
-    Printer.print_success("GCS subpath was cleaned, subpath: `{}`".format(subpath))
+    _delete(
+        subpath=subpath,
+        connection_name=connection_name,
+        connection_kind=V1ConnectionKind.GCS,
+        is_file=is_file,
+    )
 
 
 @clean_artifacts.command()
@@ -96,25 +98,14 @@ def gcs(connection_name, subpath, is_file, workers):
     default=False,
     help="whether or not to use the basename of the key.",
 )
-@click.option(
-    "--workers", type=int, default=50, help="Number of worker threads to use."
-)
-def wasb(connection_name, subpath, is_file, workers):
+def wasb(connection_name, subpath, is_file):
     """Delete a wasb path context."""
-    from polyaxon.stores.manager import delete_file_or_dir
-
-    subpath = to_list(subpath, check_none=True)
-    for sp in subpath:
-        delete_file_or_dir(
-            connection_type=V1ConnectionType(
-                name=connection_name, kind=V1ConnectionKind.WASB
-            ),
-            subpath=sp,
-            workers=workers,
-            is_file=is_file,
-        )
-
-    Printer.print_success("WASB subpath was cleaned, subpath: `{}`".format(subpath))
+    _delete(
+        subpath=subpath,
+        connection_name=connection_name,
+        connection_kind=V1ConnectionKind.WASB,
+        is_file=is_file,
+    )
 
 
 @clean_artifacts.command()
@@ -126,25 +117,14 @@ def wasb(connection_name, subpath, is_file, workers):
     default=False,
     help="whether or not to use the basename of the key.",
 )
-@click.option(
-    "--workers", type=int, default=50, help="Number of worker threads to use."
-)
-def volume_claim(connection_name, subpath, is_file, workers):
+def volume_claim(connection_name, subpath, is_file):
     """Delete a volume path context."""
-    from polyaxon.stores.manager import delete_file_or_dir
-
-    subpath = to_list(subpath, check_none=True)
-    for sp in subpath:
-        delete_file_or_dir(
-            connection_type=V1ConnectionType(
-                name=connection_name, kind=V1ConnectionKind.VOLUME_CLAIM
-            ),
-            subpath=sp,
-            workers=workers,
-            is_file=is_file,
-        )
-
-    Printer.print_success("Volume subpath was cleaned, subpath: `{}`".format(subpath))
+    _delete(
+        subpath=subpath,
+        connection_name=connection_name,
+        connection_kind=V1ConnectionKind.VOLUME_CLAIM,
+        is_file=is_file,
+    )
 
 
 @clean_artifacts.command()
@@ -156,22 +136,11 @@ def volume_claim(connection_name, subpath, is_file, workers):
     default=False,
     help="whether or not to use the basename of the key.",
 )
-@click.option(
-    "--workers", type=int, default=50, help="Number of worker threads to use."
-)
-def host_path(connection_name, subpath, is_file, workers):
+def host_path(connection_name, subpath, is_file):
     """Delete a host path context."""
-    from polyaxon.stores.manager import delete_file_or_dir
-
-    subpath = to_list(subpath, check_none=True)
-    for sp in subpath:
-        delete_file_or_dir(
-            connection_type=V1ConnectionType(
-                name=connection_name, kind=V1ConnectionKind.HOST_PATH
-            ),
-            subpath=sp,
-            workers=workers,
-            is_file=is_file,
-        )
-
-    Printer.print_success("WASB subpath was cleaned, subpath: `{}`".format(subpath))
+    _delete(
+        subpath=subpath,
+        connection_name=connection_name,
+        connection_kind=V1ConnectionKind.HOST_PATH,
+        is_file=is_file,
+    )

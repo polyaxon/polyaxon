@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
+
 from typing import List, Optional
 
 import ujson
@@ -58,7 +60,10 @@ def get_repo_context_args(
     if not url:
         raise PolypodException("A repo url is required to create a repo context.")
 
-    args = ["--repo-path={}/{}".format(mount_path, name), "--url={}".format(url)]
+    args = [
+        "--repo-path={}".format(os.path.join(mount_path, name)),
+        "--url={}".format(url),
+    ]
 
     if revision:
         args.append("--revision={}".format(revision))

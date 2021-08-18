@@ -15,6 +15,7 @@
 # limitations under the License.=
 
 from kubernetes_asyncio import client, config
+from kubernetes_asyncio.client import Configuration
 from kubernetes_asyncio.client.rest import ApiException
 
 from polyaxon.exceptions import PolyaxonK8SError
@@ -33,6 +34,26 @@ class AsyncK8SManager:
         self.k8s_beta_api = None
         self.k8s_custom_object_api = None
         self.k8s_version_api = None
+
+    @staticmethod
+    def get_managed_by_polyaxon(instance: str):
+        return "app.kubernetes.io/instance={},app.kubernetes.io/managed-by=polyaxon".format(
+            instance
+        )
+
+    @staticmethod
+    async def load_config(in_cluster=False, k8s_config=None):
+        if not k8s_config:
+            if in_cluster:
+                config.load_incluster_config()
+            else:
+                await config.load_kube_config()
+        return Configuration.get_default_copy()
+
+    @classmethod
+    def get_config_auth(cls, k8s_config=None):
+        additional_headers = k8s_config.api_key or {}
+        return additional_headers.get("authorization", "").strip("bearer").strip()
 
     async def setup(self, k8s_config=None):
         if not k8s_config:

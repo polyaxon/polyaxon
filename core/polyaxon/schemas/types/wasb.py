@@ -58,7 +58,7 @@ class V1WasbType(BaseTypeConfig, polyaxon_sdk.V1WasbType):
     ```yaml
     >>> params:
     >>>   test1: {value: {container: "containerName", user: "username"}}
-    >>>   test2: {value: {container: "containerName", user: "username", key: "some/path"}}
+    >>>   test2: {value: {container: "containerName", user: "username", path: "some/path"}}
     ```
 
     ### Python usage
@@ -103,12 +103,20 @@ class V1WasbType(BaseTypeConfig, polyaxon_sdk.V1WasbType):
     REDUCED_ATTRIBUTES = ["container", "storageAccount", "path"]
 
     def __str__(self):
-        return "wasbs://{}@{}.blob.core.windows.net".format(
-            self.container, self.storage_account, self.path
+        value = "wasbs://{}@{}.blob.core.windows.net".format(
+            self.container, self.storage_account
         )
+        if self.path:
+            return "{}/{}".format(value, self.path)
+        return value
 
     def __repr__(self):
         return str(self)
 
     def to_param(self):
         return str(self)
+
+    def get_container_path(self):
+        if self.path:
+            return "{}/{}".format(self.container, self.path)
+        return self.container

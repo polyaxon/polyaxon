@@ -21,16 +21,12 @@ import tarfile
 import tempfile
 
 from contextlib import contextmanager
-from typing import List
+from typing import List, Tuple
 
 from polyaxon.exceptions import PolyaxonPathException
 from polyaxon.logger import logger
 from polyaxon.utils import cli_constants
 from polyaxon.utils.list_utils import to_list
-
-
-def get_path(store_path: str, entity_path: str) -> str:
-    return os.path.join(store_path, entity_path)
 
 
 def check_or_create_path(path: str = None, is_dir=False) -> None:
@@ -62,7 +58,7 @@ def create_path(path: str) -> None:
 
 
 def get_tmp_path(path: str) -> str:
-    return get_path("/tmp", path)
+    return os.path.join("/tmp", path)
 
 
 def create_tmp_dir(dir_name: str) -> None:
@@ -114,16 +110,28 @@ def get_files_by_paths(file_type, filepaths):
         f[1][1].close()
 
 
-def get_files_in_path(path: str, exclude: List[str] = None) -> List[str]:
+def get_files_and_dirs_in_path(
+    path: str,
+    exclude: List[str] = None,
+    collect_dirs: bool = False,
+) -> Tuple[List[str], List[str]]:
     result_files = []
+    result_dirs = []
+    exclude = to_list(exclude, check_none=True)
     for root, dirs, files in os.walk(path, topdown=True):
-        exclude = to_list(exclude, check_none=True)
         if exclude:
             dirs[:] = [d for d in dirs if d not in exclude]
         logger.debug("Root:%s, Dirs:%s", root, dirs)
         for file_name in files:
             result_files.append(os.path.join(root, file_name))
-    return result_files
+        if collect_dirs:
+            for dir_name in dirs:
+                result_dirs.append(os.path.join(root, dir_name))
+    return result_files, result_dirs
+
+
+def get_files_in_path(path: str, exclude: List[str] = None) -> List[str]:
+    return get_files_and_dirs_in_path(path, exclude, False)[0]
 
 
 def get_dirs_under_path(path: str) -> List[str]:
@@ -191,7 +199,7 @@ def untar_file(
 ):
     extract_path = extract_path or "."
     if use_filepath:
-        extract_path = get_path(extract_path, filename.split(".tar.gz")[0])
+        extract_path = os.path.join(extract_path, filename.split(".tar.gz")[0])
     check_or_create_path(extract_path, is_dir=True)
     logger.info("Untarring the contents of the file ...")
     # Untar the file

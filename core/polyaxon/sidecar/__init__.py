@@ -19,15 +19,26 @@ import os
 from kubernetes.client.rest import ApiException
 
 from polyaxon.client import RunClient
-from polyaxon.containers.contexts import CONTEXT_MOUNT_RUN_EVENTS_FORMAT
+from polyaxon.containers.contexts import (
+    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
+    CONTEXT_MOUNT_FILE_WATCHER,
+    CONTEXT_MOUNT_RUN_EVENTS_FORMAT,
+)
 from polyaxon.env_vars.getters import get_run_info
 from polyaxon.env_vars.keys import POLYAXON_KEYS_K8S_POD_ID
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
+from polyaxon.fs.fs import (
+    close_fs,
+    get_artifacts_connection_type,
+    get_async_fs_from_type,
+)
+from polyaxon.fs.watcher import FSWatcher
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.logger import logger
 from polyaxon.settings import CLIENT_CONFIG
 from polyaxon.sidecar.intervals import get_sync_interval
 from polyaxon.sidecar.monitors import sync_artifacts, sync_logs
+from polyaxon.utils.date_utils import path_last_modified
 
 
 async def start_sidecar(
@@ -57,6 +68,9 @@ async def start_sidecar(
     k8s_manager = AsyncK8SManager(namespace=CLIENT_CONFIG.namespace, in_cluster=True)
     await k8s_manager.setup()
     pod = await k8s_manager.get_pod(pod_id, reraise=True)
+    connection_type = get_artifacts_connection_type()
+    fs = await get_async_fs_from_type(connection_type=connection_type)
+    fw = FSWatcher.read(CONTEXT_MOUNT_FILE_WATCHER)
 
     retry = 1
     is_running = True
@@ -78,8 +92,12 @@ async def start_sidecar(
             )
         if monitor_outputs:
             last_check = state["last_artifacts_check"]
-            state["last_artifacts_check"] = sync_artifacts(
-                last_check=last_check,
+            path_from = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_uuid)
+            state["last_artifacts_check"] = path_last_modified(path_from)
+            await sync_artifacts(
+                fs=fs,
+                fw=fw,
+                store_path=connection_type.store_path,
                 run_uuid=run_uuid,
             )
             client.sync_events_summaries(
@@ -114,3 +132,5 @@ async def start_sidecar(
     logger.info("Cleaning non main containers")
     if k8s_manager:
         await k8s_manager.close()
+
+    await close_fs(fs)

@@ -30,20 +30,18 @@ from polyaxon.exceptions import (
     PolyaxonShouldExitError,
 )
 from polyaxon.logger import logger
-from polyaxon.stores.base_store import StoreMixin
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import (
     check_or_create_path,
     create_tarfile_from_path,
     get_files_by_paths,
-    get_path,
     untar_file,
 )
 from polyaxon.utils.requests_utils import create_progress_callback, progress_bar
 from polyaxon.utils.units import format_sizeof
 
 
-class PolyaxonStore(StoreMixin):
+class PolyaxonStore:
     """
     Polyaxon filesystem store.
 
@@ -258,11 +256,11 @@ class PolyaxonStore(StoreMixin):
         If untar is False: it keeps the file compressed.
         """
         local_path = kwargs.pop("path_to", None)
-        local_path = local_path or get_path(
+        local_path = local_path or os.path.join(
             settings.CLIENT_CONFIG.archive_root, self._client.run_uuid
         )
         if path:
-            local_path = get_path(local_path, path)
+            local_path = os.path.join(local_path, path)
         _local_path = local_path
         untar = kwargs.get("untar")
         if untar is not None:

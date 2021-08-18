@@ -23,7 +23,7 @@ from typing import List
 from botocore.exceptions import ClientError
 
 from polyaxon.connections.aws import base
-from polyaxon.connections.aws.base import AWSService
+from polyaxon.connections.aws.service import AWSService
 from polyaxon.exceptions import (
     PolyaxonPathException,
     PolyaxonSchemaError,

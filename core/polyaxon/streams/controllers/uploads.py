@@ -19,6 +19,7 @@ import os
 import ujson
 
 from starlette import status
+from starlette.concurrency import run_in_threadpool
 from starlette.datastructures import UploadFile
 from starlette.exceptions import HTTPException
 from starlette.requests import Request
@@ -26,11 +27,13 @@ from starlette.responses import Response
 
 from polyaxon import settings
 from polyaxon.constants.globals import DEFAULT_UPLOADS_PATH
-from polyaxon.stores.async_manager import upload_dir, upload_file
+from polyaxon.fs.async_manager import upload_dir, upload_file
+from polyaxon.fs.types import FSSystem
 from polyaxon.utils.path_utils import check_or_create_path, delete_path, untar_file
 
 
 async def handle_posted_data(
+    fs: FSSystem,
     content_file: UploadFile,
     root_path: str,
     path: str,
@@ -74,16 +77,18 @@ async def handle_posted_data(
         for chunk in content_file.file:
             destination.write(chunk)
     if untar:
-        untar_file(full_tmppath, extract_path=full_filepath, use_filepath=False)
+        await run_in_threadpool(
+            untar_file, full_tmppath, extract_path=full_filepath, use_filepath=False
+        )
     if upload:
         if is_file:
-            await upload_file(subpath=root_path)
+            await upload_file(fs=fs, subpath=root_path)
         else:
-            await upload_dir(subpath=root_path)
+            await upload_dir(fs=fs, subpath=root_path)
     return root_path
 
 
-async def handle_upload(request: Request, is_file: bool) -> Response:
+async def handle_upload(fs: FSSystem, request: Request, is_file: bool) -> Response:
     form = await request.form()
     content_file = form["upload_file"]  # type: UploadFile
     content_json = form["json"]  # type: str
@@ -94,6 +99,7 @@ async def handle_upload(request: Request, is_file: bool) -> Response:
     path = content_json.get("path", "")
     try:
         archived_path = await handle_posted_data(
+            fs=fs,
             content_file=content_file,
             root_path=run_uuid,
             path=path,

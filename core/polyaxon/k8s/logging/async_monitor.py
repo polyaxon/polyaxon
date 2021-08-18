@@ -25,12 +25,6 @@ from polyaxon.types import AwareDT
 from polyaxon.utils.tz_utils import now
 
 
-def get_label_selector(instance: str) -> str:
-    return "app.kubernetes.io/instance={},app.kubernetes.io/managed-by=polyaxon".format(
-        instance
-    )
-
-
 async def handle_container_logs(
     k8s_manager: AsyncK8SManager, pod: V1Pod, container_name: str, **params
 ) -> List[V1Log]:
@@ -93,7 +87,9 @@ async def query_k8s_operation_logs(
         params["tail_lines"] = V1Logs.CHUNK_SIZE
     logs = []
 
-    pods = await k8s_manager.list_pods(label_selector=get_label_selector(instance))
+    pods = await k8s_manager.list_pods(
+        label_selector=k8s_manager.get_managed_by_polyaxon(instance)
+    )
 
     for pod in pods:
         logs += await handle_pod_logs(

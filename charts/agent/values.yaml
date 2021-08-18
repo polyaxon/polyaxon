@@ -68,7 +68,7 @@ agentSecret:
 gateway:
   enabled: true
   image: polyaxon/polyaxon-gateway
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -90,7 +90,7 @@ gateway:
 streams:
   enabled: true
   image: polyaxon/polyaxon-streams
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -117,7 +117,7 @@ streams:
 
 init:
   image: polyaxon/polyaxon-init
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -129,7 +129,7 @@ init:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   sleepInterval: 10
   syncInterval: 10
@@ -147,7 +147,7 @@ agent:
   compressedLogs: false
   enabled: true
   image: polyaxon/polyaxon-agent
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   # A flag to simplify configuring a replica agent on a different cluster
   isReplica: false
@@ -165,7 +165,7 @@ operator:
   skipCRD: false
   useCRDV1Beta1: false
   image: polyaxon/polyaxon-operator
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   maxConcurrentReconciles: 1
   resources:
@@ -178,7 +178,7 @@ operator:
 
 cleanHooks:
   image: polyaxon/polyaxon-cli
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
 
 securityContext:

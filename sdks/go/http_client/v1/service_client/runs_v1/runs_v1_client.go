@@ -118,6 +118,8 @@ type ClientService interface {
 
 	ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ImpersonateTokenOK, *ImpersonateTokenNoContent, error)
 
+	InspectRun(params *InspectRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InspectRunOK, *InspectRunNoContent, error)
+
 	InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InvalidateRunOK, *InvalidateRunNoContent, error)
 
 	InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InvalidateRunsOK, *InvalidateRunsNoContent, error)
@@ -1640,6 +1642,46 @@ func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runti
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ImpersonateTokenDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  InspectRun inspects an active run full conditions
+*/
+func (a *Client) InspectRun(params *InspectRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InspectRunOK, *InspectRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewInspectRunParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "InspectRun",
+		Method:             "GET",
+		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/k8s_inspect",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &InspectRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *InspectRunOK:
+		return value, nil, nil
+	case *InspectRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*InspectRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

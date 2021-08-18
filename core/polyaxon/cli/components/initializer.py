@@ -23,7 +23,10 @@ from marshmallow import ValidationError
 
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.connections.kinds import V1ConnectionKind
+from polyaxon.containers.contexts import CONTEXT_MOUNT_FILE_WATCHER
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.fs.watcher import FSWatcher
+from polyaxon.logger import logger
 from polyaxon.parser import parser
 from polyaxon.schemas.types import V1ConnectionType, V1FileType
 from polyaxon.utils.formatting import Printer
@@ -113,6 +116,53 @@ def git(url, repo_path, revision, connection, flags):
     Printer.print_success("Git Repo is initialized, path: `{}`".format(repo_path))
 
 
+def _sync_fw(path: str):
+    try:
+        fw = FSWatcher()
+        fw.sync(path)
+        fw.write(CONTEXT_MOUNT_FILE_WATCHER)
+    except Exception as e:  # File watcher should not prevent job from starting
+        logger.warning(
+            "File watcher failed syncing path: {}.\nError: {}".format(path, e)
+        )
+
+
+def _download(
+    connection_name: str,
+    connection_kind: str,
+    path_from: str,
+    path_to: str,
+    is_file: bool,
+    raise_errors: bool,
+    sync_fw: bool,
+):
+    from polyaxon.fs.fs import get_sync_fs_from_type
+    from polyaxon.fs.manager import download_file_or_dir
+
+    connection_type = V1ConnectionType(name=connection_name, kind=connection_kind)
+    fs = get_sync_fs_from_type(connection_type=connection_type)
+
+    try:
+        download_file_or_dir(
+            fs=fs,
+            path_from=path_from,
+            path_to=path_to,
+            is_file=is_file,
+        )
+        if sync_fw:
+            _sync_fw(path_to)
+        Printer.print_success(
+            "{} path is initialized, path: `{}`".format(connection_kind, path_to)
+        )
+    except Exception as e:
+        if raise_errors:
+            raise e
+        else:
+            logger.debug(
+                "Initialization failed, the error was ignored. Error details %s", e
+            )
+
+
 @initializer.command()
 @click.option("--connection-name", help="The connection name.")
 @click.option("--path-from", help="The s3 path to download data from.")
@@ -124,23 +174,28 @@ def git(url, repo_path, revision, connection, flags):
     help="whether or not to use the basename of the key.",
 )
 @click.option(
-    "--workers", type=int, default=50, help="Number of worker threads to use."
+    "--raise-errors",
+    is_flag=True,
+    default=False,
+    help="whether or not to raise initialization errors.",
 )
-def s3(connection_name, path_from, path_to, is_file, workers):
+@click.option(
+    "--sync-fw",
+    is_flag=True,
+    default=False,
+    help="whether or not to sync file watcher after initialization.",
+)
+def s3(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
     """Create s3 path context."""
-    from polyaxon.stores.manager import download_file_or_dir
-
-    download_file_or_dir(
-        connection_type=V1ConnectionType(
-            name=connection_name, kind=V1ConnectionKind.S3
-        ),
+    _download(
+        connection_name=connection_name,
+        connection_kind=V1ConnectionKind.S3,
         path_from=path_from,
         path_to=path_to,
-        workers=workers,
         is_file=is_file,
+        raise_errors=raise_errors,
+        sync_fw=sync_fw,
     )
-
-    Printer.print_success("S3 path is initialized, path: `{}`".format(path_to))
 
 
 @initializer.command()
@@ -154,23 +209,28 @@ def s3(connection_name, path_from, path_to, is_file, workers):
     help="whether or not to use the basename of the key.",
 )
 @click.option(
-    "--workers", type=int, default=50, help="Number of worker threads to use."
+    "--raise-errors",
+    is_flag=True,
+    default=False,
+    help="whether or not to raise initialization errors.",
 )
-def gcs(connection_name, path_from, path_to, is_file, workers):
+@click.option(
+    "--sync-fw",
+    is_flag=True,
+    default=False,
+    help="whether or not to sync file watcher after initialization.",
+)
+def gcs(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
     """Create gcs path context."""
-    from polyaxon.stores.manager import download_file_or_dir
-
-    download_file_or_dir(
-        connection_type=V1ConnectionType(
-            name=connection_name, kind=V1ConnectionKind.GCS
-        ),
+    _download(
+        connection_name=connection_name,
+        connection_kind=V1ConnectionKind.GCS,
         path_from=path_from,
         path_to=path_to,
-        workers=workers,
         is_file=is_file,
+        raise_errors=raise_errors,
+        sync_fw=sync_fw,
     )
-
-    Printer.print_success("GCS path is initialized, path: `{}`".format(path_to))
 
 
 @initializer.command()
@@ -184,20 +244,31 @@ def gcs(connection_name, path_from, path_to, is_file, workers):
     help="whether or not to use the basename of the key.",
 )
 @click.option(
-    "--workers", type=int, default=50, help="Number of worker threads to use."
+    "--raise-errors",
+    is_flag=True,
+    default=False,
+    help="whether or not to raise initialization errors.",
 )
-def wasb(connection_name, path_from, path_to, is_file, workers):
+@click.option(
+    "--sync-fw",
+    is_flag=True,
+    default=False,
+    help="whether or not to sync file watcher after initialization.",
+)
+def wasb(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
     """Create wasb path context."""
-    from polyaxon.stores.manager import download_file_or_dir
-
-    download_file_or_dir(
-        connection_type=V1ConnectionType(
-            name=connection_name, kind=V1ConnectionKind.WASB
-        ),
+    _download(
+        connection_name=connection_name,
+        connection_kind=V1ConnectionKind.WASB,
         path_from=path_from,
         path_to=path_to,
-        workers=workers,
         is_file=is_file,
+        raise_errors=raise_errors,
+        sync_fw=sync_fw,
     )
 
-    Printer.print_success("WASB path is initialized, path: `{}`".format(path_to))
+
+@initializer.command()
+@click.option("--path", help="The local path to store the data.")
+def fswatch(path):
+    _sync_fw(path)

@@ -76,6 +76,7 @@ class TestInitOutputsStore(BaseTestCase):
                 store=store,
                 mount_path=CONTEXT_MOUNT_ARTIFACTS,
                 artifacts=V1ArtifactsType(dirs=["run_uid"]),
+                sync_fw=True,
             )
         )
 
@@ -115,6 +116,7 @@ class TestInitOutputsStore(BaseTestCase):
                 store=store,
                 mount_path=CONTEXT_MOUNT_ARTIFACTS,
                 artifacts=V1ArtifactsType(dirs=["run_uid"]),
+                sync_fw=True,
             )
         )
 
@@ -154,6 +156,7 @@ class TestInitOutputsStore(BaseTestCase):
                 store=store,
                 mount_path=CONTEXT_MOUNT_ARTIFACTS,
                 artifacts=V1ArtifactsType(dirs=["run_uid"]),
+                sync_fw=True,
             )
         )
 

@@ -15,51 +15,34 @@
 # limitations under the License.
 import os
 
-from datetime import datetime
-from typing import Optional
-
 from polyaxon.containers.contexts import (
+    CONTEXT_MOUNT_ARTIFACTS,
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_ARTIFACTS_RELATED,
     CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT,
 )
-from polyaxon.stores.manager import get_artifacts_connection, upload_file_or_dir
-from polyaxon.utils.date_utils import path_last_modified
+from polyaxon.fs.async_manager import sync_fs
+from polyaxon.fs.types import FSSystem
+from polyaxon.fs.watcher import FSWatcher
+
+IGNORE_FOLDERS = ["plxlogs", ".git"]
 
 
-def sync_artifacts(last_check: Optional[datetime], run_uuid: str):
-    connection_type = get_artifacts_connection()
+async def sync_artifacts(fs: FSSystem, fw: FSWatcher, store_path: str, run_uuid: str):
+    fw.init()
     path_from = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_uuid)
-    new_check = path_last_modified(path_from)
-    # check if there's a path to sync
-    if os.path.exists(path_from):
-        path_to = os.path.join(connection_type.store_path, run_uuid)
+    fw.sync(path_from, exclude=IGNORE_FOLDERS)
 
-        upload_file_or_dir(
-            path_from=path_from,
-            path_to=path_to,
-            is_file=False,
-            workers=5,
-            last_time=last_check,
-            connection_type=connection_type,
-            exclude=["plxlogs"],
-        )
-
-    # Check if this run has trigger some related run paths
+    # Check if this run has triggered some related run paths
     if os.path.exists(CONTEXT_MOUNT_ARTIFACTS_RELATED):
         for sub_path in os.listdir(CONTEXT_MOUNT_ARTIFACTS_RELATED):
             # check if there's a path to sync
             path_from = CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT.format(sub_path)
-            if os.path.exists(path_from):
-                path_to = os.path.join(connection_type.store_path, sub_path)
+            fw.sync(path_from, exclude=IGNORE_FOLDERS)
 
-                upload_file_or_dir(
-                    path_from=path_from,
-                    path_to=path_to,
-                    is_file=False,
-                    workers=5,
-                    last_time=last_check,
-                    connection_type=connection_type,
-                )
-
-    return new_check
+    await sync_fs(
+        fs=fs,
+        fw=fw,
+        store_base_path=store_path,
+        context_base_path=CONTEXT_MOUNT_ARTIFACTS,
+    )

@@ -69,7 +69,6 @@ from polyaxon.utils.path_utils import (
     get_base_filename,
     get_dirs_under_path,
     get_files_in_path_context,
-    get_path,
 )
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.tz_utils import now
@@ -1734,7 +1733,7 @@ class RunClient:
         events_kind: str,
         last_check: Optional[datetime],
     ) -> Tuple[List, Dict]:
-        current_events_path = get_path(events_path, events_kind)
+        current_events_path = os.path.join(events_path, events_kind)
 
         summaries = []
         last_values = {}
@@ -1776,7 +1775,7 @@ class RunClient:
         > automatically, so you should not call this method manually.
         """
         # check if there's a path to sync
-        if not os.path.exists(events_path):
+        if not events_path or not os.path.exists(events_path):
             return
 
         # crawl dirs
@@ -1810,7 +1809,7 @@ class RunClient:
                 "Make sure that the offline mode is enabled and that run_data is provided."
             )
             return
-        if not os.path.exists(artifacts_path):
+        if not artifacts_path or not os.path.exists(artifacts_path):
             check_or_create_path(artifacts_path, is_dir=True)
         run_path = "{}/run_data.json".format(artifacts_path)
         with open(run_path, "w") as config_file:

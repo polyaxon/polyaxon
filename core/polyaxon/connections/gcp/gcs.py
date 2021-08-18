@@ -19,9 +19,7 @@ import os
 from concurrent import futures
 from typing import List
 
-from google.api_core.exceptions import GoogleAPIError, NotFound
-
-from polyaxon.connections.gcp.base import GCPService
+from polyaxon.connections.gcp.service import GCPService
 from polyaxon.exceptions import (
     PolyaxonPathException,
     PolyaxonSchemaError,
@@ -197,7 +195,7 @@ class GCSService(GCPService, StoreMixin):
         try:
             blob = self.get_blob(blob=blob, bucket_name=bucket_name)
             blob.download_to_filename(local_path)
-        except (NotFound, GoogleAPIError) as e:
+        except Exception as e:
             raise PolyaxonStoresException("Connection error: %s" % e) from e
 
     def upload_dir(
@@ -334,21 +332,21 @@ class GCSService(GCPService, StoreMixin):
         bucket = self.get_bucket(bucket_name)
         try:
             return bucket.delete_blob(key)
-        except (NotFound, GoogleAPIError) as e:
+        except Exception as e:
             raise PolyaxonStoresException("Connection error: %s" % e) from e
 
 
 def _delete_blob(blob):
     try:
         return blob.delete()
-    except (NotFound, GoogleAPIError) as e:
+    except Exception as e:
         raise PolyaxonStoresException("Connection error: %s" % e) from e
 
 
 def _download_blob(blob, local_path):
     try:
         blob.download_to_filename(local_path)
-    except (NotFound, GoogleAPIError) as e:
+    except Exception as e:
         raise PolyaxonStoresException("Connection error: %s" % e) from e
 
 

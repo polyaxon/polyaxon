@@ -46,7 +46,7 @@ class TestConnectionType(BaseTestCase):
         self.az_store = V1ConnectionType(
             name="test",
             kind=V1ConnectionKind.WASB,
-            schema=V1BucketConnection(bucket="Conwasb://x@y.blob.core.windows.net"),
+            schema=V1BucketConnection(bucket="wasbs://x@y.blob.core.windows.net"),
         )
         self.claim_store = V1ConnectionType(
             name="test",
@@ -79,7 +79,7 @@ class TestConnectionType(BaseTestCase):
         assert self.s3_store.tags == ["test", "foo"]
         assert self.gcs_store.store_path == self.gcs_store.schema.bucket
         assert self.gcs_store.tags == ["test"]
-        assert self.az_store.store_path == self.az_store.schema.bucket
+        assert self.az_store.store_path == "x"
         assert self.az_store.tags is None
         assert self.claim_store.store_path == self.claim_store.schema.mount_path
         assert self.claim_store.tags is None

@@ -42,6 +42,7 @@ Method | HTTP request | Description
 [**get_run_upstream_lineage**](RunsV1Api.md#get_run_upstream_lineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream | Get run upstream lineage
 [**get_runs_artifacts_lineage**](RunsV1Api.md#get_runs_artifacts_lineage) | **GET** /api/v1/{owner}/{name}/runs/lineage/artifacts | Get runs artifacts lineage
 [**impersonate_token**](RunsV1Api.md#impersonate_token) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/impersonate | Impersonate run token
+[**inspect_run**](RunsV1Api.md#inspect_run) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/k8s_inspect | Inspect an active run full conditions
 [**invalidate_run**](RunsV1Api.md#invalidate_run) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/invalidate | Invalidate run
 [**invalidate_runs**](RunsV1Api.md#invalidate_runs) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 [**list_archived_runs**](RunsV1Api.md#list_archived_runs) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
@@ -3266,6 +3267,97 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Auth**](V1Auth.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **inspect_run**
+> object inspect_run(namespace, owner, project, uuid, names=names, tail=tail, force=force)
+
+Inspect an active run full conditions
+
+### Example
+
+* Api Key Authentication (ApiKey):
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | namespace
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the run will be assigned
+uuid = 'uuid_example' # str | Uuid identifier of the entity
+names = 'names_example' # str | Names query param. (optional)
+tail = True # bool | Query param flag to tail the values. (optional)
+force = True # bool | Force query param. (optional)
+
+    try:
+        # Inspect an active run full conditions
+        api_response = api_instance.inspect_run(namespace, owner, project, uuid, names=names, tail=tail, force=force)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->inspect_run: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **str**| namespace | 
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the run will be assigned | 
+ **uuid** | **str**| Uuid identifier of the entity | 
+ **names** | **str**| Names query param. | [optional] 
+ **tail** | **bool**| Query param flag to tail the values. | [optional] 
+ **force** | **bool**| Force query param. | [optional] 
+
+### Return type
+
+**object**
 
 ### Authorization
 

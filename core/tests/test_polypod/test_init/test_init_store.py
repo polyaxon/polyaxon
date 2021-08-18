@@ -70,32 +70,38 @@ class TestInitStore(BaseTestCase):
         )
 
     def test_cp_copy_args(self):
-        assert cp_copy_args(path_from="/foo", path_to="/bar", is_file=True) == (
-            "if [ -f /foo ]; then cp /foo /bar; fi;"
-        )
-        assert cp_copy_args(path_from="/foo", path_to="/bar", is_file=False) == (
-            'if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -R /foo/* /bar; fi;'
-        )
+        assert cp_copy_args(
+            path_from="/foo", path_to="/bar", is_file=True, sync_fw=False
+        ) == ("if [ -f /foo ]; then cp /foo /bar;  fi;")
+        assert cp_copy_args(
+            path_from="/foo", path_to="/bar", is_file=False, sync_fw=False
+        ) == ('if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -R /foo/* /bar;  fi;')
 
     def test_files_cp_gcs_args(self):
-        assert cp_gcs_args(path_from="gcs://foo", path_to="/local", is_file=True) == (
-            "polyaxon initializer gcs --path-from=gcs://foo --path-to=/local --is-file;"
+        assert cp_gcs_args(
+            path_from="gcs://foo", path_to="/local", is_file=True, sync_fw=False
+        ) == (
+            "polyaxon initializer gcs --path-from=gcs://foo --path-to=/local --is-file ;"
         )
 
     def test_dirs_cp_gcs_args(self):
-        assert cp_gcs_args(path_from="gcs://foo", path_to="/local", is_file=False) == (
-            "polyaxon initializer gcs --path-from=gcs://foo --path-to=/local ;"
-        )
+        assert cp_gcs_args(
+            path_from="gcs://foo", path_to="/local", is_file=False, sync_fw=False
+        ) == ("polyaxon initializer gcs --path-from=gcs://foo --path-to=/local  ;")
 
     def test_files_cp_wasb_args(self):
-        assert cp_wasb_args(path_from="wasb://foo", path_to="/local", is_file=True) == (
-            "polyaxon initializer wasb --path-from=wasb://foo --path-to=/local --is-file;"
+        assert cp_wasb_args(
+            path_from="wasb://foo", path_to="/local", is_file=True, sync_fw=False
+        ) == (
+            "polyaxon initializer wasb --path-from=wasb://foo --path-to=/local --is-file ;"
         )
 
     def test_cp_wasb_args(self):
         assert (
-            cp_wasb_args(path_from="wasb://foo", path_to="/local", is_file=False)
-            == "polyaxon initializer wasb --path-from=wasb://foo --path-to=/local ;"
+            cp_wasb_args(
+                path_from="wasb://foo", path_to="/local", is_file=False, sync_fw=False
+            )
+            == "polyaxon initializer wasb --path-from=wasb://foo --path-to=/local  ;"
         )
 
     def test_get_volume_args_s3(self):
@@ -109,7 +115,9 @@ class TestInitStore(BaseTestCase):
         assert get_volume_args(s3_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_s3_args(path_from=path_from, path_to=path_to, is_file=False),
+                cp_s3_args(
+                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                ),
             ]
         )
 
@@ -128,9 +136,13 @@ class TestInitStore(BaseTestCase):
         ) == " ".join(
             [
                 get_or_create_args(path=base_path),
-                cp_s3_args(path_from=path_from1, path_to=path_to1, is_file=True),
+                cp_s3_args(
+                    path_from=path_from1, path_to=path_to1, is_file=True, sync_fw=False
+                ),
                 get_or_create_args(path=base_path),
-                cp_s3_args(path_from=path_from2, path_to=path_to2, is_file=True),
+                cp_s3_args(
+                    path_from=path_from2, path_to=path_to2, is_file=True, sync_fw=False
+                ),
             ]
         )
 
@@ -145,7 +157,9 @@ class TestInitStore(BaseTestCase):
         assert get_volume_args(gcs_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_gcs_args(path_from=path_from, path_to=path_to, is_file=False),
+                cp_gcs_args(
+                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                ),
             ]
         )
 
@@ -164,9 +178,13 @@ class TestInitStore(BaseTestCase):
         ) == " ".join(
             [
                 get_or_create_args(path=path_to1),
-                cp_gcs_args(path_from=path_from1, path_to=path_to1, is_file=False),
+                cp_gcs_args(
+                    path_from=path_from1, path_to=path_to1, is_file=False, sync_fw=False
+                ),
                 get_or_create_args(path=path_to2),
-                cp_gcs_args(path_from=path_from2, path_to=path_to2, is_file=False),
+                cp_gcs_args(
+                    path_from=path_from2, path_to=path_to2, is_file=False, sync_fw=False
+                ),
             ]
         )
 
@@ -174,21 +192,23 @@ class TestInitStore(BaseTestCase):
         az_store = V1ConnectionType(
             name="test_az",
             kind=V1ConnectionKind.WASB,
-            schema=V1BucketConnection(bucket="Conwasb://x@y.blob.core.windows.net"),
+            schema=V1BucketConnection(bucket="wasb://x@y.blob.core.windows.net"),
         )
         path_to = "/path/to/"
         path_from = os.path.join(az_store.store_path, "")
         assert get_volume_args(az_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_wasb_args(path_from=path_from, path_to=path_to, is_file=False),
+                cp_wasb_args(
+                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                ),
             ]
         )
 
         az_store = V1ConnectionType(
             name="test_az",
             kind=V1ConnectionKind.WASB,
-            schema=V1BucketConnection(bucket="Conwasb://x@y.blob.core.windows.net"),
+            schema=V1BucketConnection(bucket="wasb://x@y.blob.core.windows.net"),
         )
         base_path = "/path/to/"
         path_to1 = "/path/to/path1"
@@ -202,9 +222,13 @@ class TestInitStore(BaseTestCase):
         ) == " ".join(
             [
                 get_or_create_args(path=base_path),
-                cp_wasb_args(path_from=path_from1, path_to=path_to1, is_file=True),
+                cp_wasb_args(
+                    path_from=path_from1, path_to=path_to1, is_file=True, sync_fw=False
+                ),
                 get_or_create_args(path=path_to2),
-                cp_wasb_args(path_from=path_from2, path_to=path_to2, is_file=False),
+                cp_wasb_args(
+                    path_from=path_from2, path_to=path_to2, is_file=False, sync_fw=False
+                ),
             ]
         )
 
@@ -221,7 +245,9 @@ class TestInitStore(BaseTestCase):
         assert get_volume_args(claim_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_copy_args(path_from=path_from, path_to=path_to, is_file=False),
+                cp_copy_args(
+                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                ),
             ]
         )
 
@@ -242,9 +268,13 @@ class TestInitStore(BaseTestCase):
         ) == " ".join(
             [
                 get_or_create_args(path=base_path),
-                cp_copy_args(path_from=path_from1, path_to=path_to1, is_file=True),
+                cp_copy_args(
+                    path_from=path_from1, path_to=path_to1, is_file=True, sync_fw=False
+                ),
                 get_or_create_args(path=base_path),
-                cp_copy_args(path_from=path_from2, path_to=path_to2, is_file=True),
+                cp_copy_args(
+                    path_from=path_from2, path_to=path_to2, is_file=True, sync_fw=False
+                ),
             ]
         )
 
@@ -261,7 +291,9 @@ class TestInitStore(BaseTestCase):
         assert get_volume_args(host_path_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_copy_args(path_from=path_from, path_to=path_to, is_file=False),
+                cp_copy_args(
+                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                ),
             ]
         )
 
@@ -283,9 +315,13 @@ class TestInitStore(BaseTestCase):
         ) == " ".join(
             [
                 get_or_create_args(path=path_to1),
-                cp_copy_args(path_from=path_from1, path_to=path_to1, is_file=False),
+                cp_copy_args(
+                    path_from=path_from1, path_to=path_to1, is_file=False, sync_fw=False
+                ),
                 get_or_create_args(path=path_to2),
-                cp_copy_args(path_from=path_from2, path_to=path_to2, is_file=False),
+                cp_copy_args(
+                    path_from=path_from2, path_to=path_to2, is_file=False, sync_fw=False
+                ),
             ]
         )
 

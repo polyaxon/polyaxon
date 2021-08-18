@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 
 import polyaxon_sdk
 
@@ -99,7 +100,7 @@ class V1GcsType(BaseTypeConfig, polyaxon_sdk.V1GcsType):
     def __str__(self):
         path = "gs://{}".format(self.bucket)
         if self.blob:
-            path = "{}/{}".format(path, self.blob)
+            path = os.path.join(path, self.blob)
         return path
 
     def __repr__(self):

@@ -17,22 +17,33 @@
 import logging
 import os
 
+from typing import Dict
+
 logger = logging.getLogger("polyaxon.cli")
 
 
-def set_raven_client() -> bool:
+def set_raven_client(options: Dict = None) -> bool:
     from polyaxon import pkg, settings
     from polyaxon.env_vars.keys import POLYAXON_KEYS_SERVICE
 
     cli_config = settings.CLI_CONFIG
-    if cli_config and cli_config.log_handler and cli_config.log_handler.dsn:
+    options = options or {}
+    environment = options.get("environment")
+    dsn = options.get("dsn")
+    sample_rate = options.get("sample_rate", 0)
+    if cli_config and cli_config.log_handler and cli_config.log_handler.decoded_dsn:
+        dsn = dsn or cli_config.log_handler.decoded_dsn
+        environment = environment or cli_config.log_handler.environment
+
+    if dsn:
         import sentry_sdk
 
         sentry_sdk.init(
-            dsn=cli_config.log_handler.decoded_dsn,
+            dsn=dsn,
             release=pkg.VERSION,
-            environment=cli_config.log_handler.environment,
+            environment=environment,
             server_name=os.environ.get(POLYAXON_KEYS_SERVICE, None),
+            sample_rate=sample_rate,
         )
         return True
 

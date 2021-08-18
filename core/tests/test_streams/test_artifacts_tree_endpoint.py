@@ -40,7 +40,9 @@ class TestArtifactsTreeEndpoints(BaseTestCase):
     def test_get_artifacts_tree_non_existing_path(self):
         response = self.client.get(self.base_url + "?path=foo")
         assert response.status_code == 200
-        assert response.json() == {"dirs": [], "files": {}}
+        results = response.json()
+        assert results.pop("error") is not None
+        assert results == {"dirs": [], "files": {}}
 
     def test_get_artifacts_tree(self):
         response = self.client.get(self.base_url)
@@ -71,4 +73,6 @@ class TestArtifactsTreeEndpoints(BaseTestCase):
 
         response = self.client.get(self.base_url + "?path=foo/1")
         assert response.status_code == 200
-        assert response.json() == {"dirs": [], "files": {}}
+        results = response.json()
+        assert results.pop("error") is not None
+        assert results == {"dirs": [], "files": {}}

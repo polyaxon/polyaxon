@@ -90,6 +90,18 @@ location /streams/ {
 }
 
 
+location /k8s/ {
+    proxy_pass http://polyaxon-polyaxon-streams;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_buffering off;
+}
+
+
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
     proxy_pass http://plx-operation-$4.$1.svc.cluster.local;
     proxy_http_version 1.1;
@@ -249,6 +261,22 @@ location = /auth/v1/ {
 
 
 location /streams/ {
+    auth_request     /auth/v1/;
+    auth_request_set $auth_status $upstream_status;
+
+    resolver coredns.kube-system.svc.cluster.local valid=5s;
+    proxy_pass http://polyaxon-polyaxon-streams;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_buffering off;
+}
+
+
+location /k8s/ {
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 

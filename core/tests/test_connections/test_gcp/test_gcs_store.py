@@ -24,7 +24,8 @@ from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.utils.date_utils import to_datetime
 from tests.utils import BaseTestCase
 
-GCS_MODULE = "polyaxon.connections.gcp.base.{}"
+GCP_BASE_MODULE = "polyaxon.connections.gcp.base.{}"
+GCP_MODULE = "polyaxon.connections.gcp.service.{}"
 
 
 class TestGCSStore(BaseTestCase):
@@ -47,25 +48,25 @@ class TestGCSStore(BaseTestCase):
         gcs_url = "gs://bucket/"
         assert GCSService.parse_gcs_url(gcs_url) == ("bucket", "")
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_store_client(self, client, gc_credentials):
-        client.return_value = "client"
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_store_client(self, get_gc_client, gc_credentials):
+        get_gc_client.return_value = "client"
         store = GCSService(connection="foo")
         assert store.connection == "foo"
 
         store = GCSService()
         assert store.connection == "client"
-        assert gc_credentials.call_count == 1
-        assert client.call_count == 1
+        assert gc_credentials.call_count == 0
+        assert get_gc_client.call_count == 1
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_existing_object(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_existing_object(self, get_gc_client, _):
         test_bucket = "test_bucket"
         test_object = "test_object"
 
-        client.return_value.objects.return_value.get.return_value.execute.return_value = {
+        get_gc_client.return_value.objects.return_value.get.return_value.execute.return_value = {
             "kind": "storage#object",
             # the bucket name, object name, and generation number.
             "id": "{}/{}/1521132662504504".format(test_bucket, test_object),
@@ -87,72 +88,74 @@ class TestGCSStore(BaseTestCase):
         response = GCSService().check_blob(blob=test_object, bucket_name=test_bucket)
         assert response is True
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_non_existing_object(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_non_existing_object(self, get_gc_client, _):
         test_bucket = "test_bucket"
         test_object = "test_object"
 
-        client.return_value.get_bucket.return_value.get_blob.side_effect = Exception
+        get_gc_client.return_value.get_bucket.return_value.get_blob.side_effect = (
+            Exception
+        )
 
         response = GCSService().check_blob(blob=test_object, bucket_name=test_bucket)
         assert response is False
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_get_bucket(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_get_bucket(self, get_gc_client, _):
         test_bucket = "test_bucket"
 
-        client.return_value.get_bucket.return_value = {}
+        get_gc_client.return_value.get_bucket.return_value = {}
 
         response = GCSService().get_bucket(bucket_name=test_bucket)
 
         assert response == {}
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_get_blob(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_get_blob(self, get_gc_client, _):
         test_bucket = "test_bucket"
         test_object = "test_object"
 
         bucket = mock.MagicMock()
-        client.return_value.get_bucket.return_value = bucket
+        get_gc_client.return_value.get_bucket.return_value = bucket
         bucket.get_blob.return_value = {}
 
         response = GCSService().get_blob(blob=test_object, bucket_name=test_bucket)
 
         assert response == {}
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_delete(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_delete(self, get_gc_client, _):
         test_bucket = "test_bucket"
         test_object = "test_object"
 
         # Correct file
         bucket = mock.MagicMock()
-        client.return_value.get_bucket.return_value = bucket
+        get_gc_client.return_value.get_bucket.return_value = bucket
         bucket.delete_blob.return_value = True
 
         GCSService().delete(key=test_object, bucket_name=test_bucket)
 
         # Wrong file
         bucket = mock.MagicMock()
-        client.return_value.get_bucket.return_value = bucket
+        get_gc_client.return_value.get_bucket.return_value = bucket
         bucket.delete_blob.return_value = True
 
         GCSService().delete(key=test_object, bucket_name=test_bucket)
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_list_empty(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_list_empty(self, get_gc_client, _):
         gcs_url = "gs://bucket/path/to/blob"
         store = GCSService()
         assert store.list(gcs_url) == {"blobs": [], "prefixes": []}
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_list_dirs_and_blobs(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_list_dirs_and_blobs(self, get_gc_client, _):
         blob_root_path = "project_path/experiment_id/"
         gcs_url = "gs://bucket/" + blob_root_path
 
@@ -169,7 +172,7 @@ class TestGCSStore(BaseTestCase):
         mock_results.configure_mock(prefixes=(blob_root_path + dirname + "/",))
         mock_results.__iter__.return_value = [obj1_mock, obj2_mock]
 
-        client.return_value.list_blobs.return_value = mock_results
+        get_gc_client.return_value.list_blobs.return_value = mock_results
 
         store = GCSService()
         results = store.list(gcs_url)
@@ -186,9 +189,9 @@ class TestGCSStore(BaseTestCase):
         assert blobs[1][1] == 0
         assert prefixes[0] == dirname
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_list_with_subdir(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_list_with_subdir(self, get_gc_client, _):
         blob_root_path = "project_path/experiment_id/"
         gcs_url = "gs://bucket/" + blob_root_path
         dirname = "model"
@@ -201,7 +204,7 @@ class TestGCSStore(BaseTestCase):
         mock_results.configure_mock(prefixes=(blob_root_path + subdirname + "/",))
         mock_results.__iter__.return_value = [obj_mock]
 
-        client.return_value.list_blobs.return_value = mock_results
+        get_gc_client.return_value.list_blobs.return_value = mock_results
 
         store = GCSService()
         results = store.list(gcs_url, path=dirname)
@@ -214,15 +217,15 @@ class TestGCSStore(BaseTestCase):
         assert blobs[0][1] == obj_mock.size
         assert prefixes[0] == subdirname
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_upload(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_upload(self, get_gc_client, _):
         dirname = tempfile.mkdtemp()
         fpath = dirname + "/test.txt"
         open(fpath, "w")
 
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.side_effect  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.side_effect  # noqa
         ) = os.path.isfile
 
         store = GCSService()
@@ -230,12 +233,12 @@ class TestGCSStore(BaseTestCase):
         # Test without basename
         gcs_url = "gs://bucket/path/to/blob.txt"
         store.upload_file(filename=fpath, blob=gcs_url, use_basename=False)
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket.return_value.blob.assert_called_with(
+        get_gc_client.return_value.get_bucket.assert_called_with("bucket")
+        get_gc_client.return_value.get_bucket.return_value.blob.assert_called_with(
             "path/to/blob.txt"
         )
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_called_with(  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_called_with(  # noqa
                 fpath
             )
         )
@@ -243,19 +246,19 @@ class TestGCSStore(BaseTestCase):
         # Test with basename
         gcs_url = "gs://bucket/path/to/"
         store.upload_file(filename=fpath, blob=gcs_url, use_basename=True)
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket.return_value.blob.assert_called_with(
+        get_gc_client.return_value.get_bucket.assert_called_with("bucket")
+        get_gc_client.return_value.get_bucket.return_value.blob.assert_called_with(
             "path/to/test.txt"
         )
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_called_with(  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_called_with(  # noqa
                 fpath
             )
         )
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_download(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_download(self, get_gc_client, _):
         dirname = tempfile.mkdtemp()
         fpath = dirname + "/test.txt"
 
@@ -263,7 +266,7 @@ class TestGCSStore(BaseTestCase):
             return open(fname, "w")
 
         (
-            client.return_value.get_bucket.return_value.get_blob.return_value.download_to_filename.side_effect  # noqa
+            get_gc_client.return_value.get_bucket.return_value.get_blob.return_value.download_to_filename.side_effect  # noqa
         ) = mkfile
 
         store = GCSService()
@@ -271,24 +274,28 @@ class TestGCSStore(BaseTestCase):
         # Test without basename
         gcs_url = "gs://bucket/path/to/blob.txt"
         store.download_file(gcs_url, fpath, use_basename=False)
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket().get_blob.assert_called_with("path/to/blob.txt")
-        client.return_value.get_bucket().get_blob().download_to_filename.assert_called_with(
+        get_gc_client.return_value.get_bucket.assert_called_with("bucket")
+        get_gc_client.return_value.get_bucket().get_blob.assert_called_with(
+            "path/to/blob.txt"
+        )
+        get_gc_client.return_value.get_bucket().get_blob().download_to_filename.assert_called_with(
             fpath
         )
 
         # Test with basename
         gcs_url = "gs://bucket/path/to/blob.txt"
         store.download_file(gcs_url, dirname, use_basename=True)
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket().get_blob.assert_called_with("path/to/blob.txt")
-        client.return_value.get_bucket().get_blob().download_to_filename.assert_called_with(
+        get_gc_client.return_value.get_bucket.assert_called_with("bucket")
+        get_gc_client.return_value.get_bucket().get_blob.assert_called_with(
+            "path/to/blob.txt"
+        )
+        get_gc_client.return_value.get_bucket().get_blob().download_to_filename.assert_called_with(
             dirname + "/blob.txt"
         )
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_upload_dir(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_upload_dir(self, get_gc_client, _):
         dirname1 = tempfile.mkdtemp()
         fpath1 = dirname1 + "/test1.txt"
         with open(fpath1, "w") as f:
@@ -304,7 +311,7 @@ class TestGCSStore(BaseTestCase):
             f.write("data3")
 
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.side_effect  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.side_effect  # noqa
         ) = os.path.isfile
 
         store = GCSService()
@@ -316,8 +323,8 @@ class TestGCSStore(BaseTestCase):
 
         # Test without basename
         store.upload_dir(dirname=dirname1, blob=gcs_url, use_basename=False)
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket.return_value.blob.assert_has_calls(
+        get_gc_client.return_value.get_bucket.assert_called_with("bucket")
+        get_gc_client.return_value.get_bucket.return_value.blob.assert_has_calls(
             [
                 mock.call("{}test1.txt".format(blob_path)),
                 mock.call("{}test2.txt".format(blob_path)),
@@ -326,7 +333,7 @@ class TestGCSStore(BaseTestCase):
             any_order=True,
         )
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_has_calls(  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_has_calls(  # noqa
                 [mock.call(fpath1), mock.call(fpath2), mock.call(fpath3)],
                 any_order=True,
             )
@@ -334,8 +341,8 @@ class TestGCSStore(BaseTestCase):
 
         # Test with basename
         store.upload_dir(dirname=dirname1, blob=gcs_url, use_basename=True)
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket.return_value.blob.assert_has_calls(
+        get_gc_client.return_value.get_bucket.assert_called_with("bucket")
+        get_gc_client.return_value.get_bucket.return_value.blob.assert_has_calls(
             [
                 mock.call("{}{}/test1.txt".format(blob_path, rel_path1)),
                 mock.call("{}{}/test2.txt".format(blob_path, rel_path1)),
@@ -344,15 +351,15 @@ class TestGCSStore(BaseTestCase):
             any_order=True,
         )
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_has_calls(  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_has_calls(  # noqa
                 [mock.call(fpath1), mock.call(fpath2), mock.call(fpath3)],
                 any_order=True,
             )
         )
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_upload_dir_with_last_time(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_upload_dir_with_last_time(self, get_gc_client, _):
         dirname1 = tempfile.mkdtemp()
         fpath1 = dirname1 + "/test1.txt"
         with open(fpath1, "w") as f:
@@ -371,7 +378,7 @@ class TestGCSStore(BaseTestCase):
             f.write("data3")
 
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.side_effect  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.side_effect  # noqa
         ) = os.path.isfile
 
         store = GCSService()
@@ -385,12 +392,12 @@ class TestGCSStore(BaseTestCase):
         store.upload_dir(
             dirname=dirname1, blob=gcs_url, use_basename=False, last_time=last_time
         )
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket.return_value.blob.assert_has_calls(
+        get_gc_client.return_value.get_bucket.assert_called_with("bucket")
+        get_gc_client.return_value.get_bucket.return_value.blob.assert_has_calls(
             [mock.call("{}{}/test3.txt".format(blob_path, rel_path2))], any_order=True
         )
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_has_calls(  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_has_calls(  # noqa
                 [mock.call(fpath3)], any_order=True
             )
         )
@@ -399,20 +406,20 @@ class TestGCSStore(BaseTestCase):
         store.upload_dir(
             dirname=dirname1, blob=gcs_url, use_basename=True, last_time=last_time
         )
-        client.return_value.get_bucket.assert_called_with("bucket")
-        client.return_value.get_bucket.return_value.blob.assert_has_calls(
+        get_gc_client.return_value.get_bucket.assert_called_with("bucket")
+        get_gc_client.return_value.get_bucket.return_value.blob.assert_has_calls(
             [mock.call("{}{}/{}/test3.txt".format(blob_path, rel_path1, rel_path2))],
             any_order=True,
         )
         (
-            client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_has_calls(  # noqa
+            get_gc_client.return_value.get_bucket.return_value.blob.return_value.upload_from_filename.assert_has_calls(  # noqa
                 [mock.call(fpath3)], any_order=True
             )
         )
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_download_dir(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_download_dir(self, get_gc_client, _):
         dirname1 = tempfile.mkdtemp()
         dirname2 = tempfile.mkdtemp(prefix=dirname1 + "/")
 
@@ -420,7 +427,7 @@ class TestGCSStore(BaseTestCase):
             return open(fname, "w")
 
         (
-            client.return_value.get_bucket.return_value.get_blob.return_value.download_to_filename.side_effect  # noqa
+            get_gc_client.return_value.get_bucket.return_value.get_blob.return_value.download_to_filename.side_effect  # noqa
         ) = mkfile
 
         store = GCSService()
@@ -445,13 +452,15 @@ class TestGCSStore(BaseTestCase):
         mock_results.configure_mock()
         mock_results.__iter__.return_value = [obj_mock1, obj_mock2, obj_mock3]
 
-        client.return_value.list_blobs.return_value = mock_results
+        get_gc_client.return_value.list_blobs.return_value = mock_results
 
         dirname3 = tempfile.mkdtemp()
 
         # Test without basename
         store.download_dir(blob=gcs_url, local_path=dirname3, use_basename=False)
-        client.return_value.list_blobs.assert_called_with("bucket", prefix=blob_path)
+        get_gc_client.return_value.list_blobs.assert_called_with(
+            "bucket", prefix=blob_path
+        )
 
         obj_mock1.download_to_filename.assert_called_with(f"{dirname3}/test1.txt")
         obj_mock2.download_to_filename.assert_called_with(f"{dirname3}/test2.txt")
@@ -459,9 +468,9 @@ class TestGCSStore(BaseTestCase):
             f"{dirname3}/{rel_path2}/test3.txt"
         )
 
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_download_dir_with_basename(self, client, _):
+    @mock.patch(GCP_BASE_MODULE.format("get_gc_credentials"))
+    @mock.patch(GCP_MODULE.format("get_gc_client"))
+    def test_download_dir_with_basename(self, get_gc_client, _):
         dirname1 = tempfile.mkdtemp()
         dirname2 = tempfile.mkdtemp(prefix=dirname1 + "/")
 
@@ -469,7 +478,7 @@ class TestGCSStore(BaseTestCase):
             return open(fname, "w")
 
         (
-            client.return_value.get_bucket.return_value.get_blob.return_value.download_to_filename.side_effect  # noqa
+            get_gc_client.return_value.get_bucket.return_value.get_blob.return_value.download_to_filename.side_effect  # noqa
         ) = mkfile
 
         store = GCSService()
@@ -496,13 +505,13 @@ class TestGCSStore(BaseTestCase):
         mock_results.configure_mock()
         mock_results.__iter__.return_value = [obj_mock1, obj_mock2, obj_mock3]
 
-        client.return_value.list_blobs.return_value = mock_results
+        get_gc_client.return_value.list_blobs.return_value = mock_results
 
         dirname3 = tempfile.mkdtemp()
 
         # Test with basename
         store.download_dir(blob=gcs_url + "foo", local_path=dirname3, use_basename=True)
-        client.return_value.list_blobs.assert_called_with(
+        get_gc_client.return_value.list_blobs.assert_called_with(
             "bucket", prefix=blob_path + "foo"
         )
 

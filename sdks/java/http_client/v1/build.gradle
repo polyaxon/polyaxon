@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'java'
 
 group = 'org.openapitools'
-version = '1.10.1'
+version = '1.11.0'
 
 buildscript {
     repositories {

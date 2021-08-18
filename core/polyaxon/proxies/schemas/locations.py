@@ -105,5 +105,8 @@ def get_api_locations_config():
 
 
 def get_streams_locations_config():
-    config = [get_tmp_location_config(), get_archives_root_location_config()]
+    config = [
+        get_tmp_location_config(),
+        get_archives_root_location_config(),
+    ]
     return "\n".join(config)

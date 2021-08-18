@@ -266,7 +266,7 @@ class Run(RunClient):
         connection = get_connection_type(get_artifacts_store_name())
         if not connection:
             logger.warning("Artifacts store connection not detected.")
-        return "{}/{}".format(connection.store_path, self.run_uuid)
+        return os.path.join(connection.store_path, self.run_uuid)
 
     @client_handler(check_no_op=True)
     def get_artifacts_path(

@@ -299,9 +299,14 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
     @property
     def store_path(self) -> str:
         if self.is_mount:
-            return self.schema.mount_path
+            return self.schema.mount_path.rstrip("/")
         if self.is_bucket:
-            return self.schema.bucket
+            bucket = self.schema.bucket.rstrip("/")
+            if self.is_wasb:
+                from polyaxon.parser.parser import parse_wasbs_path
+
+                return parse_wasbs_path(bucket).get_container_path()
+            return bucket
 
     @property
     def is_mount(self) -> bool:

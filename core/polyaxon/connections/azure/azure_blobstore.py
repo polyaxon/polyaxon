@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import logging
 import os
 
 from concurrent import futures
@@ -23,11 +22,11 @@ from azure.core.exceptions import HttpResponseError
 from azure.storage.blob import BlobPrefix, BlobServiceClient
 
 from polyaxon.connections.azure.base import (
-    AzureService,
     get_account_key,
     get_account_name,
     get_connection_string,
 )
+from polyaxon.connections.azure.service import AzureService
 from polyaxon.connections.reader import get_connection_context_path
 from polyaxon.exceptions import (
     PolyaxonConnectionError,
@@ -43,10 +42,6 @@ from polyaxon.utils.path_utils import (
     check_dirname_exists,
     get_files_in_path_context,
 )
-
-logging.getLogger("azure").setLevel(logging.WARNING)
-logging.getLogger("azure.storage").setLevel(logging.WARNING)
-logging.getLogger("azure.storage.blob").setLevel(logging.WARNING)
 
 
 def get_blob_service_connection(
@@ -185,15 +180,13 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
         client = self.connection.get_container_client(container_name)
 
-        if key and not key.endswith("/"):
-            key += "/"
+        key = "/{}/".format(key.strip("/"))
 
         prefix = key
         if path:
             prefix = os.path.join(prefix, path)
 
-        if prefix and not prefix.endswith("/"):
-            prefix += "/"
+        prefix = "/{}/".format(prefix.strip("/"))
 
         list_blobs = []
         list_prefixes = []

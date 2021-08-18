@@ -29,7 +29,10 @@ from polyaxon.proxies.schemas.gateway.dns import get_resolver
 from polyaxon.proxies.schemas.gateway.healthz import get_healthz_location_config
 from polyaxon.proxies.schemas.gateway.services import get_services_location_config
 from polyaxon.proxies.schemas.gateway.ssl import get_ssl_config
-from polyaxon.proxies.schemas.gateway.streams import get_streams_location_config
+from polyaxon.proxies.schemas.gateway.streams import (
+    get_k8s_location_config,
+    get_streams_location_config,
+)
 from polyaxon.proxies.schemas.gzip import get_gzip_config
 from polyaxon.proxies.schemas.listen import get_listen_config
 from polyaxon.proxies.schemas.logging import get_logging_config
@@ -55,6 +58,7 @@ def get_base_config():
         get_healthz_location_config(),
         get_auth_location_config(resolver=resolver),
         get_streams_location_config(resolver=resolver, auth=auth),
+        get_k8s_location_config(resolver=resolver, auth=auth),
         get_services_location_config(resolver=resolver, auth=auth, rewrite=False),
         get_services_location_config(resolver=resolver, auth=auth, rewrite=True),
         get_api_location_config(resolver=resolver, auth=auth),

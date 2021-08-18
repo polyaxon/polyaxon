@@ -48,4 +48,5 @@ def create_tmp_files(path):
 
 
 def get_streams_client():
-    return TestClient(app)
+    with TestClient(app) as client:
+        return client

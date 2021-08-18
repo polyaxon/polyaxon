@@ -1210,20 +1210,40 @@ def parse_wasbs_path(wasbs_path):
         return V1WasbType.from_dict(wasbs_path)
 
     parsed_url = urlparse(wasbs_path)
-    if parsed_url.scheme != "wasbs":
+    if parsed_url.scheme not in {"wasb", "wasbs", "https", "az", "abfs"}:
         raise PolyaxonSchemaError("Received an invalid url `{}`".format(wasbs_path))
-    match = re.match("([^@]+)@([^.]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc)
-    if match is None:
-        raise PolyaxonSchemaError(
-            "wasbs url must be of the form <container>@<account>.blob.core.windows.net"
+    if parsed_url.scheme in {"wasb", "wasbs"}:
+        match = re.match(
+            "([^@]+)@([^.]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc
         )
-
-    container = match.group(1)
-    storage_account = match.group(2)
-    path = parsed_url.path
-    if path.startswith("/"):
-        path = path[1:]
-    return V1WasbType(container, storage_account, path)
+        if match is None:
+            raise PolyaxonSchemaError(
+                "wasbs url must be of the form <container>@<account>.blob.core.windows.net"
+            )
+        container = match.group(1)
+        storage_account = match.group(2)
+        path = parsed_url.path
+        path = path.strip("/")
+    elif parsed_url.scheme == "https":
+        match = re.match("([^@]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc)
+        if match is None:
+            raise PolyaxonSchemaError(
+                "wasbs url must be of the form <container>.blob.core.windows.net"
+            )
+        storage_account = match.group(1)
+        path = parsed_url.path
+        path = path.strip("/")
+        if "/" not in path:
+            # this means path is the container_name
+            container, path = path, ""
+        else:
+            container, path = path.split("/", 1)
+    else:
+        storage_account = None
+        container = parsed_url.netloc
+        path = parsed_url.path or ""
+        path = path.strip("/")
+    return V1WasbType(container, storage_account, path.strip("/"))
 
 
 def parse_gcs_path(gcs_path):

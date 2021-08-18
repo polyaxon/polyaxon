@@ -44,8 +44,8 @@ class AgentConfigManager(BaseConfigManager):
 
     @classmethod
     def get_config_from_env(cls) -> AgentConfig:
-        tmp_path = os.path.join(CONTEXT_TMP_POLYAXON_PATH, ".agent")
-        user_path = os.path.join(CONTEXT_USER_POLYAXON_PATH, ".agent")
+        tmp_path = os.path.join(CONTEXT_TMP_POLYAXON_PATH, cls.CONFIG_FILE_NAME)
+        user_path = os.path.join(CONTEXT_USER_POLYAXON_PATH, cls.CONFIG_FILE_NAME)
 
         config_paths = [
             os.environ,

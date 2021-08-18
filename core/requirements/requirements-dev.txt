@@ -6,23 +6,19 @@ GitPython<3.2.0
 numpy>=1.15.2
 scikit-learn==0.24.2
 hyperopt==0.2.5
-nbconvert>=5.4.0,<6.0.0
+nbconvert>=5.4,<6.0.0 # pin to fix #958
+gcsfs
+s3fs
+adlfs
 
-azure-storage-blob==12.4.0
-boto3==1.17.26
-botocore==1.20.26
-google-cloud-storage==1.36.2
+# Remove this
+google-cloud-storage
 
 moto==2.0.5
-google-compute-engine==2.8.13
 
-kubernetes_asyncio==12.0.1
-starlette==0.14.1
+kubernetes_asyncio==12.1.1
+starlette==0.14.2
 aiofiles==0.6.0
-uvicorn==0.13.3
-uvloop==0.14.0
-httptools==0.1.1
-python-multipart==0.0.5
 
 altair==4.1.0
 matplotlib==3.2.1

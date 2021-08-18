@@ -23,15 +23,11 @@ from polyaxon.utils.path_utils import (
     create_tarfile_from_path,
     get_files_by_paths,
     get_files_in_path_context,
-    get_path,
 )
 from tests.utils import BaseTestCase
 
 
 class TestFiles(BaseTestCase):
-    def test_get_path(self):
-        assert get_path("/foo", "bar") == "/foo/bar"
-
     def test_create_tarfile_from_path(self):
         files = ["tests/test_utils/__init__.py"]
         with create_tarfile_from_path(files, "project_name") as tar_file_name:

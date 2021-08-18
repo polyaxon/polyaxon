@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from polyaxon import settings
+from polyaxon.api import REWRITE_SERVICES_V1_LOCATION, SERVICES_V1_LOCATION
 from polyaxon.proxies.schemas.base import get_config
 
 PLUGIN_OPTIONS = r"""
@@ -60,7 +61,7 @@ def get_plugins_location_config(resolver: str, auth: str, proxy_services=None):
 
 
 SERVICES_OPTIONS = r"""
-location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {{
+location ~ {app}([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {{
     {auth}
     {resolver}
     proxy_pass http://plx-operation-$4.$1.svc.{dns_cluster_with_port};
@@ -76,7 +77,7 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
 """  # noqa
 
 SERVICES_REWRITE_OPTIONS = r"""
-location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {{
+location ~ {app}([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {{
     {auth}
     {resolver}
     rewrite_log on;
@@ -103,6 +104,7 @@ def get_services_location_config(resolver: str, auth: str, rewrite: bool = False
         )
     return get_config(
         options=SERVICES_REWRITE_OPTIONS if rewrite else SERVICES_OPTIONS,
+        app=REWRITE_SERVICES_V1_LOCATION if rewrite else SERVICES_V1_LOCATION,
         resolver=resolver,
         auth=auth,
         dns_cluster_with_port=dns_cluster_with_port,

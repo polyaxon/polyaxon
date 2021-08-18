@@ -52,42 +52,55 @@ def get_or_create_args(path):
     return 'if [ ! -d "{path}" ]; then mkdir -m 0777 -p {path}; fi;'.format(path=path)
 
 
-def cp_copy_args(path_from, path_to, is_file: bool) -> str:
+def cp_copy_args(path_from, path_to, is_file: bool, sync_fw: bool) -> str:
+    sync_fw_flag = (
+        "polyaxon initializer fswatch --path={};".format(path_to) if sync_fw else ""
+    )
     if is_file:
-        return "if [ -f {path_from} ]; then cp {path_from} {path_to}; fi;".format(
-            path_from=path_from, path_to=path_to
+        return "if [ -f {path_from} ]; then cp {path_from} {path_to}; {sync_fw_flag} fi;".format(
+            path_from=path_from,
+            path_to=path_to,
+            sync_fw_flag=sync_fw_flag,
         )
     return (
         'if [ -d {path_from} ] && [ "$(ls -A {path_from})" ]; '
-        "then cp -R {path_from}/* {path_to}; fi;".format(
-            path_from=path_from, path_to=path_to
+        "then cp -R {path_from}/* {path_to}; {sync_fw_flag} fi;".format(
+            path_from=path_from,
+            path_to=path_to,
+            sync_fw_flag=sync_fw_flag,
         )
     )
 
 
-def cp_gcs_args(path_from: str, path_to: str, is_file: bool) -> str:
+def cp_gcs_args(path_from: str, path_to: str, is_file: bool, sync_fw: bool) -> str:
     file_flag = "--is-file" if is_file else ""
-    return "polyaxon initializer gcs --path-from={} --path-to={} {};".format(
-        path_from, path_to, file_flag
+    sync_fw_flag = "--sync-fw" if sync_fw else ""
+    return "polyaxon initializer gcs --path-from={} --path-to={} {} {};".format(
+        path_from, path_to, file_flag, sync_fw_flag
     )
 
 
-def cp_s3_args(path_from: str, path_to: str, is_file: bool) -> str:
+def cp_s3_args(path_from: str, path_to: str, is_file: bool, sync_fw: bool) -> str:
     file_flag = "--is-file" if is_file else ""
-    return "polyaxon initializer s3 --path-from={} --path-to={} {};".format(
-        path_from, path_to, file_flag
+    sync_fw_flag = "--sync-fw" if sync_fw else ""
+    return "polyaxon initializer s3 --path-from={} --path-to={} {} {};".format(
+        path_from, path_to, file_flag, sync_fw_flag
     )
 
 
-def cp_wasb_args(path_from: str, path_to: str, is_file: bool) -> str:
+def cp_wasb_args(path_from: str, path_to: str, is_file: bool, sync_fw: bool) -> str:
     file_flag = "--is-file" if is_file else ""
-    return "polyaxon initializer wasb --path-from={} --path-to={} {};".format(
-        path_from, path_to, file_flag
+    sync_fw_flag = "--sync-fw" if sync_fw else ""
+    return "polyaxon initializer wasb --path-from={} --path-to={} {} {};".format(
+        path_from, path_to, file_flag, sync_fw_flag
     )
 
 
 def get_volume_args(
-    store: V1ConnectionType, mount_path: str, artifacts: V1ArtifactsType
+    store: V1ConnectionType,
+    mount_path: str,
+    artifacts: V1ArtifactsType,
+    sync_fw: bool = False,
 ) -> str:
     files = []
     dirs = []
@@ -121,19 +134,39 @@ def get_volume_args(
         # copy to context
         if store.is_wasb:
             args.append(
-                cp_wasb_args(path_from=path_from, path_to=path_to, is_file=is_file)
+                cp_wasb_args(
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=is_file,
+                    sync_fw=sync_fw,
+                )
             )
         elif store.is_s3:
             args.append(
-                cp_s3_args(path_from=path_from, path_to=path_to, is_file=is_file)
+                cp_s3_args(
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=is_file,
+                    sync_fw=sync_fw,
+                )
             )
         elif store.is_gcs:
             args.append(
-                cp_gcs_args(path_from=path_from, path_to=path_to, is_file=is_file)
+                cp_gcs_args(
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=is_file,
+                    sync_fw=sync_fw,
+                )
             )
         else:
             args.append(
-                cp_copy_args(path_from=path_from, path_to=path_to, is_file=is_file)
+                cp_copy_args(
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=is_file,
+                    sync_fw=sync_fw,
+                )
             )
 
     is_file = True

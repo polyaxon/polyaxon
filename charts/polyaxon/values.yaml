@@ -66,7 +66,7 @@ broker: rabbitmq
 gateway:
   enabled: true
   image: polyaxon/polyaxon-gateway
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -90,7 +90,7 @@ api:
   enabled: true
   useResolver: true
   image: polyaxon/polyaxon-api
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -118,7 +118,7 @@ api:
 streams:
   enabled: true
   image: polyaxon/polyaxon-streams
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -145,7 +145,7 @@ streams:
 
 init:
   image: polyaxon/polyaxon-init
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -157,7 +157,7 @@ init:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   sleepInterval: 10
   syncInterval: 10
@@ -175,7 +175,7 @@ agent:
   compressedLogs: false
   enabled: false
   image: polyaxon/polyaxon-agent
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -190,7 +190,7 @@ operator:
   skipCRD: false
   useCRDV1Beta1: false
   image: polyaxon/polyaxon-operator
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   maxConcurrentReconciles: 1
   resources:
@@ -204,7 +204,7 @@ operator:
 scheduler:
   enabled: false
   image: polyaxon/polyaxon-scheduler
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -225,7 +225,7 @@ scheduler:
 compiler:
   enabled: false
   image:
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -246,7 +246,7 @@ compiler:
 worker:
   enabled: false
   image:
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
@@ -267,7 +267,7 @@ worker:
 beat:
   enabled: false
   image:
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -304,7 +304,7 @@ apiHooks: {}
 
 cleanHooks:
   image: polyaxon/polyaxon-cli
-  imageTag: 1.10.1
+  imageTag: 1.11.0
   imagePullPolicy: IfNotPresent
 
 tablesHook:

@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 from datetime import datetime
 from typing import Dict
 
@@ -32,7 +34,6 @@ from polyaxon.polypod.compiler.contexts.service import ServiceContextsManager
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.fqn_utils import get_project_instance, get_run_instance
-from polyaxon.utils.path_utils import get_path
 
 CONTEXTS_MANAGERS = {
     V1RunKind.CLEANER: JobContextsManager,
@@ -109,8 +110,8 @@ def resolve_globals_contexts(
             contexts_keys.RUN_OUTPUTS_PATH
         ] = run_outputs_path
     elif artifacts_store:
-        run_artifacts_path = get_path(artifacts_store.store_path, run_path)
-        run_outputs_path = get_path(run_artifacts_path, "outputs")
+        run_artifacts_path = os.path.join(artifacts_store.store_path, run_path)
+        run_outputs_path = os.path.join(run_artifacts_path, "outputs")
         resolved_contexts[contexts_sections.GLOBALS][
             contexts_keys.RUN_ARTIFACTS_PATH
         ] = run_artifacts_path

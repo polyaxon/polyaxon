@@ -20,16 +20,21 @@ from typing import List, Optional, Tuple
 
 import aiofiles
 
+from polyaxon.fs.async_manager import list_files
+from polyaxon.fs.types import FSSystem
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
-from polyaxon.polyboard.logging import V1Log, V1Logs
-from polyaxon.stores.manager import list_files
-from polyaxon.streams.tasks.logs import download_logs_file, download_tmp_logs
+from polyaxon.polyboard.logging import V1Log
+from polyaxon.streams.tasks.logs import (
+    content_to_logs,
+    download_logs_file,
+    download_tmp_logs,
+)
 from polyaxon.types import AwareDT
 
 
-def get_logs_files(run_uuid: str) -> List[str]:
-    files = list_files(subpath="{}/plxlogs".format(run_uuid))
+async def get_logs_files(fs: FSSystem, run_uuid: str) -> List[str]:
+    files = await list_files(fs=fs, subpath="{}/plxlogs".format(run_uuid))
     if not files["files"]:
         return []
     return sorted([f for f in files["files"].keys()])
@@ -54,49 +59,39 @@ async def get_next_file(files: List[str], last_file: str = None) -> Optional[str
 
 
 async def read_logs_file(logs_path) -> List[V1Log]:
-    if not os.path.exists(logs_path):
+    if not logs_path or not os.path.exists(logs_path):
         return []
 
     async with aiofiles.open(logs_path, mode="r") as f:
-        contents = await f.read()
-        if contents:
-            # Version handling
-            if ".plx" in logs_path:
-                return V1Logs.read_csv(contents).logs
-            # Legacy logs
-            logs = V1Logs.read(contents)
-            return logs.logs
-
-    return []
+        content = await f.read()
+        return await content_to_logs(content, logs_path)
 
 
 async def get_archived_operation_logs(
-    run_uuid: str, last_file: Optional[str], check_cache: bool = True
+    fs: FSSystem, run_uuid: str, last_file: Optional[str], check_cache: bool = True
 ) -> Tuple[List[V1Log], Optional[str], List[str]]:
-    files = get_logs_files(run_uuid)
+    files = await get_logs_files(fs=fs, run_uuid=run_uuid)
     logs = []
     last_file = await get_next_file(files=files, last_file=last_file)
     if not last_file:
         return logs, last_file, files
 
-    logs_path = await download_logs_file(
-        run_uuid=run_uuid, last_file=last_file, check_cache=check_cache
+    logs = await download_logs_file(
+        fs=fs, run_uuid=run_uuid, last_file=last_file, check_cache=check_cache
     )
-
-    logs = await read_logs_file(logs_path)
 
     return logs, last_file, files
 
 
 async def get_tmp_operation_logs(
-    run_uuid: str, last_time: Optional[AwareDT]
+    fs: FSSystem, run_uuid: str, last_time: Optional[AwareDT]
 ) -> Tuple[List[V1Log], Optional[AwareDT]]:
 
     logs = []
 
-    tmp_logs = await download_tmp_logs(run_uuid=run_uuid)
+    tmp_logs = await download_tmp_logs(fs=fs, run_uuid=run_uuid)
 
-    if not os.path.exists(tmp_logs):
+    if not tmp_logs or not os.path.exists(tmp_logs):
         return logs, None
 
     tmp_log_files = os.listdir(tmp_logs)
@@ -112,7 +107,7 @@ async def get_tmp_operation_logs(
     if logs:
         logs = sorted(logs, key=lambda x: x.timestamp)
         last_time = logs[-1].timestamp
-    return logs, last_time
+    return [l.to_dict() for l in logs], last_time
 
 
 async def get_operation_logs(
@@ -131,6 +126,8 @@ async def get_operation_logs(
     if k8s_operation["status"].get("completionTime"):
         last_time = None
     if previous_last:
-        operation_logs = [l for l in operation_logs if l.timestamp > previous_last]
+        operation_logs = [
+            l.to_dict() for l in operation_logs if l.timestamp > previous_last
+        ]
 
     return operation_logs, last_time

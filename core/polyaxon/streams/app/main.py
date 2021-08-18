@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
+import os
 
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from starlette.applications import Starlette
@@ -22,10 +24,15 @@ from starlette.routing import Route
 
 from polyaxon import settings
 from polyaxon.api import STREAMS_V1
+from polyaxon.env_vars.keys import POLYAXON_KEYS_CUSTOM_ERRORS_OPTIONS
 from polyaxon.plugins.sentry import set_raven_client
 from polyaxon.streams.app import endpoints
+from polyaxon.streams.app.fs import AppFS
 
-has_raven = set_raven_client()
+errors_options = os.environ.get(POLYAXON_KEYS_CUSTOM_ERRORS_OPTIONS)
+if errors_options:
+    errors_options = json.loads(errors_options)
+has_raven = set_raven_client(errors_options)
 
 STREAMS_URL = "/{}".format(STREAMS_V1)
 URLS_RUNS_INTERNAL_LOGS = (
@@ -36,6 +43,11 @@ URLS_RUNS_INTERNAL_LOGS = (
 )
 URLS_RUNS_LOGS = (
     STREAMS_URL + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/logs"
+)
+URLS_RUNS_K8S_AUTH = STREAMS_URL + "/k8s/auth/"
+URLS_RUNS_K8S_INSPECT = (
+    STREAMS_URL
+    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/k8s_inspect"
 )
 URLS_RUNS_MULTI_EVENTS = (
     STREAMS_URL
@@ -89,6 +101,16 @@ routes = [
     Route(
         URLS_RUNS_LOGS, endpoints.get_logs,
         name="logs",
+        methods=["GET"]
+    ),
+    Route(
+        URLS_RUNS_K8S_AUTH, endpoints.k8s_auth,
+        name="k8s",
+        methods=["GET"]
+    ),
+    Route(
+        URLS_RUNS_K8S_INSPECT, endpoints.k8s_inspect,
+        name="k8s",
         methods=["GET"]
     ),
     Route(
@@ -153,4 +175,6 @@ app = Starlette(
     routes=routes,
     middleware=middleware,
     exception_handlers=exception_handlers,
+    on_startup=[AppFS.set_fs],
+    on_shutdown=[AppFS.close_fs],
 )

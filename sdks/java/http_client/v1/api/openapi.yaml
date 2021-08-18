@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.10.1
+  version: 1.11.0
 servers:
 - url: /
 security:
@@ -15013,6 +15013,84 @@ paths:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
       summary: Get run events
+      tags:
+      - RunsV1
+      x-accepts: application/json
+  /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/k8s_inspect:
+    get:
+      operationId: InspectRun
+      parameters:
+      - description: namespace
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Project where the run will be assigned
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+      - description: Uuid identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Names query param.
+        in: query
+        name: names
+        schema:
+          type: string
+      - description: Query param flag to tail the values.
+        in: query
+        name: tail
+        schema:
+          type: boolean
+      - description: Force query param.
+        in: query
+        name: force
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Inspect an active run full conditions
       tags:
       - RunsV1
       x-accepts: application/json

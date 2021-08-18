@@ -18,12 +18,8 @@ import os
 import pytest
 
 from polyaxon import settings
-from polyaxon.stores.async_manager import (
-    delete_dir,
-    delete_file,
-    download_dir,
-    download_file,
-)
+from polyaxon.fs.async_manager import delete_file_or_dir, download_dir, download_file
+from polyaxon.fs.fs import get_default_fs
 from polyaxon.utils.path_utils import check_or_create_path
 from tests.test_streams.base import create_tmp_files, set_store
 
@@ -35,7 +31,8 @@ async def test_download_dir_archive():
     path = os.path.join(store_root, "foo")
     check_or_create_path(path, is_dir=True)
     create_tmp_files(path)
-    await download_dir(subpath="foo", to_tar=True)
+    fs = await get_default_fs()
+    await download_dir(fs=fs, subpath="foo", to_tar=True)
 
     path_to = os.path.join(settings.AGENT_CONFIG.artifacts_root, "foo")
     assert os.path.exists(path_to)
@@ -52,7 +49,8 @@ async def test_download_file():
     path = os.path.join(store_root, "foo")
     check_or_create_path(path, is_dir=True)
     create_tmp_files(path)
-    await download_file(subpath="foo/0", check_cache=False)
+    fs = await get_default_fs()
+    await download_file(fs=fs, subpath="foo/0", check_cache=False)
 
     path_to = os.path.join(settings.AGENT_CONFIG.artifacts_root, "foo/0")
     assert os.path.exists(path_to)
@@ -68,7 +66,8 @@ async def test_delete_file():
     filepath = "{}/0".format(path)
     assert os.path.exists(path) is True
     assert os.path.exists(filepath) is True
-    await delete_file(subpath="foo/0")
+    fs = await get_default_fs()
+    await delete_file_or_dir(fs=fs, subpath="foo/0", is_file=True)
     assert os.path.exists(path) is True
     assert os.path.exists(filepath) is False
 
@@ -84,6 +83,7 @@ async def test_delete_dir():
     assert os.path.exists(path) is True
     assert os.path.exists(filepath) is True
     assert os.path.exists(filepath) is True
-    await delete_dir(subpath="foo")
+    fs = await get_default_fs()
+    await delete_file_or_dir(fs=fs, subpath="foo", is_file=False)
     assert os.path.exists(path) is False
     assert os.path.exists(filepath) is False

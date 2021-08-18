@@ -188,7 +188,7 @@ class TestMainSecrets(BaseTestCase):
         new_az_store = V1ConnectionType(
             name="test_az",
             kind=V1ConnectionKind.WASB,
-            schema=V1BucketConnection(bucket="Conwasb://x@y.blob.core.windows.net"),
+            schema=V1BucketConnection(bucket="wasb://x@y.blob.core.windows.net"),
             secret=self.resource1,
         )
         expected = get_requested_secrets(

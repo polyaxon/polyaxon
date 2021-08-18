@@ -56,10 +56,3 @@ class TestGCClient(BaseTestCase):
         credentials = get_gc_credentials(keyfile_dict='{"private_key": "private_key"}')
         assert service_account.call_count == 2
         assert credentials is None
-
-    @mock.patch(GCS_MODULE.format("get_gc_credentials"))
-    @mock.patch(GCS_MODULE.format("Client"))
-    def test_get_gc_client(self, client, gc_credentials):
-        get_gc_client()
-        assert gc_credentials.call_count == 1
-        assert client.call_count == 1
