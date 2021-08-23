@@ -17,11 +17,12 @@ jobs:
       env:
         KUBEBUILDER_CONTROLPLANE_START_TIMEOUT: 600s
       run: |
-        os=$(go env GOOS)
-        arch=$(go env GOARCH)
+        OS=$(go env GOOS)
+        ARCH=$(go env GOARCH)
+        KUBEBUILDER_VERSION=2.3.1
         # download kubebuilder and extract it to tmp
-        curl -L https://go.kubebuilder.io/dl/2.3.0/${os}/${arch} | tar -xz -C /tmp/
-        sudo mv /tmp/kubebuilder_2.3.0_${os}_${arch} /usr/local/kubebuilder
+        curl -L https://github.com/kubernetes-sigs/kubebuilder/releases/download/v${KUBEBUILDER_VERSION}/kubebuilder_${KUBEBUILDER_VERSION}_${OS}_${ARCH}.tar.gz | tar -xz -C /tmp/
+        sudo mv /tmp/kubebuilder_2.3.1_${OS}_${ARCH} /usr/local/kubebuilder
         export PATH=$PATH:/usr/local/kubebuilder/bin
         cd operator
         go version
