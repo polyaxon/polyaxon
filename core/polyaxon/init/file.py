@@ -25,11 +25,14 @@ from polyaxon.utils.path_utils import get_base_filename
 
 
 def create_file_lineage(filepath: str, summary: Dict, kind: str):
-    kind = kind or V1ArtifactKind.FILE
-
     if not filepath:
         return
     filename = os.path.basename(filepath)
+    if not kind:
+        if "dockerfile" in filename.lower():
+            kind = V1ArtifactKind.DOCKERFILE
+        else:
+            kind = V1ArtifactKind.FILE
 
     if settings.CLIENT_CONFIG.no_api:
         return

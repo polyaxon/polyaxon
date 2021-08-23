@@ -69,6 +69,7 @@ class RunQueryManager(BaseQueryManager):
         "schedule_at",
         "name",
         "kind",
+        "namespace",
         "runtime",
         "user",
         "uuid",
@@ -140,6 +141,8 @@ class RunQueryManager(BaseQueryManager):
         "kind": parse_value_operation,
         # Meta Kind
         "runtime": parse_value_operation,
+        # Namespace
+        "namespace": parse_value_operation,
         # Params
         "params": parse_value_operation,
         "inputs": parse_value_operation,
@@ -226,6 +229,8 @@ class RunQueryManager(BaseQueryManager):
         "kind": ValueCondition,
         # Meta Kind
         "runtime": ValueCondition,
+        # Namespace
+        "namespace": ValueCondition,
         # Params
         "params": ComparisonCondition,
         "inputs": ComparisonCondition,
