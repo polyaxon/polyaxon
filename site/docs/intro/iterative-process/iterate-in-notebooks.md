@@ -98,6 +98,12 @@ polyaxon ops -uid UUID resume
 
 ## Start experiments
 
+We need to install polyaxon in our Jupyter environment:
+
+```bash
+!pip install -U polyaxon
+```
+
 We will programmatically schedule some experiments from the notebook, all experiments that we schedule from the notebook will run inside isolated pods in the Kubernetes cluster.
 Each one of those experiments will be managed separately by Polyaxon and will create a new record under the runs table in the database.
 
@@ -155,6 +161,13 @@ Install some plotting dependencies
 ```yaml
 !pip install plotly hiplot
 ```
+
+If you are using Jupyter notebook you can skip this step, otherwise, to use Plotly Express in JupyterLab, 
+you will need to install the express extension (mode details can be found [in Plotly troubleshooting page](https://plotly.com/python/troubleshooting/#jupyterlab-problems)), in a new terminal run and reload the notebook:
+
+```bash
+jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyterlab-plotly
+``` 
 
 Plot a line chart
 
