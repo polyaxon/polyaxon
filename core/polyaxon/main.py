@@ -77,11 +77,11 @@ def cli(context, verbose, offline):
 
       - polyaxon version
 
-    To can check the version of the CLI and the server, and check the compatibility matrix:
+    You can check the version of the CLI and the server, and the compatibility matrix with:
 
       - polyaxon version --check
 
-    To Enable debug mode, you can use the `-v` flag:
+    To enable the debug mode, you can use the `-v` flag:
 
       - polyaxon -v ...
 

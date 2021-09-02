@@ -9,5 +9,7 @@ Name | Type | Description | Notes
 **columns** | **Number** |  | [optional] 
 **height** | **Number** |  | [optional] 
 **widgets** | **[Object]** |  | [optional] 
+**pageIndex** | **Number** |  | [optional] 
+**pageSize** | **Number** |  | [optional] 
 
 

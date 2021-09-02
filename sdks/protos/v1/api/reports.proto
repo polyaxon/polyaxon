@@ -37,6 +37,12 @@ message SectionSpec {
 
   // Section's widgets
   repeated google.protobuf.Struct widgets = 5;
+
+  // Page index
+  int32 pageIndex = 6;
+
+  // Page size
+  int32 pageSize = 7;
 }
 
 

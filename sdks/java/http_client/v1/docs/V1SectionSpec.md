@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **columns** | **Integer** |  |  [optional]
 **height** | **Integer** |  |  [optional]
 **widgets** | **List&lt;Object&gt;** |  |  [optional]
+**pageIndex** | **Integer** |  |  [optional]
+**pageSize** | **Integer** |  |  [optional]
 
 
 

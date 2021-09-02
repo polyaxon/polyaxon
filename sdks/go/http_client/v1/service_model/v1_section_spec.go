@@ -43,6 +43,12 @@ type V1SectionSpec struct {
 	// Section name
 	Name string `json:"name,omitempty"`
 
+	// Page index
+	PageIndex int32 `json:"pageIndex,omitempty"`
+
+	// Page size
+	PageSize int32 `json:"pageSize,omitempty"`
+
 	// Section's widgets
 	Widgets []interface{} `json:"widgets"`
 }

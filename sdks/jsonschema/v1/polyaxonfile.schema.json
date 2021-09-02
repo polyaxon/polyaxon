@@ -9987,6 +9987,16 @@
           "title": "Section name",
           "type": "string"
         },
+        "pageIndex": {
+          "format": "int32",
+          "title": "Page index",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int32",
+          "title": "Page size",
+          "type": "integer"
+        },
         "widgets": {
           "items": {
             "type": "object"

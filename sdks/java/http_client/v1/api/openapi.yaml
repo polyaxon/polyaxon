@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.11.0
+  version: 1.11.1
 servers:
 - url: /
 security:
@@ -18382,15 +18382,19 @@ components:
         spec:
           sections:
           - is_minimized: true
+            pageIndex: 5
             columns: 1
             name: name
+            pageSize: 2
             widgets:
             - '{}'
             - '{}'
             height: 5
           - is_minimized: true
+            pageIndex: 5
             columns: 1
             name: name
+            pageSize: 2
             widgets:
             - '{}'
             - '{}'
@@ -18433,15 +18437,19 @@ components:
       example:
         sections:
         - is_minimized: true
+          pageIndex: 5
           columns: 1
           name: name
+          pageSize: 2
           widgets:
           - '{}'
           - '{}'
           height: 5
         - is_minimized: true
+          pageIndex: 5
           columns: 1
           name: name
+          pageSize: 2
           widgets:
           - '{}'
           - '{}'
@@ -21042,15 +21050,19 @@ components:
           spec:
             sections:
             - is_minimized: true
+              pageIndex: 5
               columns: 1
               name: name
+              pageSize: 2
               widgets:
               - '{}'
               - '{}'
               height: 5
             - is_minimized: true
+              pageIndex: 5
               columns: 1
               name: name
+              pageSize: 2
               widgets:
               - '{}'
               - '{}'
@@ -21067,15 +21079,19 @@ components:
           spec:
             sections:
             - is_minimized: true
+              pageIndex: 5
               columns: 1
               name: name
+              pageSize: 2
               widgets:
               - '{}'
               - '{}'
               height: 5
             - is_minimized: true
+              pageIndex: 5
               columns: 1
               name: name
+              pageSize: 2
               widgets:
               - '{}'
               - '{}'
@@ -22132,15 +22148,19 @@ components:
             events:
               sections:
               - is_minimized: true
+                pageIndex: 5
                 columns: 1
                 name: name
+                pageSize: 2
                 widgets:
                 - '{}'
                 - '{}'
                 height: 5
               - is_minimized: true
+                pageIndex: 5
                 columns: 1
                 name: name
+                pageSize: 2
                 widgets:
                 - '{}'
                 - '{}'
@@ -22174,15 +22194,19 @@ components:
             events:
               sections:
               - is_minimized: true
+                pageIndex: 5
                 columns: 1
                 name: name
+                pageSize: 2
                 widgets:
                 - '{}'
                 - '{}'
                 height: 5
               - is_minimized: true
+                pageIndex: 5
                 columns: 1
                 name: name
+                pageSize: 2
                 widgets:
                 - '{}'
                 - '{}'
@@ -31477,15 +31501,19 @@ components:
           events:
             sections:
             - is_minimized: true
+              pageIndex: 5
               columns: 1
               name: name
+              pageSize: 2
               widgets:
               - '{}'
               - '{}'
               height: 5
             - is_minimized: true
+              pageIndex: 5
               columns: 1
               name: name
+              pageSize: 2
               widgets:
               - '{}'
               - '{}'
@@ -31547,15 +31575,19 @@ components:
         events:
           sections:
           - is_minimized: true
+            pageIndex: 5
             columns: 1
             name: name
+            pageSize: 2
             widgets:
             - '{}'
             - '{}'
             height: 5
           - is_minimized: true
+            pageIndex: 5
             columns: 1
             name: name
+            pageSize: 2
             widgets:
             - '{}'
             - '{}'
@@ -31608,8 +31640,10 @@ components:
     v1SectionSpec:
       example:
         is_minimized: true
+        pageIndex: 5
         columns: 1
         name: name
+        pageSize: 2
         widgets:
         - '{}'
         - '{}'
@@ -31635,6 +31669,14 @@ components:
             type: object
           title: Section's widgets
           type: array
+        pageIndex:
+          format: int32
+          title: Page index
+          type: integer
+        pageSize:
+          format: int32
+          title: Page size
+          type: integer
       title: Dashboard section definition
       type: object
     v1Service:

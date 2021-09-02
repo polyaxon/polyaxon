@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.11.0",
+    "version": "1.11.1",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -21903,6 +21903,16 @@
             "type": "object"
           },
           "title": "Section's widgets"
+        },
+        "pageIndex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Page index"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Page size"
         }
       },
       "title": "Dashboard section definition"
