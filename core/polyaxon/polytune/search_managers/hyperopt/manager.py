@@ -27,7 +27,7 @@ from polyaxon.polyflow import (
     V1Optimization,
 )
 from polyaxon.polytune.matrix.hyperopt import to_hyperopt
-from polyaxon.polytune.matrix.utils import to_numpy
+from polyaxon.polytune.matrix.utils import space_get_index, to_numpy
 from polyaxon.polytune.search_managers.base import BaseManager
 from polyaxon.polytune.search_managers.utils import get_random_generator
 
@@ -36,6 +36,11 @@ class HyperoptManager(BaseManager):
     """Hyperopt search strategy manager for hyperparameter optimization."""
 
     CONFIG = V1Hyperopt
+    ALGORITHMS = {
+        "tpe": hyperopt.tpe.suggest,
+        "rand": hyperopt.rand.suggest,
+        "anneal": hyperopt.anneal.suggest,
+    }
 
     def __init__(self, config):
         super().__init__(config)
@@ -84,17 +89,16 @@ class HyperoptManager(BaseManager):
 
                 observation_value = observation_config[param]
                 if param in self._param_to_value:
-                    index_of_value = self._param_to_value[param].index(
-                        observation_value
+                    index_of_value = space_get_index(
+                        self._param_to_value[param], observation_value
                     )
                     miscs_idxs[param] = [tid]
                     miscs_vals[param] = [index_of_value]
-
                 else:
                     miscs_idxs[param] = [tid]
                     miscs_vals[param] = [observation_value]
 
-            observation_specs.append(None)
+            observation_specs.append({"trial-name": "trial-{}".format(tid)})
 
             trial_misc["idxs"] = miscs_idxs
             trial_misc["vals"] = miscs_vals
@@ -122,14 +126,19 @@ class HyperoptManager(BaseManager):
         trials.refresh()
         return trials
 
-    @property
-    def algorithm(self):
-        if self.config.algorithm == "tpe":
-            return hyperopt.tpe.suggest
-        if self.config.algorithm == "rand":
-            return hyperopt.rand.suggest
-        if self.config.algorithm == "anneal":
-            return hyperopt.anneal.suggest
+    def run_algorithm(self, is_first, new_ids, domain, hyperopt_trials, random_state):
+        if self.config.algorithm == "random" or is_first:
+            return self.ALGORITHMS[self.config.algorithm](
+                new_ids, domain, hyperopt_trials, random_state
+            )
+        new_trials = []
+        for i in new_ids:
+            new_trials.append(
+                self.ALGORITHMS[self.config.algorithm](
+                    [i], domain, hyperopt_trials, random_state
+                )[0]
+            )
+        return new_trials
 
     def get_suggestions(
         self, configs: List[Dict] = None, metrics: List[float] = None
@@ -145,6 +154,7 @@ class HyperoptManager(BaseManager):
         hyperopt_trials = self._get_previous_observations(
             hyperopt_domain=hyperopt_domain, configs=configs, metrics=metrics
         )
+        is_first = not all([configs, metrics])
 
         minimize = hyperopt.FMinIter(
             self.config.algorithm,
@@ -159,8 +169,8 @@ class HyperoptManager(BaseManager):
         new_ids = minimize.trials.new_trial_ids(self.config.num_runs)
         minimize.trials.refresh()
         random_state = minimize.rstate.randint(2 ** 31 - 1)
-        new_trials = self.algorithm(
-            new_ids, minimize.domain, hyperopt_trials, random_state
+        new_trials = self.run_algorithm(
+            is_first, new_ids, minimize.domain, hyperopt_trials, random_state
         )
         minimize.trials.refresh()
 

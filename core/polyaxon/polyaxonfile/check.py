@@ -17,7 +17,7 @@
 import os
 
 from collections import OrderedDict
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
@@ -100,6 +100,7 @@ def check_polyaxonfile(
     is_cli: bool = True,
     to_op: bool = True,
     validate_params: bool = True,
+    approved: Union[int, str, bool] = None,
     eager: bool = False,
     git_init: V1Init = None,
     ignore_template: bool = False,
@@ -185,6 +186,7 @@ def check_polyaxonfile(
                 queue=queue,
                 nocache=nocache,
                 cache=cache,
+                approved=approved,
                 validate_params=validate_params,
                 preset_files=polyaxonfile,
                 git_init=git_init,

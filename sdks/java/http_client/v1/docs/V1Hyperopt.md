@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **params** | **Map&lt;String, Object&gt;** |  |  [optional]
 **numRuns** | **Integer** |  |  [optional]
 **maxIterations** | **Integer** |  |  [optional]
+**metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  |  [optional]
 **seed** | **Integer** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]
 **tuner** | [**V1Tuner**](V1Tuner.md) |  |  [optional]

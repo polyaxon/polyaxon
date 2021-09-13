@@ -29,6 +29,7 @@ from polyaxon.polyaxonfile.specs import (
 )
 from polyaxon.polyflow import V1Component, V1Init, V1Operation
 from polyaxon.schemas import V1PatchStrategy
+from polyaxon.utils.bool_utils import to_bool
 
 
 def get_op_specification(
@@ -39,13 +40,14 @@ def get_op_specification(
     queue: str = None,
     nocache: bool = None,
     cache: bool = None,
+    approved: Union[int, str, bool] = None,
     validate_params: bool = True,
     preset_files: List[str] = None,
     git_init: V1Init = None,
 ) -> V1Operation:
     if cache and nocache:
         raise PolyaxonfileError("Received both cache and nocache")
-    job_data = {
+    op_data = {
         "version": config.version if config else pkg.SCHEMA_VERSION,
         "kind": kinds.OPERATION,
     }
@@ -54,26 +56,29 @@ def get_op_specification(
             raise PolyaxonfileError(
                 "Params: `{}` must be a valid mapping".format(params)
             )
-        job_data["params"] = params
+        op_data["params"] = params
     if presets:
-        job_data["presets"] = presets
+        op_data["presets"] = presets
     if queue:
         # Check only
         get_queue_info(queue)
-        job_data["queue"] = queue
+        op_data["queue"] = queue
     if cache:
-        job_data["cache"] = {"disable": False}
+        op_data["cache"] = {"disable": False}
     if nocache:
-        job_data["cache"] = {"disable": True}
+        op_data["cache"] = {"disable": True}
+    # Handle approval logic
+    if approved is not None:
+        op_data["isApproved"] = to_bool(approved)
 
     if config and config.kind == kinds.COMPONENT:
-        job_data["component"] = config.to_dict()
-        config = get_specification(data=[job_data])
+        op_data["component"] = config.to_dict()
+        config = get_specification(data=[op_data])
     elif config and config.kind == kinds.OPERATION:
-        config = get_specification(data=[config.to_dict(), job_data])
+        config = get_specification(data=[config.to_dict(), op_data])
     elif hub:
-        job_data["hubRef"] = hub
-        config = get_specification(data=[job_data])
+        op_data["hubRef"] = hub
+        config = get_specification(data=[op_data])
 
     if hub and config.hub_ref is None:
         config.hub_ref = hub

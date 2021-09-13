@@ -192,17 +192,20 @@ message Hyperopt {
     // Maximum number of iteration to produce new observations
     int32 maxIterations = 5;
 
+    // Metric to optimize during the iterations
+    OptimizationMetric metric = 6;
+
     // Seed for the random generator
-    int32 seed = 6;
+    int32 seed = 7;
 
     // Number of concurrent runs
-    int32 concurrency = 7;
+    int32 concurrency = 8;
 
     // Tuner reference (hubRef) to use
-    Tuner tuner = 8;
+    Tuner tuner = 9;
 
     // A list of Early stopping objects, accepts both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct earlyStopping = 9;
+    repeated google.protobuf.Struct earlyStopping = 10;
 }
 
 

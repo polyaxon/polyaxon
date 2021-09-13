@@ -78,7 +78,7 @@ def get_iteration_definition(
 
 
 def handle_iteration_failure(client: RunClient, exp: Exception):
-    exp = "Polyaxon tuner failed creating suggestions : {}\n{}".format(
+    exp = "Polyaxon tuner failed creating suggestions: {}\n{}".format(
         repr(exp), traceback.format_exc()
     )
     client.log_failed(reason="PolyaxonTunerSuggestions", message=exp)
@@ -96,9 +96,14 @@ def handle_iteration(
         client.log_outputs(
             suggestions=[sanitize_dict(s) for s in suggestions], async_req=False
         )
+        return
     except Exception as e:
-        exp = "Polyaxon tuner failed logging iteration definition: {}\n{}".format(
-            repr(e), traceback.format_exc()
-        )
-        client.log_failed(reason="PolyaxonTunerIteration", message=exp)
         logger.warning(e)
+        exp = e
+
+    if exp:
+        message = "Polyaxon tuner failed logging iteration definition: {}\n{}".format(
+            repr(exp), traceback.format_exc()
+        )
+        client.log_failed(reason="PolyaxonTunerIteration", message=message)
+        raise exp

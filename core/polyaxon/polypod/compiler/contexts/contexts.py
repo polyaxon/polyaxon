@@ -67,6 +67,7 @@ def resolve_globals_contexts(
     artifacts_store: V1ConnectionType = None,
     cloning_kind: V1CloningKind = None,
     original_uuid: str = None,
+    is_independent: bool = True,
 ) -> Dict:
 
     resolved_contexts = {
@@ -94,6 +95,7 @@ def resolve_globals_contexts(
             contexts_keys.DURATION: duration,
             contexts_keys.CLONING_KIND: cloning_kind,
             contexts_keys.ORIGINAL_UUID: original_uuid,
+            contexts_keys.IS_INDEPENDENT: is_independent,
             contexts_keys.STORE_PATH: "",
         },
     }
@@ -146,6 +148,7 @@ def resolve_contexts(
     duration: int = None,
     cloning_kind: V1CloningKind = None,
     original_uuid: str = None,
+    is_independent: bool = True,
 ) -> Dict:
     run_kind = compiled_operation.get_run_kind()
     if run_kind not in CONTEXTS_MANAGERS:
@@ -175,6 +178,7 @@ def resolve_contexts(
         artifacts_store=artifacts_store,
         cloning_kind=cloning_kind,
         original_uuid=original_uuid,
+        is_independent=is_independent,
     )
 
     return CONTEXTS_MANAGERS[run_kind].resolve(

@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.11.1
+  version: 1.11.2
 servers:
 - url: /
 security:
@@ -20017,6 +20017,8 @@ components:
           queue: queue
         seed: 1
         numRuns: 3
+        metric:
+          name: name
         kind: hyperopt
         params:
           key: '{}'
@@ -20045,6 +20047,8 @@ components:
           format: int32
           title: Maximum number of iteration to produce new observations
           type: integer
+        metric:
+          $ref: '#/components/schemas/v1OptimizationMetric'
         seed:
           format: int32
           title: Seed for the random generator
@@ -22852,6 +22856,8 @@ components:
             queue: queue
           seed: 1
           numRuns: 3
+          metric:
+            name: name
           kind: hyperopt
           params:
             key: '{}'
@@ -30655,6 +30661,8 @@ components:
               queue: queue
             seed: 1
             numRuns: 3
+            metric:
+              name: name
             kind: hyperopt
             params:
               key: '{}'

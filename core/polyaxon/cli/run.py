@@ -144,6 +144,13 @@ from polyaxon.utils.validation import validate_tags
     help="Enable cache check before starting this operation.",
 )
 @click.option(
+    "--approved",
+    help="To enable/disable human in the loop validation without changing the polyaxonfile, "
+    "similar to 'isApproved: true/false'. "
+    "Can be used with yes/no, y/n, false/true, f/t, 1/0. "
+    "e.g. '--approved=1', '--approved=yes', '--approved=false', '--approved=t', ...",
+)
+@click.option(
     "--eager",
     is_flag=True,
     default=False,
@@ -197,6 +204,7 @@ def run(
     queue,
     nocache,
     cache,
+    approved,
     eager,
     git_preset,
     git_revision,
@@ -303,6 +311,7 @@ def run(
         queue=queue,
         cache=cache,
         nocache=nocache,
+        approved=approved,
         verbose=False,
         eager=eager,
         git_init=git_init,

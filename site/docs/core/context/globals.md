@@ -44,7 +44,8 @@ The following information can be accessed by all Polyaxon sections:
  * `{{ globals.compiled_at }}`: Datetime when the operation was compiled.
  * `{{ globals.cloning_kind }}`: Is populated if the operation is restarted or copied from another operation.
  * `{{ globals.original_uuid }}`: The original operation's uuid when the current operation was cloned from.
- * `{{ globals.iteration }}`
+ * `{{ globals.is_independent }}`: A flag that tells id the operation is independent or part of a pipeline.
+ * `{{ globals.iteration }}`: The iteration number if the operation is part of an iterative process.
 
 ## Artifacts store
 

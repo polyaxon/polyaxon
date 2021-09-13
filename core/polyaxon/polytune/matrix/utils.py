@@ -49,6 +49,13 @@ def space_sample(value, size, rand_generator):
         return value[idx]
 
 
+def space_get_index(array, value):
+    try:
+        return array.index(value)
+    except (ValueError, AttributeError):
+        return int(np.where(array == value)[0][0])
+
+
 def dist_sample(fct, value, size, rand_generator):
     size = None if size == 1 else size
     rand_generator = rand_generator or np.random

@@ -143,6 +143,7 @@ def resolve(
             created_at=run.created_at,
             cloning_kind=run.cloning_kind,
             original_uuid=run.original.uuid.hex if run.original_id else None,
+            is_independent=bool(run.pipeline_id),
             eager=eager,
         )
     except (

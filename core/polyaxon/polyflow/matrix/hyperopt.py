@@ -23,6 +23,7 @@ from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.polyflow.matrix.tuner import TunerSchema
+from polyaxon.polyflow.optimization import OptimizationMetricSchema
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
@@ -30,6 +31,7 @@ from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 class HyperoptSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1MatrixKind.HYPEROPT))
     max_iterations = RefOrObject(fields.Int(allow_none=True))
+    metric = fields.Nested(OptimizationMetricSchema, required=True)
     algorithm = fields.Str(
         allow_none=True, validate=validate.OneOf(["tpe", "rand", "anneal"])
     )
@@ -60,7 +62,8 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
         kind: hyperopt
         algorithm: str, one of tpe, rand, anneal
         params: List[Dict[str, [params](/docs/automation/optimization-engine/params/#discrete-values)]]  # noqa
-        maxIterations: int, optional
+        metric: V1OptimizationMetric
+        max_iterations: int, optional
         concurrency: int, optional
         num_runs: int, optional
         seed: int, optional
@@ -75,6 +78,7 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
     >>>   kind: hyperopt
     >>>   algorithm:
     >>>   maxIterations:
+    >>>   metric:
     >>>   concurrency:
     >>>   params:
     >>>   numRuns:
@@ -94,6 +98,7 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
     >>>   num_runs=20,
     >>>   concurrency=2,
     >>>   seed=23,
+    >>>   metric=V1OptimizationMetric(name="loss", optimization=V1Optimization.MINIMIZE),
     >>>   params={"param1": V1HpLogSpace(...), "param2": V1HpUniform(...), ... },
     >>>   early_stopping=[V1FailureEarlyStopping(...), V1MetricEarlyStopping(...)]
     >>> )
@@ -183,6 +188,19 @@ class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
     >>> matrix:
     >>>   kind: hyperopt
     >>>   maxIterations: 5
+    ```
+
+    ### metric
+
+    The metric to optimize during the iterations,
+    this is the metric that you want to maximize or minimize.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   metric:
+    >>>     name: loss
+    >>>     optimization: minimize
     ```
 
     ### seed

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **params** | **dict(str, object)** |  | [optional] 
 **num_runs** | **int** |  | [optional] 
 **max_iterations** | **int** |  | [optional] 
+**metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 
 **seed** | **int** |  | [optional] 
 **concurrency** | **int** |  | [optional] 
 **tuner** | [**V1Tuner**](V1Tuner.md) |  | [optional] 

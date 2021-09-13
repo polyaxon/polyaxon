@@ -34,33 +34,36 @@ class TestHyperoptSearch(BaseTestCase):
                 "concurrency": 2,
                 "algorithm": "rand",
                 "numRuns": 1,
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {"param": {"kind": "uniform", "value": [0.01, 0.5]}},
             }
         )
         manager = HyperoptManager(config)
-        assert manager.algorithm == hyperopt.rand.suggest
+        assert manager.ALGORITHMS[manager.config.algorithm] == hyperopt.rand.suggest
 
         config = V1Hyperopt.from_dict(
             {
                 "concurrency": 2,
                 "algorithm": "anneal",
                 "numRuns": 1,
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {"param": {"kind": "uniform", "value": [0.01, 0.5]}},
             }
         )
         manager = HyperoptManager(config)
-        assert manager.algorithm == hyperopt.anneal.suggest
+        assert manager.ALGORITHMS[manager.config.algorithm] == hyperopt.anneal.suggest
 
         config = V1Hyperopt.from_dict(
             {
                 "concurrency": 2,
                 "algorithm": "tpe",
                 "numRuns": 1,
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {"param": {"kind": "uniform", "value": [0.01, 0.5]}},
             }
         )
         manager = HyperoptManager(config)
-        assert manager.algorithm == hyperopt.tpe.suggest
+        assert manager.ALGORITHMS[manager.config.algorithm] == hyperopt.tpe.suggest
 
     def test_search_space(self):
         config = V1Hyperopt.from_dict(
@@ -68,6 +71,7 @@ class TestHyperoptSearch(BaseTestCase):
                 "concurrency": 2,
                 "algorithm": "rand",
                 "numRuns": 1,
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {
                     "param1": {"kind": "uniform", "value": [0.01, 0.5]},
                     "param2": {"kind": "quniform", "value": [0.01, 0.99, 0.1]},
@@ -105,6 +109,7 @@ class TestHyperoptSearch(BaseTestCase):
                 "concurrency": 2,
                 "algorithm": "rand",
                 "numRuns": 1,
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {
                     "lr": {"kind": "uniform", "value": [0.01, 0.5]},
                     "dropout": {"kind": "uniform", "value": [0.01, 0.99]},
@@ -129,6 +134,7 @@ class TestHyperoptSearch(BaseTestCase):
                 "concurrency": 2,
                 "algorithm": "rand",
                 "numRuns": 10,
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {
                     "lr": {"kind": "uniform", "value": [0.01, 0.5]},
                     "dropout": {"kind": "uniform", "value": [0.01, 0.99]},
@@ -149,6 +155,7 @@ class TestHyperoptSearch(BaseTestCase):
                 "concurrency": 2,
                 "algorithm": "anneal",
                 "numRuns": 1,  # TODO: no numRuns
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {
                     "lr": {"kind": "uniform", "value": [0.01, 0.5]},
                     "dropout": {"kind": "uniform", "value": [0.01, 0.99]},
@@ -174,6 +181,7 @@ class TestHyperoptSearch(BaseTestCase):
                 "concurrency": 2,
                 "algorithm": "tpe",
                 "numRuns": 1,
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {
                     "lr": {"kind": "uniform", "value": [0.01, 0.5]},
                     "dropout": {"kind": "uniform", "value": [0.01, 0.99]},
@@ -198,6 +206,7 @@ class TestHyperoptSearch(BaseTestCase):
                 "concurrency": 2,
                 "algorithm": "tpe",
                 "numRuns": 10,
+                "metric": {"name": "loss", "optimization": "minimize"},
                 "params": {
                     "lr": {"kind": "uniform", "value": [0.01, 0.5]},
                     "dropout": {"kind": "uniform", "value": [0.01, 0.99]},

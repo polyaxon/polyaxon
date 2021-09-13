@@ -56,6 +56,7 @@ class BaseResolver:
         compiled_at: datetime = None,
         cloning_kind: V1CloningKind = None,
         original_uuid: str = None,
+        is_independent: bool = True,
         eager: bool = False,
     ):
         if not compiled_operation:
@@ -90,6 +91,7 @@ class BaseResolver:
         self.eager = eager
         self.cloning_kind = cloning_kind
         self.original_uuid = original_uuid
+        self.is_independent = is_independent
         self._param_spec = {}
 
     @classmethod
@@ -116,12 +118,19 @@ class BaseResolver:
             owner_name=self.owner_name,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
+            run_uuid=self.run_uuid,
             run_name=self.run_name,
             run_path=self.run_path,
-            run_uuid=self.run_uuid,
             iteration=self.iteration,
             created_at=self.created_at,
             compiled_at=self.compiled_at,
+            schedule_at=self.schedule_at,
+            started_at=self.started_at,
+            finished_at=self.finished_at,
+            duration=self.duration,
+            cloning_kind=self.cloning_kind,
+            original_uuid=self.original_uuid,
+            is_independent=self.is_independent,
         )
 
     def resolve_params(self):
@@ -214,17 +223,22 @@ class BaseResolver:
             owner_name=self.owner_name,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
+            run_uuid=self.run_uuid,
             run_name=self.run_name,
             run_path=self.run_path,
-            run_uuid=self.run_uuid,
             compiled_operation=self.compiled_operation,
-            connection_by_names=self.connection_by_names,
             artifacts_store=self.artifacts_store,
+            connection_by_names=self.connection_by_names,
             iteration=self.iteration,
             created_at=self.created_at,
             compiled_at=self.compiled_at,
+            schedule_at=self.schedule_at,
+            started_at=self.started_at,
+            finished_at=self.finished_at,
+            duration=self.duration,
             cloning_kind=self.cloning_kind,
             original_uuid=self.original_uuid,
+            is_independent=self.is_independent,
         )
 
     def _apply_runtime_contexts(self):

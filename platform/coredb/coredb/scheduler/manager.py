@@ -48,6 +48,7 @@ def get_run(
     use_all: bool = False,
     only: List[str] = None,
     defer: List[str] = None,
+    prefetch: List[str] = None,
 ) -> Optional[BaseRun]:
     if run:
         return run
@@ -57,6 +58,8 @@ def get_run(
         query = query.only(*only)
     if defer:
         query = query.only(*defer)
+    if prefetch:
+        query = query.select_related(*prefetch)
 
     try:
         return query.get(id=run_id)
@@ -112,7 +115,7 @@ def runs_prepare(
     eager: bool = False,
     extra_message: str = None,
 ) -> bool:
-    run = get_run(run_id=run_id, run=run)
+    run = get_run(run_id=run_id, run=run, prefetch=["project"])
     if not run:
         return False
 

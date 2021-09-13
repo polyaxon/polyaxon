@@ -31,9 +31,25 @@ For example:
 
 ```yaml
 params:
-  param_foo:
+  param_upstream_op_uuid:
     ref: ops.upstream1
     value: globals.uuid
+  param_upstream_op_input:
+    ref: ops.upstream1
+    value: inputs.in_name_foo
+```
+
+or from a pipeline:
+
+
+```yaml
+params:
+  param_dag_uuid:
+    ref: dag
+    value: globals.uuid
+  param_dag_input:
+    ref: dag
+    value: inputs.in_name_foo
 ```
 
 The following `param_foo` is not going to use the current run `globals.*` instead it will use whatever run instance of the upstream operation, 

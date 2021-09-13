@@ -35,6 +35,7 @@ def resolve(
     compiled_at: datetime = None,
     cloning_kind: V1CloningKind = None,
     original_uuid: str = None,
+    is_independent: bool = True,
     eager: bool = False,
 ):
     resolver_cls = resolver_cls or BaseResolver
@@ -54,6 +55,7 @@ def resolve(
         compiled_at=compiled_at,
         cloning_kind=cloning_kind,
         original_uuid=original_uuid,
+        is_independent=is_independent,
         eager=eager,
     )
     if resolver:
@@ -103,5 +105,6 @@ def resolve_hooks(
         created_at=created_at,
         cloning_kind=cloning_kind,
         original_uuid=original_uuid,
+        is_independent=False,
         eager=eager,
     ).resolve_hooks()

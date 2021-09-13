@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.11.1",
+    "version": "1.11.2",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -18932,6 +18932,10 @@
           "type": "integer",
           "format": "int32",
           "title": "Maximum number of iteration to produce new observations"
+        },
+        "metric": {
+          "$ref": "#/definitions/v1OptimizationMetric",
+          "title": "Metric to optimize during the iterations"
         },
         "seed": {
           "type": "integer",

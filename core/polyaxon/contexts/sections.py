@@ -55,4 +55,5 @@ GLOBALS_CONTEXTS = {
     keys.DURATION,
     keys.CLONING_KIND,
     keys.ORIGINAL_UUID,
+    keys.IS_INDEPENDENT,
 }

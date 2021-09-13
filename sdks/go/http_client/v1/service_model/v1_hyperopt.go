@@ -47,6 +47,9 @@ type V1Hyperopt struct {
 	// Maximum number of iteration to produce new observations
 	MaxIterations int32 `json:"maxIterations,omitempty"`
 
+	// Metric to optimize during the iterations
+	Metric *V1OptimizationMetric `json:"metric,omitempty"`
+
 	// Number of runs to generate and search
 	NumRuns int32 `json:"numRuns,omitempty"`
 
@@ -65,6 +68,10 @@ func (m *V1Hyperopt) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAlgorithm(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateMetric(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -87,6 +94,23 @@ func (m *V1Hyperopt) validateAlgorithm(formats strfmt.Registry) error {
 		if err := m.Algorithm.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("algorithm")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Hyperopt) validateMetric(formats strfmt.Registry) error {
+	if swag.IsZero(m.Metric) { // not required
+		return nil
+	}
+
+	if m.Metric != nil {
+		if err := m.Metric.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("metric")
 			}
 			return err
 		}
@@ -120,6 +144,10 @@ func (m *V1Hyperopt) ContextValidate(ctx context.Context, formats strfmt.Registr
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateMetric(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateTuner(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -136,6 +164,20 @@ func (m *V1Hyperopt) contextValidateAlgorithm(ctx context.Context, formats strfm
 		if err := m.Algorithm.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("algorithm")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Hyperopt) contextValidateMetric(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Metric != nil {
+		if err := m.Metric.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("metric")
 			}
 			return err
 		}

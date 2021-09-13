@@ -85,6 +85,7 @@ class TestResolveContexts(BaseTestCase):
                 "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
+                "is_independent": True,
                 "store_path": "",
             },
             "init": {},
@@ -138,6 +139,7 @@ class TestResolveContexts(BaseTestCase):
             compiled_at=date_value,
             cloning_kind=V1CloningKind.COPY,
             original_uuid="uuid-copy",
+            is_independent=False,
         )
         assert spec == {
             "globals": {
@@ -160,6 +162,7 @@ class TestResolveContexts(BaseTestCase):
                 "started_at": None,
                 "finished_at": None,
                 "duration": None,
+                "is_independent": False,
                 "cloning_kind": V1CloningKind.COPY,
                 "original_uuid": "uuid-copy",
                 "store_path": "/claim/path",
@@ -211,6 +214,7 @@ class TestResolveContexts(BaseTestCase):
             iteration=12,
             created_at=None,
             compiled_at=None,
+            is_independent=True,
         )
         assert spec == {
             "globals": {
@@ -235,6 +239,7 @@ class TestResolveContexts(BaseTestCase):
                 "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
+                "is_independent": True,
                 "store_path": "",
             },
             "init": {"test_claim": store.schema.to_dict()},
@@ -308,6 +313,7 @@ class TestResolveContexts(BaseTestCase):
                 "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
+                "is_independent": True,
                 "store_path": "/claim/path",
             },
             "init": {"test_claim": store.schema.to_dict()},
@@ -374,6 +380,7 @@ class TestResolveContexts(BaseTestCase):
                 "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
+                "is_independent": True,
                 "store_path": "",
             },
             "init": {},
