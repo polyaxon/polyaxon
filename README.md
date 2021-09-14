@@ -192,4 +192,3 @@ Please follow the contribution guide line: *[Contribute to Polyaxon](CONTRIBUTIN
 If you use Polyaxon in your academic research, we would be grateful if you could cite it.
 
 Feel free to [contact us](mailto:contact@polyaxon.com), we would love to learn about your project and see how we can support your custom need.
-
