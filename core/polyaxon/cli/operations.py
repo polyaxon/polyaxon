@@ -756,7 +756,7 @@ def invalidate(ctx, project, uid):
 @click.pass_context
 @clean_outputs
 def statuses(ctx, project, uid, watch):
-    """Get run or run job statuses.
+    """Get run's statuses.
 
     Uses /docs/core/cli/#caching
 
@@ -886,7 +886,7 @@ def statuses(ctx, project, uid, watch):
 @click.pass_context
 @clean_outputs
 def logs(ctx, project, uid, follow, hide_time, all_containers, all_info):
-    """Get run or run job logs.
+    """Get run's logs.
 
     Uses /docs/core/cli/#caching
 
