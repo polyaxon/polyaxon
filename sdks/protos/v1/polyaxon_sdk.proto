@@ -1440,7 +1440,7 @@ service AgentsV1 {
     };
   }
 
-  // Create new run status
+  // Create new agent status
   rpc CreateAgentStatus(AgentStatusBodyRequest) returns (Status) {
     option (google.api.http) = {
       post: "/api/v1/orgs/{owner}/agents/{uuid}/statuses"

@@ -179,7 +179,7 @@ class AgentsV1Api(object):
             collection_formats=collection_formats)
 
     def create_agent_status(self, owner, uuid, body, **kwargs):  # noqa: E501
-        """Create new run status  # noqa: E501
+        """Create new agent status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -205,7 +205,7 @@ class AgentsV1Api(object):
         return self.create_agent_status_with_http_info(owner, uuid, body, **kwargs)  # noqa: E501
 
     def create_agent_status_with_http_info(self, owner, uuid, body, **kwargs):  # noqa: E501
-        """Create new run status  # noqa: E501
+        """Create new agent status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

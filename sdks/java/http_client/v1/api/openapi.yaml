@@ -2389,7 +2389,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
-      summary: Create new run status
+      summary: Create new agent status
       tags:
       - AgentsV1
       x-codegen-request-body-name: body

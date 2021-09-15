@@ -70,7 +70,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * Create new run status
+     * Create new agent status
      *
      * 
      *

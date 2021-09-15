@@ -2419,7 +2419,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}/statuses": {
       "post": {
-        "summary": "Create new run status",
+        "summary": "Create new agent status",
         "operationId": "CreateAgentStatus",
         "responses": {
           "200": {

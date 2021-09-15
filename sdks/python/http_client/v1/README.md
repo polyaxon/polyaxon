@@ -98,7 +98,7 @@ All URIs are relative to *http://localhost*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AgentsV1Api* | [**create_agent**](docs/AgentsV1Api.md#create_agent) | **POST** /api/v1/orgs/{owner}/agents | Create agent
-*AgentsV1Api* | [**create_agent_status**](docs/AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new run status
+*AgentsV1Api* | [**create_agent_status**](docs/AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new agent status
 *AgentsV1Api* | [**delete_agent**](docs/AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete agent
 *AgentsV1Api* | [**get_agent**](docs/AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
 *AgentsV1Api* | [**get_agent_config**](docs/AgentsV1Api.md#get_agent_config) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/config | Get agent config

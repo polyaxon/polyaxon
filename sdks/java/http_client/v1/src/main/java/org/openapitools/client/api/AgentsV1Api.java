@@ -284,7 +284,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Create new run status
+     * Create new agent status
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -307,7 +307,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Create new run status
+     * Create new agent status
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -331,7 +331,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Create new run status (asynchronously)
+     * Create new agent status (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)

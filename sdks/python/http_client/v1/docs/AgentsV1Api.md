@@ -6,7 +6,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_agent**](AgentsV1Api.md#create_agent) | **POST** /api/v1/orgs/{owner}/agents | Create agent
-[**create_agent_status**](AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new run status
+[**create_agent_status**](AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new agent status
 [**delete_agent**](AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete agent
 [**get_agent**](AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
 [**get_agent_config**](AgentsV1Api.md#get_agent_config) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/config | Get agent config
@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 # **create_agent_status**
 > V1Status create_agent_status(owner, uuid, body)
 
-Create new run status
+Create new agent status
 
 ### Example
 
@@ -147,7 +147,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1AgentStatusBodyRequest() # V1AgentStatusBodyRequest | 
 
     try:
-        # Create new run status
+        # Create new agent status
         api_response = api_instance.create_agent_status(owner, uuid, body)
         pprint(api_response)
     except ApiException as e:

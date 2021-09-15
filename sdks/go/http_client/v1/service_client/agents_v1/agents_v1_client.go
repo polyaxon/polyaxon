@@ -116,7 +116,7 @@ func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientA
 }
 
 /*
-  CreateAgentStatus creates new run status
+  CreateAgentStatus creates new agent status
 */
 func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error) {
 	// TODO: Validate the params before sending

@@ -111,7 +111,7 @@ export default class AgentsV1Api {
      */
 
     /**
-     * Create new run status
+     * Create new agent status
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:model/V1AgentStatusBodyRequest} body 

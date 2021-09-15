@@ -192,7 +192,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create new run status
+     * Create new agent status
      */
     async createAgentStatusRaw(requestParameters: CreateAgentStatusRequest): Promise<runtime.ApiResponse<V1Status>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -229,7 +229,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create new run status
+     * Create new agent status
      */
     async createAgentStatus(requestParameters: CreateAgentStatusRequest): Promise<V1Status> {
         const response = await this.createAgentStatusRaw(requestParameters);
