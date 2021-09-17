@@ -31,7 +31,7 @@ You can also attach a quota to a queue
 
 ![queue-create](../../../../content/images/dashboard/queues/create-quota.png)
 
-> **Note**: You can set the quota field accepts any resource format supported by Kubernetes e.g. (5Gi, 0.5m, 1000, ...)
+> **Note**: The quota field accepts any resource format supported by Kubernetes e.g. (5Gi, 0.5m, 1000, ...)
 
 ## Manage queues
 
