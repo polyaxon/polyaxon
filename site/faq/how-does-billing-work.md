@@ -18,7 +18,8 @@ tags:
   - enterprise
 ---
 
-If you deploy the community open-source version,
-the billing is not handled by Polyaxon and is done by the cloud provider of your choice.
+All Polyaxon distributions deploy your workload and manage your artifacts on your on-premise cluster or cloud provider.  
 
-For the **Polyaxon Cloud** and **Polyaxon EE**, please check our pricing page.
+If you use a cloud provider, you will pay for all resources consumed using your account on that cloud provider.
+
+For **Polyaxon Cloud** and **Polyaxon EE**, please check our pricing page for more details.
