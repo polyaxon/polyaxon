@@ -57,8 +57,15 @@ operator                                 | example
 `n <[=] x <[=] m` where n < m            | `metrics.loss:>0.1, metrics.loss:<0.4` will match all entities that have a metric strictly between 0.1 and 0.4
 `x <[=] n` and `x >[=] m`  where n < m   | `metrics.loss:<=0.1, metrics.loss:>=0.4` will match all entities that have a metric outside the range 0.1 and 0.4
 
-You can of course use any combination of the operators and with negation modifier.
+You can of course use any combination of the operators with negation modifier.
 
+## Query with cpu condition
+
+Similar to the query with scalar condition, and in addition to the int/float values, it accepts any valid Kubernetes CPU value e.g. 1, 100, 0.75, 750m, ...  
+
+## Query with memory condition
+
+Similar to the query with scalar condition, and in addition to the int/float values, it accepts any valid Kubernetes memory value e.g. 128974848, 129e6, 129M, 123Mi, 4Gi, ...
 
 ## Query with value condition
 
