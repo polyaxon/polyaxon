@@ -43,6 +43,7 @@ You can also update their roles.
 | Can add/remove/change an agent                               |        |        |       | ✅      | ✅     |         |
 | Can add/remove/change a preset                               |        |        |       | ✅      | ✅     |         |
 | Can edit global integrations                                 |        |        |       | ✅      | ✅     |         |
+| Can manage an organization's cross-project runs              |        |        | ✅    | ✅      | ✅     |         |
 | Can view an organization's level analytics                   |        |        | ✅    | ✅      | ✅     |         |
 | Can view an organization's level activity logs               |        |        | ✅    | ✅      | ✅     |         |
 | Can add/remove/change a project                              |        |        | ✅    | ✅      | ✅     |         |
@@ -66,7 +67,10 @@ You can also update their roles.
 | Can delete component versions                                |        |        | ✅    | ✅      | ✅     |         |
 | Can create/update model versions                             |        | ✅     | ✅    | ✅      | ✅     |         |
 | Can delete model versions                                    |        |        | ✅    | ✅      | ✅     |         |
-| Can view projects, runs and related metadata and artifacts   | ✅     | ✅     | ✅    | ✅      | ✅     |         |
+| Can view projects                                            | ✅     | ✅     | ✅    | ✅      | ✅     |         |
+| Can view a project's level analytics                         | ✅     | ✅     | ✅    | ✅      | ✅     |         |
+| Can view a project's level activity logs                     | ✅     | ✅     | ✅    | ✅      | ✅     |         |
+| Can view runs and related metadata and artifacts             | ✅     | ✅     | ✅    | ✅      | ✅     |         |
 | Can view component hub and versions                          | ✅     | ✅     | ✅    | ✅      | ✅     |         |
 | Can view model registry and versions                         | ✅     | ✅     | ✅    | ✅      | ✅     |         |
 
@@ -146,6 +150,21 @@ Users with `outsider`, `viewer`, `member`, and `admin` can be invited to teams a
 
 Each project, component hub, model registry can restrict access by selecting users and teams. 
 If teams are selected, users will act based on the highest role they have in the teams they belong to and have access to that entity.
+
+Please check [teams section](/docs/management/organizations/teams/) for more details.
+
+## Team spaces
+
+> **Coming soon**
+
+Organization owners and managers can create space/group and allow delegate management to users following their team's roles instead of their organization roles.
+
+When promoting a viewer or a member to the admin role on a specific team, the user cannot create projects/models/components and still requires an organization's level admin to perform those operations.
+
+A team space (or a group) provides a view of the organization where users can act based on their roles in a specific team, 
+which should allow the users in that team to be fully autonomous within that specific space and can act following the role they have on that team.
+
+The team space/group allows as well to reduce the amount of work required from an organization's admin to bootstrap new projects for their users, i.e. within a team space any new project will inherit all restrictions and default configurations such as presets, runtimes, connections, ... 
 
 Please check [teams section](/docs/management/organizations/teams/) for more details.
 
