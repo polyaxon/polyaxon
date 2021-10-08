@@ -38,6 +38,7 @@ class V1JoinParam(BaseConfig, ParamValueMixin, polyaxon_sdk.V1JoinParam):
         "contextOnly",
         "connection",
         "toInit",
+        "toEnv",
     ]
 
     @property

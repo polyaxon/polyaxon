@@ -31,6 +31,7 @@ SYNCED = "synced"
 DONE = "done"
 STOPPED = "stopped"
 APPROVED = "approved"
+TRANSFERRED = "transferred"
 INVALIDATED = "invalidated"
 SKIPPED = "skipped"
 SETTINGS = "settings"
@@ -56,6 +57,7 @@ WRITE_ACTIONS = [
     CLONED,
     STOPPED,
     APPROVED,
+    TRANSFERRED,
     SETTINGS,
     PROMOTED,
     INVALIDATED,

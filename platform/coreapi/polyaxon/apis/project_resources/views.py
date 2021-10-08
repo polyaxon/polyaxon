@@ -28,6 +28,7 @@ from coredb.query_managers.artifact import ArtifactQueryManager
 from coredb.query_managers.run import RunQueryManager
 from endpoints.project import ProjectResourceListEndpoint
 from polycommon.apis.filters import OrderingFilter, QueryFilter
+from polycommon.apis.paginator import LargeLimitOffsetPagination
 from polycommon.endpoints.base import (
     CreateEndpoint,
     DestroyEndpoint,
@@ -96,6 +97,7 @@ class ProjectRunsArtifactsView(ProjectResourceListEndpoint, ListEndpoint):
     ordering = ArtifactQueryManager.FIELDS_DEFAULT_ORDERING
     ordering_fields = ArtifactQueryManager.FIELDS_ORDERING
     ordering_proxy_fields = ArtifactQueryManager.FIELDS_ORDERING_PROXY
+    pagination_class = LargeLimitOffsetPagination
 
     def enrich_queryset(self, queryset):
         return queryset.filter(run__project=self.project)

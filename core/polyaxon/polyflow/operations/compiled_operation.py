@@ -108,6 +108,8 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
                             i.connection = current_param.connection
                         if current_param.to_init:
                             i.to_init = current_param.to_init
+                        if current_param.to_env:
+                            i.to_env = current_param.to_env
 
         def set_contexts() -> List[V1IO]:
             context_params = [p for p in param_specs if p not in processed_params]
@@ -121,6 +123,7 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
                         is_optional=True,
                         connection=current_param.connection,
                         to_init=current_param.to_init,
+                        to_env=current_param.to_env,
                     )
                 )
 
@@ -129,6 +132,16 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
         set_io(self.inputs)
         set_io(self.outputs)
         self.contexts = set_contexts()
+
+    def get_env_io(self) -> List[List]:
+        def get_env_io(io: List[V1IO]) -> List[List]:
+            return [[i.to_env, i.value] for i in io if i.to_env]
+
+        return (
+            get_env_io(self.inputs or [])
+            + get_env_io(self.outputs or [])
+            + get_env_io(self.contexts or [])
+        )
 
     def apply_image_destination(self, image: str):
         self.run.apply_image_destination(image)

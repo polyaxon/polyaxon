@@ -200,6 +200,7 @@ class ParamSchema(BaseCamelSchema):
     context_only = fields.Bool(allow_none=True)
     connection = fields.Str(allow_none=True)
     to_init = fields.Bool(allow_none=True)
+    to_env = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -239,6 +240,7 @@ class V1Param(
         context_only: bool, optional
         connection: str, optional
         to_init: bool, optional
+        to_env: str, optional
 
     ## YAML usage
 
@@ -411,6 +413,18 @@ class V1Param(
     >>>       - files: ["subpath/file1", "another/subpath/file2.ext"]
     >>>       - dirs: ["subpath/dir1", "another/subpath/dir2"]
     ```
+
+    ### toEnv
+
+    > **N.B**: Requires Polyaxon CLI and Polyaxon Agent/CE version `>= 1.12`
+
+    If passed, it will be converted automatically to an environment variable.
+
+    ```yaml
+    >>> param1:
+    >>>   toEnv: ENV_VAR_NAME_TO_USE
+    >>>   value: "some value"
+    ```
     """
 
     SCHEMA = ParamSchema
@@ -420,6 +434,7 @@ class V1Param(
         "contextOnly",
         "connection",
         "toInit",
+        "toEnv",
     ]
 
 

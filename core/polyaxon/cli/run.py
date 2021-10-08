@@ -135,13 +135,15 @@ from polyaxon.utils.validation import validate_tags
     "--nocache",
     is_flag=True,
     default=False,
-    help="Disable cache check before starting this operation.",
+    help="[DEPRECATED] Please use '--cache=f' instead. "
+    "Disable cache check before starting this operation.",
 )
 @click.option(
     "--cache",
-    is_flag=True,
-    default=False,
-    help="Enable cache check before starting this operation.",
+    help="To enable/disable cache check before starting this operation, "
+    "similar to 'cache: {disable: true/false}'. "
+    "Can be used with yes/no, y/n, false/true, f/t, 1/0. "
+    "e.g. '--cache=1', '--cache=yes', '--cache=false', '--cache=t', ...",
 )
 @click.option(
     "--approved",
@@ -268,6 +270,11 @@ def run(
     if cache and nocache:
         Printer.print_error(
             "You can't use `--cache` and `--nocache` at the same.", sys_exit=True
+        )
+    if nocache:
+        Printer.print_error(
+            "'--nocache' is DEPRECATED and will be removed in the future, "
+            "please use '--cache=f' instead.",
         )
     if (upload_to or upload_from) and not upload:
         upload = True

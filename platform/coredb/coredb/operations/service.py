@@ -377,6 +377,7 @@ class OperationsService(Service):
                 reason="ResumeManager",
                 message=message,
             ),
+            force=True,
         )
         return run
 
@@ -394,6 +395,7 @@ class OperationsService(Service):
         readme: str = None,
         tags: List[int] = None,
         supported_kinds: Set[str] = None,
+        supported_owners: Set[str] = None,
         **kwargs,
     ) -> BaseRun:
         op_spec = V1Operation.read(run.raw_content)
@@ -429,6 +431,7 @@ class OperationsService(Service):
             tags=tags or run.tags,
             override=content,
             supported_kinds=supported_kinds,
+            supported_owners=supported_owners,
             meta_info=meta_info,
             **kwargs,
         ).instance
@@ -447,6 +450,7 @@ class OperationsService(Service):
         readme: str = None,
         tags: List[int] = None,
         supported_kinds: Set[str] = None,
+        supported_owners: Set[str] = None,
         **kwargs,
     ) -> BaseRun:
         return self._clone_run(
@@ -459,6 +463,7 @@ class OperationsService(Service):
             readme=readme,
             tags=tags,
             supported_kinds=supported_kinds,
+            supported_owners=supported_owners,
             **kwargs,
         )
 
@@ -472,6 +477,7 @@ class OperationsService(Service):
         readme: str = None,
         tags: List[int] = None,
         supported_kinds: Set[str] = None,
+        supported_owners: Set[str] = None,
         **kwargs,
     ) -> BaseRun:
         return self._clone_run(
@@ -484,5 +490,6 @@ class OperationsService(Service):
             readme=readme,
             tags=tags,
             supported_kinds=supported_kinds,
+            supported_owners=supported_owners,
             **kwargs,
         )

@@ -122,7 +122,8 @@ class TestDockerfileInitConfigs(BaseTestCase):
         config_dict = {
             "image": "tensorflow:1.3.0",
             "path": ["./module"],
-            "copy": ["/foo/bar"],
+            "copy": ["/foo/bar", ["/foo2", "/bar2"]],
+            "postRunCopy": ["/foo/bar", ["/foo2", "/bar2"]],
             "run": ["pip install tensor2tensor"],
             "env": {"LC_ALL": "en_US.UTF-8"},
             "filename": "dockerfile",
@@ -140,6 +141,7 @@ class TestDockerfileInitConfigs(BaseTestCase):
             "env": {"LC_ALL": "en_US.UTF-8"},
             "uid": 1000,
             "gid": 3000,
+            "username": "test",
             "filename": "dockerfile",
             "workdir": "",
             "shell": "sh",

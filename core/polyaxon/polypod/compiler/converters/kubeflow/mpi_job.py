@@ -58,10 +58,12 @@ class MPIJobConverter(MPIJobMixin, BaseConverter):
                 connection_by_names=connection_by_names,
                 secrets=secrets,
                 config_maps=config_maps,
+                kv_env_vars=kv_env_vars,
                 default_sa=default_sa,
                 num_replicas=replica.replicas,
             )
 
+        kv_env_vars = compiled_operation.get_env_io()
         plugins = compiled_operation.plugins or V1Plugins()
         contexts = PluginsContextsSpec.from_config(plugins, default_auth=default_auth)
         launcher = _get_replica(job.launcher)

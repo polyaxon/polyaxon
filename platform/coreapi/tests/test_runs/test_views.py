@@ -373,6 +373,7 @@ class TestResumeRunViewV1(BaseRerunRunApi):
             condition=V1StatusCondition.get_condition(
                 type=V1Statuses.RUNNING, status=True
             ),
+            force=True,
         )
         data = {}
         assert self.queryset.count() == 1
@@ -524,6 +525,76 @@ class TestRunStatusListViewV1(BaseTestRunApi):
             "status": True,
             "reason": "Run is stopped",
             "message": "foo",
+        }
+
+    def test_final_status(self):
+        assert self.object.status == V1Statuses.CREATED
+        assert self.object.status_conditions == {}
+        # Create with failed status
+        data = {
+            "condition": {
+                "type": V1Statuses.FAILED,
+                "status": True,
+                "reason": "Run is stopped",
+                "message": "foo",
+            }
+        }
+        resp = self.stuff_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        self.object.refresh_from_db()
+        assert self.object.status == V1Statuses.FAILED
+        assert len(self.object.status_conditions) == 1
+        condition = self.object.status_conditions[0]
+        condition.pop("last_transition_time")
+        condition.pop("last_update_time")
+        assert condition == {
+            "type": V1Statuses.FAILED,
+            "status": True,
+            "reason": "Run is stopped",
+            "message": "foo",
+        }
+
+        # Create with stopped status
+        data = {
+            "condition": {
+                "type": V1Statuses.STOPPED,
+            }
+        }
+        resp = self.stuff_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        self.object.refresh_from_db()
+        assert self.object.status == V1Statuses.FAILED
+        assert len(self.object.status_conditions) == 1
+        condition = self.object.status_conditions[0]
+        condition.pop("last_transition_time")
+        condition.pop("last_update_time")
+        assert condition == {
+            "type": V1Statuses.FAILED,
+            "status": True,
+            "reason": "Run is stopped",
+            "message": "foo",
+        }
+
+        # Create with stopped status with force flag
+        data = {
+            "condition": {
+                "type": V1Statuses.STOPPED,
+            },
+            "force": True,
+        }
+        resp = self.stuff_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        self.object.refresh_from_db()
+        assert self.object.status == V1Statuses.STOPPED
+        assert len(self.object.status_conditions) == 2
+        condition = self.object.status_conditions[1]
+        condition.pop("last_transition_time")
+        condition.pop("last_update_time")
+        assert condition == {
+            "type": V1Statuses.STOPPED,
+            "status": None,
+            "reason": None,
+            "message": None,
         }
 
 

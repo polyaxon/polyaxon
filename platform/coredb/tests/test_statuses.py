@@ -290,6 +290,23 @@ class TestStatuses(TestCase):
         new_run_status(self.run, condition2)
         self.run.refresh_from_db()
         assert self.run.started_at == started_at
+        assert self.run.finished_at is not None
+        finished_at = self.run.finished_at
+        assert self.run.wait_time == int(
+            (self.run.started_at - self.run.created_at).total_seconds()
+        )
+        assert self.run.duration == int(
+            (self.run.finished_at - self.run.started_at).total_seconds()
+        )
+        assert len(self.run.status_conditions) == 4
+        assert self.run.status_conditions[3]["type"] == V1Statuses.STOPPED
+        assert self.run.status_conditions[3]["message"] == "zombie error"
+        assert self.run.status_conditions[3]["reason"] == "Run is stopped"
+
+        # Set force
+        new_run_status(self.run, condition2, force=True)
+        self.run.refresh_from_db()
+        assert self.run.started_at == started_at
         assert self.run.finished_at == finished_at
         assert self.run.wait_time == int(
             (self.run.started_at - self.run.created_at).total_seconds()
@@ -301,14 +318,14 @@ class TestStatuses(TestCase):
         assert self.run.status_conditions[3]["type"] == V1Statuses.STOPPED
         assert self.run.status_conditions[4]["type"] == V1Statuses.FAILED
 
-        # Update the stopped status
+        # Update the stopped status force
         condition3 = V1StatusCondition.get_condition(
             type=V1Statuses.STOPPED,
             status="True",
             reason="Run failed",
             message="some error",
         )
-        new_run_status(self.run, condition3)
+        new_run_status(self.run, condition3, force=True)
         self.run.refresh_from_db()
         assert self.run.started_at == started_at
         assert self.run.finished_at == finished_at

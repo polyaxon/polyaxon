@@ -95,7 +95,7 @@ def check_polyaxonfile(
     presets: List[str] = None,
     queue: str = None,
     nocache: bool = None,
-    cache: bool = None,
+    cache: Union[int, str, bool] = None,
     verbose: bool = True,
     is_cli: bool = True,
     to_op: bool = True,

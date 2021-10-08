@@ -14,9 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from rest_framework import serializers
+from rest_framework import fields, serializers
 
 
 class ProjectMixin(serializers.Serializer):
+    project = fields.SerializerMethodField()
+
     def get_project(self, obj):
         return obj.project.name

@@ -39,14 +39,14 @@ def get_op_specification(
     presets: List[str] = None,
     queue: str = None,
     nocache: bool = None,
-    cache: bool = None,
+    cache: Union[int, str, bool] = None,
     approved: Union[int, str, bool] = None,
     validate_params: bool = True,
     preset_files: List[str] = None,
     git_init: V1Init = None,
 ) -> V1Operation:
     if cache and nocache:
-        raise PolyaxonfileError("Received both cache and nocache")
+        raise PolyaxonfileError("Received both 'cache' and 'nocache'")
     op_data = {
         "version": config.version if config else pkg.SCHEMA_VERSION,
         "kind": kinds.OPERATION,
@@ -63,8 +63,8 @@ def get_op_specification(
         # Check only
         get_queue_info(queue)
         op_data["queue"] = queue
-    if cache:
-        op_data["cache"] = {"disable": False}
+    if cache is not None:
+        op_data["cache"] = {"disable": not to_bool(cache)}
     if nocache:
         op_data["cache"] = {"disable": True}
     # Handle approval logic

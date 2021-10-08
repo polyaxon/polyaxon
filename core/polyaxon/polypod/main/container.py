@@ -45,7 +45,7 @@ def get_main_container(
     config_maps: Optional[Iterable[V1K8sResourceType]],
     log_level: str,
     run_path: Optional[str],
-    kv_env_vars=None,
+    kv_env_vars: List[List] = None,
     env: List[k8s_schemas.V1EnvVar] = None,
     ports: List[int] = None,
 ) -> k8s_schemas.V1Container:

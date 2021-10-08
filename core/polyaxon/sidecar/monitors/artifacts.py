@@ -20,6 +20,7 @@ from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_ARTIFACTS_RELATED,
     CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT,
+    CONTEXT_RELATED_RUNS,
 )
 from polyaxon.fs.async_manager import sync_fs
 from polyaxon.fs.types import FSSystem
@@ -45,4 +46,5 @@ async def sync_artifacts(fs: FSSystem, fw: FSWatcher, store_path: str, run_uuid:
         fw=fw,
         store_base_path=store_path,
         context_base_path=CONTEXT_MOUNT_ARTIFACTS,
+        context_related_runs=CONTEXT_RELATED_RUNS,
     )

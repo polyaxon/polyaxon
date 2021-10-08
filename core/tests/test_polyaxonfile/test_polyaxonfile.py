@@ -267,7 +267,7 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.plugins.collect_logs is None
         assert isinstance(run_config.run.environment, V1Environment)
         assert run_config.run.environment.labels == {"key": "value"}
-        assert isinstance(run_config.run.init, list)
+        assert len(run_config.run.init) == 3
         assert len(run_config.run.connections) == 2
         assert run_config.run.connections == ["data1", "data2"]
         assert len(run_config.run.volumes) == 2
@@ -275,6 +275,55 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.run.volumes[0].secret == {"secretName": "mysecret"}
         assert run_config.run.volumes[1].name == "config_map"
         assert run_config.run.volumes[1].config_map == {"configName": "config_map2"}
+
+    def test_job_file_with_templated_file_init_and_to_env(self):
+        run_config = CompiledOperationSpecification.read(
+            [
+                os.path.abspath(
+                    "tests/fixtures/plain/job_file_with_templated_file_init_and_to_env.yml"
+                ),
+                {"kind": "compiled_operation"},
+            ]
+        )
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        assert run_config.version == 1.1
+        assert isinstance(run_config.plugins, V1Plugins)
+        assert run_config.plugins.log_level == "INFO"
+        assert run_config.plugins.auth is True
+        assert run_config.plugins.shm is True
+        assert run_config.plugins.docker is True
+        assert run_config.plugins.collect_artifacts is True
+        assert run_config.plugins.collect_logs is None
+        assert isinstance(run_config.run.environment, V1Environment)
+        assert run_config.run.environment.labels == {"key": "value"}
+        assert len(run_config.run.init) == 4
+        assert "param1" in run_config.run.init[0].file.content
+        assert "param2" in run_config.run.init[0].file.content
+        assert "params.dest.connection" in run_config.run.init[0].file.content
+        assert "23423" not in run_config.run.init[0].file.content
+        assert "foo" not in run_config.run.init[0].file.content
+        assert (
+            "https://registry.com/image:tag" not in run_config.run.init[0].file.content
+        )
+        assert len(run_config.run.connections) == 2
+        assert run_config.run.connections == ["data1", "data2"]
+        assert len(run_config.run.volumes) == 2
+        assert run_config.run.volumes[0].name == "my_ssh_secret"
+        assert run_config.run.volumes[0].secret == {"secretName": "mysecret"}
+        assert run_config.run.volumes[1].name == "config_map"
+        assert run_config.run.volumes[1].config_map == {"configName": "config_map2"}
+
+        # Compile run
+        run_config = CompiledOperationSpecification.apply_runtime_contexts(
+            run_config,
+            contexts={"connections": {"registry": {"url": "https://registry.com"}}},
+        )
+        assert "param1" not in run_config.run.init[0].file.content
+        assert "param2" not in run_config.run.init[0].file.content
+        assert "params.dest.connection" not in run_config.run.init[0].file.content
+        assert "23423" in run_config.run.init[0].file.content
+        assert "foo" in run_config.run.init[0].file.content
+        assert "https://registry.com/image:tag" in run_config.run.init[0].file.content
 
     def test_job_file_with_termination_passes(self):
         run_config = CompiledOperationSpecification.read(

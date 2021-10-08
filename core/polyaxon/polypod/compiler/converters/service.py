@@ -41,6 +41,7 @@ class ServiceConverter(ServiceMixin, BaseConverter):
         service = compiled_operation.run  # type: V1Service
         plugins = compiled_operation.plugins or V1Plugins()
         contexts = PluginsContextsSpec.from_config(plugins, default_auth=default_auth)
+        kv_env_vars = compiled_operation.get_env_io()
         replica_spec = self.get_replica_resource(
             plugins=plugins,
             contexts=contexts,
@@ -54,6 +55,7 @@ class ServiceConverter(ServiceMixin, BaseConverter):
             connection_by_names=connection_by_names,
             secrets=secrets,
             config_maps=config_maps,
+            kv_env_vars=kv_env_vars,
             default_sa=default_sa,
             ports=service.ports,
         )
