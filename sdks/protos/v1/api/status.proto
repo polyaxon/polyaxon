@@ -68,6 +68,9 @@ message EntityStatusBodyRequest {
 
     // Status to set
     StatusCondition condition = 4;
+
+    // Force flag
+    bool force = 5;
 }
 
 // Request data to create/update agent status

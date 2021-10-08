@@ -597,7 +597,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_agent_names**
-> V1ListAgentsResponse list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
+> V1ListAgentsResponse list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
 
 List agents names
 
@@ -640,11 +640,14 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+bookmarks = True # bool | Filter by bookmarks. (optional)
+pins = 'pins_example' # str | Pinned entities. (optional)
+mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List agents names
-        api_response = api_instance.list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
+        api_response = api_instance.list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->list_agent_names: %s\n" % e)
@@ -659,6 +662,9 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
+ **pins** | **str**| Pinned entities. | [optional] 
+ **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
@@ -686,7 +692,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_agents**
-> V1ListAgentsResponse list_agents(owner, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
+> V1ListAgentsResponse list_agents(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
 
 List agents
 
@@ -729,11 +735,14 @@ offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
+bookmarks = True # bool | Filter by bookmarks. (optional)
+pins = 'pins_example' # str | Pinned entities. (optional)
+mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List agents
-        api_response = api_instance.list_agents(owner, offset=offset, limit=limit, sort=sort, query=query, no_page=no_page)
+        api_response = api_instance.list_agents(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->list_agents: %s\n" % e)
@@ -748,6 +757,9 @@ Name | Type | Description  | Notes
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
+ **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
+ **pins** | **str**| Pinned entities. | [optional] 
+ **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type

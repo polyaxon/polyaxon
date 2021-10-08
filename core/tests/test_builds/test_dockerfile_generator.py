@@ -97,7 +97,16 @@ class TestDockerfileGenerator(BaseTestCase):
         builder.clean()
 
         # Add copy steps
-        copy = ["polyaxon_requirements.txt", "polyaxon_setup.sh", "environment.yml"]
+        copy = [
+            "polyaxon_requirements.txt",
+            "polyaxon_setup.sh",
+            ["environment-in.yml", "environment-out.yml"],
+        ]
+        # Add copy steps
+        post_run_copy = [
+            "post_run_setup.sh",
+            ["post_run_environment-in.yml", "post_run_environment-out.yml"],
+        ]
         # Add run steps to act on them
         run = [
             "pip install -r polyaxon_requirements.txt",
@@ -105,7 +114,11 @@ class TestDockerfileGenerator(BaseTestCase):
             "conda env update -n base -f environment.yml",
         ]
         build_context = V1DockerfileType(
-            image="busybox", workdir_path=repo_path, copy=copy, run=run
+            image="busybox",
+            workdir_path=repo_path,
+            copy=copy,
+            post_run_copy=post_run_copy,
+            run=run,
         )
 
         builder = DockerFileGenerator(
@@ -115,7 +128,14 @@ class TestDockerfileGenerator(BaseTestCase):
         dockerfile = builder.render()
         assert "COPY {} {}".format(copy[0], POLYAXON_DOCKER_WORKDIR) in dockerfile
         assert "COPY {} {}".format(copy[1], POLYAXON_DOCKER_WORKDIR) in dockerfile
-        assert "COPY {} {}".format(copy[2], POLYAXON_DOCKER_WORKDIR) in dockerfile
+        assert "COPY {} {}".format(copy[2][0], copy[2][1]) in dockerfile
+
+        assert (
+            "COPY {} {}".format(post_run_copy[0], POLYAXON_DOCKER_WORKDIR) in dockerfile
+        )
+        assert (
+            "COPY {} {}".format(post_run_copy[1][0], post_run_copy[1][1]) in dockerfile
+        )
 
         assert "RUN {}".format(run[0]) in dockerfile
         assert "RUN {}".format(run[1]) in dockerfile

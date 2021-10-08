@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **ref** | **String** |  | [optional] 
 **connection** | **String** |  | [optional] 
 **toInit** | **Boolean** |  | [optional] 
+**toEnv** | **String** |  | [optional] 
 **contextOnly** | **Boolean** |  | [optional] 
 
 

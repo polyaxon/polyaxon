@@ -36,7 +36,7 @@ from polycommon.events.registry.run import RUN_NEW_ARTIFACTS
 class RunArtifactListView(RunResourceListEndpoint, ListEndpoint, CreateEndpoint):
     queryset = queries.artifacts
     serializer_class = RunArtifactSerializer
-
+    pagination_class = LargeLimitOffsetPagination
     AUDITOR_EVENT_TYPES = {
         "POST": RUN_NEW_ARTIFACTS,
     }

@@ -21,6 +21,7 @@ from marshmallow import fields, validates_schema
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.docker_image import validate_image
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.fields.str_or_list import StrOrList
 from polyaxon.schemas.types.base import BaseTypeConfig
 from polyaxon.utils.signal_decorators import check_partial
 
@@ -33,11 +34,13 @@ class DockerfileTypeSchema(BaseCamelSchema):
     image = RefOrObject(fields.Str(), required=True)
     env = RefOrObject(fields.Dict(keys=fields.Str(), allow_none=True))
     path = RefOrObject(fields.List(fields.Str(), allow_none=True))
-    copy = RefOrObject(fields.List(fields.Str(), allow_none=True))
+    copy = RefOrObject(fields.List(StrOrList(), allow_none=True))
+    post_run_copy = RefOrObject(fields.List(StrOrList(), allow_none=True))
     run = RefOrObject(fields.List(fields.Str(), allow_none=True))
     lang_env = RefOrObject(fields.Str(allow_none=True))
     uid = RefOrObject(fields.Int(allow_none=True))
     gid = RefOrObject(fields.Int(allow_none=True))
+    username = RefOrObject(fields.Str(allow_none=True))
     filename = RefOrObject(fields.Str(allow_none=True))
     workdir = RefOrObject(fields.Str(allow_none=True))
     workdir_path = RefOrObject(fields.Str(allow_none=True))
@@ -64,11 +67,13 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
         image: str
         env: Dict, optional
         path: List[str], optional
-        copy: List[str], optional
+        copy: Union[List[str], List[[str, str]], optional
+        post_run_copy: Union[List[str], List[[str, str]], optional
         run: List[str], optional
         lang_env: str, optional
         uid: str, optional
         gid: str, optional
+        username: str, optional, default 'polyaxon'
         filename: str, optional
         workdir: str, optional
         workdir_path: str, optional
@@ -174,10 +179,16 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
       * image: the base image to use, is will exposed as `FROM` command in the dockerfile.
       * env: environment variables dictionary that will be exposed as `ENV` sections.
       * path: list of paths to be added to your `PATH` environment variable.
-      * copy: a list a copy commands that will be exposed as list of COPY commands.
+      * copy: a list a copy commands that will be exposed as list of COPY commands. You can pass a
+        Union[List[str], List[[str, str]], if a str is passed it will be placed under the workdir,
+        if [str, str] is passed the path will be placed under the second string.
+      * postRunCopy: Similar to the copy section,
+        the COPY commands will be placed after RUN commands.
+        This could be very useful to leverage any cached commands before copying new artifacts.
       * run: a list a run commands that will be exposed as list of RUN commands.
       * langEnv: if passed it will expose these environment variable: ENV LC_ALL, LANG, LANGUAGE
       * uid and gid: will create a new user based on these 2 values.
+      * username: an optional name to use for the uid/gid, default is 'polyaxon' user.
       * filename: an optional name for your dockerfile, default is Dockerfile.
         **N.B.** this is not a path, if you need to generate the dockerfile on a custom path,
         you will need to set the path key on the init container definition.
@@ -195,10 +206,14 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
     >>> path:
     >>> - module/add/to/path
     >>> copy:
-    >>> - copy/local/path
+    >>> - copy/local/requirements.txt
+    >>> - [copy/.cache/dir, /destination]
     >>> run:
     >>> - pip install ...
     >>> - mv foo bar
+    >>> postRunCopy:
+    >>> - copy/local/path
+    >>> - [copy/local/path, /path/to/user/in/container]
     >>> langEnv: en_US.UTF-8
     >>> uid: 2222
     >>> gid: 1111
@@ -214,10 +229,12 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
         "env",
         "path",
         "copy",
+        "postRunCopy",
         "run",
         "langEnv",
         "uid",
         "gid",
+        "username",
         "filename",
         "workdir",
         "workdirPath",

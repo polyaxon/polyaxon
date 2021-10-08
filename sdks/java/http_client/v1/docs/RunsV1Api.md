@@ -52,7 +52,7 @@ Method | HTTP request | Description
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/restart | Restart run
 [**restoreRun**](RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/restore | Restore run
-[**restoreRuns**](RunsV1Api.md#restoreRuns) | **POST** /api/v1/{owner}/{project}/runs/restore | Archive runs
+[**restoreRuns**](RunsV1Api.md#restoreRuns) | **POST** /api/v1/{owner}/{project}/runs/restore | Restore runs
 [**resumeRun**](RunsV1Api.md#resumeRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/resume | Resume run
 [**startRunTensorboard**](RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start | Start run tensorboard
 [**stopRun**](RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/stop | Stop run
@@ -60,6 +60,8 @@ Method | HTTP request | Description
 [**stopRuns**](RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 [**syncRun**](RunsV1Api.md#syncRun) | **POST** /api/v1/{owner}/{project}/runs/sync | Sync offline run
 [**tagRuns**](RunsV1Api.md#tagRuns) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
+[**transferRun**](RunsV1Api.md#transferRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/transfer | Transfer run
+[**transferRuns**](RunsV1Api.md#transferRuns) | **POST** /api/v1/{owner}/{project}/runs/transfer | Transfer runs
 [**unbookmarkRun**](RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark | Unbookmark run
 [**updateRun**](RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 [**uploadRunArtifact**](RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
@@ -2583,7 +2585,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunStats"></a>
 # **getRunStats**
-> Object getRunStats(owner, entity, uuid, offset, limit, sort, query, kind, aggregate, groupby, trunc)
+> Object getRunStats(owner, entity, uuid, offset, limit, sort, query, bookmarks, kind, aggregate, groupby, trunc)
 
 Get run stats
 
@@ -2616,12 +2618,13 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
     String kind = "kind_example"; // String | Stats Kind.
     String aggregate = "aggregate_example"; // String | Stats aggregate.
     String groupby = "groupby_example"; // String | Stats group.
     String trunc = "trunc_example"; // String | Stats trunc.
     try {
-      Object result = apiInstance.getRunStats(owner, entity, uuid, offset, limit, sort, query, kind, aggregate, groupby, trunc);
+      Object result = apiInstance.getRunStats(owner, entity, uuid, offset, limit, sort, query, bookmarks, kind, aggregate, groupby, trunc);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunStats");
@@ -2645,6 +2648,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
  **kind** | **String**| Stats Kind. | [optional]
  **aggregate** | **String**| Stats aggregate. | [optional]
  **groupby** | **String**| Stats group. | [optional]
@@ -2834,7 +2838,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunsArtifactsLineage"></a>
 # **getRunsArtifactsLineage**
-> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode, noPage)
+> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 Get runs artifacts lineage
 
@@ -2866,10 +2870,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, mode, noPage);
+      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunsArtifactsLineage");
@@ -2892,6 +2898,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -3387,7 +3395,7 @@ Name | Type | Description  | Notes
 
 <a name="listRuns"></a>
 # **listRuns**
-> V1ListRunsResponse listRuns(owner, name, offset, limit, sort, query, mode, noPage)
+> V1ListRunsResponse listRuns(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List runs
 
@@ -3419,10 +3427,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query, mode, noPage);
+      V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#listRuns");
@@ -3445,6 +3455,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -3780,7 +3792,7 @@ null (empty response body)
 # **restoreRuns**
 > restoreRuns(owner, project, body)
 
-Archive runs
+Restore runs
 
 ### Example
 ```java
@@ -4350,6 +4362,156 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
  **body** | [**V1EntitiesTags**](V1EntitiesTags.md)| Data |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+<a name="transferRun"></a>
+# **transferRun**
+> transferRun(owner, project, runUuid, body)
+
+Transfer run
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String runUuid = "runUuid_example"; // String | UUID
+    V1Run body = new V1Run(); // V1Run | Run object
+    try {
+      apiInstance.transferRun(owner, project, runUuid, body);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#transferRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **runUuid** | **String**| UUID |
+ **body** | [**V1Run**](V1Run.md)| Run object |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+<a name="transferRuns"></a>
+# **transferRuns**
+> transferRuns(owner, project, body)
+
+Transfer runs
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    V1EntitiesTransfer body = new V1EntitiesTransfer(); // V1EntitiesTransfer | Data
+    try {
+      apiInstance.transferRuns(owner, project, body);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#transferRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project under namesapce |
+ **body** | [**V1EntitiesTransfer**](V1EntitiesTransfer.md)| Data |
 
 ### Return type
 

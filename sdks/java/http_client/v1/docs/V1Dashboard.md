@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **liveState** | **Integer** |  |  [optional]
 **spec** | [**V1DashboardSpec**](V1DashboardSpec.md) |  |  [optional]
+**orgLevel** | **Boolean** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 

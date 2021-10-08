@@ -80,6 +80,12 @@ type GetProjectStatsParams struct {
 	*/
 	Aggregate *string
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Groupby.
 
 	   Stats group.
@@ -202,6 +208,17 @@ func (o *GetProjectStatsParams) SetAggregate(aggregate *string) {
 	o.Aggregate = aggregate
 }
 
+// WithBookmarks adds the bookmarks to the get project stats params
+func (o *GetProjectStatsParams) WithBookmarks(bookmarks *bool) *GetProjectStatsParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the get project stats params
+func (o *GetProjectStatsParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
+}
+
 // WithGroupby adds the groupby to the get project stats params
 func (o *GetProjectStatsParams) WithGroupby(groupby *string) *GetProjectStatsParams {
 	o.SetGroupby(groupby)
@@ -321,6 +338,23 @@ func (o *GetProjectStatsParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		if qAggregate != "" {
 
 			if err := r.SetQueryParam("aggregate", qAggregate); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
 				return err
 			}
 		}

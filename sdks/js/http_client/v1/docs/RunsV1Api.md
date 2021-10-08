@@ -53,7 +53,7 @@ Method | HTTP request | Description
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/restart | Restart run
 [**restoreRun**](RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/restore | Restore run
-[**restoreRuns**](RunsV1Api.md#restoreRuns) | **POST** /api/v1/{owner}/{project}/runs/restore | Archive runs
+[**restoreRuns**](RunsV1Api.md#restoreRuns) | **POST** /api/v1/{owner}/{project}/runs/restore | Restore runs
 [**resumeRun**](RunsV1Api.md#resumeRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/resume | Resume run
 [**startRunTensorboard**](RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start | Start run tensorboard
 [**stopRun**](RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/stop | Stop run
@@ -61,6 +61,8 @@ Method | HTTP request | Description
 [**stopRuns**](RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 [**syncRun**](RunsV1Api.md#syncRun) | **POST** /api/v1/{owner}/{project}/runs/sync | Sync offline run
 [**tagRuns**](RunsV1Api.md#tagRuns) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
+[**transferRun**](RunsV1Api.md#transferRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/transfer | Transfer run
+[**transferRuns**](RunsV1Api.md#transferRuns) | **POST** /api/v1/{owner}/{project}/runs/transfer | Transfer runs
 [**unbookmarkRun**](RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark | Unbookmark run
 [**updateRun**](RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 [**uploadRunArtifact**](RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
@@ -1952,6 +1954,7 @@ let opts = {
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
+  'bookmarks': true, // Boolean | Filter by bookmarks.
   'kind': "kind_example", // String | Stats Kind.
   'aggregate': "aggregate_example", // String | Stats aggregate.
   'groupby': "groupby_example", // String | Stats group.
@@ -1978,6 +1981,7 @@ Name | Type | Description  | Notes
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
  **kind** | **String**| Stats Kind. | [optional] 
  **aggregate** | **String**| Stats aggregate. | [optional] 
  **groupby** | **String**| Stats group. | [optional] 
@@ -2140,6 +2144,8 @@ let opts = {
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
+  'bookmarks': true, // Boolean | Filter by bookmarks.
+  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -2163,6 +2169,8 @@ Name | Type | Description  | Notes
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
+ **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 
@@ -2549,6 +2557,8 @@ let opts = {
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
+  'bookmarks': true, // Boolean | Filter by bookmarks.
+  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -2572,6 +2582,8 @@ Name | Type | Description  | Notes
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
+ **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 
@@ -2813,7 +2825,7 @@ null (empty response body)
 
 > restoreRuns(owner, project, body)
 
-Archive runs
+Restore runs
 
 ### Example
 
@@ -3222,6 +3234,114 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
  **body** | [**V1EntitiesTags**](V1EntitiesTags.md)| Data | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## transferRun
+
+> transferRun(owner, project, run_uuid, body)
+
+Transfer run
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let run_uuid = "run_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
+apiInstance.transferRun(owner, project, run_uuid, body, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **run_uuid** | **String**| UUID | 
+ **body** | [**V1Run**](V1Run.md)| Run object | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## transferRuns
+
+> transferRuns(owner, project, body)
+
+Transfer runs
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let body = new PolyaxonSdk.V1EntitiesTransfer(); // V1EntitiesTransfer | Data
+apiInstance.transferRuns(owner, project, body, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project under namesapce | 
+ **body** | [**V1EntitiesTransfer**](V1EntitiesTransfer.md)| Data | 
 
 ### Return type
 

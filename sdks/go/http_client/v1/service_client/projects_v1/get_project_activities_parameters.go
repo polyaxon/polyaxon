@@ -74,6 +74,12 @@ func NewGetProjectActivitiesParamsWithHTTPClient(client *http.Client) *GetProjec
 */
 type GetProjectActivitiesParams struct {
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Limit.
 
 	   Limit size.
@@ -113,6 +119,12 @@ type GetProjectActivitiesParams struct {
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* Pins.
+
+	   Pinned entities.
+	*/
+	Pins *string
 
 	/* Query.
 
@@ -177,6 +189,17 @@ func (o *GetProjectActivitiesParams) WithHTTPClient(client *http.Client) *GetPro
 // SetHTTPClient adds the HTTPClient to the get project activities params
 func (o *GetProjectActivitiesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithBookmarks adds the bookmarks to the get project activities params
+func (o *GetProjectActivitiesParams) WithBookmarks(bookmarks *bool) *GetProjectActivitiesParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the get project activities params
+func (o *GetProjectActivitiesParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
 }
 
 // WithLimit adds the limit to the get project activities params
@@ -245,6 +268,17 @@ func (o *GetProjectActivitiesParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithPins adds the pins to the get project activities params
+func (o *GetProjectActivitiesParams) WithPins(pins *string) *GetProjectActivitiesParams {
+	o.SetPins(pins)
+	return o
+}
+
+// SetPins adds the pins to the get project activities params
+func (o *GetProjectActivitiesParams) SetPins(pins *string) {
+	o.Pins = pins
+}
+
 // WithQuery adds the query to the get project activities params
 func (o *GetProjectActivitiesParams) WithQuery(query *string) *GetProjectActivitiesParams {
 	o.SetQuery(query)
@@ -274,6 +308,23 @@ func (o *GetProjectActivitiesParams) WriteToRequest(r runtime.ClientRequest, reg
 		return err
 	}
 	var res []error
+
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
+				return err
+			}
+		}
+	}
 
 	if o.Limit != nil {
 
@@ -351,6 +402,23 @@ func (o *GetProjectActivitiesParams) WriteToRequest(r runtime.ClientRequest, reg
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Pins != nil {
+
+		// query param pins
+		var qrPins string
+
+		if o.Pins != nil {
+			qrPins = *o.Pins
+		}
+		qPins := qrPins
+		if qPins != "" {
+
+			if err := r.SetQueryParam("pins", qPins); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Query != nil {

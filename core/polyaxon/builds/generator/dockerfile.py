@@ -27,11 +27,6 @@ ENV LANGUAGE {{ lang_env }}
 ENV SHELL {{ shell }}
 {% endif -%}
 
-{% if uid and gid -%}
-# Drop root user and use Polyaxon user
-RUN groupadd -g {{ gid }} -r polyaxon && useradd -r -m -g polyaxon -u {{ uid }} polyaxon
-{% endif -%}
-
 {% if path -%}
 {% for path_step in path -%}
 ENV PATH="${PATH}:{{ path_step }}"
@@ -40,15 +35,15 @@ ENV PATH="${PATH}:{{ path_step }}"
 
 {% if env -%}
 {% for env_step in env -%}
-ENV {{env_step[0]}} {{env_step[1]}}
+ENV {{ env_step[0] }} {{ env_step[1] }}
 {% endfor -%}
 {% endif -%}
 
 WORKDIR {{ workdir }}
 
 {% if copy -%}
-{% for step in copy -%}
-COPY {{ step }} {{ workdir }}
+{% for copy_step in copy -%}
+COPY {{ copy_step[0] }} {{ copy_step[1] }}
 {% endfor -%}
 {% endif -%}
 
@@ -56,6 +51,17 @@ COPY {{ step }} {{ workdir }}
 {% for step in run -%}
 RUN {{ step }}
 {% endfor -%}
+{% endif -%}
+
+{% if post_run_copy -%}
+{% for copy_step in post_run_copy -%}
+COPY {{ copy_step[0] }} {{ copy_step[1] }}
+{% endfor -%}
+{% endif -%}
+
+{% if uid and gid -%}
+# Drop root user and use Polyaxon user
+RUN groupadd -g {{ gid }} -r polyaxon && useradd -r -m -g polyaxon -u {{ uid }} {{ username }}
 {% endif -%}
 
 {% if workdir_path -%}

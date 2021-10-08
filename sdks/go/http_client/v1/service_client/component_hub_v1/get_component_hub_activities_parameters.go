@@ -74,6 +74,12 @@ func NewGetComponentHubActivitiesParamsWithHTTPClient(client *http.Client) *GetC
 */
 type GetComponentHubActivitiesParams struct {
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Limit.
 
 	   Limit size.
@@ -113,6 +119,12 @@ type GetComponentHubActivitiesParams struct {
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* Pins.
+
+	   Pinned entities.
+	*/
+	Pins *string
 
 	/* Query.
 
@@ -177,6 +189,17 @@ func (o *GetComponentHubActivitiesParams) WithHTTPClient(client *http.Client) *G
 // SetHTTPClient adds the HTTPClient to the get component hub activities params
 func (o *GetComponentHubActivitiesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithBookmarks adds the bookmarks to the get component hub activities params
+func (o *GetComponentHubActivitiesParams) WithBookmarks(bookmarks *bool) *GetComponentHubActivitiesParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the get component hub activities params
+func (o *GetComponentHubActivitiesParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
 }
 
 // WithLimit adds the limit to the get component hub activities params
@@ -245,6 +268,17 @@ func (o *GetComponentHubActivitiesParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithPins adds the pins to the get component hub activities params
+func (o *GetComponentHubActivitiesParams) WithPins(pins *string) *GetComponentHubActivitiesParams {
+	o.SetPins(pins)
+	return o
+}
+
+// SetPins adds the pins to the get component hub activities params
+func (o *GetComponentHubActivitiesParams) SetPins(pins *string) {
+	o.Pins = pins
+}
+
 // WithQuery adds the query to the get component hub activities params
 func (o *GetComponentHubActivitiesParams) WithQuery(query *string) *GetComponentHubActivitiesParams {
 	o.SetQuery(query)
@@ -274,6 +308,23 @@ func (o *GetComponentHubActivitiesParams) WriteToRequest(r runtime.ClientRequest
 		return err
 	}
 	var res []error
+
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
+				return err
+			}
+		}
+	}
 
 	if o.Limit != nil {
 
@@ -351,6 +402,23 @@ func (o *GetComponentHubActivitiesParams) WriteToRequest(r runtime.ClientRequest
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Pins != nil {
+
+		// query param pins
+		var qrPins string
+
+		if o.Pins != nil {
+			qrPins = *o.Pins
+		}
+		qPins := qrPins
+		if qPins != "" {
+
+			if err := r.SetQueryParam("pins", qPins); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Query != nil {

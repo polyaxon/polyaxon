@@ -234,7 +234,7 @@ Name | Type | Description  | Notes
 
 <a name="listConnectionNames"></a>
 # **listConnectionNames**
-> V1ListConnectionsResponse listConnectionNames(owner, offset, limit, sort, query, noPage)
+> V1ListConnectionsResponse listConnectionNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List connections names
 
@@ -265,9 +265,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
+    String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListConnectionsResponse result = apiInstance.listConnectionNames(owner, offset, limit, sort, query, noPage);
+      V1ListConnectionsResponse result = apiInstance.listConnectionNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectionsV1Api#listConnectionNames");
@@ -289,6 +292,9 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
@@ -315,7 +321,7 @@ Name | Type | Description  | Notes
 
 <a name="listConnections"></a>
 # **listConnections**
-> V1ListConnectionsResponse listConnections(owner, offset, limit, sort, query, noPage)
+> V1ListConnectionsResponse listConnections(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List connections
 
@@ -346,9 +352,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
+    String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListConnectionsResponse result = apiInstance.listConnections(owner, offset, limit, sort, query, noPage);
+      V1ListConnectionsResponse result = apiInstance.listConnections(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectionsV1Api#listConnections");
@@ -370,6 +379,9 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type

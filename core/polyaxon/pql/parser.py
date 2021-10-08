@@ -17,9 +17,10 @@
 import json
 
 from collections import defaultdict, namedtuple
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple
 
 from polyaxon.exceptions import PQLException
+from polyaxon.utils.units import to_cpu_value, to_memory_bytes
 
 
 class QueryOpSpec(namedtuple("QueryOpSpec", "op negation params")):
@@ -139,7 +140,7 @@ def parse_datetime_operation(operation: str) -> "QueryOpSpec":
     return QueryOpSpec(op, negation, _operation)
 
 
-def parse_scalar_operation(operation: str) -> "QueryOpSpec":
+def parse_scalar_operation(operation: str, loader: Callable = None) -> "QueryOpSpec":
     """Parse scalar operations.
 
     A scalar operation can be one of the following:
@@ -178,6 +179,8 @@ def parse_scalar_operation(operation: str) -> "QueryOpSpec":
         # Now the operation must be an equality param
         op = "="
 
+    if loader:
+        _operation = loader(_operation)
     # Check that params are scalar (int, float)
     try:
         int(_operation)
@@ -190,6 +193,14 @@ def parse_scalar_operation(operation: str) -> "QueryOpSpec":
                 "received {}.".format(operation)
             )
     return QueryOpSpec(op, negation, _operation)
+
+
+def parse_memory_operation(operation: str) -> "QueryOpSpec":
+    return parse_scalar_operation(operation, loader=to_memory_bytes)
+
+
+def parse_cpu_operation(operation: str) -> "QueryOpSpec":
+    return parse_scalar_operation(operation, loader=to_cpu_value)
 
 
 def parse_value_operation(operation: str) -> "QueryOpSpec":

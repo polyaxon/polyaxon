@@ -55,6 +55,8 @@ def validate_params(
             v.context_only = True
             if v.to_init is None:
                 v.to_init = contexts_by_keys[k].to_init
+            if v.to_env is None:
+                v.to_env = contexts_by_keys[k].to_env
             if v.connection is None:
                 v.connection = contexts_by_keys[k].connection
         return v
@@ -124,6 +126,8 @@ def validate_params(
                         param_spec.param.connection = inp.connection
                     if not param_spec.param.to_init and param_value.to_init:
                         param_spec.param.to_init = inp.to_init
+                    if not param_spec.param.to_env and param_value.to_env:
+                        param_spec.param.to_env = inp.to_env
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(inp.name)
@@ -139,7 +143,10 @@ def validate_params(
                 ParamSpec(
                     name=inp.name,
                     param=V1Param(
-                        value=inp.value, connection=inp.connection, to_init=inp.to_init
+                        value=inp.value,
+                        connection=inp.connection,
+                        to_init=inp.to_init,
+                        to_env=inp.to_env,
                     ),
                     type=inp.type,
                     is_flag=inp.is_flag,
@@ -172,6 +179,8 @@ def validate_params(
                         param_spec.param.connection = out.connection
                     if not param_spec.param.to_init and param_value.to_init:
                         param_spec.param.to_init = out.to_init
+                    if not param_spec.param.to_env and param_value.to_env:
+                        param_spec.param.to_env = out.to_env
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(out.name)
@@ -181,7 +190,10 @@ def validate_params(
                 ParamSpec(
                     name=out.name,
                     param=V1Param(
-                        value=out.value, connection=out.connection, to_init=out.to_init
+                        value=out.value,
+                        connection=out.connection,
+                        to_init=out.to_init,
+                        to_env=out.to_env,
                     ),
                     type=out.type,
                     is_flag=out.is_flag,
@@ -221,6 +233,7 @@ def validate_params(
                         value=context_io.value,
                         connection=context_io.connection,
                         to_init=context_io.to_init,
+                        to_env=context_io.to_env,
                     ),
                     type=None,
                     is_flag=None,

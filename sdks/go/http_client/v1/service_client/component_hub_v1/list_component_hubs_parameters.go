@@ -74,6 +74,12 @@ func NewListComponentHubsParamsWithHTTPClient(client *http.Client) *ListComponen
 */
 type ListComponentHubsParams struct {
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Limit.
 
 	   Limit size.
@@ -81,6 +87,12 @@ type ListComponentHubsParams struct {
 	   Format: int32
 	*/
 	Limit *int32
+
+	/* Mode.
+
+	   Mode of the search.
+	*/
+	Mode *string
 
 	/* NoPage.
 
@@ -101,6 +113,12 @@ type ListComponentHubsParams struct {
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* Pins.
+
+	   Pinned entities.
+	*/
+	Pins *string
 
 	/* Query.
 
@@ -167,6 +185,17 @@ func (o *ListComponentHubsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithBookmarks adds the bookmarks to the list component hubs params
+func (o *ListComponentHubsParams) WithBookmarks(bookmarks *bool) *ListComponentHubsParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the list component hubs params
+func (o *ListComponentHubsParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
+}
+
 // WithLimit adds the limit to the list component hubs params
 func (o *ListComponentHubsParams) WithLimit(limit *int32) *ListComponentHubsParams {
 	o.SetLimit(limit)
@@ -176,6 +205,17 @@ func (o *ListComponentHubsParams) WithLimit(limit *int32) *ListComponentHubsPara
 // SetLimit adds the limit to the list component hubs params
 func (o *ListComponentHubsParams) SetLimit(limit *int32) {
 	o.Limit = limit
+}
+
+// WithMode adds the mode to the list component hubs params
+func (o *ListComponentHubsParams) WithMode(mode *string) *ListComponentHubsParams {
+	o.SetMode(mode)
+	return o
+}
+
+// SetMode adds the mode to the list component hubs params
+func (o *ListComponentHubsParams) SetMode(mode *string) {
+	o.Mode = mode
 }
 
 // WithNoPage adds the noPage to the list component hubs params
@@ -211,6 +251,17 @@ func (o *ListComponentHubsParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithPins adds the pins to the list component hubs params
+func (o *ListComponentHubsParams) WithPins(pins *string) *ListComponentHubsParams {
+	o.SetPins(pins)
+	return o
+}
+
+// SetPins adds the pins to the list component hubs params
+func (o *ListComponentHubsParams) SetPins(pins *string) {
+	o.Pins = pins
+}
+
 // WithQuery adds the query to the list component hubs params
 func (o *ListComponentHubsParams) WithQuery(query *string) *ListComponentHubsParams {
 	o.SetQuery(query)
@@ -241,6 +292,23 @@ func (o *ListComponentHubsParams) WriteToRequest(r runtime.ClientRequest, reg st
 	}
 	var res []error
 
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.Limit != nil {
 
 		// query param limit
@@ -253,6 +321,23 @@ func (o *ListComponentHubsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Mode != nil {
+
+		// query param mode
+		var qrMode string
+
+		if o.Mode != nil {
+			qrMode = *o.Mode
+		}
+		qMode := qrMode
+		if qMode != "" {
+
+			if err := r.SetQueryParam("mode", qMode); err != nil {
 				return err
 			}
 		}
@@ -295,6 +380,23 @@ func (o *ListComponentHubsParams) WriteToRequest(r runtime.ClientRequest, reg st
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Pins != nil {
+
+		// query param pins
+		var qrPins string
+
+		if o.Pins != nil {
+			qrPins = *o.Pins
+		}
+		qPins := qrPins
+		if qPins != "" {
+
+			if err := r.SetQueryParam("pins", qPins); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Query != nil {

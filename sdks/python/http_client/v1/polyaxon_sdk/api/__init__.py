@@ -35,6 +35,7 @@ from polyaxon_sdk.api.queues_v1_api import QueuesV1Api
 from polyaxon_sdk.api.runs_v1_api import RunsV1Api
 from polyaxon_sdk.api.schemas_v1_api import SchemasV1Api
 from polyaxon_sdk.api.searches_v1_api import SearchesV1Api
+from polyaxon_sdk.api.tags_v1_api import TagsV1Api
 from polyaxon_sdk.api.teams_v1_api import TeamsV1Api
 from polyaxon_sdk.api.users_v1_api import UsersV1Api
 from polyaxon_sdk.api.versions_v1_api import VersionsV1Api

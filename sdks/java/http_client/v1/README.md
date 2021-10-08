@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.11.2
+- API version: 1.11.3
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.11.2</version>
+  <version>1.11.3</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.11.2"
+compile "org.openapitools:openapi-java-client:1.11.3"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.11.2.jar`
+* `target/openapi-java-client-1.11.3.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -199,17 +199,23 @@ Class | Method | HTTP request | Description
 *ModelRegistryV1Api* | [**updateModelRegistry**](docs/ModelRegistryV1Api.md#updateModelRegistry) | **PUT** /api/v1/{owner}/registry/{model.name} | Update registry model
 *ModelRegistryV1Api* | [**updateModelRegistrySettings**](docs/ModelRegistryV1Api.md#updateModelRegistrySettings) | **PUT** /api/v1/{owner}/registry/{model}/settings | Update registry model settings
 *ModelRegistryV1Api* | [**updateModelVersion**](docs/ModelRegistryV1Api.md#updateModelVersion) | **PUT** /api/v1/{owner}/registry/{model}/versions/{version.name} | Update model version
+*OrganizationsV1Api* | [**approveOrganizationRuns**](docs/OrganizationsV1Api.md#approveOrganizationRuns) | **POST** /api/v1/orgs/{owner}/runs/approve | Approve cross-project runs selection
+*OrganizationsV1Api* | [**archiveOrganizationRuns**](docs/OrganizationsV1Api.md#archiveOrganizationRuns) | **POST** /api/v1/orgs/{owner}/runs/archive | Archive cross-project runs selection
+*OrganizationsV1Api* | [**bookmarkOrganizationRuns**](docs/OrganizationsV1Api.md#bookmarkOrganizationRuns) | **POST** /api/v1/orgs/{owner}/runs/bookmark | Bookmark cross-project runs selection
 *OrganizationsV1Api* | [**createOrganization**](docs/OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | Create organization
 *OrganizationsV1Api* | [**createOrganizationMember**](docs/OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Create organization member
 *OrganizationsV1Api* | [**deleteOrganization**](docs/OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
 *OrganizationsV1Api* | [**deleteOrganizationInvitation**](docs/OrganizationsV1Api.md#deleteOrganizationInvitation) | **DELETE** /api/v1/orgs/{owner}/invitations | Delete organization invitation details
 *OrganizationsV1Api* | [**deleteOrganizationMember**](docs/OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{name} | Delete organization member details
+*OrganizationsV1Api* | [**deleteOrganizationRuns**](docs/OrganizationsV1Api.md#deleteOrganizationRuns) | **DELETE** /api/v1/orgs/{owner}/runs/delete | Delete cross-project runs selection
 *OrganizationsV1Api* | [**getOrganization**](docs/OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Get organization
 *OrganizationsV1Api* | [**getOrganizationActivities**](docs/OrganizationsV1Api.md#getOrganizationActivities) | **GET** /api/v1/orgs/{owner}/activities | Get organization activities
 *OrganizationsV1Api* | [**getOrganizationInvitation**](docs/OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 *OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{name} | Get organization member details
+*OrganizationsV1Api* | [**getOrganizationRuns**](docs/OrganizationsV1Api.md#getOrganizationRuns) | **GET** /api/v1/orgs/{owner}/runs | Get all runs in an organization
 *OrganizationsV1Api* | [**getOrganizationSettings**](docs/OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
 *OrganizationsV1Api* | [**getOrganizationStats**](docs/OrganizationsV1Api.md#getOrganizationStats) | **GET** /api/v1/orgs/{owner}/stats | Get organization stats
+*OrganizationsV1Api* | [**invalidateOrganizationRuns**](docs/OrganizationsV1Api.md#invalidateOrganizationRuns) | **POST** /api/v1/orgs/{owner}/runs/invalidate | Invalidate cross-project runs selection
 *OrganizationsV1Api* | [**listOrganizationMemberNames**](docs/OrganizationsV1Api.md#listOrganizationMemberNames) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 *OrganizationsV1Api* | [**listOrganizationMembers**](docs/OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 *OrganizationsV1Api* | [**listOrganizationNames**](docs/OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
@@ -220,6 +226,10 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**patchOrganizationMember**](docs/OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
 *OrganizationsV1Api* | [**patchOrganizationSettings**](docs/OrganizationsV1Api.md#patchOrganizationSettings) | **PATCH** /api/v1/orgs/{owner}/settings | Patch oranization settings
 *OrganizationsV1Api* | [**resendOrganizationInvitation**](docs/OrganizationsV1Api.md#resendOrganizationInvitation) | **POST** /api/v1/orgs/{owner}/invitations | Resend organization invitation
+*OrganizationsV1Api* | [**restoreOrganizationRuns**](docs/OrganizationsV1Api.md#restoreOrganizationRuns) | **POST** /api/v1/orgs/{owner}/runs/restore | Restore cross-project runs selection
+*OrganizationsV1Api* | [**stopOrganizationRuns**](docs/OrganizationsV1Api.md#stopOrganizationRuns) | **POST** /api/v1/orgs/{owner}/runs/stop | Stop cross-project runs selection
+*OrganizationsV1Api* | [**tagOrganizationRuns**](docs/OrganizationsV1Api.md#tagOrganizationRuns) | **POST** /api/v1/orgs/{owner}/runs/tag | Tag cross-project runs selection
+*OrganizationsV1Api* | [**transferOrganizationRuns**](docs/OrganizationsV1Api.md#transferOrganizationRuns) | **POST** /api/v1/orgs/{owner}/runs/transfer | Transfer cross-project runs selection to a new project
 *OrganizationsV1Api* | [**updateOrganization**](docs/OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | Update organization
 *OrganizationsV1Api* | [**updateOrganizationInvitation**](docs/OrganizationsV1Api.md#updateOrganizationInvitation) | **PUT** /api/v1/orgs/{owner}/invitations | Update organization invitation
 *OrganizationsV1Api* | [**updateOrganizationMember**](docs/OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Update organization member
@@ -324,7 +334,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**patchRun**](docs/RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 *RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/restart | Restart run
 *RunsV1Api* | [**restoreRun**](docs/RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/restore | Restore run
-*RunsV1Api* | [**restoreRuns**](docs/RunsV1Api.md#restoreRuns) | **POST** /api/v1/{owner}/{project}/runs/restore | Archive runs
+*RunsV1Api* | [**restoreRuns**](docs/RunsV1Api.md#restoreRuns) | **POST** /api/v1/{owner}/{project}/runs/restore | Restore runs
 *RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/resume | Resume run
 *RunsV1Api* | [**startRunTensorboard**](docs/RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start | Start run tensorboard
 *RunsV1Api* | [**stopRun**](docs/RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/stop | Stop run
@@ -332,6 +342,8 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**stopRuns**](docs/RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *RunsV1Api* | [**syncRun**](docs/RunsV1Api.md#syncRun) | **POST** /api/v1/{owner}/{project}/runs/sync | Sync offline run
 *RunsV1Api* | [**tagRuns**](docs/RunsV1Api.md#tagRuns) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
+*RunsV1Api* | [**transferRun**](docs/RunsV1Api.md#transferRun) | **POST** /api/v1/{owner}/{project}/runs/{run.uuid}/transfer | Transfer run
+*RunsV1Api* | [**transferRuns**](docs/RunsV1Api.md#transferRuns) | **POST** /api/v1/{owner}/{project}/runs/transfer | Transfer runs
 *RunsV1Api* | [**unbookmarkRun**](docs/RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark | Unbookmark run
 *RunsV1Api* | [**updateRun**](docs/RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *RunsV1Api* | [**uploadRunArtifact**](docs/RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
@@ -344,6 +356,14 @@ Class | Method | HTTP request | Description
 *SearchesV1Api* | [**listSearches**](docs/SearchesV1Api.md#listSearches) | **GET** /api/v1/orgs/{owner}/searches | List searches
 *SearchesV1Api* | [**patchSearch**](docs/SearchesV1Api.md#patchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
 *SearchesV1Api* | [**updateSearch**](docs/SearchesV1Api.md#updateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
+*TagsV1Api* | [**createTag**](docs/TagsV1Api.md#createTag) | **POST** /api/v1/orgs/{owner}/tags | Create tag
+*TagsV1Api* | [**deleteTag**](docs/TagsV1Api.md#deleteTag) | **DELETE** /api/v1/orgs/{owner}/tags/{name} | Delete tag
+*TagsV1Api* | [**getTag**](docs/TagsV1Api.md#getTag) | **GET** /api/v1/orgs/{owner}/tags/{name} | Get tag
+*TagsV1Api* | [**listTags**](docs/TagsV1Api.md#listTags) | **GET** /api/v1/orgs/{owner}/tags | List tags
+*TagsV1Api* | [**loadTags**](docs/TagsV1Api.md#loadTags) | **GET** /api/v1/orgs/{owner}/tags/load | Load tags
+*TagsV1Api* | [**patchTag**](docs/TagsV1Api.md#patchTag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.name} | Patch tag
+*TagsV1Api* | [**syncTags**](docs/TagsV1Api.md#syncTags) | **POST** /api/v1/orgs/{owner}/tags/sync | Sync tags
+*TagsV1Api* | [**updateTag**](docs/TagsV1Api.md#updateTag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.name} | Update tag
 *TeamsV1Api* | [**createTeam**](docs/TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create team
 *TeamsV1Api* | [**createTeamMember**](docs/TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create team member
 *TeamsV1Api* | [**deleteTeam**](docs/TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{name} | Delete team
@@ -421,6 +441,7 @@ Class | Method | HTTP request | Description
  - [V1DockerfileType](docs/V1DockerfileType.md)
  - [V1EarlyStopping](docs/V1EarlyStopping.md)
  - [V1EntitiesTags](docs/V1EntitiesTags.md)
+ - [V1EntitiesTransfer](docs/V1EntitiesTransfer.md)
  - [V1EntityNotificationBody](docs/V1EntityNotificationBody.md)
  - [V1EntityStageBodyRequest](docs/V1EntityStageBodyRequest.md)
  - [V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
@@ -500,9 +521,11 @@ Class | Method | HTTP request | Description
  - [V1ListRunEdgesResponse](docs/V1ListRunEdgesResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1ListSearchesResponse](docs/V1ListSearchesResponse.md)
+ - [V1ListTagsResponse](docs/V1ListTagsResponse.md)
  - [V1ListTeamMembersResponse](docs/V1ListTeamMembersResponse.md)
  - [V1ListTeamsResponse](docs/V1ListTeamsResponse.md)
  - [V1ListTokenResponse](docs/V1ListTokenResponse.md)
+ - [V1LoadTagsResponse](docs/V1LoadTagsResponse.md)
  - [V1Log](docs/V1Log.md)
  - [V1LogHandler](docs/V1LogHandler.md)
  - [V1Logs](docs/V1Logs.md)
@@ -574,6 +597,7 @@ Class | Method | HTTP request | Description
  - [V1StatusCondition](docs/V1StatusCondition.md)
  - [V1Statuses](docs/V1Statuses.md)
  - [V1TFJob](docs/V1TFJob.md)
+ - [V1Tag](docs/V1Tag.md)
  - [V1Team](docs/V1Team.md)
  - [V1TeamMember](docs/V1TeamMember.md)
  - [V1TeamSettings](docs/V1TeamSettings.md)

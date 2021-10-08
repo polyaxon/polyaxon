@@ -536,7 +536,7 @@ Name | Type | Description  | Notes
 
 <a name="getProjectActivities"></a>
 # **getProjectActivities**
-> V1ListActivitiesResponse getProjectActivities(owner, name, offset, limit, sort, query, mode, noPage)
+> V1ListActivitiesResponse getProjectActivities(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 Get project activities
 
@@ -568,10 +568,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListActivitiesResponse result = apiInstance.getProjectActivities(owner, name, offset, limit, sort, query, mode, noPage);
+      V1ListActivitiesResponse result = apiInstance.getProjectActivities(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#getProjectActivities");
@@ -594,6 +596,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -694,7 +698,7 @@ Name | Type | Description  | Notes
 
 <a name="getProjectStats"></a>
 # **getProjectStats**
-> Object getProjectStats(owner, name, offset, limit, sort, query, kind, aggregate, groupby, trunc)
+> Object getProjectStats(owner, name, offset, limit, sort, query, bookmarks, kind, aggregate, groupby, trunc)
 
 Get project stats
 
@@ -726,12 +730,13 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
     String kind = "kind_example"; // String | Stats Kind.
     String aggregate = "aggregate_example"; // String | Stats aggregate.
     String groupby = "groupby_example"; // String | Stats group.
     String trunc = "trunc_example"; // String | Stats trunc.
     try {
-      Object result = apiInstance.getProjectStats(owner, name, offset, limit, sort, query, kind, aggregate, groupby, trunc);
+      Object result = apiInstance.getProjectStats(owner, name, offset, limit, sort, query, bookmarks, kind, aggregate, groupby, trunc);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#getProjectStats");
@@ -754,6 +759,7 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
  **kind** | **String**| Stats Kind. | [optional]
  **aggregate** | **String**| Stats aggregate. | [optional]
  **groupby** | **String**| Stats group. | [optional]
@@ -945,7 +951,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectNames"></a>
 # **listProjectNames**
-> V1ListProjectsResponse listProjectNames(owner, offset, limit, sort, query, noPage)
+> V1ListProjectsResponse listProjectNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List project names
 
@@ -976,9 +982,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
+    String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListProjectsResponse result = apiInstance.listProjectNames(owner, offset, limit, sort, query, noPage);
+      V1ListProjectsResponse result = apiInstance.listProjectNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#listProjectNames");
@@ -1000,6 +1009,9 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
@@ -1026,7 +1038,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjects"></a>
 # **listProjects**
-> V1ListProjectsResponse listProjects(owner, offset, limit, sort, query, noPage)
+> V1ListProjectsResponse listProjects(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List projects
 
@@ -1057,9 +1069,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
+    String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListProjectsResponse result = apiInstance.listProjects(owner, offset, limit, sort, query, noPage);
+      V1ListProjectsResponse result = apiInstance.listProjects(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#listProjects");
@@ -1081,6 +1096,9 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type

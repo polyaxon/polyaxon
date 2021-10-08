@@ -40,6 +40,9 @@ type V1Param struct {
 	// Ref corresponds to a reference of an object
 	Ref string `json:"ref,omitempty"`
 
+	// A flag to signal to Polyaxon that this io must be tranformed to the environment variable passed
+	ToEnv string `json:"toEnv,omitempty"`
+
 	// A flag to signal to Polyaxon that this param must be tranformed to an init container
 	ToInit bool `json:"toInit,omitempty"`
 

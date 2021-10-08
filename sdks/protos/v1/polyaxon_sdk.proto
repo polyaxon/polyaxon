@@ -39,6 +39,7 @@ import "v1/api/user.proto";
 import "v1/api/search.proto";
 import "v1/api/status.proto";
 import "v1/api/stage.proto";
+import "v1/api/tag.proto";
 import "v1/api/team.proto";
 import "v1/api/hub.proto";
 import "v1/api/registry.proto";
@@ -50,7 +51,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.11.2";
+        version: "1.11.3";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -273,11 +274,27 @@ service RunsV1 {
     };
   }
 
-  // Archive runs
+  // Restore runs
   rpc RestoreRuns(ProjectResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/api/v1/{owner}/{project}/runs/restore"
       body: "uuids"
+    };
+  }
+
+  // Transfer run
+  rpc TransferRun(RunBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/{project}/runs/{run.uuid}/transfer"
+      body: "run"
+    };
+  }
+
+  // Transfer runs
+  rpc TransferRuns(ProjectTransferResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/{project}/runs/transfer"
+      body: "data"
     };
   }
 
@@ -1301,6 +1318,70 @@ service ComponentHubV1 {
   }
 }
 
+
+// Service to manage tags
+service TagsV1 {
+  // List tags
+  rpc ListTags(OwnerResourceListRequest) returns (ListTagsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/orgs/{owner}/tags"
+    };
+  }
+
+  // Load tags
+  rpc LoadTags(OwnerResourceListRequest) returns (LoadTagsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/orgs/{owner}/tags/load"
+    };
+  }
+
+  // Create tag
+  rpc CreateTag(TagBodyRequest) returns (Tag) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/tags"
+      body: "tag"
+    };
+  }
+
+  // Sync tags
+  rpc SyncTags(OwnerTagResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/tags/sync"
+      body: "data"
+    };
+  }
+
+  // Get tag
+  rpc GetTag(OwnerEntityResourceRequestByName) returns (Tag) {
+    option (google.api.http) = {
+      get: "/api/v1/orgs/{owner}/tags/{name}"
+    };
+  }
+
+  // Update tag
+  rpc UpdateTag(TagBodyRequest) returns (Tag) {
+    option (google.api.http) = {
+      put: "/api/v1/orgs/{owner}/tags/{tag.name}"
+      body: "tag"
+    };
+  }
+
+  // Patch tag
+  rpc PatchTag(TagBodyRequest) returns (Tag) {
+    option (google.api.http) = {
+      patch: "/api/v1/orgs/{owner}/tags/{tag.name}"
+      body: "tag"
+    };
+  }
+
+  // Delete tag
+  rpc DeleteTag(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/orgs/{owner}/tags/{name}"
+    };
+  }
+}
+
 // Service to manage scheduling presets
 service PresetsV1 {
   // List scheduling presets names
@@ -1744,6 +1825,85 @@ service OrganizationsV1 {
   rpc GetOrganizationStats(OwnerStatsRequest) returns (google.protobuf.Struct) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/stats"
+    };
+  }
+
+  // Get all runs in an organization
+  rpc GetOrganizationRuns(OwnerResourceListRequest) returns (ListRunsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/orgs/{owner}/runs"
+    };
+  }
+
+  // Delete cross-project runs selection
+  rpc DeleteOrganizationRuns(OwnerResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/orgs/{owner}/runs/delete"
+      body: "uuids"
+    };
+  }
+
+  // Stop cross-project runs selection
+  rpc StopOrganizationRuns(OwnerResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/runs/stop"
+      body: "uuids"
+    };
+  }
+
+  // Approve cross-project runs selection
+  rpc ApproveOrganizationRuns(OwnerResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/runs/approve"
+      body: "uuids"
+    };
+  }
+
+  // Invalidate cross-project runs selection
+  rpc InvalidateOrganizationRuns(OwnerResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/runs/invalidate"
+      body: "uuids"
+    };
+  }
+
+  // Archive cross-project runs selection
+  rpc ArchiveOrganizationRuns(OwnerResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/runs/archive"
+      body: "uuids"
+    };
+  }
+
+  // Restore cross-project runs selection
+  rpc RestoreOrganizationRuns(OwnerResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/runs/restore"
+      body: "uuids"
+    };
+  }
+
+  // Bookmark cross-project runs selection
+  rpc BookmarkOrganizationRuns(OwnerResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/runs/bookmark"
+      body: "uuids"
+    };
+  }
+
+  // Tag cross-project runs selection
+  rpc TagOrganizationRuns(OwnerTagResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/runs/tag"
+      body: "data"
+    };
+  }
+
+  // Transfer cross-project runs selection to a new project
+  rpc TransferOrganizationRuns(OwnerTransferResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/runs/transfer"
+      body: "data"
     };
   }
 

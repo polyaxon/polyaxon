@@ -203,7 +203,7 @@ message Run {
 }
 
 // Operation creation
-message OperationBody{
+message OperationBody {
     // The Operation body content as dump string
     string content = 1;
 
@@ -227,7 +227,7 @@ message OperationBody{
 }
 
 // Request data to create run
-message RunCreateBodyRequest{
+message RunCreateBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -239,7 +239,7 @@ message RunCreateBodyRequest{
 }
 
 // Request data to get/update/delete an operation run
-message RunBodyRequest{
+message RunBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -323,7 +323,7 @@ message RunConnection {
 }
 
 // Contains list runs
-message ListRunConnectionsResponse{
+message ListRunConnectionsResponse {
   // Count of the entities
   int32 count = 1;
 
@@ -367,7 +367,7 @@ message RunEdge {
 }
 
 // Contains list run edges
-message ListRunEdgesResponse{
+message ListRunEdgesResponse {
   // Count of the entities
   int32 count = 1;
 

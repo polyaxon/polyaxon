@@ -99,6 +99,12 @@ class TestEventsRegistry(TestCase):
             events,
         )
         self._asser_event(
+            run.RunTransferredActorEvent,
+            run.RunTransferredActorEvent.get_event_subject(),
+            "run",
+            events,
+        )
+        self._asser_event(
             run.RunResumedActorEvent,
             run.RunResumedActorEvent.get_event_subject(),
             "run",
@@ -214,6 +220,12 @@ class TestEventsRegistry(TestCase):
             run.RunApprovedActorEvent,
             run.RunApprovedActorEvent.get_event_action(),
             "approved",
+            events,
+        )
+        self._asser_event(
+            run.RunTransferredActorEvent,
+            run.RunTransferredActorEvent.get_event_action(),
+            "transferred",
             events,
         )
         self._asser_event(

@@ -28,10 +28,11 @@ class RunStatusSerializer(serializers.ModelSerializer):
     condition = fields.DictField(
         write_only=True, allow_empty=True, allow_null=True, required=False
     )
+    force = fields.BooleanField(write_only=True, required=False)
 
     class Meta:
         model = get_run_model()
-        fields = ("uuid", "status", "condition", "status_conditions")
+        fields = ("uuid", "status", "condition", "status_conditions", "force")
         extra_kwargs = {
             "status": {"read_only": True},
             "status_conditions": {"read_only": True},

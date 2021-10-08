@@ -54,17 +54,20 @@ message Search {
       projects = 3;
     }
 
-    // Optional dashboard level
+    // Optional search view
     View view = 6;
 
     // Search spec
     SearchSpec spec = 7;
 
+    // Optional search level
+    bool org_level = 8;
+
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 9;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 10;
 }
 
  // Request data to create/update search

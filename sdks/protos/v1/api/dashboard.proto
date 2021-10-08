@@ -42,11 +42,14 @@ message Dashboard {
     // Optional dashboard specification
     DashboardSpec spec = 6;
 
+    // Optional dashboard level
+    bool org_level = 7;
+
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp created_at = 8;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 8;
+    google.protobuf.Timestamp updated_at = 9;
 }
 
  // Request data to create/update dashboard

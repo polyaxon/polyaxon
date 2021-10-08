@@ -5526,6 +5526,10 @@
           "title": "Optional name",
           "type": "string"
         },
+        "org_level": {
+          "title": "Optional dashboard level",
+          "type": "boolean"
+        },
         "spec": {
           "$ref": "#/definitions/v1DashboardSpec",
           "title": "Optional dashboard specification"
@@ -5683,11 +5687,11 @@
     "v1DockerfileType": {
       "properties": {
         "copy": {
-          "additionalProperties": {
-            "type": "string"
+          "items": {
+            "type": "object"
           },
-          "title": "An optional list of tuples for copying paths, translate to a COPY statements",
-          "type": "object"
+          "title": "An optional list of strings or tuples for copying paths, translate to a COPY statements, if string is passed the path is copy to the workdir",
+          "type": "array"
         },
         "env": {
           "additionalProperties": {
@@ -5714,17 +5718,24 @@
           "type": "string"
         },
         "path": {
-          "additionalProperties": {
+          "items": {
             "type": "string"
           },
-          "title": "An optional list of tuples for exporting paths, translate to a PATH statements",
-          "type": "object"
+          "title": "An optional list of strings for exporting paths, translate to a PATH statements",
+          "type": "array"
+        },
+        "post_run_copy": {
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional list of strings or tuples for copying paths post run commands to leverage the cache, translate to a COPY statements, if string is passed the path is copy to the workdir",
+          "type": "array"
         },
         "run": {
           "items": {
             "type": "string"
           },
-          "title": "An optional list of strubg for executing Run commands, translate to a RUN statements",
+          "title": "An optional list of strings for executing Run commands, translate to a RUN statements",
           "type": "array"
         },
         "shell": {
@@ -5734,6 +5745,11 @@
         "uid": {
           "format": "int32",
           "title": "A uid to use when creating the docker image",
+          "type": "integer"
+        },
+        "username": {
+          "format": "int32",
+          "title": "Optional username value to use, default to \"polyaxon\"",
           "type": "integer"
         },
         "workdir": {
@@ -5776,6 +5792,20 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "uuids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "v1EntitiesTransfer": {
+      "properties": {
+        "project": {
+          "type": "string"
         },
         "uuids": {
           "items": {
@@ -5850,6 +5880,10 @@
         "condition": {
           "$ref": "#/definitions/v1StatusCondition",
           "title": "Status to set"
+        },
+        "force": {
+          "title": "Force flag",
+          "type": "boolean"
         },
         "owner": {
           "title": "Owner of the namespace",
@@ -7013,6 +7047,10 @@
           "title": "An optional field to provide possible values for validation",
           "type": "array"
         },
+        "toEnv": {
+          "title": "A flag to signal to Polyaxon that this io must be tranformed to the environment variable passed",
+          "type": "string"
+        },
         "toInit": {
           "title": "A flag to signal to Polyaxon that this io must be tranformed to an init container",
           "type": "boolean"
@@ -7267,6 +7305,10 @@
         "contextOnly": {
           "title": "A flag to signal to Polyaxon that this param should not be validated against io",
           "type": "boolean"
+        },
+        "toEnv": {
+          "title": "A flag to signal to Polyaxon that this param must be tranformed to the environment variable passed",
+          "type": "string"
         },
         "toInit": {
           "title": "A flag to signal to Polyaxon that this param must be tranformed to an init container",
@@ -7862,6 +7904,32 @@
       "title": "Contains list searches",
       "type": "object"
     },
+    "v1ListTagsResponse": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "title": "Count of the entities",
+          "type": "integer"
+        },
+        "next": {
+          "title": "Next page",
+          "type": "string"
+        },
+        "previous": {
+          "title": "Previous page",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/definitions/v1Tag"
+          },
+          "title": "List of all entities",
+          "type": "array"
+        }
+      },
+      "title": "Contains list tags",
+      "type": "object"
+    },
     "v1ListTeamMembersResponse": {
       "properties": {
         "count": {
@@ -7938,6 +8006,15 @@
         }
       },
       "title": "Contains list tokens",
+      "type": "object"
+    },
+    "v1LoadTagsResponse": {
+      "properties": {
+        "data": {
+          "type": "object"
+        }
+      },
+      "title": "Contains an object containing a map of tags -\u003e color",
       "type": "object"
     },
     "v1Log": {
@@ -8762,6 +8839,10 @@
         },
         "ref": {
           "title": "Ref corresponds to a reference of an object",
+          "type": "string"
+        },
+        "toEnv": {
+          "title": "A flag to signal to Polyaxon that this io must be tranformed to the environment variable passed",
           "type": "string"
         },
         "toInit": {
@@ -9883,6 +9964,10 @@
           "title": "Optional name",
           "type": "string"
         },
+        "org_level": {
+          "title": "Optional search level",
+          "type": "boolean"
+        },
         "spec": {
           "$ref": "#/definitions/v1SearchSpec",
           "title": "Search spec"
@@ -9905,7 +9990,7 @@
         },
         "view": {
           "$ref": "#/definitions/SearchView",
-          "title": "Optional dashboard level"
+          "title": "Optional search view"
         }
       },
       "title": "Search specification",
@@ -10385,6 +10470,28 @@
         }
       },
       "title": "TF Job specification",
+      "type": "object"
+    },
+    "v1Tag": {
+      "properties": {
+        "color": {
+          "title": "Optional Tag color",
+          "type": "string"
+        },
+        "description": {
+          "title": "Optional tag description",
+          "type": "string"
+        },
+        "icon": {
+          "title": "Optional tag icon",
+          "type": "string"
+        },
+        "name": {
+          "title": "Tag name",
+          "type": "string"
+        }
+      },
+      "title": "Tag specification",
       "type": "object"
     },
     "v1Team": {

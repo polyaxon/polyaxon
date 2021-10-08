@@ -29,8 +29,11 @@ message JoinParam {
   // A flag to signal to Polyaxon that this param must be tranformed to an init container
   bool toInit = 3;
 
+  // A flag to signal to Polyaxon that this param must be tranformed to the environment variable passed
+  string toEnv = 4;
+
   // A flag to signal to Polyaxon that this param should not be validated against io
-  bool contextOnly = 4;
+  bool contextOnly = 5;
 }
 
 // Join specification

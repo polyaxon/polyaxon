@@ -154,6 +154,10 @@ type ClientService interface {
 
 	TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TagRunsOK, *TagRunsNoContent, error)
 
+	TransferRun(params *TransferRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TransferRunOK, *TransferRunNoContent, error)
+
+	TransferRuns(params *TransferRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TransferRunsOK, *TransferRunsNoContent, error)
+
 	UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error)
 
 	UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRunOK, *UpdateRunNoContent, error)
@@ -2046,7 +2050,7 @@ func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAut
 }
 
 /*
-  RestoreRuns archives runs
+  RestoreRuns restores runs
 */
 func (a *Client) RestoreRuns(params *RestoreRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreRunsOK, *RestoreRunsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -2362,6 +2366,86 @@ func (a *Client) TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoW
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*TagRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  TransferRun transfers run
+*/
+func (a *Client) TransferRun(params *TransferRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TransferRunOK, *TransferRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewTransferRunParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "TransferRun",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}/transfer",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &TransferRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *TransferRunOK:
+		return value, nil, nil
+	case *TransferRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*TransferRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  TransferRuns transfers runs
+*/
+func (a *Client) TransferRuns(params *TransferRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TransferRunsOK, *TransferRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewTransferRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "TransferRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/transfer",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &TransferRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *TransferRunsOK:
+		return value, nil, nil
+	case *TransferRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*TransferRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

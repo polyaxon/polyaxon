@@ -80,6 +80,12 @@ type GetOrganizationStatsParams struct {
 	*/
 	Aggregate *string
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Groupby.
 
 	   Stats group.
@@ -196,6 +202,17 @@ func (o *GetOrganizationStatsParams) SetAggregate(aggregate *string) {
 	o.Aggregate = aggregate
 }
 
+// WithBookmarks adds the bookmarks to the get organization stats params
+func (o *GetOrganizationStatsParams) WithBookmarks(bookmarks *bool) *GetOrganizationStatsParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the get organization stats params
+func (o *GetOrganizationStatsParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
+}
+
 // WithGroupby adds the groupby to the get organization stats params
 func (o *GetOrganizationStatsParams) WithGroupby(groupby *string) *GetOrganizationStatsParams {
 	o.SetGroupby(groupby)
@@ -304,6 +321,23 @@ func (o *GetOrganizationStatsParams) WriteToRequest(r runtime.ClientRequest, reg
 		if qAggregate != "" {
 
 			if err := r.SetQueryParam("aggregate", qAggregate); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
 				return err
 			}
 		}

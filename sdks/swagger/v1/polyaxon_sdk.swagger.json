@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.11.2",
+    "version": "1.11.3",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -1126,6 +1126,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -1202,6 +1223,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1334,6 +1376,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2083,6 +2146,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -2173,6 +2250,20 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2596,6 +2687,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -2723,6 +2835,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -3024,6 +3157,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -3151,6 +3305,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -3797,6 +3972,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -3931,6 +4127,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4299,6 +4516,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -4426,6 +4664,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4741,6 +5000,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -4822,6 +5102,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -4831,6 +5132,558 @@
         ],
         "tags": [
           "QueuesV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs": {
+      "get": {
+        "summary": "Get all runs in an organization",
+        "operationId": "GetOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRunsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/approve": {
+      "post": {
+        "summary": "Approve cross-project runs selection",
+        "operationId": "ApproveOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/archive": {
+      "post": {
+        "summary": "Archive cross-project runs selection",
+        "operationId": "ArchiveOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/bookmark": {
+      "post": {
+        "summary": "Bookmark cross-project runs selection",
+        "operationId": "BookmarkOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/delete": {
+      "delete": {
+        "summary": "Delete cross-project runs selection",
+        "operationId": "DeleteOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/invalidate": {
+      "post": {
+        "summary": "Invalidate cross-project runs selection",
+        "operationId": "InvalidateOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/restore": {
+      "post": {
+        "summary": "Restore cross-project runs selection",
+        "operationId": "RestoreOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/stop": {
+      "post": {
+        "summary": "Stop cross-project runs selection",
+        "operationId": "StopOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/tag": {
+      "post": {
+        "summary": "Tag cross-project runs selection",
+        "operationId": "TagOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1EntitiesTags"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/runs/transfer": {
+      "post": {
+        "summary": "Transfer cross-project runs selection to a new project",
+        "operationId": "TransferOrganizationRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1EntitiesTransfer"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
         ]
       }
     },
@@ -4898,6 +5751,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -5030,6 +5904,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -5565,6 +6460,13 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
             "name": "kind",
             "description": "Stats Kind.",
             "in": "query",
@@ -5595,6 +6497,526 @@
         ],
         "tags": [
           "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/tags": {
+      "get": {
+        "summary": "List tags",
+        "operationId": "ListTags",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListTagsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      },
+      "post": {
+        "summary": "Create tag",
+        "operationId": "CreateTag",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Tag"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Tag body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Tag"
+            }
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/tags/load": {
+      "get": {
+        "summary": "Load tags",
+        "operationId": "LoadTags",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1LoadTagsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "no_page",
+            "description": "No pagination.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/tags/sync": {
+      "post": {
+        "summary": "Sync tags",
+        "operationId": "SyncTags",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1EntitiesTags"
+            }
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/tags/{name}": {
+      "get": {
+        "summary": "Get tag",
+        "operationId": "GetTag",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Tag"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Component under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Delete tag",
+        "operationId": "DeleteTag",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Component under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/tags/{tag.name}": {
+      "put": {
+        "summary": "Update tag",
+        "operationId": "UpdateTag",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Tag"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tag.name",
+            "description": "Tag name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Tag body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Tag"
+            }
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Patch tag",
+        "operationId": "PatchTag",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Tag"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tag.name",
+            "description": "Tag name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Tag body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Tag"
+            }
+          }
+        ],
+        "tags": [
+          "TagsV1"
         ]
       }
     },
@@ -5662,6 +7084,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -5794,6 +7237,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -5979,6 +7443,20 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -6972,6 +8450,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -7048,6 +8547,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -7899,6 +9419,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -8237,6 +9771,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -8327,6 +9875,20 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -8473,6 +10035,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -8549,6 +10132,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -8688,6 +10292,27 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "no_page",
             "description": "No pagination.",
             "in": "query",
@@ -8764,6 +10389,27 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "description": "Mode of the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -9615,6 +11261,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -9953,6 +11613,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -10043,6 +11717,20 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -11446,6 +13134,13 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
             "name": "kind",
             "description": "Stats Kind.",
             "in": "query",
@@ -12104,6 +13799,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -12389,6 +14098,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -12479,6 +14202,20 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -12627,6 +14364,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -12717,6 +14468,20 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -12817,6 +14582,20 @@
             "type": "string"
           },
           {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -12907,6 +14686,20 @@
           {
             "name": "query",
             "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pins",
+            "description": "Pinned entities.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -13056,6 +14849,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "bookmarks",
+            "description": "Filter by bookmarks.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           },
           {
             "name": "kind",
@@ -13796,7 +15596,7 @@
     },
     "/api/v1/{owner}/{project}/runs/restore": {
       "post": {
-        "summary": "Archive runs",
+        "summary": "Restore runs",
         "operationId": "RestoreRuns",
         "responses": {
           "200": {
@@ -14014,6 +15814,63 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/v1EntitiesTags"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/transfer": {
+      "post": {
+        "summary": "Transfer runs",
+        "operationId": "TransferRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1EntitiesTransfer"
             }
           }
         ],
@@ -14298,6 +16155,70 @@
             "schema": {
               "$ref": "#/definitions/v1Run"
             }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the run will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Run object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run.uuid}/transfer": {
+      "post": {
+        "summary": "Transfer run",
+        "operationId": "TransferRun",
+        "responses": {
+          "200": {
+            "description": "A successful response."
           },
           "204": {
             "description": "No content.",
@@ -17561,6 +19482,10 @@
           "$ref": "#/definitions/v1DashboardSpec",
           "title": "Optional dashboard specification"
         },
+        "org_level": {
+          "type": "boolean",
+          "title": "Optional dashboard level"
+        },
         "created_at": {
           "type": "string",
           "format": "date-time",
@@ -17719,25 +19644,32 @@
           "title": "An optional list of tuples(key, value) for defining env vars, translate to an ENV statements"
         },
         "path": {
-          "type": "object",
-          "additionalProperties": {
+          "type": "array",
+          "items": {
             "type": "string"
           },
-          "title": "An optional list of tuples for exporting paths, translate to a PATH statements"
+          "title": "An optional list of strings for exporting paths, translate to a PATH statements"
         },
         "copy": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
+          "type": "array",
+          "items": {
+            "type": "object"
           },
-          "title": "An optional list of tuples for copying paths, translate to a COPY statements"
+          "title": "An optional list of strings or tuples for copying paths, translate to a COPY statements, if string is passed the path is copy to the workdir"
+        },
+        "post_run_copy": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional list of strings or tuples for copying paths post run commands to leverage the cache, translate to a COPY statements, if string is passed the path is copy to the workdir"
         },
         "run": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "An optional list of strubg for executing Run commands, translate to a RUN statements"
+          "title": "An optional list of strings for executing Run commands, translate to a RUN statements"
         },
         "langEnv": {
           "type": "string",
@@ -17752,6 +19684,11 @@
           "type": "integer",
           "format": "int32",
           "title": "A gid to use when creating the docker image"
+        },
+        "username": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Optional username value to use, default to \"polyaxon\""
         },
         "filename": {
           "type": "string",
@@ -17807,6 +19744,20 @@
           "items": {
             "type": "string"
           }
+        }
+      }
+    },
+    "v1EntitiesTransfer": {
+      "type": "object",
+      "properties": {
+        "uuids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "project": {
+          "type": "string"
         }
       }
     },
@@ -17887,6 +19838,10 @@
         "condition": {
           "$ref": "#/definitions/v1StatusCondition",
           "title": "Status to set"
+        },
+        "force": {
+          "type": "boolean",
+          "title": "Force flag"
         }
       },
       "title": "Request data to create/update entity status"
@@ -19025,6 +20980,10 @@
         "toInit": {
           "type": "boolean",
           "title": "A flag to signal to Polyaxon that this io must be tranformed to an init container"
+        },
+        "toEnv": {
+          "type": "string",
+          "title": "A flag to signal to Polyaxon that this io must be tranformed to the environment variable passed"
         }
       },
       "title": "Inputs/Outputs specification"
@@ -19264,6 +21223,10 @@
         "toInit": {
           "type": "boolean",
           "title": "A flag to signal to Polyaxon that this param must be tranformed to an init container"
+        },
+        "toEnv": {
+          "type": "string",
+          "title": "A flag to signal to Polyaxon that this param must be tranformed to the environment variable passed"
         },
         "contextOnly": {
           "type": "boolean",
@@ -19853,6 +21816,32 @@
       },
       "title": "Contains list searches"
     },
+    "v1ListTagsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Tag"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list tags"
+    },
     "v1ListTeamMembersResponse": {
       "type": "object",
       "properties": {
@@ -19930,6 +21919,15 @@
         }
       },
       "title": "Contains list tokens"
+    },
+    "v1LoadTagsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object"
+        }
+      },
+      "title": "Contains an object containing a map of tags -> color"
     },
     "v1Log": {
       "type": "object",
@@ -20685,6 +22683,10 @@
         "toInit": {
           "type": "boolean",
           "title": "A flag to signal to Polyaxon that this param must be tranformed to an init container"
+        },
+        "toEnv": {
+          "type": "string",
+          "title": "A flag to signal to Polyaxon that this io must be tranformed to the environment variable passed"
         },
         "contextOnly": {
           "type": "boolean",
@@ -21801,11 +23803,15 @@
         },
         "view": {
           "$ref": "#/definitions/SearchView",
-          "title": "Optional dashboard level"
+          "title": "Optional search view"
         },
         "spec": {
           "$ref": "#/definitions/v1SearchSpec",
           "title": "Search spec"
+        },
+        "org_level": {
+          "type": "boolean",
+          "title": "Optional search level"
         },
         "created_at": {
           "type": "string",
@@ -22295,6 +24301,28 @@
         }
       },
       "title": "TF Job specification"
+    },
+    "v1Tag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Tag name"
+        },
+        "color": {
+          "type": "string",
+          "title": "Optional Tag color"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional tag description"
+        },
+        "icon": {
+          "type": "string",
+          "title": "Optional tag icon"
+        }
+      },
+      "title": "Tag specification"
     },
     "v1Team": {
       "type": "object",

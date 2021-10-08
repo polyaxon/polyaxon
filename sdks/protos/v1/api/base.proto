@@ -21,23 +21,23 @@ package v1;
 import "google/protobuf/any.proto";
 
 message KV {
-    string key = 1;
-    google.protobuf.Any value = 2;
+  string key = 1;
+  google.protobuf.Any value = 2;
 }
 
 // Request data with user namespace
 message UserResourceRequest {
-    // User
-    string user = 1;
+  // User
+  string user = 1;
 }
 
 // Request data with owner namespace
 message OwnerResourceRequest {
-    // Owner of the namespace
-    string owner = 1;
+  // Owner of the namespace
+  string owner = 1;
 
-    // Owner usage query param
-    string usage = 2;
+  // Owner usage query param
+  string usage = 2;
 }
 
 message UuidResourceRequest {
@@ -47,11 +47,11 @@ message UuidResourceRequest {
 
 // Request data to get/delete entity
 message OwnerEntityResourceRequestByUid {
-    // Owner of the namespace
-    string owner = 1;
+  // Owner of the namespace
+  string owner = 1;
 
-    // Uuid identifier of the entity
-    string uuid = 2;
+  // Uuid identifier of the entity
+  string uuid = 2;
 }
 
 // Request data with owner/entity namespace
@@ -89,48 +89,94 @@ message OwnerSubEntityResourceRequestByName {
 
 // Request data with owner/team/member namespace
 message TeamMemeberResourceRequest {
-    // Owner of the namespace
-    string owner = 1;
+  // Owner of the namespace
+  string owner = 1;
 
-    // Team under namesapce
-    string team = 2;
+  // Team under namesapce
+  string team = 2;
 
-    // Member under team
-    string user = 3;
+  // Member under team
+  string user = 3;
 }
 
 message Uuids {
-    repeated string uuids = 1;
+  repeated string uuids = 1;
 }
 
 message EntitiesTags {
-    repeated string uuids = 1;
-    repeated string tags = 2;
+  repeated string uuids = 1;
+  repeated string tags = 2;
 }
+
+message EntitiesTransfer {
+  repeated string uuids = 1;
+  string project = 2;
+}
+
+// Request to act on multiple entities under an owner
+message OwnerResourceUuidsBodyRequest {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Uuids of the entities
+  Uuids uuids = 2;
+}
+
 
 // Request to act on multiple entities under project
 message ProjectResourceUuidsBodyRequest {
-    // Owner of the namespace
-    string owner = 1;
+  // Owner of the namespace
+  string owner = 1;
 
-    // Project under namesapce
-    string project = 2;
+  // Project under namesapce
+  string project = 2;
 
-    // Uuids of the entities
-    Uuids uuids = 3;
+  // Uuids of the entities
+  Uuids uuids = 3;
+}
+
+// Request to tag multiple entities under an owner
+message OwnerTagResourceUuidsBodyRequest {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Data
+  EntitiesTags data = 3;
 }
 
 // Request to tag multiple entities under project
 message ProjectTagResourceUuidsBodyRequest {
-    // Owner of the namespace
-    string owner = 1;
+  // Owner of the namespace
+  string owner = 1;
 
-    // Project under namesapce
-    string project = 2;
+  // Project under namesapce
+  string project = 2;
 
-    // Data
-    EntitiesTags data = 3;
+  // Data
+  EntitiesTags data = 3;
 }
+
+// Request to transfer multiple entities under an owner
+message OwnerTransferResourceUuidsBodyRequest {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Data
+  EntitiesTransfer data = 3;
+}
+
+// Request to transfer multiple entities under project
+message ProjectTransferResourceUuidsBodyRequest {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Project under namesapce
+  string project = 2;
+
+  // Data
+  EntitiesTransfer data = 3;
+}
+
 
 // Request list data
 message ResourceListRequest {
@@ -152,44 +198,53 @@ message ResourceListRequest {
 
 // Request list data with user namespace
 message UserResourceListRequest {
-    // User
-    string user = 1;
+  // User
+  string user = 1;
 
-    // Pagination offset
-    int32 offset = 2;
+  // Pagination offset
+  int32 offset = 2;
 
-    // Limit size
-    int32 limit = 3;
+  // Limit size
+  int32 limit = 3;
 
-    // Sort to order the search
-    string sort = 4;
+  // Sort to order the search
+  string sort = 4;
 
-    // Query filter the search
-    string query = 5;
+  // Query filter the search
+  string query = 5;
 
-    // No pagination
-    bool no_page = 6;
+  // No pagination
+  bool no_page = 6;
 }
 
 // Request list data with owner namespace
 message OwnerResourceListRequest {
-    // Owner of the namespace
-    string owner = 1;
+  // Owner of the namespace
+  string owner = 1;
 
-    // Pagination offset
-    int32 offset = 2;
+  // Pagination offset
+  int32 offset = 2;
 
-    // Limit size
-    int32 limit = 3;
+  // Limit size
+  int32 limit = 3;
 
-    // Sort to order the search
-    string sort = 4;
+  // Sort to order the search
+  string sort = 4;
 
-    // Query filter the search
-    string query = 5;
+  // Query filter the search
+  string query = 5;
 
-    // No pagination
-    bool no_page = 6;
+  // Filter by bookmarks
+  bool bookmarks = 6;
+
+  // Pinned entities
+  string pins = 8;
+
+  // Mode of the search
+  string mode = 9;
+
+  // No pagination
+  bool no_page = 10;
 }
 
 
@@ -210,44 +265,53 @@ message OwnerStatsRequest {
   // Query filter the search
   string query = 5;
 
+  // Filter by bookmarks
+  bool bookmarks = 6;
+
   // Stats Kind
-  string kind = 6;
+  string kind = 7;
 
   // Stats aggregate
-  string aggregate = 7;
+  string aggregate = 8;
 
   // Stats group
-  string groupby = 8;
+  string groupby = 9;
 
   // Stats trunc
-  string trunc = 9;
+  string trunc = 10;
 }
 
 // Request list data with owner/agent namespace
 message OwnerEntityResourceListRequestByName {
-    // Owner of the namespace
-    string owner = 1;
+  // Owner of the namespace
+  string owner = 1;
 
-    // Entity managing the resource
-    string name = 2;
+  // Entity managing the resource
+  string name = 2;
 
-    // Pagination offset
-    int32 offset = 3;
+  // Pagination offset
+  int32 offset = 3;
 
-    // Limit size
-    int32 limit = 4;
+  // Limit size
+  int32 limit = 4;
 
-    // Sort to order the search
-    string sort = 5;
+  // Sort to order the search
+  string sort = 5;
 
-    // Query filter the search
-    string query = 6;
+  // Query filter the search
+  string query = 6;
 
-    // Mode of the search
-    string mode = 7;
+  // Filter by bookmarks
+  bool bookmarks = 7;
 
-    // No pagination
-    bool no_page = 8;
+  // Pinned entities
+  string pins = 8;
+
+  // Mode of the search
+  string mode = 9;
+
+  // No pagination
+  bool no_page = 10;
 }
 
 // Request stats with owner/entity namespace
@@ -264,50 +328,53 @@ message OwnerEntityStatsRequest {
   // Limit size
   int32 limit = 4;
 
-   // Sort to order the search
+  // Sort to order the search
   string sort = 5;
 
-   // Query filter the search
+  // Query filter the search
   string query = 6;
 
+  // Filter by bookmarks
+  bool bookmarks = 7;
+
   // Stats Kind
-  string kind = 7;
+  string kind = 8;
 
   // Stats aggregate
-  string aggregate = 8;
+  string aggregate = 9;
 
   // Stats group
-  string groupby = 9;
+  string groupby = 10;
 
   // Stats trunc
-  string trunc = 10;
+  string trunc = 11;
 }
 
 // Request list data with owner/project/entity namespace
 message OwnerSubEntityResourceListRequestByUid {
-    // Owner of the namespace
-    string owner = 1;
+  // Owner of the namespace
+  string owner = 1;
 
-    // Entity name under namesapce
-    string entity = 2;
+  // Entity name under namesapce
+  string entity = 2;
 
-    // SubEntity uuid
-    string uuid = 3;
+  // SubEntity uuid
+  string uuid = 3;
 
-    // Pagination offset
-    int32 offset = 4;
+  // Pagination offset
+  int32 offset = 4;
 
-    // Limit size
-    int32 limit = 5;
+  // Limit size
+  int32 limit = 5;
 
-     // Sort to order the search
-    string sort = 6;
+  // Sort to order the search
+  string sort = 6;
 
-     // Query filter the search
-    string query = 7;
+  // Query filter the search
+  string query = 7;
 
-    // No pagination
-    bool no_page = 8;
+  // No pagination
+  bool no_page = 8;
 }
 
 // Request list data with owner/project/entity namespace
@@ -327,10 +394,10 @@ message OwnerSubEntityResourceListRequestByName {
   // Limit size
   int32 limit = 5;
 
-   // Sort to order the search
+  // Sort to order the search
   string sort = 6;
 
-   // Query filter the search
+  // Query filter the search
   string query = 7;
 
   // No pagination
@@ -360,24 +427,27 @@ message OwnerSubEntityStatsRequestByUid {
    // Query filter the search
   string query = 7;
 
+  // Filter by bookmarks
+  bool bookmarks = 8;
+
   // Stats Kind
-  string kind = 8;
+  string kind = 9;
 
   // Stats aggregate
-  string aggregate = 9;
+  string aggregate = 10;
 
   // Stats group
-  string groupby = 10;
+  string groupby = 11;
 
   // Stats trunc
-  string trunc = 11;
+  string trunc = 12;
 }
 
 // Artifact tree response
 message ArtifactTree {
-    map<string, int64> files = 1;
-    repeated string dirs = 2;
-    bool is_done = 3;
+  map<string, int64> files = 1;
+  repeated string dirs = 2;
+  bool is_done = 3;
 }
 
 // Settings catalog specification

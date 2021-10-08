@@ -31,8 +31,8 @@ import (
 // swagger:model v1DockerfileType
 type V1DockerfileType struct {
 
-	// An optional list of tuples for copying paths, translate to a COPY statements
-	Copy map[string]string `json:"copy,omitempty"`
+	// An optional list of strings or tuples for copying paths, translate to a COPY statements, if string is passed the path is copy to the workdir
+	Copy []interface{} `json:"copy"`
 
 	// An optional list of tuples(key, value) for defining env vars, translate to an ENV statements
 	Env map[string]string `json:"env,omitempty"`
@@ -49,10 +49,13 @@ type V1DockerfileType struct {
 	// An optional string defining a language, e.g. en_US.UTF-8
 	LangEnv string `json:"langEnv,omitempty"`
 
-	// An optional list of tuples for exporting paths, translate to a PATH statements
-	Path map[string]string `json:"path,omitempty"`
+	// An optional list of strings for exporting paths, translate to a PATH statements
+	Path []string `json:"path"`
 
-	// An optional list of strubg for executing Run commands, translate to a RUN statements
+	// An optional list of strings or tuples for copying paths post run commands to leverage the cache, translate to a COPY statements, if string is passed the path is copy to the workdir
+	PostRunCopy []interface{} `json:"post_run_copy"`
+
+	// An optional list of strings for executing Run commands, translate to a RUN statements
 	Run []string `json:"run"`
 
 	// An optional shell type, defaults to "/bin/bash"
@@ -60,6 +63,9 @@ type V1DockerfileType struct {
 
 	// A uid to use when creating the docker image
 	UID int32 `json:"uid,omitempty"`
+
+	// Optional username value to use, default to "polyaxon"
+	Username int32 `json:"username,omitempty"`
 
 	// A work dir to copy code to, default to /code
 	Workdir string `json:"workdir,omitempty"`

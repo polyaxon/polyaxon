@@ -74,6 +74,12 @@ func NewListModelVersionsParamsWithHTTPClient(client *http.Client) *ListModelVer
 */
 type ListModelVersionsParams struct {
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Limit.
 
 	   Limit size.
@@ -113,6 +119,12 @@ type ListModelVersionsParams struct {
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* Pins.
+
+	   Pinned entities.
+	*/
+	Pins *string
 
 	/* Query.
 
@@ -177,6 +189,17 @@ func (o *ListModelVersionsParams) WithHTTPClient(client *http.Client) *ListModel
 // SetHTTPClient adds the HTTPClient to the list model versions params
 func (o *ListModelVersionsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithBookmarks adds the bookmarks to the list model versions params
+func (o *ListModelVersionsParams) WithBookmarks(bookmarks *bool) *ListModelVersionsParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the list model versions params
+func (o *ListModelVersionsParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
 }
 
 // WithLimit adds the limit to the list model versions params
@@ -245,6 +268,17 @@ func (o *ListModelVersionsParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithPins adds the pins to the list model versions params
+func (o *ListModelVersionsParams) WithPins(pins *string) *ListModelVersionsParams {
+	o.SetPins(pins)
+	return o
+}
+
+// SetPins adds the pins to the list model versions params
+func (o *ListModelVersionsParams) SetPins(pins *string) {
+	o.Pins = pins
+}
+
 // WithQuery adds the query to the list model versions params
 func (o *ListModelVersionsParams) WithQuery(query *string) *ListModelVersionsParams {
 	o.SetQuery(query)
@@ -274,6 +308,23 @@ func (o *ListModelVersionsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		return err
 	}
 	var res []error
+
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
+				return err
+			}
+		}
+	}
 
 	if o.Limit != nil {
 
@@ -351,6 +402,23 @@ func (o *ListModelVersionsParams) WriteToRequest(r runtime.ClientRequest, reg st
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Pins != nil {
+
+		// query param pins
+		var qrPins string
+
+		if o.Pins != nil {
+			qrPins = *o.Pins
+		}
+		qPins := qrPins
+		if qPins != "" {
+
+			if err := r.SetQueryParam("pins", qPins); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Query != nil {

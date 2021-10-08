@@ -80,6 +80,12 @@ type GetRunStatsParams struct {
 	*/
 	Aggregate *string
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Entity.
 
 	   Entity name under namesapce
@@ -206,6 +212,17 @@ func (o *GetRunStatsParams) WithAggregate(aggregate *string) *GetRunStatsParams 
 // SetAggregate adds the aggregate to the get run stats params
 func (o *GetRunStatsParams) SetAggregate(aggregate *string) {
 	o.Aggregate = aggregate
+}
+
+// WithBookmarks adds the bookmarks to the get run stats params
+func (o *GetRunStatsParams) WithBookmarks(bookmarks *bool) *GetRunStatsParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the get run stats params
+func (o *GetRunStatsParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
 }
 
 // WithEntity adds the entity to the get run stats params
@@ -338,6 +355,23 @@ func (o *GetRunStatsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 		if qAggregate != "" {
 
 			if err := r.SetQueryParam("aggregate", qAggregate); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
 				return err
 			}
 		}

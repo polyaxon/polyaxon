@@ -40,6 +40,7 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/runs_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/schemas_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/searches_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/tags_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/teams_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/users_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/versions_v1"
@@ -103,6 +104,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 	cli.RunsV1 = runs_v1.New(transport, formats)
 	cli.SchemasV1 = schemas_v1.New(transport, formats)
 	cli.SearchesV1 = searches_v1.New(transport, formats)
+	cli.TagsV1 = tags_v1.New(transport, formats)
 	cli.TeamsV1 = teams_v1.New(transport, formats)
 	cli.UsersV1 = users_v1.New(transport, formats)
 	cli.VersionsV1 = versions_v1.New(transport, formats)
@@ -182,6 +184,8 @@ type PolyaxonSdk struct {
 
 	SearchesV1 searches_v1.ClientService
 
+	TagsV1 tags_v1.ClientService
+
 	TeamsV1 teams_v1.ClientService
 
 	UsersV1 users_v1.ClientService
@@ -210,6 +214,7 @@ func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 	c.RunsV1.SetTransport(transport)
 	c.SchemasV1.SetTransport(transport)
 	c.SearchesV1.SetTransport(transport)
+	c.TagsV1.SetTransport(transport)
 	c.TeamsV1.SetTransport(transport)
 	c.UsersV1.SetTransport(transport)
 	c.VersionsV1.SetTransport(transport)

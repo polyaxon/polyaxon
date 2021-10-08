@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **live_state** | **Number** |  | [optional] 
 **view** | [**SearchView**](SearchView.md) |  | [optional] 
 **spec** | [**V1SearchSpec**](V1SearchSpec.md) |  | [optional] 
+**org_level** | **Boolean** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 

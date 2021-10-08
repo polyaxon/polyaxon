@@ -53,6 +53,9 @@ RUN_STOPPED_ACTOR = "{}.{}.{}".format(
 RUN_APPROVED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.APPROVED, event_subjects.ACTOR
 )
+RUN_TRANSFERRED_ACTOR = "{}.{}.{}".format(
+    event_subjects.RUN, event_actions.TRANSFERRED, event_subjects.ACTOR
+)
 RUN_INVALIDATED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.INVALIDATED, event_subjects.ACTOR
 )
@@ -89,6 +92,7 @@ EVENTS = {
     RUN_DELETED_ACTOR,
     RUN_STOPPED_ACTOR,
     RUN_APPROVED_ACTOR,
+    RUN_TRANSFERRED_ACTOR,
     RUN_INVALIDATED_ACTOR,
     RUN_RESUMED_ACTOR,
     RUN_RESTARTED_ACTOR,
@@ -190,6 +194,11 @@ class RunStoppedActorEvent(RunActorEvent):
 
 class RunApprovedActorEvent(RunActorEvent):
     event_type = RUN_APPROVED_ACTOR
+    attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
+
+
+class RunTransferredActorEvent(RunActorEvent):
+    event_type = RUN_TRANSFERRED_ACTOR
     attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
 
 

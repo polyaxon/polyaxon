@@ -74,6 +74,12 @@ func NewListSearchesParamsWithHTTPClient(client *http.Client) *ListSearchesParam
 */
 type ListSearchesParams struct {
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Limit.
 
 	   Limit size.
@@ -81,6 +87,12 @@ type ListSearchesParams struct {
 	   Format: int32
 	*/
 	Limit *int32
+
+	/* Mode.
+
+	   Mode of the search.
+	*/
+	Mode *string
 
 	/* NoPage.
 
@@ -101,6 +113,12 @@ type ListSearchesParams struct {
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* Pins.
+
+	   Pinned entities.
+	*/
+	Pins *string
 
 	/* Query.
 
@@ -167,6 +185,17 @@ func (o *ListSearchesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithBookmarks adds the bookmarks to the list searches params
+func (o *ListSearchesParams) WithBookmarks(bookmarks *bool) *ListSearchesParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the list searches params
+func (o *ListSearchesParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
+}
+
 // WithLimit adds the limit to the list searches params
 func (o *ListSearchesParams) WithLimit(limit *int32) *ListSearchesParams {
 	o.SetLimit(limit)
@@ -176,6 +205,17 @@ func (o *ListSearchesParams) WithLimit(limit *int32) *ListSearchesParams {
 // SetLimit adds the limit to the list searches params
 func (o *ListSearchesParams) SetLimit(limit *int32) {
 	o.Limit = limit
+}
+
+// WithMode adds the mode to the list searches params
+func (o *ListSearchesParams) WithMode(mode *string) *ListSearchesParams {
+	o.SetMode(mode)
+	return o
+}
+
+// SetMode adds the mode to the list searches params
+func (o *ListSearchesParams) SetMode(mode *string) {
+	o.Mode = mode
 }
 
 // WithNoPage adds the noPage to the list searches params
@@ -211,6 +251,17 @@ func (o *ListSearchesParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithPins adds the pins to the list searches params
+func (o *ListSearchesParams) WithPins(pins *string) *ListSearchesParams {
+	o.SetPins(pins)
+	return o
+}
+
+// SetPins adds the pins to the list searches params
+func (o *ListSearchesParams) SetPins(pins *string) {
+	o.Pins = pins
+}
+
 // WithQuery adds the query to the list searches params
 func (o *ListSearchesParams) WithQuery(query *string) *ListSearchesParams {
 	o.SetQuery(query)
@@ -241,6 +292,23 @@ func (o *ListSearchesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 	}
 	var res []error
 
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.Limit != nil {
 
 		// query param limit
@@ -253,6 +321,23 @@ func (o *ListSearchesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Mode != nil {
+
+		// query param mode
+		var qrMode string
+
+		if o.Mode != nil {
+			qrMode = *o.Mode
+		}
+		qMode := qrMode
+		if qMode != "" {
+
+			if err := r.SetQueryParam("mode", qMode); err != nil {
 				return err
 			}
 		}
@@ -295,6 +380,23 @@ func (o *ListSearchesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Pins != nil {
+
+		// query param pins
+		var qrPins string
+
+		if o.Pins != nil {
+			qrPins = *o.Pins
+		}
+		qPins := qrPins
+		if qPins != "" {
+
+			if err := r.SetQueryParam("pins", qPins); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Query != nil {

@@ -621,7 +621,7 @@ Name | Type | Description  | Notes
 
 <a name="getComponentHubActivities"></a>
 # **getComponentHubActivities**
-> V1ListActivitiesResponse getComponentHubActivities(owner, name, offset, limit, sort, query, mode, noPage)
+> V1ListActivitiesResponse getComponentHubActivities(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 Get hub activities
 
@@ -653,10 +653,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListActivitiesResponse result = apiInstance.getComponentHubActivities(owner, name, offset, limit, sort, query, mode, noPage);
+      V1ListActivitiesResponse result = apiInstance.getComponentHubActivities(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#getComponentHubActivities");
@@ -679,6 +681,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -929,7 +933,7 @@ Name | Type | Description  | Notes
 
 <a name="listComponentHubNames"></a>
 # **listComponentHubNames**
-> V1ListComponentHubsResponse listComponentHubNames(owner, offset, limit, sort, query, noPage)
+> V1ListComponentHubsResponse listComponentHubNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List hub component names
 
@@ -960,9 +964,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
+    String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListComponentHubsResponse result = apiInstance.listComponentHubNames(owner, offset, limit, sort, query, noPage);
+      V1ListComponentHubsResponse result = apiInstance.listComponentHubNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#listComponentHubNames");
@@ -984,6 +991,9 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
@@ -1010,7 +1020,7 @@ Name | Type | Description  | Notes
 
 <a name="listComponentHubs"></a>
 # **listComponentHubs**
-> V1ListComponentHubsResponse listComponentHubs(owner, offset, limit, sort, query, noPage)
+> V1ListComponentHubsResponse listComponentHubs(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List hub components
 
@@ -1041,9 +1051,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
+    String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListComponentHubsResponse result = apiInstance.listComponentHubs(owner, offset, limit, sort, query, noPage);
+      V1ListComponentHubsResponse result = apiInstance.listComponentHubs(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#listComponentHubs");
@@ -1065,6 +1078,9 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
+ **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
@@ -1091,7 +1107,7 @@ Name | Type | Description  | Notes
 
 <a name="listComponentVersionNames"></a>
 # **listComponentVersionNames**
-> V1ListComponentVersionsResponse listComponentVersionNames(owner, name, offset, limit, sort, query, mode, noPage)
+> V1ListComponentVersionsResponse listComponentVersionNames(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List component version names
 
@@ -1123,10 +1139,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListComponentVersionsResponse result = apiInstance.listComponentVersionNames(owner, name, offset, limit, sort, query, mode, noPage);
+      V1ListComponentVersionsResponse result = apiInstance.listComponentVersionNames(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#listComponentVersionNames");
@@ -1149,6 +1167,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -1176,7 +1196,7 @@ Name | Type | Description  | Notes
 
 <a name="listComponentVersions"></a>
 # **listComponentVersions**
-> V1ListComponentVersionsResponse listComponentVersions(owner, name, offset, limit, sort, query, mode, noPage)
+> V1ListComponentVersionsResponse listComponentVersions(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List component versions
 
@@ -1208,10 +1228,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListComponentVersionsResponse result = apiInstance.listComponentVersions(owner, name, offset, limit, sort, query, mode, noPage);
+      V1ListComponentVersionsResponse result = apiInstance.listComponentVersions(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#listComponentVersions");
@@ -1234,6 +1256,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 

@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **liveState** | **Integer** |  |  [optional]
 **view** | [**SearchView**](SearchView.md) |  |  [optional]
 **spec** | [**V1SearchSpec**](V1SearchSpec.md) |  |  [optional]
+**orgLevel** | **Boolean** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 

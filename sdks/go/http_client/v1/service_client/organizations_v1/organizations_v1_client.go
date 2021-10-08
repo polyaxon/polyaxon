@@ -42,6 +42,12 @@ type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	ApproveOrganizationRuns(params *ApproveOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApproveOrganizationRunsOK, *ApproveOrganizationRunsNoContent, error)
+
+	ArchiveOrganizationRuns(params *ArchiveOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveOrganizationRunsOK, *ArchiveOrganizationRunsNoContent, error)
+
+	BookmarkOrganizationRuns(params *BookmarkOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkOrganizationRunsOK, *BookmarkOrganizationRunsNoContent, error)
+
 	CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationOK, *CreateOrganizationNoContent, error)
 
 	CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error)
@@ -52,6 +58,8 @@ type ClientService interface {
 
 	DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error)
 
+	DeleteOrganizationRuns(params *DeleteOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationRunsOK, *DeleteOrganizationRunsNoContent, error)
+
 	GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationOK, *GetOrganizationNoContent, error)
 
 	GetOrganizationActivities(params *GetOrganizationActivitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationActivitiesOK, *GetOrganizationActivitiesNoContent, error)
@@ -60,9 +68,13 @@ type ClientService interface {
 
 	GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error)
 
+	GetOrganizationRuns(params *GetOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationRunsOK, *GetOrganizationRunsNoContent, error)
+
 	GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error)
 
 	GetOrganizationStats(params *GetOrganizationStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationStatsOK, *GetOrganizationStatsNoContent, error)
+
+	InvalidateOrganizationRuns(params *InvalidateOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InvalidateOrganizationRunsOK, *InvalidateOrganizationRunsNoContent, error)
 
 	ListOrganizationMemberNames(params *ListOrganizationMemberNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrganizationMemberNamesOK, *ListOrganizationMemberNamesNoContent, error)
 
@@ -84,6 +96,14 @@ type ClientService interface {
 
 	ResendOrganizationInvitation(params *ResendOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResendOrganizationInvitationOK, *ResendOrganizationInvitationNoContent, error)
 
+	RestoreOrganizationRuns(params *RestoreOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreOrganizationRunsOK, *RestoreOrganizationRunsNoContent, error)
+
+	StopOrganizationRuns(params *StopOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StopOrganizationRunsOK, *StopOrganizationRunsNoContent, error)
+
+	TagOrganizationRuns(params *TagOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TagOrganizationRunsOK, *TagOrganizationRunsNoContent, error)
+
+	TransferOrganizationRuns(params *TransferOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TransferOrganizationRunsOK, *TransferOrganizationRunsNoContent, error)
+
 	UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error)
 
 	UpdateOrganizationInvitation(params *UpdateOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationInvitationOK, *UpdateOrganizationInvitationNoContent, error)
@@ -93,6 +113,126 @@ type ClientService interface {
 	UpdateOrganizationSettings(params *UpdateOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSettingsOK, *UpdateOrganizationSettingsNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  ApproveOrganizationRuns approves cross project runs selection
+*/
+func (a *Client) ApproveOrganizationRuns(params *ApproveOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApproveOrganizationRunsOK, *ApproveOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewApproveOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ApproveOrganizationRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/approve",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ApproveOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ApproveOrganizationRunsOK:
+		return value, nil, nil
+	case *ApproveOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ApproveOrganizationRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ArchiveOrganizationRuns archives cross project runs selection
+*/
+func (a *Client) ArchiveOrganizationRuns(params *ArchiveOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ArchiveOrganizationRunsOK, *ArchiveOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewArchiveOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ArchiveOrganizationRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/archive",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ArchiveOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ArchiveOrganizationRunsOK:
+		return value, nil, nil
+	case *ArchiveOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ArchiveOrganizationRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  BookmarkOrganizationRuns bookmarks cross project runs selection
+*/
+func (a *Client) BookmarkOrganizationRuns(params *BookmarkOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BookmarkOrganizationRunsOK, *BookmarkOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewBookmarkOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "BookmarkOrganizationRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/bookmark",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &BookmarkOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *BookmarkOrganizationRunsOK:
+		return value, nil, nil
+	case *BookmarkOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*BookmarkOrganizationRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -296,6 +436,46 @@ func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams
 }
 
 /*
+  DeleteOrganizationRuns deletes cross project runs selection
+*/
+func (a *Client) DeleteOrganizationRuns(params *DeleteOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationRunsOK, *DeleteOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteOrganizationRuns",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/delete",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteOrganizationRunsOK:
+		return value, nil, nil
+	case *DeleteOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteOrganizationRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetOrganization gets organization
 */
 func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationOK, *GetOrganizationNoContent, error) {
@@ -456,6 +636,46 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 }
 
 /*
+  GetOrganizationRuns gets all runs in an organization
+*/
+func (a *Client) GetOrganizationRuns(params *GetOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationRunsOK, *GetOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "GetOrganizationRuns",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/runs",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetOrganizationRunsOK:
+		return value, nil, nil
+	case *GetOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetOrganizationRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetOrganizationSettings gets organization settings
 */
 func (a *Client) GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error) {
@@ -532,6 +752,46 @@ func (a *Client) GetOrganizationStats(params *GetOrganizationStatsParams, authIn
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetOrganizationStatsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  InvalidateOrganizationRuns invalidates cross project runs selection
+*/
+func (a *Client) InvalidateOrganizationRuns(params *InvalidateOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InvalidateOrganizationRunsOK, *InvalidateOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewInvalidateOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "InvalidateOrganizationRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/invalidate",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &InvalidateOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *InvalidateOrganizationRunsOK:
+		return value, nil, nil
+	case *InvalidateOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*InvalidateOrganizationRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -932,6 +1192,166 @@ func (a *Client) ResendOrganizationInvitation(params *ResendOrganizationInvitati
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ResendOrganizationInvitationDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  RestoreOrganizationRuns restores cross project runs selection
+*/
+func (a *Client) RestoreOrganizationRuns(params *RestoreOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreOrganizationRunsOK, *RestoreOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRestoreOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "RestoreOrganizationRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/restore",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &RestoreOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *RestoreOrganizationRunsOK:
+		return value, nil, nil
+	case *RestoreOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*RestoreOrganizationRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  StopOrganizationRuns stops cross project runs selection
+*/
+func (a *Client) StopOrganizationRuns(params *StopOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StopOrganizationRunsOK, *StopOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStopOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "StopOrganizationRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/stop",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &StopOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *StopOrganizationRunsOK:
+		return value, nil, nil
+	case *StopOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*StopOrganizationRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  TagOrganizationRuns tags cross project runs selection
+*/
+func (a *Client) TagOrganizationRuns(params *TagOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TagOrganizationRunsOK, *TagOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewTagOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "TagOrganizationRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/tag",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &TagOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *TagOrganizationRunsOK:
+		return value, nil, nil
+	case *TagOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*TagOrganizationRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  TransferOrganizationRuns transfers cross project runs selection to a new project
+*/
+func (a *Client) TransferOrganizationRuns(params *TransferOrganizationRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TransferOrganizationRunsOK, *TransferOrganizationRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewTransferOrganizationRunsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "TransferOrganizationRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/runs/transfer",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &TransferOrganizationRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *TransferOrganizationRunsOK:
+		return value, nil, nil
+	case *TransferOrganizationRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*TransferOrganizationRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

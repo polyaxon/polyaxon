@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **live_state** | **int** |  | [optional] 
 **view** | [**SearchView**](SearchView.md) |  | [optional] 
 **spec** | [**V1SearchSpec**](V1SearchSpec.md) |  | [optional] 
+**org_level** | **bool** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

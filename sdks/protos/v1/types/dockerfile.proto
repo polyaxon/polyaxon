@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/struct.proto";
+
 // Dockerfile type specification
 message DockerfileType {
     // Docker image to use as a base
@@ -26,33 +28,39 @@ message DockerfileType {
     // An optional list of tuples(key, value) for defining env vars, translate to an ENV statements
     map<string, string> env = 2;
 
-    // An optional list of tuples for exporting paths, translate to a PATH statements
-    map<string, string> path = 3;
+    // An optional list of strings for exporting paths, translate to a PATH statements
+    repeated string path = 3;
 
-    // An optional list of tuples for copying paths, translate to a COPY statements
-    map<string, string> copy = 4;
+    // An optional list of strings or tuples for copying paths, translate to a COPY statements, if string is passed the path is copy to the workdir
+    repeated google.protobuf.Struct copy = 4;
 
-    // An optional list of strubg for executing Run commands, translate to a RUN statements
-    repeated string run = 5;
+    // An optional list of strings or tuples for copying paths post run commands to leverage the cache, translate to a COPY statements, if string is passed the path is copy to the workdir
+    repeated google.protobuf.Struct post_run_copy = 5;
+
+    // An optional list of strings for executing Run commands, translate to a RUN statements
+    repeated string run = 6;
 
     // An optional string defining a language, e.g. en_US.UTF-8
-    string langEnv = 6;
+    string langEnv = 7;
 
     // A uid to use when creating the docker image
-    int32 uid = 7;
+    int32 uid = 8;
 
     // A gid to use when creating the docker image
-    int32 gid = 8;
+    int32 gid = 9;
+
+    // Optional username value to use, default to "polyaxon"
+    int32 username = 10;
 
     // A filename to give to the generated dockerfile
-    string filename = 9;
+    string filename = 11;
 
     // A work dir to copy code to, default to /code
-    string workdir = 10;
+    string workdir = 12;
 
     // An optional workdir path
-    string workdirPath = 11;
+    string workdirPath = 13;
 
     // An optional shell type, defaults to "/bin/bash"
-    string shell = 12;
+    string shell = 14;
 }

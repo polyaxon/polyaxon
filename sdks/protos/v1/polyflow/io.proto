@@ -57,6 +57,9 @@ message IO {
 
     // A flag to signal to Polyaxon that this io must be tranformed to an init container
     bool toInit = 12;
+
+    // A flag to signal to Polyaxon that this io must be tranformed to the environment variable passed
+    string toEnv = 13;
 }
 
 // Param specification
@@ -73,6 +76,9 @@ message Param {
     // A flag to signal to Polyaxon that this param must be tranformed to an init container
     bool toInit = 5;
 
+    // A flag to signal to Polyaxon that this io must be tranformed to the environment variable passed
+    string toEnv = 6;
+
     // A flag to signal to Polyaxon that this param should not be validated against io
-    bool contextOnly = 6;
+    bool contextOnly = 7;
 }

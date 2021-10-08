@@ -74,6 +74,12 @@ func NewListTeamMembersParamsWithHTTPClient(client *http.Client) *ListTeamMember
 */
 type ListTeamMembersParams struct {
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Limit.
 
 	   Limit size.
@@ -113,6 +119,12 @@ type ListTeamMembersParams struct {
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* Pins.
+
+	   Pinned entities.
+	*/
+	Pins *string
 
 	/* Query.
 
@@ -177,6 +189,17 @@ func (o *ListTeamMembersParams) WithHTTPClient(client *http.Client) *ListTeamMem
 // SetHTTPClient adds the HTTPClient to the list team members params
 func (o *ListTeamMembersParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithBookmarks adds the bookmarks to the list team members params
+func (o *ListTeamMembersParams) WithBookmarks(bookmarks *bool) *ListTeamMembersParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the list team members params
+func (o *ListTeamMembersParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
 }
 
 // WithLimit adds the limit to the list team members params
@@ -245,6 +268,17 @@ func (o *ListTeamMembersParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithPins adds the pins to the list team members params
+func (o *ListTeamMembersParams) WithPins(pins *string) *ListTeamMembersParams {
+	o.SetPins(pins)
+	return o
+}
+
+// SetPins adds the pins to the list team members params
+func (o *ListTeamMembersParams) SetPins(pins *string) {
+	o.Pins = pins
+}
+
 // WithQuery adds the query to the list team members params
 func (o *ListTeamMembersParams) WithQuery(query *string) *ListTeamMembersParams {
 	o.SetQuery(query)
@@ -274,6 +308,23 @@ func (o *ListTeamMembersParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
+
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
+				return err
+			}
+		}
+	}
 
 	if o.Limit != nil {
 
@@ -351,6 +402,23 @@ func (o *ListTeamMembersParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Pins != nil {
+
+		// query param pins
+		var qrPins string
+
+		if o.Pins != nil {
+			qrPins = *o.Pins
+		}
+		qPins := qrPins
+		if qPins != "" {
+
+			if err := r.SetQueryParam("pins", qPins); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Query != nil {

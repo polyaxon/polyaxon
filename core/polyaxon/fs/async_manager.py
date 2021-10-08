@@ -93,12 +93,16 @@ async def sync_fs(
     fw: FSWatcher,
     store_base_path: str,
     context_base_path: str,
+    context_related_runs: str = None,
 ):
     rm_files = fw.get_files_to_rm()
     logger.debug("rm_files {}".format(rm_files))
 
     def get_store_path(base_path: str, subpath: str):
-        rel_path = os.path.relpath(base_path, context_base_path)
+        _context_base_path = context_base_path
+        if context_related_runs and context_related_runs in base_path:
+            _context_base_path = os.path.join(context_base_path, context_related_runs)
+        rel_path = os.path.relpath(base_path, _context_base_path)
         return os.path.join(store_base_path, rel_path, subpath)
 
     await asyncio.gather(

@@ -74,6 +74,12 @@ func NewGetOrganizationActivitiesParamsWithHTTPClient(client *http.Client) *GetO
 */
 type GetOrganizationActivitiesParams struct {
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Limit.
 
 	   Limit size.
@@ -81,6 +87,12 @@ type GetOrganizationActivitiesParams struct {
 	   Format: int32
 	*/
 	Limit *int32
+
+	/* Mode.
+
+	   Mode of the search.
+	*/
+	Mode *string
 
 	/* NoPage.
 
@@ -101,6 +113,12 @@ type GetOrganizationActivitiesParams struct {
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* Pins.
+
+	   Pinned entities.
+	*/
+	Pins *string
 
 	/* Query.
 
@@ -167,6 +185,17 @@ func (o *GetOrganizationActivitiesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithBookmarks adds the bookmarks to the get organization activities params
+func (o *GetOrganizationActivitiesParams) WithBookmarks(bookmarks *bool) *GetOrganizationActivitiesParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the get organization activities params
+func (o *GetOrganizationActivitiesParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
+}
+
 // WithLimit adds the limit to the get organization activities params
 func (o *GetOrganizationActivitiesParams) WithLimit(limit *int32) *GetOrganizationActivitiesParams {
 	o.SetLimit(limit)
@@ -176,6 +205,17 @@ func (o *GetOrganizationActivitiesParams) WithLimit(limit *int32) *GetOrganizati
 // SetLimit adds the limit to the get organization activities params
 func (o *GetOrganizationActivitiesParams) SetLimit(limit *int32) {
 	o.Limit = limit
+}
+
+// WithMode adds the mode to the get organization activities params
+func (o *GetOrganizationActivitiesParams) WithMode(mode *string) *GetOrganizationActivitiesParams {
+	o.SetMode(mode)
+	return o
+}
+
+// SetMode adds the mode to the get organization activities params
+func (o *GetOrganizationActivitiesParams) SetMode(mode *string) {
+	o.Mode = mode
 }
 
 // WithNoPage adds the noPage to the get organization activities params
@@ -211,6 +251,17 @@ func (o *GetOrganizationActivitiesParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithPins adds the pins to the get organization activities params
+func (o *GetOrganizationActivitiesParams) WithPins(pins *string) *GetOrganizationActivitiesParams {
+	o.SetPins(pins)
+	return o
+}
+
+// SetPins adds the pins to the get organization activities params
+func (o *GetOrganizationActivitiesParams) SetPins(pins *string) {
+	o.Pins = pins
+}
+
 // WithQuery adds the query to the get organization activities params
 func (o *GetOrganizationActivitiesParams) WithQuery(query *string) *GetOrganizationActivitiesParams {
 	o.SetQuery(query)
@@ -241,6 +292,23 @@ func (o *GetOrganizationActivitiesParams) WriteToRequest(r runtime.ClientRequest
 	}
 	var res []error
 
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.Limit != nil {
 
 		// query param limit
@@ -253,6 +321,23 @@ func (o *GetOrganizationActivitiesParams) WriteToRequest(r runtime.ClientRequest
 		if qLimit != "" {
 
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Mode != nil {
+
+		// query param mode
+		var qrMode string
+
+		if o.Mode != nil {
+			qrMode = *o.Mode
+		}
+		qMode := qrMode
+		if qMode != "" {
+
+			if err := r.SetQueryParam("mode", qMode); err != nil {
 				return err
 			}
 		}
@@ -295,6 +380,23 @@ func (o *GetOrganizationActivitiesParams) WriteToRequest(r runtime.ClientRequest
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Pins != nil {
+
+		// query param pins
+		var qrPins string
+
+		if o.Pins != nil {
+			qrPins = *o.Pins
+		}
+		qPins := qrPins
+		if qPins != "" {
+
+			if err := r.SetQueryParam("pins", qPins); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Query != nil {

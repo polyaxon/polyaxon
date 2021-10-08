@@ -35,6 +35,9 @@ type V1EntityStatusBodyRequest struct {
 	// Status to set
 	Condition *V1StatusCondition `json:"condition,omitempty"`
 
+	// Force flag
+	Force bool `json:"force,omitempty"`
+
 	// Owner of the namespace
 	Owner string `json:"owner,omitempty"`
 

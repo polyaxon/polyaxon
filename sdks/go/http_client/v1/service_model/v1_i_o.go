@@ -58,6 +58,9 @@ type V1IO struct {
 	// An optional field to provide possible values for validation
 	Options []interface{} `json:"options"`
 
+	// A flag to signal to Polyaxon that this io must be tranformed to the environment variable passed
+	ToEnv string `json:"toEnv,omitempty"`
+
 	// A flag to signal to Polyaxon that this io must be tranformed to an init container
 	ToInit bool `json:"toInit,omitempty"`
 

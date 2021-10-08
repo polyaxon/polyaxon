@@ -107,6 +107,7 @@ class IOSchema(BaseCamelSchema):
     options = fields.List(fields.Raw(), allow_none=True)
     connection = fields.Str(allow_none=True)
     to_init = fields.Bool(allow_none=True)
+    to_env = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -169,6 +170,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
         options: List[any], optional
         connection: str, optional
         to_init: bool, optional
+        to_env: str, optional
 
     ## YAML usage
 
@@ -414,7 +416,21 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### toInit
 
-    if True, it will be converted to an init container.
+    If True, it will be converted to an init container.
+
+    ### toEnv
+
+    > **N.B**: Requires Polyaxon CLI and Polyaxon Agent/CE version `>= 1.12`
+
+    If passed, it will be converted automatically to an environment variable.
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: learning_rate
+    >>>     type: float
+    >>>     value: 1.1
+    >>>     toEnv: MY_LEARNING_RATE
+    ```
 
     ### options
 
@@ -525,6 +541,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
         "options",
         "connection",
         "toInit",
+        "toEnv",
     ]
 
     def __init__(
@@ -541,6 +558,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
         options=None,
         connection=None,
         to_init=None,
+        to_env=None,
         iotype=None,
         local_vars_configuration=None,
     ):
@@ -564,6 +582,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
             options=options,
             connection=connection,
             to_init=to_init,
+            to_env=to_env,
             local_vars_configuration=local_vars_configuration,
         )
 

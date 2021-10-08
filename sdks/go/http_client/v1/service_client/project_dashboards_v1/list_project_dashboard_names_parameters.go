@@ -74,6 +74,12 @@ func NewListProjectDashboardNamesParamsWithHTTPClient(client *http.Client) *List
 */
 type ListProjectDashboardNamesParams struct {
 
+	/* Bookmarks.
+
+	   Filter by bookmarks.
+	*/
+	Bookmarks *bool
+
 	/* Limit.
 
 	   Limit size.
@@ -113,6 +119,12 @@ type ListProjectDashboardNamesParams struct {
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* Pins.
+
+	   Pinned entities.
+	*/
+	Pins *string
 
 	/* Query.
 
@@ -177,6 +189,17 @@ func (o *ListProjectDashboardNamesParams) WithHTTPClient(client *http.Client) *L
 // SetHTTPClient adds the HTTPClient to the list project dashboard names params
 func (o *ListProjectDashboardNamesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithBookmarks adds the bookmarks to the list project dashboard names params
+func (o *ListProjectDashboardNamesParams) WithBookmarks(bookmarks *bool) *ListProjectDashboardNamesParams {
+	o.SetBookmarks(bookmarks)
+	return o
+}
+
+// SetBookmarks adds the bookmarks to the list project dashboard names params
+func (o *ListProjectDashboardNamesParams) SetBookmarks(bookmarks *bool) {
+	o.Bookmarks = bookmarks
 }
 
 // WithLimit adds the limit to the list project dashboard names params
@@ -245,6 +268,17 @@ func (o *ListProjectDashboardNamesParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithPins adds the pins to the list project dashboard names params
+func (o *ListProjectDashboardNamesParams) WithPins(pins *string) *ListProjectDashboardNamesParams {
+	o.SetPins(pins)
+	return o
+}
+
+// SetPins adds the pins to the list project dashboard names params
+func (o *ListProjectDashboardNamesParams) SetPins(pins *string) {
+	o.Pins = pins
+}
+
 // WithQuery adds the query to the list project dashboard names params
 func (o *ListProjectDashboardNamesParams) WithQuery(query *string) *ListProjectDashboardNamesParams {
 	o.SetQuery(query)
@@ -274,6 +308,23 @@ func (o *ListProjectDashboardNamesParams) WriteToRequest(r runtime.ClientRequest
 		return err
 	}
 	var res []error
+
+	if o.Bookmarks != nil {
+
+		// query param bookmarks
+		var qrBookmarks bool
+
+		if o.Bookmarks != nil {
+			qrBookmarks = *o.Bookmarks
+		}
+		qBookmarks := swag.FormatBool(qrBookmarks)
+		if qBookmarks != "" {
+
+			if err := r.SetQueryParam("bookmarks", qBookmarks); err != nil {
+				return err
+			}
+		}
+	}
 
 	if o.Limit != nil {
 
@@ -351,6 +402,23 @@ func (o *ListProjectDashboardNamesParams) WriteToRequest(r runtime.ClientRequest
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Pins != nil {
+
+		// query param pins
+		var qrPins string
+
+		if o.Pins != nil {
+			qrPins = *o.Pins
+		}
+		qPins := qrPins
+		if qPins != "" {
+
+			if err := r.SetQueryParam("pins", qPins); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Query != nil {

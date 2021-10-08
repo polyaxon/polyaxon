@@ -46,6 +46,9 @@ type V1Dashboard struct {
 	// Optional name
 	Name string `json:"name,omitempty"`
 
+	// Optional dashboard level
+	OrgLevel bool `json:"org_level,omitempty"`
+
 	// Optional dashboard specification
 	Spec *V1DashboardSpec `json:"spec,omitempty"`
 

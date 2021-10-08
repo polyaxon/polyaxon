@@ -25,7 +25,9 @@ from polyaxon.pql.builder import (
     ValueCondition,
 )
 from polyaxon.pql.parser import (
+    parse_cpu_operation,
     parse_datetime_operation,
+    parse_memory_operation,
     parse_scalar_operation,
     parse_search_operation,
     parse_value_operation,
@@ -174,8 +176,8 @@ class RunQueryManager(BaseQueryManager):
         "pending": parse_value_operation,
         # Resources
         "cost": parse_scalar_operation,
-        "cpu": parse_scalar_operation,
-        "memory": parse_scalar_operation,
+        "cpu": parse_cpu_operation,
+        "memory": parse_memory_operation,
         "gpu": parse_scalar_operation,
         "custom": parse_scalar_operation,
     }

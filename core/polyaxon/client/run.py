@@ -370,7 +370,8 @@ class RunClient:
         presets: List[str] = None,
         queue: str = None,
         nocache: bool = None,
-        cache: bool = None,
+        cache: Union[int, str, bool] = None,
+        approved: Union[int, str, bool] = None,
     ) -> V1Run:
         """Creates a new run based on a polyaxonfile.
 
@@ -396,14 +397,21 @@ class RunClient:
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
                  [queue](/docs/core/scheduling-strategies/queues/) to assign the run to.
-            nocache: bool, optional, simple flag to disable
+            nocache: bool, optional, DEPRECATED Please use `cache='f'`
+                 simple flag to disable
                  [cache check](/docs/automation/helpers/cache/).
                  If passed and the Polyaxonfile has cache section,
                  it will be patched with `disabled: true`.
-            cache: bool, optional, simple flag to enable
+            cache: Union[int, str, bool], optional, simple flag to enable/disable
                  [cache check](/docs/automation/helpers/cache/).
-                 If passed and the Polyaxonfile has cache section,
-                 it will be patched with `disabled: false`.
+                 If passed and the Polyaxonfile will be patched with `disabled: true/false`.
+                 e.g. `cache=1`, `cache='yes'`, `cache=False`, `cache='t'`, ...
+            approved: Union[int, str, bool], optional, simple flag to enable/disable
+                 human in the loop validation without changing the polyaxonfile,
+                 similar to `isApproved: true/false`,
+                 [manual approval](/docs/core/scheduling-strategies/manual-approval/).
+                 Can be used with yes/no, y/n, false/true, f/t, 1/0. "
+                 "e.g. `approved=1`, `approved='yes'`, `approved=False`, `approved='t'`, ..."
 
         Returns:
             V1Run, run instance from the response.
@@ -415,6 +423,7 @@ class RunClient:
             queue=queue,
             nocache=nocache,
             cache=cache,
+            approved=approved,
             verbose=False,
             is_cli=False,
         )
@@ -433,7 +442,8 @@ class RunClient:
         presets: List[str] = None,
         queue: str = None,
         nocache: bool = None,
-        cache: bool = None,
+        cache: Union[int, str, bool] = None,
+        approved: Union[int, str, bool] = None,
     ) -> V1Run:
         """Creates a new run from a url containing a Polyaxonfile specification.
 
@@ -458,14 +468,21 @@ class RunClient:
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
                  [queue](/docs/core/scheduling-strategies/queues/) to assign the run to.
-            nocache: bool, optional, simple flag to disable
+            nocache: bool, optional, DEPRECATED Please use `cache='f'`
+                 simple flag to disable
                  [cache check](/docs/automation/helpers/cache/).
                  If passed and the Polyaxonfile has cache section,
                  it will be patched with `disabled: true`.
-            cache: bool, optional, simple flag to enable
+            cache: Union[int, str, bool], optional, simple flag to enable/disable
                  [cache check](/docs/automation/helpers/cache/).
-                 If passed and the Polyaxonfile has cache section,
-                 it will be patched with `disabled: false`.
+                 If passed and the Polyaxonfile will be patched with `disabled: true/false`.
+                 e.g. `cache=1`, `cache='yes'`, `cache=False`, `cache='t'`, ...
+            approved: Union[int, str, bool], optional, simple flag to enable/disable
+                 human in the loop validation without changing the polyaxonfile,
+                 similar to `isApproved: true/false`,
+                 [manual approval](/docs/core/scheduling-strategies/manual-approval/).
+                 Can be used with yes/no, y/n, false/true, f/t, 1/0. "
+                 "e.g. `approved=1`, `approved='yes'`, `approved=False`, `approved='t'`, ..."
 
         Returns:
             V1Run, run instance from the response.
@@ -477,6 +494,7 @@ class RunClient:
             queue=queue,
             nocache=nocache,
             cache=cache,
+            approved=approved,
             verbose=False,
             is_cli=False,
         )
@@ -495,7 +513,8 @@ class RunClient:
         presets: str = None,
         queue: str = None,
         nocache: bool = None,
-        cache: bool = None,
+        cache: Union[int, str, bool] = None,
+        approved: Union[int, str, bool] = None,
     ) -> V1Run:
         """Creates a new run from the hub based on the component name.
 
@@ -519,14 +538,21 @@ class RunClient:
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
                  [queue](/docs/core/scheduling-strategies/queues/) to assign the run to.
-            nocache: bool, optional, simple flag to disable
+            nocache: bool, optional, DEPRECATED Please use `cache='f'`
+                 simple flag to disable
                  [cache check](/docs/automation/helpers/cache/).
                  If passed and the Polyaxonfile has cache section,
                  it will be patched with `disabled: true`.
-            cache: bool, optional, simple flag to enable
+            cache: Union[int, str, bool], optional, simple flag to enable/disable
                  [cache check](/docs/automation/helpers/cache/).
-                 If passed and the Polyaxonfile has cache section,
-                 it will be patched with `disabled: false`.
+                 If passed and the Polyaxonfile will be patched with `disabled: true/false`.
+                 e.g. `cache=1`, `cache='yes'`, `cache=False`, `cache='t'`, ...
+            approved: Union[int, str, bool], optional, simple flag to enable/disable
+                 human in the loop validation without changing the polyaxonfile,
+                 similar to `isApproved: true/false`,
+                 [manual approval](/docs/core/scheduling-strategies/manual-approval/).
+                 Can be used with yes/no, y/n, false/true, f/t, 1/0. "
+                 "e.g. `approved=1`, `approved='yes'`, `approved=False`, `approved='t'`, ..."
 
         Returns:
             V1Run, run instance from the response.
@@ -538,6 +564,7 @@ class RunClient:
             queue=queue,
             nocache=nocache,
             cache=cache,
+            approved=approved,
             verbose=False,
             is_cli=False,
         )

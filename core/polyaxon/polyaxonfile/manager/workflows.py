@@ -68,6 +68,7 @@ def get_ops_from_suggestions(
         op_spec.dependencies = None
         op_spec.trigger = None
         op_spec.build = None
+        op_spec.is_approved = None
         op_spec.skip_on_upstream_skip = None
         op_spec.cache = compiled_operation.cache
         op_spec.queue = compiled_operation.queue

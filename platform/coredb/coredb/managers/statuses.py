@@ -69,12 +69,18 @@ def set_entity_status(entity, condition: V1StatusCondition):
 
 
 def new_status(
-    entity, condition: V1StatusCondition, additional_fields: List[str] = None
+    entity,
+    condition: V1StatusCondition,
+    additional_fields: List[str] = None,
+    force: bool = False,
 ):
     previous_status = entity.status
     if condition.type == V1Statuses.CREATED:
         return previous_status
     if previous_status == V1Statuses.STOPPING and not LifeCycle.is_done(condition.type):
+        return previous_status
+    # Do not override final status
+    if LifeCycle.is_done(previous_status) and not force:
         return previous_status
 
     entity = set_entity_status(entity=entity, condition=condition)
@@ -126,10 +132,16 @@ def bulk_new_run_status(
 
 
 def new_run_status(
-    run: BaseRun, condition: V1StatusCondition, additional_fields: List[str] = None
+    run: BaseRun,
+    condition: V1StatusCondition,
+    additional_fields: List[str] = None,
+    force: bool = False,
 ):
     previous_status = new_status(
-        entity=run, condition=condition, additional_fields=additional_fields
+        entity=run,
+        condition=condition,
+        additional_fields=additional_fields,
+        force=force,
     )
     # Do not audit the new status since it's the same as the previous one
     if (

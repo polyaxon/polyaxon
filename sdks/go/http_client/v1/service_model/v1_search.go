@@ -46,6 +46,9 @@ type V1Search struct {
 	// Optional name
 	Name string `json:"name,omitempty"`
 
+	// Optional search level
+	OrgLevel bool `json:"org_level,omitempty"`
+
 	// Search spec
 	Spec *V1SearchSpec `json:"spec,omitempty"`
 
@@ -59,7 +62,7 @@ type V1Search struct {
 	// UUID
 	UUID string `json:"uuid,omitempty"`
 
-	// Optional dashboard level
+	// Optional search view
 	View *SearchView `json:"view,omitempty"`
 }
 

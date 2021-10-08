@@ -63,7 +63,9 @@ def create_status(view, serializer):
     if validated_data.get("condition"):
         condition = V1StatusCondition.get_condition(**validated_data.get("condition"))
     if condition:
-        new_run_status(run=view.run, condition=condition)
+        new_run_status(
+            run=view.run, condition=condition, force=validated_data.get("force", False)
+        )
 
 
 def stop_run(view, request, *args, **kwargs):

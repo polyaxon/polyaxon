@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **tags** | **list[str]** |  | [optional] 
 **live_state** | **int** |  | [optional] 
 **spec** | [**V1DashboardSpec**](V1DashboardSpec.md) |  | [optional] 
+**org_level** | **bool** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

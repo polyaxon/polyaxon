@@ -241,7 +241,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectDashboardNames"></a>
 # **listProjectDashboardNames**
-> V1ListDashboardsResponse listProjectDashboardNames(owner, name, offset, limit, sort, query, mode, noPage)
+> V1ListDashboardsResponse listProjectDashboardNames(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List project dashboard
 
@@ -273,10 +273,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListDashboardsResponse result = apiInstance.listProjectDashboardNames(owner, name, offset, limit, sort, query, mode, noPage);
+      V1ListDashboardsResponse result = apiInstance.listProjectDashboardNames(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#listProjectDashboardNames");
@@ -299,6 +301,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -326,7 +330,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectDashboards"></a>
 # **listProjectDashboards**
-> V1ListDashboardsResponse listProjectDashboards(owner, name, offset, limit, sort, query, mode, noPage)
+> V1ListDashboardsResponse listProjectDashboards(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
 
 List project dashboards
 
@@ -358,10 +362,12 @@ public class Example {
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
+    Boolean bookmarks = true; // Boolean | Filter by bookmarks.
+    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListDashboardsResponse result = apiInstance.listProjectDashboards(owner, name, offset, limit, sort, query, mode, noPage);
+      V1ListDashboardsResponse result = apiInstance.listProjectDashboards(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#listProjectDashboards");
@@ -384,6 +390,8 @@ Name | Type | Description  | Notes
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
+ **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
+ **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 

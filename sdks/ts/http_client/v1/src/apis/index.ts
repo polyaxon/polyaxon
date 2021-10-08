@@ -28,6 +28,7 @@ export * from './QueuesV1Api';
 export * from './RunsV1Api';
 export * from './SchemasV1Api';
 export * from './SearchesV1Api';
+export * from './TagsV1Api';
 export * from './TeamsV1Api';
 export * from './UsersV1Api';
 export * from './VersionsV1Api';

@@ -500,6 +500,7 @@ class BaseConverter(ConverterAbstract):
         connection_by_names: Dict[str, V1ConnectionType],
         secrets: Optional[Iterable[V1K8sResourceType]],
         config_maps: Optional[Iterable[V1K8sResourceType]],
+        kv_env_vars: List[List],
         default_sa: str = None,
         ports: List[int] = None,
         num_replicas: int = None,
@@ -555,6 +556,7 @@ class BaseConverter(ConverterAbstract):
             secrets=secrets,
             config_maps=config_maps,
             ports=ports,
+            kv_env_vars=kv_env_vars,
         )
 
         labels = self.get_labels(version=pkg.VERSION, labels=environment.labels)

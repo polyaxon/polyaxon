@@ -70,6 +70,7 @@ class OperationSpecification(BaseSpecification):
                 V1IO(
                     name=c_name,
                     to_init=c_io.to_init,
+                    to_env=c_io.to_env,
                     connection=c_io.connection,
                     is_list=is_list,
                 )
