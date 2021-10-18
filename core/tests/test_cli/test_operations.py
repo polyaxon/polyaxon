@@ -26,7 +26,7 @@ from tests.test_cli.utils import BaseCommandTestCase
 class TestCliRuns(BaseCommandTestCase):
     @patch("polyaxon.client.RunClient.list")
     def test_list_runs(self, list_runs):
-        self.runner.invoke(ops, ["-p admin/foo", "ls"])
+        self.runner.invoke(ops, ["-p", "admin/foo", "ls"])
         assert list_runs.call_count == 1
 
     @patch("polyaxon.client.RunClient.refresh_data")

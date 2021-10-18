@@ -38,7 +38,7 @@ class TestCliProject(BaseCommandTestCase):
 
     @patch("polyaxon.client.ProjectClient.refresh_data")
     def test_get_project(self, get_project):
-        self.runner.invoke(project, ["-p admin/foo", "get"])
+        self.runner.invoke(project, ["-p", "admin/foo", "get"])
         assert get_project.call_count == 1
 
     @patch("polyaxon.client.ProjectClient.update")
@@ -46,5 +46,5 @@ class TestCliProject(BaseCommandTestCase):
         self.runner.invoke(project, ["update"])
         assert update_project.call_count == 0
 
-        self.runner.invoke(project, ["-p admin/foo", "update", "--description=foo"])
+        self.runner.invoke(project, ["-p", "admin/foo", "update", "--description=foo"])
         assert update_project.call_count == 1
