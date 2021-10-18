@@ -79,3 +79,18 @@ def slugify(value: str, mark_safe: Callable = None) -> str:
     value = re.sub(r"[^\w\.\s-]", "", value).strip()
     value = re.sub(r"[-\.\s]+", "-", value)
     return mark_safe(value) if mark_safe else value
+
+
+def validate_slug(value: str) -> bool:
+    return value == slugify(value)
+
+
+def to_camel_case(snake_str):
+    parts = iter(snake_str.split("_"))
+    return next(parts) + "".join(i.title() for i in parts)
+
+
+def to_snake_case(camel_str):
+    regex1 = re.compile(r"([A-Z]+)([A-Z][a-z])")
+    regex2 = re.compile(r"([a-z\d])([A-Z])")
+    return regex2.sub(r"\1_\2", regex1.sub(r"\1_\2", camel_str)).lower()

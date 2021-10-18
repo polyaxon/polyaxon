@@ -14,23 +14,65 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import click
-import click_completion
 
 from polyaxon.logger import clean_outputs
+from polyaxon.utils.formatting import Printer
 
 
 @click.command()
-@click.option(
-    "--append/--overwrite", help="Append the completion code to the file", default=None
-)
-@click.argument(
-    "shell",
-    required=False,
-    type=click_completion.DocumentedChoice(click_completion.core.shells),
-)
-@click.argument("path", required=False)
+@click.argument("shell")
 @clean_outputs
-def completion(append, shell, path):
-    """Install the auto-completion for polyaxon-cli"""
-    shell, path = click_completion.core.install(shell=shell, path=path, append=append)
-    click.echo("%s completion installed in %s" % (shell, path))
+def completion(shell):
+    """Show documentation for installing the auto-completion for polyaxon cli.
+
+    Valid options: [bash, zsh, fish]
+
+    \b
+    $ polyaxon completion SHELL
+    """
+
+    if shell == "bash":
+        Printer.print_header(
+            "Please save the following scripts:",
+        )
+        click.echo(
+            "_POLYAXON_COMPLETE=bash_source polyaxon > ~/.polyaxon-complete.bash"
+        )
+        click.echo("_PLX_COMPLETE=bash_source plx > ~/.plx-complete.bash")
+        Printer.print_header(
+            "Add the following lines to your: `~/.bashrc`",
+        )
+        click.echo("# Polyaxon completion")
+        click.echo(". ~/.polyaxon-complete.bash")
+        click.echo(". ~/.plx-complete.bash")
+        Printer.print_header(
+            "Reload your shell.",
+        )
+    elif shell == "zsh":
+        Printer.print_header(
+            "Please save the following scripts:",
+        )
+        click.echo("_POLYAXON_COMPLETE=zsh_source polyaxon > ~/.polyaxon-complete.zsh")
+        click.echo("_PLX_COMPLETE=zsh_source plx > ~/.plx-complete.zsh")
+        Printer.print_header(
+            "Add the following lines to your: `~/.zshrc`",
+        )
+        click.echo("# Polyaxon completion")
+        click.echo(". ~/.polyaxon-complete.zsh")
+        click.echo(". ~/.plx-complete.zsh")
+        Printer.print_header(
+            "Reload your shell.",
+        )
+    elif shell == "fish":
+        Printer.print_header(
+            "Please save the following scripts under `~/.config/fish/completions`:",
+        )
+        click.echo(
+            "_POLYAXON_COMPLETE=fish_source polyaxon > ~/.config/fish/completions/polyaxon-complete.fish"  # noqa
+        )
+        click.echo(
+            "_PLX_COMPLETE=fish_source plx > ~/.config/fish/completions/plx-complete.fish"
+        )
+
+    click.echo("Shell {} is not supported.".format(shell))
+    raise click.exceptions.Exit(1)

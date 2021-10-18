@@ -20,6 +20,7 @@ from polyaxon.constants.globals import DEFAULT
 from polyaxon.env_vars.getters.user import get_local_owner
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.utils.formatting import Printer
+from polyaxon.utils.string_utils import validate_slug
 
 
 def get_entity_full_name(owner: str = None, entity: str = None) -> str:
@@ -59,7 +60,7 @@ def resolve_entity_info(entity: str, entity_name: str, is_cli: bool = False):
         else:
             raise PolyaxonClientException(message)
 
-    owner, entity_name = get_entity_info(entity)
+    owner, entity_value = get_entity_info(entity)
 
     if not owner:
         owner = get_local_owner(is_cli=is_cli)
@@ -68,11 +69,22 @@ def resolve_entity_info(entity: str, entity_name: str, is_cli: bool = False):
         owner = DEFAULT
     owner = owner or settings.AUTH_CONFIG.username
 
-    if not all([owner, entity_name]):
+    if not all([owner, entity_value]):
         message = "Please provide a valid {}.".format(entity_name)
         if is_cli:
             Printer.print_error(message)
             sys.exit(1)
         else:
             raise PolyaxonClientException(message)
-    return owner, entity_name
+    if owner and not validate_slug(owner):
+        raise PolyaxonSchemaError(
+            "Received an invalid owner, received the value: `{}`".format(owner)
+        )
+
+    if entity_value and not validate_slug(entity_value):
+        raise PolyaxonSchemaError(
+            "Received an invalid {}, received the value: `{}`".format(
+                entity_name, entity_value
+            )
+        )
+    return owner, entity_value

@@ -20,10 +20,10 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
 class IntervalsSchema(BaseCamelSchema):
-    runs_scheduler = fields.Int(default=None)
-    operations_default_retry_delay = fields.Int(default=None)
-    operations_max_retry_delay = fields.Int(default=None)
-    compatibility_check = fields.Int(default=None)
+    runs_scheduler = fields.Int(allow_none=True)
+    operations_default_retry_delay = fields.Int(allow_none=True)
+    operations_max_retry_delay = fields.Int(allow_none=True)
+    compatibility_check = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():

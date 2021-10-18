@@ -19,10 +19,11 @@ import sys
 from polyaxon.constants.globals import DEFAULT
 from polyaxon.env_vars.getters import get_entity_info
 from polyaxon.env_vars.getters.user import get_local_owner
-from polyaxon.exceptions import PolyaxonClientException
+from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.utils.cache import get_local_project
 from polyaxon.utils.formatting import Printer
+from polyaxon.utils.string_utils import validate_slug
 
 
 def get_project_error_message(owner, project):
@@ -73,4 +74,20 @@ def get_project_or_local(project=None, is_cli: bool = False):
             sys.exit(1)
         else:
             raise PolyaxonClientException(error_message)
+
+    if owner and not validate_slug(owner):
+        error_message = "Received an invalid owner, received the value: `{}`".format(owner)
+        if is_cli:
+            Printer.print_error(error_message)
+            sys.exit(1)
+        else:
+            raise PolyaxonSchemaError(error_message)
+
+    if project_name and not validate_slug(project_name):
+        error_message = "Received an invalid project, received the value: `{}`".format(project_name)
+        if is_cli:
+            Printer.print_error(error_message)
+            sys.exit(1)
+        else:
+            raise PolyaxonSchemaError(error_message)
     return owner, project_name

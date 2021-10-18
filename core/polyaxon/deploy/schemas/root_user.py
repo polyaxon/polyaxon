@@ -20,10 +20,8 @@ from polyaxon.schemas.base import NAME_REGEX, BaseCamelSchema, BaseConfig
 
 
 class RootUserSchema(BaseCamelSchema):
-    username = fields.Str(
-        allow_none=True, default="root", validate=validate.Regexp(regex=NAME_REGEX)
-    )
-    password = fields.Str(allow_none=True, default="rootpassword")
+    username = fields.Str(allow_none=True, validate=validate.Regexp(regex=NAME_REGEX))
+    password = fields.Str(allow_none=True)
     email = fields.Email(allow_none=True)
 
     @staticmethod

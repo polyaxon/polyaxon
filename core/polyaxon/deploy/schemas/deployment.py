@@ -202,7 +202,6 @@ class DeploymentSchema(BaseCamelSchema):
     deployment_chart = fields.Str(
         allow_none=True,
         validate=validate.OneOf(DeploymentCharts.VALUES),
-        default=DeploymentCharts.PLATFORM,
     )
     deployment_version = fields.Str(allow_none=True)
     release_name = fields.Str(allow_none=True)

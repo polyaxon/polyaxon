@@ -68,12 +68,11 @@ setup(
         "pytorch",
     ],
     install_requires=[
-        "click<8.0",
-        "click-completion<0.6",
+        "click>=7.1.1,<9.0.0",
         "tabulate<0.9.0",
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
-        "marshmallow<3.12.0",
+        "marshmallow<3.15.0",
         "polyaxon-sdk==1.11.3",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
@@ -92,7 +91,7 @@ setup(
         "docker": ["docker"],
         "git": ["gitpython"],
         "numpy": ["numpy"],
-        "polytune": ["scikit-learn==0.24.2", "hyperopt==0.2.5"],
+        "polytune": ["scikit-learn==1.0", "hyperopt==0.2.5"],
         "polyboard": [
             "Pillow",
             "matplotlib<3.3.3",

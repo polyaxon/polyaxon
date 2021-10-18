@@ -44,7 +44,7 @@ def create_auth_context():
         except PolyaxonClientException as e:
             retry += 1
             print("Could not establish connection, retrying ...")
-            exp = "Polyaxon auth initialized failed authenticating the operation: {}\n{}".format(
+            exp = "Polyaxon auth initializer failed authenticating the operation: {}\n{}".format(
                 repr(e), traceback.format_exc()
             )
             time.sleep(retry)

@@ -29,8 +29,8 @@ from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.config_reader.utils import deep_update
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.patch_strategy import V1PatchStrategy
-from polyaxon.schemas.utils import to_camel_case
 from polyaxon.utils.humanize import humanize_timesince
+from polyaxon.utils.string_utils import to_camel_case
 from polyaxon.utils.tz_utils import get_timezone
 from polyaxon.utils.units import to_percentage, to_unit_memory
 

@@ -38,10 +38,10 @@ class TestCliHub(BaseCommandTestCase):
 
     @patch("polyaxon_sdk.ComponentHubV1Api.get_component_hub")
     def test_get_hub(self, get_hub):
-        self.runner.invoke(hub, ["get", "-c=admin/foo"])
+        self.runner.invoke(hub, ["get", "-c", "admin/foo"])
         assert get_hub.call_count == 1
 
     @patch("polyaxon_sdk.ComponentHubV1Api.patch_component_hub")
     def test_update_hub(self, update_hub):
-        self.runner.invoke(hub, ["update", "-c=admin/foo", "--description=foo"])
+        self.runner.invoke(hub, ["update", "-c", "admin/foo", "--description=foo"])
         assert update_hub.call_count == 1

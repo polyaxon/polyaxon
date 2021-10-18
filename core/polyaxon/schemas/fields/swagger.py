@@ -18,7 +18,7 @@ from collections.abc import Mapping
 
 from marshmallow import ValidationError, fields
 
-from polyaxon.schemas.utils import to_camel_case, to_snake_case
+from polyaxon.utils.string_utils import to_camel_case, to_snake_case
 
 
 class SwaggerField(fields.Field):

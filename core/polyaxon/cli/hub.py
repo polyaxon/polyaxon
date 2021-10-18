@@ -89,7 +89,7 @@ def get_component_version_details(response):
         )
 
 
-def get_info(component: str = None, version: str = None):
+def get_info(component: str = None, version: str = None, use_local_owner: bool = False):
     if not any([component, version]):
         Printer.print_error(
             "A component or a component version is required.", sys_exit=True
@@ -110,7 +110,9 @@ def get_info(component: str = None, version: str = None):
         is_version = True
 
     try:
-        owner, component_hub, component_version = get_component_info(entity)
+        owner, component_hub, component_version = get_component_info(
+            entity, use_local_owner
+        )
         return owner, component_hub, component_version, is_version
     except PolyaxonException as e:
         handle_cli_error(
@@ -155,7 +157,7 @@ def create(name, description, tags, public):
             command_help="hub create",
             sys_exit=True,
         )
-    owner, hub_name, _, _ = get_info(name, None)
+    owner, hub_name, _, _ = get_info(name, None, True)
 
     tags = validate_tags(tags)
 
@@ -222,7 +224,7 @@ def push(polyaxonfile, name, description, tags):
             command_help="hub push",
             sys_exit=True,
         )
-    owner, hub_name, version, is_version = get_info(None, name)
+    owner, hub_name, version, is_version = get_info(None, name, True)
     tags = validate_tags(tags)
 
     if not polyaxonfile or not os.path.isfile(polyaxonfile):
@@ -471,7 +473,9 @@ def get(component, version):
 @clean_outputs
 def delete(component, version):
     """Delete a component hub or a component version."""
-    owner, component_hub, component_version, is_version = get_info(component, version)
+    owner, component_hub, component_version, is_version = get_info(
+        component, version, True
+    )
     full_entity = (
         "{}/{}:{}".format(owner, component_hub, component_version)
         if is_version
@@ -543,7 +547,9 @@ def update(component, version, name, description, tags, private):
     \b
     $ polyaxon hub update --tags="foo, bar"
     """
-    owner, component_hub, component_version, is_version = get_info(component, version)
+    owner, component_hub, component_version, is_version = get_info(
+        component, version, True
+    )
     full_entity = (
         "{}/{}:{}".format(owner, component_hub, component_version)
         if is_version

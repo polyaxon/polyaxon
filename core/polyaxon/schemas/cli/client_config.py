@@ -77,9 +77,7 @@ class ClientSchema(BaseSchema):
     tracking_timeout = fields.Float(
         allow_none=True, data_key=POLYAXON_KEYS_TRACKING_TIMEOUT
     )
-    timezone = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_TIME_ZONE, default="UTC"
-    )
+    timezone = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_TIME_ZONE)
     watch_interval = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_WATCH_INTERVAL)
     interval = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_INTERVAL)
     verify_ssl = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_VERIFY_SSL)

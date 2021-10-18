@@ -17,7 +17,6 @@
 import os
 
 import click
-import click_completion
 
 from polyaxon import settings
 from polyaxon.cli.admin import admin
@@ -40,7 +39,6 @@ from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.formatting import Printer
 
 DOCS_GEN = to_bool(os.environ.get("POLYAXON_DOCS_GEN", False))
-click_completion.init()
 
 
 @click.group()

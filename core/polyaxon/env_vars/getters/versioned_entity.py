@@ -64,9 +64,21 @@ def get_versioned_entity_info(
     return owner, entity_namespace, version
 
 
-def get_component_info(hub: str) -> Tuple[str, str, str]:
+def get_component_info(hub: str, use_local_owner: bool = False) -> Tuple[str, str, str]:
+    from polyaxon import settings
+
+    if use_local_owner:
+        try:
+            owner = get_local_owner()
+        except PolyaxonClientException:
+            owner = None
+
+        if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
+            owner = DEFAULT
+    else:
+        owner = DEFAULT_HUB
     return get_versioned_entity_info(
-        entity=hub, entity_name="component", default_owner=DEFAULT_HUB
+        entity=hub, entity_name="component", default_owner=owner
     )
 
 
@@ -81,7 +93,10 @@ def get_model_info(entity: str, entity_name: str, is_cli: bool = False):
         else:
             raise PolyaxonClientException(message)
 
-    owner = get_local_owner(is_cli=is_cli)
+    try:
+        owner = get_local_owner()
+    except PolyaxonClientException:
+        owner = None
 
     if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
         owner = DEFAULT
