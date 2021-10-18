@@ -4,7 +4,7 @@ docker
 GitPython<3.2.0
 
 numpy
-scikit-learn==1.0
+scikit-learn
 hyperopt
 nbconvert>=5.4,<6.0.0 # pin to fix #958
 gcsfs
