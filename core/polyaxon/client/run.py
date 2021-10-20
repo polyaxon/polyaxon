@@ -1713,9 +1713,9 @@ class RunClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                 [Project PQL](/docs/core/query-language/runs/#query)
+                 [Run PQL](/docs/core/query-language/runs/#query)
             sort: str, optional, fields to order by, please refer to
-                 [Project PQL](/docs/core/query-language/runs/#sort)
+                 [Run PQL](/docs/core/query-language/runs/#sort)
             limit: int, optional, limit of runs to return.
             offset: int, optional, offset pages to paginate runs.
 
