@@ -59,6 +59,10 @@ def file_modified_since(filepath: str, last_time: datetime) -> bool:
     return path_last_modified(filepath) > last_time
 
 
+def as_timezone(value, timezone):
+    return value.astimezone(pytz.timezone(timezone))
+
+
 class DateTimeFormatter:
     """
     The `DateTimeFormatter` class implements a utility used to create
@@ -96,7 +100,7 @@ class DateTimeFormatter:
         return timestamp.strftime(cls.DATETIME_FORMAT)
 
     @classmethod
-    def extract_date(cls, date_str, timezone):
+    def extract_date(cls, date_str, timezone, force_tz: bool = False):
         """
         Tries to extract a `datetime` object from the given string, expecting
         date information only.
@@ -114,19 +118,23 @@ class DateTimeFormatter:
             )
 
         try:
-            return cls.extract_iso_timestamp(date_str, timezone=timezone)
+            return cls.extract_iso_timestamp(
+                date_str, timezone=timezone, force_tz=force_tz
+            )
         except (TypeError, ValueError, AttributeError):
             pass
 
         try:
-            return cls.extract_timestamp(date_str, cls.DATE_FORMAT, timezone=timezone)
+            return cls.extract_timestamp(
+                date_str, cls.DATE_FORMAT, timezone=timezone, force_tz=force_tz
+            )
         except (TypeError, ValueError):
             raise PolyaxonDateTimeFormatterException(
                 "Invalid date string {}.".format(date_str)
             )
 
     @classmethod
-    def extract_datetime(cls, datetime_str, timezone):
+    def extract_datetime(cls, datetime_str, timezone, force_tz: bool = False):
         """
         Tries to extract a `datetime` object from the given string, including
         time information.
@@ -142,13 +150,15 @@ class DateTimeFormatter:
             )
 
         try:
-            return cls.extract_iso_timestamp(datetime_str, timezone=timezone)
+            return cls.extract_iso_timestamp(
+                datetime_str, timezone=timezone, force_tz=force_tz
+            )
         except (TypeError, ValueError, AttributeError):
             pass
 
         try:
             return cls.extract_timestamp(
-                datetime_str, cls.DATETIME_FORMAT, timezone=timezone
+                datetime_str, cls.DATETIME_FORMAT, timezone=timezone, force_tz=force_tz
             )
         except (TypeError, ValueError):
             raise PolyaxonDateTimeFormatterException(
@@ -156,7 +166,7 @@ class DateTimeFormatter:
             )
 
     @classmethod
-    def extract_datetime_hour(cls, datetime_str, timezone):
+    def extract_datetime_hour(cls, datetime_str, timezone, force_tz: bool = False):
         """
         Tries to extract a `datetime` object from the given string, including only hours.
 
@@ -171,13 +181,18 @@ class DateTimeFormatter:
             )
 
         try:
-            return cls.extract_iso_timestamp(datetime_str, timezone=timezone)
+            return cls.extract_iso_timestamp(
+                datetime_str, timezone=timezone, force_tz=force_tz
+            )
         except (TypeError, ValueError, AttributeError):
             pass
 
         try:
             return cls.extract_timestamp(
-                datetime_str, cls.DATETIME_HOUR_FORMAT, timezone=timezone
+                datetime_str,
+                cls.DATETIME_HOUR_FORMAT,
+                timezone=timezone,
+                force_tz=force_tz,
             )
         except (TypeError, ValueError):
             raise PolyaxonDateTimeFormatterException(
@@ -220,14 +235,18 @@ class DateTimeFormatter:
         return cls.extract_date(timestamp_str, timezone=timezone)
 
     @staticmethod
-    def extract_iso_timestamp(timestamp_str, timezone):
+    def extract_iso_timestamp(timestamp_str, timezone, force_tz: bool = False):
         timestamp = datetime.fromisoformat(timestamp_str)
         if not timestamp.tzinfo and timezone:
             timestamp = timestamp.replace(tzinfo=pytz.timezone(timezone))
+        if force_tz:
+            timestamp = as_timezone(timestamp, timezone)
         return timestamp
 
     @staticmethod
-    def extract_timestamp(timestamp_str, dt_format, timezone):
+    def extract_timestamp(timestamp_str, dt_format, timezone, force_tz: bool = False):
         timestamp = datetime.strptime(timestamp_str, dt_format)
         timestamp = timestamp.replace(tzinfo=pytz.timezone(timezone))
+        if force_tz:
+            timestamp = as_timezone(timestamp, timezone)
         return timestamp

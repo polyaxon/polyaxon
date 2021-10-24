@@ -249,7 +249,11 @@ class TestQueryManager(BaseTestQuery):
             Run.objects.filter(
                 Q(updated_at__lte="2020-10-10"),
                 Q(started_at__gt="2010-10-10"),
-                ~Q(started_at="2016-10-01 10:10"),
+                ~Q(
+                    Q(started_at__date="2016-10-01"),
+                    Q(started_at__hour="10"),
+                    Q(started_at__minute="10"),
+                ),
             ).query
         )
         assert str(result_queryset.query) == expected_query

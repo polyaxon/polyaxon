@@ -292,8 +292,24 @@ class DateTimeCondition(ComparisonCondition):
                 params,
                 dt_format=DateTimeFormatter.DATE_FORMAT,
                 timezone=timezone,
+                force_tz=True,
             )
             return query_backend(**{f"{name}__date": params})
+        except (TypeError, ValueError):
+            pass
+        try:
+            # Extract full datetime
+            params_value = DateTimeFormatter.extract_datetime(
+                params,
+                timezone=timezone,
+                force_tz=True,
+            )
+            filters = {
+                f"{name}__date": params_value.date(),
+                f"{name}__hour": params_value.hour,
+                f"{name}__minute": params_value.minute,
+            }
+            return query_backend(**filters)
         except (TypeError, ValueError):
             pass
         return query_backend(**{name: params})

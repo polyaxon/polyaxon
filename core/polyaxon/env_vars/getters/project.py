@@ -76,7 +76,9 @@ def get_project_or_local(project=None, is_cli: bool = False):
             raise PolyaxonClientException(error_message)
 
     if owner and not validate_slug(owner):
-        error_message = "Received an invalid owner, received the value: `{}`".format(owner)
+        error_message = "Received an invalid owner, received the value: `{}`".format(
+            owner
+        )
         if is_cli:
             Printer.print_error(error_message)
             sys.exit(1)
@@ -84,7 +86,9 @@ def get_project_or_local(project=None, is_cli: bool = False):
             raise PolyaxonSchemaError(error_message)
 
     if project_name and not validate_slug(project_name):
-        error_message = "Received an invalid project, received the value: `{}`".format(project_name)
+        error_message = "Received an invalid project, received the value: `{}`".format(
+            project_name
+        )
         if is_cli:
             Printer.print_error(error_message)
             sys.exit(1)
