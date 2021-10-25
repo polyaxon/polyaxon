@@ -23,6 +23,41 @@ Polyaxon provides a flag `isApproved: false` to perform human in the loop patter
  
 In all these cases, if a run is decorated with this flag, the operation will be waiting and can only be resumed by an individual or event, either from the UI, the CLI, or the API.
 
+## Using the CLI
+
+You can use the CLI to automatically add or override the `isApproved` flag:
+
+```bash
+polyaxon run ... --approved=f
+``` 
+or
+
+```bash
+polyaxon run ... --approved=0
+``` 
+or
+```bash
+polyaxon run ... --approved=false
+``` 
+
+This is similar to `isApproved: false` without having to change the polyaxonfile.
+
+If a polyaxonfile has already the section `isApproved: false` defined and you need to disable the behavior for a specific run, you can use the CLI without changing the file:
+
+
+```bash
+polyaxon run ... --approved=y
+``` 
+or
+
+```bash
+polyaxon run ... --approved=1
+``` 
+or
+```bash
+polyaxon run ... --approved=true
+``` 
+
 ## Suspending a pipeline
 
 If an operation is defined in the context of a DAG and is decorated with `isApproved: false`, 
