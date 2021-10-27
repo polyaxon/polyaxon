@@ -50,7 +50,11 @@ def get_fxt_job_with_inputs():
             "tags": ["tag1", "tag2"],
             "run": {
                 "kind": V1RunKind.JOB,
-                "container": {"image": "{{ image }}"},
+                "container": {
+                    "image": "{{ image }}",
+                    "command": ["foo"],
+                    "args": ["foo"],
+                },
                 "init": [{"connection": "foo", "git": {"revision": "dev"}}],
             },
         },

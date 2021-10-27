@@ -25,7 +25,7 @@ from coredb.factories.users import UserFactory
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS, META_UPLOAD_ARTIFACTS
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
-from polyaxon.polyflow import V1CloningKind
+from polyaxon.polyflow import V1CloningKind, V1CompiledOperation
 from polycommon.events.registry import run as run_events
 from polycommon.test_cases.fixtures import get_fxt_job_with_inputs
 
@@ -229,6 +229,7 @@ class TestRunManager(TestCase):
         assert run.cloning_kind == V1CloningKind.RESTART
         assert run.original == self.run
 
+        # Test restart with updated info
         run = operations.restart_run(
             run=self.run,
             user_id=self.user.id,
@@ -248,6 +249,35 @@ class TestRunManager(TestCase):
         assert run.cloning_kind == V1CloningKind.RESTART
         assert run.original == self.run
         assert run.meta_info == {}
+
+        # Restart with patch strategy
+        job = V1CompiledOperation.read(self.run.content)
+        assert job.run.container.command == ["foo"]
+        assert job.run.container.args == ["foo"]
+        run = operations.restart_run(
+            run=self.run,
+            user_id=self.user.id,
+            name="new-name",
+            description="new-description",
+            content={
+                "patchStrategy": "replace",
+                "runPatch": {"container": {"command": ["bar"], "args": ["bar"]}},
+            },
+            readme="new-readme",
+        )
+        assert run.user == self.user
+        assert run.project == self.project
+        assert run.name == "new-name"
+        assert run.description == "new-description"
+        assert run.content != self.run.content
+        assert run.raw_content == self.run.raw_content
+        assert run.readme == "new-readme"
+        assert set(run.tags) == {"tag1", "tag2"}
+        assert run.cloning_kind == V1CloningKind.RESTART
+        assert run.original == self.run
+        job = V1CompiledOperation.read(run.content)
+        assert job.run.container.command == ["bar"]
+        assert job.run.container.args == ["bar"]
 
         # Restart with upload
         self.run.meta_info[META_UPLOAD_ARTIFACTS] = "foo"

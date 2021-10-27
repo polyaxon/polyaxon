@@ -201,6 +201,7 @@ class OperationsService(Service):
         description: str = None,
         tags: str = None,
         override: Union[str, Dict] = None,
+        use_override_patch_strategy: bool = False,
         params: Dict = None,
         readme: str = None,
         original_id: int = None,
@@ -216,7 +217,9 @@ class OperationsService(Service):
         if op_spec:
             if not compiled_operation or override:
                 compiled_operation = OperationSpecification.compile_operation(
-                    op_spec, override=override
+                    op_spec,
+                    override=override,
+                    use_override_patch_strategy=use_override_patch_strategy,
                 )
             params = op_spec.params
 
@@ -358,6 +361,7 @@ class OperationsService(Service):
             override=content,
             supported_kinds=supported_kinds,
             cloning_kind=V1CloningKind.RESTART,  # To clean the build if any
+            use_override_patch_strategy=True,
             **kwargs,
         ).instance
 
@@ -433,6 +437,7 @@ class OperationsService(Service):
             supported_kinds=supported_kinds,
             supported_owners=supported_owners,
             meta_info=meta_info,
+            use_override_patch_strategy=True,
             **kwargs,
         ).instance
         instance.save()

@@ -40,10 +40,17 @@ class OperationSpecification(BaseSpecification):
 
     @classmethod
     def compile_operation(
-        cls, config: V1Operation, override: Dict = None
+        cls,
+        config: V1Operation,
+        override: Dict = None,
+        use_override_patch_strategy: bool = False,
     ) -> V1CompiledOperation:
+        preset_patch_strategy = None
         if override:
             preset = OperationSpecification.read(override, is_preset=True)
+            if use_override_patch_strategy and preset.patch_strategy:
+                preset_patch_strategy = preset.patch_strategy
+
             config = config.patch(preset, preset.patch_strategy)
         # Patch run
         component = config.component  # type: V1Component
@@ -55,9 +62,14 @@ class OperationSpecification(BaseSpecification):
                 "before to calling this operation."
             )
         if config.run_patch:
+            patch_strategy = (
+                preset_patch_strategy
+                if use_override_patch_strategy and preset_patch_strategy is not None
+                else config.patch_strategy
+            )
             component.run = component.run.patch(
                 validate_run_patch(config.run_patch, component.run.kind),
-                strategy=config.patch_strategy,
+                strategy=patch_strategy,
             )
 
         contexts = []
