@@ -1,11 +1,11 @@
 - groups:
   - group: V1
     items:
-    - title: V1.13 [Roadmap]
+    - title: V1.13
       link: /docs/releases/1-13/
-    - title: V1.12 [WIP]
+    - title: V1.12 [Latest]
       link: /docs/releases/1-12/
-    - title: V1.11 [Stable]
+    - title: V1.11
       link: /docs/releases/1-11/
     - title: V1.10
       link: /docs/releases/1-10/
