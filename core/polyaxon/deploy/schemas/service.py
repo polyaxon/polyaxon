@@ -197,7 +197,6 @@ class AgentServiceConfig(Service):
 
 class OperatorServiceSchema(ServiceSchema):
     skip_crd = fields.Bool(allow_none=True, data_key="skipCRD")
-    use_crd_v1beta1 = fields.Bool(allow_none=True, data_key="useCRDV1Beta1")
 
     @staticmethod
     def schema_config():
@@ -206,7 +205,7 @@ class OperatorServiceSchema(ServiceSchema):
 
 class OperatorServiceConfig(Service):
     SCHEMA = OperatorServiceSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["skipCRD", "useCRDV1Beta1"]
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["skipCRD"]
 
     def __init__(
         self,
@@ -218,7 +217,6 @@ class OperatorServiceConfig(Service):
         concurrency=None,
         resources=None,
         skip_crd=None,
-        use_crd_v1beta1=None,
     ):
         super().__init__(
             enabled=enabled,
@@ -230,7 +228,6 @@ class OperatorServiceConfig(Service):
             resources=resources,
         )
         self.skip_crd = skip_crd
-        self.use_crd_v1beta1 = use_crd_v1beta1
 
 
 class ApiServiceSchema(ServiceSchema):

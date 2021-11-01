@@ -123,6 +123,8 @@ func (m *V1Spark) validateDeployMode(formats strfmt.Registry) error {
 		if err := m.DeployMode.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("deployMode")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deployMode")
 			}
 			return err
 		}
@@ -140,6 +142,8 @@ func (m *V1Spark) validateDriver(formats strfmt.Registry) error {
 		if err := m.Driver.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("driver")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("driver")
 			}
 			return err
 		}
@@ -157,6 +161,8 @@ func (m *V1Spark) validateExecutor(formats strfmt.Registry) error {
 		if err := m.Executor.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("executor")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("executor")
 			}
 			return err
 		}
@@ -174,6 +180,8 @@ func (m *V1Spark) validateType(formats strfmt.Registry) error {
 		if err := m.Type.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("type")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("type")
 			}
 			return err
 		}
@@ -214,6 +222,8 @@ func (m *V1Spark) contextValidateDeployMode(ctx context.Context, formats strfmt.
 		if err := m.DeployMode.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("deployMode")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deployMode")
 			}
 			return err
 		}
@@ -228,6 +238,8 @@ func (m *V1Spark) contextValidateDriver(ctx context.Context, formats strfmt.Regi
 		if err := m.Driver.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("driver")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("driver")
 			}
 			return err
 		}
@@ -242,6 +254,8 @@ func (m *V1Spark) contextValidateExecutor(ctx context.Context, formats strfmt.Re
 		if err := m.Executor.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("executor")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("executor")
 			}
 			return err
 		}
@@ -256,6 +270,8 @@ func (m *V1Spark) contextValidateType(ctx context.Context, formats strfmt.Regist
 		if err := m.Type.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("type")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("type")
 			}
 			return err
 		}

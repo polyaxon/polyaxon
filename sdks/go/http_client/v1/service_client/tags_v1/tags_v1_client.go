@@ -112,7 +112,7 @@ func (a *Client) DeleteTag(params *DeleteTagParams, authInfo runtime.ClientAuthI
 	op := &runtime.ClientOperation{
 		ID:                 "DeleteTag",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/orgs/{owner}/tags/{name}",
+		PathPattern:        "/api/v1/orgs/{owner}/tags/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -152,7 +152,7 @@ func (a *Client) GetTag(params *GetTagParams, authInfo runtime.ClientAuthInfoWri
 	op := &runtime.ClientOperation{
 		ID:                 "GetTag",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/tags/{name}",
+		PathPattern:        "/api/v1/orgs/{owner}/tags/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -272,7 +272,7 @@ func (a *Client) PatchTag(params *PatchTagParams, authInfo runtime.ClientAuthInf
 	op := &runtime.ClientOperation{
 		ID:                 "PatchTag",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/orgs/{owner}/tags/{tag.name}",
+		PathPattern:        "/api/v1/orgs/{owner}/tags/{tag.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -352,7 +352,7 @@ func (a *Client) UpdateTag(params *UpdateTagParams, authInfo runtime.ClientAuthI
 	op := &runtime.ClientOperation{
 		ID:                 "UpdateTag",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/orgs/{owner}/tags/{tag.name}",
+		PathPattern:        "/api/v1/orgs/{owner}/tags/{tag.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

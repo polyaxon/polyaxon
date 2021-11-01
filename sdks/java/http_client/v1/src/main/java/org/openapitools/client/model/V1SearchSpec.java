@@ -69,10 +69,6 @@ public class V1SearchSpec {
   @SerializedName(SERIALIZED_NAME_COLUMNS)
   private String columns;
 
-  public static final String SERIALIZED_NAME_PINS = "pins";
-  @SerializedName(SERIALIZED_NAME_PINS)
-  private String pins;
-
   public static final String SERIALIZED_NAME_LAYOUT = "layout";
   @SerializedName(SERIALIZED_NAME_LAYOUT)
   private String layout;
@@ -80,6 +76,14 @@ public class V1SearchSpec {
   public static final String SERIALIZED_NAME_SECTIONS = "sections";
   @SerializedName(SERIALIZED_NAME_SECTIONS)
   private String sections;
+
+  public static final String SERIALIZED_NAME_COMPARES = "compares";
+  @SerializedName(SERIALIZED_NAME_COMPARES)
+  private String compares;
+
+  public static final String SERIALIZED_NAME_HEAT = "heat";
+  @SerializedName(SERIALIZED_NAME_HEAT)
+  private String heat;
 
   public static final String SERIALIZED_NAME_EVENTS = "events";
   @SerializedName(SERIALIZED_NAME_EVENTS)
@@ -236,29 +240,6 @@ public class V1SearchSpec {
   }
 
 
-  public V1SearchSpec pins(String pins) {
-    
-    this.pins = pins;
-    return this;
-  }
-
-   /**
-   * Get pins
-   * @return pins
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getPins() {
-    return pins;
-  }
-
-
-  public void setPins(String pins) {
-    this.pins = pins;
-  }
-
-
   public V1SearchSpec layout(String layout) {
     
     this.layout = layout;
@@ -302,6 +283,52 @@ public class V1SearchSpec {
 
   public void setSections(String sections) {
     this.sections = sections;
+  }
+
+
+  public V1SearchSpec compares(String compares) {
+    
+    this.compares = compares;
+    return this;
+  }
+
+   /**
+   * Get compares
+   * @return compares
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getCompares() {
+    return compares;
+  }
+
+
+  public void setCompares(String compares) {
+    this.compares = compares;
+  }
+
+
+  public V1SearchSpec heat(String heat) {
+    
+    this.heat = heat;
+    return this;
+  }
+
+   /**
+   * Get heat
+   * @return heat
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getHeat() {
+    return heat;
+  }
+
+
+  public void setHeat(String heat) {
+    this.heat = heat;
   }
 
 
@@ -412,9 +439,10 @@ public class V1SearchSpec {
         Objects.equals(this.offset, v1SearchSpec.offset) &&
         Objects.equals(this.groupby, v1SearchSpec.groupby) &&
         Objects.equals(this.columns, v1SearchSpec.columns) &&
-        Objects.equals(this.pins, v1SearchSpec.pins) &&
         Objects.equals(this.layout, v1SearchSpec.layout) &&
         Objects.equals(this.sections, v1SearchSpec.sections) &&
+        Objects.equals(this.compares, v1SearchSpec.compares) &&
+        Objects.equals(this.heat, v1SearchSpec.heat) &&
         Objects.equals(this.events, v1SearchSpec.events) &&
         Objects.equals(this.histograms, v1SearchSpec.histograms) &&
         Objects.equals(this.trends, v1SearchSpec.trends) &&
@@ -423,7 +451,7 @@ public class V1SearchSpec {
 
   @Override
   public int hashCode() {
-    return Objects.hash(query, sort, limit, offset, groupby, columns, pins, layout, sections, events, histograms, trends, analytics);
+    return Objects.hash(query, sort, limit, offset, groupby, columns, layout, sections, compares, heat, events, histograms, trends, analytics);
   }
 
 
@@ -437,9 +465,10 @@ public class V1SearchSpec {
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
     sb.append("    groupby: ").append(toIndentedString(groupby)).append("\n");
     sb.append("    columns: ").append(toIndentedString(columns)).append("\n");
-    sb.append("    pins: ").append(toIndentedString(pins)).append("\n");
     sb.append("    layout: ").append(toIndentedString(layout)).append("\n");
     sb.append("    sections: ").append(toIndentedString(sections)).append("\n");
+    sb.append("    compares: ").append(toIndentedString(compares)).append("\n");
+    sb.append("    heat: ").append(toIndentedString(heat)).append("\n");
     sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("    histograms: ").append(toIndentedString(histograms)).append("\n");
     sb.append("    trends: ").append(toIndentedString(trends)).append("\n");

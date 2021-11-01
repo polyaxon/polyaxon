@@ -42,7 +42,7 @@ class TestEventsSummaries(BaseTestCase):
         assert exit_mock.call_count == 1
 
     def test_metrics_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="metric",
             last_check=None,
@@ -66,7 +66,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {"metric_events": 0.3}
 
     def test_images_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="image",
             last_check=None,
@@ -90,7 +90,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_histograms_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="histogram",
             last_check=None,
@@ -116,7 +116,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_videos_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="video",
             last_check=None,
@@ -140,7 +140,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_audios_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="audio",
             last_check=None,
@@ -164,7 +164,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_htmls_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="html",
             last_check=None,
@@ -188,7 +188,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_charts_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="chart",
             last_check=None,
@@ -212,7 +212,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_curves_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="curve",
             last_check=None,
@@ -236,7 +236,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_artifacts_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="artifact",
             last_check=None,
@@ -262,7 +262,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_models_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="model",
             last_check=None,
@@ -302,7 +302,7 @@ class TestEventsSummaries(BaseTestCase):
         assert last_values == {}
 
     def test_dataframes_summaries(self):
-        summaries, last_values = self.run._sync_events_summaries(
+        summaries, last_values = self.run._collect_events_summaries(
             events_path="tests/fixtures/polyboard",
             events_kind="dataframe",
             last_check=None,

@@ -115,10 +115,9 @@ public class DashboardsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListDashboardsResponse response = api.listDashboardNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListDashboardsResponse response = api.listDashboardNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -139,10 +138,9 @@ public class DashboardsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListDashboardsResponse response = api.listDashboards(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListDashboardsResponse response = api.listDashboards(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

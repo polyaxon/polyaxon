@@ -26,27 +26,30 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1LoadTagsResponse Contains an object containing a map of tags -> color
+// V1HpDateTimeRange DateTimeRange specification
 //
-// swagger:model v1LoadTagsResponse
-type V1LoadTagsResponse struct {
+// swagger:model v1HpDateTimeRange
+type V1HpDateTimeRange struct {
 
-	// data
-	Data interface{} `json:"data,omitempty"`
+	// Kind of hp, should be equal to "datetimerange"
+	Kind *string `json:"kind,omitempty"`
+
+	// Value
+	Value interface{} `json:"value,omitempty"`
 }
 
-// Validate validates this v1 load tags response
-func (m *V1LoadTagsResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 hp date time range
+func (m *V1HpDateTimeRange) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this v1 load tags response based on context it is used
-func (m *V1LoadTagsResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this v1 hp date time range based on context it is used
+func (m *V1HpDateTimeRange) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *V1LoadTagsResponse) MarshalBinary() ([]byte, error) {
+func (m *V1HpDateTimeRange) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -54,8 +57,8 @@ func (m *V1LoadTagsResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1LoadTagsResponse) UnmarshalBinary(b []byte) error {
-	var res V1LoadTagsResponse
+func (m *V1HpDateTimeRange) UnmarshalBinary(b []byte) error {
+	var res V1HpDateTimeRange
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

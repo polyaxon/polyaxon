@@ -17,10 +17,14 @@
 import copy
 import numpy as np
 
+from datetime import date, datetime
+
 from marshmallow import ValidationError
 
 from polyaxon.polyflow import (
     V1HpChoice,
+    V1HpDateRange,
+    V1HpDateTimeRange,
     V1HpGeomSpace,
     V1HpLinSpace,
     V1HpLogNormal,
@@ -68,8 +72,15 @@ def dist_sample(fct, value, size, rand_generator):
 def get_length(matrix):
     if matrix.IDENTIFIER == V1HpChoice.IDENTIFIER:
         return len(matrix.value)
+
     if matrix.IDENTIFIER == V1HpPChoice.IDENTIFIER:
         return len(matrix.value)
+
+    if matrix.IDENTIFIER == V1HpDateRange.IDENTIFIER:
+        return len(np.arange(**matrix.value))
+
+    if matrix.IDENTIFIER == V1HpDateTimeRange.IDENTIFIER:
+        return len(np.arange(**matrix.value))
 
     if matrix.IDENTIFIER == V1HpRange.IDENTIFIER:
         return len(np.arange(**matrix.value))
@@ -106,6 +117,8 @@ def get_min(matrix):
         return None
 
     if matrix.IDENTIFIER in {
+        V1HpDateRange.IDENTIFIER,
+        V1HpDateTimeRange.IDENTIFIER,
         V1HpRange.IDENTIFIER,
         V1HpLinSpace.IDENTIFIER,
         V1HpLogSpace.IDENTIFIER,
@@ -138,6 +151,8 @@ def get_max(matrix):
         return None
 
     if matrix.IDENTIFIER in {
+        V1HpDateRange.IDENTIFIER,
+        V1HpDateTimeRange.IDENTIFIER,
         V1HpRange.IDENTIFIER,
         V1HpLinSpace.IDENTIFIER,
         V1HpLogSpace.IDENTIFIER,
@@ -163,11 +178,18 @@ def get_max(matrix):
 def to_numpy(matrix):
     if matrix.IDENTIFIER == V1HpChoice.IDENTIFIER:
         return matrix.value
+
     if matrix.IDENTIFIER == V1HpPChoice.IDENTIFIER:
         raise ValidationError(
             "Distribution should not call `to_numpy`, "
             "instead it should call `sample`."
         )
+
+    if matrix.IDENTIFIER == V1HpDateRange.IDENTIFIER:
+        return np.arange(**matrix.value).astype(date)
+
+    if matrix.IDENTIFIER == V1HpDateTimeRange.IDENTIFIER:
+        return np.arange(**matrix.value).astype(datetime)
 
     if matrix.IDENTIFIER == V1HpRange.IDENTIFIER:
         return np.arange(**matrix.value)
@@ -206,6 +228,16 @@ def sample(matrix, size=None, rand_generator=None):
         )
     if matrix.IDENTIFIER == V1HpPChoice.IDENTIFIER:
         return pchoice(values=matrix.value, size=size, rand_generator=rand_generator)
+
+    if matrix.IDENTIFIER == V1HpDateRange.IDENTIFIER:
+        return space_sample(
+            value=to_numpy(matrix), size=size, rand_generator=rand_generator
+        )
+
+    if matrix.IDENTIFIER == V1HpDateTimeRange.IDENTIFIER:
+        return space_sample(
+            value=to_numpy(matrix), size=size, rand_generator=rand_generator
+        )
 
     if matrix.IDENTIFIER == V1HpRange.IDENTIFIER:
         return space_sample(

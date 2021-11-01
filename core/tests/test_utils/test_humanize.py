@@ -67,7 +67,7 @@ class HumanizeTimesinceTest(BaseTestCase):
             "1 year ago",
         )
         self.assertEqual(
-            humanize_timesince(local_datetime(now()) - datetime.timedelta(days=365)),
+            humanize_timesince(local_datetime(now()) - datetime.timedelta(days=366)),
             "1 year ago",
         )
         self.assertEqual(

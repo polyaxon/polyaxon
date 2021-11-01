@@ -777,7 +777,7 @@ Name | Type | Description  | Notes
 
 <a name="getOrganizationActivities"></a>
 # **getOrganizationActivities**
-> V1ListActivitiesResponse getOrganizationActivities(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListActivitiesResponse getOrganizationActivities(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 Get organization activities
 
@@ -809,11 +809,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListActivitiesResponse result = apiInstance.getOrganizationActivities(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListActivitiesResponse result = apiInstance.getOrganizationActivities(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#getOrganizationActivities");
@@ -836,7 +835,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -1020,7 +1018,7 @@ Name | Type | Description  | Notes
 
 <a name="getOrganizationRuns"></a>
 # **getOrganizationRuns**
-> V1ListRunsResponse getOrganizationRuns(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListRunsResponse getOrganizationRuns(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 Get all runs in an organization
 
@@ -1052,11 +1050,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunsResponse result = apiInstance.getOrganizationRuns(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListRunsResponse result = apiInstance.getOrganizationRuns(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#getOrganizationRuns");
@@ -1079,7 +1076,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -1363,7 +1359,7 @@ null (empty response body)
 
 <a name="listOrganizationMemberNames"></a>
 # **listOrganizationMemberNames**
-> V1ListOrganizationMembersResponse listOrganizationMemberNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListOrganizationMembersResponse listOrganizationMemberNames(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 Get organization member names
 
@@ -1395,11 +1391,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListOrganizationMembersResponse result = apiInstance.listOrganizationMemberNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListOrganizationMembersResponse result = apiInstance.listOrganizationMemberNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#listOrganizationMemberNames");
@@ -1422,7 +1417,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -1450,7 +1444,7 @@ Name | Type | Description  | Notes
 
 <a name="listOrganizationMembers"></a>
 # **listOrganizationMembers**
-> V1ListOrganizationMembersResponse listOrganizationMembers(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListOrganizationMembersResponse listOrganizationMembers(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 Get organization members
 
@@ -1482,11 +1476,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListOrganizationMembersResponse result = apiInstance.listOrganizationMembers(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListOrganizationMembersResponse result = apiInstance.listOrganizationMembers(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#listOrganizationMembers");
@@ -1509,7 +1502,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 

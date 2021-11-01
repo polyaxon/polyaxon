@@ -114,12 +114,6 @@ type ListModelRegistryNamesParams struct {
 	*/
 	Owner string
 
-	/* Pins.
-
-	   Pinned entities.
-	*/
-	Pins *string
-
 	/* Query.
 
 	   Query filter the search.
@@ -251,17 +245,6 @@ func (o *ListModelRegistryNamesParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithPins adds the pins to the list model registry names params
-func (o *ListModelRegistryNamesParams) WithPins(pins *string) *ListModelRegistryNamesParams {
-	o.SetPins(pins)
-	return o
-}
-
-// SetPins adds the pins to the list model registry names params
-func (o *ListModelRegistryNamesParams) SetPins(pins *string) {
-	o.Pins = pins
-}
-
 // WithQuery adds the query to the list model registry names params
 func (o *ListModelRegistryNamesParams) WithQuery(query *string) *ListModelRegistryNamesParams {
 	o.SetQuery(query)
@@ -380,23 +363,6 @@ func (o *ListModelRegistryNamesParams) WriteToRequest(r runtime.ClientRequest, r
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
-	}
-
-	if o.Pins != nil {
-
-		// query param pins
-		var qrPins string
-
-		if o.Pins != nil {
-			qrPins = *o.Pins
-		}
-		qPins := qrPins
-		if qPins != "" {
-
-			if err := r.SetQueryParam("pins", qPins); err != nil {
-				return err
-			}
-		}
 	}
 
 	if o.Query != nil {

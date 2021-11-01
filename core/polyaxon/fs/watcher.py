@@ -138,23 +138,31 @@ class FSWatcher:
         files, dirs = get_files_and_dirs_in_path(
             path, exclude=exclude, collect_dirs=True
         )
+        base_path, prefix_path = os.path.split(path)
         for file_path in files:
-            self.sync_file(file_path, base_path=path)
+            self.sync_file(os.path.join(prefix_path, file_path), base_path=base_path)
 
         for dir_path in dirs:
-            self.sync_dir(dir_path, base_path=path)
+            self.sync_dir(os.path.join(prefix_path, dir_path), base_path=base_path)
 
     def _get_mapping_by_op(self, mapping: Dict, op: str):
         return {(p.base, k) for k, p in mapping.items() if p.op == op}
+
+    def _clean_by_op(self, mapping: Dict, op: str):
+        return {k: p for k, p in mapping.items() if p.op != op}
 
     def get_files_to_put(self):
         return self._get_mapping_by_op(self._file_mapping, self.PUT)
 
     def get_files_to_rm(self):
-        return self._get_mapping_by_op(self._file_mapping, self.RM)
+        results = self._get_mapping_by_op(self._file_mapping, self.RM)
+        self._file_mapping = self._clean_by_op(self._file_mapping, self.RM)
+        return results
 
     def get_dirs_to_put(self):
         return self._get_mapping_by_op(self._dir_mapping, self.PUT)
 
     def get_dirs_to_rm(self):
-        return self._get_mapping_by_op(self._dir_mapping, self.RM)
+        results = self._get_mapping_by_op(self._dir_mapping, self.RM)
+        self._file_mapping = self._clean_by_op(self._file_mapping, self.RM)
+        return results

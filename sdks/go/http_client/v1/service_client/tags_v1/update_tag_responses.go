@@ -87,7 +87,7 @@ type UpdateTagOK struct {
 }
 
 func (o *UpdateTagOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.name}][%d] updateTagOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] updateTagOK  %+v", 200, o.Payload)
 }
 func (o *UpdateTagOK) GetPayload() *service_model.V1Tag {
 	return o.Payload
@@ -119,7 +119,7 @@ type UpdateTagNoContent struct {
 }
 
 func (o *UpdateTagNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.name}][%d] updateTagNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] updateTagNoContent  %+v", 204, o.Payload)
 }
 func (o *UpdateTagNoContent) GetPayload() interface{} {
 	return o.Payload
@@ -149,7 +149,7 @@ type UpdateTagForbidden struct {
 }
 
 func (o *UpdateTagForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.name}][%d] updateTagForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] updateTagForbidden  %+v", 403, o.Payload)
 }
 func (o *UpdateTagForbidden) GetPayload() interface{} {
 	return o.Payload
@@ -179,7 +179,7 @@ type UpdateTagNotFound struct {
 }
 
 func (o *UpdateTagNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.name}][%d] updateTagNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] updateTagNotFound  %+v", 404, o.Payload)
 }
 func (o *UpdateTagNotFound) GetPayload() interface{} {
 	return o.Payload
@@ -218,7 +218,7 @@ func (o *UpdateTagDefault) Code() int {
 }
 
 func (o *UpdateTagDefault) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.name}][%d] UpdateTag default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] UpdateTag default  %+v", o._statusCode, o.Payload)
 }
 func (o *UpdateTagDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload

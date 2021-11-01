@@ -102,7 +102,7 @@ class PolypodConfig:
                     connection_by_names[c] = agent_config.connections_by_names[c]
             if missing_connections:
                 raise PolyaxonCompilerError(
-                    "Some Connection refs were provided "
+                    "Some connection refs were provided "
                     "but were not found in the "
                     "agent.connections catalog: `{}`".format(missing_connections)
                 )

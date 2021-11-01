@@ -1279,7 +1279,7 @@ null (empty response body)
 
 <a name="getMultiRunEvents"></a>
 # **getMultiRunEvents**
-> V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, force)
+> V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, force, sample)
 
 Get multi runs events
 
@@ -1313,8 +1313,9 @@ public class Example {
     String runs = "runs_example"; // String | Runs query param.
     String orient = "orient_example"; // String | Orient query param.
     Boolean force = true; // Boolean | Force query param.
+    Integer sample = 56; // Integer | Sample query param.
     try {
-      V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, force);
+      V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, force, sample);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getMultiRunEvents");
@@ -1334,11 +1335,12 @@ Name | Type | Description  | Notes
  **namespace** | **String**| namespace |
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
- **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve, analysis, iteration, markdown]
+ **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve, analysis, iteration, markdown, system]
  **names** | **String**| Names query param. | [optional]
  **runs** | **String**| Runs query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
  **force** | **Boolean**| Force query param. | [optional]
+ **sample** | **Integer**| Sample query param. | [optional]
 
 ### Return type
 
@@ -2184,7 +2186,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunEvents"></a>
 # **getRunEvents**
-> V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, names, orient, force)
+> V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, names, orient, force, sample)
 
 Get run events
 
@@ -2218,8 +2220,9 @@ public class Example {
     String names = "names_example"; // String | Names query param.
     String orient = "orient_example"; // String | Orient query param.
     Boolean force = true; // Boolean | Force query param.
+    Integer sample = 56; // Integer | Sample query param.
     try {
-      V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, names, orient, force);
+      V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, names, orient, force, sample);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunEvents");
@@ -2240,10 +2243,11 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
  **uuid** | **String**| Uuid identifier of the entity |
- **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve, analysis, iteration, markdown]
+ **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve, analysis, iteration, markdown, system]
  **names** | **String**| Names query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
  **force** | **Boolean**| Force query param. | [optional]
+ **sample** | **Integer**| Sample query param. | [optional]
 
 ### Return type
 
@@ -2427,7 +2431,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunResources"></a>
 # **getRunResources**
-> V1EventsResponse getRunResources(namespace, owner, project, uuid, names, tail, force)
+> V1EventsResponse getRunResources(namespace, owner, project, uuid, names, tail, force, sample)
 
 Get run resources events
 
@@ -2460,8 +2464,9 @@ public class Example {
     String names = "names_example"; // String | Names query param.
     Boolean tail = true; // Boolean | Query param flag to tail the values.
     Boolean force = true; // Boolean | Force query param.
+    Integer sample = 56; // Integer | Sample query param.
     try {
-      V1EventsResponse result = apiInstance.getRunResources(namespace, owner, project, uuid, names, tail, force);
+      V1EventsResponse result = apiInstance.getRunResources(namespace, owner, project, uuid, names, tail, force, sample);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunResources");
@@ -2485,6 +2490,7 @@ Name | Type | Description  | Notes
  **names** | **String**| Names query param. | [optional]
  **tail** | **Boolean**| Query param flag to tail the values. | [optional]
  **force** | **Boolean**| Force query param. | [optional]
+ **sample** | **Integer**| Sample query param. | [optional]
 
 ### Return type
 
@@ -2838,7 +2844,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunsArtifactsLineage"></a>
 # **getRunsArtifactsLineage**
-> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, name, offset, limit, sort, query, bookmarks, mode, noPage)
 
 Get runs artifacts lineage
 
@@ -2871,11 +2877,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunsArtifactsLineage");
@@ -2899,7 +2904,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -3002,7 +3006,7 @@ Name | Type | Description  | Notes
 
 <a name="inspectRun"></a>
 # **inspectRun**
-> Object inspectRun(namespace, owner, project, uuid, names, tail, force)
+> Object inspectRun(namespace, owner, project, uuid, names, tail, force, sample)
 
 Inspect an active run full conditions
 
@@ -3035,8 +3039,9 @@ public class Example {
     String names = "names_example"; // String | Names query param.
     Boolean tail = true; // Boolean | Query param flag to tail the values.
     Boolean force = true; // Boolean | Force query param.
+    Integer sample = 56; // Integer | Sample query param.
     try {
-      Object result = apiInstance.inspectRun(namespace, owner, project, uuid, names, tail, force);
+      Object result = apiInstance.inspectRun(namespace, owner, project, uuid, names, tail, force, sample);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#inspectRun");
@@ -3060,6 +3065,7 @@ Name | Type | Description  | Notes
  **names** | **String**| Names query param. | [optional]
  **tail** | **Boolean**| Query param flag to tail the values. | [optional]
  **force** | **Boolean**| Force query param. | [optional]
+ **sample** | **Integer**| Sample query param. | [optional]
 
 ### Return type
 
@@ -3395,7 +3401,7 @@ Name | Type | Description  | Notes
 
 <a name="listRuns"></a>
 # **listRuns**
-> V1ListRunsResponse listRuns(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListRunsResponse listRuns(owner, name, offset, limit, sort, query, bookmarks, mode, noPage)
 
 List runs
 
@@ -3428,11 +3434,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#listRuns");
@@ -3456,7 +3461,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 

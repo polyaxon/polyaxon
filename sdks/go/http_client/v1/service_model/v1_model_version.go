@@ -123,6 +123,8 @@ func (m *V1ModelVersion) validateStage(formats strfmt.Registry) error {
 		if err := m.Stage.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("stage")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("stage")
 			}
 			return err
 		}
@@ -145,6 +147,8 @@ func (m *V1ModelVersion) validateStageConditions(formats strfmt.Registry) error 
 			if err := m.StageConditions[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -191,6 +195,8 @@ func (m *V1ModelVersion) contextValidateStage(ctx context.Context, formats strfm
 		if err := m.Stage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("stage")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("stage")
 			}
 			return err
 		}
@@ -207,6 +213,8 @@ func (m *V1ModelVersion) contextValidateStageConditions(ctx context.Context, for
 			if err := m.StageConditions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

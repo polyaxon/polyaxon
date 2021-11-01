@@ -86,7 +86,7 @@ type DeleteTagOK struct {
 }
 
 func (o *DeleteTagOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{name}][%d] deleteTagOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{uuid}][%d] deleteTagOK ", 200)
 }
 
 func (o *DeleteTagOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteTagNoContent struct {
 }
 
 func (o *DeleteTagNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{name}][%d] deleteTagNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{uuid}][%d] deleteTagNoContent  %+v", 204, o.Payload)
 }
 func (o *DeleteTagNoContent) GetPayload() interface{} {
 	return o.Payload
@@ -138,7 +138,7 @@ type DeleteTagForbidden struct {
 }
 
 func (o *DeleteTagForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{name}][%d] deleteTagForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{uuid}][%d] deleteTagForbidden  %+v", 403, o.Payload)
 }
 func (o *DeleteTagForbidden) GetPayload() interface{} {
 	return o.Payload
@@ -168,7 +168,7 @@ type DeleteTagNotFound struct {
 }
 
 func (o *DeleteTagNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{name}][%d] deleteTagNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{uuid}][%d] deleteTagNotFound  %+v", 404, o.Payload)
 }
 func (o *DeleteTagNotFound) GetPayload() interface{} {
 	return o.Payload
@@ -207,7 +207,7 @@ func (o *DeleteTagDefault) Code() int {
 }
 
 func (o *DeleteTagDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{name}][%d] DeleteTag default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/tags/{uuid}][%d] DeleteTag default  %+v", o._statusCode, o.Payload)
 }
 func (o *DeleteTagDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload

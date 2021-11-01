@@ -81,6 +81,12 @@ export interface V1Init {
      * @type {string}
      * @memberof V1Init
      */
+    model?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Init
+     */
     connection?: string;
     /**
      * 
@@ -110,6 +116,7 @@ export function V1InitFromJSONTyped(json: any, ignoreDiscriminator: boolean): V1
         'git': !exists(json, 'git') ? undefined : V1GitTypeFromJSON(json['git']),
         'dockerfile': !exists(json, 'dockerfile') ? undefined : V1DockerfileTypeFromJSON(json['dockerfile']),
         'file': !exists(json, 'file') ? undefined : V1FileTypeFromJSON(json['file']),
+        'model': !exists(json, 'model') ? undefined : json['model'],
         'connection': !exists(json, 'connection') ? undefined : json['connection'],
         'path': !exists(json, 'path') ? undefined : json['path'],
         'container': !exists(json, 'container') ? undefined : json['container'],
@@ -129,6 +136,7 @@ export function V1InitToJSON(value?: V1Init | null): any {
         'git': V1GitTypeToJSON(value.git),
         'dockerfile': V1DockerfileTypeToJSON(value.dockerfile),
         'file': V1FileTypeToJSON(value.file),
+        'model': value.model,
         'connection': value.connection,
         'path': value.path,
         'container': value.container,

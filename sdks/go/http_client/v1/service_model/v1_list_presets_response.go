@@ -74,6 +74,8 @@ func (m *V1ListPresetsResponse) validateResults(formats strfmt.Registry) error {
 			if err := m.Results[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("results" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("results" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -106,6 +108,8 @@ func (m *V1ListPresetsResponse) contextValidateResults(ctx context.Context, form
 			if err := m.Results[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("results" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("results" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -94,6 +94,8 @@ func (m *V1Dag) validateComponents(formats strfmt.Registry) error {
 			if err := m.Components[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("components" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("components" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -113,6 +115,8 @@ func (m *V1Dag) validateEnvironment(formats strfmt.Registry) error {
 		if err := m.Environment.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("environment")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("environment")
 			}
 			return err
 		}
@@ -135,6 +139,8 @@ func (m *V1Dag) validateOperations(formats strfmt.Registry) error {
 			if err := m.Operations[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("operations" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("operations" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -175,6 +181,8 @@ func (m *V1Dag) contextValidateComponents(ctx context.Context, formats strfmt.Re
 			if err := m.Components[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("components" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("components" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -191,6 +199,8 @@ func (m *V1Dag) contextValidateEnvironment(ctx context.Context, formats strfmt.R
 		if err := m.Environment.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("environment")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("environment")
 			}
 			return err
 		}
@@ -207,6 +217,8 @@ func (m *V1Dag) contextValidateOperations(ctx context.Context, formats strfmt.Re
 			if err := m.Operations[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("operations" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("operations" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

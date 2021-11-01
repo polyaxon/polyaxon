@@ -87,11 +87,11 @@ type UpdateTagParams struct {
 	*/
 	Owner string
 
-	/* TagName.
+	/* TagUUID.
 
-	   Tag name
+	   UUID
 	*/
-	TagName string
+	TagUUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -168,15 +168,15 @@ func (o *UpdateTagParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithTagName adds the tagName to the update tag params
-func (o *UpdateTagParams) WithTagName(tagName string) *UpdateTagParams {
-	o.SetTagName(tagName)
+// WithTagUUID adds the tagUUID to the update tag params
+func (o *UpdateTagParams) WithTagUUID(tagUUID string) *UpdateTagParams {
+	o.SetTagUUID(tagUUID)
 	return o
 }
 
-// SetTagName adds the tagName to the update tag params
-func (o *UpdateTagParams) SetTagName(tagName string) {
-	o.TagName = tagName
+// SetTagUUID adds the tagUuid to the update tag params
+func (o *UpdateTagParams) SetTagUUID(tagUUID string) {
+	o.TagUUID = tagUUID
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -197,8 +197,8 @@ func (o *UpdateTagParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 		return err
 	}
 
-	// path param tag.name
-	if err := r.SetPathParam("tag.name", o.TagName); err != nil {
+	// path param tag.uuid
+	if err := r.SetPathParam("tag.uuid", o.TagUUID); err != nil {
 		return err
 	}
 

@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **qnormal** | [**V1HpQNormal**](V1HpQNormal.md) |  | [optional] 
 **lognormal** | [**V1HpLogNormal**](V1HpLogNormal.md) |  | [optional] 
 **qlognormal** | [**V1HpQLogNormal**](V1HpQLogNormal.md) |  | [optional] 
+**daterange** | [**V1HpDateRange**](V1HpDateRange.md) |  | [optional] 
+**datetimerange** | [**V1HpDateTimeRange**](V1HpDateTimeRange.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

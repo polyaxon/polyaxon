@@ -76,6 +76,8 @@ func (m *V1PytorchJob) validateCleanPodPolicy(formats strfmt.Registry) error {
 		if err := m.CleanPodPolicy.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cleanPodPolicy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cleanPodPolicy")
 			}
 			return err
 		}
@@ -93,6 +95,8 @@ func (m *V1PytorchJob) validateMaster(formats strfmt.Registry) error {
 		if err := m.Master.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("master")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("master")
 			}
 			return err
 		}
@@ -110,6 +114,8 @@ func (m *V1PytorchJob) validateWorker(formats strfmt.Registry) error {
 		if err := m.Worker.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("worker")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("worker")
 			}
 			return err
 		}
@@ -146,6 +152,8 @@ func (m *V1PytorchJob) contextValidateCleanPodPolicy(ctx context.Context, format
 		if err := m.CleanPodPolicy.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cleanPodPolicy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cleanPodPolicy")
 			}
 			return err
 		}
@@ -160,6 +168,8 @@ func (m *V1PytorchJob) contextValidateMaster(ctx context.Context, formats strfmt
 		if err := m.Master.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("master")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("master")
 			}
 			return err
 		}
@@ -174,6 +184,8 @@ func (m *V1PytorchJob) contextValidateWorker(ctx context.Context, formats strfmt
 		if err := m.Worker.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("worker")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("worker")
 			}
 			return err
 		}

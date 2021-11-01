@@ -4406,7 +4406,7 @@
     },
     "v1ArtifactKind": {
       "default": "model",
-      "description": "- model: Model asset/event\n - audio: Audio asset/event\n - video: Vidio asset/event\n - histogram: Histogram asset/event\n - image: Image asset/event\n - tensor: Tensor asset/event\n - dataframe: Dataframe asset/event\n - chart: plotly/bokeh/vega chart\n - csv: Comma separated values\n - tsv: Tab separated values\n - psv: Pipe separated values\n - ssv: Space separated values\n - metric: Metric asset/event\n - env: Env file\n - html: HTML asset/event\n - text: Text asset/event\n - file: File asset/lineage\n - dir: Dir asset/lineage\n - dockerfile: Dockerfile asset\n - docker_image: Docker image\n - data: Data asset/event\n - coderef: Coderef lineage\n - table: Table asset/event\n - tensorboard: Tensorboard lineage\n - curve: Curve event\n - analysis: Analysis lineage\n - iteration: Iteration lineage\n - markdown: Mardown event",
+      "description": "- model: Model asset/event\n - audio: Audio asset/event\n - video: Vidio asset/event\n - histogram: Histogram asset/event\n - image: Image asset/event\n - tensor: Tensor asset/event\n - dataframe: Dataframe asset/event\n - chart: plotly/bokeh/vega chart\n - csv: Comma separated values\n - tsv: Tab separated values\n - psv: Pipe separated values\n - ssv: Space separated values\n - metric: Metric asset/event\n - env: Env file\n - html: HTML asset/event\n - text: Text asset/event\n - file: File asset/lineage\n - dir: Dir asset/lineage\n - dockerfile: Dockerfile asset\n - docker_image: Docker image\n - data: Data asset/event\n - coderef: Coderef lineage\n - table: Table asset/event\n - tensorboard: Tensorboard lineage\n - curve: Curve event\n - analysis: Analysis lineage\n - iteration: Iteration lineage\n - markdown: Mardown event\n - system: System event",
       "enum": [
         "model",
         "audio",
@@ -4435,7 +4435,8 @@
         "curve",
         "analysis",
         "iteration",
-        "markdown"
+        "markdown",
+        "system"
       ],
       "title": "Artifact kind",
       "type": "string"
@@ -4664,7 +4665,14 @@
           "items": {
             "type": "string"
           },
-          "title": "Optional Inputs/Outputs' names to consider for the cache",
+          "title": "Optional Inputs/Outputs' names to consider for the cache, default behavior to consider all inputs/outputs",
+          "type": "array"
+        },
+        "sections": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional sections to consider for the cache, default behavior to consider container(command, args), init section, and connections section",
           "type": "array"
         },
         "ttl": {
@@ -6603,6 +6611,36 @@
       "title": "HP Choice specification",
       "type": "object"
     },
+    "v1HpDateRange": {
+      "properties": {
+        "kind": {
+          "default": "daterange",
+          "title": "Kind of hp, should be equal to \"daterange\"",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "object"
+        }
+      },
+      "title": "DateRange specification",
+      "type": "object"
+    },
+    "v1HpDateTimeRange": {
+      "properties": {
+        "kind": {
+          "default": "datetimerange",
+          "title": "Kind of hp, should be equal to \"datetimerange\"",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "object"
+        }
+      },
+      "title": "DateTimeRange specification",
+      "type": "object"
+    },
     "v1HpGeomSpace": {
       "properties": {
         "kind": {
@@ -6712,6 +6750,12 @@
       "properties": {
         "choice": {
           "$ref": "#/definitions/v1HpChoice"
+        },
+        "daterange": {
+          "$ref": "#/definitions/v1HpDateRange"
+        },
+        "datetimerange": {
+          "$ref": "#/definitions/v1HpDateTimeRange"
         },
         "geomspace": {
           "$ref": "#/definitions/v1HpGeomSpace"
@@ -7092,6 +7136,10 @@
         "git": {
           "$ref": "#/definitions/v1GitType",
           "title": "Override for git connections"
+        },
+        "model": {
+          "title": "Model intializer",
+          "type": "string"
         },
         "path": {
           "title": "Optional context path, the path to mount to main the container",
@@ -8006,15 +8054,6 @@
         }
       },
       "title": "Contains list tokens",
-      "type": "object"
-    },
-    "v1LoadTagsResponse": {
-      "properties": {
-        "data": {
-          "type": "object"
-        }
-      },
-      "title": "Contains an object containing a map of tags -\u003e color",
       "type": "object"
     },
     "v1Log": {
@@ -10006,6 +10045,10 @@
           "title": "Search columns",
           "type": "string"
         },
+        "compares": {
+          "title": "Compare Flags",
+          "type": "string"
+        },
         "events": {
           "$ref": "#/definitions/v1DashboardSpec",
           "title": "Optional events specification"
@@ -10014,12 +10057,16 @@
           "title": "Search group bys",
           "type": "string"
         },
+        "heat": {
+          "title": "Optional heat fields",
+          "type": "string"
+        },
         "histograms": {
           "title": "Optional histograms specification",
           "type": "object"
         },
         "layout": {
-          "title": "Widgets layout",
+          "title": "Search layout",
           "type": "string"
         },
         "limit": {
@@ -10032,16 +10079,12 @@
           "title": "Offset value",
           "type": "integer"
         },
-        "pins": {
-          "title": "Search pins",
-          "type": "string"
-        },
         "query": {
           "title": "Search query",
           "type": "string"
         },
         "sections": {
-          "title": "Widgets layout",
+          "title": "Search sections",
           "type": "string"
         },
         "sort": {
@@ -10488,6 +10531,14 @@
         },
         "name": {
           "title": "Tag name",
+          "type": "string"
+        },
+        "stats": {
+          "title": "Optional tag stats",
+          "type": "object"
+        },
+        "uuid": {
+          "title": "UUID",
           "type": "string"
         }
       },

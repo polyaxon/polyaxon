@@ -514,7 +514,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -530,7 +529,7 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listOrganizationQueueNamesCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listOrganizationQueueNamesCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -559,10 +558,6 @@ public class QueuesV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -593,7 +588,7 @@ public class QueuesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listOrganizationQueueNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listOrganizationQueueNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -601,7 +596,7 @@ public class QueuesV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listOrganizationQueueNamesCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listOrganizationQueueNamesCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -615,7 +610,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListQueuesResponse
@@ -630,8 +624,8 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListQueuesResponse listOrganizationQueueNames(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListQueuesResponse> localVarResp = listOrganizationQueueNamesWithHttpInfo(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListQueuesResponse listOrganizationQueueNames(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListQueuesResponse> localVarResp = listOrganizationQueueNamesWithHttpInfo(owner, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -644,7 +638,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListQueuesResponse&gt;
@@ -659,8 +652,8 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListQueuesResponse> listOrganizationQueueNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listOrganizationQueueNamesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListQueuesResponse> listOrganizationQueueNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listOrganizationQueueNamesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -674,7 +667,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -690,9 +682,9 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listOrganizationQueueNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListQueuesResponse> _callback) throws ApiException {
+    public okhttp3.Call listOrganizationQueueNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListQueuesResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listOrganizationQueueNamesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listOrganizationQueueNamesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -705,7 +697,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -721,7 +712,7 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listOrganizationQueuesCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listOrganizationQueuesCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -750,10 +741,6 @@ public class QueuesV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -784,7 +771,7 @@ public class QueuesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listOrganizationQueuesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listOrganizationQueuesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -792,7 +779,7 @@ public class QueuesV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listOrganizationQueuesCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listOrganizationQueuesCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -806,7 +793,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListQueuesResponse
@@ -821,8 +807,8 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListQueuesResponse listOrganizationQueues(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListQueuesResponse> localVarResp = listOrganizationQueuesWithHttpInfo(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListQueuesResponse listOrganizationQueues(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListQueuesResponse> localVarResp = listOrganizationQueuesWithHttpInfo(owner, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -835,7 +821,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListQueuesResponse&gt;
@@ -850,8 +835,8 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListQueuesResponse> listOrganizationQueuesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listOrganizationQueuesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListQueuesResponse> listOrganizationQueuesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listOrganizationQueuesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -865,7 +850,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -881,9 +865,9 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listOrganizationQueuesAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListQueuesResponse> _callback) throws ApiException {
+    public okhttp3.Call listOrganizationQueuesAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListQueuesResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listOrganizationQueuesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listOrganizationQueuesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -897,7 +881,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -913,7 +896,7 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listQueueNamesCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listQueueNamesCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -943,10 +926,6 @@ public class QueuesV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -977,7 +956,7 @@ public class QueuesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listQueueNamesValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listQueueNamesValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -990,7 +969,7 @@ public class QueuesV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listQueueNamesCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listQueueNamesCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -1005,7 +984,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListQueuesResponse
@@ -1020,8 +998,8 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListQueuesResponse listQueueNames(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListQueuesResponse> localVarResp = listQueueNamesWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListQueuesResponse listQueueNames(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListQueuesResponse> localVarResp = listQueueNamesWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -1035,7 +1013,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListQueuesResponse&gt;
@@ -1050,8 +1027,8 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListQueuesResponse> listQueueNamesWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listQueueNamesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListQueuesResponse> listQueueNamesWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listQueueNamesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1066,7 +1043,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -1082,9 +1058,9 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listQueueNamesAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListQueuesResponse> _callback) throws ApiException {
+    public okhttp3.Call listQueueNamesAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListQueuesResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listQueueNamesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listQueueNamesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1098,7 +1074,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -1114,7 +1089,7 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listQueuesCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listQueuesCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1144,10 +1119,6 @@ public class QueuesV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -1178,7 +1149,7 @@ public class QueuesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listQueuesValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listQueuesValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1191,7 +1162,7 @@ public class QueuesV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listQueuesCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listQueuesCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -1206,7 +1177,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListQueuesResponse
@@ -1221,8 +1191,8 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListQueuesResponse listQueues(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListQueuesResponse> localVarResp = listQueuesWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListQueuesResponse listQueues(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListQueuesResponse> localVarResp = listQueuesWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -1236,7 +1206,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListQueuesResponse&gt;
@@ -1251,8 +1220,8 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListQueuesResponse> listQueuesWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listQueuesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListQueuesResponse> listQueuesWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listQueuesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1267,7 +1236,6 @@ public class QueuesV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -1283,9 +1251,9 @@ public class QueuesV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listQueuesAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListQueuesResponse> _callback) throws ApiException {
+    public okhttp3.Call listQueuesAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListQueuesResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listQueuesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listQueuesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

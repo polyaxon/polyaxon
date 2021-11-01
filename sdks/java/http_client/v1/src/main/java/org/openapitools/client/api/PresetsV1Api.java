@@ -500,7 +500,6 @@ public class PresetsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -516,7 +515,7 @@ public class PresetsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listPresetNamesCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listPresetNamesCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -545,10 +544,6 @@ public class PresetsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -579,7 +574,7 @@ public class PresetsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listPresetNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listPresetNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -587,7 +582,7 @@ public class PresetsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listPresetNamesCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listPresetNamesCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -601,7 +596,6 @@ public class PresetsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListPresetsResponse
@@ -616,8 +610,8 @@ public class PresetsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListPresetsResponse listPresetNames(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListPresetsResponse> localVarResp = listPresetNamesWithHttpInfo(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListPresetsResponse listPresetNames(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListPresetsResponse> localVarResp = listPresetNamesWithHttpInfo(owner, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -630,7 +624,6 @@ public class PresetsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListPresetsResponse&gt;
@@ -645,8 +638,8 @@ public class PresetsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListPresetsResponse> listPresetNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listPresetNamesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListPresetsResponse> listPresetNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listPresetNamesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListPresetsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -660,7 +653,6 @@ public class PresetsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -676,9 +668,9 @@ public class PresetsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listPresetNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListPresetsResponse> _callback) throws ApiException {
+    public okhttp3.Call listPresetNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListPresetsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listPresetNamesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listPresetNamesValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListPresetsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -691,7 +683,6 @@ public class PresetsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -707,7 +698,7 @@ public class PresetsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listPresetsCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listPresetsCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -736,10 +727,6 @@ public class PresetsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -770,7 +757,7 @@ public class PresetsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listPresetsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listPresetsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -778,7 +765,7 @@ public class PresetsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listPresetsCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listPresetsCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -792,7 +779,6 @@ public class PresetsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListPresetsResponse
@@ -807,8 +793,8 @@ public class PresetsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListPresetsResponse listPresets(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListPresetsResponse> localVarResp = listPresetsWithHttpInfo(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListPresetsResponse listPresets(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListPresetsResponse> localVarResp = listPresetsWithHttpInfo(owner, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -821,7 +807,6 @@ public class PresetsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListPresetsResponse&gt;
@@ -836,8 +821,8 @@ public class PresetsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListPresetsResponse> listPresetsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listPresetsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListPresetsResponse> listPresetsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listPresetsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListPresetsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -851,7 +836,6 @@ public class PresetsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -867,9 +851,9 @@ public class PresetsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listPresetsAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListPresetsResponse> _callback) throws ApiException {
+    public okhttp3.Call listPresetsAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListPresetsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listPresetsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listPresetsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListPresetsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

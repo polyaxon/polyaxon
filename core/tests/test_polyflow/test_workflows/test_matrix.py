@@ -17,10 +17,13 @@
 import numpy as np
 import pytest
 
+from marshmallow import fields
 from marshmallow.exceptions import ValidationError
 
 from polyaxon.polyflow.matrix.params import (
     V1HpChoice,
+    V1HpDateRange,
+    V1HpDateTimeRange,
     V1HpGeomSpace,
     V1HpLinSpace,
     V1HpLogNormal,
@@ -159,6 +162,86 @@ class TestMatrixConfigs(BaseTestCase):
         # as dict
         config_dict["value"] = {"start": 1.2, "stop": 1.8, "step": 0.1}
         config = V1HpRange.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
+    def test_matrix_date_range_option(self):
+        date_deserialize = fields.Date().deserialize
+
+        def assert_equal(config, _v1, _v2, v3):
+            v1 = date_deserialize(_v1)
+            v2 = date_deserialize(_v2)
+            result = {"start": v1, "stop": v2, "step": v3}
+            assert date_deserialize(config.to_dict()["value"]["start"]) == v1
+            assert date_deserialize(config.to_dict()["value"]["stop"]) == v2
+            assert config.to_dict()["value"]["step"] == v3
+            np.testing.assert_array_equal(to_numpy(config), np.arange(**result))
+            assert get_length(config) == len(np.arange(**result))
+            assert sample(config) in np.arange(**result)
+            assert config.is_categorical is False
+            assert config.is_distribution is False
+            assert config.is_range is True
+            assert config.is_uniform is False
+            assert config.is_discrete is True
+            assert config.is_continuous is False
+            assert get_min(config) == v1
+            assert get_max(config) == v2
+
+        # as list
+        config_dict = {
+            "kind": "daterange",
+            "value": ["2019-06-22", "2019-07-25", 1],
+        }
+        config = V1HpDateRange.from_dict(config_dict)
+        assert_equal(config, *config_dict["value"])
+
+        # as dict
+        config_dict["value"] = {
+            "start": "2019-06-22",
+            "stop": "2019-07-25",
+            "step": 4,
+        }
+        config = V1HpDateRange.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
+    def test_matrix_datetime_range_option(self):
+        datetime_deserialize = fields.DateTime().deserialize
+        timedelta_deserialize = fields.TimeDelta().deserialize
+
+        def assert_equal(config, _v1, _v2, _v3):
+            v1 = datetime_deserialize(_v1)
+            v2 = datetime_deserialize(_v2)
+            v3 = timedelta_deserialize(_v3)
+            result = {"start": v1, "stop": v2, "step": v3}
+            assert datetime_deserialize(config.to_dict()["value"]["start"]) == v1
+            assert datetime_deserialize(config.to_dict()["value"]["stop"]) == v2
+            assert timedelta_deserialize(config.to_dict()["value"]["step"]) == v3
+            np.testing.assert_array_equal(to_numpy(config), np.arange(**result))
+            assert get_length(config) == len(np.arange(**result))
+            assert sample(config) in np.arange(**result)
+            assert config.is_categorical is False
+            assert config.is_distribution is False
+            assert config.is_range is True
+            assert config.is_uniform is False
+            assert config.is_discrete is True
+            assert config.is_continuous is False
+            assert get_min(config) == v1
+            assert get_max(config) == v2
+
+        # as list
+        config_dict = {
+            "kind": "datetimerange",
+            "value": ["2019-06-22 00:00", "2019-07-25 00:00", 3600],
+        }
+        config = V1HpDateTimeRange.from_dict(config_dict)
+        assert_equal(config, *config_dict["value"])
+
+        # as dict
+        config_dict["value"] = {
+            "start": "2019-06-22T12:12:00",
+            "stop": "2019-07-25T13:34:00",
+            "step": 4 * 3600,
+        }
+        config = V1HpDateTimeRange.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
     def test_matrix_linspace_option(self):

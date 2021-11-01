@@ -77,6 +77,8 @@ func (m *V1Iterative) validateTuner(formats strfmt.Registry) error {
 		if err := m.Tuner.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tuner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tuner")
 			}
 			return err
 		}
@@ -105,6 +107,8 @@ func (m *V1Iterative) contextValidateTuner(ctx context.Context, formats strfmt.R
 		if err := m.Tuner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tuner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tuner")
 			}
 			return err
 		}

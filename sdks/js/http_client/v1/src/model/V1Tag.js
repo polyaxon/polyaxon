@@ -61,6 +61,9 @@ class V1Tag {
         if (data) {
             obj = obj || new V1Tag();
 
+            if (data.hasOwnProperty('uuid')) {
+                obj['uuid'] = ApiClient.convertToType(data['uuid'], 'String');
+            }
             if (data.hasOwnProperty('name')) {
                 obj['name'] = ApiClient.convertToType(data['name'], 'String');
             }
@@ -73,12 +76,20 @@ class V1Tag {
             if (data.hasOwnProperty('icon')) {
                 obj['icon'] = ApiClient.convertToType(data['icon'], 'String');
             }
+            if (data.hasOwnProperty('stats')) {
+                obj['stats'] = ApiClient.convertToType(data['stats'], Object);
+            }
         }
         return obj;
     }
 
 
 }
+
+/**
+ * @member {String} uuid
+ */
+V1Tag.prototype['uuid'] = undefined;
 
 /**
  * @member {String} name
@@ -99,6 +110,11 @@ V1Tag.prototype['description'] = undefined;
  * @member {String} icon
  */
 V1Tag.prototype['icon'] = undefined;
+
+/**
+ * @member {Object} stats
+ */
+V1Tag.prototype['stats'] = undefined;
 
 
 

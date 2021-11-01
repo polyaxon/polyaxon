@@ -70,6 +70,8 @@ func (m *V1Status) validateStatus(formats strfmt.Registry) error {
 		if err := m.Status.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("status")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("status")
 			}
 			return err
 		}
@@ -92,6 +94,8 @@ func (m *V1Status) validateStatusConditions(formats strfmt.Registry) error {
 			if err := m.StatusConditions[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("status_conditions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("status_conditions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -126,6 +130,8 @@ func (m *V1Status) contextValidateStatus(ctx context.Context, formats strfmt.Reg
 		if err := m.Status.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("status")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("status")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *V1Status) contextValidateStatusConditions(ctx context.Context, formats 
 			if err := m.StatusConditions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("status_conditions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("status_conditions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

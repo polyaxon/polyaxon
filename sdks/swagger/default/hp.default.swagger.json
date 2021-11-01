@@ -21,6 +21,20 @@
         }
       }
     },
+    "v1HpDateRange": {
+      "properties": {
+        "kind": {
+          "default": "daterange"
+        }
+      }
+    },
+    "v1HpDateTimeRange": {
+      "properties": {
+        "kind": {
+          "default": "datetimerange"
+        }
+      }
+    },
     "v1HpLinSpace": {
       "properties": {
         "kind": {

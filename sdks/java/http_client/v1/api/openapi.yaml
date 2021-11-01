@@ -1067,11 +1067,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -1154,11 +1149,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -1294,11 +1284,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -2043,11 +2028,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -2136,11 +2116,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -2548,11 +2523,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -2688,11 +2658,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -2992,11 +2957,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -3132,11 +3092,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -3760,11 +3715,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -3905,11 +3855,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -4273,11 +4218,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -4413,11 +4353,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -4727,11 +4662,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -4814,11 +4744,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -4901,11 +4826,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -5447,11 +5367,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -5587,11 +5502,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -6198,11 +6108,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -6338,11 +6243,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -6358,7 +6258,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v1LoadTagsResponse'
+                type: object
           description: A successful response.
         "204":
           content:
@@ -6439,105 +6339,7 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
-  /api/v1/orgs/{owner}/tags/{name}:
-    delete:
-      operationId: DeleteTag
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Component under namesapce
-        in: path
-        name: name
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          content: {}
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response.
-      summary: Delete tag
-      tags:
-      - TagsV1
-      x-accepts: application/json
-    get:
-      operationId: GetTag
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Component under namesapce
-        in: path
-        name: name
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1Tag'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response.
-      summary: Get tag
-      tags:
-      - TagsV1
-      x-accepts: application/json
-  /api/v1/orgs/{owner}/tags/{tag.name}:
+  /api/v1/orgs/{owner}/tags/{tag.uuid}:
     patch:
       operationId: PatchTag
       parameters:
@@ -6547,9 +6349,9 @@ paths:
         required: true
         schema:
           type: string
-      - description: Tag name
+      - description: UUID
         in: path
-        name: tag.name
+        name: tag.uuid
         required: true
         schema:
           type: string
@@ -6606,9 +6408,9 @@ paths:
         required: true
         schema:
           type: string
-      - description: Tag name
+      - description: UUID
         in: path
-        name: tag.name
+        name: tag.uuid
         required: true
         schema:
           type: string
@@ -6656,6 +6458,109 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
+  /api/v1/orgs/{owner}/tags/{uuid}:
+    delete:
+      operationId: DeleteTag
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Uuid identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Flag to handle sub-entities.
+        in: query
+        name: cascade
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Delete tag
+      tags:
+      - TagsV1
+      x-accepts: application/json
+    get:
+      operationId: GetTag
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Uuid identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Tag'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get tag
+      tags:
+      - TagsV1
+      x-accepts: application/json
   /api/v1/orgs/{owner}/teams:
     get:
       operationId: ListTeams
@@ -6693,11 +6598,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -6833,11 +6733,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -7024,11 +6919,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -8018,11 +7908,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -8105,11 +7990,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -8960,11 +8840,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -9296,11 +9171,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -9389,11 +9259,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -9530,11 +9395,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -9617,11 +9477,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -9758,11 +9613,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -9845,11 +9695,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -10700,11 +10545,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -11036,11 +10876,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -11129,11 +10964,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -13088,11 +12918,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -13372,11 +13197,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -13465,11 +13285,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -13606,11 +13421,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -13699,11 +13509,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -13792,11 +13597,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -13885,11 +13685,6 @@ paths:
         name: bookmarks
         schema:
           type: boolean
-      - description: Pinned entities.
-        in: query
-        name: pins
-        schema:
-          type: string
       - description: Mode of the search.
         in: query
         name: mode
@@ -16193,6 +15988,7 @@ paths:
           - analysis
           - iteration
           - markdown
+          - system
           type: string
       - description: Names query param.
         in: query
@@ -16214,6 +16010,12 @@ paths:
         name: force
         schema:
           type: boolean
+      - description: Sample query param.
+        in: query
+        name: sample
+        schema:
+          format: int32
+          type: integer
       responses:
         "200":
           content:
@@ -16646,6 +16448,7 @@ paths:
           - analysis
           - iteration
           - markdown
+          - system
           type: string
       - description: Names query param.
         in: query
@@ -16662,6 +16465,12 @@ paths:
         name: force
         schema:
           type: boolean
+      - description: Sample query param.
+        in: query
+        name: sample
+        schema:
+          format: int32
+          type: integer
       responses:
         "200":
           content:
@@ -16740,6 +16549,12 @@ paths:
         name: force
         schema:
           type: boolean
+      - description: Sample query param.
+        in: query
+        name: sample
+        schema:
+          format: int32
+          type: integer
       responses:
         "200":
           content:
@@ -16964,6 +16779,12 @@ paths:
         name: force
         schema:
           type: boolean
+      - description: Sample query param.
+        in: query
+        name: sample
+        schema:
+          format: int32
+          type: integer
       responses:
         "200":
           content:
@@ -17700,6 +17521,7 @@ components:
          - analysis: Analysis lineage
          - iteration: Iteration lineage
          - markdown: Mardown event
+         - system: System event
       enum:
       - model
       - audio
@@ -17729,6 +17551,7 @@ components:
       - analysis
       - iteration
       - markdown
+      - system
       title: Artifact kind
       type: string
     v1ArtifactTree:
@@ -17910,6 +17733,9 @@ components:
           - io
           - io
           ttl: 4
+          sections:
+          - sections
+          - sections
         presets:
         - presets
         - presets
@@ -17963,6 +17789,9 @@ components:
         - io
         - io
         ttl: 4
+        sections:
+        - sections
+        - sections
       properties:
         disable:
           title: Optional flag to disable cache, Cache is enabled by default
@@ -17976,7 +17805,14 @@ components:
         io:
           items:
             type: string
-          title: Optional Inputs/Outputs' names to consider for the cache
+          title: Optional Inputs/Outputs' names to consider for the cache, default
+            behavior to consider all inputs/outputs
+          type: array
+        sections:
+          items:
+            type: string
+          title: Optional sections to consider for the cache, default behavior to
+            consider container(command, args), init section, and connections section
           type: array
       title: |-
         Cache specification
@@ -18247,6 +18083,9 @@ components:
           - io
           - io
           ttl: 4
+          sections:
+          - sections
+          - sections
         cost: 5.507387
         kind: kind
         version: 7.933507
@@ -18268,6 +18107,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           presets:
           - presets
           - presets
@@ -18437,6 +18279,9 @@ components:
           - io
           - io
           ttl: 4
+          sections:
+          - sections
+          - sections
         cost: 6.628464
         kind: kind
         plugins:
@@ -18513,6 +18358,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           presets:
           - presets
           - presets
@@ -19055,6 +18903,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           cost: 6.628464
           kind: kind
           plugins:
@@ -19131,6 +18982,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             presets:
             - presets
             - presets
@@ -19229,6 +19083,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           cost: 6.628464
           kind: kind
           plugins:
@@ -19305,6 +19162,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             presets:
             - presets
             - presets
@@ -19489,6 +19349,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           cost: 4.078846
           kind: kind
           isPreset: true
@@ -19556,6 +19419,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             cost: 6.628464
             kind: kind
             plugins:
@@ -19632,6 +19498,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               presets:
               - presets
               - presets
@@ -19695,6 +19564,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             presets:
             - presets
             - presets
@@ -19819,6 +19691,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           cost: 4.078846
           kind: kind
           isPreset: true
@@ -19886,6 +19761,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             cost: 6.628464
             kind: kind
             plugins:
@@ -19962,6 +19840,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               presets:
               - presets
               - presets
@@ -20025,6 +19906,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             presets:
             - presets
             - presets
@@ -20245,6 +20129,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -20291,6 +20176,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -21426,6 +21312,36 @@ components:
           type: object
       title: HP Choice specification
       type: object
+    v1HpDateRange:
+      example:
+        kind: daterange
+        value: '{}'
+      properties:
+        kind:
+          default: daterange
+          title: Kind of hp, should be equal to "daterange"
+          type: string
+        value:
+          properties: {}
+          title: Value
+          type: object
+      title: DateRange specification
+      type: object
+    v1HpDateTimeRange:
+      example:
+        kind: datetimerange
+        value: '{}'
+      properties:
+        kind:
+          default: datetimerange
+          title: Kind of hp, should be equal to "datetimerange"
+          type: string
+        value:
+          properties: {}
+          title: Value
+          type: object
+      title: DateTimeRange specification
+      type: object
     v1HpGeomSpace:
       example:
         kind: geomspace
@@ -21539,6 +21455,9 @@ components:
         lognormal:
           kind: lognormal
           value: '{}'
+        daterange:
+          kind: daterange
+          value: '{}'
         pchoice:
           kind: pchoice
           value: '{}'
@@ -21547,6 +21466,9 @@ components:
           value: '{}'
         quniform:
           kind: quniform
+          value: '{}'
+        datetimerange:
+          kind: datetimerange
           value: '{}'
         qlognormal:
           kind: qlognormal
@@ -21604,6 +21526,10 @@ components:
           $ref: '#/components/schemas/v1HpLogNormal'
         qlognormal:
           $ref: '#/components/schemas/v1HpQLogNormal'
+        daterange:
+          $ref: '#/components/schemas/v1HpDateRange'
+        datetimerange:
+          $ref: '#/components/schemas/v1HpDateTimeRange'
       title: Hp Matrix specification
       type: object
     v1HpQLogNormal:
@@ -21975,6 +21901,7 @@ components:
           - '{}'
           - '{}'
           username: 7
+        model: model
         connection: connection
         artifacts:
           files:
@@ -21993,6 +21920,9 @@ components:
           $ref: '#/components/schemas/v1DockerfileType'
         file:
           $ref: '#/components/schemas/v1FileType'
+        model:
+          title: Model intializer
+          type: string
         connection:
           title: Optional, connection to use with this initializer
           type: string
@@ -22165,6 +22095,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -22211,6 +22142,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -22443,6 +22375,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -22489,6 +22422,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -23967,14 +23901,15 @@ components:
           live_state: 6
           uuid: uuid
           spec:
+            heat: heat
             histograms: '{}'
             offset: 5
             columns: columns
             query: query
-            pins: pins
             sort: sort
             groupby: groupby
             sections: sections
+            compares: compares
             layout: layout
             analytics:
               view: view
@@ -24014,14 +23949,15 @@ components:
           live_state: 6
           uuid: uuid
           spec:
+            heat: heat
             histograms: '{}'
             offset: 5
             columns: columns
             query: query
-            pins: pins
             sort: sort
             groupby: groupby
             sections: sections
+            compares: compares
             layout: layout
             analytics:
               view: view
@@ -24078,13 +24014,17 @@ components:
         count: 0
         results:
         - color: color
+          stats: '{}'
           name: name
           icon: icon
           description: description
+          uuid: uuid
         - color: color
+          stats: '{}'
           name: name
           icon: icon
           description: description
+          uuid: uuid
       properties:
         count:
           format: int32
@@ -24273,15 +24213,6 @@ components:
           type: string
       title: Contains list tokens
       type: object
-    v1LoadTagsResponse:
-      example:
-        data: '{}'
-      properties:
-        data:
-          properties: {}
-          type: object
-      title: Contains an object containing a map of tags -> color
-      type: object
     v1Log:
       example:
         container: container
@@ -24400,6 +24331,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -24446,6 +24378,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -24533,6 +24466,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -24579,6 +24513,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -25202,6 +25137,9 @@ components:
           - io
           - io
           ttl: 4
+          sections:
+          - sections
+          - sections
         cost: 4.078846
         kind: kind
         isPreset: true
@@ -25269,6 +25207,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           cost: 6.628464
           kind: kind
           plugins:
@@ -25345,6 +25286,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             presets:
             - presets
             - presets
@@ -25408,6 +25352,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           presets:
           - presets
           - presets
@@ -26202,6 +26149,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -26248,6 +26196,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -26335,6 +26284,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -26381,6 +26331,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -27159,6 +27110,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27205,6 +27157,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27286,6 +27239,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27332,6 +27286,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27420,6 +27375,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -27466,6 +27422,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -27561,6 +27518,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27607,6 +27565,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27695,6 +27654,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27741,6 +27701,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27828,6 +27789,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27874,6 +27836,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -27961,6 +27924,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -28007,6 +27971,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -28103,6 +28068,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             cost: 6.628464
             kind: kind
             plugins:
@@ -28179,6 +28147,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               presets:
               - presets
               - presets
@@ -28277,6 +28248,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             cost: 6.628464
             kind: kind
             plugins:
@@ -28353,6 +28327,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               presets:
               - presets
               - presets
@@ -28537,6 +28514,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             cost: 4.078846
             kind: kind
             isPreset: true
@@ -28604,6 +28584,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               cost: 6.628464
               kind: kind
               plugins:
@@ -28680,6 +28663,9 @@ components:
                   - io
                   - io
                   ttl: 4
+                  sections:
+                  - sections
+                  - sections
                 presets:
                 - presets
                 - presets
@@ -28743,6 +28729,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               presets:
               - presets
               - presets
@@ -28867,6 +28856,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             cost: 4.078846
             kind: kind
             isPreset: true
@@ -28934,6 +28926,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               cost: 6.628464
               kind: kind
               plugins:
@@ -29010,6 +29005,9 @@ components:
                   - io
                   - io
                   ttl: 4
+                  sections:
+                  - sections
+                  - sections
                 presets:
                 - presets
                 - presets
@@ -29073,6 +29071,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               presets:
               - presets
               - presets
@@ -29146,6 +29147,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -29192,6 +29194,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -29279,6 +29282,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -29325,6 +29329,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -29412,6 +29417,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -29458,6 +29464,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -29550,6 +29557,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -29596,6 +29604,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -29686,6 +29695,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -29732,6 +29742,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -29819,6 +29830,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -29865,6 +29877,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -30119,6 +30132,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30165,6 +30179,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30246,6 +30261,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30292,6 +30308,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30380,6 +30397,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -30426,6 +30444,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -30521,6 +30540,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30567,6 +30587,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30655,6 +30676,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30701,6 +30723,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30788,6 +30811,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30834,6 +30858,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30921,6 +30946,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -30967,6 +30993,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -31063,6 +31090,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               cost: 6.628464
               kind: kind
               plugins:
@@ -31139,6 +31169,9 @@ components:
                   - io
                   - io
                   ttl: 4
+                  sections:
+                  - sections
+                  - sections
                 presets:
                 - presets
                 - presets
@@ -31237,6 +31270,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               cost: 6.628464
               kind: kind
               plugins:
@@ -31313,6 +31349,9 @@ components:
                   - io
                   - io
                   ttl: 4
+                  sections:
+                  - sections
+                  - sections
                 presets:
                 - presets
                 - presets
@@ -31497,6 +31536,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               cost: 4.078846
               kind: kind
               isPreset: true
@@ -31564,6 +31606,9 @@ components:
                   - io
                   - io
                   ttl: 4
+                  sections:
+                  - sections
+                  - sections
                 cost: 6.628464
                 kind: kind
                 plugins:
@@ -31640,6 +31685,9 @@ components:
                     - io
                     - io
                     ttl: 4
+                    sections:
+                    - sections
+                    - sections
                   presets:
                   - presets
                   - presets
@@ -31703,6 +31751,9 @@ components:
                   - io
                   - io
                   ttl: 4
+                  sections:
+                  - sections
+                  - sections
                 presets:
                 - presets
                 - presets
@@ -31827,6 +31878,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               cost: 4.078846
               kind: kind
               isPreset: true
@@ -31894,6 +31948,9 @@ components:
                   - io
                   - io
                   ttl: 4
+                  sections:
+                  - sections
+                  - sections
                 cost: 6.628464
                 kind: kind
                 plugins:
@@ -31970,6 +32027,9 @@ components:
                     - io
                     - io
                     ttl: 4
+                    sections:
+                    - sections
+                    - sections
                   presets:
                   - presets
                   - presets
@@ -32033,6 +32093,9 @@ components:
                   - io
                   - io
                   ttl: 4
+                  sections:
+                  - sections
+                  - sections
                 presets:
                 - presets
                 - presets
@@ -32106,6 +32169,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -32152,6 +32216,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -32239,6 +32304,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -32285,6 +32351,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -32372,6 +32439,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -32418,6 +32486,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -32510,6 +32579,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -32556,6 +32626,7 @@ components:
                 - '{}'
                 - '{}'
                 username: 7
+              model: model
               connection: connection
               artifacts:
                 files:
@@ -32646,6 +32717,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -32692,6 +32764,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -32779,6 +32852,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -32825,6 +32899,7 @@ components:
                   - '{}'
                   - '{}'
                   username: 7
+                model: model
                 connection: connection
                 artifacts:
                   files:
@@ -32879,6 +32954,9 @@ components:
           lognormal:
             kind: lognormal
             value: '{}'
+          daterange:
+            kind: daterange
+            value: '{}'
           pchoice:
             kind: pchoice
             value: '{}'
@@ -32887,6 +32965,9 @@ components:
             value: '{}'
           quniform:
             kind: quniform
+            value: '{}'
+          datetimerange:
+            kind: datetimerange
             value: '{}'
           qlognormal:
             kind: qlognormal
@@ -33324,6 +33405,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           cost: 4.078846
           kind: kind
           isPreset: true
@@ -33391,6 +33475,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             cost: 6.628464
             kind: kind
             plugins:
@@ -33467,6 +33554,9 @@ components:
                 - io
                 - io
                 ttl: 4
+                sections:
+                - sections
+                - sections
               presets:
               - presets
               - presets
@@ -33530,6 +33620,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             presets:
             - presets
             - presets
@@ -33741,6 +33834,9 @@ components:
             - io
             - io
             ttl: 4
+            sections:
+            - sections
+            - sections
           cost: 5.507387
           kind: kind
           version: 7.933507
@@ -33762,6 +33858,9 @@ components:
               - io
               - io
               ttl: 4
+              sections:
+              - sections
+              - sections
             presets:
             - presets
             - presets
@@ -33850,14 +33949,15 @@ components:
         live_state: 6
         uuid: uuid
         spec:
+          heat: heat
           histograms: '{}'
           offset: 5
           columns: columns
           query: query
-          pins: pins
           sort: sort
           groupby: groupby
           sections: sections
+          compares: compares
           layout: layout
           analytics:
             view: view
@@ -33927,14 +34027,15 @@ components:
       type: object
     v1SearchSpec:
       example:
+        heat: heat
         histograms: '{}'
         offset: 5
         columns: columns
         query: query
-        pins: pins
         sort: sort
         groupby: groupby
         sections: sections
+        compares: compares
         layout: layout
         analytics:
           view: view
@@ -33984,14 +34085,17 @@ components:
         columns:
           title: Search columns
           type: string
-        pins:
-          title: Search pins
-          type: string
         layout:
-          title: Widgets layout
+          title: Search layout
           type: string
         sections:
-          title: Widgets layout
+          title: Search sections
+          type: string
+        compares:
+          title: Compare Flags
+          type: string
+        heat:
+          title: Optional heat fields
           type: string
         events:
           $ref: '#/components/schemas/v1DashboardSpec'
@@ -34090,6 +34194,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -34136,6 +34241,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -34298,6 +34404,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -34344,6 +34451,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -34425,6 +34533,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -34471,6 +34580,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -34631,6 +34741,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -34677,6 +34788,7 @@ components:
             - '{}'
             - '{}'
             username: 7
+          model: model
           connection: connection
           artifacts:
             files:
@@ -34934,6 +35046,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -34980,6 +35093,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -35068,6 +35182,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -35114,6 +35229,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -35201,6 +35317,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -35247,6 +35364,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -35334,6 +35452,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -35380,6 +35499,7 @@ components:
               - '{}'
               - '{}'
               username: 7
+            model: model
             connection: connection
             artifacts:
               files:
@@ -35447,10 +35567,15 @@ components:
     v1Tag:
       example:
         color: color
+        stats: '{}'
         name: name
         icon: icon
         description: description
+        uuid: uuid
       properties:
+        uuid:
+          title: UUID
+          type: string
         name:
           title: Tag name
           type: string
@@ -35463,6 +35588,10 @@ components:
         icon:
           title: Optional tag icon
           type: string
+        stats:
+          properties: {}
+          title: Optional tag stats
+          type: object
       title: Tag specification
       type: object
     v1Team:

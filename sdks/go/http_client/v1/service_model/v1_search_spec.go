@@ -38,16 +38,22 @@ type V1SearchSpec struct {
 	// Search columns
 	Columns string `json:"columns,omitempty"`
 
+	// Compare Flags
+	Compares string `json:"compares,omitempty"`
+
 	// Optional events specification
 	Events *V1DashboardSpec `json:"events,omitempty"`
 
 	// Search group bys
 	Groupby string `json:"groupby,omitempty"`
 
+	// Optional heat fields
+	Heat string `json:"heat,omitempty"`
+
 	// Optional histograms specification
 	Histograms interface{} `json:"histograms,omitempty"`
 
-	// Widgets layout
+	// Search layout
 	Layout string `json:"layout,omitempty"`
 
 	// Limit size
@@ -56,13 +62,10 @@ type V1SearchSpec struct {
 	// Offset value
 	Offset int32 `json:"offset,omitempty"`
 
-	// Search pins
-	Pins string `json:"pins,omitempty"`
-
 	// Search query
 	Query string `json:"query,omitempty"`
 
-	// Widgets layout
+	// Search sections
 	Sections string `json:"sections,omitempty"`
 
 	// Search sort
@@ -99,6 +102,8 @@ func (m *V1SearchSpec) validateAnalytics(formats strfmt.Registry) error {
 		if err := m.Analytics.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("analytics")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("analytics")
 			}
 			return err
 		}
@@ -116,6 +121,8 @@ func (m *V1SearchSpec) validateEvents(formats strfmt.Registry) error {
 		if err := m.Events.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("events")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("events")
 			}
 			return err
 		}
@@ -148,6 +155,8 @@ func (m *V1SearchSpec) contextValidateAnalytics(ctx context.Context, formats str
 		if err := m.Analytics.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("analytics")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("analytics")
 			}
 			return err
 		}
@@ -162,6 +171,8 @@ func (m *V1SearchSpec) contextValidateEvents(ctx context.Context, formats strfmt
 		if err := m.Events.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("events")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("events")
 			}
 			return err
 		}

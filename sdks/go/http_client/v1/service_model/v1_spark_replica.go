@@ -76,6 +76,8 @@ func (m *V1SparkReplica) validateEnvironment(formats strfmt.Registry) error {
 		if err := m.Environment.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("environment")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("environment")
 			}
 			return err
 		}
@@ -98,6 +100,8 @@ func (m *V1SparkReplica) validateInit(formats strfmt.Registry) error {
 			if err := m.Init[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("init" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("init" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -132,6 +136,8 @@ func (m *V1SparkReplica) contextValidateEnvironment(ctx context.Context, formats
 		if err := m.Environment.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("environment")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("environment")
 			}
 			return err
 		}
@@ -148,6 +154,8 @@ func (m *V1SparkReplica) contextValidateInit(ctx context.Context, formats strfmt
 			if err := m.Init[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("init" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("init" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

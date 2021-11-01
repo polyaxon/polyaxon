@@ -17,7 +17,7 @@
 import ast
 
 from collections.abc import Mapping
-from typing import Union
+from typing import Any, Union
 
 import polyaxon_sdk
 
@@ -26,6 +26,14 @@ from marshmallow.exceptions import ValidationError
 
 from polyaxon import types
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig, BaseOneOfSchema
+from polyaxon.utils.serialization import (
+    date_deserialize,
+    date_serialize,
+    datetime_deserialize,
+    datetime_serialize,
+    timedelta_deserialize,
+    timedelta_serialize,
+)
 from polyaxon.utils.signal_decorators import check_partial
 
 try:
@@ -50,11 +58,10 @@ class Range(fields.Field):
     OPTIONAL_KEY = None
     KEYS = REQUIRED_KEYS
     CHECK_ORDER = True
+    ACCEPT_STR_VALUE = True
 
-    def _deserialize(
-        self, value, attr, data, **kwargs
-    ):  # pylint:disable=too-many-branches
-        if isinstance(value, str):
+    def _validate_value(self, value, attr, data, **kwargs):
+        if self.ACCEPT_STR_VALUE and isinstance(value, str):
             value = value.split(":")
         elif isinstance(value, Mapping):
             if set(self.REQUIRED_KEYS) - set(value.keys()):
@@ -96,6 +103,10 @@ class Range(fields.Field):
                     len(value),
                 )
             )
+        return value
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        value = self._validate_value(value, attr, data, **kwargs)
 
         for i, v in enumerate(value):
             try:
@@ -108,6 +119,122 @@ class Range(fields.Field):
                 )
             if not isinstance(v, (int, float)):
                 value[i] = ast.literal_eval(v)
+
+        # Check that lower value is smaller than higher value
+        if self.CHECK_ORDER and value[0] >= value[1]:
+            raise ValidationError(
+                "{key2} value must be strictly higher that {key1} value, "
+                "received instead {key1}: {val1}, {key2}: {val2}".format(
+                    key1=self.REQUIRED_KEYS[0],
+                    key2=self.REQUIRED_KEYS[1],
+                    val1=value[0],
+                    val2=value[1],
+                )
+            )
+        if len(self.REQUIRED_KEYS) == 3 and value[2] == 0:
+            raise ValidationError("{} cannot be 0".format(self.REQUIRED_KEYS[2]))
+
+        value = dict(zip(self.KEYS, value))
+        return value
+
+
+class DateRange(Range):
+    REQUIRED_KEYS = ["start", "stop", "step"]
+    KEYS = REQUIRED_KEYS
+    ACCEPT_STR_VALUE = False
+
+    def _serialize(self, value: Any, attr: str, obj: Any, **kwargs):
+        return {
+            "start": date_serialize("start", value),
+            "stop": date_serialize("stop", value),
+            "step": value["step"],
+        }
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        value = self._validate_value(value, attr, data, **kwargs)
+
+        def _date_deserialize(i, v):
+            try:
+                return date_deserialize(v)
+            except Exception as e:
+                raise ValidationError(
+                    "{}: {} must of type date, received instead {}. Error {}".format(
+                        self.__class__.__name__, self.REQUIRED_KEYS[i], v, e
+                    )
+                )
+
+        try:
+            frequency = int(value[2])
+        except Exception as e:
+            raise ValidationError(
+                "{}: {} must of type int, received instead {}. Error {}".format(
+                    self.__class__.__name__, self.REQUIRED_KEYS[2], value[2], e
+                )
+            )
+
+        value = [
+            _date_deserialize(0, value[0]),
+            _date_deserialize(1, value[1]),
+            frequency,
+        ]
+
+        # Check that lower value is smaller than higher value
+        if self.CHECK_ORDER and value[0] >= value[1]:
+            raise ValidationError(
+                "{key2} value must be strictly higher that {key1} value, "
+                "received instead {key1}: {val1}, {key2}: {val2}".format(
+                    key1=self.REQUIRED_KEYS[0],
+                    key2=self.REQUIRED_KEYS[1],
+                    val1=value[0],
+                    val2=value[1],
+                )
+            )
+        if len(self.REQUIRED_KEYS) == 3 and value[2] == 0:
+            raise ValidationError("{} cannot be 0".format(self.REQUIRED_KEYS[2]))
+
+        value = dict(zip(self.KEYS, value))
+        return value
+
+
+class DateTimeRange(Range):
+    REQUIRED_KEYS = ["start", "stop", "step"]
+    KEYS = REQUIRED_KEYS
+    ACCEPT_STR_VALUE = False
+
+    def _serialize(self, value: Any, attr: str, obj: Any, **kwargs):
+        return {
+            "start": datetime_serialize("start", value),
+            "stop": datetime_serialize("stop", value),
+            "step": timedelta_serialize("step", value),
+        }
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        value = self._validate_value(value, attr, data, **kwargs)
+
+        def _datetime_deserialize(i, v):
+            try:
+                return datetime_deserialize(v)
+            except Exception as e:
+                raise ValidationError(
+                    "{}: {} must of type datetime, received instead {}. Error {}".format(
+                        self.__class__.__name__, self.REQUIRED_KEYS[i], v, e
+                    )
+                )
+
+        try:
+            frequency = timedelta_deserialize(value[2])
+        except Exception as e:
+            raise ValidationError(
+                "{}: {} must of type int(timedelta), received instead {}. Error {}".format(
+                    self.__class__.__name__, self.REQUIRED_KEYS[2], value[2], e
+                )
+            )
+
+        value = [
+            _datetime_deserialize(0, value[0]),
+            _datetime_deserialize(1, value[1]),
+            frequency,
+        ]
 
         # Check that lower value is smaller than higher value
         if self.CHECK_ORDER and value[0] >= value[1]:
@@ -392,6 +519,146 @@ class V1HpRange(BaseHpParamConfig, polyaxon_sdk.V1HpRange):
 
     SCHEMA = HpRangeSchema
     IDENTIFIER = "range"
+
+    @property
+    def is_distribution(self):
+        return False
+
+    @property
+    def is_continuous(self):
+        return False
+
+    @property
+    def is_discrete(self):
+        return True
+
+    @property
+    def is_range(self):
+        return True
+
+    @property
+    def is_categorical(self):
+        return False
+
+    @property
+    def is_uniform(self):
+        return False
+
+
+class HpDateRangeSchema(BaseCamelSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal("daterange"))
+    value = DateRange(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return V1HpDateRange
+
+
+class V1HpDateRange(BaseHpParamConfig, polyaxon_sdk.V1HpDateRange):
+    """`DateTimeRange` picks a value from a generated list of values using `[start, stop, step]`,
+    you can pass values in these forms:
+      * ["2019-06-24", "2019-06-25", 3600 * 24]
+      * {start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 1}
+
+    Step (frequency): represents a timedelta in days.
+
+    ```yaml
+    >>> params:
+    >>>   paramTest:
+    >>>     kind: range
+    >>>     value: ["2019-06-22", "2019-07-25", 1]
+    ```
+
+    ```python
+    >>> from polyaxon.polyflow import V1HpDateRange
+    >>> param_test = V1HpDateRange(value=["2019-06-22", "2019-06-25", 2])
+    ```
+    """
+
+    SCHEMA = HpDateRangeSchema
+    IDENTIFIER = "daterange"
+
+    @staticmethod
+    def validate_io(io: "V1IO"):  # noqa
+        if io.type != types.DATE:
+            raise ValidationError(
+                "Param `{}` has a an input type `{}` "
+                "and it does not correspond to hyper-param type `date`.".format(
+                    io.name,
+                    io.type,
+                )
+            )
+        return True
+
+    @property
+    def is_distribution(self):
+        return False
+
+    @property
+    def is_continuous(self):
+        return False
+
+    @property
+    def is_discrete(self):
+        return True
+
+    @property
+    def is_range(self):
+        return True
+
+    @property
+    def is_categorical(self):
+        return False
+
+    @property
+    def is_uniform(self):
+        return False
+
+
+class HpDateTimeRangeSchema(BaseCamelSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal("datetimerange"))
+    value = DateTimeRange(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return V1HpDateTimeRange
+
+
+class V1HpDateTimeRange(BaseHpParamConfig, polyaxon_sdk.V1HpDateTimeRange):
+    """`DateTimeRange` picks a value from a generated list of values using `[start, stop, step]`,
+    you can pass values in these forms:
+      * ["2019-06-24T21:20:07+02:00", "2019-06-25T21:20:07+02:00", 3600]
+      * {start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 3600 * 4}
+
+    Step (frequency): represents a timedelta in seconds.
+
+    ```yaml
+    >>> params:
+    >>>   paramTest:
+    >>>     kind: range
+    >>>     value: ["2019-06-22 21:00", "2019-06-25 21:00", 3600]
+    ```
+
+    ```python
+    >>> from polyaxon.polyflow import V1HpDateTimeRange
+    >>> param_test = V1HpDateTimeRange(value=["2019-06-22 21:00", "2019-06-25 21:00", 3600])
+    ```
+    """
+
+    SCHEMA = HpDateTimeRangeSchema
+    IDENTIFIER = "datetimerange"
+
+    @staticmethod
+    def validate_io(io: "V1IO"):  # noqa
+        if io.type != types.DATETIME:
+            raise ValidationError(
+                "Param `{}` has a an input type `{}` "
+                "and it does not correspond to hyper-param type `datetime`.".format(
+                    io.name,
+                    io.type,
+                )
+            )
+        return True
 
     @property
     def is_distribution(self):
@@ -1064,6 +1331,8 @@ class HpParamSchema(BaseOneOfSchema):
         V1HpChoice.IDENTIFIER: HpChoiceSchema,
         V1HpPChoice.IDENTIFIER: HpPChoiceSchema,
         V1HpRange.IDENTIFIER: HpRangeSchema,
+        V1HpDateRange.IDENTIFIER: HpDateRangeSchema,
+        V1HpDateTimeRange.IDENTIFIER: HpDateTimeRangeSchema,
         V1HpLinSpace.IDENTIFIER: HpLinSpaceSchema,
         V1HpLogSpace.IDENTIFIER: HpLogSpaceSchema,
         V1HpGeomSpace.IDENTIFIER: HpGeomSpaceSchema,
@@ -1082,6 +1351,8 @@ V1HpParam = Union[
     V1HpChoice,
     V1HpPChoice,
     V1HpRange,
+    V1HpDateRange,
+    V1HpDateTimeRange,
     V1HpLinSpace,
     V1HpLogSpace,
     V1HpGeomSpace,

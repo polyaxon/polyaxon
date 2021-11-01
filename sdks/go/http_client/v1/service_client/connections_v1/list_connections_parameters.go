@@ -114,12 +114,6 @@ type ListConnectionsParams struct {
 	*/
 	Owner string
 
-	/* Pins.
-
-	   Pinned entities.
-	*/
-	Pins *string
-
 	/* Query.
 
 	   Query filter the search.
@@ -251,17 +245,6 @@ func (o *ListConnectionsParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithPins adds the pins to the list connections params
-func (o *ListConnectionsParams) WithPins(pins *string) *ListConnectionsParams {
-	o.SetPins(pins)
-	return o
-}
-
-// SetPins adds the pins to the list connections params
-func (o *ListConnectionsParams) SetPins(pins *string) {
-	o.Pins = pins
-}
-
 // WithQuery adds the query to the list connections params
 func (o *ListConnectionsParams) WithQuery(query *string) *ListConnectionsParams {
 	o.SetQuery(query)
@@ -380,23 +363,6 @@ func (o *ListConnectionsParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
-	}
-
-	if o.Pins != nil {
-
-		// query param pins
-		var qrPins string
-
-		if o.Pins != nil {
-			qrPins = *o.Pins
-		}
-		qPins := qrPins
-		if qPins != "" {
-
-			if err := r.SetQueryParam("pins", qPins); err != nil {
-				return err
-			}
-		}
 	}
 
 	if o.Query != nil {

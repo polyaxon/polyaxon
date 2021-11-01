@@ -38,6 +38,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import org.openapitools.client.model.V1HpChoice;
+import org.openapitools.client.model.V1HpDateRange;
+import org.openapitools.client.model.V1HpDateTimeRange;
 import org.openapitools.client.model.V1HpGeomSpace;
 import org.openapitools.client.model.V1HpLinSpace;
 import org.openapitools.client.model.V1HpLogNormal;
@@ -112,6 +114,14 @@ public class V1HpParams {
   public static final String SERIALIZED_NAME_QLOGNORMAL = "qlognormal";
   @SerializedName(SERIALIZED_NAME_QLOGNORMAL)
   private V1HpQLogNormal qlognormal;
+
+  public static final String SERIALIZED_NAME_DATERANGE = "daterange";
+  @SerializedName(SERIALIZED_NAME_DATERANGE)
+  private V1HpDateRange daterange;
+
+  public static final String SERIALIZED_NAME_DATETIMERANGE = "datetimerange";
+  @SerializedName(SERIALIZED_NAME_DATETIMERANGE)
+  private V1HpDateTimeRange datetimerange;
 
 
   public V1HpParams choice(V1HpChoice choice) {
@@ -436,6 +446,52 @@ public class V1HpParams {
   }
 
 
+  public V1HpParams daterange(V1HpDateRange daterange) {
+    
+    this.daterange = daterange;
+    return this;
+  }
+
+   /**
+   * Get daterange
+   * @return daterange
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public V1HpDateRange getDaterange() {
+    return daterange;
+  }
+
+
+  public void setDaterange(V1HpDateRange daterange) {
+    this.daterange = daterange;
+  }
+
+
+  public V1HpParams datetimerange(V1HpDateTimeRange datetimerange) {
+    
+    this.datetimerange = datetimerange;
+    return this;
+  }
+
+   /**
+   * Get datetimerange
+   * @return datetimerange
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public V1HpDateTimeRange getDatetimerange() {
+    return datetimerange;
+  }
+
+
+  public void setDatetimerange(V1HpDateTimeRange datetimerange) {
+    this.datetimerange = datetimerange;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -458,12 +514,14 @@ public class V1HpParams {
         Objects.equals(this.normal, v1HpParams.normal) &&
         Objects.equals(this.qnormal, v1HpParams.qnormal) &&
         Objects.equals(this.lognormal, v1HpParams.lognormal) &&
-        Objects.equals(this.qlognormal, v1HpParams.qlognormal);
+        Objects.equals(this.qlognormal, v1HpParams.qlognormal) &&
+        Objects.equals(this.daterange, v1HpParams.daterange) &&
+        Objects.equals(this.datetimerange, v1HpParams.datetimerange);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(choice, pchoice, range, linspace, logspace, geomspace, uniform, quniform, loguniform, qloguniform, normal, qnormal, lognormal, qlognormal);
+    return Objects.hash(choice, pchoice, range, linspace, logspace, geomspace, uniform, quniform, loguniform, qloguniform, normal, qnormal, lognormal, qlognormal, daterange, datetimerange);
   }
 
 
@@ -485,6 +543,8 @@ public class V1HpParams {
     sb.append("    qnormal: ").append(toIndentedString(qnormal)).append("\n");
     sb.append("    lognormal: ").append(toIndentedString(lognormal)).append("\n");
     sb.append("    qlognormal: ").append(toIndentedString(qlognormal)).append("\n");
+    sb.append("    daterange: ").append(toIndentedString(daterange)).append("\n");
+    sb.append("    datetimerange: ").append(toIndentedString(datetimerange)).append("\n");
     sb.append("}");
     return sb.toString();
   }

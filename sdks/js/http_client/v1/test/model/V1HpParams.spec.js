@@ -152,6 +152,18 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property daterange (base name: "daterange")', function() {
+      // uncomment below and update the code to test the property daterange
+      //var instane = new PolyaxonSdk.V1HpParams();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property datetimerange (base name: "datetimerange")', function() {
+      // uncomment below and update the code to test the property datetimerange
+      //var instane = new PolyaxonSdk.V1HpParams();
+      //expect(instance).to.be();
+    });
+
   });
 
 }));

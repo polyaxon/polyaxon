@@ -264,7 +264,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_project_dashboard_names**
-> V1ListDashboardsResponse list_project_dashboard_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListDashboardsResponse list_project_dashboard_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List project dashboard
 
@@ -309,13 +309,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List project dashboard
-        api_response = api_instance.list_project_dashboard_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_project_dashboard_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->list_project_dashboard_names: %s\n" % e)
@@ -332,7 +331,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -361,7 +359,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_project_dashboards**
-> V1ListDashboardsResponse list_project_dashboards(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListDashboardsResponse list_project_dashboards(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List project dashboards
 
@@ -406,13 +404,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List project dashboards
-        api_response = api_instance.list_project_dashboards(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_project_dashboards(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->list_project_dashboards: %s\n" % e)
@@ -429,7 +426,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 

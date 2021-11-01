@@ -38,9 +38,6 @@ import {
     V1ListTagsResponse,
     V1ListTagsResponseFromJSON,
     V1ListTagsResponseToJSON,
-    V1LoadTagsResponse,
-    V1LoadTagsResponseFromJSON,
-    V1LoadTagsResponseToJSON,
     V1Tag,
     V1TagFromJSON,
     V1TagToJSON,
@@ -53,12 +50,13 @@ export interface CreateTagRequest {
 
 export interface DeleteTagRequest {
     owner: string;
-    name: string;
+    uuid: string;
+    cascade?: boolean;
 }
 
 export interface GetTagRequest {
     owner: string;
-    name: string;
+    uuid: string;
 }
 
 export interface ListTagsRequest {
@@ -68,7 +66,6 @@ export interface ListTagsRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -80,14 +77,13 @@ export interface LoadTagsRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
 
 export interface PatchTagRequest {
     owner: string;
-    tagName: string;
+    tagUuid: string;
     body: V1Tag;
 }
 
@@ -98,7 +94,7 @@ export interface SyncTagsRequest {
 
 export interface UpdateTagRequest {
     owner: string;
-    tagName: string;
+    tagUuid: string;
     body: V1Tag;
 }
 
@@ -156,11 +152,15 @@ export class TagsV1Api extends runtime.BaseAPI {
             throw new runtime.RequiredError('owner','Required parameter requestParameters.owner was null or undefined when calling deleteTag.');
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling deleteTag.');
+        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
+            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling deleteTag.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.cascade !== undefined) {
+            queryParameters['cascade'] = requestParameters.cascade;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -169,7 +169,7 @@ export class TagsV1Api extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/api/v1/orgs/{owner}/tags/{name}`.replace(`{${"owner"}}`, encodeURIComponent(String(requestParameters.owner))).replace(`{${"name"}}`, encodeURIComponent(String(requestParameters.name))),
+            path: `/api/v1/orgs/{owner}/tags/{uuid}`.replace(`{${"owner"}}`, encodeURIComponent(String(requestParameters.owner))).replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -193,8 +193,8 @@ export class TagsV1Api extends runtime.BaseAPI {
             throw new runtime.RequiredError('owner','Required parameter requestParameters.owner was null or undefined when calling getTag.');
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getTag.');
+        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
+            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling getTag.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -206,7 +206,7 @@ export class TagsV1Api extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/api/v1/orgs/{owner}/tags/{name}`.replace(`{${"owner"}}`, encodeURIComponent(String(requestParameters.owner))).replace(`{${"name"}}`, encodeURIComponent(String(requestParameters.name))),
+            path: `/api/v1/orgs/{owner}/tags/{uuid}`.replace(`{${"owner"}}`, encodeURIComponent(String(requestParameters.owner))).replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -253,10 +253,6 @@ export class TagsV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -292,7 +288,7 @@ export class TagsV1Api extends runtime.BaseAPI {
     /**
      * Load tags
      */
-    async loadTagsRaw(requestParameters: LoadTagsRequest): Promise<runtime.ApiResponse<V1LoadTagsResponse>> {
+    async loadTagsRaw(requestParameters: LoadTagsRequest): Promise<runtime.ApiResponse<object>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
             throw new runtime.RequiredError('owner','Required parameter requestParameters.owner was null or undefined when calling loadTags.');
         }
@@ -319,10 +315,6 @@ export class TagsV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -344,13 +336,13 @@ export class TagsV1Api extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => V1LoadTagsResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * Load tags
      */
-    async loadTags(requestParameters: LoadTagsRequest): Promise<V1LoadTagsResponse> {
+    async loadTags(requestParameters: LoadTagsRequest): Promise<object> {
         const response = await this.loadTagsRaw(requestParameters);
         return await response.value();
     }
@@ -363,8 +355,8 @@ export class TagsV1Api extends runtime.BaseAPI {
             throw new runtime.RequiredError('owner','Required parameter requestParameters.owner was null or undefined when calling patchTag.');
         }
 
-        if (requestParameters.tagName === null || requestParameters.tagName === undefined) {
-            throw new runtime.RequiredError('tagName','Required parameter requestParameters.tagName was null or undefined when calling patchTag.');
+        if (requestParameters.tagUuid === null || requestParameters.tagUuid === undefined) {
+            throw new runtime.RequiredError('tagUuid','Required parameter requestParameters.tagUuid was null or undefined when calling patchTag.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -382,7 +374,7 @@ export class TagsV1Api extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/api/v1/orgs/{owner}/tags/{tag.name}`.replace(`{${"owner"}}`, encodeURIComponent(String(requestParameters.owner))).replace(`{${"tag.name"}}`, encodeURIComponent(String(requestParameters.tagName))),
+            path: `/api/v1/orgs/{owner}/tags/{tag.uuid}`.replace(`{${"owner"}}`, encodeURIComponent(String(requestParameters.owner))).replace(`{${"tag.uuid"}}`, encodeURIComponent(String(requestParameters.tagUuid))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
@@ -448,8 +440,8 @@ export class TagsV1Api extends runtime.BaseAPI {
             throw new runtime.RequiredError('owner','Required parameter requestParameters.owner was null or undefined when calling updateTag.');
         }
 
-        if (requestParameters.tagName === null || requestParameters.tagName === undefined) {
-            throw new runtime.RequiredError('tagName','Required parameter requestParameters.tagName was null or undefined when calling updateTag.');
+        if (requestParameters.tagUuid === null || requestParameters.tagUuid === undefined) {
+            throw new runtime.RequiredError('tagUuid','Required parameter requestParameters.tagUuid was null or undefined when calling updateTag.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -467,7 +459,7 @@ export class TagsV1Api extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/api/v1/orgs/{owner}/tags/{tag.name}`.replace(`{${"owner"}}`, encodeURIComponent(String(requestParameters.owner))).replace(`{${"tag.name"}}`, encodeURIComponent(String(requestParameters.tagName))),
+            path: `/api/v1/orgs/{owner}/tags/{tag.uuid}`.replace(`{${"owner"}}`, encodeURIComponent(String(requestParameters.owner))).replace(`{${"tag.uuid"}}`, encodeURIComponent(String(requestParameters.tagUuid))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

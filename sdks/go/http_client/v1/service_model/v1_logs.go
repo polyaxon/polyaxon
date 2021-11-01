@@ -92,6 +92,8 @@ func (m *V1Logs) validateLogs(formats strfmt.Registry) error {
 			if err := m.Logs[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("logs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("logs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -124,6 +126,8 @@ func (m *V1Logs) contextValidateLogs(ctx context.Context, formats strfmt.Registr
 			if err := m.Logs[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("logs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("logs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -263,6 +263,7 @@ class BaseConverter(ConverterAbstract):
         contexts: PluginsContextsSpec,
         artifacts_store: V1ConnectionType,
         sidecar_containers: List[k8s_schemas.V1Container],
+        log_level: str = None,
     ) -> List[k8s_schemas.V1Container]:
         sidecar_containers = [
             ensure_container_name(container=c, prefix=SIDECAR_PREFIX)
@@ -277,6 +278,7 @@ class BaseConverter(ConverterAbstract):
             artifacts_store=artifacts_store,
             contexts=contexts,
             run_path=self.run_path,
+            log_level=log_level,
         )
         containers = to_list(polyaxon_sidecar_container, check_none=True)
         containers += sidecar_containers

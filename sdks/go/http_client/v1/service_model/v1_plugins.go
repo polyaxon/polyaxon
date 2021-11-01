@@ -105,6 +105,8 @@ func (m *V1Plugins) validateNotifications(formats strfmt.Registry) error {
 			if err := m.Notifications[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("notifications" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("notifications" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -124,6 +126,8 @@ func (m *V1Plugins) validateSidecar(formats strfmt.Registry) error {
 		if err := m.Sidecar.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("sidecar")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sidecar")
 			}
 			return err
 		}
@@ -158,6 +162,8 @@ func (m *V1Plugins) contextValidateNotifications(ctx context.Context, formats st
 			if err := m.Notifications[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("notifications" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("notifications" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -174,6 +180,8 @@ func (m *V1Plugins) contextValidateSidecar(ctx context.Context, formats strfmt.R
 		if err := m.Sidecar.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("sidecar")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sidecar")
 			}
 			return err
 		}

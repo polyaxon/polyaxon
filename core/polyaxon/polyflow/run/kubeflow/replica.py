@@ -252,3 +252,12 @@ class V1KFReplica(BaseConfig, polyaxon_sdk.V1KFReplica):
             resources += V1RunResources.from_container(self.container)
 
         return resources
+
+    def get_all_containers(self):
+        return [self.container] if self.container else []
+
+    def get_all_connections(self):
+        return self.connections or []
+
+    def get_all_init(self):
+        return self.init or []

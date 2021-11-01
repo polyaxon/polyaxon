@@ -544,7 +544,6 @@ export default class OrganizationsV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/OrganizationsV1Api~getOrganizationActivitiesCallback} callback The callback function, accepting three arguments: error, data, response
@@ -567,7 +566,6 @@ export default class OrganizationsV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };
@@ -708,7 +706,6 @@ export default class OrganizationsV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/OrganizationsV1Api~getOrganizationRunsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -731,7 +728,6 @@ export default class OrganizationsV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };
@@ -944,7 +940,6 @@ export default class OrganizationsV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/OrganizationsV1Api~listOrganizationMemberNamesCallback} callback The callback function, accepting three arguments: error, data, response
@@ -967,7 +962,6 @@ export default class OrganizationsV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };
@@ -1004,7 +998,6 @@ export default class OrganizationsV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/OrganizationsV1Api~listOrganizationMembersCallback} callback The callback function, accepting three arguments: error, data, response
@@ -1027,7 +1020,6 @@ export default class OrganizationsV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };

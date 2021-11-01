@@ -191,10 +191,9 @@ public class AgentsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListAgentsResponse response = api.listAgentNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListAgentsResponse response = api.listAgentNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -215,10 +214,9 @@ public class AgentsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListAgentsResponse response = api.listAgents(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListAgentsResponse response = api.listAgents(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

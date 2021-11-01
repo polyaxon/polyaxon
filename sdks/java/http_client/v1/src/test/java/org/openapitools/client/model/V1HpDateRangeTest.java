@@ -41,25 +41,33 @@ import org.junit.Test;
 
 
 /**
- * Model tests for V1LoadTagsResponse
+ * Model tests for V1HpDateRange
  */
-public class V1LoadTagsResponseTest {
-    private final V1LoadTagsResponse model = new V1LoadTagsResponse();
+public class V1HpDateRangeTest {
+    private final V1HpDateRange model = new V1HpDateRange();
 
     /**
-     * Model tests for V1LoadTagsResponse
+     * Model tests for V1HpDateRange
      */
     @Test
-    public void testV1LoadTagsResponse() {
-        // TODO: test V1LoadTagsResponse
+    public void testV1HpDateRange() {
+        // TODO: test V1HpDateRange
     }
 
     /**
-     * Test the property 'data'
+     * Test the property 'kind'
      */
     @Test
-    public void dataTest() {
-        // TODO: test data
+    public void kindTest() {
+        // TODO: test kind
+    }
+
+    /**
+     * Test the property 'value'
+     */
+    @Test
+    public void valueTest() {
+        // TODO: test value
     }
 
 }

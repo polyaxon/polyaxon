@@ -61,5 +61,7 @@
 
 * `MARKDOWN` (value: `"markdown"`)
 
+* `SYSTEM` (value: `"system"`)
+
 
 

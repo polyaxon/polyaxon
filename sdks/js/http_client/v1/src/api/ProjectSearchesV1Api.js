@@ -229,7 +229,6 @@ export default class ProjectSearchesV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectSearchesV1Api~listProjectSearchNamesCallback} callback The callback function, accepting three arguments: error, data, response
@@ -257,7 +256,6 @@ export default class ProjectSearchesV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };
@@ -295,7 +293,6 @@ export default class ProjectSearchesV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/ProjectSearchesV1Api~listProjectSearchesCallback} callback The callback function, accepting three arguments: error, data, response
@@ -323,7 +320,6 @@ export default class ProjectSearchesV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };

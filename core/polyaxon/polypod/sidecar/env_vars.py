@@ -19,6 +19,7 @@ from typing import List
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_ARTIFACTS_STORE_NAME,
     POLYAXON_KEYS_CONTAINER_ID,
+    POLYAXON_KEYS_LOG_LEVEL,
 )
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.env_vars import get_env_var
@@ -29,8 +30,11 @@ def get_sidecar_env_vars(
     env_vars: List[k8s_schemas.V1EnvVar],
     container_id: str,
     artifacts_store_name: str,
+    log_level: str = None,
 ) -> List[k8s_schemas.V1EnvVar]:
 
+    if log_level:
+        env_vars.append(get_env_var(name=POLYAXON_KEYS_LOG_LEVEL, value=log_level))
     env_vars = to_list(env_vars, check_none=True)[:]
     env_vars.append(get_env_var(name=POLYAXON_KEYS_CONTAINER_ID, value=container_id))
     env_vars.append(

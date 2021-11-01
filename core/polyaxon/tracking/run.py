@@ -32,7 +32,10 @@ from polyaxon.client.decorators import client_handler
 from polyaxon.connections.reader import get_connection_type
 from polyaxon.constants.globals import UNKNOWN
 from polyaxon.containers import contexts as container_contexts
-from polyaxon.containers.contexts import CONTEXTS_EVENTS_SUBPATH_FORMAT
+from polyaxon.containers.contexts import (
+    CONTEXTS_EVENTS_SUBPATH_FORMAT,
+    CONTEXTS_SYSTEM_RESOURCES_EVENTS_SUBPATH_FORMAT,
+)
 from polyaxon.env_vars.getters import (
     get_artifacts_store_name,
     get_collect_artifacts,
@@ -1555,6 +1558,12 @@ class Run(RunClient):
             self.sync_events_summaries(
                 last_check=None,
                 events_path=CONTEXTS_EVENTS_SUBPATH_FORMAT.format(self._artifacts_path),
+            )
+            self.sync_events_summaries(
+                last_check=None,
+                events_path=CONTEXTS_SYSTEM_RESOURCES_EVENTS_SUBPATH_FORMAT.format(
+                    self._artifacts_path
+                ),
             )
         time.sleep(settings.CLIENT_CONFIG.tracking_timeout)
 

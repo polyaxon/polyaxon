@@ -386,7 +386,8 @@ public class RunsV1ApiTest {
         String runs = null;
         String orient = null;
         Boolean force = null;
-        V1EventsResponse response = api.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, force);
+        Integer sample = null;
+        V1EventsResponse response = api.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, force, sample);
 
         // TODO: test validations
     }
@@ -625,7 +626,8 @@ public class RunsV1ApiTest {
         String names = null;
         String orient = null;
         Boolean force = null;
-        V1EventsResponse response = api.getRunEvents(namespace, owner, project, uuid, kind, names, orient, force);
+        Integer sample = null;
+        V1EventsResponse response = api.getRunEvents(namespace, owner, project, uuid, kind, names, orient, force, sample);
 
         // TODO: test validations
     }
@@ -687,7 +689,8 @@ public class RunsV1ApiTest {
         String names = null;
         Boolean tail = null;
         Boolean force = null;
-        V1EventsResponse response = api.getRunResources(namespace, owner, project, uuid, names, tail, force);
+        Integer sample = null;
+        V1EventsResponse response = api.getRunResources(namespace, owner, project, uuid, names, tail, force, sample);
 
         // TODO: test validations
     }
@@ -795,10 +798,9 @@ public class RunsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListRunArtifactsResponse response = api.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListRunArtifactsResponse response = api.getRunsArtifactsLineage(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -838,7 +840,8 @@ public class RunsV1ApiTest {
         String names = null;
         Boolean tail = null;
         Boolean force = null;
-        Object response = api.inspectRun(namespace, owner, project, uuid, names, tail, force);
+        Integer sample = null;
+        Object response = api.inspectRun(namespace, owner, project, uuid, names, tail, force, sample);
 
         // TODO: test validations
     }
@@ -938,10 +941,9 @@ public class RunsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListRunsResponse response = api.listRuns(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListRunsResponse response = api.listRuns(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

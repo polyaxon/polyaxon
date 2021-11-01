@@ -39,12 +39,15 @@ message Init {
     // File intializer
     FileType file = 4;
 
+    // Model intializer
+    string model = 5;
+
     // Optional, connection to use with this initializer
-    string connection = 5;
+    string connection = 6;
 
     // Optional context path, the path to mount to main the container
-    string path = 6;
+    string path = 7;
 
     // Container to override
-    Container container = 7;
+    Container container = 8;
 }

@@ -98,7 +98,6 @@ export interface ListAgentNamesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -110,7 +109,6 @@ export interface ListAgentsRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -473,10 +471,6 @@ export class AgentsV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -537,10 +531,6 @@ export class AgentsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.bookmarks !== undefined) {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
-        }
-
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
         }
 
         if (requestParameters.mode !== undefined) {

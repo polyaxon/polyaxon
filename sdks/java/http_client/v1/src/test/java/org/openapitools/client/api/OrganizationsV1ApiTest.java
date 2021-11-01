@@ -247,10 +247,9 @@ public class OrganizationsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListActivitiesResponse response = api.getOrganizationActivities(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListActivitiesResponse response = api.getOrganizationActivities(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -310,10 +309,9 @@ public class OrganizationsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListRunsResponse response = api.getOrganizationRuns(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListRunsResponse response = api.getOrganizationRuns(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -404,10 +402,9 @@ public class OrganizationsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListOrganizationMembersResponse response = api.listOrganizationMemberNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListOrganizationMembersResponse response = api.listOrganizationMemberNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -428,10 +425,9 @@ public class OrganizationsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListOrganizationMembersResponse response = api.listOrganizationMembers(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListOrganizationMembersResponse response = api.listOrganizationMembers(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

@@ -122,6 +122,8 @@ func (m *V1RunSchema) validateDag(formats strfmt.Registry) error {
 		if err := m.Dag.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dag")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dag")
 			}
 			return err
 		}
@@ -139,6 +141,8 @@ func (m *V1RunSchema) validateDask(formats strfmt.Registry) error {
 		if err := m.Dask.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dask")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dask")
 			}
 			return err
 		}
@@ -156,6 +160,8 @@ func (m *V1RunSchema) validateFlink(formats strfmt.Registry) error {
 		if err := m.Flink.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("flink")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("flink")
 			}
 			return err
 		}
@@ -173,6 +179,8 @@ func (m *V1RunSchema) validateJob(formats strfmt.Registry) error {
 		if err := m.Job.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("job")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("job")
 			}
 			return err
 		}
@@ -190,6 +198,8 @@ func (m *V1RunSchema) validateMpiJob(formats strfmt.Registry) error {
 		if err := m.MpiJob.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("mpiJob")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("mpiJob")
 			}
 			return err
 		}
@@ -207,6 +217,8 @@ func (m *V1RunSchema) validatePytorchJob(formats strfmt.Registry) error {
 		if err := m.PytorchJob.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pytorchJob")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("pytorchJob")
 			}
 			return err
 		}
@@ -224,6 +236,8 @@ func (m *V1RunSchema) validateRuy(formats strfmt.Registry) error {
 		if err := m.Ruy.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ruy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ruy")
 			}
 			return err
 		}
@@ -241,6 +255,8 @@ func (m *V1RunSchema) validateService(formats strfmt.Registry) error {
 		if err := m.Service.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("service")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("service")
 			}
 			return err
 		}
@@ -258,6 +274,8 @@ func (m *V1RunSchema) validateSpark(formats strfmt.Registry) error {
 		if err := m.Spark.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("spark")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("spark")
 			}
 			return err
 		}
@@ -275,6 +293,8 @@ func (m *V1RunSchema) validateTfJob(formats strfmt.Registry) error {
 		if err := m.TfJob.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tfJob")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tfJob")
 			}
 			return err
 		}
@@ -339,6 +359,8 @@ func (m *V1RunSchema) contextValidateDag(ctx context.Context, formats strfmt.Reg
 		if err := m.Dag.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dag")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dag")
 			}
 			return err
 		}
@@ -353,6 +375,8 @@ func (m *V1RunSchema) contextValidateDask(ctx context.Context, formats strfmt.Re
 		if err := m.Dask.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dask")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dask")
 			}
 			return err
 		}
@@ -367,6 +391,8 @@ func (m *V1RunSchema) contextValidateFlink(ctx context.Context, formats strfmt.R
 		if err := m.Flink.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("flink")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("flink")
 			}
 			return err
 		}
@@ -381,6 +407,8 @@ func (m *V1RunSchema) contextValidateJob(ctx context.Context, formats strfmt.Reg
 		if err := m.Job.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("job")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("job")
 			}
 			return err
 		}
@@ -395,6 +423,8 @@ func (m *V1RunSchema) contextValidateMpiJob(ctx context.Context, formats strfmt.
 		if err := m.MpiJob.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("mpiJob")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("mpiJob")
 			}
 			return err
 		}
@@ -409,6 +439,8 @@ func (m *V1RunSchema) contextValidatePytorchJob(ctx context.Context, formats str
 		if err := m.PytorchJob.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pytorchJob")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("pytorchJob")
 			}
 			return err
 		}
@@ -423,6 +455,8 @@ func (m *V1RunSchema) contextValidateRuy(ctx context.Context, formats strfmt.Reg
 		if err := m.Ruy.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ruy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ruy")
 			}
 			return err
 		}
@@ -437,6 +471,8 @@ func (m *V1RunSchema) contextValidateService(ctx context.Context, formats strfmt
 		if err := m.Service.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("service")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("service")
 			}
 			return err
 		}
@@ -451,6 +487,8 @@ func (m *V1RunSchema) contextValidateSpark(ctx context.Context, formats strfmt.R
 		if err := m.Spark.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("spark")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("spark")
 			}
 			return err
 		}
@@ -465,6 +503,8 @@ func (m *V1RunSchema) contextValidateTfJob(ctx context.Context, formats strfmt.R
 		if err := m.TfJob.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tfJob")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tfJob")
 			}
 			return err
 		}

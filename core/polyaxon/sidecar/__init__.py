@@ -20,9 +20,9 @@ from kubernetes.client.rest import ApiException
 
 from polyaxon.client import RunClient
 from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_FILE_WATCHER,
     CONTEXT_MOUNT_RUN_EVENTS_FORMAT,
+    CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT,
 )
 from polyaxon.env_vars.getters import get_run_info
 from polyaxon.env_vars.keys import POLYAXON_KEYS_K8S_POD_ID
@@ -38,7 +38,7 @@ from polyaxon.logger import logger
 from polyaxon.settings import CLIENT_CONFIG
 from polyaxon.sidecar.intervals import get_sync_interval
 from polyaxon.sidecar.monitors import sync_artifacts, sync_logs
-from polyaxon.utils.date_utils import path_last_modified
+from polyaxon.utils.tz_utils import now
 
 
 async def start_sidecar(
@@ -92,8 +92,6 @@ async def start_sidecar(
             )
         if monitor_outputs:
             last_check = state["last_artifacts_check"]
-            path_from = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_uuid)
-            state["last_artifacts_check"] = path_last_modified(path_from)
             await sync_artifacts(
                 fs=fs,
                 fw=fw,
@@ -104,6 +102,13 @@ async def start_sidecar(
                 last_check=last_check,
                 events_path=CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(run_uuid),
             )
+            client.sync_system_events_summaries(
+                last_check=last_check,
+                events_path=CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(
+                    run_uuid
+                ),
+            )
+            state["last_artifacts_check"] = now()
 
     while is_running and retry <= 3:
         await asyncio.sleep(sleep_interval)

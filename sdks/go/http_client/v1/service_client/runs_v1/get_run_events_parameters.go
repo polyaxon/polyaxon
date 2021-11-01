@@ -116,6 +116,14 @@ type GetRunEventsParams struct {
 	*/
 	Project string
 
+	/* Sample.
+
+	   Sample query param.
+
+	   Format: int32
+	*/
+	Sample *int32
+
 	/* UUID.
 
 	   Uuid identifier of the entity
@@ -252,6 +260,17 @@ func (o *GetRunEventsParams) SetProject(project string) {
 	o.Project = project
 }
 
+// WithSample adds the sample to the get run events params
+func (o *GetRunEventsParams) WithSample(sample *int32) *GetRunEventsParams {
+	o.SetSample(sample)
+	return o
+}
+
+// SetSample adds the sample to the get run events params
+func (o *GetRunEventsParams) SetSample(sample *int32) {
+	o.Sample = sample
+}
+
 // WithUUID adds the uuid to the get run events params
 func (o *GetRunEventsParams) WithUUID(uuid string) *GetRunEventsParams {
 	o.SetUUID(uuid)
@@ -340,6 +359,23 @@ func (o *GetRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 	// path param project
 	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
+	}
+
+	if o.Sample != nil {
+
+		// query param sample
+		var qrSample int32
+
+		if o.Sample != nil {
+			qrSample = *o.Sample
+		}
+		qSample := swag.FormatInt32(qrSample)
+		if qSample != "" {
+
+			if err := r.SetQueryParam("sample", qSample); err != nil {
+				return err
+			}
+		}
 	}
 
 	// path param uuid

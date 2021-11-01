@@ -992,6 +992,7 @@ export default class RunsV1Api {
      * @param {String} opts.runs Runs query param.
      * @param {String} opts.orient Orient query param.
      * @param {Boolean} opts.force Force query param.
+     * @param {Number} opts.sample Sample query param.
      * @param {module:api/RunsV1Api~getMultiRunEventsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1EventsResponse}
      */
@@ -1025,7 +1026,8 @@ export default class RunsV1Api {
         'names': opts['names'],
         'runs': opts['runs'],
         'orient': opts['orient'],
-        'force': opts['force']
+        'force': opts['force'],
+        'sample': opts['sample']
       };
       let headerParams = {
       };
@@ -1708,6 +1710,7 @@ export default class RunsV1Api {
      * @param {String} opts.names Names query param.
      * @param {String} opts.orient Orient query param.
      * @param {Boolean} opts.force Force query param.
+     * @param {Number} opts.sample Sample query param.
      * @param {module:api/RunsV1Api~getRunEventsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1EventsResponse}
      */
@@ -1745,7 +1748,8 @@ export default class RunsV1Api {
       let queryParams = {
         'names': opts['names'],
         'orient': opts['orient'],
-        'force': opts['force']
+        'force': opts['force'],
+        'sample': opts['sample']
       };
       let headerParams = {
       };
@@ -1903,6 +1907,7 @@ export default class RunsV1Api {
      * @param {String} opts.names Names query param.
      * @param {Boolean} opts.tail Query param flag to tail the values.
      * @param {Boolean} opts.force Force query param.
+     * @param {Number} opts.sample Sample query param.
      * @param {module:api/RunsV1Api~getRunResourcesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1EventsResponse}
      */
@@ -1935,7 +1940,8 @@ export default class RunsV1Api {
       let queryParams = {
         'names': opts['names'],
         'tail': opts['tail'],
-        'force': opts['force']
+        'force': opts['force'],
+        'sample': opts['sample']
       };
       let headerParams = {
       };
@@ -2219,7 +2225,6 @@ export default class RunsV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/RunsV1Api~getRunsArtifactsLineageCallback} callback The callback function, accepting three arguments: error, data, response
@@ -2247,7 +2252,6 @@ export default class RunsV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };
@@ -2339,6 +2343,7 @@ export default class RunsV1Api {
      * @param {String} opts.names Names query param.
      * @param {Boolean} opts.tail Query param flag to tail the values.
      * @param {Boolean} opts.force Force query param.
+     * @param {Number} opts.sample Sample query param.
      * @param {module:api/RunsV1Api~inspectRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
@@ -2371,7 +2376,8 @@ export default class RunsV1Api {
       let queryParams = {
         'names': opts['names'],
         'tail': opts['tail'],
-        'force': opts['force']
+        'force': opts['force'],
+        'sample': opts['sample']
       };
       let headerParams = {
       };
@@ -2620,7 +2626,6 @@ export default class RunsV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/RunsV1Api~listRunsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -2648,7 +2653,6 @@ export default class RunsV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };

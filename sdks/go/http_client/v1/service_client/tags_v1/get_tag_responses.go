@@ -87,7 +87,7 @@ type GetTagOK struct {
 }
 
 func (o *GetTagOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{name}][%d] getTagOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{uuid}][%d] getTagOK  %+v", 200, o.Payload)
 }
 func (o *GetTagOK) GetPayload() *service_model.V1Tag {
 	return o.Payload
@@ -119,7 +119,7 @@ type GetTagNoContent struct {
 }
 
 func (o *GetTagNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{name}][%d] getTagNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{uuid}][%d] getTagNoContent  %+v", 204, o.Payload)
 }
 func (o *GetTagNoContent) GetPayload() interface{} {
 	return o.Payload
@@ -149,7 +149,7 @@ type GetTagForbidden struct {
 }
 
 func (o *GetTagForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{name}][%d] getTagForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{uuid}][%d] getTagForbidden  %+v", 403, o.Payload)
 }
 func (o *GetTagForbidden) GetPayload() interface{} {
 	return o.Payload
@@ -179,7 +179,7 @@ type GetTagNotFound struct {
 }
 
 func (o *GetTagNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{name}][%d] getTagNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{uuid}][%d] getTagNotFound  %+v", 404, o.Payload)
 }
 func (o *GetTagNotFound) GetPayload() interface{} {
 	return o.Payload
@@ -218,7 +218,7 @@ func (o *GetTagDefault) Code() int {
 }
 
 func (o *GetTagDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{name}][%d] GetTag default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/{uuid}][%d] GetTag default  %+v", o._statusCode, o.Payload)
 }
 func (o *GetTagDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload

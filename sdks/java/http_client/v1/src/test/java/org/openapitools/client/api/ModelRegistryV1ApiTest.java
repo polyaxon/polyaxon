@@ -211,10 +211,9 @@ public class ModelRegistryV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListActivitiesResponse response = api.getModelRegistryActivities(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListActivitiesResponse response = api.getModelRegistryActivities(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -288,10 +287,9 @@ public class ModelRegistryV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListModelRegistriesResponse response = api.listModelRegistries(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListModelRegistriesResponse response = api.listModelRegistries(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -312,10 +310,9 @@ public class ModelRegistryV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListModelRegistriesResponse response = api.listModelRegistryNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListModelRegistriesResponse response = api.listModelRegistryNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -337,10 +334,9 @@ public class ModelRegistryV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListModelVersionsResponse response = api.listModelVersionNames(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListModelVersionsResponse response = api.listModelVersionNames(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -362,10 +358,9 @@ public class ModelRegistryV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListModelVersionsResponse response = api.listModelVersions(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListModelVersionsResponse response = api.listModelVersions(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

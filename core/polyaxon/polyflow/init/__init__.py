@@ -36,6 +36,7 @@ class InitSchema(BaseCamelSchema):
     git = fields.Nested(GitTypeSchema, allow_none=True)
     dockerfile = fields.Nested(DockerfileTypeSchema, allow_none=True)
     file = fields.Nested(FileTypeSchema, allow_none=True)
+    model = fields.Str(allow_none=True)
     connection = fields.Str(allow_none=True)
     path = fields.Str(allow_none=True)
     container = SwaggerField(
@@ -55,6 +56,7 @@ class InitSchema(BaseCamelSchema):
         git = data.get("git")
         dockerfile = data.get("dockerfile")
         file = data.get("file")
+        model = data.get("model")
         connection = data.get("connection")
         schemas = 0
         if artifacts:
@@ -64,6 +66,8 @@ class InitSchema(BaseCamelSchema):
         if dockerfile:
             schemas += 1
         if file:
+            schemas += 1
+        if model:
             schemas += 1
         if schemas > 1:
             raise ValidationError(
@@ -96,6 +100,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
         git: [V1GitType](/docs/core/specification/types/#v1gittype), optional
         dockerfile: [V1DockerfileType](/docs/core/specification/types/#v1dockerfiletype), optional
         file: [V1FileType](/docs/core/specification/types/#v1Filetype), optional
+        model: str, optional
         connection: str, optional
         path: str, optional
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/), optional
@@ -115,6 +120,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     >>>   init:
     >>>   - artifacts:
     >>>       dirs: ["path/on/the/default/artifacts/store"]
+    >>>   - model: "modelName:version"
     >>>   - connection: gcs-large-datasets
     >>>     artifacts:
     >>>       dirs: ["data"]
@@ -163,6 +169,9 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     >>>        init=[
     >>>             V1Init(
     >>>                 artifacts=V1ArtifactsType(dirs=["path/on/the/default/artifacts/store"])
+    >>>             ),
+    >>>             V1Init(
+    >>>                 model="object-detection:v12"
     >>>             ),
     >>>             V1Init(
     >>>                 connection="gcs-large-datasets",
@@ -215,6 +224,8 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     In both the YAML and Python example we are telling Polyaxon to initialize:
      * A directory `path/on/the/default/artifacts/store` from the default `artfactsStore`,
        because we did not specify a connection and we invoked an artifacts handler.
+     * A model artifact from the registry `object-detection` version `v12`.
+       (it's possible to provide the FQN `org_name/model_name:version`)
      * A directory `data` from a GCS connection named `gcs-large-datasets`, we also
        customized the built-in init container with a new resources section.
      * Two files `data1`, `path/to/data2` from an S3 connection named `s3-datasets`,
@@ -234,6 +245,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
         "git",
         "dockerfile",
         "file",
+        "model",
         "connection",
         "path",
         "container",

@@ -515,7 +515,6 @@ public class ProjectDashboardsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -531,7 +530,7 @@ public class ProjectDashboardsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listProjectDashboardNamesCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listProjectDashboardNamesCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -561,10 +560,6 @@ public class ProjectDashboardsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -595,7 +590,7 @@ public class ProjectDashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listProjectDashboardNamesValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listProjectDashboardNamesValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -608,7 +603,7 @@ public class ProjectDashboardsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listProjectDashboardNamesCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listProjectDashboardNamesCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -623,7 +618,6 @@ public class ProjectDashboardsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListDashboardsResponse
@@ -638,8 +632,8 @@ public class ProjectDashboardsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListDashboardsResponse listProjectDashboardNames(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListDashboardsResponse> localVarResp = listProjectDashboardNamesWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListDashboardsResponse listProjectDashboardNames(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListDashboardsResponse> localVarResp = listProjectDashboardNamesWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -653,7 +647,6 @@ public class ProjectDashboardsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListDashboardsResponse&gt;
@@ -668,8 +661,8 @@ public class ProjectDashboardsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListDashboardsResponse> listProjectDashboardNamesWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listProjectDashboardNamesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListDashboardsResponse> listProjectDashboardNamesWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listProjectDashboardNamesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListDashboardsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -684,7 +677,6 @@ public class ProjectDashboardsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -700,9 +692,9 @@ public class ProjectDashboardsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listProjectDashboardNamesAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListDashboardsResponse> _callback) throws ApiException {
+    public okhttp3.Call listProjectDashboardNamesAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListDashboardsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listProjectDashboardNamesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listProjectDashboardNamesValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListDashboardsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -716,7 +708,6 @@ public class ProjectDashboardsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -732,7 +723,7 @@ public class ProjectDashboardsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listProjectDashboardsCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listProjectDashboardsCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -762,10 +753,6 @@ public class ProjectDashboardsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -796,7 +783,7 @@ public class ProjectDashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listProjectDashboardsValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listProjectDashboardsValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -809,7 +796,7 @@ public class ProjectDashboardsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listProjectDashboardsCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listProjectDashboardsCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -824,7 +811,6 @@ public class ProjectDashboardsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListDashboardsResponse
@@ -839,8 +825,8 @@ public class ProjectDashboardsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListDashboardsResponse listProjectDashboards(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListDashboardsResponse> localVarResp = listProjectDashboardsWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListDashboardsResponse listProjectDashboards(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListDashboardsResponse> localVarResp = listProjectDashboardsWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -854,7 +840,6 @@ public class ProjectDashboardsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListDashboardsResponse&gt;
@@ -869,8 +854,8 @@ public class ProjectDashboardsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListDashboardsResponse> listProjectDashboardsWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listProjectDashboardsValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListDashboardsResponse> listProjectDashboardsWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listProjectDashboardsValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListDashboardsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -885,7 +870,6 @@ public class ProjectDashboardsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -901,9 +885,9 @@ public class ProjectDashboardsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listProjectDashboardsAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListDashboardsResponse> _callback) throws ApiException {
+    public okhttp3.Call listProjectDashboardsAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListDashboardsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listProjectDashboardsValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listProjectDashboardsValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListDashboardsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

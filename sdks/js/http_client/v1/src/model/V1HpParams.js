@@ -27,6 +27,8 @@
 
 import ApiClient from '../ApiClient';
 import V1HpChoice from './V1HpChoice';
+import V1HpDateRange from './V1HpDateRange';
+import V1HpDateTimeRange from './V1HpDateTimeRange';
 import V1HpGeomSpace from './V1HpGeomSpace';
 import V1HpLinSpace from './V1HpLinSpace';
 import V1HpLogNormal from './V1HpLogNormal';
@@ -117,6 +119,12 @@ class V1HpParams {
             if (data.hasOwnProperty('qlognormal')) {
                 obj['qlognormal'] = V1HpQLogNormal.constructFromObject(data['qlognormal']);
             }
+            if (data.hasOwnProperty('daterange')) {
+                obj['daterange'] = V1HpDateRange.constructFromObject(data['daterange']);
+            }
+            if (data.hasOwnProperty('datetimerange')) {
+                obj['datetimerange'] = V1HpDateTimeRange.constructFromObject(data['datetimerange']);
+            }
         }
         return obj;
     }
@@ -193,6 +201,16 @@ V1HpParams.prototype['lognormal'] = undefined;
  * @member {module:model/V1HpQLogNormal} qlognormal
  */
 V1HpParams.prototype['qlognormal'] = undefined;
+
+/**
+ * @member {module:model/V1HpDateRange} daterange
+ */
+V1HpParams.prototype['daterange'] = undefined;
+
+/**
+ * @member {module:model/V1HpDateTimeRange} datetimerange
+ */
+V1HpParams.prototype['datetimerange'] = undefined;
 
 
 

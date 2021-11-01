@@ -89,6 +89,8 @@ func (m *V1Build) validateCache(formats strfmt.Registry) error {
 		if err := m.Cache.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cache")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cache")
 			}
 			return err
 		}
@@ -127,6 +129,8 @@ func (m *V1Build) validatePatchStrategy(formats strfmt.Registry) error {
 		if err := m.PatchStrategy.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("patchStrategy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("patchStrategy")
 			}
 			return err
 		}
@@ -163,6 +167,8 @@ func (m *V1Build) contextValidateCache(ctx context.Context, formats strfmt.Regis
 		if err := m.Cache.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cache")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cache")
 			}
 			return err
 		}
@@ -192,6 +198,8 @@ func (m *V1Build) contextValidatePatchStrategy(ctx context.Context, formats strf
 		if err := m.PatchStrategy.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("patchStrategy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("patchStrategy")
 			}
 			return err
 		}

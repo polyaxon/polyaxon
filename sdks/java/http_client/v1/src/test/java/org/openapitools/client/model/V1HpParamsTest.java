@@ -36,6 +36,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import org.openapitools.client.model.V1HpChoice;
+import org.openapitools.client.model.V1HpDateRange;
+import org.openapitools.client.model.V1HpDateTimeRange;
 import org.openapitools.client.model.V1HpGeomSpace;
 import org.openapitools.client.model.V1HpLinSpace;
 import org.openapitools.client.model.V1HpLogNormal;
@@ -178,6 +180,22 @@ public class V1HpParamsTest {
     @Test
     public void qlognormalTest() {
         // TODO: test qlognormal
+    }
+
+    /**
+     * Test the property 'daterange'
+     */
+    @Test
+    public void daterangeTest() {
+        // TODO: test daterange
+    }
+
+    /**
+     * Test the property 'datetimerange'
+     */
+    @Test
+    public void datetimerangeTest() {
+        // TODO: test datetimerange
     }
 
 }

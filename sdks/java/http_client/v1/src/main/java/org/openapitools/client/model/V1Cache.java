@@ -57,6 +57,10 @@ public class V1Cache {
   @SerializedName(SERIALIZED_NAME_IO)
   private List<String> io = null;
 
+  public static final String SERIALIZED_NAME_SECTIONS = "sections";
+  @SerializedName(SERIALIZED_NAME_SECTIONS)
+  private List<String> sections = null;
+
 
   public V1Cache disable(Boolean disable) {
     
@@ -135,6 +139,37 @@ public class V1Cache {
   }
 
 
+  public V1Cache sections(List<String> sections) {
+    
+    this.sections = sections;
+    return this;
+  }
+
+  public V1Cache addSectionsItem(String sectionsItem) {
+    if (this.sections == null) {
+      this.sections = new ArrayList<String>();
+    }
+    this.sections.add(sectionsItem);
+    return this;
+  }
+
+   /**
+   * Get sections
+   * @return sections
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<String> getSections() {
+    return sections;
+  }
+
+
+  public void setSections(List<String> sections) {
+    this.sections = sections;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -146,12 +181,13 @@ public class V1Cache {
     V1Cache v1Cache = (V1Cache) o;
     return Objects.equals(this.disable, v1Cache.disable) &&
         Objects.equals(this.ttl, v1Cache.ttl) &&
-        Objects.equals(this.io, v1Cache.io);
+        Objects.equals(this.io, v1Cache.io) &&
+        Objects.equals(this.sections, v1Cache.sections);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(disable, ttl, io);
+    return Objects.hash(disable, ttl, io, sections);
   }
 
 
@@ -162,6 +198,7 @@ public class V1Cache {
     sb.append("    disable: ").append(toIndentedString(disable)).append("\n");
     sb.append("    ttl: ").append(toIndentedString(ttl)).append("\n");
     sb.append("    io: ").append(toIndentedString(io)).append("\n");
+    sb.append("    sections: ").append(toIndentedString(sections)).append("\n");
     sb.append("}");
     return sb.toString();
   }

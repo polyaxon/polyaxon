@@ -110,7 +110,6 @@ export interface GetModelRegistryActivitiesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -139,7 +138,6 @@ export interface ListModelRegistriesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -151,7 +149,6 @@ export interface ListModelRegistryNamesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -164,7 +161,6 @@ export interface ListModelVersionNamesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -177,7 +173,6 @@ export interface ListModelVersionsRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -594,10 +589,6 @@ export class ModelRegistryV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -782,10 +773,6 @@ export class ModelRegistryV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -846,10 +833,6 @@ export class ModelRegistryV1Api extends runtime.BaseAPI {
 
         if (requestParameters.bookmarks !== undefined) {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
-        }
-
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
         }
 
         if (requestParameters.mode !== undefined) {
@@ -918,10 +901,6 @@ export class ModelRegistryV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -986,10 +965,6 @@ export class ModelRegistryV1Api extends runtime.BaseAPI {
 
         if (requestParameters.bookmarks !== undefined) {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
-        }
-
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
         }
 
         if (requestParameters.mode !== undefined) {

@@ -86,6 +86,8 @@ func (m *V1ProjectSettings) validateUserAccesses(formats strfmt.Registry) error 
 			if err := m.UserAccesses[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("user_accesses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("user_accesses" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -118,6 +120,8 @@ func (m *V1ProjectSettings) contextValidateUserAccesses(ctx context.Context, for
 			if err := m.UserAccesses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("user_accesses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("user_accesses" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

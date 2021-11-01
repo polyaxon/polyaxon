@@ -32,10 +32,11 @@ class PolyaxonHandler(logging.Handler):
         self._container = socket.gethostname()
         self._node = os.environ.get(POLYAXON_KEYS_K8S_NODE_NAME, "local")
         self._pod = os.environ.get(POLYAXON_KEYS_K8S_POD_ID, get_user())
+        log_level = settings.CLIENT_CONFIG.log_level
+        if log_level and isinstance(log_level, str):
+            log_level = log_level.upper()
         super().__init__(
-            level=kwargs.get(
-                "level", settings.CLIENT_CONFIG.log_level or logging.NOTSET
-            ),
+            level=kwargs.get("level", log_level or logging.NOTSET),
         )
 
     def set_add_logs(self, add_logs):

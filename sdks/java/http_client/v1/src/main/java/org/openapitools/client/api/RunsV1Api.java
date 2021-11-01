@@ -2497,6 +2497,7 @@ public class RunsV1Api {
      * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2510,7 +2511,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getMultiRunEventsCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getMultiRunEventsCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force, Integer sample, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2538,6 +2539,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("force", force));
         }
 
+        if (sample != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sample", sample));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -2560,7 +2565,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getMultiRunEventsValidateBeforeCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getMultiRunEventsValidateBeforeCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force, Integer sample, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
@@ -2583,7 +2588,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getMultiRunEventsCall(namespace, owner, project, kind, names, runs, orient, force, _callback);
+        okhttp3.Call localVarCall = getMultiRunEventsCall(namespace, owner, project, kind, names, runs, orient, force, sample, _callback);
         return localVarCall;
 
     }
@@ -2599,6 +2604,7 @@ public class RunsV1Api {
      * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @return V1EventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2611,8 +2617,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1EventsResponse getMultiRunEvents(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force) throws ApiException {
-        ApiResponse<V1EventsResponse> localVarResp = getMultiRunEventsWithHttpInfo(namespace, owner, project, kind, names, runs, orient, force);
+    public V1EventsResponse getMultiRunEvents(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force, Integer sample) throws ApiException {
+        ApiResponse<V1EventsResponse> localVarResp = getMultiRunEventsWithHttpInfo(namespace, owner, project, kind, names, runs, orient, force, sample);
         return localVarResp.getData();
     }
 
@@ -2627,6 +2633,7 @@ public class RunsV1Api {
      * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @return ApiResponse&lt;V1EventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2639,8 +2646,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1EventsResponse> getMultiRunEventsWithHttpInfo(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force) throws ApiException {
-        okhttp3.Call localVarCall = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, force, null);
+    public ApiResponse<V1EventsResponse> getMultiRunEventsWithHttpInfo(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force, Integer sample) throws ApiException {
+        okhttp3.Call localVarCall = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, force, sample, null);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2656,6 +2663,7 @@ public class RunsV1Api {
      * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2669,9 +2677,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getMultiRunEventsAsync(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force, final ApiCallback<V1EventsResponse> _callback) throws ApiException {
+    public okhttp3.Call getMultiRunEventsAsync(String namespace, String owner, String project, String kind, String names, String runs, String orient, Boolean force, Integer sample, final ApiCallback<V1EventsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, force, _callback);
+        okhttp3.Call localVarCall = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, force, sample, _callback);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -4444,6 +4452,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param orient Orient query param. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -4457,7 +4466,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunEventsCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunEventsCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force, Integer sample, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -4482,6 +4491,10 @@ public class RunsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("force", force));
         }
 
+        if (sample != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sample", sample));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -4504,7 +4517,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunEventsValidateBeforeCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunEventsValidateBeforeCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force, Integer sample, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
@@ -4532,7 +4545,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunEventsCall(namespace, owner, project, uuid, kind, names, orient, force, _callback);
+        okhttp3.Call localVarCall = getRunEventsCall(namespace, owner, project, uuid, kind, names, orient, force, sample, _callback);
         return localVarCall;
 
     }
@@ -4548,6 +4561,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param orient Orient query param. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @return V1EventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4560,8 +4574,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1EventsResponse getRunEvents(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force) throws ApiException {
-        ApiResponse<V1EventsResponse> localVarResp = getRunEventsWithHttpInfo(namespace, owner, project, uuid, kind, names, orient, force);
+    public V1EventsResponse getRunEvents(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force, Integer sample) throws ApiException {
+        ApiResponse<V1EventsResponse> localVarResp = getRunEventsWithHttpInfo(namespace, owner, project, uuid, kind, names, orient, force, sample);
         return localVarResp.getData();
     }
 
@@ -4576,6 +4590,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param orient Orient query param. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @return ApiResponse&lt;V1EventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4588,8 +4603,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1EventsResponse> getRunEventsWithHttpInfo(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force) throws ApiException {
-        okhttp3.Call localVarCall = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, force, null);
+    public ApiResponse<V1EventsResponse> getRunEventsWithHttpInfo(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force, Integer sample) throws ApiException {
+        okhttp3.Call localVarCall = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, force, sample, null);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -4605,6 +4620,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param orient Orient query param. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4618,9 +4634,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunEventsAsync(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force, final ApiCallback<V1EventsResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunEventsAsync(String namespace, String owner, String project, String uuid, String kind, String names, String orient, Boolean force, Integer sample, final ApiCallback<V1EventsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, force, _callback);
+        okhttp3.Call localVarCall = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, force, sample, _callback);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -4962,6 +4978,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param tail Query param flag to tail the values. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -4975,7 +4992,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunResourcesCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunResourcesCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -4997,6 +5014,10 @@ public class RunsV1Api {
 
         if (force != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("force", force));
+        }
+
+        if (sample != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sample", sample));
         }
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
@@ -5021,7 +5042,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunResourcesValidateBeforeCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunResourcesValidateBeforeCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
@@ -5044,7 +5065,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunResourcesCall(namespace, owner, project, uuid, names, tail, force, _callback);
+        okhttp3.Call localVarCall = getRunResourcesCall(namespace, owner, project, uuid, names, tail, force, sample, _callback);
         return localVarCall;
 
     }
@@ -5059,6 +5080,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param tail Query param flag to tail the values. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @return V1EventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -5071,8 +5093,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1EventsResponse getRunResources(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force) throws ApiException {
-        ApiResponse<V1EventsResponse> localVarResp = getRunResourcesWithHttpInfo(namespace, owner, project, uuid, names, tail, force);
+    public V1EventsResponse getRunResources(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample) throws ApiException {
+        ApiResponse<V1EventsResponse> localVarResp = getRunResourcesWithHttpInfo(namespace, owner, project, uuid, names, tail, force, sample);
         return localVarResp.getData();
     }
 
@@ -5086,6 +5108,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param tail Query param flag to tail the values. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @return ApiResponse&lt;V1EventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -5098,8 +5121,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1EventsResponse> getRunResourcesWithHttpInfo(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force) throws ApiException {
-        okhttp3.Call localVarCall = getRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, force, null);
+    public ApiResponse<V1EventsResponse> getRunResourcesWithHttpInfo(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample) throws ApiException {
+        okhttp3.Call localVarCall = getRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, force, sample, null);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -5114,6 +5137,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param tail Query param flag to tail the values. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -5127,9 +5151,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunResourcesAsync(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, final ApiCallback<V1EventsResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunResourcesAsync(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample, final ApiCallback<V1EventsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, force, _callback);
+        okhttp3.Call localVarCall = getRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, force, sample, _callback);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -5843,7 +5867,6 @@ public class RunsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -5859,7 +5882,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunsArtifactsLineageCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getRunsArtifactsLineageCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -5887,10 +5910,6 @@ public class RunsV1Api {
 
         if (bookmarks != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
-        }
-
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
         }
 
         if (mode != null) {
@@ -5923,7 +5942,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRunsArtifactsLineageValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getRunsArtifactsLineageValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -5936,7 +5955,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = getRunsArtifactsLineageCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = getRunsArtifactsLineageCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -5951,7 +5970,6 @@ public class RunsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListRunArtifactsResponse
@@ -5966,8 +5984,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunArtifactsResponse getRunsArtifactsLineage(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListRunArtifactsResponse> localVarResp = getRunsArtifactsLineageWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListRunArtifactsResponse getRunsArtifactsLineage(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunArtifactsResponse> localVarResp = getRunsArtifactsLineageWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -5981,7 +5999,6 @@ public class RunsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunArtifactsResponse&gt;
@@ -5996,8 +6013,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunArtifactsResponse> getRunsArtifactsLineageWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = getRunsArtifactsLineageValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListRunArtifactsResponse> getRunsArtifactsLineageWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = getRunsArtifactsLineageValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -6012,7 +6029,6 @@ public class RunsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -6028,9 +6044,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getRunsArtifactsLineageAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListRunArtifactsResponse> _callback) throws ApiException {
+    public okhttp3.Call getRunsArtifactsLineageAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListRunArtifactsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getRunsArtifactsLineageValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = getRunsArtifactsLineageValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -6191,6 +6207,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param tail Query param flag to tail the values. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -6204,7 +6221,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call inspectRunCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call inspectRunCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -6226,6 +6243,10 @@ public class RunsV1Api {
 
         if (force != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("force", force));
+        }
+
+        if (sample != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sample", sample));
         }
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
@@ -6250,7 +6271,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call inspectRunValidateBeforeCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call inspectRunValidateBeforeCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
@@ -6273,7 +6294,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = inspectRunCall(namespace, owner, project, uuid, names, tail, force, _callback);
+        okhttp3.Call localVarCall = inspectRunCall(namespace, owner, project, uuid, names, tail, force, sample, _callback);
         return localVarCall;
 
     }
@@ -6288,6 +6309,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param tail Query param flag to tail the values. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -6300,8 +6322,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public Object inspectRun(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force) throws ApiException {
-        ApiResponse<Object> localVarResp = inspectRunWithHttpInfo(namespace, owner, project, uuid, names, tail, force);
+    public Object inspectRun(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample) throws ApiException {
+        ApiResponse<Object> localVarResp = inspectRunWithHttpInfo(namespace, owner, project, uuid, names, tail, force, sample);
         return localVarResp.getData();
     }
 
@@ -6315,6 +6337,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param tail Query param flag to tail the values. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -6327,8 +6350,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> inspectRunWithHttpInfo(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force) throws ApiException {
-        okhttp3.Call localVarCall = inspectRunValidateBeforeCall(namespace, owner, project, uuid, names, tail, force, null);
+    public ApiResponse<Object> inspectRunWithHttpInfo(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample) throws ApiException {
+        okhttp3.Call localVarCall = inspectRunValidateBeforeCall(namespace, owner, project, uuid, names, tail, force, sample, null);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -6343,6 +6366,7 @@ public class RunsV1Api {
      * @param names Names query param. (optional)
      * @param tail Query param flag to tail the values. (optional)
      * @param force Force query param. (optional)
+     * @param sample Sample query param. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -6356,9 +6380,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call inspectRunAsync(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call inspectRunAsync(String namespace, String owner, String project, String uuid, String names, Boolean tail, Boolean force, Integer sample, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = inspectRunValidateBeforeCall(namespace, owner, project, uuid, names, tail, force, _callback);
+        okhttp3.Call localVarCall = inspectRunValidateBeforeCall(namespace, owner, project, uuid, names, tail, force, sample, _callback);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -6991,7 +7015,6 @@ public class RunsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -7007,7 +7030,7 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listRunsCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listRunsCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -7035,10 +7058,6 @@ public class RunsV1Api {
 
         if (bookmarks != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
-        }
-
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
         }
 
         if (mode != null) {
@@ -7071,7 +7090,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listRunsValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listRunsValidateBeforeCall(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -7084,7 +7103,7 @@ public class RunsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listRunsCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listRunsCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -7099,7 +7118,6 @@ public class RunsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListRunsResponse
@@ -7114,8 +7132,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListRunsResponse listRuns(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListRunsResponse> localVarResp = listRunsWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListRunsResponse listRuns(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListRunsResponse> localVarResp = listRunsWithHttpInfo(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -7129,7 +7147,6 @@ public class RunsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
@@ -7144,8 +7161,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListRunsResponse> listRunsWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listRunsValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListRunsResponse> listRunsWithHttpInfo(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listRunsValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -7160,7 +7177,6 @@ public class RunsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -7176,9 +7192,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listRunsAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListRunsResponse> _callback) throws ApiException {
+    public okhttp3.Call listRunsAsync(String owner, String name, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListRunsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listRunsValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listRunsValidateBeforeCall(owner, name, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

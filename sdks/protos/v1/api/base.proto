@@ -46,6 +46,18 @@ message UuidResourceRequest {
 }
 
 // Request data to get/delete entity
+message OwnerEntityResourceRequestByUidCascade {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Uuid identifier of the entity
+  string uuid = 2;
+
+  // Flag to handle sub-entities
+  bool cascade = 3;
+}
+
+// Request data to get/delete entity
 message OwnerEntityResourceRequestByUid {
   // Owner of the namespace
   string owner = 1;
@@ -237,14 +249,11 @@ message OwnerResourceListRequest {
   // Filter by bookmarks
   bool bookmarks = 6;
 
-  // Pinned entities
-  string pins = 8;
-
   // Mode of the search
-  string mode = 9;
+  string mode = 7;
 
   // No pagination
-  bool no_page = 10;
+  bool no_page = 8;
 }
 
 
@@ -304,14 +313,11 @@ message OwnerEntityResourceListRequestByName {
   // Filter by bookmarks
   bool bookmarks = 7;
 
-  // Pinned entities
-  string pins = 8;
-
   // Mode of the search
-  string mode = 9;
+  string mode = 8;
 
   // No pagination
-  bool no_page = 10;
+  bool no_page = 9;
 }
 
 // Request stats with owner/entity namespace

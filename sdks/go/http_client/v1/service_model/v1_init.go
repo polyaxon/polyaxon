@@ -50,6 +50,9 @@ type V1Init struct {
 	// Override for git connections
 	Git *V1GitType `json:"git,omitempty"`
 
+	// Model intializer
+	Model string `json:"model,omitempty"`
+
 	// Optional context path, the path to mount to main the container
 	Path string `json:"path,omitempty"`
 }
@@ -89,6 +92,8 @@ func (m *V1Init) validateArtifacts(formats strfmt.Registry) error {
 		if err := m.Artifacts.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("artifacts")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("artifacts")
 			}
 			return err
 		}
@@ -106,6 +111,8 @@ func (m *V1Init) validateDockerfile(formats strfmt.Registry) error {
 		if err := m.Dockerfile.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dockerfile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dockerfile")
 			}
 			return err
 		}
@@ -123,6 +130,8 @@ func (m *V1Init) validateFile(formats strfmt.Registry) error {
 		if err := m.File.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("file")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("file")
 			}
 			return err
 		}
@@ -140,6 +149,8 @@ func (m *V1Init) validateGit(formats strfmt.Registry) error {
 		if err := m.Git.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("git")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("git")
 			}
 			return err
 		}
@@ -180,6 +191,8 @@ func (m *V1Init) contextValidateArtifacts(ctx context.Context, formats strfmt.Re
 		if err := m.Artifacts.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("artifacts")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("artifacts")
 			}
 			return err
 		}
@@ -194,6 +207,8 @@ func (m *V1Init) contextValidateDockerfile(ctx context.Context, formats strfmt.R
 		if err := m.Dockerfile.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dockerfile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dockerfile")
 			}
 			return err
 		}
@@ -208,6 +223,8 @@ func (m *V1Init) contextValidateFile(ctx context.Context, formats strfmt.Registr
 		if err := m.File.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("file")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("file")
 			}
 			return err
 		}
@@ -222,6 +239,8 @@ func (m *V1Init) contextValidateGit(ctx context.Context, formats strfmt.Registry
 		if err := m.Git.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("git")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("git")
 			}
 			return err
 		}

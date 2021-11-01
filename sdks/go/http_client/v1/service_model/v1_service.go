@@ -89,6 +89,8 @@ func (m *V1Service) validateEnvironment(formats strfmt.Registry) error {
 		if err := m.Environment.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("environment")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("environment")
 			}
 			return err
 		}
@@ -111,6 +113,8 @@ func (m *V1Service) validateInit(formats strfmt.Registry) error {
 			if err := m.Init[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("init" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("init" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -145,6 +149,8 @@ func (m *V1Service) contextValidateEnvironment(ctx context.Context, formats strf
 		if err := m.Environment.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("environment")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("environment")
 			}
 			return err
 		}
@@ -161,6 +167,8 @@ func (m *V1Service) contextValidateInit(ctx context.Context, formats strfmt.Regi
 			if err := m.Init[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("init" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("init" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -31,7 +31,6 @@ import org.openapitools.client.ApiException;
 import org.openapitools.client.model.RuntimeError;
 import org.openapitools.client.model.V1EntitiesTags;
 import org.openapitools.client.model.V1ListTagsResponse;
-import org.openapitools.client.model.V1LoadTagsResponse;
 import org.openapitools.client.model.V1Tag;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -78,8 +77,9 @@ public class TagsV1ApiTest {
     @Test
     public void deleteTagTest() throws ApiException {
         String owner = null;
-        String name = null;
-        api.deleteTag(owner, name);
+        String uuid = null;
+        Boolean cascade = null;
+        api.deleteTag(owner, uuid, cascade);
 
         // TODO: test validations
     }
@@ -95,8 +95,8 @@ public class TagsV1ApiTest {
     @Test
     public void getTagTest() throws ApiException {
         String owner = null;
-        String name = null;
-        V1Tag response = api.getTag(owner, name);
+        String uuid = null;
+        V1Tag response = api.getTag(owner, uuid);
 
         // TODO: test validations
     }
@@ -117,10 +117,9 @@ public class TagsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListTagsResponse response = api.listTags(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListTagsResponse response = api.listTags(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -141,10 +140,9 @@ public class TagsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1LoadTagsResponse response = api.loadTags(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        Object response = api.loadTags(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -160,9 +158,9 @@ public class TagsV1ApiTest {
     @Test
     public void patchTagTest() throws ApiException {
         String owner = null;
-        String tagName = null;
+        String tagUuid = null;
         V1Tag body = null;
-        V1Tag response = api.patchTag(owner, tagName, body);
+        V1Tag response = api.patchTag(owner, tagUuid, body);
 
         // TODO: test validations
     }
@@ -195,9 +193,9 @@ public class TagsV1ApiTest {
     @Test
     public void updateTagTest() throws ApiException {
         String owner = null;
-        String tagName = null;
+        String tagUuid = null;
         V1Tag body = null;
-        V1Tag response = api.updateTag(owner, tagName, body);
+        V1Tag response = api.updateTag(owner, tagUuid, body);
 
         // TODO: test validations
     }

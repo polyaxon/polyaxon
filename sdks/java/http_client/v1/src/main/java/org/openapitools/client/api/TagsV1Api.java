@@ -44,7 +44,6 @@ import java.io.IOException;
 import org.openapitools.client.model.RuntimeError;
 import org.openapitools.client.model.V1EntitiesTags;
 import org.openapitools.client.model.V1ListTagsResponse;
-import org.openapitools.client.model.V1LoadTagsResponse;
 import org.openapitools.client.model.V1Tag;
 
 import java.lang.reflect.Type;
@@ -211,7 +210,8 @@ public class TagsV1Api {
     /**
      * Build call for deleteTag
      * @param owner Owner of the namespace (required)
-     * @param name Component under namesapce (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param cascade Flag to handle sub-entities. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -225,16 +225,20 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteTagCall(String owner, String name, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call deleteTagCall(String owner, String uuid, Boolean cascade, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/orgs/{owner}/tags/{name}"
+        String localVarPath = "/api/v1/orgs/{owner}/tags/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", localVarApiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "name" + "\\}", localVarApiClient.escapeString(name.toString()));
+            .replaceAll("\\{" + "uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (cascade != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("cascade", cascade));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -257,20 +261,20 @@ public class TagsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteTagValidateBeforeCall(String owner, String name, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteTagValidateBeforeCall(String owner, String uuid, Boolean cascade, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
             throw new ApiException("Missing the required parameter 'owner' when calling deleteTag(Async)");
         }
         
-        // verify the required parameter 'name' is set
-        if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling deleteTag(Async)");
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling deleteTag(Async)");
         }
         
 
-        okhttp3.Call localVarCall = deleteTagCall(owner, name, _callback);
+        okhttp3.Call localVarCall = deleteTagCall(owner, uuid, cascade, _callback);
         return localVarCall;
 
     }
@@ -279,7 +283,8 @@ public class TagsV1Api {
      * Delete tag
      * 
      * @param owner Owner of the namespace (required)
-     * @param name Component under namesapce (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param cascade Flag to handle sub-entities. (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -291,15 +296,16 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public void deleteTag(String owner, String name) throws ApiException {
-        deleteTagWithHttpInfo(owner, name);
+    public void deleteTag(String owner, String uuid, Boolean cascade) throws ApiException {
+        deleteTagWithHttpInfo(owner, uuid, cascade);
     }
 
     /**
      * Delete tag
      * 
      * @param owner Owner of the namespace (required)
-     * @param name Component under namesapce (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param cascade Flag to handle sub-entities. (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -312,8 +318,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> deleteTagWithHttpInfo(String owner, String name) throws ApiException {
-        okhttp3.Call localVarCall = deleteTagValidateBeforeCall(owner, name, null);
+    public ApiResponse<Void> deleteTagWithHttpInfo(String owner, String uuid, Boolean cascade) throws ApiException {
+        okhttp3.Call localVarCall = deleteTagValidateBeforeCall(owner, uuid, cascade, null);
         return localVarApiClient.execute(localVarCall);
     }
 
@@ -321,7 +327,8 @@ public class TagsV1Api {
      * Delete tag (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
-     * @param name Component under namesapce (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param cascade Flag to handle sub-entities. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -335,16 +342,16 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteTagAsync(String owner, String name, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call deleteTagAsync(String owner, String uuid, Boolean cascade, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteTagValidateBeforeCall(owner, name, _callback);
+        okhttp3.Call localVarCall = deleteTagValidateBeforeCall(owner, uuid, cascade, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
      * Build call for getTag
      * @param owner Owner of the namespace (required)
-     * @param name Component under namesapce (required)
+     * @param uuid Uuid identifier of the entity (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -358,13 +365,13 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getTagCall(String owner, String name, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getTagCall(String owner, String uuid, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/orgs/{owner}/tags/{name}"
+        String localVarPath = "/api/v1/orgs/{owner}/tags/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", localVarApiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "name" + "\\}", localVarApiClient.escapeString(name.toString()));
+            .replaceAll("\\{" + "uuid" + "\\}", localVarApiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -390,20 +397,20 @@ public class TagsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getTagValidateBeforeCall(String owner, String name, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getTagValidateBeforeCall(String owner, String uuid, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
             throw new ApiException("Missing the required parameter 'owner' when calling getTag(Async)");
         }
         
-        // verify the required parameter 'name' is set
-        if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling getTag(Async)");
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling getTag(Async)");
         }
         
 
-        okhttp3.Call localVarCall = getTagCall(owner, name, _callback);
+        okhttp3.Call localVarCall = getTagCall(owner, uuid, _callback);
         return localVarCall;
 
     }
@@ -412,7 +419,7 @@ public class TagsV1Api {
      * Get tag
      * 
      * @param owner Owner of the namespace (required)
-     * @param name Component under namesapce (required)
+     * @param uuid Uuid identifier of the entity (required)
      * @return V1Tag
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -425,8 +432,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1Tag getTag(String owner, String name) throws ApiException {
-        ApiResponse<V1Tag> localVarResp = getTagWithHttpInfo(owner, name);
+    public V1Tag getTag(String owner, String uuid) throws ApiException {
+        ApiResponse<V1Tag> localVarResp = getTagWithHttpInfo(owner, uuid);
         return localVarResp.getData();
     }
 
@@ -434,7 +441,7 @@ public class TagsV1Api {
      * Get tag
      * 
      * @param owner Owner of the namespace (required)
-     * @param name Component under namesapce (required)
+     * @param uuid Uuid identifier of the entity (required)
      * @return ApiResponse&lt;V1Tag&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -447,8 +454,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1Tag> getTagWithHttpInfo(String owner, String name) throws ApiException {
-        okhttp3.Call localVarCall = getTagValidateBeforeCall(owner, name, null);
+    public ApiResponse<V1Tag> getTagWithHttpInfo(String owner, String uuid) throws ApiException {
+        okhttp3.Call localVarCall = getTagValidateBeforeCall(owner, uuid, null);
         Type localVarReturnType = new TypeToken<V1Tag>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -457,7 +464,7 @@ public class TagsV1Api {
      * Get tag (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
-     * @param name Component under namesapce (required)
+     * @param uuid Uuid identifier of the entity (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -471,9 +478,9 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getTagAsync(String owner, String name, final ApiCallback<V1Tag> _callback) throws ApiException {
+    public okhttp3.Call getTagAsync(String owner, String uuid, final ApiCallback<V1Tag> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getTagValidateBeforeCall(owner, name, _callback);
+        okhttp3.Call localVarCall = getTagValidateBeforeCall(owner, uuid, _callback);
         Type localVarReturnType = new TypeToken<V1Tag>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -486,7 +493,6 @@ public class TagsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -502,7 +508,7 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listTagsCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listTagsCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -531,10 +537,6 @@ public class TagsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -565,7 +567,7 @@ public class TagsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listTagsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listTagsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -573,7 +575,7 @@ public class TagsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = listTagsCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listTagsCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -587,7 +589,6 @@ public class TagsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return V1ListTagsResponse
@@ -602,8 +603,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1ListTagsResponse listTags(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1ListTagsResponse> localVarResp = listTagsWithHttpInfo(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public V1ListTagsResponse listTags(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<V1ListTagsResponse> localVarResp = listTagsWithHttpInfo(owner, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -616,7 +617,6 @@ public class TagsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @return ApiResponse&lt;V1ListTagsResponse&gt;
@@ -631,8 +631,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1ListTagsResponse> listTagsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = listTagsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
+    public ApiResponse<V1ListTagsResponse> listTagsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = listTagsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, null);
         Type localVarReturnType = new TypeToken<V1ListTagsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -646,7 +646,6 @@ public class TagsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -662,9 +661,9 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listTagsAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1ListTagsResponse> _callback) throws ApiException {
+    public okhttp3.Call listTagsAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<V1ListTagsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listTagsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = listTagsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         Type localVarReturnType = new TypeToken<V1ListTagsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -677,7 +676,6 @@ public class TagsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback Callback for upload/download progress
@@ -693,7 +691,7 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call loadTagsCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call loadTagsCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -722,10 +720,6 @@ public class TagsV1Api {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("bookmarks", bookmarks));
         }
 
-        if (pins != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pins", pins));
-        }
-
         if (mode != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
@@ -756,7 +750,7 @@ public class TagsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call loadTagsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call loadTagsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -764,7 +758,7 @@ public class TagsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = loadTagsCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
+        okhttp3.Call localVarCall = loadTagsCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
         return localVarCall;
 
     }
@@ -778,10 +772,9 @@ public class TagsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
-     * @return V1LoadTagsResponse
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -793,8 +786,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1LoadTagsResponse loadTags(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        ApiResponse<V1LoadTagsResponse> localVarResp = loadTagsWithHttpInfo(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+    public Object loadTags(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        ApiResponse<Object> localVarResp = loadTagsWithHttpInfo(owner, offset, limit, sort, query, bookmarks, mode, noPage);
         return localVarResp.getData();
     }
 
@@ -807,10 +800,9 @@ public class TagsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
-     * @return ApiResponse&lt;V1LoadTagsResponse&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -822,9 +814,9 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1LoadTagsResponse> loadTagsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage) throws ApiException {
-        okhttp3.Call localVarCall = loadTagsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, null);
-        Type localVarReturnType = new TypeToken<V1LoadTagsResponse>(){}.getType();
+    public ApiResponse<Object> loadTagsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage) throws ApiException {
+        okhttp3.Call localVarCall = loadTagsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, null);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -837,7 +829,6 @@ public class TagsV1Api {
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search. (optional)
      * @param bookmarks Filter by bookmarks. (optional)
-     * @param pins Pinned entities. (optional)
      * @param mode Mode of the search. (optional)
      * @param noPage No pagination. (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -853,17 +844,17 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call loadTagsAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String pins, String mode, Boolean noPage, final ApiCallback<V1LoadTagsResponse> _callback) throws ApiException {
+    public okhttp3.Call loadTagsAsync(String owner, Integer offset, Integer limit, String sort, String query, Boolean bookmarks, String mode, Boolean noPage, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = loadTagsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage, _callback);
-        Type localVarReturnType = new TypeToken<V1LoadTagsResponse>(){}.getType();
+        okhttp3.Call localVarCall = loadTagsValidateBeforeCall(owner, offset, limit, sort, query, bookmarks, mode, noPage, _callback);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for patchTag
      * @param owner Owner of the namespace (required)
-     * @param tagName Tag name (required)
+     * @param tagUuid UUID (required)
      * @param body Tag body (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -878,13 +869,13 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchTagCall(String owner, String tagName, V1Tag body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchTagCall(String owner, String tagUuid, V1Tag body, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/orgs/{owner}/tags/{tag.name}"
+        String localVarPath = "/api/v1/orgs/{owner}/tags/{tag.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", localVarApiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "tag.name" + "\\}", localVarApiClient.escapeString(tagName.toString()));
+            .replaceAll("\\{" + "tag.uuid" + "\\}", localVarApiClient.escapeString(tagUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -910,16 +901,16 @@ public class TagsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchTagValidateBeforeCall(String owner, String tagName, V1Tag body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchTagValidateBeforeCall(String owner, String tagUuid, V1Tag body, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
             throw new ApiException("Missing the required parameter 'owner' when calling patchTag(Async)");
         }
         
-        // verify the required parameter 'tagName' is set
-        if (tagName == null) {
-            throw new ApiException("Missing the required parameter 'tagName' when calling patchTag(Async)");
+        // verify the required parameter 'tagUuid' is set
+        if (tagUuid == null) {
+            throw new ApiException("Missing the required parameter 'tagUuid' when calling patchTag(Async)");
         }
         
         // verify the required parameter 'body' is set
@@ -928,7 +919,7 @@ public class TagsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = patchTagCall(owner, tagName, body, _callback);
+        okhttp3.Call localVarCall = patchTagCall(owner, tagUuid, body, _callback);
         return localVarCall;
 
     }
@@ -937,7 +928,7 @@ public class TagsV1Api {
      * Patch tag
      * 
      * @param owner Owner of the namespace (required)
-     * @param tagName Tag name (required)
+     * @param tagUuid UUID (required)
      * @param body Tag body (required)
      * @return V1Tag
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -951,8 +942,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1Tag patchTag(String owner, String tagName, V1Tag body) throws ApiException {
-        ApiResponse<V1Tag> localVarResp = patchTagWithHttpInfo(owner, tagName, body);
+    public V1Tag patchTag(String owner, String tagUuid, V1Tag body) throws ApiException {
+        ApiResponse<V1Tag> localVarResp = patchTagWithHttpInfo(owner, tagUuid, body);
         return localVarResp.getData();
     }
 
@@ -960,7 +951,7 @@ public class TagsV1Api {
      * Patch tag
      * 
      * @param owner Owner of the namespace (required)
-     * @param tagName Tag name (required)
+     * @param tagUuid UUID (required)
      * @param body Tag body (required)
      * @return ApiResponse&lt;V1Tag&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -974,8 +965,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1Tag> patchTagWithHttpInfo(String owner, String tagName, V1Tag body) throws ApiException {
-        okhttp3.Call localVarCall = patchTagValidateBeforeCall(owner, tagName, body, null);
+    public ApiResponse<V1Tag> patchTagWithHttpInfo(String owner, String tagUuid, V1Tag body) throws ApiException {
+        okhttp3.Call localVarCall = patchTagValidateBeforeCall(owner, tagUuid, body, null);
         Type localVarReturnType = new TypeToken<V1Tag>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -984,7 +975,7 @@ public class TagsV1Api {
      * Patch tag (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
-     * @param tagName Tag name (required)
+     * @param tagUuid UUID (required)
      * @param body Tag body (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -999,9 +990,9 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchTagAsync(String owner, String tagName, V1Tag body, final ApiCallback<V1Tag> _callback) throws ApiException {
+    public okhttp3.Call patchTagAsync(String owner, String tagUuid, V1Tag body, final ApiCallback<V1Tag> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchTagValidateBeforeCall(owner, tagName, body, _callback);
+        okhttp3.Call localVarCall = patchTagValidateBeforeCall(owner, tagUuid, body, _callback);
         Type localVarReturnType = new TypeToken<V1Tag>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1141,7 +1132,7 @@ public class TagsV1Api {
     /**
      * Build call for updateTag
      * @param owner Owner of the namespace (required)
-     * @param tagName Tag name (required)
+     * @param tagUuid UUID (required)
      * @param body Tag body (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -1156,13 +1147,13 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateTagCall(String owner, String tagName, V1Tag body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateTagCall(String owner, String tagUuid, V1Tag body, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/orgs/{owner}/tags/{tag.name}"
+        String localVarPath = "/api/v1/orgs/{owner}/tags/{tag.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", localVarApiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "tag.name" + "\\}", localVarApiClient.escapeString(tagName.toString()));
+            .replaceAll("\\{" + "tag.uuid" + "\\}", localVarApiClient.escapeString(tagUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1188,16 +1179,16 @@ public class TagsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateTagValidateBeforeCall(String owner, String tagName, V1Tag body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateTagValidateBeforeCall(String owner, String tagUuid, V1Tag body, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
             throw new ApiException("Missing the required parameter 'owner' when calling updateTag(Async)");
         }
         
-        // verify the required parameter 'tagName' is set
-        if (tagName == null) {
-            throw new ApiException("Missing the required parameter 'tagName' when calling updateTag(Async)");
+        // verify the required parameter 'tagUuid' is set
+        if (tagUuid == null) {
+            throw new ApiException("Missing the required parameter 'tagUuid' when calling updateTag(Async)");
         }
         
         // verify the required parameter 'body' is set
@@ -1206,7 +1197,7 @@ public class TagsV1Api {
         }
         
 
-        okhttp3.Call localVarCall = updateTagCall(owner, tagName, body, _callback);
+        okhttp3.Call localVarCall = updateTagCall(owner, tagUuid, body, _callback);
         return localVarCall;
 
     }
@@ -1215,7 +1206,7 @@ public class TagsV1Api {
      * Update tag
      * 
      * @param owner Owner of the namespace (required)
-     * @param tagName Tag name (required)
+     * @param tagUuid UUID (required)
      * @param body Tag body (required)
      * @return V1Tag
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1229,8 +1220,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public V1Tag updateTag(String owner, String tagName, V1Tag body) throws ApiException {
-        ApiResponse<V1Tag> localVarResp = updateTagWithHttpInfo(owner, tagName, body);
+    public V1Tag updateTag(String owner, String tagUuid, V1Tag body) throws ApiException {
+        ApiResponse<V1Tag> localVarResp = updateTagWithHttpInfo(owner, tagUuid, body);
         return localVarResp.getData();
     }
 
@@ -1238,7 +1229,7 @@ public class TagsV1Api {
      * Update tag
      * 
      * @param owner Owner of the namespace (required)
-     * @param tagName Tag name (required)
+     * @param tagUuid UUID (required)
      * @param body Tag body (required)
      * @return ApiResponse&lt;V1Tag&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1252,8 +1243,8 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<V1Tag> updateTagWithHttpInfo(String owner, String tagName, V1Tag body) throws ApiException {
-        okhttp3.Call localVarCall = updateTagValidateBeforeCall(owner, tagName, body, null);
+    public ApiResponse<V1Tag> updateTagWithHttpInfo(String owner, String tagUuid, V1Tag body) throws ApiException {
+        okhttp3.Call localVarCall = updateTagValidateBeforeCall(owner, tagUuid, body, null);
         Type localVarReturnType = new TypeToken<V1Tag>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1262,7 +1253,7 @@ public class TagsV1Api {
      * Update tag (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
-     * @param tagName Tag name (required)
+     * @param tagUuid UUID (required)
      * @param body Tag body (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1277,9 +1268,9 @@ public class TagsV1Api {
         <tr><td> 0 </td><td> An unexpected error response. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateTagAsync(String owner, String tagName, V1Tag body, final ApiCallback<V1Tag> _callback) throws ApiException {
+    public okhttp3.Call updateTagAsync(String owner, String tagUuid, V1Tag body, final ApiCallback<V1Tag> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateTagValidateBeforeCall(owner, tagName, body, _callback);
+        okhttp3.Call localVarCall = updateTagValidateBeforeCall(owner, tagUuid, body, _callback);
         Type localVarReturnType = new TypeToken<V1Tag>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

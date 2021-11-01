@@ -42,6 +42,12 @@ type V1Tag struct {
 
 	// Tag name
 	Name string `json:"name,omitempty"`
+
+	// Optional tag stats
+	Stats interface{} `json:"stats,omitempty"`
+
+	// UUID
+	UUID string `json:"uuid,omitempty"`
 }
 
 // Validate validates this v1 tag

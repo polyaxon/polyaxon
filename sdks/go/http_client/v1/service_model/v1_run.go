@@ -247,6 +247,8 @@ func (m *V1Run) validateKind(formats strfmt.Registry) error {
 		if err := m.Kind.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("kind")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("kind")
 			}
 			return err
 		}
@@ -264,6 +266,8 @@ func (m *V1Run) validateOriginal(formats strfmt.Registry) error {
 		if err := m.Original.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("original")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("original")
 			}
 			return err
 		}
@@ -281,6 +285,8 @@ func (m *V1Run) validatePending(formats strfmt.Registry) error {
 		if err := m.Pending.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pending")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("pending")
 			}
 			return err
 		}
@@ -298,6 +304,8 @@ func (m *V1Run) validatePipeline(formats strfmt.Registry) error {
 		if err := m.Pipeline.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pipeline")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("pipeline")
 			}
 			return err
 		}
@@ -315,6 +323,8 @@ func (m *V1Run) validateResources(formats strfmt.Registry) error {
 		if err := m.Resources.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resources")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("resources")
 			}
 			return err
 		}
@@ -332,6 +342,8 @@ func (m *V1Run) validateRuntime(formats strfmt.Registry) error {
 		if err := m.Runtime.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("runtime")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("runtime")
 			}
 			return err
 		}
@@ -361,6 +373,8 @@ func (m *V1Run) validateSettings(formats strfmt.Registry) error {
 		if err := m.Settings.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("settings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("settings")
 			}
 			return err
 		}
@@ -390,6 +404,8 @@ func (m *V1Run) validateStatus(formats strfmt.Registry) error {
 		if err := m.Status.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("status")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("status")
 			}
 			return err
 		}
@@ -412,6 +428,8 @@ func (m *V1Run) validateStatusConditions(formats strfmt.Registry) error {
 			if err := m.StatusConditions[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("status_conditions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("status_conditions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -486,6 +504,8 @@ func (m *V1Run) contextValidateKind(ctx context.Context, formats strfmt.Registry
 		if err := m.Kind.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("kind")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("kind")
 			}
 			return err
 		}
@@ -500,6 +520,8 @@ func (m *V1Run) contextValidateOriginal(ctx context.Context, formats strfmt.Regi
 		if err := m.Original.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("original")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("original")
 			}
 			return err
 		}
@@ -514,6 +536,8 @@ func (m *V1Run) contextValidatePending(ctx context.Context, formats strfmt.Regis
 		if err := m.Pending.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pending")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("pending")
 			}
 			return err
 		}
@@ -528,6 +552,8 @@ func (m *V1Run) contextValidatePipeline(ctx context.Context, formats strfmt.Regi
 		if err := m.Pipeline.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pipeline")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("pipeline")
 			}
 			return err
 		}
@@ -542,6 +568,8 @@ func (m *V1Run) contextValidateResources(ctx context.Context, formats strfmt.Reg
 		if err := m.Resources.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resources")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("resources")
 			}
 			return err
 		}
@@ -556,6 +584,8 @@ func (m *V1Run) contextValidateRuntime(ctx context.Context, formats strfmt.Regis
 		if err := m.Runtime.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("runtime")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("runtime")
 			}
 			return err
 		}
@@ -570,6 +600,8 @@ func (m *V1Run) contextValidateSettings(ctx context.Context, formats strfmt.Regi
 		if err := m.Settings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("settings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("settings")
 			}
 			return err
 		}
@@ -584,6 +616,8 @@ func (m *V1Run) contextValidateStatus(ctx context.Context, formats strfmt.Regist
 		if err := m.Status.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("status")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("status")
 			}
 			return err
 		}
@@ -600,6 +634,8 @@ func (m *V1Run) contextValidateStatusConditions(ctx context.Context, formats str
 			if err := m.StatusConditions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("status_conditions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("status_conditions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -84,6 +84,8 @@ func (m *V1RunEdge) validateDownstream(formats strfmt.Registry) error {
 		if err := m.Downstream.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("downstream")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("downstream")
 			}
 			return err
 		}
@@ -101,6 +103,8 @@ func (m *V1RunEdge) validateKind(formats strfmt.Registry) error {
 		if err := m.Kind.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("kind")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("kind")
 			}
 			return err
 		}
@@ -123,6 +127,8 @@ func (m *V1RunEdge) validateStatuses(formats strfmt.Registry) error {
 			if err := m.Statuses[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("statuses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("statuses" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -142,6 +148,8 @@ func (m *V1RunEdge) validateUpstream(formats strfmt.Registry) error {
 		if err := m.Upstream.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("upstream")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("upstream")
 			}
 			return err
 		}
@@ -182,6 +190,8 @@ func (m *V1RunEdge) contextValidateDownstream(ctx context.Context, formats strfm
 		if err := m.Downstream.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("downstream")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("downstream")
 			}
 			return err
 		}
@@ -196,6 +206,8 @@ func (m *V1RunEdge) contextValidateKind(ctx context.Context, formats strfmt.Regi
 		if err := m.Kind.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("kind")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("kind")
 			}
 			return err
 		}
@@ -212,6 +224,8 @@ func (m *V1RunEdge) contextValidateStatuses(ctx context.Context, formats strfmt.
 			if err := m.Statuses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("statuses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("statuses" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -228,6 +242,8 @@ func (m *V1RunEdge) contextValidateUpstream(ctx context.Context, formats strfmt.
 		if err := m.Upstream.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("upstream")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("upstream")
 			}
 			return err
 		}

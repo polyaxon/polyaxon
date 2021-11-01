@@ -1406,7 +1406,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_multi_run_events**
-> V1EventsResponse get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient, force=force)
+> V1EventsResponse get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient, force=force, sample=sample)
 
 Get multi runs events
 
@@ -1452,10 +1452,11 @@ names = 'names_example' # str | Names query param. (optional)
 runs = 'runs_example' # str | Runs query param. (optional)
 orient = 'orient_example' # str | Orient query param. (optional)
 force = True # bool | Force query param. (optional)
+sample = 56 # int | Sample query param. (optional)
 
     try:
         # Get multi runs events
-        api_response = api_instance.get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient, force=force)
+        api_response = api_instance.get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient, force=force, sample=sample)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_multi_run_events: %s\n" % e)
@@ -1473,6 +1474,7 @@ Name | Type | Description  | Notes
  **runs** | **str**| Runs query param. | [optional] 
  **orient** | **str**| Orient query param. | [optional] 
  **force** | **bool**| Force query param. | [optional] 
+ **sample** | **int**| Sample query param. | [optional] 
 
 ### Return type
 
@@ -2399,7 +2401,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_events**
-> V1EventsResponse get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient, force=force)
+> V1EventsResponse get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient, force=force, sample=sample)
 
 Get run events
 
@@ -2445,10 +2447,11 @@ kind = 'kind_example' # str | The artifact kind
 names = 'names_example' # str | Names query param. (optional)
 orient = 'orient_example' # str | Orient query param. (optional)
 force = True # bool | Force query param. (optional)
+sample = 56 # int | Sample query param. (optional)
 
     try:
         # Get run events
-        api_response = api_instance.get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient, force=force)
+        api_response = api_instance.get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient, force=force, sample=sample)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_events: %s\n" % e)
@@ -2466,6 +2469,7 @@ Name | Type | Description  | Notes
  **names** | **str**| Names query param. | [optional] 
  **orient** | **str**| Orient query param. | [optional] 
  **force** | **bool**| Force query param. | [optional] 
+ **sample** | **int**| Sample query param. | [optional] 
 
 ### Return type
 
@@ -2666,7 +2670,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_resources**
-> V1EventsResponse get_run_resources(namespace, owner, project, uuid, names=names, tail=tail, force=force)
+> V1EventsResponse get_run_resources(namespace, owner, project, uuid, names=names, tail=tail, force=force, sample=sample)
 
 Get run resources events
 
@@ -2711,10 +2715,11 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 names = 'names_example' # str | Names query param. (optional)
 tail = True # bool | Query param flag to tail the values. (optional)
 force = True # bool | Force query param. (optional)
+sample = 56 # int | Sample query param. (optional)
 
     try:
         # Get run resources events
-        api_response = api_instance.get_run_resources(namespace, owner, project, uuid, names=names, tail=tail, force=force)
+        api_response = api_instance.get_run_resources(namespace, owner, project, uuid, names=names, tail=tail, force=force, sample=sample)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_resources: %s\n" % e)
@@ -2731,6 +2736,7 @@ Name | Type | Description  | Notes
  **names** | **str**| Names query param. | [optional] 
  **tail** | **bool**| Query param flag to tail the values. | [optional] 
  **force** | **bool**| Force query param. | [optional] 
+ **sample** | **int**| Sample query param. | [optional] 
 
 ### Return type
 
@@ -3117,7 +3123,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_runs_artifacts_lineage**
-> V1ListRunArtifactsResponse get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListRunArtifactsResponse get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 Get runs artifacts lineage
 
@@ -3162,13 +3168,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # Get runs artifacts lineage
-        api_response = api_instance.get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.get_runs_artifacts_lineage(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_runs_artifacts_lineage: %s\n" % e)
@@ -3185,7 +3190,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -3297,7 +3301,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **inspect_run**
-> object inspect_run(namespace, owner, project, uuid, names=names, tail=tail, force=force)
+> object inspect_run(namespace, owner, project, uuid, names=names, tail=tail, force=force, sample=sample)
 
 Inspect an active run full conditions
 
@@ -3342,10 +3346,11 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 names = 'names_example' # str | Names query param. (optional)
 tail = True # bool | Query param flag to tail the values. (optional)
 force = True # bool | Force query param. (optional)
+sample = 56 # int | Sample query param. (optional)
 
     try:
         # Inspect an active run full conditions
-        api_response = api_instance.inspect_run(namespace, owner, project, uuid, names=names, tail=tail, force=force)
+        api_response = api_instance.inspect_run(namespace, owner, project, uuid, names=names, tail=tail, force=force, sample=sample)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->inspect_run: %s\n" % e)
@@ -3362,6 +3367,7 @@ Name | Type | Description  | Notes
  **names** | **str**| Names query param. | [optional] 
  **tail** | **bool**| Query param flag to tail the values. | [optional] 
  **force** | **bool**| Force query param. | [optional] 
+ **sample** | **int**| Sample query param. | [optional] 
 
 ### Return type
 
@@ -3730,7 +3736,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runs**
-> V1ListRunsResponse list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListRunsResponse list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List runs
 
@@ -3775,13 +3781,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List runs
-        api_response = api_instance.list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_runs(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->list_runs: %s\n" % e)
@@ -3798,7 +3803,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 

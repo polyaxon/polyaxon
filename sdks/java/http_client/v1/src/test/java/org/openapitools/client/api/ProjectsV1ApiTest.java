@@ -188,10 +188,9 @@ public class ProjectsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListActivitiesResponse response = api.getProjectActivities(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListActivitiesResponse response = api.getProjectActivities(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -297,10 +296,9 @@ public class ProjectsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListProjectsResponse response = api.listProjectNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListProjectsResponse response = api.listProjectNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -321,10 +319,9 @@ public class ProjectsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListProjectsResponse response = api.listProjects(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListProjectsResponse response = api.listProjects(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

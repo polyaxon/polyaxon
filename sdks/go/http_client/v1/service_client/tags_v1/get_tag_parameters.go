@@ -73,17 +73,17 @@ func NewGetTagParamsWithHTTPClient(client *http.Client) *GetTagParams {
 */
 type GetTagParams struct {
 
-	/* Name.
-
-	   Component under namesapce
-	*/
-	Name string
-
 	/* Owner.
 
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* UUID.
+
+	   Uuid identifier of the entity
+	*/
+	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -138,17 +138,6 @@ func (o *GetTagParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithName adds the name to the get tag params
-func (o *GetTagParams) WithName(name string) *GetTagParams {
-	o.SetName(name)
-	return o
-}
-
-// SetName adds the name to the get tag params
-func (o *GetTagParams) SetName(name string) {
-	o.Name = name
-}
-
 // WithOwner adds the owner to the get tag params
 func (o *GetTagParams) WithOwner(owner string) *GetTagParams {
 	o.SetOwner(owner)
@@ -160,6 +149,17 @@ func (o *GetTagParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithUUID adds the uuid to the get tag params
+func (o *GetTagParams) WithUUID(uuid string) *GetTagParams {
+	o.SetUUID(uuid)
+	return o
+}
+
+// SetUUID adds the uuid to the get tag params
+func (o *GetTagParams) SetUUID(uuid string) {
+	o.UUID = uuid
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *GetTagParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -168,13 +168,13 @@ func (o *GetTagParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 	}
 	var res []error
 
-	// path param name
-	if err := r.SetPathParam("name", o.Name); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param uuid
+	if err := r.SetPathParam("uuid", o.UUID); err != nil {
 		return err
 	}
 

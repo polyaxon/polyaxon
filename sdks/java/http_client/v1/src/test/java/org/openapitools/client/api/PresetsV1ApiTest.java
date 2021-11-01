@@ -117,10 +117,9 @@ public class PresetsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListPresetsResponse response = api.listPresetNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListPresetsResponse response = api.listPresetNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -141,10 +140,9 @@ public class PresetsV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListPresetsResponse response = api.listPresets(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListPresetsResponse response = api.listPresets(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

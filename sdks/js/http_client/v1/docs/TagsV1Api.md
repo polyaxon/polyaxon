@@ -7,13 +7,13 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createTag**](TagsV1Api.md#createTag) | **POST** /api/v1/orgs/{owner}/tags | Create tag
-[**deleteTag**](TagsV1Api.md#deleteTag) | **DELETE** /api/v1/orgs/{owner}/tags/{name} | Delete tag
-[**getTag**](TagsV1Api.md#getTag) | **GET** /api/v1/orgs/{owner}/tags/{name} | Get tag
+[**deleteTag**](TagsV1Api.md#deleteTag) | **DELETE** /api/v1/orgs/{owner}/tags/{uuid} | Delete tag
+[**getTag**](TagsV1Api.md#getTag) | **GET** /api/v1/orgs/{owner}/tags/{uuid} | Get tag
 [**listTags**](TagsV1Api.md#listTags) | **GET** /api/v1/orgs/{owner}/tags | List tags
 [**loadTags**](TagsV1Api.md#loadTags) | **GET** /api/v1/orgs/{owner}/tags/load | Load tags
-[**patchTag**](TagsV1Api.md#patchTag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.name} | Patch tag
+[**patchTag**](TagsV1Api.md#patchTag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.uuid} | Patch tag
 [**syncTags**](TagsV1Api.md#syncTags) | **POST** /api/v1/orgs/{owner}/tags/sync | Sync tags
-[**updateTag**](TagsV1Api.md#updateTag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.name} | Update tag
+[**updateTag**](TagsV1Api.md#updateTag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.uuid} | Update tag
 
 
 
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 ## deleteTag
 
-> deleteTag(owner, name)
+> deleteTag(owner, uuid, opts)
 
 Delete tag
 
@@ -87,8 +87,11 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.TagsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let name = "name_example"; // String | Component under namesapce
-apiInstance.deleteTag(owner, name, (error, data, response) => {
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let opts = {
+  'cascade': true // Boolean | Flag to handle sub-entities.
+};
+apiInstance.deleteTag(owner, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -103,7 +106,8 @@ apiInstance.deleteTag(owner, name, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **name** | **String**| Component under namesapce | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **cascade** | **Boolean**| Flag to handle sub-entities. | [optional] 
 
 ### Return type
 
@@ -121,7 +125,7 @@ null (empty response body)
 
 ## getTag
 
-> V1Tag getTag(owner, name)
+> V1Tag getTag(owner, uuid)
 
 Get tag
 
@@ -138,8 +142,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.TagsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let name = "name_example"; // String | Component under namesapce
-apiInstance.getTag(owner, name, (error, data, response) => {
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getTag(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -154,7 +158,7 @@ apiInstance.getTag(owner, name, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **name** | **String**| Component under namesapce | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -195,7 +199,6 @@ let opts = {
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
   'bookmarks': true, // Boolean | Filter by bookmarks.
-  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -219,7 +222,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
- **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 
@@ -239,7 +241,7 @@ Name | Type | Description  | Notes
 
 ## loadTags
 
-> V1LoadTagsResponse loadTags(owner, opts)
+> Object loadTags(owner, opts)
 
 Load tags
 
@@ -262,7 +264,6 @@ let opts = {
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
   'bookmarks': true, // Boolean | Filter by bookmarks.
-  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -286,13 +287,12 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
- **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 
 ### Return type
 
-[**V1LoadTagsResponse**](V1LoadTagsResponse.md)
+**Object**
 
 ### Authorization
 
@@ -306,7 +306,7 @@ Name | Type | Description  | Notes
 
 ## patchTag
 
-> V1Tag patchTag(owner, tag_name, body)
+> V1Tag patchTag(owner, tag_uuid, body)
 
 Patch tag
 
@@ -323,9 +323,9 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.TagsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let tag_name = "tag_name_example"; // String | Tag name
+let tag_uuid = "tag_uuid_example"; // String | UUID
 let body = new PolyaxonSdk.V1Tag(); // V1Tag | Tag body
-apiInstance.patchTag(owner, tag_name, body, (error, data, response) => {
+apiInstance.patchTag(owner, tag_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -340,7 +340,7 @@ apiInstance.patchTag(owner, tag_name, body, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **tag_name** | **String**| Tag name | 
+ **tag_uuid** | **String**| UUID | 
  **body** | [**V1Tag**](V1Tag.md)| Tag body | 
 
 ### Return type
@@ -410,7 +410,7 @@ null (empty response body)
 
 ## updateTag
 
-> V1Tag updateTag(owner, tag_name, body)
+> V1Tag updateTag(owner, tag_uuid, body)
 
 Update tag
 
@@ -427,9 +427,9 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.TagsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let tag_name = "tag_name_example"; // String | Tag name
+let tag_uuid = "tag_uuid_example"; // String | UUID
 let body = new PolyaxonSdk.V1Tag(); // V1Tag | Tag body
-apiInstance.updateTag(owner, tag_name, body, (error, data, response) => {
+apiInstance.updateTag(owner, tag_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -444,7 +444,7 @@ apiInstance.updateTag(owner, tag_name, body, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **tag_name** | **String**| Tag name | 
+ **tag_uuid** | **String**| UUID | 
  **body** | [**V1Tag**](V1Tag.md)| Tag body | 
 
 ### Return type

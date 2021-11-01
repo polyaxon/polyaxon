@@ -213,6 +213,7 @@ export interface GetMultiRunEventsRequest {
     runs?: string;
     orient?: string;
     force?: boolean;
+    sample?: number;
 }
 
 export interface GetRunRequest {
@@ -320,6 +321,7 @@ export interface GetRunEventsRequest {
     names?: string;
     orient?: string;
     force?: boolean;
+    sample?: number;
 }
 
 export interface GetRunLogsRequest {
@@ -346,6 +348,7 @@ export interface GetRunResourcesRequest {
     names?: string;
     tail?: boolean;
     force?: boolean;
+    sample?: number;
 }
 
 export interface GetRunSettingsRequest {
@@ -394,7 +397,6 @@ export interface GetRunsArtifactsLineageRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -413,6 +415,7 @@ export interface InspectRunRequest {
     names?: string;
     tail?: boolean;
     force?: boolean;
+    sample?: number;
 }
 
 export interface InvalidateRunRequest {
@@ -453,7 +456,6 @@ export interface ListRunsRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -1350,6 +1352,10 @@ export class RunsV1Api extends runtime.BaseAPI {
             queryParameters['force'] = requestParameters.force;
         }
 
+        if (requestParameters.sample !== undefined) {
+            queryParameters['sample'] = requestParameters.sample;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -1976,6 +1982,10 @@ export class RunsV1Api extends runtime.BaseAPI {
             queryParameters['force'] = requestParameters.force;
         }
 
+        if (requestParameters.sample !== undefined) {
+            queryParameters['sample'] = requestParameters.sample;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -2132,6 +2142,10 @@ export class RunsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.force !== undefined) {
             queryParameters['force'] = requestParameters.force;
+        }
+
+        if (requestParameters.sample !== undefined) {
+            queryParameters['sample'] = requestParameters.sample;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2416,10 +2430,6 @@ export class RunsV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -2526,6 +2536,10 @@ export class RunsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.force !== undefined) {
             queryParameters['force'] = requestParameters.force;
+        }
+
+        if (requestParameters.sample !== undefined) {
+            queryParameters['sample'] = requestParameters.sample;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2777,10 +2791,6 @@ export class RunsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.bookmarks !== undefined) {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
-        }
-
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
         }
 
         if (requestParameters.mode !== undefined) {
@@ -3725,7 +3735,8 @@ export enum GetMultiRunEventsKindEnum {
     Curve = 'curve',
     Analysis = 'analysis',
     Iteration = 'iteration',
-    Markdown = 'markdown'
+    Markdown = 'markdown',
+    System = 'system'
 }
 /**
     * @export
@@ -3759,5 +3770,6 @@ export enum GetRunEventsKindEnum {
     Curve = 'curve',
     Analysis = 'analysis',
     Iteration = 'iteration',
-    Markdown = 'markdown'
+    Markdown = 'markdown',
+    System = 'system'
 }

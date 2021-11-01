@@ -105,14 +105,6 @@ public class V1SearchSpecTest {
     }
 
     /**
-     * Test the property 'pins'
-     */
-    @Test
-    public void pinsTest() {
-        // TODO: test pins
-    }
-
-    /**
      * Test the property 'layout'
      */
     @Test
@@ -126,6 +118,22 @@ public class V1SearchSpecTest {
     @Test
     public void sectionsTest() {
         // TODO: test sections
+    }
+
+    /**
+     * Test the property 'compares'
+     */
+    @Test
+    public void comparesTest() {
+        // TODO: test compares
+    }
+
+    /**
+     * Test the property 'heat'
+     */
+    @Test
+    public void heatTest() {
+        // TODO: test heat
     }
 
     /**

@@ -1,12 +1,13 @@
 
 
-# V1LoadTagsResponse
+# V1HpDateRange
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**Object**](.md) |  |  [optional]
+**kind** | **String** |  |  [optional]
+**value** | [**Object**](.md) |  |  [optional]
 
 
 

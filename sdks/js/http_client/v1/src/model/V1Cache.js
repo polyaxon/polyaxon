@@ -70,6 +70,9 @@ class V1Cache {
             if (data.hasOwnProperty('io')) {
                 obj['io'] = ApiClient.convertToType(data['io'], ['String']);
             }
+            if (data.hasOwnProperty('sections')) {
+                obj['sections'] = ApiClient.convertToType(data['sections'], ['String']);
+            }
         }
         return obj;
     }
@@ -91,6 +94,11 @@ V1Cache.prototype['ttl'] = undefined;
  * @member {Array.<String>} io
  */
 V1Cache.prototype['io'] = undefined;
+
+/**
+ * @member {Array.<String>} sections
+ */
+V1Cache.prototype['sections'] = undefined;
 
 
 

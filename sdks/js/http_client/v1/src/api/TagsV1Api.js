@@ -30,7 +30,6 @@ import ApiClient from "../ApiClient";
 import RuntimeError from '../model/RuntimeError';
 import V1EntitiesTags from '../model/V1EntitiesTags';
 import V1ListTagsResponse from '../model/V1ListTagsResponse';
-import V1LoadTagsResponse from '../model/V1LoadTagsResponse';
 import V1Tag from '../model/V1Tag';
 
 /**
@@ -111,25 +110,29 @@ export default class TagsV1Api {
     /**
      * Delete tag
      * @param {String} owner Owner of the namespace
-     * @param {String} name Component under namesapce
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {Object} opts Optional parameters
+     * @param {Boolean} opts.cascade Flag to handle sub-entities.
      * @param {module:api/TagsV1Api~deleteTagCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    deleteTag(owner, name, callback) {
+    deleteTag(owner, uuid, opts, callback) {
+      opts = opts || {};
       let postBody = null;
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
         throw new Error("Missing the required parameter 'owner' when calling deleteTag");
       }
-      // verify the required parameter 'name' is set
-      if (name === undefined || name === null) {
-        throw new Error("Missing the required parameter 'name' when calling deleteTag");
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling deleteTag");
       }
 
       let pathParams = {
         'owner': owner,
-        'name': name
+        'uuid': uuid
       };
       let queryParams = {
+        'cascade': opts['cascade']
       };
       let headerParams = {
       };
@@ -141,7 +144,7 @@ export default class TagsV1Api {
       let accepts = ['application/json'];
       let returnType = null;
       return this.apiClient.callApi(
-        '/api/v1/orgs/{owner}/tags/{name}', 'DELETE',
+        '/api/v1/orgs/{owner}/tags/{uuid}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
@@ -158,24 +161,24 @@ export default class TagsV1Api {
     /**
      * Get tag
      * @param {String} owner Owner of the namespace
-     * @param {String} name Component under namesapce
+     * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/TagsV1Api~getTagCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Tag}
      */
-    getTag(owner, name, callback) {
+    getTag(owner, uuid, callback) {
       let postBody = null;
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
         throw new Error("Missing the required parameter 'owner' when calling getTag");
       }
-      // verify the required parameter 'name' is set
-      if (name === undefined || name === null) {
-        throw new Error("Missing the required parameter 'name' when calling getTag");
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling getTag");
       }
 
       let pathParams = {
         'owner': owner,
-        'name': name
+        'uuid': uuid
       };
       let queryParams = {
       };
@@ -189,7 +192,7 @@ export default class TagsV1Api {
       let accepts = ['application/json'];
       let returnType = V1Tag;
       return this.apiClient.callApi(
-        '/api/v1/orgs/{owner}/tags/{name}', 'GET',
+        '/api/v1/orgs/{owner}/tags/{uuid}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
@@ -212,7 +215,6 @@ export default class TagsV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/TagsV1Api~listTagsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -235,7 +237,6 @@ export default class TagsV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };
@@ -259,7 +260,7 @@ export default class TagsV1Api {
      * Callback function to receive the result of the loadTags operation.
      * @callback module:api/TagsV1Api~loadTagsCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/V1LoadTagsResponse} data The data returned by the service call.
+     * @param {Object} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -272,11 +273,10 @@ export default class TagsV1Api {
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search.
      * @param {Boolean} opts.bookmarks Filter by bookmarks.
-     * @param {String} opts.pins Pinned entities.
      * @param {String} opts.mode Mode of the search.
      * @param {Boolean} opts.no_page No pagination.
      * @param {module:api/TagsV1Api~loadTagsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1LoadTagsResponse}
+     * data is of type: {@link Object}
      */
     loadTags(owner, opts, callback) {
       opts = opts || {};
@@ -295,7 +295,6 @@ export default class TagsV1Api {
         'sort': opts['sort'],
         'query': opts['query'],
         'bookmarks': opts['bookmarks'],
-        'pins': opts['pins'],
         'mode': opts['mode'],
         'no_page': opts['no_page']
       };
@@ -307,7 +306,7 @@ export default class TagsV1Api {
       let authNames = ['ApiKey'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = V1LoadTagsResponse;
+      let returnType = Object;
       return this.apiClient.callApi(
         '/api/v1/orgs/{owner}/tags/load', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -326,20 +325,20 @@ export default class TagsV1Api {
     /**
      * Patch tag
      * @param {String} owner Owner of the namespace
-     * @param {String} tag_name Tag name
+     * @param {String} tag_uuid UUID
      * @param {module:model/V1Tag} body Tag body
      * @param {module:api/TagsV1Api~patchTagCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Tag}
      */
-    patchTag(owner, tag_name, body, callback) {
+    patchTag(owner, tag_uuid, body, callback) {
       let postBody = body;
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
         throw new Error("Missing the required parameter 'owner' when calling patchTag");
       }
-      // verify the required parameter 'tag_name' is set
-      if (tag_name === undefined || tag_name === null) {
-        throw new Error("Missing the required parameter 'tag_name' when calling patchTag");
+      // verify the required parameter 'tag_uuid' is set
+      if (tag_uuid === undefined || tag_uuid === null) {
+        throw new Error("Missing the required parameter 'tag_uuid' when calling patchTag");
       }
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
@@ -348,7 +347,7 @@ export default class TagsV1Api {
 
       let pathParams = {
         'owner': owner,
-        'tag.name': tag_name
+        'tag.uuid': tag_uuid
       };
       let queryParams = {
       };
@@ -362,7 +361,7 @@ export default class TagsV1Api {
       let accepts = ['application/json'];
       let returnType = V1Tag;
       return this.apiClient.callApi(
-        '/api/v1/orgs/{owner}/tags/{tag.name}', 'PATCH',
+        '/api/v1/orgs/{owner}/tags/{tag.uuid}', 'PATCH',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
@@ -425,20 +424,20 @@ export default class TagsV1Api {
     /**
      * Update tag
      * @param {String} owner Owner of the namespace
-     * @param {String} tag_name Tag name
+     * @param {String} tag_uuid UUID
      * @param {module:model/V1Tag} body Tag body
      * @param {module:api/TagsV1Api~updateTagCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Tag}
      */
-    updateTag(owner, tag_name, body, callback) {
+    updateTag(owner, tag_uuid, body, callback) {
       let postBody = body;
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
         throw new Error("Missing the required parameter 'owner' when calling updateTag");
       }
-      // verify the required parameter 'tag_name' is set
-      if (tag_name === undefined || tag_name === null) {
-        throw new Error("Missing the required parameter 'tag_name' when calling updateTag");
+      // verify the required parameter 'tag_uuid' is set
+      if (tag_uuid === undefined || tag_uuid === null) {
+        throw new Error("Missing the required parameter 'tag_uuid' when calling updateTag");
       }
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
@@ -447,7 +446,7 @@ export default class TagsV1Api {
 
       let pathParams = {
         'owner': owner,
-        'tag.name': tag_name
+        'tag.uuid': tag_uuid
       };
       let queryParams = {
       };
@@ -461,7 +460,7 @@ export default class TagsV1Api {
       let accepts = ['application/json'];
       let returnType = V1Tag;
       return this.apiClient.callApi(
-        '/api/v1/orgs/{owner}/tags/{tag.name}', 'PUT',
+        '/api/v1/orgs/{owner}/tags/{tag.uuid}', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

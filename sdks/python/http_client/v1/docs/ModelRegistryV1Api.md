@@ -684,7 +684,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_model_registry_activities**
-> V1ListActivitiesResponse get_model_registry_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListActivitiesResponse get_model_registry_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 Get model activities
 
@@ -729,13 +729,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # Get model activities
-        api_response = api_instance.get_model_registry_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.get_model_registry_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->get_model_registry_activities: %s\n" % e)
@@ -752,7 +751,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -1028,7 +1026,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_model_registries**
-> V1ListModelRegistriesResponse list_model_registries(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListModelRegistriesResponse list_model_registries(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List registry models
 
@@ -1072,13 +1070,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List registry models
-        api_response = api_instance.list_model_registries(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_model_registries(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->list_model_registries: %s\n" % e)
@@ -1094,7 +1091,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -1123,7 +1119,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_model_registry_names**
-> V1ListModelRegistriesResponse list_model_registry_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListModelRegistriesResponse list_model_registry_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List registry model names
 
@@ -1167,13 +1163,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List registry model names
-        api_response = api_instance.list_model_registry_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_model_registry_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->list_model_registry_names: %s\n" % e)
@@ -1189,7 +1184,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -1218,7 +1212,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_model_version_names**
-> V1ListModelVersionsResponse list_model_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListModelVersionsResponse list_model_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List model versions names
 
@@ -1263,13 +1257,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List model versions names
-        api_response = api_instance.list_model_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_model_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->list_model_version_names: %s\n" % e)
@@ -1286,7 +1279,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -1315,7 +1307,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_model_versions**
-> V1ListModelVersionsResponse list_model_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListModelVersionsResponse list_model_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List model versions
 
@@ -1360,13 +1352,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List model versions
-        api_response = api_instance.list_model_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_model_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ModelRegistryV1Api->list_model_versions: %s\n" % e)
@@ -1383,7 +1374,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 

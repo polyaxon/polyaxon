@@ -70,6 +70,8 @@ func (m *V1Stage) validateStage(formats strfmt.Registry) error {
 		if err := m.Stage.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("stage")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("stage")
 			}
 			return err
 		}
@@ -92,6 +94,8 @@ func (m *V1Stage) validateStageConditions(formats strfmt.Registry) error {
 			if err := m.StageConditions[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -126,6 +130,8 @@ func (m *V1Stage) contextValidateStage(ctx context.Context, formats strfmt.Regis
 		if err := m.Stage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("stage")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("stage")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *V1Stage) contextValidateStageConditions(ctx context.Context, formats st
 			if err := m.StageConditions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

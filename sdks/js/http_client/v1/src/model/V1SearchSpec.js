@@ -81,14 +81,17 @@ class V1SearchSpec {
             if (data.hasOwnProperty('columns')) {
                 obj['columns'] = ApiClient.convertToType(data['columns'], 'String');
             }
-            if (data.hasOwnProperty('pins')) {
-                obj['pins'] = ApiClient.convertToType(data['pins'], 'String');
-            }
             if (data.hasOwnProperty('layout')) {
                 obj['layout'] = ApiClient.convertToType(data['layout'], 'String');
             }
             if (data.hasOwnProperty('sections')) {
                 obj['sections'] = ApiClient.convertToType(data['sections'], 'String');
+            }
+            if (data.hasOwnProperty('compares')) {
+                obj['compares'] = ApiClient.convertToType(data['compares'], 'String');
+            }
+            if (data.hasOwnProperty('heat')) {
+                obj['heat'] = ApiClient.convertToType(data['heat'], 'String');
             }
             if (data.hasOwnProperty('events')) {
                 obj['events'] = V1DashboardSpec.constructFromObject(data['events']);
@@ -140,11 +143,6 @@ V1SearchSpec.prototype['groupby'] = undefined;
 V1SearchSpec.prototype['columns'] = undefined;
 
 /**
- * @member {String} pins
- */
-V1SearchSpec.prototype['pins'] = undefined;
-
-/**
  * @member {String} layout
  */
 V1SearchSpec.prototype['layout'] = undefined;
@@ -153,6 +151,16 @@ V1SearchSpec.prototype['layout'] = undefined;
  * @member {String} sections
  */
 V1SearchSpec.prototype['sections'] = undefined;
+
+/**
+ * @member {String} compares
+ */
+V1SearchSpec.prototype['compares'] = undefined;
+
+/**
+ * @member {String} heat
+ */
+V1SearchSpec.prototype['heat'] = undefined;
 
 /**
  * @member {module:model/V1DashboardSpec} events

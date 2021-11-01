@@ -52,16 +52,18 @@ class V1Cache(object):
     openapi_types = {
         'disable': 'bool',
         'ttl': 'int',
-        'io': 'list[str]'
+        'io': 'list[str]',
+        'sections': 'list[str]'
     }
 
     attribute_map = {
         'disable': 'disable',
         'ttl': 'ttl',
-        'io': 'io'
+        'io': 'io',
+        'sections': 'sections'
     }
 
-    def __init__(self, disable=None, ttl=None, io=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, disable=None, ttl=None, io=None, sections=None, local_vars_configuration=None):  # noqa: E501
         """V1Cache - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -70,6 +72,7 @@ class V1Cache(object):
         self._disable = None
         self._ttl = None
         self._io = None
+        self._sections = None
         self.discriminator = None
 
         if disable is not None:
@@ -78,6 +81,8 @@ class V1Cache(object):
             self.ttl = ttl
         if io is not None:
             self.io = io
+        if sections is not None:
+            self.sections = sections
 
     @property
     def disable(self):
@@ -141,6 +146,27 @@ class V1Cache(object):
         """
 
         self._io = io
+
+    @property
+    def sections(self):
+        """Gets the sections of this V1Cache.  # noqa: E501
+
+
+        :return: The sections of this V1Cache.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._sections
+
+    @sections.setter
+    def sections(self, sections):
+        """Sets the sections of this V1Cache.
+
+
+        :param sections: The sections of this V1Cache.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._sections = sections
 
     def to_dict(self):
         """Returns the model properties as a dict"""

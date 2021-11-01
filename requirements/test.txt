@@ -1,5 +1,5 @@
-black==21.9b0
-coverage<6.1
+black==21.10b0
+coverage<6.2
 faker<10.0.0
 flake8<4.1.0
 flaky<3.8.0

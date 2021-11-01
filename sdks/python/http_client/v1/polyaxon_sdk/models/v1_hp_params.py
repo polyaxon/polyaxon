@@ -63,7 +63,9 @@ class V1HpParams(object):
         'normal': 'V1HpNormal',
         'qnormal': 'V1HpQNormal',
         'lognormal': 'V1HpLogNormal',
-        'qlognormal': 'V1HpQLogNormal'
+        'qlognormal': 'V1HpQLogNormal',
+        'daterange': 'V1HpDateRange',
+        'datetimerange': 'V1HpDateTimeRange'
     }
 
     attribute_map = {
@@ -80,10 +82,12 @@ class V1HpParams(object):
         'normal': 'normal',
         'qnormal': 'qnormal',
         'lognormal': 'lognormal',
-        'qlognormal': 'qlognormal'
+        'qlognormal': 'qlognormal',
+        'daterange': 'daterange',
+        'datetimerange': 'datetimerange'
     }
 
-    def __init__(self, choice=None, pchoice=None, range=None, linspace=None, logspace=None, geomspace=None, uniform=None, quniform=None, loguniform=None, qloguniform=None, normal=None, qnormal=None, lognormal=None, qlognormal=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, choice=None, pchoice=None, range=None, linspace=None, logspace=None, geomspace=None, uniform=None, quniform=None, loguniform=None, qloguniform=None, normal=None, qnormal=None, lognormal=None, qlognormal=None, daterange=None, datetimerange=None, local_vars_configuration=None):  # noqa: E501
         """V1HpParams - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -103,6 +107,8 @@ class V1HpParams(object):
         self._qnormal = None
         self._lognormal = None
         self._qlognormal = None
+        self._daterange = None
+        self._datetimerange = None
         self.discriminator = None
 
         if choice is not None:
@@ -133,6 +139,10 @@ class V1HpParams(object):
             self.lognormal = lognormal
         if qlognormal is not None:
             self.qlognormal = qlognormal
+        if daterange is not None:
+            self.daterange = daterange
+        if datetimerange is not None:
+            self.datetimerange = datetimerange
 
     @property
     def choice(self):
@@ -427,6 +437,48 @@ class V1HpParams(object):
         """
 
         self._qlognormal = qlognormal
+
+    @property
+    def daterange(self):
+        """Gets the daterange of this V1HpParams.  # noqa: E501
+
+
+        :return: The daterange of this V1HpParams.  # noqa: E501
+        :rtype: V1HpDateRange
+        """
+        return self._daterange
+
+    @daterange.setter
+    def daterange(self, daterange):
+        """Sets the daterange of this V1HpParams.
+
+
+        :param daterange: The daterange of this V1HpParams.  # noqa: E501
+        :type: V1HpDateRange
+        """
+
+        self._daterange = daterange
+
+    @property
+    def datetimerange(self):
+        """Gets the datetimerange of this V1HpParams.  # noqa: E501
+
+
+        :return: The datetimerange of this V1HpParams.  # noqa: E501
+        :rtype: V1HpDateTimeRange
+        """
+        return self._datetimerange
+
+    @datetimerange.setter
+    def datetimerange(self, datetimerange):
+        """Sets the datetimerange of this V1HpParams.
+
+
+        :param datetimerange: The datetimerange of this V1HpParams.  # noqa: E501
+        :type: V1HpDateTimeRange
+        """
+
+        self._datetimerange = datetimerange
 
     def to_dict(self):
         """Returns the model properties as a dict"""

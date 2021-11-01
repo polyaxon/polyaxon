@@ -242,7 +242,7 @@ Name | Type | Description  | Notes
 
 <a name="listOrganizationQueueNames"></a>
 # **listOrganizationQueueNames**
-> V1ListQueuesResponse listOrganizationQueueNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListQueuesResponse listOrganizationQueueNames(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 List organization level queues names
 
@@ -274,11 +274,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListQueuesResponse result = apiInstance.listOrganizationQueueNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListQueuesResponse result = apiInstance.listOrganizationQueueNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#listOrganizationQueueNames");
@@ -301,7 +300,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -329,7 +327,7 @@ Name | Type | Description  | Notes
 
 <a name="listOrganizationQueues"></a>
 # **listOrganizationQueues**
-> V1ListQueuesResponse listOrganizationQueues(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListQueuesResponse listOrganizationQueues(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 List organization level queues
 
@@ -361,11 +359,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListQueuesResponse result = apiInstance.listOrganizationQueues(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListQueuesResponse result = apiInstance.listOrganizationQueues(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#listOrganizationQueues");
@@ -388,7 +385,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -416,7 +412,7 @@ Name | Type | Description  | Notes
 
 <a name="listQueueNames"></a>
 # **listQueueNames**
-> V1ListQueuesResponse listQueueNames(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListQueuesResponse listQueueNames(owner, name, offset, limit, sort, query, bookmarks, mode, noPage)
 
 List queues names
 
@@ -449,11 +445,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListQueuesResponse result = apiInstance.listQueueNames(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListQueuesResponse result = apiInstance.listQueueNames(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#listQueueNames");
@@ -477,7 +472,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -505,7 +499,7 @@ Name | Type | Description  | Notes
 
 <a name="listQueues"></a>
 # **listQueues**
-> V1ListQueuesResponse listQueues(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListQueuesResponse listQueues(owner, name, offset, limit, sort, query, bookmarks, mode, noPage)
 
 List queues
 
@@ -538,11 +532,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListQueuesResponse result = apiInstance.listQueues(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListQueuesResponse result = apiInstance.listQueues(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#listQueues");
@@ -566,7 +559,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 

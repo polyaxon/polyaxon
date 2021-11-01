@@ -120,12 +120,6 @@ type ListQueuesParams struct {
 	*/
 	Owner string
 
-	/* Pins.
-
-	   Pinned entities.
-	*/
-	Pins *string
-
 	/* Query.
 
 	   Query filter the search.
@@ -268,17 +262,6 @@ func (o *ListQueuesParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithPins adds the pins to the list queues params
-func (o *ListQueuesParams) WithPins(pins *string) *ListQueuesParams {
-	o.SetPins(pins)
-	return o
-}
-
-// SetPins adds the pins to the list queues params
-func (o *ListQueuesParams) SetPins(pins *string) {
-	o.Pins = pins
-}
-
 // WithQuery adds the query to the list queues params
 func (o *ListQueuesParams) WithQuery(query *string) *ListQueuesParams {
 	o.SetQuery(query)
@@ -402,23 +385,6 @@ func (o *ListQueuesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
-	}
-
-	if o.Pins != nil {
-
-		// query param pins
-		var qrPins string
-
-		if o.Pins != nil {
-			qrPins = *o.Pins
-		}
-		qPins := qrPins
-		if qPins != "" {
-
-			if err := r.SetQueryParam("pins", qPins); err != nil {
-				return err
-			}
-		}
 	}
 
 	if o.Query != nil {

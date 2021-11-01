@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **git** | [**V1GitType**](V1GitType.md) |  | [optional] 
 **dockerfile** | [**V1DockerfileType**](V1DockerfileType.md) |  | [optional] 
 **file** | [**V1FileType**](V1FileType.md) |  | [optional] 
+**model** | **str** |  | [optional] 
 **connection** | **str** |  | [optional] 
 **path** | **str** |  | [optional] 
 **container** | [**V1Container**](V1Container.md) |  | [optional] 

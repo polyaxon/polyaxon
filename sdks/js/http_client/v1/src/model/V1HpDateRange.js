@@ -28,18 +28,18 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The V1LoadTagsResponse model module.
- * @module model/V1LoadTagsResponse
+ * The V1HpDateRange model module.
+ * @module model/V1HpDateRange
  * @version 1.11.3
  */
-class V1LoadTagsResponse {
+class V1HpDateRange {
     /**
-     * Constructs a new <code>V1LoadTagsResponse</code>.
-     * @alias module:model/V1LoadTagsResponse
+     * Constructs a new <code>V1HpDateRange</code>.
+     * @alias module:model/V1HpDateRange
      */
     constructor() { 
         
-        V1LoadTagsResponse.initialize(this);
+        V1HpDateRange.initialize(this);
     }
 
     /**
@@ -51,18 +51,21 @@ class V1LoadTagsResponse {
     }
 
     /**
-     * Constructs a <code>V1LoadTagsResponse</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>V1HpDateRange</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/V1LoadTagsResponse} obj Optional instance to populate.
-     * @return {module:model/V1LoadTagsResponse} The populated <code>V1LoadTagsResponse</code> instance.
+     * @param {module:model/V1HpDateRange} obj Optional instance to populate.
+     * @return {module:model/V1HpDateRange} The populated <code>V1HpDateRange</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new V1LoadTagsResponse();
+            obj = obj || new V1HpDateRange();
 
-            if (data.hasOwnProperty('data')) {
-                obj['data'] = ApiClient.convertToType(data['data'], Object);
+            if (data.hasOwnProperty('kind')) {
+                obj['kind'] = ApiClient.convertToType(data['kind'], 'String');
+            }
+            if (data.hasOwnProperty('value')) {
+                obj['value'] = ApiClient.convertToType(data['value'], Object);
             }
         }
         return obj;
@@ -72,14 +75,20 @@ class V1LoadTagsResponse {
 }
 
 /**
- * @member {Object} data
+ * @member {String} kind
+ * @default 'daterange'
  */
-V1LoadTagsResponse.prototype['data'] = undefined;
+V1HpDateRange.prototype['kind'] = 'daterange';
+
+/**
+ * @member {Object} value
+ */
+V1HpDateRange.prototype['value'] = undefined;
 
 
 
 
 
 
-export default V1LoadTagsResponse;
+export default V1HpDateRange;
 

@@ -77,6 +77,9 @@ class V1Init {
             if (data.hasOwnProperty('file')) {
                 obj['file'] = V1FileType.constructFromObject(data['file']);
             }
+            if (data.hasOwnProperty('model')) {
+                obj['model'] = ApiClient.convertToType(data['model'], 'String');
+            }
             if (data.hasOwnProperty('connection')) {
                 obj['connection'] = ApiClient.convertToType(data['connection'], 'String');
             }
@@ -112,6 +115,11 @@ V1Init.prototype['dockerfile'] = undefined;
  * @member {module:model/V1FileType} file
  */
 V1Init.prototype['file'] = undefined;
+
+/**
+ * @member {String} model
+ */
+V1Init.prototype['model'] = undefined;
 
 /**
  * @member {String} connection

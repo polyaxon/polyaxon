@@ -31,6 +31,7 @@ from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.mapping import MappingSchema, V1Mapping
 from polyaxon.polyflow.matrix.params import (
     HpChoiceSchema,
+    HpDateTimeRangeSchema,
     HpGeomSpaceSchema,
     HpLinSpaceSchema,
     HpLogNormalSchema,
@@ -46,6 +47,8 @@ from polyaxon.polyflow.matrix.params import (
     HpRangeSchema,
     HpUniformSchema,
     V1HpChoice,
+    V1HpDateRange,
+    V1HpDateTimeRange,
     V1HpGeomSpace,
     V1HpLinSpace,
     V1HpLogNormal,

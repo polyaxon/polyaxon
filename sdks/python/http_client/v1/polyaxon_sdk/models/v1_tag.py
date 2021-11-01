@@ -50,31 +50,39 @@ class V1Tag(object):
                             and the value is json key in definition.
     """
     openapi_types = {
+        'uuid': 'str',
         'name': 'str',
         'color': 'str',
         'description': 'str',
-        'icon': 'str'
+        'icon': 'str',
+        'stats': 'object'
     }
 
     attribute_map = {
+        'uuid': 'uuid',
         'name': 'name',
         'color': 'color',
         'description': 'description',
-        'icon': 'icon'
+        'icon': 'icon',
+        'stats': 'stats'
     }
 
-    def __init__(self, name=None, color=None, description=None, icon=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, uuid=None, name=None, color=None, description=None, icon=None, stats=None, local_vars_configuration=None):  # noqa: E501
         """V1Tag - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
+        self._uuid = None
         self._name = None
         self._color = None
         self._description = None
         self._icon = None
+        self._stats = None
         self.discriminator = None
 
+        if uuid is not None:
+            self.uuid = uuid
         if name is not None:
             self.name = name
         if color is not None:
@@ -83,6 +91,29 @@ class V1Tag(object):
             self.description = description
         if icon is not None:
             self.icon = icon
+        if stats is not None:
+            self.stats = stats
+
+    @property
+    def uuid(self):
+        """Gets the uuid of this V1Tag.  # noqa: E501
+
+
+        :return: The uuid of this V1Tag.  # noqa: E501
+        :rtype: str
+        """
+        return self._uuid
+
+    @uuid.setter
+    def uuid(self, uuid):
+        """Sets the uuid of this V1Tag.
+
+
+        :param uuid: The uuid of this V1Tag.  # noqa: E501
+        :type: str
+        """
+
+        self._uuid = uuid
 
     @property
     def name(self):
@@ -167,6 +198,27 @@ class V1Tag(object):
         """
 
         self._icon = icon
+
+    @property
+    def stats(self):
+        """Gets the stats of this V1Tag.  # noqa: E501
+
+
+        :return: The stats of this V1Tag.  # noqa: E501
+        :rtype: object
+        """
+        return self._stats
+
+    @stats.setter
+    def stats(self, stats):
+        """Sets the stats of this V1Tag.
+
+
+        :param stats: The stats of this V1Tag.  # noqa: E501
+        :type: object
+        """
+
+        self._stats = stats
 
     def to_dict(self):
         """Returns the model properties as a dict"""

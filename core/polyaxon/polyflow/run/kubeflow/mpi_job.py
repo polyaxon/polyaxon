@@ -19,6 +19,7 @@ import polyaxon_sdk
 from marshmallow import fields, validate
 
 from polyaxon.k8s.k8s_schemas import V1Container
+from polyaxon.polyflow.run.base import BaseRun
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema
@@ -41,7 +42,7 @@ class MPIJobSchema(BaseCamelSchema):
         return V1MPIJob
 
 
-class V1MPIJob(BaseConfig, DestinationImageMixin, polyaxon_sdk.V1MPIJob):
+class V1MPIJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1MPIJob):
     """Kubeflow MPI-Job provides an interface to train distributed experiments with Pytorch.
 
     Args:
@@ -155,3 +156,27 @@ class V1MPIJob(BaseConfig, DestinationImageMixin, polyaxon_sdk.V1MPIJob):
         if self.worker:
             resources += self.worker.get_resources()
         return resources
+
+    def get_all_containers(self):
+        containers = []
+        if self.launcher:
+            containers += self.launcher.get_all_containers()
+        if self.worker:
+            containers += self.worker.get_all_containers()
+        return containers
+
+    def get_all_connections(self):
+        connections = []
+        if self.launcher:
+            connections += self.launcher.get_all_connections()
+        if self.worker:
+            connections += self.worker.get_all_connections()
+        return connections
+
+    def get_all_init(self):
+        init = []
+        if self.launcher:
+            init += self.launcher.get_all_init()
+        if self.worker:
+            init += self.worker.get_all_init()
+        return init

@@ -51,6 +51,12 @@ export interface V1Cache {
      * @memberof V1Cache
      */
     io?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Cache
+     */
+    sections?: Array<string>;
 }
 
 export function V1CacheFromJSON(json: any): V1Cache {
@@ -66,6 +72,7 @@ export function V1CacheFromJSONTyped(json: any, ignoreDiscriminator: boolean): V
         'disable': !exists(json, 'disable') ? undefined : json['disable'],
         'ttl': !exists(json, 'ttl') ? undefined : json['ttl'],
         'io': !exists(json, 'io') ? undefined : json['io'],
+        'sections': !exists(json, 'sections') ? undefined : json['sections'],
     };
 }
 
@@ -81,6 +88,7 @@ export function V1CacheToJSON(value?: V1Cache | null): any {
         'disable': value.disable,
         'ttl': value.ttl,
         'io': value.io,
+        'sections': value.sections,
     };
 }
 

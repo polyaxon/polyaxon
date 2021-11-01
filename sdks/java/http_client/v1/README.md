@@ -357,13 +357,13 @@ Class | Method | HTTP request | Description
 *SearchesV1Api* | [**patchSearch**](docs/SearchesV1Api.md#patchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
 *SearchesV1Api* | [**updateSearch**](docs/SearchesV1Api.md#updateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
 *TagsV1Api* | [**createTag**](docs/TagsV1Api.md#createTag) | **POST** /api/v1/orgs/{owner}/tags | Create tag
-*TagsV1Api* | [**deleteTag**](docs/TagsV1Api.md#deleteTag) | **DELETE** /api/v1/orgs/{owner}/tags/{name} | Delete tag
-*TagsV1Api* | [**getTag**](docs/TagsV1Api.md#getTag) | **GET** /api/v1/orgs/{owner}/tags/{name} | Get tag
+*TagsV1Api* | [**deleteTag**](docs/TagsV1Api.md#deleteTag) | **DELETE** /api/v1/orgs/{owner}/tags/{uuid} | Delete tag
+*TagsV1Api* | [**getTag**](docs/TagsV1Api.md#getTag) | **GET** /api/v1/orgs/{owner}/tags/{uuid} | Get tag
 *TagsV1Api* | [**listTags**](docs/TagsV1Api.md#listTags) | **GET** /api/v1/orgs/{owner}/tags | List tags
 *TagsV1Api* | [**loadTags**](docs/TagsV1Api.md#loadTags) | **GET** /api/v1/orgs/{owner}/tags/load | Load tags
-*TagsV1Api* | [**patchTag**](docs/TagsV1Api.md#patchTag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.name} | Patch tag
+*TagsV1Api* | [**patchTag**](docs/TagsV1Api.md#patchTag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.uuid} | Patch tag
 *TagsV1Api* | [**syncTags**](docs/TagsV1Api.md#syncTags) | **POST** /api/v1/orgs/{owner}/tags/sync | Sync tags
-*TagsV1Api* | [**updateTag**](docs/TagsV1Api.md#updateTag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.name} | Update tag
+*TagsV1Api* | [**updateTag**](docs/TagsV1Api.md#updateTag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.uuid} | Update tag
 *TeamsV1Api* | [**createTeam**](docs/TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create team
 *TeamsV1Api* | [**createTeamMember**](docs/TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create team member
 *TeamsV1Api* | [**deleteTeam**](docs/TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{name} | Delete team
@@ -473,6 +473,8 @@ Class | Method | HTTP request | Description
  - [V1HostConnection](docs/V1HostConnection.md)
  - [V1HostPathConnection](docs/V1HostPathConnection.md)
  - [V1HpChoice](docs/V1HpChoice.md)
+ - [V1HpDateRange](docs/V1HpDateRange.md)
+ - [V1HpDateTimeRange](docs/V1HpDateTimeRange.md)
  - [V1HpGeomSpace](docs/V1HpGeomSpace.md)
  - [V1HpLinSpace](docs/V1HpLinSpace.md)
  - [V1HpLogNormal](docs/V1HpLogNormal.md)
@@ -525,7 +527,6 @@ Class | Method | HTTP request | Description
  - [V1ListTeamMembersResponse](docs/V1ListTeamMembersResponse.md)
  - [V1ListTeamsResponse](docs/V1ListTeamsResponse.md)
  - [V1ListTokenResponse](docs/V1ListTokenResponse.md)
- - [V1LoadTagsResponse](docs/V1LoadTagsResponse.md)
  - [V1Log](docs/V1Log.md)
  - [V1LogHandler](docs/V1LogHandler.md)
  - [V1Logs](docs/V1Logs.md)

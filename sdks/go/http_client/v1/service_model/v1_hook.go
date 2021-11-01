@@ -106,6 +106,8 @@ func (m *V1Hook) validateTrigger(formats strfmt.Registry) error {
 		if err := m.Trigger.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("trigger")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("trigger")
 			}
 			return err
 		}
@@ -153,6 +155,8 @@ func (m *V1Hook) contextValidateTrigger(ctx context.Context, formats strfmt.Regi
 		if err := m.Trigger.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("trigger")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("trigger")
 			}
 			return err
 		}

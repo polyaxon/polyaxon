@@ -43,6 +43,10 @@ import java.io.IOException;
  */
 
 public class V1Tag {
+  public static final String SERIALIZED_NAME_UUID = "uuid";
+  @SerializedName(SERIALIZED_NAME_UUID)
+  private String uuid;
+
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
@@ -58,6 +62,33 @@ public class V1Tag {
   public static final String SERIALIZED_NAME_ICON = "icon";
   @SerializedName(SERIALIZED_NAME_ICON)
   private String icon;
+
+  public static final String SERIALIZED_NAME_STATS = "stats";
+  @SerializedName(SERIALIZED_NAME_STATS)
+  private Object stats;
+
+
+  public V1Tag uuid(String uuid) {
+    
+    this.uuid = uuid;
+    return this;
+  }
+
+   /**
+   * Get uuid
+   * @return uuid
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getUuid() {
+    return uuid;
+  }
+
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
 
 
   public V1Tag name(String name) {
@@ -152,6 +183,29 @@ public class V1Tag {
   }
 
 
+  public V1Tag stats(Object stats) {
+    
+    this.stats = stats;
+    return this;
+  }
+
+   /**
+   * Get stats
+   * @return stats
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Object getStats() {
+    return stats;
+  }
+
+
+  public void setStats(Object stats) {
+    this.stats = stats;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -161,15 +215,17 @@ public class V1Tag {
       return false;
     }
     V1Tag v1Tag = (V1Tag) o;
-    return Objects.equals(this.name, v1Tag.name) &&
+    return Objects.equals(this.uuid, v1Tag.uuid) &&
+        Objects.equals(this.name, v1Tag.name) &&
         Objects.equals(this.color, v1Tag.color) &&
         Objects.equals(this.description, v1Tag.description) &&
-        Objects.equals(this.icon, v1Tag.icon);
+        Objects.equals(this.icon, v1Tag.icon) &&
+        Objects.equals(this.stats, v1Tag.stats);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, color, description, icon);
+    return Objects.hash(uuid, name, color, description, icon, stats);
   }
 
 
@@ -177,10 +233,12 @@ public class V1Tag {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1Tag {\n");
+    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    icon: ").append(toIndentedString(icon)).append("\n");
+    sb.append("    stats: ").append(toIndentedString(stats)).append("\n");
     sb.append("}");
     return sb.toString();
   }

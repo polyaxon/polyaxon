@@ -104,6 +104,14 @@ type InspectRunParams struct {
 	*/
 	Project string
 
+	/* Sample.
+
+	   Sample query param.
+
+	   Format: int32
+	*/
+	Sample *int32
+
 	/* Tail.
 
 	   Query param flag to tail the values.
@@ -224,6 +232,17 @@ func (o *InspectRunParams) SetProject(project string) {
 	o.Project = project
 }
 
+// WithSample adds the sample to the inspect run params
+func (o *InspectRunParams) WithSample(sample *int32) *InspectRunParams {
+	o.SetSample(sample)
+	return o
+}
+
+// SetSample adds the sample to the inspect run params
+func (o *InspectRunParams) SetSample(sample *int32) {
+	o.Sample = sample
+}
+
 // WithTail adds the tail to the inspect run params
 func (o *InspectRunParams) WithTail(tail *bool) *InspectRunParams {
 	o.SetTail(tail)
@@ -301,6 +320,23 @@ func (o *InspectRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 	// path param project
 	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
+	}
+
+	if o.Sample != nil {
+
+		// query param sample
+		var qrSample int32
+
+		if o.Sample != nil {
+			qrSample = *o.Sample
+		}
+		qSample := swag.FormatInt32(qrSample)
+		if qSample != "" {
+
+			if err := r.SetQueryParam("sample", qSample); err != nil {
+				return err
+			}
+		}
 	}
 
 	if o.Tail != nil {

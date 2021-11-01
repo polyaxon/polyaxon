@@ -92,6 +92,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property model (base name: "model")', function() {
+      // uncomment below and update the code to test the property model
+      //var instane = new PolyaxonSdk.V1Init();
+      //expect(instance).to.be();
+    });
+
     it('should have the property connection (base name: "connection")', function() {
       // uncomment below and update the code to test the property connection
       //var instane = new PolyaxonSdk.V1Init();

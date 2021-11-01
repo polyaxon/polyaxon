@@ -118,10 +118,9 @@ public class QueuesV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListQueuesResponse response = api.listOrganizationQueueNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListQueuesResponse response = api.listOrganizationQueueNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -142,10 +141,9 @@ public class QueuesV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListQueuesResponse response = api.listOrganizationQueues(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListQueuesResponse response = api.listOrganizationQueues(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -167,10 +165,9 @@ public class QueuesV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListQueuesResponse response = api.listQueueNames(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListQueuesResponse response = api.listQueueNames(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -192,10 +189,9 @@ public class QueuesV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListQueuesResponse response = api.listQueues(owner, name, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListQueuesResponse response = api.listQueues(owner, name, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

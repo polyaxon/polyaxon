@@ -120,12 +120,6 @@ type ListModelVersionsParams struct {
 	*/
 	Owner string
 
-	/* Pins.
-
-	   Pinned entities.
-	*/
-	Pins *string
-
 	/* Query.
 
 	   Query filter the search.
@@ -268,17 +262,6 @@ func (o *ListModelVersionsParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithPins adds the pins to the list model versions params
-func (o *ListModelVersionsParams) WithPins(pins *string) *ListModelVersionsParams {
-	o.SetPins(pins)
-	return o
-}
-
-// SetPins adds the pins to the list model versions params
-func (o *ListModelVersionsParams) SetPins(pins *string) {
-	o.Pins = pins
-}
-
 // WithQuery adds the query to the list model versions params
 func (o *ListModelVersionsParams) WithQuery(query *string) *ListModelVersionsParams {
 	o.SetQuery(query)
@@ -402,23 +385,6 @@ func (o *ListModelVersionsParams) WriteToRequest(r runtime.ClientRequest, reg st
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
-	}
-
-	if o.Pins != nil {
-
-		// query param pins
-		var qrPins string
-
-		if o.Pins != nil {
-			qrPins = *o.Pins
-		}
-		qPins := qrPins
-		if qPins != "" {
-
-			if err := r.SetQueryParam("pins", qPins); err != nil {
-				return err
-			}
-		}
 	}
 
 	if o.Query != nil {

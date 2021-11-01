@@ -65,7 +65,6 @@ export interface ListOrganizationQueueNamesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -77,7 +76,6 @@ export interface ListOrganizationQueuesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -90,7 +88,6 @@ export interface ListQueueNamesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -103,7 +100,6 @@ export interface ListQueuesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -285,10 +281,6 @@ export class QueuesV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -349,10 +341,6 @@ export class QueuesV1Api extends runtime.BaseAPI {
 
         if (requestParameters.bookmarks !== undefined) {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
-        }
-
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
         }
 
         if (requestParameters.mode !== undefined) {
@@ -421,10 +409,6 @@ export class QueuesV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -489,10 +473,6 @@ export class QueuesV1Api extends runtime.BaseAPI {
 
         if (requestParameters.bookmarks !== undefined) {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
-        }
-
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
         }
 
         if (requestParameters.mode !== undefined) {

@@ -229,6 +229,13 @@ export default class V1ArtifactKind {
         "markdown" = "markdown";
 
     
+        /**
+         * value: "system"
+         * @const
+         */
+        "system" = "system";
+
+    
 
     /**
     * Returns a <code>V1ArtifactKind</code> enum value from a Javascript object name.

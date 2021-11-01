@@ -94,6 +94,8 @@ func (m *V1Hyperopt) validateAlgorithm(formats strfmt.Registry) error {
 		if err := m.Algorithm.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("algorithm")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("algorithm")
 			}
 			return err
 		}
@@ -111,6 +113,8 @@ func (m *V1Hyperopt) validateMetric(formats strfmt.Registry) error {
 		if err := m.Metric.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("metric")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("metric")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *V1Hyperopt) validateTuner(formats strfmt.Registry) error {
 		if err := m.Tuner.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tuner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tuner")
 			}
 			return err
 		}
@@ -164,6 +170,8 @@ func (m *V1Hyperopt) contextValidateAlgorithm(ctx context.Context, formats strfm
 		if err := m.Algorithm.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("algorithm")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("algorithm")
 			}
 			return err
 		}
@@ -178,6 +186,8 @@ func (m *V1Hyperopt) contextValidateMetric(ctx context.Context, formats strfmt.R
 		if err := m.Metric.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("metric")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("metric")
 			}
 			return err
 		}
@@ -192,6 +202,8 @@ func (m *V1Hyperopt) contextValidateTuner(ctx context.Context, formats strfmt.Re
 		if err := m.Tuner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tuner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tuner")
 			}
 			return err
 		}

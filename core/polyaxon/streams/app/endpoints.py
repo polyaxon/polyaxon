@@ -19,7 +19,6 @@ from typing import Any, Dict
 
 import ujson
 
-from marshmallow import fields
 from starlette import status
 from starlette.background import BackgroundTask
 from starlette.datastructures import QueryParams
@@ -61,6 +60,7 @@ from polyaxon.streams.tasks.notification import notify_run
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.fqn_utils import get_resource_name, get_resource_name_for_kind
+from polyaxon.utils.serialization import datetime_serialize
 
 
 class UJSONResponse(JSONResponse):
@@ -114,7 +114,7 @@ async def get_logs(request: Request) -> UJSONResponse:
             check_cache=not force,
         )
     response = dict(
-        last_time=fields.DateTime().serialize("last_time", {"last_time": last_time}),
+        last_time=datetime_serialize("last_time", {"last_time": last_time}),
         last_file=last_file,
         logs=operation_logs,
         files=files,
@@ -216,6 +216,7 @@ async def get_multi_run_events(request: Request) -> UJSONResponse:
     run_uuids = request.query_params["runs"]
     event_names = request.query_params["names"]
     orient = request.query_params.get("orient")
+    sample = request.query_params.get("sample")
     orient = orient or V1Events.ORIENT_DICT
     event_names = {e for e in event_names.split(",") if e} if event_names else set([])
     run_uuids = {e for e in run_uuids.split(",") if e} if run_uuids else set([])
@@ -226,6 +227,7 @@ async def get_multi_run_events(request: Request) -> UJSONResponse:
         event_names=event_names,
         orient=orient,
         check_cache=not force,
+        sample=sample,
     )
     return UJSONResponse({"data": events})
 
@@ -241,6 +243,7 @@ async def get_run_events(request: Request) -> UJSONResponse:
         )
     event_names = request.query_params["names"]
     orient = request.query_params.get("orient")
+    sample = request.query_params.get("sample")
     orient = orient or V1Events.ORIENT_DICT
     event_names = {e for e in event_names.split(",") if e} if event_names else set([])
     events = await get_archived_operation_events(
@@ -250,6 +253,7 @@ async def get_run_events(request: Request) -> UJSONResponse:
         event_names=event_names,
         orient=orient,
         check_cache=not force,
+        sample=sample,
     )
     return UJSONResponse({"data": events})
 
@@ -259,6 +263,7 @@ async def get_run_resources(request: Request) -> UJSONResponse:
     event_names = request.query_params.get("names")
     orient = request.query_params.get("orient")
     force = to_bool(request.query_params.get("force"), handle_none=True)
+    sample = request.query_params.get("sample")
     orient = orient or V1Events.ORIENT_DICT
     event_names = {e for e in event_names.split(",") if e} if event_names else set([])
     events = await get_archived_operation_resources(
@@ -268,6 +273,7 @@ async def get_run_resources(request: Request) -> UJSONResponse:
         event_names=event_names,
         orient=orient,
         check_cache=not force,
+        sample=sample,
     )
     return UJSONResponse({"data": events})
 

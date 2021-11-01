@@ -115,10 +115,9 @@ public class SearchesV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListSearchesResponse response = api.listSearchNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListSearchesResponse response = api.listSearchNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }
@@ -139,10 +138,9 @@ public class SearchesV1ApiTest {
         String sort = null;
         String query = null;
         Boolean bookmarks = null;
-        String pins = null;
         String mode = null;
         Boolean noPage = null;
-        V1ListSearchesResponse response = api.listSearches(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+        V1ListSearchesResponse response = api.listSearches(owner, offset, limit, sort, query, bookmarks, mode, noPage);
 
         // TODO: test validations
     }

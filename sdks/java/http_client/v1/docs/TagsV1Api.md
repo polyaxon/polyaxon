@@ -6,13 +6,13 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createTag**](TagsV1Api.md#createTag) | **POST** /api/v1/orgs/{owner}/tags | Create tag
-[**deleteTag**](TagsV1Api.md#deleteTag) | **DELETE** /api/v1/orgs/{owner}/tags/{name} | Delete tag
-[**getTag**](TagsV1Api.md#getTag) | **GET** /api/v1/orgs/{owner}/tags/{name} | Get tag
+[**deleteTag**](TagsV1Api.md#deleteTag) | **DELETE** /api/v1/orgs/{owner}/tags/{uuid} | Delete tag
+[**getTag**](TagsV1Api.md#getTag) | **GET** /api/v1/orgs/{owner}/tags/{uuid} | Get tag
 [**listTags**](TagsV1Api.md#listTags) | **GET** /api/v1/orgs/{owner}/tags | List tags
 [**loadTags**](TagsV1Api.md#loadTags) | **GET** /api/v1/orgs/{owner}/tags/load | Load tags
-[**patchTag**](TagsV1Api.md#patchTag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.name} | Patch tag
+[**patchTag**](TagsV1Api.md#patchTag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.uuid} | Patch tag
 [**syncTags**](TagsV1Api.md#syncTags) | **POST** /api/v1/orgs/{owner}/tags/sync | Sync tags
-[**updateTag**](TagsV1Api.md#updateTag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.name} | Update tag
+[**updateTag**](TagsV1Api.md#updateTag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.uuid} | Update tag
 
 
 <a name="createTag"></a>
@@ -90,7 +90,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteTag"></a>
 # **deleteTag**
-> deleteTag(owner, name)
+> deleteTag(owner, uuid, cascade)
 
 Delete tag
 
@@ -117,9 +117,10 @@ public class Example {
 
     TagsV1Api apiInstance = new TagsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String name = "name_example"; // String | Component under namesapce
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    Boolean cascade = true; // Boolean | Flag to handle sub-entities.
     try {
-      apiInstance.deleteTag(owner, name);
+      apiInstance.deleteTag(owner, uuid, cascade);
     } catch (ApiException e) {
       System.err.println("Exception when calling TagsV1Api#deleteTag");
       System.err.println("Status code: " + e.getCode());
@@ -136,7 +137,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **name** | **String**| Component under namesapce |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **cascade** | **Boolean**| Flag to handle sub-entities. | [optional]
 
 ### Return type
 
@@ -162,7 +164,7 @@ null (empty response body)
 
 <a name="getTag"></a>
 # **getTag**
-> V1Tag getTag(owner, name)
+> V1Tag getTag(owner, uuid)
 
 Get tag
 
@@ -189,9 +191,9 @@ public class Example {
 
     TagsV1Api apiInstance = new TagsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String name = "name_example"; // String | Component under namesapce
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      V1Tag result = apiInstance.getTag(owner, name);
+      V1Tag result = apiInstance.getTag(owner, uuid);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TagsV1Api#getTag");
@@ -209,7 +211,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **name** | **String**| Component under namesapce |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -235,7 +237,7 @@ Name | Type | Description  | Notes
 
 <a name="listTags"></a>
 # **listTags**
-> V1ListTagsResponse listTags(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListTagsResponse listTags(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 List tags
 
@@ -267,11 +269,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListTagsResponse result = apiInstance.listTags(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListTagsResponse result = apiInstance.listTags(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TagsV1Api#listTags");
@@ -294,7 +295,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -322,7 +322,7 @@ Name | Type | Description  | Notes
 
 <a name="loadTags"></a>
 # **loadTags**
-> V1LoadTagsResponse loadTags(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> Object loadTags(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 Load tags
 
@@ -354,11 +354,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1LoadTagsResponse result = apiInstance.loadTags(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      Object result = apiInstance.loadTags(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TagsV1Api#loadTags");
@@ -381,13 +380,12 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
 ### Return type
 
-[**V1LoadTagsResponse**](V1LoadTagsResponse.md)
+**Object**
 
 ### Authorization
 
@@ -409,7 +407,7 @@ Name | Type | Description  | Notes
 
 <a name="patchTag"></a>
 # **patchTag**
-> V1Tag patchTag(owner, tagName, body)
+> V1Tag patchTag(owner, tagUuid, body)
 
 Patch tag
 
@@ -436,10 +434,10 @@ public class Example {
 
     TagsV1Api apiInstance = new TagsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String tagName = "tagName_example"; // String | Tag name
+    String tagUuid = "tagUuid_example"; // String | UUID
     V1Tag body = new V1Tag(); // V1Tag | Tag body
     try {
-      V1Tag result = apiInstance.patchTag(owner, tagName, body);
+      V1Tag result = apiInstance.patchTag(owner, tagUuid, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TagsV1Api#patchTag");
@@ -457,7 +455,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **tagName** | **String**| Tag name |
+ **tagUuid** | **String**| UUID |
  **body** | [**V1Tag**](V1Tag.md)| Tag body |
 
 ### Return type
@@ -556,7 +554,7 @@ null (empty response body)
 
 <a name="updateTag"></a>
 # **updateTag**
-> V1Tag updateTag(owner, tagName, body)
+> V1Tag updateTag(owner, tagUuid, body)
 
 Update tag
 
@@ -583,10 +581,10 @@ public class Example {
 
     TagsV1Api apiInstance = new TagsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String tagName = "tagName_example"; // String | Tag name
+    String tagUuid = "tagUuid_example"; // String | UUID
     V1Tag body = new V1Tag(); // V1Tag | Tag body
     try {
-      V1Tag result = apiInstance.updateTag(owner, tagName, body);
+      V1Tag result = apiInstance.updateTag(owner, tagUuid, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TagsV1Api#updateTag");
@@ -604,7 +602,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **tagName** | **String**| Tag name |
+ **tagUuid** | **String**| UUID |
  **body** | [**V1Tag**](V1Tag.md)| Tag body |
 
 ### Return type

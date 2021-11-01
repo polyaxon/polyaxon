@@ -48,7 +48,6 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
              list of file subpaths or a list of [path from, path to].
         dirs: Union[List[str], List[[str, str]], optional,
              list of directory subpaths or a list of [path from, path to].
-        workers: int, optional, number of threads for downloading data from S3/GCS/Azure.
 
     ### YAML usage
 
@@ -149,7 +148,7 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
     >>>         to_init=True
     >>>     ),
     >>>     "test3": V1Param(
-    >>>         value=types.V1ArtifactsType(dirs=["/"], workers=10),
+    >>>         value=types.V1ArtifactsType(dirs=["/"]),
     >>>         connection="s3-dataset",
     >>>         to_init=True
     >>>     ),
@@ -173,7 +172,7 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
     >>>                 connection="foo"
     >>>             ),
     >>>             V1Init(
-    >>>                 artifacts=V1ArtifactsType(dirs=["/"], workers=10),
+    >>>                 artifacts=V1ArtifactsType(dirs=["/"]),
     >>>                 connection="s3-dataset"
     >>>             ),
     >>>        ],

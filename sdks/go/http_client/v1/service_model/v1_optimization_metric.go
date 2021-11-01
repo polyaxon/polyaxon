@@ -62,6 +62,8 @@ func (m *V1OptimizationMetric) validateOptimization(formats strfmt.Registry) err
 		if err := m.Optimization.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("optimization")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("optimization")
 			}
 			return err
 		}
@@ -90,6 +92,8 @@ func (m *V1OptimizationMetric) contextValidateOptimization(ctx context.Context, 
 		if err := m.Optimization.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("optimization")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("optimization")
 			}
 			return err
 		}

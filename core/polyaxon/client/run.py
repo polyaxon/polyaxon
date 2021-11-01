@@ -1754,11 +1754,12 @@ class RunClient:
 
         return self.client.runs_v1.list_runs(self.owner, self.project, **params)
 
-    def _sync_events_summaries(
+    def _collect_events_summaries(
         self,
         events_path: str,
         events_kind: str,
         last_check: Optional[datetime],
+        is_system_resource: bool = False,
     ) -> Tuple[List, Dict]:
         current_events_path = os.path.join(events_path, events_kind)
 
@@ -1782,7 +1783,7 @@ class RunClient:
                 summary = event.get_summary()
                 run_artifact = V1RunArtifact(
                     name=event_name,
-                    kind=events_kind,
+                    kind=V1ArtifactKind.SYSTEM if is_system_resource else events_kind,
                     connection=connection_name,
                     summary=summary,
                     path=event_rel_path,
@@ -1794,13 +1795,12 @@ class RunClient:
 
         return summaries, last_values
 
-    @client_handler(check_no_op=True)
-    def sync_events_summaries(self, last_check: Optional[datetime], events_path: str):
-        """Syncs all tracked events and auto-generates summaries and lineage data.
-
-        > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
-        > automatically, so you should not call this method manually.
-        """
+    def _sync_events_summaries(
+        self,
+        last_check: Optional[datetime],
+        events_path: str,
+        is_system_resource: bool = False,
+    ):
         # check if there's a path to sync
         if not events_path or not os.path.exists(events_path):
             return
@@ -1808,20 +1808,51 @@ class RunClient:
         # crawl dirs
         summaries = []
         last_values = {}
+        set_last_values = not is_system_resource
 
         for events_kind in get_dirs_under_path(events_path):
-            _summaries, _last_values = self._sync_events_summaries(
+            _summaries, _last_values = self._collect_events_summaries(
                 events_path=events_path,
                 events_kind=events_kind,
                 last_check=last_check,
+                is_system_resource=is_system_resource,
             )
             summaries += _summaries
-            last_values.update(_last_values)
+            if set_last_values:
+                last_values.update(_last_values)
 
         if summaries:
             self.log_artifact_lineage(summaries)
-        if last_values:
+        if set_last_values and last_values:
             self.log_outputs(**last_values)
+
+    @client_handler(check_no_op=True)
+    def sync_events_summaries(self, last_check: Optional[datetime], events_path: str):
+        """Syncs all tracked events and auto-generates summaries and lineage data.
+
+        > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
+        > automatically, so you should not call this method manually.
+        """
+        self._sync_events_summaries(
+            last_check=last_check,
+            events_path=events_path,
+            is_system_resource=False,
+        )
+
+    @client_handler(check_no_op=True)
+    def sync_system_events_summaries(
+        self, last_check: Optional[datetime], events_path: str
+    ):
+        """Syncs all tracked system events and auto-generates summaries and lineage data.
+
+        > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
+        > automatically, so you should not call this method manually.
+        """
+        self._sync_events_summaries(
+            last_check=last_check,
+            events_path=events_path,
+            is_system_resource=True,
+        )
 
     @client_handler(check_no_op=True)
     def persist_offline_run(self, artifacts_path: str):

@@ -684,7 +684,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_component_hub_activities**
-> V1ListActivitiesResponse get_component_hub_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListActivitiesResponse get_component_hub_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 Get hub activities
 
@@ -729,13 +729,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # Get hub activities
-        api_response = api_instance.get_component_hub_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.get_component_hub_activities(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->get_component_hub_activities: %s\n" % e)
@@ -752,7 +751,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -1028,7 +1026,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_component_hub_names**
-> V1ListComponentHubsResponse list_component_hub_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListComponentHubsResponse list_component_hub_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List hub component names
 
@@ -1072,13 +1070,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List hub component names
-        api_response = api_instance.list_component_hub_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_component_hub_names(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->list_component_hub_names: %s\n" % e)
@@ -1094,7 +1091,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -1123,7 +1119,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_component_hubs**
-> V1ListComponentHubsResponse list_component_hubs(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListComponentHubsResponse list_component_hubs(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List hub components
 
@@ -1167,13 +1163,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List hub components
-        api_response = api_instance.list_component_hubs(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_component_hubs(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->list_component_hubs: %s\n" % e)
@@ -1189,7 +1184,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -1218,7 +1212,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_component_version_names**
-> V1ListComponentVersionsResponse list_component_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListComponentVersionsResponse list_component_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List component version names
 
@@ -1263,13 +1257,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List component version names
-        api_response = api_instance.list_component_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_component_version_names(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->list_component_version_names: %s\n" % e)
@@ -1286,7 +1279,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -1315,7 +1307,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_component_versions**
-> V1ListComponentVersionsResponse list_component_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListComponentVersionsResponse list_component_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List component versions
 
@@ -1360,13 +1352,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List component versions
-        api_response = api_instance.list_component_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_component_versions(owner, name, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->list_component_versions: %s\n" % e)
@@ -1383,7 +1374,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 

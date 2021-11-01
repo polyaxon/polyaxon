@@ -1133,13 +1133,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -1233,13 +1226,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -1386,13 +1372,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -2153,13 +2132,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -2260,13 +2232,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -2694,13 +2659,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -2845,13 +2803,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -3164,13 +3115,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -3315,13 +3259,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -3979,13 +3916,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -4137,13 +4067,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -4523,13 +4446,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -4674,13 +4590,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -5007,13 +4916,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -5109,13 +5011,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -5209,13 +5104,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -5763,13 +5651,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -5914,13 +5795,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -6576,13 +6450,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -6661,7 +6528,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1LoadTagsResponse"
+              "type": "object"
             }
           },
           "204": {
@@ -6727,13 +6594,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -6805,104 +6665,7 @@
         ]
       }
     },
-    "/api/v1/orgs/{owner}/tags/{name}": {
-      "get": {
-        "summary": "Get tag",
-        "operationId": "GetTag",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Tag"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Component under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "TagsV1"
-        ]
-      },
-      "delete": {
-        "summary": "Delete tag",
-        "operationId": "DeleteTag",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Component under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "TagsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/tags/{tag.name}": {
+    "/api/v1/orgs/{owner}/tags/{tag.uuid}": {
       "put": {
         "summary": "Update tag",
         "operationId": "UpdateTag",
@@ -6941,8 +6704,8 @@
             "type": "string"
           },
           {
-            "name": "tag.name",
-            "description": "Tag name",
+            "name": "tag.uuid",
+            "description": "UUID",
             "in": "path",
             "required": true,
             "type": "string"
@@ -6999,8 +6762,8 @@
             "type": "string"
           },
           {
-            "name": "tag.name",
-            "description": "Tag name",
+            "name": "tag.uuid",
+            "description": "UUID",
             "in": "path",
             "required": true,
             "type": "string"
@@ -7013,6 +6776,110 @@
             "schema": {
               "$ref": "#/definitions/v1Tag"
             }
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/tags/{uuid}": {
+      "get": {
+        "summary": "Get tag",
+        "operationId": "GetTag",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Tag"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TagsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Delete tag",
+        "operationId": "DeleteTag",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cascade",
+            "description": "Flag to handle sub-entities.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -7094,13 +6961,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -7247,13 +7107,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -7453,13 +7306,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -8457,13 +8303,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -8557,13 +8396,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -9426,13 +9258,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -9778,13 +9603,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -9885,13 +9703,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -10042,13 +9853,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -10142,13 +9946,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -10299,13 +10096,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -10399,13 +10189,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -11268,13 +11051,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -11620,13 +11396,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -11727,13 +11496,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -13806,13 +13568,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -14105,13 +13860,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -14212,13 +13960,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -14371,13 +14112,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -14478,13 +14212,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -14589,13 +14316,6 @@
             "type": "boolean"
           },
           {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "mode",
             "description": "Mode of the search.",
             "in": "query",
@@ -14696,13 +14416,6 @@
             "in": "query",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "name": "pins",
-            "description": "Pinned entities.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "mode",
@@ -17044,7 +16757,8 @@
               "curve",
               "analysis",
               "iteration",
-              "markdown"
+              "markdown",
+              "system"
             ]
           },
           {
@@ -17074,6 +16788,14 @@
             "in": "query",
             "required": false,
             "type": "boolean"
+          },
+          {
+            "name": "sample",
+            "description": "Sample query param.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -17533,7 +17255,8 @@
               "curve",
               "analysis",
               "iteration",
-              "markdown"
+              "markdown",
+              "system"
             ]
           },
           {
@@ -17556,6 +17279,14 @@
             "in": "query",
             "required": false,
             "type": "boolean"
+          },
+          {
+            "name": "sample",
+            "description": "Sample query param.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -17642,6 +17373,14 @@
             "in": "query",
             "required": false,
             "type": "boolean"
+          },
+          {
+            "name": "sample",
+            "description": "Sample query param.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -17884,6 +17623,14 @@
             "in": "query",
             "required": false,
             "type": "boolean"
+          },
+          {
+            "name": "sample",
+            "description": "Sample query param.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -18500,10 +18247,11 @@
         "curve",
         "analysis",
         "iteration",
-        "markdown"
+        "markdown",
+        "system"
       ],
       "default": "model",
-      "description": "- model: Model asset/event\n - audio: Audio asset/event\n - video: Vidio asset/event\n - histogram: Histogram asset/event\n - image: Image asset/event\n - tensor: Tensor asset/event\n - dataframe: Dataframe asset/event\n - chart: plotly/bokeh/vega chart\n - csv: Comma separated values\n - tsv: Tab separated values\n - psv: Pipe separated values\n - ssv: Space separated values\n - metric: Metric asset/event\n - env: Env file\n - html: HTML asset/event\n - text: Text asset/event\n - file: File asset/lineage\n - dir: Dir asset/lineage\n - dockerfile: Dockerfile asset\n - docker_image: Docker image\n - data: Data asset/event\n - coderef: Coderef lineage\n - table: Table asset/event\n - tensorboard: Tensorboard lineage\n - curve: Curve event\n - analysis: Analysis lineage\n - iteration: Iteration lineage\n - markdown: Mardown event",
+      "description": "- model: Model asset/event\n - audio: Audio asset/event\n - video: Vidio asset/event\n - histogram: Histogram asset/event\n - image: Image asset/event\n - tensor: Tensor asset/event\n - dataframe: Dataframe asset/event\n - chart: plotly/bokeh/vega chart\n - csv: Comma separated values\n - tsv: Tab separated values\n - psv: Pipe separated values\n - ssv: Space separated values\n - metric: Metric asset/event\n - env: Env file\n - html: HTML asset/event\n - text: Text asset/event\n - file: File asset/lineage\n - dir: Dir asset/lineage\n - dockerfile: Dockerfile asset\n - docker_image: Docker image\n - data: Data asset/event\n - coderef: Coderef lineage\n - table: Table asset/event\n - tensorboard: Tensorboard lineage\n - curve: Curve event\n - analysis: Analysis lineage\n - iteration: Iteration lineage\n - markdown: Mardown event\n - system: System event",
       "title": "Artifact kind"
     },
     "v1ArtifactTree": {
@@ -18722,7 +18470,14 @@
           "items": {
             "type": "string"
           },
-          "title": "Optional Inputs/Outputs' names to consider for the cache"
+          "title": "Optional Inputs/Outputs' names to consider for the cache, default behavior to consider all inputs/outputs"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional sections to consider for the cache, default behavior to consider container(command, args), init section, and connections section"
         }
       },
       "title": "Cache specification\nCache is calculated based on inputs state as well as component version if used"
@@ -20540,6 +20295,36 @@
       },
       "title": "HP Choice specification"
     },
+    "v1HpDateRange": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of hp, should be equal to \"daterange\"",
+          "default": "daterange"
+        },
+        "value": {
+          "type": "object",
+          "title": "Value"
+        }
+      },
+      "title": "DateRange specification"
+    },
+    "v1HpDateTimeRange": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of hp, should be equal to \"datetimerange\"",
+          "default": "datetimerange"
+        },
+        "value": {
+          "type": "object",
+          "title": "Value"
+        }
+      },
+      "title": "DateTimeRange specification"
+    },
     "v1HpGeomSpace": {
       "type": "object",
       "properties": {
@@ -20689,6 +20474,12 @@
         },
         "qlognormal": {
           "$ref": "#/definitions/v1HpQLogNormal"
+        },
+        "daterange": {
+          "$ref": "#/definitions/v1HpDateRange"
+        },
+        "datetimerange": {
+          "$ref": "#/definitions/v1HpDateTimeRange"
         }
       },
       "title": "Hp Matrix specification"
@@ -21006,6 +20797,10 @@
         "file": {
           "$ref": "#/definitions/v1FileType",
           "title": "File intializer"
+        },
+        "model": {
+          "type": "string",
+          "title": "Model intializer"
         },
         "connection": {
           "type": "string",
@@ -21919,15 +21714,6 @@
         }
       },
       "title": "Contains list tokens"
-    },
-    "v1LoadTagsResponse": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "object"
-        }
-      },
-      "title": "Contains an object containing a map of tags -> color"
     },
     "v1Log": {
       "type": "object",
@@ -23855,17 +23641,21 @@
           "type": "string",
           "title": "Search columns"
         },
-        "pins": {
-          "type": "string",
-          "title": "Search pins"
-        },
         "layout": {
           "type": "string",
-          "title": "Widgets layout"
+          "title": "Search layout"
         },
         "sections": {
           "type": "string",
-          "title": "Widgets layout"
+          "title": "Search sections"
+        },
+        "compares": {
+          "type": "string",
+          "title": "Compare Flags"
+        },
+        "heat": {
+          "type": "string",
+          "title": "Optional heat fields"
         },
         "events": {
           "$ref": "#/definitions/v1DashboardSpec",
@@ -24305,6 +24095,10 @@
     "v1Tag": {
       "type": "object",
       "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
         "name": {
           "type": "string",
           "title": "Tag name"
@@ -24320,6 +24114,10 @@
         "icon": {
           "type": "string",
           "title": "Optional tag icon"
+        },
+        "stats": {
+          "type": "object",
+          "title": "Optional tag stats"
         }
       },
       "title": "Tag specification"

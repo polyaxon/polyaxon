@@ -67,6 +67,21 @@ message AnalyticsSpec {
   string frequency = 4;
 }
 
+// Heatmap spec definition
+message HeatmapSpec {
+  // Field
+  string field = 1;
+
+  // Trunc field
+  string trunc = 2;
+
+  // Groupby field
+  string groupby = 3;
+
+  // Stats frequency
+  string frequency = 4;
+}
+
 
 // Search spec definition
 message SearchSpec {
@@ -88,24 +103,27 @@ message SearchSpec {
     // Search columns
     string columns = 6;
 
-    // Search pins
-    string pins = 7;
+    // Search layout
+    string layout = 7;
 
-    // Widgets layout
-    string layout = 8;
+    // Search sections
+    string sections = 8;
 
-    // Widgets layout
-    string sections = 9;
+    // Compare Flags
+    string compares = 9;
+
+    // Optional heat fields
+    string heat = 10;
 
     // Optional events specification
-    DashboardSpec events = 10;
+    DashboardSpec events = 11;
 
     // Optional histograms specification
-    google.protobuf.Struct histograms = 11;
+    google.protobuf.Struct histograms = 12;
 
     // Optional trends specification
-    google.protobuf.Struct trends = 12;
+    google.protobuf.Struct trends = 13;
 
     // Optional analytics specification
-    AnalyticsSpec analytics = 13;
+    AnalyticsSpec analytics = 14;
 }

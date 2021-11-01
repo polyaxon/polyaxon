@@ -32,6 +32,14 @@ import {
     V1HpChoiceFromJSON,
     V1HpChoiceFromJSONTyped,
     V1HpChoiceToJSON,
+    V1HpDateRange,
+    V1HpDateRangeFromJSON,
+    V1HpDateRangeFromJSONTyped,
+    V1HpDateRangeToJSON,
+    V1HpDateTimeRange,
+    V1HpDateTimeRangeFromJSON,
+    V1HpDateTimeRangeFromJSONTyped,
+    V1HpDateTimeRangeToJSON,
     V1HpGeomSpace,
     V1HpGeomSpaceFromJSON,
     V1HpGeomSpaceFromJSONTyped,
@@ -176,6 +184,18 @@ export interface V1HpParams {
      * @memberof V1HpParams
      */
     qlognormal?: V1HpQLogNormal;
+    /**
+     * 
+     * @type {V1HpDateRange}
+     * @memberof V1HpParams
+     */
+    daterange?: V1HpDateRange;
+    /**
+     * 
+     * @type {V1HpDateTimeRange}
+     * @memberof V1HpParams
+     */
+    datetimerange?: V1HpDateTimeRange;
 }
 
 export function V1HpParamsFromJSON(json: any): V1HpParams {
@@ -202,6 +222,8 @@ export function V1HpParamsFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'qnormal': !exists(json, 'qnormal') ? undefined : V1HpQNormalFromJSON(json['qnormal']),
         'lognormal': !exists(json, 'lognormal') ? undefined : V1HpLogNormalFromJSON(json['lognormal']),
         'qlognormal': !exists(json, 'qlognormal') ? undefined : V1HpQLogNormalFromJSON(json['qlognormal']),
+        'daterange': !exists(json, 'daterange') ? undefined : V1HpDateRangeFromJSON(json['daterange']),
+        'datetimerange': !exists(json, 'datetimerange') ? undefined : V1HpDateTimeRangeFromJSON(json['datetimerange']),
     };
 }
 
@@ -228,6 +250,8 @@ export function V1HpParamsToJSON(value?: V1HpParams | null): any {
         'qnormal': V1HpQNormalToJSON(value.qnormal),
         'lognormal': V1HpLogNormalToJSON(value.lognormal),
         'qlognormal': V1HpQLogNormalToJSON(value.qlognormal),
+        'daterange': V1HpDateRangeToJSON(value.daterange),
+        'datetimerange': V1HpDateTimeRangeToJSON(value.datetimerange),
     };
 }
 

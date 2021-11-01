@@ -22,17 +22,23 @@ import "google/protobuf/struct.proto";
 
 // Tag specification
 message Tag {
+  // UUID
+  string uuid = 1;
+
   // Tag name
-  string name = 1;
+  string name = 2;
 
   // Optional Tag color
-  string color = 2;
+  string color = 3;
 
   // Optional tag description
-  string description = 3;
+  string description = 4;
 
   // Optional tag icon
-  string icon = 4;
+  string icon = 5;
+
+  // Optional tag stats
+  google.protobuf.Struct stats = 6;
 }
 
 // Request data to create/update tag
@@ -58,9 +64,4 @@ message ListTagsResponse {
 
   // Next page
   string next = 4;
-}
-
-// Contains an object containing a map of tags -> color
-message LoadTagsResponse {
-  google.protobuf.Struct data = 1;
 }

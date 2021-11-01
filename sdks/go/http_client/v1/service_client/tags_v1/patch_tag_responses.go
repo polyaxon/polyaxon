@@ -87,7 +87,7 @@ type PatchTagOK struct {
 }
 
 func (o *PatchTagOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.name}][%d] patchTagOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] patchTagOK  %+v", 200, o.Payload)
 }
 func (o *PatchTagOK) GetPayload() *service_model.V1Tag {
 	return o.Payload
@@ -119,7 +119,7 @@ type PatchTagNoContent struct {
 }
 
 func (o *PatchTagNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.name}][%d] patchTagNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] patchTagNoContent  %+v", 204, o.Payload)
 }
 func (o *PatchTagNoContent) GetPayload() interface{} {
 	return o.Payload
@@ -149,7 +149,7 @@ type PatchTagForbidden struct {
 }
 
 func (o *PatchTagForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.name}][%d] patchTagForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] patchTagForbidden  %+v", 403, o.Payload)
 }
 func (o *PatchTagForbidden) GetPayload() interface{} {
 	return o.Payload
@@ -179,7 +179,7 @@ type PatchTagNotFound struct {
 }
 
 func (o *PatchTagNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.name}][%d] patchTagNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] patchTagNotFound  %+v", 404, o.Payload)
 }
 func (o *PatchTagNotFound) GetPayload() interface{} {
 	return o.Payload
@@ -218,7 +218,7 @@ func (o *PatchTagDefault) Code() int {
 }
 
 func (o *PatchTagDefault) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.name}][%d] PatchTag default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/tags/{tag.uuid}][%d] PatchTag default  %+v", o._statusCode, o.Payload)
 }
 func (o *PatchTagDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload

@@ -104,12 +104,6 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property pins (base name: "pins")', function() {
-      // uncomment below and update the code to test the property pins
-      //var instane = new PolyaxonSdk.V1SearchSpec();
-      //expect(instance).to.be();
-    });
-
     it('should have the property layout (base name: "layout")', function() {
       // uncomment below and update the code to test the property layout
       //var instane = new PolyaxonSdk.V1SearchSpec();
@@ -118,6 +112,18 @@
 
     it('should have the property sections (base name: "sections")', function() {
       // uncomment below and update the code to test the property sections
+      //var instane = new PolyaxonSdk.V1SearchSpec();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property compares (base name: "compares")', function() {
+      // uncomment below and update the code to test the property compares
+      //var instane = new PolyaxonSdk.V1SearchSpec();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property heat (base name: "heat")', function() {
+      // uncomment below and update the code to test the property heat
       //var instane = new PolyaxonSdk.V1SearchSpec();
       //expect(instance).to.be();
     });

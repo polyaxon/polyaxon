@@ -25,6 +25,7 @@ from starlette.exceptions import HTTPException
 
 from polyaxon.fs.async_manager import download_file, list_files
 from polyaxon.fs.types import FSSystem
+from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events, get_event_path, get_resource_path
 
@@ -50,6 +51,7 @@ async def process_operation_event(
     event_kind: str,
     event_name: str,
     orient: str = V1Events.ORIENT_CSV,
+    sample: int = None,
 ) -> Optional[Dict]:
     if not events_path or not os.path.exists(events_path):
         return None
@@ -60,14 +62,25 @@ async def process_operation_event(
             if orient == V1Events.ORIENT_CSV:
                 return {"name": event_name, "kind": event_kind, "data": contents}
             if orient == V1Events.ORIENT_DICT:
-                df = await run_in_threadpool(
+                event_df = await run_in_threadpool(
                     V1Events.read,
                     kind=event_kind,
                     name=event_name,
                     data=contents,
                     parse_dates=False,
                 )
-                return {"name": event_name, "kind": event_kind, "data": df.to_dict()}
+                if sample:
+                    try:
+                        sample = int(sample)
+                        if event_df.df.shape[0] > sample:
+                            event_df.df = event_df.df.sample(n=sample)
+                    except Exception as e:
+                        logger.warning("Could not sample event dataframe, error %s", e)
+                return {
+                    "name": event_name,
+                    "kind": event_kind,
+                    "data": event_df.to_dict(),
+                }
             else:
                 raise HTTPException(
                     detail="received an unrecognisable orient value {}.".format(orient),
@@ -83,6 +96,7 @@ async def get_archived_operation_resource(
     event_name: str,
     orient: str = V1Events.ORIENT_CSV,
     check_cache: bool = True,
+    sample: int = None,
 ) -> Optional[Dict]:
 
     subpath = get_resource_path(run_path=run_uuid, kind=event_kind, name=event_name)
@@ -93,6 +107,7 @@ async def get_archived_operation_resource(
         event_kind=event_kind,
         event_name=event_name,
         orient=orient,
+        sample=sample,
     )
 
 
@@ -103,6 +118,7 @@ async def get_archived_operation_event(
     event_name: str,
     orient: str = V1Events.ORIENT_CSV,
     check_cache: bool = True,
+    sample: int = None,
 ) -> Optional[Dict]:
 
     subpath = get_event_path(run_path=run_uuid, kind=event_kind, name=event_name)
@@ -113,6 +129,7 @@ async def get_archived_operation_event(
         event_kind=event_kind,
         event_name=event_name,
         orient=orient,
+        sample=sample,
     )
 
 
@@ -123,6 +140,7 @@ async def get_archived_operation_resources(
     event_names: Set[str],
     orient: str = V1Events.ORIENT_CSV,
     check_cache: bool = True,
+    sample: int = None,
 ) -> List[Dict]:
     events = []
     if not event_names:
@@ -136,6 +154,7 @@ async def get_archived_operation_resources(
             event_name=event_name,
             orient=orient,
             check_cache=check_cache,
+            sample=sample,
         )
         if event:
             events.append(event)
@@ -149,6 +168,7 @@ async def get_archived_operation_events(
     event_names: Set[str],
     orient: str = V1Events.ORIENT_CSV,
     check_cache: bool = True,
+    sample: int = None,
 ) -> List[Dict]:
     events = []
     for event_name in event_names:
@@ -159,6 +179,7 @@ async def get_archived_operation_events(
             event_name=event_name,
             orient=orient,
             check_cache=check_cache,
+            sample=sample,
         )
         if event:
             events.append(event)
@@ -172,6 +193,7 @@ async def get_archived_operations_events(
     event_names: Set[str],
     orient: str = V1Events.ORIENT_CSV,
     check_cache: bool = True,
+    sample: int = None,
 ) -> Dict[str, List]:
     events = {}
     for run_uuid in run_uuids:
@@ -182,6 +204,7 @@ async def get_archived_operations_events(
             event_names=event_names,
             orient=orient,
             check_cache=check_cache,
+            sample=sample,
         )
         events[run_uuid] = run_events
     return events

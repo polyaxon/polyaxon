@@ -65,6 +65,8 @@ func (m *V1DashboardSpec) validateSections(formats strfmt.Registry) error {
 			if err := m.Sections[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("sections" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("sections" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -97,6 +99,8 @@ func (m *V1DashboardSpec) contextValidateSections(ctx context.Context, formats s
 			if err := m.Sections[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("sections" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("sections" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

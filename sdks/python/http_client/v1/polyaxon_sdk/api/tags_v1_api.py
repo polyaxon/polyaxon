@@ -178,17 +178,18 @@ class TagsV1Api(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def delete_tag(self, owner, name, **kwargs):  # noqa: E501
+    def delete_tag(self, owner, uuid, **kwargs):  # noqa: E501
         """Delete tag  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_tag(owner, name, async_req=True)
+        >>> thread = api.delete_tag(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
-        :param str name: Component under namesapce (required)
+        :param str uuid: Uuid identifier of the entity (required)
+        :param bool cascade: Flag to handle sub-entities.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -201,19 +202,20 @@ class TagsV1Api(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.delete_tag_with_http_info(owner, name, **kwargs)  # noqa: E501
+        return self.delete_tag_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
-    def delete_tag_with_http_info(self, owner, name, **kwargs):  # noqa: E501
+    def delete_tag_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
         """Delete tag  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_tag_with_http_info(owner, name, async_req=True)
+        >>> thread = api.delete_tag_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
-        :param str name: Component under namesapce (required)
+        :param str uuid: Uuid identifier of the entity (required)
+        :param bool cascade: Flag to handle sub-entities.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -232,7 +234,8 @@ class TagsV1Api(object):
 
         all_params = [
             'owner',
-            'name'
+            'uuid',
+            'cascade'
         ]
         all_params.extend(
             [
@@ -255,20 +258,22 @@ class TagsV1Api(object):
         if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
                                                         local_var_params['owner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `owner` when calling `delete_tag`")  # noqa: E501
-        # verify the required parameter 'name' is set
-        if self.api_client.client_side_validation and ('name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `name` when calling `delete_tag`")  # noqa: E501
+        # verify the required parameter 'uuid' is set
+        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['uuid'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `uuid` when calling `delete_tag`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
         if 'owner' in local_var_params:
             path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'name' in local_var_params:
-            path_params['name'] = local_var_params['name']  # noqa: E501
+        if 'uuid' in local_var_params:
+            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
 
         query_params = []
+        if 'cascade' in local_var_params and local_var_params['cascade'] is not None:  # noqa: E501
+            query_params.append(('cascade', local_var_params['cascade']))  # noqa: E501
 
         header_params = {}
 
@@ -284,7 +289,7 @@ class TagsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/tags/{name}', 'DELETE',
+            '/api/v1/orgs/{owner}/tags/{uuid}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -299,17 +304,17 @@ class TagsV1Api(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def get_tag(self, owner, name, **kwargs):  # noqa: E501
+    def get_tag(self, owner, uuid, **kwargs):  # noqa: E501
         """Get tag  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tag(owner, name, async_req=True)
+        >>> thread = api.get_tag(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
-        :param str name: Component under namesapce (required)
+        :param str uuid: Uuid identifier of the entity (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -322,19 +327,19 @@ class TagsV1Api(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.get_tag_with_http_info(owner, name, **kwargs)  # noqa: E501
+        return self.get_tag_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
-    def get_tag_with_http_info(self, owner, name, **kwargs):  # noqa: E501
+    def get_tag_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
         """Get tag  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tag_with_http_info(owner, name, async_req=True)
+        >>> thread = api.get_tag_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
-        :param str name: Component under namesapce (required)
+        :param str uuid: Uuid identifier of the entity (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -353,7 +358,7 @@ class TagsV1Api(object):
 
         all_params = [
             'owner',
-            'name'
+            'uuid'
         ]
         all_params.extend(
             [
@@ -376,18 +381,18 @@ class TagsV1Api(object):
         if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
                                                         local_var_params['owner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `owner` when calling `get_tag`")  # noqa: E501
-        # verify the required parameter 'name' is set
-        if self.api_client.client_side_validation and ('name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `name` when calling `get_tag`")  # noqa: E501
+        # verify the required parameter 'uuid' is set
+        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['uuid'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `uuid` when calling `get_tag`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
         if 'owner' in local_var_params:
             path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'name' in local_var_params:
-            path_params['name'] = local_var_params['name']  # noqa: E501
+        if 'uuid' in local_var_params:
+            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -405,7 +410,7 @@ class TagsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/tags/{name}', 'GET',
+            '/api/v1/orgs/{owner}/tags/{uuid}', 'GET',
             path_params,
             query_params,
             header_params,
@@ -435,7 +440,6 @@ class TagsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -467,7 +471,6 @@ class TagsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _return_http_data_only: response data without head status code
@@ -493,7 +496,6 @@ class TagsV1Api(object):
             'sort',
             'query',
             'bookmarks',
-            'pins',
             'mode',
             'no_page'
         ]
@@ -536,8 +538,6 @@ class TagsV1Api(object):
             query_params.append(('query', local_var_params['query']))  # noqa: E501
         if 'bookmarks' in local_var_params and local_var_params['bookmarks'] is not None:  # noqa: E501
             query_params.append(('bookmarks', local_var_params['bookmarks']))  # noqa: E501
-        if 'pins' in local_var_params and local_var_params['pins'] is not None:  # noqa: E501
-            query_params.append(('pins', local_var_params['pins']))  # noqa: E501
         if 'mode' in local_var_params and local_var_params['mode'] is not None:  # noqa: E501
             query_params.append(('mode', local_var_params['mode']))  # noqa: E501
         if 'no_page' in local_var_params and local_var_params['no_page'] is not None:  # noqa: E501
@@ -587,7 +587,6 @@ class TagsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -597,7 +596,7 @@ class TagsV1Api(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: V1LoadTagsResponse
+        :return: object
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -619,7 +618,6 @@ class TagsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _return_http_data_only: response data without head status code
@@ -631,7 +629,7 @@ class TagsV1Api(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(V1LoadTagsResponse, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -645,7 +643,6 @@ class TagsV1Api(object):
             'sort',
             'query',
             'bookmarks',
-            'pins',
             'mode',
             'no_page'
         ]
@@ -688,8 +685,6 @@ class TagsV1Api(object):
             query_params.append(('query', local_var_params['query']))  # noqa: E501
         if 'bookmarks' in local_var_params and local_var_params['bookmarks'] is not None:  # noqa: E501
             query_params.append(('bookmarks', local_var_params['bookmarks']))  # noqa: E501
-        if 'pins' in local_var_params and local_var_params['pins'] is not None:  # noqa: E501
-            query_params.append(('pins', local_var_params['pins']))  # noqa: E501
         if 'mode' in local_var_params and local_var_params['mode'] is not None:  # noqa: E501
             query_params.append(('mode', local_var_params['mode']))  # noqa: E501
         if 'no_page' in local_var_params and local_var_params['no_page'] is not None:  # noqa: E501
@@ -716,7 +711,7 @@ class TagsV1Api(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1LoadTagsResponse',  # noqa: E501
+            response_type='object',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -724,17 +719,17 @@ class TagsV1Api(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def patch_tag(self, owner, tag_name, body, **kwargs):  # noqa: E501
+    def patch_tag(self, owner, tag_uuid, body, **kwargs):  # noqa: E501
         """Patch tag  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_tag(owner, tag_name, body, async_req=True)
+        >>> thread = api.patch_tag(owner, tag_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
-        :param str tag_name: Tag name (required)
+        :param str tag_uuid: UUID (required)
         :param V1Tag body: Tag body (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
@@ -748,19 +743,19 @@ class TagsV1Api(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.patch_tag_with_http_info(owner, tag_name, body, **kwargs)  # noqa: E501
+        return self.patch_tag_with_http_info(owner, tag_uuid, body, **kwargs)  # noqa: E501
 
-    def patch_tag_with_http_info(self, owner, tag_name, body, **kwargs):  # noqa: E501
+    def patch_tag_with_http_info(self, owner, tag_uuid, body, **kwargs):  # noqa: E501
         """Patch tag  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_tag_with_http_info(owner, tag_name, body, async_req=True)
+        >>> thread = api.patch_tag_with_http_info(owner, tag_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
-        :param str tag_name: Tag name (required)
+        :param str tag_uuid: UUID (required)
         :param V1Tag body: Tag body (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
@@ -780,7 +775,7 @@ class TagsV1Api(object):
 
         all_params = [
             'owner',
-            'tag_name',
+            'tag_uuid',
             'body'
         ]
         all_params.extend(
@@ -804,10 +799,10 @@ class TagsV1Api(object):
         if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
                                                         local_var_params['owner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `owner` when calling `patch_tag`")  # noqa: E501
-        # verify the required parameter 'tag_name' is set
-        if self.api_client.client_side_validation and ('tag_name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['tag_name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `tag_name` when calling `patch_tag`")  # noqa: E501
+        # verify the required parameter 'tag_uuid' is set
+        if self.api_client.client_side_validation and ('tag_uuid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['tag_uuid'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `tag_uuid` when calling `patch_tag`")  # noqa: E501
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
                                                         local_var_params['body'] is None):  # noqa: E501
@@ -818,8 +813,8 @@ class TagsV1Api(object):
         path_params = {}
         if 'owner' in local_var_params:
             path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'tag_name' in local_var_params:
-            path_params['tag.name'] = local_var_params['tag_name']  # noqa: E501
+        if 'tag_uuid' in local_var_params:
+            path_params['tag.uuid'] = local_var_params['tag_uuid']  # noqa: E501
 
         query_params = []
 
@@ -843,7 +838,7 @@ class TagsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/tags/{tag.name}', 'PATCH',
+            '/api/v1/orgs/{owner}/tags/{tag.uuid}', 'PATCH',
             path_params,
             query_params,
             header_params,
@@ -983,17 +978,17 @@ class TagsV1Api(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_tag(self, owner, tag_name, body, **kwargs):  # noqa: E501
+    def update_tag(self, owner, tag_uuid, body, **kwargs):  # noqa: E501
         """Update tag  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_tag(owner, tag_name, body, async_req=True)
+        >>> thread = api.update_tag(owner, tag_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
-        :param str tag_name: Tag name (required)
+        :param str tag_uuid: UUID (required)
         :param V1Tag body: Tag body (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
@@ -1007,19 +1002,19 @@ class TagsV1Api(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_tag_with_http_info(owner, tag_name, body, **kwargs)  # noqa: E501
+        return self.update_tag_with_http_info(owner, tag_uuid, body, **kwargs)  # noqa: E501
 
-    def update_tag_with_http_info(self, owner, tag_name, body, **kwargs):  # noqa: E501
+    def update_tag_with_http_info(self, owner, tag_uuid, body, **kwargs):  # noqa: E501
         """Update tag  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_tag_with_http_info(owner, tag_name, body, async_req=True)
+        >>> thread = api.update_tag_with_http_info(owner, tag_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
-        :param str tag_name: Tag name (required)
+        :param str tag_uuid: UUID (required)
         :param V1Tag body: Tag body (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
@@ -1039,7 +1034,7 @@ class TagsV1Api(object):
 
         all_params = [
             'owner',
-            'tag_name',
+            'tag_uuid',
             'body'
         ]
         all_params.extend(
@@ -1063,10 +1058,10 @@ class TagsV1Api(object):
         if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
                                                         local_var_params['owner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `owner` when calling `update_tag`")  # noqa: E501
-        # verify the required parameter 'tag_name' is set
-        if self.api_client.client_side_validation and ('tag_name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['tag_name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `tag_name` when calling `update_tag`")  # noqa: E501
+        # verify the required parameter 'tag_uuid' is set
+        if self.api_client.client_side_validation and ('tag_uuid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['tag_uuid'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `tag_uuid` when calling `update_tag`")  # noqa: E501
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
                                                         local_var_params['body'] is None):  # noqa: E501
@@ -1077,8 +1072,8 @@ class TagsV1Api(object):
         path_params = {}
         if 'owner' in local_var_params:
             path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'tag_name' in local_var_params:
-            path_params['tag.name'] = local_var_params['tag_name']  # noqa: E501
+        if 'tag_uuid' in local_var_params:
+            path_params['tag.uuid'] = local_var_params['tag_uuid']  # noqa: E501
 
         query_params = []
 
@@ -1102,7 +1097,7 @@ class TagsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/tags/{tag.name}', 'PUT',
+            '/api/v1/orgs/{owner}/tags/{tag.uuid}', 'PUT',
             path_params,
             query_params,
             header_params,

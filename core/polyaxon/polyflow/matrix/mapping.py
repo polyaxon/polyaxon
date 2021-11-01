@@ -135,6 +135,3 @@ class V1Mapping(BaseSearchConfig, polyaxon_sdk.V1Mapping):
 
     def has_key(self, key: str):
         return self.values and key in set(self.values[0].keys())
-
-    def has_param(self, param: str):
-        return True

@@ -79,6 +79,8 @@ func (m *V1TeamSettings) validateHubs(formats strfmt.Registry) error {
 			if err := m.Hubs[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hubs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("hubs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -103,6 +105,8 @@ func (m *V1TeamSettings) validateProjects(formats strfmt.Registry) error {
 			if err := m.Projects[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("projects" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("projects" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -127,6 +131,8 @@ func (m *V1TeamSettings) validateRegistries(formats strfmt.Registry) error {
 			if err := m.Registries[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("registries" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("registries" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -167,6 +173,8 @@ func (m *V1TeamSettings) contextValidateHubs(ctx context.Context, formats strfmt
 			if err := m.Hubs[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hubs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("hubs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -185,6 +193,8 @@ func (m *V1TeamSettings) contextValidateProjects(ctx context.Context, formats st
 			if err := m.Projects[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("projects" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("projects" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -203,6 +213,8 @@ func (m *V1TeamSettings) contextValidateRegistries(ctx context.Context, formats 
 			if err := m.Registries[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("registries" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("registries" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

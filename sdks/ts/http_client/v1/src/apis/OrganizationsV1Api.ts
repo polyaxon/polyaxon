@@ -123,7 +123,6 @@ export interface GetOrganizationActivitiesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -150,7 +149,6 @@ export interface GetOrganizationRunsRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -196,7 +194,6 @@ export interface ListOrganizationMemberNamesRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -208,7 +205,6 @@ export interface ListOrganizationMembersRequest {
     sort?: string;
     query?: string;
     bookmarks?: boolean;
-    pins?: string;
     mode?: string;
     noPage?: boolean;
 }
@@ -736,10 +732,6 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -896,10 +888,6 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.bookmarks !== undefined) {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
-        }
-
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
         }
 
         if (requestParameters.mode !== undefined) {
@@ -1156,10 +1144,6 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
         }
 
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
-        }
-
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
         }
@@ -1220,10 +1204,6 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
 
         if (requestParameters.bookmarks !== undefined) {
             queryParameters['bookmarks'] = requestParameters.bookmarks;
-        }
-
-        if (requestParameters.pins !== undefined) {
-            queryParameters['pins'] = requestParameters.pins;
         }
 
         if (requestParameters.mode !== undefined) {

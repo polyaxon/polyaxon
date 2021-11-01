@@ -830,7 +830,6 @@ class TeamsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -863,7 +862,6 @@ class TeamsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _return_http_data_only: response data without head status code
@@ -890,7 +888,6 @@ class TeamsV1Api(object):
             'sort',
             'query',
             'bookmarks',
-            'pins',
             'mode',
             'no_page'
         ]
@@ -939,8 +936,6 @@ class TeamsV1Api(object):
             query_params.append(('query', local_var_params['query']))  # noqa: E501
         if 'bookmarks' in local_var_params and local_var_params['bookmarks'] is not None:  # noqa: E501
             query_params.append(('bookmarks', local_var_params['bookmarks']))  # noqa: E501
-        if 'pins' in local_var_params and local_var_params['pins'] is not None:  # noqa: E501
-            query_params.append(('pins', local_var_params['pins']))  # noqa: E501
         if 'mode' in local_var_params and local_var_params['mode'] is not None:  # noqa: E501
             query_params.append(('mode', local_var_params['mode']))  # noqa: E501
         if 'no_page' in local_var_params and local_var_params['no_page'] is not None:  # noqa: E501
@@ -990,7 +985,6 @@ class TeamsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1022,7 +1016,6 @@ class TeamsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _return_http_data_only: response data without head status code
@@ -1048,7 +1041,6 @@ class TeamsV1Api(object):
             'sort',
             'query',
             'bookmarks',
-            'pins',
             'mode',
             'no_page'
         ]
@@ -1091,8 +1083,6 @@ class TeamsV1Api(object):
             query_params.append(('query', local_var_params['query']))  # noqa: E501
         if 'bookmarks' in local_var_params and local_var_params['bookmarks'] is not None:  # noqa: E501
             query_params.append(('bookmarks', local_var_params['bookmarks']))  # noqa: E501
-        if 'pins' in local_var_params and local_var_params['pins'] is not None:  # noqa: E501
-            query_params.append(('pins', local_var_params['pins']))  # noqa: E501
         if 'mode' in local_var_params and local_var_params['mode'] is not None:  # noqa: E501
             query_params.append(('mode', local_var_params['mode']))  # noqa: E501
         if 'no_page' in local_var_params and local_var_params['no_page'] is not None:  # noqa: E501
@@ -1142,7 +1132,6 @@ class TeamsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1174,7 +1163,6 @@ class TeamsV1Api(object):
         :param str sort: Sort to order the search.
         :param str query: Query filter the search.
         :param bool bookmarks: Filter by bookmarks.
-        :param str pins: Pinned entities.
         :param str mode: Mode of the search.
         :param bool no_page: No pagination.
         :param _return_http_data_only: response data without head status code
@@ -1200,7 +1188,6 @@ class TeamsV1Api(object):
             'sort',
             'query',
             'bookmarks',
-            'pins',
             'mode',
             'no_page'
         ]
@@ -1243,8 +1230,6 @@ class TeamsV1Api(object):
             query_params.append(('query', local_var_params['query']))  # noqa: E501
         if 'bookmarks' in local_var_params and local_var_params['bookmarks'] is not None:  # noqa: E501
             query_params.append(('bookmarks', local_var_params['bookmarks']))  # noqa: E501
-        if 'pins' in local_var_params and local_var_params['pins'] is not None:  # noqa: E501
-            query_params.append(('pins', local_var_params['pins']))  # noqa: E501
         if 'mode' in local_var_params and local_var_params['mode'] is not None:  # noqa: E501
             query_params.append(('mode', local_var_params['mode']))  # noqa: E501
         if 'no_page' in local_var_params and local_var_params['no_page'] is not None:  # noqa: E501

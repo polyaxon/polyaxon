@@ -66,3 +66,138 @@ class TestWorkflowV1GridSearch(BaseTestCase):
         }
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict
+
+
+@pytest.mark.workflow_mark
+class TestWorkflowV1GridSearchBackfill(BaseTestCase):
+    def test_date_backfill_config(self):
+        config_dict = {
+            "kind": "grid",
+            "concurrency": 1,
+            "numRuns": 10,
+            "params": {
+                "dates": {
+                    "kind": "daterange",
+                    "value": {
+                        "start": "2019-06-22",
+                        "stop": "2019-07-25",
+                        "step": 4,
+                    },
+                }
+            },
+        }
+        config = V1GridSearch.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Raises for negative values
+        config_dict["numRuns"] = -5
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+        config_dict["numRuns"] = -0.5
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+        # Add n_runs percent
+        config_dict["numRuns"] = 0.5
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+        config_dict["numRuns"] = 5
+        config = V1GridSearch.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+    def test_datetime_backfill_config(self):
+        config_dict = {
+            "kind": "grid",
+            "concurrency": 1,
+            "numRuns": 10,
+            "params": {
+                "dates": {
+                    "kind": "datetimerange",
+                    "value": {
+                        "start": "2019-06-22T12:12:00",
+                        "stop": "2019-07-25T13:34:00",
+                        "step": 4 * 3600,
+                    },
+                }
+            },
+        }
+        config = V1GridSearch.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Raises for negative values
+        config_dict["numRuns"] = -5
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+        config_dict["numRuns"] = -0.5
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+        # Add n_runs percent
+        config_dict["numRuns"] = 0.5
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+        config_dict["numRuns"] = 5
+        config = V1GridSearch.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+    def test_wrong_date_backfill_config(self):
+        config_dict = {
+            "kind": "grid",
+            "concurrency": 1,
+            "numRuns": 10,
+            "params": {
+                "dates": {
+                    "kind": "daterange",
+                    "value": ["2019-07-25", "2019-06-22", 2],
+                }
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+        config_dict = {
+            "kind": "grid",
+            "concurrency": 1,
+            "numRuns": 10,
+            "params": {
+                "dates": {
+                    "kind": "daterange",
+                    "value": ["2019-05-25", "2019-06-22 00:00", 2],
+                }
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+    def test_wrong_datetime_backfill_config(self):
+        config_dict = {
+            "kind": "grid",
+            "concurrency": 1,
+            "numRuns": 10,
+            "params": {
+                "dates": {
+                    "kind": "datetimerange",
+                    "value": ["2019-07-25 00:00", "2019-06-22 00:00", 3600 * 24],
+                }
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)
+
+        config_dict = {
+            "kind": "grid",
+            "concurrency": 1,
+            "numRuns": 10,
+            "params": {
+                "dates": {
+                    "kind": "datetimerange",
+                    "value": ["2019-05-25", "2019-06-22 00:00", 3600 * 24],
+                }
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1GridSearch.from_dict(config_dict)

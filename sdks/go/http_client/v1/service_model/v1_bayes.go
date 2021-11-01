@@ -90,6 +90,8 @@ func (m *V1Bayes) validateMetric(formats strfmt.Registry) error {
 		if err := m.Metric.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("metric")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("metric")
 			}
 			return err
 		}
@@ -107,6 +109,8 @@ func (m *V1Bayes) validateTuner(formats strfmt.Registry) error {
 		if err := m.Tuner.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tuner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tuner")
 			}
 			return err
 		}
@@ -139,6 +143,8 @@ func (m *V1Bayes) contextValidateMetric(ctx context.Context, formats strfmt.Regi
 		if err := m.Metric.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("metric")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("metric")
 			}
 			return err
 		}
@@ -153,6 +159,8 @@ func (m *V1Bayes) contextValidateTuner(ctx context.Context, formats strfmt.Regis
 		if err := m.Tuner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tuner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tuner")
 			}
 			return err
 		}

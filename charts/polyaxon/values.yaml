@@ -12,13 +12,16 @@ ingress:
   hostName:
   # Default path is `/`
   path:
+  # e.g. `ImplementationSpecific` if you are using gke, default `Prefix`
+  pathType:
   # Extra paths to prepend to every host configuration. This is useful when configuring custom actions with
   # [AWS ALB Ingress Controller](https://kubernetes-sigs.github.io/aws-alb-ingress-controller/guide/ingress/annotation/#actions).
   extraPaths: []
   # - path: /*
   #   backend:
-  #     serviceName: ssl-redirect
-  #     servicePort: use-annotation
+  #     service:
+  #       name: ssl-redirect
+  #       port: use-annotation
   # Ingress TLS configuration
   # Secrets must be manually created in the namespace
   tls: []
@@ -188,7 +191,6 @@ agent:
 operator:
   enabled: true
   skipCRD: false
-  useCRDV1Beta1: false
   image: polyaxon/polyaxon-operator
   imageTag: 1.11.3
   imagePullPolicy: IfNotPresent

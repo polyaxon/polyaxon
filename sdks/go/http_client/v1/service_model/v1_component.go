@@ -139,6 +139,8 @@ func (m *V1Component) validateBuild(formats strfmt.Registry) error {
 		if err := m.Build.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("build")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("build")
 			}
 			return err
 		}
@@ -156,6 +158,8 @@ func (m *V1Component) validateCache(formats strfmt.Registry) error {
 		if err := m.Cache.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cache")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cache")
 			}
 			return err
 		}
@@ -178,6 +182,8 @@ func (m *V1Component) validateHooks(formats strfmt.Registry) error {
 			if err := m.Hooks[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("hooks" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -202,6 +208,8 @@ func (m *V1Component) validateInputs(formats strfmt.Registry) error {
 			if err := m.Inputs[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("inputs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("inputs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -226,6 +234,8 @@ func (m *V1Component) validateOutputs(formats strfmt.Registry) error {
 			if err := m.Outputs[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("outputs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("outputs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -245,6 +255,8 @@ func (m *V1Component) validatePlugins(formats strfmt.Registry) error {
 		if err := m.Plugins.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("plugins")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("plugins")
 			}
 			return err
 		}
@@ -262,6 +274,8 @@ func (m *V1Component) validateTemplate(formats strfmt.Registry) error {
 		if err := m.Template.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("template")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("template")
 			}
 			return err
 		}
@@ -279,6 +293,8 @@ func (m *V1Component) validateTermination(formats strfmt.Registry) error {
 		if err := m.Termination.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("termination")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("termination")
 			}
 			return err
 		}
@@ -335,6 +351,8 @@ func (m *V1Component) contextValidateBuild(ctx context.Context, formats strfmt.R
 		if err := m.Build.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("build")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("build")
 			}
 			return err
 		}
@@ -349,6 +367,8 @@ func (m *V1Component) contextValidateCache(ctx context.Context, formats strfmt.R
 		if err := m.Cache.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cache")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cache")
 			}
 			return err
 		}
@@ -365,6 +385,8 @@ func (m *V1Component) contextValidateHooks(ctx context.Context, formats strfmt.R
 			if err := m.Hooks[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("hooks" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -383,6 +405,8 @@ func (m *V1Component) contextValidateInputs(ctx context.Context, formats strfmt.
 			if err := m.Inputs[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("inputs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("inputs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -401,6 +425,8 @@ func (m *V1Component) contextValidateOutputs(ctx context.Context, formats strfmt
 			if err := m.Outputs[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("outputs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("outputs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -417,6 +443,8 @@ func (m *V1Component) contextValidatePlugins(ctx context.Context, formats strfmt
 		if err := m.Plugins.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("plugins")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("plugins")
 			}
 			return err
 		}
@@ -431,6 +459,8 @@ func (m *V1Component) contextValidateTemplate(ctx context.Context, formats strfm
 		if err := m.Template.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("template")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("template")
 			}
 			return err
 		}
@@ -445,6 +475,8 @@ func (m *V1Component) contextValidateTermination(ctx context.Context, formats st
 		if err := m.Termination.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("termination")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("termination")
 			}
 			return err
 		}

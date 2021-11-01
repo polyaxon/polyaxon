@@ -55,6 +55,8 @@ from polyaxon.polyflow.matrix import (
     V1Bayes,
     V1GridSearch,
     V1HpChoice,
+    V1HpDateRange,
+    V1HpDateTimeRange,
     V1HpGeomSpace,
     V1HpLinSpace,
     V1HpLogNormal,

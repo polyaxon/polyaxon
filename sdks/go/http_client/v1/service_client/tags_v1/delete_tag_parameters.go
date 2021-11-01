@@ -28,6 +28,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewDeleteTagParams creates a new DeleteTagParams object,
@@ -73,17 +74,23 @@ func NewDeleteTagParamsWithHTTPClient(client *http.Client) *DeleteTagParams {
 */
 type DeleteTagParams struct {
 
-	/* Name.
+	/* Cascade.
 
-	   Component under namesapce
+	   Flag to handle sub-entities.
 	*/
-	Name string
+	Cascade *bool
 
 	/* Owner.
 
 	   Owner of the namespace
 	*/
 	Owner string
+
+	/* UUID.
+
+	   Uuid identifier of the entity
+	*/
+	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -138,15 +145,15 @@ func (o *DeleteTagParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithName adds the name to the delete tag params
-func (o *DeleteTagParams) WithName(name string) *DeleteTagParams {
-	o.SetName(name)
+// WithCascade adds the cascade to the delete tag params
+func (o *DeleteTagParams) WithCascade(cascade *bool) *DeleteTagParams {
+	o.SetCascade(cascade)
 	return o
 }
 
-// SetName adds the name to the delete tag params
-func (o *DeleteTagParams) SetName(name string) {
-	o.Name = name
+// SetCascade adds the cascade to the delete tag params
+func (o *DeleteTagParams) SetCascade(cascade *bool) {
+	o.Cascade = cascade
 }
 
 // WithOwner adds the owner to the delete tag params
@@ -160,6 +167,17 @@ func (o *DeleteTagParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithUUID adds the uuid to the delete tag params
+func (o *DeleteTagParams) WithUUID(uuid string) *DeleteTagParams {
+	o.SetUUID(uuid)
+	return o
+}
+
+// SetUUID adds the uuid to the delete tag params
+func (o *DeleteTagParams) SetUUID(uuid string) {
+	o.UUID = uuid
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteTagParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -168,13 +186,30 @@ func (o *DeleteTagParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 	}
 	var res []error
 
-	// path param name
-	if err := r.SetPathParam("name", o.Name); err != nil {
-		return err
+	if o.Cascade != nil {
+
+		// query param cascade
+		var qrCascade bool
+
+		if o.Cascade != nil {
+			qrCascade = *o.Cascade
+		}
+		qCascade := swag.FormatBool(qrCascade)
+		if qCascade != "" {
+
+			if err := r.SetQueryParam("cascade", qCascade); err != nil {
+				return err
+			}
+		}
 	}
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
+		return err
+	}
+
+	// path param uuid
+	if err := r.SetPathParam("uuid", o.UUID); err != nil {
 		return err
 	}
 

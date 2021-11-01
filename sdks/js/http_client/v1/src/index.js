@@ -107,6 +107,8 @@ import V1Hook from './model/V1Hook';
 import V1HostConnection from './model/V1HostConnection';
 import V1HostPathConnection from './model/V1HostPathConnection';
 import V1HpChoice from './model/V1HpChoice';
+import V1HpDateRange from './model/V1HpDateRange';
+import V1HpDateTimeRange from './model/V1HpDateTimeRange';
 import V1HpGeomSpace from './model/V1HpGeomSpace';
 import V1HpLinSpace from './model/V1HpLinSpace';
 import V1HpLogNormal from './model/V1HpLogNormal';
@@ -159,7 +161,6 @@ import V1ListTagsResponse from './model/V1ListTagsResponse';
 import V1ListTeamMembersResponse from './model/V1ListTeamMembersResponse';
 import V1ListTeamsResponse from './model/V1ListTeamsResponse';
 import V1ListTokenResponse from './model/V1ListTokenResponse';
-import V1LoadTagsResponse from './model/V1LoadTagsResponse';
 import V1Log from './model/V1Log';
 import V1LogHandler from './model/V1LogHandler';
 import V1Logs from './model/V1Logs';
@@ -791,6 +792,18 @@ export {
     V1HpChoice,
 
     /**
+     * The V1HpDateRange model constructor.
+     * @property {module:model/V1HpDateRange}
+     */
+    V1HpDateRange,
+
+    /**
+     * The V1HpDateTimeRange model constructor.
+     * @property {module:model/V1HpDateTimeRange}
+     */
+    V1HpDateTimeRange,
+
+    /**
      * The V1HpGeomSpace model constructor.
      * @property {module:model/V1HpGeomSpace}
      */
@@ -1101,12 +1114,6 @@ export {
      * @property {module:model/V1ListTokenResponse}
      */
     V1ListTokenResponse,
-
-    /**
-     * The V1LoadTagsResponse model constructor.
-     * @property {module:model/V1LoadTagsResponse}
-     */
-    V1LoadTagsResponse,
 
     /**
      * The V1Log model constructor.

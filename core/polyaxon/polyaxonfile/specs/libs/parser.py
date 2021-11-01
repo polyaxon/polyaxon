@@ -18,12 +18,14 @@ import ast
 import jinja2
 
 from collections.abc import Mapping
+from datetime import date, datetime
 from typing import Dict
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyaxonfile.specs.libs.engine import get_engine
 from polyaxon.polyaxonfile.specs.sections import Sections
 from polyaxon.polyflow import ParamSpec
+from polyaxon.utils.serialization import date_serialize, datetime_serialize
 
 try:
     import numpy as np
@@ -217,6 +219,10 @@ class Parser:
     ):
         if isinstance(expression, (int, float, complex, type(None))):
             return expression
+        if isinstance(expression, datetime):
+            return datetime_serialize("__dt__", {"__dt__": expression})
+        if isinstance(expression, date):
+            return date_serialize("__date__", {"__date__": expression})
         if np and isinstance(expression, np.integer):
             return int(expression)
         if np and isinstance(expression, np.floating):

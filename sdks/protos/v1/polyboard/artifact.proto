@@ -105,6 +105,9 @@ enum ArtifactKind {
 
     // Mardown event
     markdown = 27;
+
+    // System event
+    system = 28;
 }
 
 // Run Artifact spec definition
@@ -246,6 +249,9 @@ message RunEventRequest {
 
     // Force query param
     bool force = 8;
+
+    // Sample query param
+    int32 sample = 9;
 }
 
 // Request data to get/delete runs' events
@@ -273,6 +279,9 @@ message RunEventsRequest {
 
     // Force query param
     bool force = 8;
+
+    // Sample query param
+    int32 sample = 9;
 }
 
 // Request data to get/delete run resources
@@ -297,4 +306,7 @@ message RunResourcesRequest {
 
     // Force query param
     bool force = 7;
+
+    // Sample query param
+    int32 sample = 8;
 }

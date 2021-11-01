@@ -542,7 +542,7 @@ Name | Type | Description  | Notes
 
 <a name="listAgentNames"></a>
 # **listAgentNames**
-> V1ListAgentsResponse listAgentNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListAgentsResponse listAgentNames(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 List agents names
 
@@ -574,11 +574,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListAgentsResponse result = apiInstance.listAgentNames(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListAgentsResponse result = apiInstance.listAgentNames(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AgentsV1Api#listAgentNames");
@@ -601,7 +600,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 
@@ -629,7 +627,7 @@ Name | Type | Description  | Notes
 
 <a name="listAgents"></a>
 # **listAgents**
-> V1ListAgentsResponse listAgents(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage)
+> V1ListAgentsResponse listAgents(owner, offset, limit, sort, query, bookmarks, mode, noPage)
 
 List agents
 
@@ -661,11 +659,10 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search.
     Boolean bookmarks = true; // Boolean | Filter by bookmarks.
-    String pins = "pins_example"; // String | Pinned entities.
     String mode = "mode_example"; // String | Mode of the search.
     Boolean noPage = true; // Boolean | No pagination.
     try {
-      V1ListAgentsResponse result = apiInstance.listAgents(owner, offset, limit, sort, query, bookmarks, pins, mode, noPage);
+      V1ListAgentsResponse result = apiInstance.listAgents(owner, offset, limit, sort, query, bookmarks, mode, noPage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AgentsV1Api#listAgents");
@@ -688,7 +685,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search. | [optional]
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional]
- **pins** | **String**| Pinned entities. | [optional]
  **mode** | **String**| Mode of the search. | [optional]
  **noPage** | **Boolean**| No pagination. | [optional]
 

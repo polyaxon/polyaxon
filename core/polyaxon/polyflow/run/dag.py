@@ -31,6 +31,7 @@ from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.environment import EnvironmentSchema
 from polyaxon.polyflow.io import V1IO
 from polyaxon.polyflow.params import ops_params
+from polyaxon.polyflow.run.base import BaseRun
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -52,7 +53,7 @@ class DagSchema(BaseCamelSchema):
         return V1Dag
 
 
-class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
+class V1Dag(BaseConfig, BaseRun, polyaxon_sdk.V1Dag):
     """Dag (Directed Acyclic Graphs) is
     a collection of all the operations you want to run,
     organized in a way that reflects their relationships and dependencies.
@@ -649,3 +650,15 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             OperationSpecification.VERSION, SCHEMA_VERSION
         )
         return OperationSpecification.read(op_dict)
+
+    def get_resources(self):
+        return None
+
+    def get_all_containers(self):
+        return []
+
+    def get_all_connections(self):
+        return self.connections or []
+
+    def get_all_init(self):
+        return []

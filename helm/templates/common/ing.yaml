@@ -25,9 +25,12 @@ spec:
 {{ include "config.ingress.backend" . | indent 8 }}
       {{- range .Values.ingress.extraPaths }}
       - path: {{ .path | quote }}
+        pathType: {{ default "Prefix" .Values.ingress.pathType }}
         backend:
-          serviceName: {{ .backend.serviceName }}
-          servicePort: {{ .backend.servicePort }}
+          service:
+            name: {{ .backend.service.name }}
+            port:
+              number: {{ .backend.service.port }}
       {{- end }}
   {{- if (not (empty .Values.ingress.tls)) }}
   tls:

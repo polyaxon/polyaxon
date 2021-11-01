@@ -85,12 +85,6 @@ export interface V1SearchSpec {
      * @type {string}
      * @memberof V1SearchSpec
      */
-    pins?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1SearchSpec
-     */
     layout?: string;
     /**
      * 
@@ -98,6 +92,18 @@ export interface V1SearchSpec {
      * @memberof V1SearchSpec
      */
     sections?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1SearchSpec
+     */
+    compares?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1SearchSpec
+     */
+    heat?: string;
     /**
      * 
      * @type {V1DashboardSpec}
@@ -140,9 +146,10 @@ export function V1SearchSpecFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'offset': !exists(json, 'offset') ? undefined : json['offset'],
         'groupby': !exists(json, 'groupby') ? undefined : json['groupby'],
         'columns': !exists(json, 'columns') ? undefined : json['columns'],
-        'pins': !exists(json, 'pins') ? undefined : json['pins'],
         'layout': !exists(json, 'layout') ? undefined : json['layout'],
         'sections': !exists(json, 'sections') ? undefined : json['sections'],
+        'compares': !exists(json, 'compares') ? undefined : json['compares'],
+        'heat': !exists(json, 'heat') ? undefined : json['heat'],
         'events': !exists(json, 'events') ? undefined : V1DashboardSpecFromJSON(json['events']),
         'histograms': !exists(json, 'histograms') ? undefined : json['histograms'],
         'trends': !exists(json, 'trends') ? undefined : json['trends'],
@@ -165,9 +172,10 @@ export function V1SearchSpecToJSON(value?: V1SearchSpec | null): any {
         'offset': value.offset,
         'groupby': value.groupby,
         'columns': value.columns,
-        'pins': value.pins,
         'layout': value.layout,
         'sections': value.sections,
+        'compares': value.compares,
+        'heat': value.heat,
         'events': V1DashboardSpecToJSON(value.events),
         'histograms': value.histograms,
         'trends': value.trends,

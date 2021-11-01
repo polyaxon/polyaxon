@@ -122,6 +122,14 @@ type GetMultiRunEventsParams struct {
 	*/
 	Runs *string
 
+	/* Sample.
+
+	   Sample query param.
+
+	   Format: int32
+	*/
+	Sample *int32
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -263,6 +271,17 @@ func (o *GetMultiRunEventsParams) SetRuns(runs *string) {
 	o.Runs = runs
 }
 
+// WithSample adds the sample to the get multi run events params
+func (o *GetMultiRunEventsParams) WithSample(sample *int32) *GetMultiRunEventsParams {
+	o.SetSample(sample)
+	return o
+}
+
+// SetSample adds the sample to the get multi run events params
+func (o *GetMultiRunEventsParams) SetSample(sample *int32) {
+	o.Sample = sample
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -354,6 +373,23 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		if qRuns != "" {
 
 			if err := r.SetQueryParam("runs", qRuns); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Sample != nil {
+
+		// query param sample
+		var qrSample int32
+
+		if o.Sample != nil {
+			qrSample = *o.Sample
+		}
+		qSample := swag.FormatInt32(qrSample)
+		if qSample != "" {
+
+			if err := r.SetQueryParam("sample", qSample); err != nil {
 				return err
 			}
 		}

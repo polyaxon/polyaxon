@@ -55,6 +55,7 @@
  *  - analysis: Analysis lineage
  *  - iteration: Iteration lineage
  *  - markdown: Mardown event
+ *  - system: System event
  * @export
  * @enum {string}
  */
@@ -86,7 +87,8 @@ export enum V1ArtifactKind {
     Curve = 'curve',
     Analysis = 'analysis',
     Iteration = 'iteration',
-    Markdown = 'markdown'
+    Markdown = 'markdown',
+    System = 'system'
 }
 
 export function V1ArtifactKindFromJSON(json: any): V1ArtifactKind {

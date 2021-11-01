@@ -24,7 +24,7 @@ from json import JSONDecodeError
 from typing import Dict, Union
 from urllib.parse import urlparse
 
-from marshmallow import ValidationError, fields
+from marshmallow import ValidationError
 
 from polyaxon import types
 from polyaxon.exceptions import PolyaxonSchemaError
@@ -43,6 +43,11 @@ from polyaxon.schemas.types import (
     V1WasbType,
 )
 from polyaxon.utils.bool_utils import strtobool
+from polyaxon.utils.serialization import (
+    date_deserialize,
+    datetime_deserialize,
+    uuid_deserialize,
+)
 
 
 def get_int(key, value, is_list=False, is_optional=False, default=None, options=None):
@@ -599,7 +604,7 @@ def get_date(key, value, is_list=False, is_optional=False, default=None, options
             key=key,
             value=value,
             target_type=date,
-            type_convert=fields.Date().deserialize,
+            type_convert=date_deserialize,
             is_optional=is_optional,
             default=default,
             options=options,
@@ -609,7 +614,7 @@ def get_date(key, value, is_list=False, is_optional=False, default=None, options
         key=key,
         value=value,
         target_type=date,
-        type_convert=fields.Date().deserialize,
+        type_convert=date_deserialize,
         is_optional=is_optional,
         default=default,
         options=options,
@@ -636,7 +641,7 @@ def get_uuid(key, value, is_list=False, is_optional=False, default=None, options
             key=key,
             value=value,
             target_type=uuid.UUID,
-            type_convert=fields.UUID(format="hex").deserialize,
+            type_convert=uuid_deserialize,
             is_optional=is_optional,
             default=default,
             options=options,
@@ -648,7 +653,7 @@ def get_uuid(key, value, is_list=False, is_optional=False, default=None, options
         key=key,
         value=value,
         target_type=uuid.UUID,
-        type_convert=fields.UUID(format="hex").deserialize,
+        type_convert=uuid_deserialize,
         is_optional=is_optional,
         default=default,
         options=options,
@@ -679,7 +684,7 @@ def get_datetime(
             key=key,
             value=value,
             target_type=datetime,
-            type_convert=fields.DateTime().deserialize,
+            type_convert=datetime_deserialize,
             is_optional=is_optional,
             default=default,
             options=options,
@@ -689,7 +694,7 @@ def get_datetime(
         key=key,
         value=value,
         target_type=datetime,
-        type_convert=fields.DateTime().deserialize,
+        type_convert=datetime_deserialize,
         is_optional=is_optional,
         default=default,
         options=options,

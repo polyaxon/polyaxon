@@ -68,6 +68,12 @@
       //expect(instance).to.be.a(PolyaxonSdk.V1Tag);
     });
 
+    it('should have the property uuid (base name: "uuid")', function() {
+      // uncomment below and update the code to test the property uuid
+      //var instane = new PolyaxonSdk.V1Tag();
+      //expect(instance).to.be();
+    });
+
     it('should have the property name (base name: "name")', function() {
       // uncomment below and update the code to test the property name
       //var instane = new PolyaxonSdk.V1Tag();
@@ -88,6 +94,12 @@
 
     it('should have the property icon (base name: "icon")', function() {
       // uncomment below and update the code to test the property icon
+      //var instane = new PolyaxonSdk.V1Tag();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property stats (base name: "stats")', function() {
+      // uncomment below and update the code to test the property stats
       //var instane = new PolyaxonSdk.V1Tag();
       //expect(instance).to.be();
     });

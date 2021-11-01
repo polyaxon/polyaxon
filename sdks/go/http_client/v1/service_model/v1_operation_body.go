@@ -77,6 +77,8 @@ func (m *V1OperationBody) validatePending(formats strfmt.Registry) error {
 		if err := m.Pending.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pending")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("pending")
 			}
 			return err
 		}
@@ -105,6 +107,8 @@ func (m *V1OperationBody) contextValidatePending(ctx context.Context, formats st
 		if err := m.Pending.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pending")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("pending")
 			}
 			return err
 		}

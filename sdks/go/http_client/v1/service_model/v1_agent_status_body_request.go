@@ -65,6 +65,8 @@ func (m *V1AgentStatusBodyRequest) validateCondition(formats strfmt.Registry) er
 		if err := m.Condition.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("condition")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("condition")
 			}
 			return err
 		}
@@ -93,6 +95,8 @@ func (m *V1AgentStatusBodyRequest) contextValidateCondition(ctx context.Context,
 		if err := m.Condition.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("condition")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("condition")
 			}
 			return err
 		}

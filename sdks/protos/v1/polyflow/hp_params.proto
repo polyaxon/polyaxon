@@ -147,6 +147,25 @@ message HpQLogNormal {
     google.protobuf.Struct value = 2;
 }
 
+// DateRange specification
+message HpDateRange {
+  // Kind of hp, should be equal to "daterange"
+  string kind = 1;
+
+ // Value
+  google.protobuf.Struct value = 2;
+}
+
+// DateTimeRange specification
+message HpDateTimeRange {
+  // Kind of hp, should be equal to "datetimerange"
+  string kind = 1;
+
+ // Value
+  google.protobuf.Struct value = 2;
+}
+
+
 // Hp Matrix specification
 message HpParams {
     oneof hpParams {
@@ -164,5 +183,7 @@ message HpParams {
         HpQNormal qnormal = 12;
         HpLogNormal lognormal = 13;
         HpQLogNormal qlognormal = 14;
+        HpDateRange daterange = 15;
+        HpDateTimeRange datetimerange = 16;
     }
 }

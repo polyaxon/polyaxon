@@ -22,6 +22,7 @@ from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.environment import EnvironmentSchema
 from polyaxon.polyflow.init import InitSchema
+from polyaxon.polyflow.run.base import BaseRun
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.polyflow.run.resources import V1RunResources
 from polyaxon.polyflow.run.utils import DestinationImageMixin
@@ -50,7 +51,7 @@ class ServiceSchema(BaseCamelSchema):
         return V1Service
 
 
-class V1Service(BaseConfig, DestinationImageMixin, polyaxon_sdk.V1Service):
+class V1Service(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1Service):
     """Services are used to launch Tensorboards, Notebooks, JupyterHub apps,
      Streamlit/Voila/Bokeh apps, internal tools,
      and dashboards based on your models and data analysis.
@@ -295,3 +296,12 @@ class V1Service(BaseConfig, DestinationImageMixin, polyaxon_sdk.V1Service):
 
     def get_resources(self):
         return V1RunResources.from_container(self.container)
+
+    def get_all_containers(self):
+        return [self.container] if self.container else []
+
+    def get_all_connections(self):
+        return self.connections or []
+
+    def get_all_init(self):
+        return self.init or []

@@ -39,35 +39,62 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * V1LoadTagsResponse
+ * V1HpDateRange
  */
 
-public class V1LoadTagsResponse {
-  public static final String SERIALIZED_NAME_DATA = "data";
-  @SerializedName(SERIALIZED_NAME_DATA)
-  private Object data;
+public class V1HpDateRange {
+  public static final String SERIALIZED_NAME_KIND = "kind";
+  @SerializedName(SERIALIZED_NAME_KIND)
+  private String kind = "daterange";
+
+  public static final String SERIALIZED_NAME_VALUE = "value";
+  @SerializedName(SERIALIZED_NAME_VALUE)
+  private Object value;
 
 
-  public V1LoadTagsResponse data(Object data) {
+  public V1HpDateRange kind(String kind) {
     
-    this.data = data;
+    this.kind = kind;
     return this;
   }
 
    /**
-   * Get data
-   * @return data
+   * Get kind
+   * @return kind
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public Object getData() {
-    return data;
+  public String getKind() {
+    return kind;
   }
 
 
-  public void setData(Object data) {
-    this.data = data;
+  public void setKind(String kind) {
+    this.kind = kind;
+  }
+
+
+  public V1HpDateRange value(Object value) {
+    
+    this.value = value;
+    return this;
+  }
+
+   /**
+   * Get value
+   * @return value
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Object getValue() {
+    return value;
+  }
+
+
+  public void setValue(Object value) {
+    this.value = value;
   }
 
 
@@ -79,21 +106,23 @@ public class V1LoadTagsResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1LoadTagsResponse v1LoadTagsResponse = (V1LoadTagsResponse) o;
-    return Objects.equals(this.data, v1LoadTagsResponse.data);
+    V1HpDateRange v1HpDateRange = (V1HpDateRange) o;
+    return Objects.equals(this.kind, v1HpDateRange.kind) &&
+        Objects.equals(this.value, v1HpDateRange.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data);
+    return Objects.hash(kind, value);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1LoadTagsResponse {\n");
-    sb.append("    data: ").append(toIndentedString(data)).append("\n");
+    sb.append("class V1HpDateRange {\n");
+    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
     return sb.toString();
   }

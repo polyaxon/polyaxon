@@ -972,7 +972,8 @@ let opts = {
   'names': "names_example", // String | Names query param.
   'runs': "runs_example", // String | Runs query param.
   'orient': "orient_example", // String | Orient query param.
-  'force': true // Boolean | Force query param.
+  'force': true, // Boolean | Force query param.
+  'sample': 56 // Number | Sample query param.
 };
 apiInstance.getMultiRunEvents(namespace, owner, project, kind, opts, (error, data, response) => {
   if (error) {
@@ -996,6 +997,7 @@ Name | Type | Description  | Notes
  **runs** | **String**| Runs query param. | [optional] 
  **orient** | **String**| Orient query param. | [optional] 
  **force** | **Boolean**| Force query param. | [optional] 
+ **sample** | **Number**| Sample query param. | [optional] 
 
 ### Return type
 
@@ -1657,7 +1659,8 @@ let kind = "kind_example"; // String | The artifact kind
 let opts = {
   'names': "names_example", // String | Names query param.
   'orient': "orient_example", // String | Orient query param.
-  'force': true // Boolean | Force query param.
+  'force': true, // Boolean | Force query param.
+  'sample': 56 // Number | Sample query param.
 };
 apiInstance.getRunEvents(namespace, owner, project, uuid, kind, opts, (error, data, response) => {
   if (error) {
@@ -1681,6 +1684,7 @@ Name | Type | Description  | Notes
  **names** | **String**| Names query param. | [optional] 
  **orient** | **String**| Orient query param. | [optional] 
  **force** | **Boolean**| Force query param. | [optional] 
+ **sample** | **Number**| Sample query param. | [optional] 
 
 ### Return type
 
@@ -1837,7 +1841,8 @@ let uuid = "uuid_example"; // String | Uuid identifier of the entity
 let opts = {
   'names': "names_example", // String | Names query param.
   'tail': true, // Boolean | Query param flag to tail the values.
-  'force': true // Boolean | Force query param.
+  'force': true, // Boolean | Force query param.
+  'sample': 56 // Number | Sample query param.
 };
 apiInstance.getRunResources(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
@@ -1860,6 +1865,7 @@ Name | Type | Description  | Notes
  **names** | **String**| Names query param. | [optional] 
  **tail** | **Boolean**| Query param flag to tail the values. | [optional] 
  **force** | **Boolean**| Force query param. | [optional] 
+ **sample** | **Number**| Sample query param. | [optional] 
 
 ### Return type
 
@@ -2145,7 +2151,6 @@ let opts = {
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
   'bookmarks': true, // Boolean | Filter by bookmarks.
-  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -2170,7 +2175,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
- **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 
@@ -2266,7 +2270,8 @@ let uuid = "uuid_example"; // String | Uuid identifier of the entity
 let opts = {
   'names': "names_example", // String | Names query param.
   'tail': true, // Boolean | Query param flag to tail the values.
-  'force': true // Boolean | Force query param.
+  'force': true, // Boolean | Force query param.
+  'sample': 56 // Number | Sample query param.
 };
 apiInstance.inspectRun(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
@@ -2289,6 +2294,7 @@ Name | Type | Description  | Notes
  **names** | **String**| Names query param. | [optional] 
  **tail** | **Boolean**| Query param flag to tail the values. | [optional] 
  **force** | **Boolean**| Force query param. | [optional] 
+ **sample** | **Number**| Sample query param. | [optional] 
 
 ### Return type
 
@@ -2558,7 +2564,6 @@ let opts = {
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
   'bookmarks': true, // Boolean | Filter by bookmarks.
-  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -2583,7 +2588,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
- **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 

@@ -30,32 +30,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface V1LoadTagsResponse
+ * @interface V1HpDateRange
  */
-export interface V1LoadTagsResponse {
+export interface V1HpDateRange {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1HpDateRange
+     */
+    kind?: string;
     /**
      * 
      * @type {object}
-     * @memberof V1LoadTagsResponse
+     * @memberof V1HpDateRange
      */
-    data?: object;
+    value?: object;
 }
 
-export function V1LoadTagsResponseFromJSON(json: any): V1LoadTagsResponse {
-    return V1LoadTagsResponseFromJSONTyped(json, false);
+export function V1HpDateRangeFromJSON(json: any): V1HpDateRange {
+    return V1HpDateRangeFromJSONTyped(json, false);
 }
 
-export function V1LoadTagsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): V1LoadTagsResponse {
+export function V1HpDateRangeFromJSONTyped(json: any, ignoreDiscriminator: boolean): V1HpDateRange {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'data': !exists(json, 'data') ? undefined : json['data'],
+        'kind': !exists(json, 'kind') ? undefined : json['kind'],
+        'value': !exists(json, 'value') ? undefined : json['value'],
     };
 }
 
-export function V1LoadTagsResponseToJSON(value?: V1LoadTagsResponse | null): any {
+export function V1HpDateRangeToJSON(value?: V1HpDateRange | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -64,7 +71,8 @@ export function V1LoadTagsResponseToJSON(value?: V1LoadTagsResponse | null): any
     }
     return {
         
-        'data': value.data,
+        'kind': value.kind,
+        'value': value.value,
     };
 }
 

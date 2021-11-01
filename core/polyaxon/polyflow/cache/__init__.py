@@ -16,7 +16,7 @@
 
 import polyaxon_sdk
 
-from marshmallow import fields
+from marshmallow import fields, validate
 
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
@@ -25,6 +25,10 @@ class CacheSchema(BaseCamelSchema):
     disable = fields.Bool(allow_none=True)
     ttl = fields.Int(allow_none=True)
     io = fields.List(fields.Str(), allow_none=True)
+    sections = fields.List(
+        fields.Str(validate=validate.OneOf(["containers", "init", "connections"])),
+        allow_none=True,
+    )
 
     @staticmethod
     def schema_config():
@@ -43,6 +47,7 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
         disable: bool, optional, default: False
         ttl: int, optional
         io: List[str], optional
+        sections: List[str], optional
 
     ## YAML usage
 
@@ -51,6 +56,7 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
     >>>   disable:
     >>>   ttl:
     >>>   inputs:
+    >>>   sections:
     ```
 
     ## Python usage
@@ -61,6 +67,7 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
     >>>   disable=False,
     >>>   ttl=3600,
     >>>   io=['param1', 'param4']
+    >>>   sections=['init']
     >>> )
     ```
 
@@ -101,8 +108,23 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
     >>> cache:
     >>>   io: ['param1', 'param4']
     ```
+
+    ### sections
+
+    By default the cache manager will consider the state of the `init`, `connections`,
+    and `containers` (command and args) to trigger the cache hit logic.
+    You may want to discard a section from being considered for
+    the cache state calculation.
+
+    This field gives you allows to define the sections that should be used
+    to calculate the cache state.
+
+    ```yaml
+    >>> cache:
+    >>>   sections: ['containers']
+    ```
     """
 
     SCHEMA = CacheSchema
     IDENTIFIER = "cache"
-    REDUCED_ATTRIBUTES = ["disable", "ttl", "io"]
+    REDUCED_ATTRIBUTES = ["disable", "ttl", "io", "sections"]

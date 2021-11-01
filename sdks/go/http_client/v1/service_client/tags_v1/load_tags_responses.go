@@ -83,22 +83,20 @@ func NewLoadTagsOK() *LoadTagsOK {
 A successful response.
 */
 type LoadTagsOK struct {
-	Payload *service_model.V1LoadTagsResponse
+	Payload interface{}
 }
 
 func (o *LoadTagsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/tags/load][%d] loadTagsOK  %+v", 200, o.Payload)
 }
-func (o *LoadTagsOK) GetPayload() *service_model.V1LoadTagsResponse {
+func (o *LoadTagsOK) GetPayload() interface{} {
 	return o.Payload
 }
 
 func (o *LoadTagsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(service_model.V1LoadTagsResponse)
-
 	// response payload
-	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

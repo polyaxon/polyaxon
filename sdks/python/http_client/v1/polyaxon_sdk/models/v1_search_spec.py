@@ -56,9 +56,10 @@ class V1SearchSpec(object):
         'offset': 'int',
         'groupby': 'str',
         'columns': 'str',
-        'pins': 'str',
         'layout': 'str',
         'sections': 'str',
+        'compares': 'str',
+        'heat': 'str',
         'events': 'V1DashboardSpec',
         'histograms': 'object',
         'trends': 'object',
@@ -72,16 +73,17 @@ class V1SearchSpec(object):
         'offset': 'offset',
         'groupby': 'groupby',
         'columns': 'columns',
-        'pins': 'pins',
         'layout': 'layout',
         'sections': 'sections',
+        'compares': 'compares',
+        'heat': 'heat',
         'events': 'events',
         'histograms': 'histograms',
         'trends': 'trends',
         'analytics': 'analytics'
     }
 
-    def __init__(self, query=None, sort=None, limit=None, offset=None, groupby=None, columns=None, pins=None, layout=None, sections=None, events=None, histograms=None, trends=None, analytics=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, query=None, sort=None, limit=None, offset=None, groupby=None, columns=None, layout=None, sections=None, compares=None, heat=None, events=None, histograms=None, trends=None, analytics=None, local_vars_configuration=None):  # noqa: E501
         """V1SearchSpec - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -93,9 +95,10 @@ class V1SearchSpec(object):
         self._offset = None
         self._groupby = None
         self._columns = None
-        self._pins = None
         self._layout = None
         self._sections = None
+        self._compares = None
+        self._heat = None
         self._events = None
         self._histograms = None
         self._trends = None
@@ -114,12 +117,14 @@ class V1SearchSpec(object):
             self.groupby = groupby
         if columns is not None:
             self.columns = columns
-        if pins is not None:
-            self.pins = pins
         if layout is not None:
             self.layout = layout
         if sections is not None:
             self.sections = sections
+        if compares is not None:
+            self.compares = compares
+        if heat is not None:
+            self.heat = heat
         if events is not None:
             self.events = events
         if histograms is not None:
@@ -256,27 +261,6 @@ class V1SearchSpec(object):
         self._columns = columns
 
     @property
-    def pins(self):
-        """Gets the pins of this V1SearchSpec.  # noqa: E501
-
-
-        :return: The pins of this V1SearchSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._pins
-
-    @pins.setter
-    def pins(self, pins):
-        """Sets the pins of this V1SearchSpec.
-
-
-        :param pins: The pins of this V1SearchSpec.  # noqa: E501
-        :type: str
-        """
-
-        self._pins = pins
-
-    @property
     def layout(self):
         """Gets the layout of this V1SearchSpec.  # noqa: E501
 
@@ -317,6 +301,48 @@ class V1SearchSpec(object):
         """
 
         self._sections = sections
+
+    @property
+    def compares(self):
+        """Gets the compares of this V1SearchSpec.  # noqa: E501
+
+
+        :return: The compares of this V1SearchSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._compares
+
+    @compares.setter
+    def compares(self, compares):
+        """Sets the compares of this V1SearchSpec.
+
+
+        :param compares: The compares of this V1SearchSpec.  # noqa: E501
+        :type: str
+        """
+
+        self._compares = compares
+
+    @property
+    def heat(self):
+        """Gets the heat of this V1SearchSpec.  # noqa: E501
+
+
+        :return: The heat of this V1SearchSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._heat
+
+    @heat.setter
+    def heat(self, heat):
+        """Sets the heat of this V1SearchSpec.
+
+
+        :param heat: The heat of this V1SearchSpec.  # noqa: E501
+        :type: str
+        """
+
+        self._heat = heat
 
     @property
     def events(self):

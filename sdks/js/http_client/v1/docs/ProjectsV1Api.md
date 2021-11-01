@@ -413,7 +413,6 @@ let opts = {
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
   'bookmarks': true, // Boolean | Filter by bookmarks.
-  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -438,7 +437,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
- **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 
@@ -725,7 +723,6 @@ let opts = {
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
   'bookmarks': true, // Boolean | Filter by bookmarks.
-  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -749,7 +746,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
- **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 
@@ -792,7 +788,6 @@ let opts = {
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example", // String | Query filter the search.
   'bookmarks': true, // Boolean | Filter by bookmarks.
-  'pins': "pins_example", // String | Pinned entities.
   'mode': "mode_example", // String | Mode of the search.
   'no_page': true // Boolean | No pagination.
 };
@@ -816,7 +811,6 @@ Name | Type | Description  | Notes
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search. | [optional] 
  **bookmarks** | **Boolean**| Filter by bookmarks. | [optional] 
- **pins** | **String**| Pinned entities. | [optional] 
  **mode** | **String**| Mode of the search. | [optional] 
  **no_page** | **Boolean**| No pagination. | [optional] 
 

@@ -86,6 +86,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property sections (base name: "sections")', function() {
+      // uncomment below and update the code to test the property sections
+      //var instane = new PolyaxonSdk.V1Cache();
+      //expect(instance).to.be();
+    });
+
   });
 
 }));

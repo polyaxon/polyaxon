@@ -894,6 +894,14 @@ def sync_events_summaries():
 sync_events_summaries.__doc__ = Run.sync_events_summaries.__doc__
 
 
+def sync_system_events_summaries():
+    global TRACKING_RUN
+    TRACKING_RUN.sync_system_events_summaries()
+
+
+sync_system_events_summaries.__doc__ = Run.sync_system_events_summaries.__doc__
+
+
 def sync_offline_run(
     artifacts_path: str = None,
     load_offline_run: bool = False,

@@ -177,6 +177,7 @@ class Migration(migrations.Migration):
                             ("model", "model"),
                             ("psv", "psv"),
                             ("ssv", "ssv"),
+                            ("system", "system"),
                             ("table", "table"),
                             ("tensor", "tensor"),
                             ("tensorboard", "tensorboard"),

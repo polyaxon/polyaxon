@@ -6,13 +6,13 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_tag**](TagsV1Api.md#create_tag) | **POST** /api/v1/orgs/{owner}/tags | Create tag
-[**delete_tag**](TagsV1Api.md#delete_tag) | **DELETE** /api/v1/orgs/{owner}/tags/{name} | Delete tag
-[**get_tag**](TagsV1Api.md#get_tag) | **GET** /api/v1/orgs/{owner}/tags/{name} | Get tag
+[**delete_tag**](TagsV1Api.md#delete_tag) | **DELETE** /api/v1/orgs/{owner}/tags/{uuid} | Delete tag
+[**get_tag**](TagsV1Api.md#get_tag) | **GET** /api/v1/orgs/{owner}/tags/{uuid} | Get tag
 [**list_tags**](TagsV1Api.md#list_tags) | **GET** /api/v1/orgs/{owner}/tags | List tags
 [**load_tags**](TagsV1Api.md#load_tags) | **GET** /api/v1/orgs/{owner}/tags/load | Load tags
-[**patch_tag**](TagsV1Api.md#patch_tag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.name} | Patch tag
+[**patch_tag**](TagsV1Api.md#patch_tag) | **PATCH** /api/v1/orgs/{owner}/tags/{tag.uuid} | Patch tag
 [**sync_tags**](TagsV1Api.md#sync_tags) | **POST** /api/v1/orgs/{owner}/tags/sync | Sync tags
-[**update_tag**](TagsV1Api.md#update_tag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.name} | Update tag
+[**update_tag**](TagsV1Api.md#update_tag) | **PUT** /api/v1/orgs/{owner}/tags/{tag.uuid} | Update tag
 
 
 # **create_tag**
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_tag**
-> delete_tag(owner, name)
+> delete_tag(owner, uuid, cascade=cascade)
 
 Delete tag
 
@@ -136,11 +136,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.TagsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-name = 'name_example' # str | Component under namesapce
+uuid = 'uuid_example' # str | Uuid identifier of the entity
+cascade = True # bool | Flag to handle sub-entities. (optional)
 
     try:
         # Delete tag
-        api_instance.delete_tag(owner, name)
+        api_instance.delete_tag(owner, uuid, cascade=cascade)
     except ApiException as e:
         print("Exception when calling TagsV1Api->delete_tag: %s\n" % e)
 ```
@@ -150,7 +151,8 @@ name = 'name_example' # str | Component under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **name** | **str**| Component under namesapce | 
+ **uuid** | **str**| Uuid identifier of the entity | 
+ **cascade** | **bool**| Flag to handle sub-entities. | [optional] 
 
 ### Return type
 
@@ -177,7 +179,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_tag**
-> V1Tag get_tag(owner, name)
+> V1Tag get_tag(owner, uuid)
 
 Get tag
 
@@ -216,11 +218,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.TagsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-name = 'name_example' # str | Component under namesapce
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Get tag
-        api_response = api_instance.get_tag(owner, name)
+        api_response = api_instance.get_tag(owner, uuid)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TagsV1Api->get_tag: %s\n" % e)
@@ -231,7 +233,7 @@ name = 'name_example' # str | Component under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **name** | **str**| Component under namesapce | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -258,7 +260,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_tags**
-> V1ListTagsResponse list_tags(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> V1ListTagsResponse list_tags(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 List tags
 
@@ -302,13 +304,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # List tags
-        api_response = api_instance.list_tags(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.list_tags(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TagsV1Api->list_tags: %s\n" % e)
@@ -324,7 +325,6 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
@@ -353,7 +353,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **load_tags**
-> V1LoadTagsResponse load_tags(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+> object load_tags(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
 
 Load tags
 
@@ -397,13 +397,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search. (optional)
 bookmarks = True # bool | Filter by bookmarks. (optional)
-pins = 'pins_example' # str | Pinned entities. (optional)
 mode = 'mode_example' # str | Mode of the search. (optional)
 no_page = True # bool | No pagination. (optional)
 
     try:
         # Load tags
-        api_response = api_instance.load_tags(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, pins=pins, mode=mode, no_page=no_page)
+        api_response = api_instance.load_tags(owner, offset=offset, limit=limit, sort=sort, query=query, bookmarks=bookmarks, mode=mode, no_page=no_page)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TagsV1Api->load_tags: %s\n" % e)
@@ -419,13 +418,12 @@ Name | Type | Description  | Notes
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search. | [optional] 
  **bookmarks** | **bool**| Filter by bookmarks. | [optional] 
- **pins** | **str**| Pinned entities. | [optional] 
  **mode** | **str**| Mode of the search. | [optional] 
  **no_page** | **bool**| No pagination. | [optional] 
 
 ### Return type
 
-[**V1LoadTagsResponse**](V1LoadTagsResponse.md)
+**object**
 
 ### Authorization
 
@@ -448,7 +446,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_tag**
-> V1Tag patch_tag(owner, tag_name, body)
+> V1Tag patch_tag(owner, tag_uuid, body)
 
 Patch tag
 
@@ -487,12 +485,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.TagsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-tag_name = 'tag_name_example' # str | Tag name
+tag_uuid = 'tag_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Tag() # V1Tag | Tag body
 
     try:
         # Patch tag
-        api_response = api_instance.patch_tag(owner, tag_name, body)
+        api_response = api_instance.patch_tag(owner, tag_uuid, body)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TagsV1Api->patch_tag: %s\n" % e)
@@ -503,7 +501,7 @@ body = polyaxon_sdk.V1Tag() # V1Tag | Tag body
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **tag_name** | **str**| Tag name | 
+ **tag_uuid** | **str**| UUID | 
  **body** | [**V1Tag**](V1Tag.md)| Tag body | 
 
 ### Return type
@@ -611,7 +609,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_tag**
-> V1Tag update_tag(owner, tag_name, body)
+> V1Tag update_tag(owner, tag_uuid, body)
 
 Update tag
 
@@ -650,12 +648,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.TagsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-tag_name = 'tag_name_example' # str | Tag name
+tag_uuid = 'tag_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Tag() # V1Tag | Tag body
 
     try:
         # Update tag
-        api_response = api_instance.update_tag(owner, tag_name, body)
+        api_response = api_instance.update_tag(owner, tag_uuid, body)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TagsV1Api->update_tag: %s\n" % e)
@@ -666,7 +664,7 @@ body = polyaxon_sdk.V1Tag() # V1Tag | Tag body
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **tag_name** | **str**| Tag name | 
+ **tag_uuid** | **str**| UUID | 
  **body** | [**V1Tag**](V1Tag.md)| Tag body | 
 
 ### Return type

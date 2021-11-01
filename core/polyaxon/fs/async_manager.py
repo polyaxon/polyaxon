@@ -92,18 +92,12 @@ async def sync_fs(
     fs: FSSystem,
     fw: FSWatcher,
     store_base_path: str,
-    context_base_path: str,
-    context_related_runs: str = None,
 ):
     rm_files = fw.get_files_to_rm()
     logger.debug("rm_files {}".format(rm_files))
 
-    def get_store_path(base_path: str, subpath: str):
-        _context_base_path = context_base_path
-        if context_related_runs and context_related_runs in base_path:
-            _context_base_path = os.path.join(context_base_path, context_related_runs)
-        rel_path = os.path.relpath(base_path, _context_base_path)
-        return os.path.join(store_base_path, rel_path, subpath)
+    def get_store_path(subpath: str):
+        return os.path.join(store_base_path, subpath)
 
     await asyncio.gather(
         *[
@@ -111,10 +105,10 @@ async def sync_fs(
                 fs=fs,
                 fct="rm_file",
                 is_async=fs.async_impl,
-                path=get_store_path(base_path, subpath),
+                path=get_store_path(subpath),
                 recursive=False,
             )
-            for (base_path, subpath) in rm_files
+            for (_, subpath) in rm_files
         ],
         return_exceptions=True
     )
@@ -126,10 +120,10 @@ async def sync_fs(
                 fs=fs,
                 fct="rm",
                 is_async=fs.async_impl,
-                path=get_store_path(base_path, subpath),
+                path=get_store_path(subpath),
                 recursive=True,
             )
-            for (base_path, subpath) in rm_dirs
+            for (_, subpath) in rm_dirs
         ],
         return_exceptions=True
     )
@@ -142,7 +136,7 @@ async def sync_fs(
                 fct="put",
                 is_async=fs.async_impl,
                 lpath=os.path.join(r_base_path, subpath),
-                rpath=get_store_path(r_base_path, subpath),
+                rpath=get_store_path(subpath),
                 recursive=False,
             )
             for (r_base_path, subpath) in put_files

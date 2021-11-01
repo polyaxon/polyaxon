@@ -73,7 +73,7 @@ class RunCloneView(RunEndpoint, CreateEndpoint):
         pass
 
     def pre_validate(self, obj):
-        pass
+        return obj
 
     def post(self, request, *args, **kwargs):
         return methods.clone_run(view=self, request=request, *args, **kwargs)
@@ -110,6 +110,7 @@ class RunResumeView(RunCloneView):
                 "Cannot resume this run, the run must reach a final state first, "
                 "current status error: {}".format(obj.status)
             )
+        return super().pre_validate(obj)
 
 
 class RunCopyView(RunCloneView):

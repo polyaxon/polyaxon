@@ -111,6 +111,8 @@ from polyaxon_sdk.models.v1_hook import V1Hook
 from polyaxon_sdk.models.v1_host_connection import V1HostConnection
 from polyaxon_sdk.models.v1_host_path_connection import V1HostPathConnection
 from polyaxon_sdk.models.v1_hp_choice import V1HpChoice
+from polyaxon_sdk.models.v1_hp_date_range import V1HpDateRange
+from polyaxon_sdk.models.v1_hp_date_time_range import V1HpDateTimeRange
 from polyaxon_sdk.models.v1_hp_geom_space import V1HpGeomSpace
 from polyaxon_sdk.models.v1_hp_lin_space import V1HpLinSpace
 from polyaxon_sdk.models.v1_hp_log_normal import V1HpLogNormal
@@ -163,7 +165,6 @@ from polyaxon_sdk.models.v1_list_tags_response import V1ListTagsResponse
 from polyaxon_sdk.models.v1_list_team_members_response import V1ListTeamMembersResponse
 from polyaxon_sdk.models.v1_list_teams_response import V1ListTeamsResponse
 from polyaxon_sdk.models.v1_list_token_response import V1ListTokenResponse
-from polyaxon_sdk.models.v1_load_tags_response import V1LoadTagsResponse
 from polyaxon_sdk.models.v1_log import V1Log
 from polyaxon_sdk.models.v1_log_handler import V1LogHandler
 from polyaxon_sdk.models.v1_logs import V1Logs

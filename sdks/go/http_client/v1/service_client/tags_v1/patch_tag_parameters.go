@@ -87,11 +87,11 @@ type PatchTagParams struct {
 	*/
 	Owner string
 
-	/* TagName.
+	/* TagUUID.
 
-	   Tag name
+	   UUID
 	*/
-	TagName string
+	TagUUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -168,15 +168,15 @@ func (o *PatchTagParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithTagName adds the tagName to the patch tag params
-func (o *PatchTagParams) WithTagName(tagName string) *PatchTagParams {
-	o.SetTagName(tagName)
+// WithTagUUID adds the tagUUID to the patch tag params
+func (o *PatchTagParams) WithTagUUID(tagUUID string) *PatchTagParams {
+	o.SetTagUUID(tagUUID)
 	return o
 }
 
-// SetTagName adds the tagName to the patch tag params
-func (o *PatchTagParams) SetTagName(tagName string) {
-	o.TagName = tagName
+// SetTagUUID adds the tagUuid to the patch tag params
+func (o *PatchTagParams) SetTagUUID(tagUUID string) {
+	o.TagUUID = tagUUID
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -197,8 +197,8 @@ func (o *PatchTagParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regi
 		return err
 	}
 
-	// path param tag.name
-	if err := r.SetPathParam("tag.name", o.TagName); err != nil {
+	// path param tag.uuid
+	if err := r.SetPathParam("tag.uuid", o.TagUUID); err != nil {
 		return err
 	}
 

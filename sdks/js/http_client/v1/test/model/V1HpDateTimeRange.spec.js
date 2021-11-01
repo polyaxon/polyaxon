@@ -42,7 +42,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new PolyaxonSdk.V1LoadTagsResponse();
+    instance = new PolyaxonSdk.V1HpDateTimeRange();
   });
 
   var getProperty = function(object, getter, property) {
@@ -61,16 +61,22 @@
       object[property] = value;
   }
 
-  describe('V1LoadTagsResponse', function() {
-    it('should create an instance of V1LoadTagsResponse', function() {
-      // uncomment below and update the code to test V1LoadTagsResponse
-      //var instane = new PolyaxonSdk.V1LoadTagsResponse();
-      //expect(instance).to.be.a(PolyaxonSdk.V1LoadTagsResponse);
+  describe('V1HpDateTimeRange', function() {
+    it('should create an instance of V1HpDateTimeRange', function() {
+      // uncomment below and update the code to test V1HpDateTimeRange
+      //var instane = new PolyaxonSdk.V1HpDateTimeRange();
+      //expect(instance).to.be.a(PolyaxonSdk.V1HpDateTimeRange);
     });
 
-    it('should have the property data (base name: "data")', function() {
-      // uncomment below and update the code to test the property data
-      //var instane = new PolyaxonSdk.V1LoadTagsResponse();
+    it('should have the property kind (base name: "kind")', function() {
+      // uncomment below and update the code to test the property kind
+      //var instane = new PolyaxonSdk.V1HpDateTimeRange();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property value (base name: "value")', function() {
+      // uncomment below and update the code to test the property value
+      //var instane = new PolyaxonSdk.V1HpDateTimeRange();
       //expect(instance).to.be();
     });
 

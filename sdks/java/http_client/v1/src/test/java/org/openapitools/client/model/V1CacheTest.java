@@ -80,4 +80,12 @@ public class V1CacheTest {
         // TODO: test io
     }
 
+    /**
+     * Test the property 'sections'
+     */
+    @Test
+    public void sectionsTest() {
+        // TODO: test sections
+    }
+
 }

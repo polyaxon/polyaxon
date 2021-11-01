@@ -1329,7 +1329,7 @@ service TagsV1 {
   }
 
   // Load tags
-  rpc LoadTags(OwnerResourceListRequest) returns (LoadTagsResponse) {
+  rpc LoadTags(OwnerResourceListRequest) returns (google.protobuf.Struct) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/tags/load"
     };
@@ -1352,16 +1352,16 @@ service TagsV1 {
   }
 
   // Get tag
-  rpc GetTag(OwnerEntityResourceRequestByName) returns (Tag) {
+  rpc GetTag(OwnerEntityResourceRequestByUid) returns (Tag) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/tags/{name}"
+      get: "/api/v1/orgs/{owner}/tags/{uuid}"
     };
   }
 
   // Update tag
   rpc UpdateTag(TagBodyRequest) returns (Tag) {
     option (google.api.http) = {
-      put: "/api/v1/orgs/{owner}/tags/{tag.name}"
+      put: "/api/v1/orgs/{owner}/tags/{tag.uuid}"
       body: "tag"
     };
   }
@@ -1369,15 +1369,15 @@ service TagsV1 {
   // Patch tag
   rpc PatchTag(TagBodyRequest) returns (Tag) {
     option (google.api.http) = {
-      patch: "/api/v1/orgs/{owner}/tags/{tag.name}"
+      patch: "/api/v1/orgs/{owner}/tags/{tag.uuid}"
       body: "tag"
     };
   }
 
   // Delete tag
-  rpc DeleteTag(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+  rpc DeleteTag(OwnerEntityResourceRequestByUidCascade) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/orgs/{owner}/tags/{name}"
+      delete: "/api/v1/orgs/{owner}/tags/{uuid}"
     };
   }
 }

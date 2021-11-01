@@ -73,6 +73,8 @@ func (m *V1Schedule) validateCron(formats strfmt.Registry) error {
 		if err := m.Cron.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cron")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cron")
 			}
 			return err
 		}
@@ -90,6 +92,8 @@ func (m *V1Schedule) validateDatetime(formats strfmt.Registry) error {
 		if err := m.Datetime.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("datetime")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("datetime")
 			}
 			return err
 		}
@@ -107,6 +111,8 @@ func (m *V1Schedule) validateInterval(formats strfmt.Registry) error {
 		if err := m.Interval.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("interval")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("interval")
 			}
 			return err
 		}
@@ -143,6 +149,8 @@ func (m *V1Schedule) contextValidateCron(ctx context.Context, formats strfmt.Reg
 		if err := m.Cron.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cron")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cron")
 			}
 			return err
 		}
@@ -157,6 +165,8 @@ func (m *V1Schedule) contextValidateDatetime(ctx context.Context, formats strfmt
 		if err := m.Datetime.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("datetime")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("datetime")
 			}
 			return err
 		}
@@ -171,6 +181,8 @@ func (m *V1Schedule) contextValidateInterval(ctx context.Context, formats strfmt
 		if err := m.Interval.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("interval")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("interval")
 			}
 			return err
 		}

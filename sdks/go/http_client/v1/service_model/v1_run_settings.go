@@ -97,6 +97,8 @@ func (m *V1RunSettings) validateAgent(formats strfmt.Registry) error {
 		if err := m.Agent.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("agent")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("agent")
 			}
 			return err
 		}
@@ -114,6 +116,8 @@ func (m *V1RunSettings) validateArtifactsStore(formats strfmt.Registry) error {
 		if err := m.ArtifactsStore.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("artifacts_store")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("artifacts_store")
 			}
 			return err
 		}
@@ -131,6 +135,8 @@ func (m *V1RunSettings) validateComponentVersion(formats strfmt.Registry) error 
 		if err := m.ComponentVersion.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("component_version")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("component_version")
 			}
 			return err
 		}
@@ -153,6 +159,8 @@ func (m *V1RunSettings) validateModelVersions(formats strfmt.Registry) error {
 			if err := m.ModelVersions[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("model_versions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("model_versions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -172,6 +180,8 @@ func (m *V1RunSettings) validateQueue(formats strfmt.Registry) error {
 		if err := m.Queue.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("queue")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("queue")
 			}
 			return err
 		}
@@ -216,6 +226,8 @@ func (m *V1RunSettings) contextValidateAgent(ctx context.Context, formats strfmt
 		if err := m.Agent.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("agent")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("agent")
 			}
 			return err
 		}
@@ -230,6 +242,8 @@ func (m *V1RunSettings) contextValidateArtifactsStore(ctx context.Context, forma
 		if err := m.ArtifactsStore.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("artifacts_store")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("artifacts_store")
 			}
 			return err
 		}
@@ -244,6 +258,8 @@ func (m *V1RunSettings) contextValidateComponentVersion(ctx context.Context, for
 		if err := m.ComponentVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("component_version")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("component_version")
 			}
 			return err
 		}
@@ -260,6 +276,8 @@ func (m *V1RunSettings) contextValidateModelVersions(ctx context.Context, format
 			if err := m.ModelVersions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("model_versions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("model_versions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -276,6 +294,8 @@ func (m *V1RunSettings) contextValidateQueue(ctx context.Context, formats strfmt
 		if err := m.Queue.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("queue")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("queue")
 			}
 			return err
 		}

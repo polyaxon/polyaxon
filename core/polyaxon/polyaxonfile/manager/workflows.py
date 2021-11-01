@@ -49,10 +49,13 @@ def get_ops_from_suggestions(
     compiled_operation: V1CompiledOperation,
     suggestions: List[Dict],
 ) -> List[V1Operation]:
+
+    io_keys = compiled_operation.get_io_names()
+
     def has_param(k: str):
         if not compiled_operation.matrix:
             return None
-        return not compiled_operation.matrix.has_param(k)
+        return k not in io_keys
 
     op_content = V1Operation.read(content)
     for suggestion in suggestions:

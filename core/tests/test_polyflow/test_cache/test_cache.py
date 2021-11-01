@@ -16,6 +16,8 @@
 
 import pytest
 
+from marshmallow import ValidationError
+
 from polyaxon.polyflow import V1Cache
 from tests.utils import BaseTestCase
 
@@ -28,3 +30,13 @@ class TestCacheConfigs(BaseTestCase):
 
         config_dict = {"disable": True, "ttl": 12, "io": ["in1", "in2"]}
         assert config_dict == V1Cache.from_dict(config_dict).to_dict()
+
+        config_dict = {"disable": False}
+        assert config_dict == V1Cache.from_dict(config_dict).to_dict()
+
+        config_dict = {"disable": False, "sections": ["containers"]}
+        assert config_dict == V1Cache.from_dict(config_dict).to_dict()
+
+        with self.assertRaises(ValidationError):
+            config_dict = {"disable": False, "sections": ["container"]}
+            V1Cache.from_dict(config_dict).to_dict()

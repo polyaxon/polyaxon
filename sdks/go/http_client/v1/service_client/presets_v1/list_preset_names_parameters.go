@@ -114,12 +114,6 @@ type ListPresetNamesParams struct {
 	*/
 	Owner string
 
-	/* Pins.
-
-	   Pinned entities.
-	*/
-	Pins *string
-
 	/* Query.
 
 	   Query filter the search.
@@ -251,17 +245,6 @@ func (o *ListPresetNamesParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithPins adds the pins to the list preset names params
-func (o *ListPresetNamesParams) WithPins(pins *string) *ListPresetNamesParams {
-	o.SetPins(pins)
-	return o
-}
-
-// SetPins adds the pins to the list preset names params
-func (o *ListPresetNamesParams) SetPins(pins *string) {
-	o.Pins = pins
-}
-
 // WithQuery adds the query to the list preset names params
 func (o *ListPresetNamesParams) WithQuery(query *string) *ListPresetNamesParams {
 	o.SetQuery(query)
@@ -380,23 +363,6 @@ func (o *ListPresetNamesParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
-	}
-
-	if o.Pins != nil {
-
-		// query param pins
-		var qrPins string
-
-		if o.Pins != nil {
-			qrPins = *o.Pins
-		}
-		qPins := qrPins
-		if qPins != "" {
-
-			if err := r.SetQueryParam("pins", qPins); err != nil {
-				return err
-			}
-		}
 	}
 
 	if o.Query != nil {

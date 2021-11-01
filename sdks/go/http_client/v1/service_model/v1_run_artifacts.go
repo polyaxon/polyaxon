@@ -65,6 +65,8 @@ func (m *V1RunArtifacts) validateArtifacts(formats strfmt.Registry) error {
 			if err := m.Artifacts[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("artifacts" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("artifacts" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -97,6 +99,8 @@ func (m *V1RunArtifacts) contextValidateArtifacts(ctx context.Context, formats s
 			if err := m.Artifacts[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("artifacts" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("artifacts" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

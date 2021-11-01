@@ -91,6 +91,14 @@ public class V1InitTest {
     }
 
     /**
+     * Test the property 'model'
+     */
+    @Test
+    public void modelTest() {
+        // TODO: test model
+    }
+
+    /**
      * Test the property 'connection'
      */
     @Test

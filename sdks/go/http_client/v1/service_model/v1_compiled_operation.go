@@ -176,6 +176,8 @@ func (m *V1CompiledOperation) validateBuild(formats strfmt.Registry) error {
 		if err := m.Build.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("build")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("build")
 			}
 			return err
 		}
@@ -193,6 +195,8 @@ func (m *V1CompiledOperation) validateCache(formats strfmt.Registry) error {
 		if err := m.Cache.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cache")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cache")
 			}
 			return err
 		}
@@ -215,6 +219,8 @@ func (m *V1CompiledOperation) validateContexts(formats strfmt.Registry) error {
 			if err := m.Contexts[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("contexts" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("contexts" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -239,6 +245,8 @@ func (m *V1CompiledOperation) validateEvents(formats strfmt.Registry) error {
 			if err := m.Events[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("events" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("events" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -263,6 +271,8 @@ func (m *V1CompiledOperation) validateHooks(formats strfmt.Registry) error {
 			if err := m.Hooks[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("hooks" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -287,6 +297,8 @@ func (m *V1CompiledOperation) validateInputs(formats strfmt.Registry) error {
 			if err := m.Inputs[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("inputs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("inputs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -332,6 +344,8 @@ func (m *V1CompiledOperation) validateOutputs(formats strfmt.Registry) error {
 			if err := m.Outputs[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("outputs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("outputs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -351,6 +365,8 @@ func (m *V1CompiledOperation) validatePlugins(formats strfmt.Registry) error {
 		if err := m.Plugins.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("plugins")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("plugins")
 			}
 			return err
 		}
@@ -368,6 +384,8 @@ func (m *V1CompiledOperation) validateTermination(formats strfmt.Registry) error
 		if err := m.Termination.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("termination")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("termination")
 			}
 			return err
 		}
@@ -385,6 +403,8 @@ func (m *V1CompiledOperation) validateTrigger(formats strfmt.Registry) error {
 		if err := m.Trigger.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("trigger")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("trigger")
 			}
 			return err
 		}
@@ -453,6 +473,8 @@ func (m *V1CompiledOperation) contextValidateBuild(ctx context.Context, formats 
 		if err := m.Build.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("build")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("build")
 			}
 			return err
 		}
@@ -467,6 +489,8 @@ func (m *V1CompiledOperation) contextValidateCache(ctx context.Context, formats 
 		if err := m.Cache.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("cache")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cache")
 			}
 			return err
 		}
@@ -483,6 +507,8 @@ func (m *V1CompiledOperation) contextValidateContexts(ctx context.Context, forma
 			if err := m.Contexts[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("contexts" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("contexts" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -501,6 +527,8 @@ func (m *V1CompiledOperation) contextValidateEvents(ctx context.Context, formats
 			if err := m.Events[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("events" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("events" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -519,6 +547,8 @@ func (m *V1CompiledOperation) contextValidateHooks(ctx context.Context, formats 
 			if err := m.Hooks[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("hooks" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -537,6 +567,8 @@ func (m *V1CompiledOperation) contextValidateInputs(ctx context.Context, formats
 			if err := m.Inputs[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("inputs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("inputs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -570,6 +602,8 @@ func (m *V1CompiledOperation) contextValidateOutputs(ctx context.Context, format
 			if err := m.Outputs[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("outputs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("outputs" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -586,6 +620,8 @@ func (m *V1CompiledOperation) contextValidatePlugins(ctx context.Context, format
 		if err := m.Plugins.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("plugins")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("plugins")
 			}
 			return err
 		}
@@ -600,6 +636,8 @@ func (m *V1CompiledOperation) contextValidateTermination(ctx context.Context, fo
 		if err := m.Termination.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("termination")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("termination")
 			}
 			return err
 		}
@@ -614,6 +652,8 @@ func (m *V1CompiledOperation) contextValidateTrigger(ctx context.Context, format
 		if err := m.Trigger.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("trigger")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("trigger")
 			}
 			return err
 		}

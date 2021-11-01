@@ -38,6 +38,12 @@ export interface V1Tag {
      * @type {string}
      * @memberof V1Tag
      */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Tag
+     */
     name?: string;
     /**
      * 
@@ -57,6 +63,12 @@ export interface V1Tag {
      * @memberof V1Tag
      */
     icon?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof V1Tag
+     */
+    stats?: object;
 }
 
 export function V1TagFromJSON(json: any): V1Tag {
@@ -69,10 +81,12 @@ export function V1TagFromJSONTyped(json: any, ignoreDiscriminator: boolean): V1T
     }
     return {
         
+        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'color': !exists(json, 'color') ? undefined : json['color'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'icon': !exists(json, 'icon') ? undefined : json['icon'],
+        'stats': !exists(json, 'stats') ? undefined : json['stats'],
     };
 }
 
@@ -85,10 +99,12 @@ export function V1TagToJSON(value?: V1Tag | null): any {
     }
     return {
         
+        'uuid': value.uuid,
         'name': value.name,
         'color': value.color,
         'description': value.description,
         'icon': value.icon,
+        'stats': value.stats,
     };
 }
 

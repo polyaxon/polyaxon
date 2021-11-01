@@ -54,6 +54,7 @@ class V1Init(object):
         'git': 'V1GitType',
         'dockerfile': 'V1DockerfileType',
         'file': 'V1FileType',
+        'model': 'str',
         'connection': 'str',
         'path': 'str',
         'container': 'V1Container'
@@ -64,12 +65,13 @@ class V1Init(object):
         'git': 'git',
         'dockerfile': 'dockerfile',
         'file': 'file',
+        'model': 'model',
         'connection': 'connection',
         'path': 'path',
         'container': 'container'
     }
 
-    def __init__(self, artifacts=None, git=None, dockerfile=None, file=None, connection=None, path=None, container=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, artifacts=None, git=None, dockerfile=None, file=None, model=None, connection=None, path=None, container=None, local_vars_configuration=None):  # noqa: E501
         """V1Init - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -79,6 +81,7 @@ class V1Init(object):
         self._git = None
         self._dockerfile = None
         self._file = None
+        self._model = None
         self._connection = None
         self._path = None
         self._container = None
@@ -92,6 +95,8 @@ class V1Init(object):
             self.dockerfile = dockerfile
         if file is not None:
             self.file = file
+        if model is not None:
+            self.model = model
         if connection is not None:
             self.connection = connection
         if path is not None:
@@ -182,6 +187,27 @@ class V1Init(object):
         """
 
         self._file = file
+
+    @property
+    def model(self):
+        """Gets the model of this V1Init.  # noqa: E501
+
+
+        :return: The model of this V1Init.  # noqa: E501
+        :rtype: str
+        """
+        return self._model
+
+    @model.setter
+    def model(self, model):
+        """Sets the model of this V1Init.
+
+
+        :param model: The model of this V1Init.  # noqa: E501
+        :type: str
+        """
+
+        self._model = model
 
     @property
     def connection(self):

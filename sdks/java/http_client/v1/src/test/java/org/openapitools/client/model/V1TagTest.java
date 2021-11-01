@@ -55,6 +55,14 @@ public class V1TagTest {
     }
 
     /**
+     * Test the property 'uuid'
+     */
+    @Test
+    public void uuidTest() {
+        // TODO: test uuid
+    }
+
+    /**
      * Test the property 'name'
      */
     @Test
@@ -84,6 +92,14 @@ public class V1TagTest {
     @Test
     public void iconTest() {
         // TODO: test icon
+    }
+
+    /**
+     * Test the property 'stats'
+     */
+    @Test
+    public void statsTest() {
+        // TODO: test stats
     }
 
 }

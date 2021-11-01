@@ -136,6 +136,8 @@ func (m *V1Event) validateArtifact(formats strfmt.Registry) error {
 		if err := m.Artifact.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("artifact")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("artifact")
 			}
 			return err
 		}
@@ -153,6 +155,8 @@ func (m *V1Event) validateAudio(formats strfmt.Registry) error {
 		if err := m.Audio.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("audio")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("audio")
 			}
 			return err
 		}
@@ -170,6 +174,8 @@ func (m *V1Event) validateChart(formats strfmt.Registry) error {
 		if err := m.Chart.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("chart")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("chart")
 			}
 			return err
 		}
@@ -187,6 +193,8 @@ func (m *V1Event) validateCurve(formats strfmt.Registry) error {
 		if err := m.Curve.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("curve")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("curve")
 			}
 			return err
 		}
@@ -204,6 +212,8 @@ func (m *V1Event) validateDataframe(formats strfmt.Registry) error {
 		if err := m.Dataframe.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dataframe")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dataframe")
 			}
 			return err
 		}
@@ -221,6 +231,8 @@ func (m *V1Event) validateHistogram(formats strfmt.Registry) error {
 		if err := m.Histogram.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("histogram")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("histogram")
 			}
 			return err
 		}
@@ -238,6 +250,8 @@ func (m *V1Event) validateImage(formats strfmt.Registry) error {
 		if err := m.Image.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("image")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("image")
 			}
 			return err
 		}
@@ -255,6 +269,8 @@ func (m *V1Event) validateModel(formats strfmt.Registry) error {
 		if err := m.Model.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("model")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("model")
 			}
 			return err
 		}
@@ -284,6 +300,8 @@ func (m *V1Event) validateVideo(formats strfmt.Registry) error {
 		if err := m.Video.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("video")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("video")
 			}
 			return err
 		}
@@ -344,6 +362,8 @@ func (m *V1Event) contextValidateArtifact(ctx context.Context, formats strfmt.Re
 		if err := m.Artifact.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("artifact")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("artifact")
 			}
 			return err
 		}
@@ -358,6 +378,8 @@ func (m *V1Event) contextValidateAudio(ctx context.Context, formats strfmt.Regis
 		if err := m.Audio.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("audio")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("audio")
 			}
 			return err
 		}
@@ -372,6 +394,8 @@ func (m *V1Event) contextValidateChart(ctx context.Context, formats strfmt.Regis
 		if err := m.Chart.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("chart")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("chart")
 			}
 			return err
 		}
@@ -386,6 +410,8 @@ func (m *V1Event) contextValidateCurve(ctx context.Context, formats strfmt.Regis
 		if err := m.Curve.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("curve")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("curve")
 			}
 			return err
 		}
@@ -400,6 +426,8 @@ func (m *V1Event) contextValidateDataframe(ctx context.Context, formats strfmt.R
 		if err := m.Dataframe.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dataframe")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dataframe")
 			}
 			return err
 		}
@@ -414,6 +442,8 @@ func (m *V1Event) contextValidateHistogram(ctx context.Context, formats strfmt.R
 		if err := m.Histogram.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("histogram")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("histogram")
 			}
 			return err
 		}
@@ -428,6 +458,8 @@ func (m *V1Event) contextValidateImage(ctx context.Context, formats strfmt.Regis
 		if err := m.Image.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("image")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("image")
 			}
 			return err
 		}
@@ -442,6 +474,8 @@ func (m *V1Event) contextValidateModel(ctx context.Context, formats strfmt.Regis
 		if err := m.Model.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("model")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("model")
 			}
 			return err
 		}
@@ -456,6 +490,8 @@ func (m *V1Event) contextValidateVideo(ctx context.Context, formats strfmt.Regis
 		if err := m.Video.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("video")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("video")
 			}
 			return err
 		}

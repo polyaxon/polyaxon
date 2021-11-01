@@ -28,7 +28,7 @@ from polyaxon.lifecycle import V1StatusCondition
 
 def clone_run(view, request, *args, **kwargs):
     view.run = view.get_object()
-    view.pre_validate(view.run)
+    run = view.pre_validate(view.run)
     content = None
     if "content" in request.data:
         content = request.data["content"]
@@ -39,7 +39,7 @@ def clone_run(view, request, *args, **kwargs):
             raise ValidationError("Cloning was not successful, error: {}".format(e))
     try:
         new_obj = view.clone(
-            obj=view.run,
+            obj=run,
             content=content,
             name=request.data.get("name"),
             description=request.data.get("description"),

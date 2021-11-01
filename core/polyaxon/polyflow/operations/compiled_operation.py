@@ -143,6 +143,16 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
             + get_env_io(self.contexts or [])
         )
 
+    def get_io_names(self) -> List[str]:
+        def get_io_name(io: List[V1IO]) -> List[str]:
+            return [i.name for i in io if i.name]
+
+        return (
+            get_io_name(self.inputs or [])
+            + get_io_name(self.outputs or [])
+            + get_io_name(self.contexts or [])
+        )
+
     def apply_image_destination(self, image: str):
         self.run.apply_image_destination(image)
 
