@@ -72,15 +72,16 @@ polyaxon port-forward -r agent
 
 ## Ingress and Gateway service
 
-| Parameter                    | Description                                                         | Default
-| ---------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------
-| `ingress.enabled`            | Use Kubernetes ingress                                              | `true`
-| `ingress.path`               | Kubernetes ingress path                                             | `/`
-| `ingress.hostName`           | Kubernetes ingress hostName                                         | ``
-| `ingress.tls`                | Use Ingress TLS (Secrets must be manually created in the namespace) | `[]`
-| `ingress.annotations`        | Ingress annotations                                                 | `{}`
-| `gateway.service.type`       | Gateway Service type                                                | `ClusterIP`
-| `gateway.service.annotations`| Gateway Service annotations                                         | `{}`
+| Parameter                    | Description                                                                    | Default
+| ---------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------
+| `ingress.enabled`            | Use Kubernetes ingress                                                         | `true`
+| `ingress.path`               | Kubernetes ingress path                                                        | `/`
+| `ingress.pathType`           | Kubernetes ingress pathType (e.g. on GKE `ImplementationSpecific`)             | `Prefix`
+| `ingress.hostName`           | Kubernetes ingress hostName                                                    | ``
+| `ingress.tls`                | Use Ingress TLS (Secrets must be manually created in the namespace)            | `[]`
+| `ingress.annotations`        | Ingress annotations                                                            | `{}`
+| `gateway.service.type`       | Gateway Service type                                                           | `ClusterIP`
+| `gateway.service.annotations`| Gateway Service annotations                                                    | `{}`
 
 
 This chart provides support for an Ingress resource.
@@ -143,6 +144,24 @@ i.e
 ```yaml
 annotations:
   domainName: polyaxon.my.domain.com
+```
+
+### GKE ingress
+
+To use an ingress on GKE, the configuration should look like:
+
+```yaml
+ingress:
+  enabled: true
+  hostName: polyaxon.acme.com
+  pathType: ImplementationSpecific
+  path: /*
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: IP_NAME
+    networking.gke.io/managed-certificates: INGRESS_TLS_CERT_NAME
+    kubernetes.io/ingress.allow-http: "false"
+    ingress.kubernetes.io/rewrite-target: "/"
 ```
 
 ### NGINX ingress
