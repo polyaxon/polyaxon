@@ -86,12 +86,12 @@ def check_cli_version(config, is_cli: bool = True):
             pip_upgrade()
             sys.exit(0)
         else:
-            indentation.puts("Your can manually run:")
+            indentation.puts(
+                "To upgrade to the latest version `{}`, "
+                "you can manually run:".format(config.latest_version)
+            )
             with indentation.indent(4):
                 indentation.puts("pip install -U polyaxon")
-            indentation.puts(
-                "to upgrade to the latest version `{}`".format(config.latest_version)
-            )
 
             sys.exit(0)
     elif LooseVersion(current_version) < LooseVersion(latest_version):
