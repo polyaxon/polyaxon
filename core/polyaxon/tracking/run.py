@@ -1317,7 +1317,7 @@ class Run(RunClient):
         kind = kind or kwargs.get("artifact_kind")  # Backwards compatibility
         kind = kind or V1ArtifactKind.FILE
 
-        if versioned and step is not None:
+        if versioned or step is not None:
             self._log_has_events()
             asset_path = get_asset_path(
                 run_path=self._artifacts_path,

@@ -1253,7 +1253,10 @@ class TestRunLogging(TestEnvVarsCase):
         self.touch(model_file)
         with patch("polyaxon.tracking.run.Run.log_artifact_ref") as log_artifact_ref:
             self.run.log_artifact(
-                name="dataframe", path=model_file, kind=V1ArtifactKind.DATAFRAME
+                name="dataframe",
+                path=model_file,
+                kind=V1ArtifactKind.DATAFRAME,
+                versioned=False,
             )
         assert log_artifact_ref.call_count == 1
         self.event_logger.flush()
@@ -1314,7 +1317,12 @@ class TestRunLogging(TestEnvVarsCase):
         tsv_file = tempfile.mkdtemp() + "/file.tsv"
         self.touch(tsv_file)
         with patch("polyaxon.tracking.run.Run.log_artifact_ref") as log_artifact:
-            self.run.log_artifact(name="file", path=tsv_file, kind=V1ArtifactKind.TSV)
+            self.run.log_artifact(
+                name="file",
+                path=tsv_file,
+                kind=V1ArtifactKind.TSV,
+                versioned=False,
+            )
         assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
