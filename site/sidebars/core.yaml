@@ -97,6 +97,8 @@
       link: /docs/core/scheduling-strategies/resume-restart/
     - title: Conditional Scheduling
       link: /docs/core/scheduling-strategies/conditional-scheduling/
+    - title: Backfills
+      link: /docs/core/scheduling-strategies/backfills/
     - title: Manual Approval
       link: /docs/core/scheduling-strategies/manual-approval/
     - title: Operations Caching
