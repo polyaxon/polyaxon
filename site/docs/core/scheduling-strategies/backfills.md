@@ -16,7 +16,7 @@ sidebar: "core"
 ## Overview
 
 Users can leverage the `matrix` section with the grid search algorithm to execute backfills. 
-Polyaxon provides a [daterange](/docs/automation/optimization-engine/params/#v1daterange) and a [datetimerange](/docs/automation/optimization-engine/params/#v1datetimerange)
+Polyaxon provides a [daterange](/docs/automation/optimization-engine/params/#v1hpdaterange) and a [datetimerange](/docs/automation/optimization-engine/params/#v1hpdatetimerange)
 generators that can be used to specify interval to use for running the backfill. Users can also specify if they need to execute the backfill sequentially by setting 
 the concurrency to `1`.
 

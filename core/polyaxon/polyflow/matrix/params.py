@@ -557,10 +557,10 @@ class HpDateRangeSchema(BaseCamelSchema):
 class V1HpDateRange(BaseHpParamConfig, polyaxon_sdk.V1HpDateRange):
     """`DateTimeRange` picks a value from a generated list of values using `[start, stop, step]`,
     you can pass values in these forms:
-      * ["2019-06-24", "2019-06-25", 3600 * 24]
-      * {start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 1}
+      * `["2019-06-24", "2019-06-25", 3600 * 24]`
+      * `{start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 1}`
 
-    Step (frequency): represents a timedelta in days.
+    **Step (frequency)**: represents a timedelta in days.
 
     ```yaml
     >>> params:
@@ -627,10 +627,10 @@ class HpDateTimeRangeSchema(BaseCamelSchema):
 class V1HpDateTimeRange(BaseHpParamConfig, polyaxon_sdk.V1HpDateTimeRange):
     """`DateTimeRange` picks a value from a generated list of values using `[start, stop, step]`,
     you can pass values in these forms:
-      * ["2019-06-24T21:20:07+02:00", "2019-06-25T21:20:07+02:00", 3600]
-      * {start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 3600 * 4}
+      * `["2019-06-24T21:20:07+02:00", "2019-06-25T21:20:07+02:00", 3600]`
+      * `{start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 3600 * 4}`
 
-    Step (frequency): represents a timedelta in seconds.
+    **Step (frequency)**: represents a timedelta in seconds.
 
     ```yaml
     >>> params:
