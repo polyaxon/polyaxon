@@ -28,7 +28,7 @@ from polyaxon.constants.metadata import (
     META_UPLOAD_ARTIFACTS,
 )
 from polyaxon.exceptions import PolyaxonCompilerError, PolyaxonSchemaError
-from polyaxon.polyaxonfile import OperationSpecification
+from polyaxon.polyaxonfile import CompiledOperationSpecification
 from polyaxon.polyflow import V1CompiledOperation, V1Init, V1Operation
 from polyaxon.polypod.compiler import resolver
 from polyaxon.polypod.compiler.lineage.artifacts_collector import (
@@ -83,7 +83,7 @@ class CorePlatformResolver(resolver.BaseResolver):
 
     def resolve_presets(self):
         for preset in self._get_meta_artifacts_presets():
-            self.compiled_operation = OperationSpecification.apply_preset(
+            self.compiled_operation = CompiledOperationSpecification.apply_preset(
                 config=self.compiled_operation, preset=preset
             )
 

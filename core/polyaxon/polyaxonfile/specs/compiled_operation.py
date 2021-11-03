@@ -15,12 +15,14 @@
 # limitations under the License.
 import copy
 
-from typing import Dict, List
+from typing import Dict, List, Set, Union
 
 from polyaxon import types
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
-from polyaxon.polyaxonfile.specs import BaseSpecification, kinds
+from polyaxon.polyaxonfile.specs import kinds
+from polyaxon.polyaxonfile.specs.base import BaseSpecification
 from polyaxon.polyaxonfile.specs.libs.parser import Parser
+from polyaxon.polyaxonfile.specs.operation import OperationSpecification
 from polyaxon.polyflow import (
     ParamSpec,
     V1CompiledOperation,
@@ -28,6 +30,7 @@ from polyaxon.polyflow import (
     V1Hook,
     V1Init,
     V1Param,
+    validate_run_patch,
 )
 
 
@@ -301,3 +304,295 @@ class CompiledOperationSpecification(BaseSpecification):
             )
         hooks = Parser.parse_hooks(config, param_spec)
         return [V1Hook.read(hook) for hook in hooks]
+
+    @classmethod
+    def apply_preset(
+        cls, config: V1CompiledOperation, preset: Union[Dict, str] = None
+    ) -> V1CompiledOperation:
+        if not preset:
+            return config
+        preset = OperationSpecification.read(
+            preset, is_preset=True
+        )  # type: V1Operation
+        if preset.run_patch:
+            config.run = config.run.patch(
+                validate_run_patch(preset.run_patch, config.run.kind),
+                strategy=preset.patch_strategy,
+            )
+        patch_compiled = V1CompiledOperation(
+            name=preset.name,
+            description=preset.description,
+            tags=preset.tags,
+            is_approved=preset.is_approved,
+            presets=preset.presets,
+            queue=preset.queue,
+            cache=preset.cache,
+            build=preset.build,
+            hooks=preset.hooks,
+            events=preset.events,
+            plugins=preset.plugins,
+            termination=preset.termination,
+            matrix=preset.matrix,
+            joins=preset.joins,
+            schedule=preset.schedule,
+            dependencies=preset.dependencies,
+            trigger=preset.trigger,
+            conditions=preset.conditions,
+            skip_on_upstream_skip=preset.skip_on_upstream_skip,
+        )
+        return config.patch(patch_compiled, strategy=preset.patch_strategy)
+
+    @classmethod
+    def _get_distributed_init_connections(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        init_connection_names = set()
+
+        def _get_resolve_connections(replica):
+            if replica and replica.init:
+                return init_connection_names | set(
+                    [i.connection for i in replica.init if i.connection]
+                )
+            return init_connection_names
+
+        if compiled_operation.is_mpi_job_run:
+            init_connection_names = _get_resolve_connections(
+                compiled_operation.run.launcher
+            )
+            init_connection_names = _get_resolve_connections(
+                compiled_operation.run.worker
+            )
+        if compiled_operation.is_tf_job_run:
+            init_connection_names = _get_resolve_connections(
+                compiled_operation.run.chief
+            )
+            init_connection_names = _get_resolve_connections(
+                compiled_operation.run.worker
+            )
+            init_connection_names = _get_resolve_connections(compiled_operation.run.ps)
+            init_connection_names = _get_resolve_connections(
+                compiled_operation.run.evaluator
+            )
+        if compiled_operation.is_pytorch_job_run:
+            init_connection_names = _get_resolve_connections(
+                compiled_operation.run.master
+            )
+            init_connection_names = _get_resolve_connections(
+                compiled_operation.run.worker
+            )
+
+        return init_connection_names
+
+    @classmethod
+    def _get_init_connections(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        init_connection_names = set()
+        if compiled_operation and not compiled_operation.has_pipeline:
+            if compiled_operation.run.init:
+                init_connection_names |= set(
+                    [i.connection for i in compiled_operation.run.init if i.connection]
+                )
+        return init_connection_names
+
+    @classmethod
+    def get_init_connections(
+        cls,
+        config: V1CompiledOperation,
+    ) -> Set[str]:
+        if config.is_distributed_run:
+            return cls._get_distributed_init_connections(
+                compiled_operation=config,
+            )
+        else:
+            return cls._get_init_connections(
+                compiled_operation=config,
+            )
+
+    @classmethod
+    def _get_distributed_connections(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        connections_names = set()
+
+        def _get_resolve_connections(replica):
+            if replica and replica.connections:
+                return connections_names | set(replica.connections)
+            return connections_names
+
+        if compiled_operation.is_mpi_job_run:
+            connections_names = _get_resolve_connections(
+                compiled_operation.run.launcher
+            )
+            connections_names = _get_resolve_connections(compiled_operation.run.worker)
+        if compiled_operation.is_tf_job_run:
+            connections_names = _get_resolve_connections(compiled_operation.run.chief)
+            connections_names = _get_resolve_connections(compiled_operation.run.worker)
+            connections_names = _get_resolve_connections(compiled_operation.run.ps)
+            connections_names = _get_resolve_connections(
+                compiled_operation.run.evaluator
+            )
+        if compiled_operation.is_pytorch_job_run:
+            connections_names = _get_resolve_connections(compiled_operation.run.master)
+            connections_names = _get_resolve_connections(compiled_operation.run.worker)
+
+        return connections_names
+
+    @classmethod
+    def _get_connections(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        connections_names = set()
+        if compiled_operation and compiled_operation.run.connections:
+            connections_names |= set(compiled_operation.run.connections)
+        return connections_names
+
+    @classmethod
+    def get_connections(
+        cls,
+        config: V1CompiledOperation,
+    ) -> Set[str]:
+        if config.is_distributed_run:
+            return cls._get_distributed_connections(
+                compiled_operation=config,
+            )
+        else:
+            return cls._get_connections(
+                compiled_operation=config,
+            )
+
+    @classmethod
+    def _get_distributed_init_model_versions(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        init_model_version_names = set()
+
+        def _get_resolve_models(replica):
+            if replica and replica.init:
+                return init_model_version_names | set(
+                    [i.model for i in replica.init if i.model]
+                )
+            return init_model_version_names
+
+        if compiled_operation.is_mpi_job_run:
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.launcher
+            )
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.worker
+            )
+        if compiled_operation.is_tf_job_run:
+            init_model_version_names = _get_resolve_models(compiled_operation.run.chief)
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.worker
+            )
+            init_model_version_names = _get_resolve_models(compiled_operation.run.ps)
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.evaluator
+            )
+        if compiled_operation.is_pytorch_job_run:
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.master
+            )
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.worker
+            )
+
+        return init_model_version_names
+
+    @classmethod
+    def _get_init_model_versions(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        init_model_version_names = set()
+        if compiled_operation and not compiled_operation.has_pipeline:
+            if compiled_operation.run.init:
+                init_model_version_names |= set(
+                    [i.model for i in compiled_operation.run.init if i.model]
+                )
+        return init_model_version_names
+
+    @classmethod
+    def get_init_model_versions(
+        cls,
+        config: V1CompiledOperation,
+    ) -> Set[str]:
+        if config.is_distributed_run:
+            return cls._get_distributed_init_model_versions(
+                compiled_operation=config,
+            )
+        else:
+            return cls._get_init_model_versions(
+                compiled_operation=config,
+            )
+
+    @classmethod
+    def _clean_distributed_init_model_versions(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> V1CompiledOperation:
+        def _clean_resolve_models(replica):
+            if replica and replica.init:
+                replica.init = [i for i in replica.init if i.model is None]
+                return replica
+            return replica
+
+        if compiled_operation.is_mpi_job_run:
+            compiled_operation.run.launcher = _clean_resolve_models(
+                compiled_operation.run.launcher
+            )
+            compiled_operation.run.worker = _clean_resolve_models(
+                compiled_operation.run.worker
+            )
+        if compiled_operation.is_tf_job_run:
+            compiled_operation.run.chief = _clean_resolve_models(
+                compiled_operation.run.chief
+            )
+            compiled_operation.run.worker = _clean_resolve_models(
+                compiled_operation.run.worker
+            )
+            compiled_operation.run.ps = _clean_resolve_models(compiled_operation.run.ps)
+            compiled_operation.run.evaluator = _clean_resolve_models(
+                compiled_operation.run.evaluator
+            )
+        if compiled_operation.is_pytorch_job_run:
+            compiled_operation.run.master = _clean_resolve_models(
+                compiled_operation.run.master
+            )
+            compiled_operation.run.worker = _clean_resolve_models(
+                compiled_operation.run.worker
+            )
+
+        return compiled_operation
+
+    @classmethod
+    def _clean_init_model_versions(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> V1CompiledOperation:
+        if compiled_operation and not compiled_operation.has_pipeline:
+            if compiled_operation.run.init:
+                compiled_operation.run.init = [
+                    i for i in compiled_operation.run.init if i.model is None
+                ]
+        return compiled_operation
+
+    @classmethod
+    def clean_init_model_versions(
+        cls,
+        config: V1CompiledOperation,
+    ) -> V1CompiledOperation:
+        if config.is_distributed_run:
+            return cls._clean_distributed_init_model_versions(
+                compiled_operation=config,
+            )
+        else:
+            return cls._clean_init_model_versions(
+                compiled_operation=config,
+            )

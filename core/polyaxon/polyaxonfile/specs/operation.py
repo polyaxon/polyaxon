@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from collections.abc import Mapping
-from typing import Dict, Union
+from typing import Dict
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyaxonfile.specs import kinds
@@ -127,43 +127,6 @@ class OperationSpecification(BaseSpecification):
         ]
         compiled = V1CompiledOperation.read(values)  # type: V1CompiledOperation
         return compiled.patch(patch_compiled, strategy=config.patch_strategy)
-
-    @classmethod
-    def apply_preset(
-        cls, config: V1CompiledOperation, preset: Union[Dict, str] = None
-    ) -> V1CompiledOperation:
-        if not preset:
-            return config
-        preset = OperationSpecification.read(
-            preset, is_preset=True
-        )  # type: V1Operation
-        if preset.run_patch:
-            config.run = config.run.patch(
-                validate_run_patch(preset.run_patch, config.run.kind),
-                strategy=preset.patch_strategy,
-            )
-        patch_compiled = V1CompiledOperation(
-            name=preset.name,
-            description=preset.description,
-            tags=preset.tags,
-            is_approved=preset.is_approved,
-            presets=preset.presets,
-            queue=preset.queue,
-            cache=preset.cache,
-            build=preset.build,
-            hooks=preset.hooks,
-            events=preset.events,
-            plugins=preset.plugins,
-            termination=preset.termination,
-            matrix=preset.matrix,
-            joins=preset.joins,
-            schedule=preset.schedule,
-            dependencies=preset.dependencies,
-            trigger=preset.trigger,
-            conditions=preset.conditions,
-            skip_on_upstream_skip=preset.skip_on_upstream_skip,
-        )
-        return config.patch(patch_compiled, strategy=preset.patch_strategy)
 
     @classmethod
     def read(cls, values, partial: bool = False, is_preset: bool = False):
