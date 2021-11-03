@@ -73,6 +73,6 @@ def completion(shell):
         click.echo(
             "_PLX_COMPLETE=fish_source plx > ~/.config/fish/completions/plx-complete.fish"
         )
-
-    click.echo("Shell {} is not supported.".format(shell))
+    else:
+        click.echo("Shell {} is not supported.".format(shell))
     raise click.exceptions.Exit(1)
