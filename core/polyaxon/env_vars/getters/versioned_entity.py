@@ -47,11 +47,11 @@ def get_versioned_entity_info(
             "Received an invalid {} reference: `{}`".format(entity_name, entity)
         )
     if len(entity_values) == 2:
-        entity_name, version = entity_values
+        entity_namespace, version = entity_values
     else:
-        entity_name, version = entity_values[0], "latest"
+        entity_namespace, version = entity_values[0], "latest"
     version = version or "latest"
-    parts = entity_name.replace(".", "/").split("/")
+    parts = entity_namespace.replace(".", "/").split("/")
     owner = default_owner
     if not parts or len(parts) > 2:
         raise PolyaxonSchemaError(
@@ -59,8 +59,6 @@ def get_versioned_entity_info(
         )
     if len(parts) == 2:
         owner, entity_namespace = parts
-    else:
-        entity_namespace = entity_name
     return owner, entity_namespace, version
 
 
