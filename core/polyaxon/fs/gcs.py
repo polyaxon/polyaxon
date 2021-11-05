@@ -55,6 +55,7 @@ class GCSFileSystem(BaseGCSFileSystem):
             return r.status, r.headers, r.request_info, data
 
     async def _get_file(self, rpath, lpath, callback=None, **kwargs):
+        # TODO: Remove when https://github.com/dask/gcsfs/issues/433 is fixed
         if await self._isdir(rpath):
             return
         await super()._get_file(rpath, lpath, callback=callback, **kwargs)
