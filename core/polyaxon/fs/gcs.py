@@ -54,6 +54,11 @@ class GCSFileSystem(BaseGCSFileSystem):
             checker.validate_http_response(r)  # validate file consistency
             return r.status, r.headers, r.request_info, data
 
+    async def _get_file(self, rpath, lpath, callback=None, **kwargs):
+        if await self._isdir(rpath):
+            return
+        await super()._get_file(rpath, lpath, callback=callback, **kwargs)
+
 
 def get_fs(
     context_path: str = None,
