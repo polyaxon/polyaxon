@@ -2,7 +2,7 @@
   "modelPropertyNaming": "original",
   "packageName": "polyaxon_sdk",
   "projectName": "polyaxon-sdk",
-  "packageVersion": "1.12.0",
+  "packageVersion": "1.12.2",
   "author": "Polyaxon",
   "description": "Polyaxon sdk",
   "contact": {
@@ -15,7 +15,7 @@
     "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
   },
   "npmName": "@polyaxon/sdk",
-  "npmVersion": "1.12.0",
+  "npmVersion": "1.12.2",
   "snapshot": false,
   "supportsES6": true
 }

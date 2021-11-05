@@ -29,23 +29,19 @@ def can_log_psutil_resources():
 
 
 def query_psutil() -> Dict:
-    vm = psutil.virtual_memory()
     results = {}
-    percents = psutil.cpu_percent(interval=None, percpu=True)
-    if len(percents) > 0:
-        results["cpu_percent_avg"] = sum(percents) / len(percents)
-        for (i, percent) in enumerate(percents):
-            results["cpu_percent_%02d" % (i + 1)] = percent
     try:
         # psutil <= 5.6.2 did not have getloadavg:
         if hasattr(psutil, "getloadavg"):
-            results["load_avg"] = psutil.getloadavg()[0]
+            results["load"] = psutil.getloadavg()[0]
         else:
             # Do not log an empty metric
             pass
     except OSError:
         pass
-    results["memory_used"] = vm.used / vm.total
+    vm = psutil.virtual_memory()
+    results["cpu"] = psutil.cpu_percent(interval=None)
+    results["memory"] = vm.percent
     return results
 
 
