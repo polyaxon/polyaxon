@@ -1,3 +1,0 @@
-runPatch:
-  container:
-    workingDir: "{{ globals.run_artifacts_path }}/uploads"

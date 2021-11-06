@@ -1,3 +1,0 @@
-image: ghcr.io/kubeflow-incubator/tf-operator
-imageTag: latest
-skipCRD: false

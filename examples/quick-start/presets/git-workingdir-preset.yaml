@@ -1,3 +1,0 @@
-runPatch:
-  container:
-    workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"

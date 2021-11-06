@@ -1,6 +1,0 @@
-patchStrategy: isnull
-isPreset: true
-runPatch:
-  environment:
-    nodeSelector:
-      polyaxon: compute
