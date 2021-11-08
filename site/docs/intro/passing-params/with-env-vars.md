@@ -71,3 +71,37 @@ polyaxon run -f echo.yaml -P message="test 1" -l
 ```bash
 polyaxon run -f echo.yaml -P message="test 2" -l
 ```
+
+### Exposing inputs/outputs to env var
+
+> **N.B**: Requires CLI `>= v1.12`.
+
+To improve the previous process, Polyaxon IO/Params specification has an option to expose the value to an environment variable automatically.
+Instead of manually using the configuration:
+
+```yaml
+    env:
+      - name: INPUT_MESSAGE
+        value: "{{ message }}"
+```
+
+It's possible to use the specification `toEnv` to tell Polyaxon to expose the variable:
+
+```yaml
+inputs:
+- name: message
+  type: str
+  isOptional: true
+  value: "Default message"
+  toEnv: INPUT_MESSAGE  # <----
+```
+
+`toEnv` is also available on the params specification, in case the component does not define if the IO should expose the value to an env var, 
+or in case a param is used as context only:
+
+```yaml
+params:
+  message:
+    value: "New message"
+    toEnv: ENV_VAR_MESSAGE  # <----
+```
