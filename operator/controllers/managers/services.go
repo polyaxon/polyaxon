@@ -28,8 +28,8 @@ import (
 )
 
 const (
-	// DefaultServicePort for service
-	DefaultServicePort = 6006
+	// DefaultTargetPort for service
+	DefaultTargetPort = 6006
 	// DefaultServingPort for service
 	DefaultServingPort = 80
 	// DefaultServiceReplicas for deployment

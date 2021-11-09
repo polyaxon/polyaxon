@@ -30,7 +30,9 @@ from polyaxon.proxies.schemas.timeout import get_timeout_config
 
 
 def get_base_config():
-    config = [get_listen_config(is_proxy=False, port=settings.PROXIES_CONFIG.api_port)]
+    config = [
+        get_listen_config(is_proxy=False, port=settings.PROXIES_CONFIG.api_target_port)
+    ]
     config += [
         get_logging_config(),
         get_gzip_config(),

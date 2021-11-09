@@ -25,7 +25,7 @@ class TestStreamsBase(BaseTestCase):
 
     def test_streams_base_config(self):
         expected = """
-listen 80;
+listen 8000;
 
 
 error_log /polyaxon/logs/error.log warn;
@@ -124,7 +124,7 @@ location /k8s/v1/ {
 
     def test_streams_base_config_with_k8s(self):
         expected = """
-listen 80;
+listen 8000;
 
 
 error_log /polyaxon/logs/error.log warn;

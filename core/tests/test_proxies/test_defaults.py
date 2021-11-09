@@ -25,10 +25,13 @@ class TestSettings(BaseTestCase):
     SET_PROXIES_SETTINGS = True
 
     def test_default_values(self):
+        assert settings.PROXIES_CONFIG.gateway_target_port == 8000
+        assert settings.PROXIES_CONFIG.streams_target_port == 8000
+        assert settings.PROXIES_CONFIG.api_target_port == 8000
+        assert settings.PROXIES_CONFIG.gateway_port == 80
         assert settings.PROXIES_CONFIG.streams_port == 80
         assert settings.PROXIES_CONFIG.api_port == 80
         assert settings.PROXIES_CONFIG.streams_host == "polyaxon-polyaxon-streams"
-        assert settings.PROXIES_CONFIG.api_port == 80
         assert settings.PROXIES_CONFIG.api_host == "polyaxon-polyaxon-api"
         assert settings.PROXIES_CONFIG.services_port == 80
         assert settings.PROXIES_CONFIG.dns_use_resolver is False

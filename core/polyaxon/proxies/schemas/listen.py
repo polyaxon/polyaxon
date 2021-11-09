@@ -27,7 +27,7 @@ ssl on;
 """
 
 
-def get_listen_config(is_proxy: bool, port=80) -> str:
+def get_listen_config(is_proxy: bool, port=8000) -> str:
     options = (
         SSL_OPTIONS
         if is_proxy and settings.PROXIES_CONFIG.ssl_enabled

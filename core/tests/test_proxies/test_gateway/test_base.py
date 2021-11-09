@@ -26,7 +26,7 @@ class TestGatewayBase(BaseTestCase):
 
     def test_gateway_base_config(self):
         expected = """
-listen 80;
+listen 8000;
 
 
 error_log /polyaxon/logs/error.log warn;
@@ -195,7 +195,7 @@ location /static/ {
 
     def test_gateway_base_config_with_auth_and_dns(self):
         expected = """
-listen 80;
+listen 8000;
 
 
 error_log /polyaxon/logs/error.log warn;

@@ -41,7 +41,7 @@ keepalive_requests 10000;
 
     def test_listen(self):
         expected = """
-listen 80;
+listen 8000;
 """  # noqa
         settings.PROXIES_CONFIG.ssl_enabled = False
         assert get_listen_config(is_proxy=False) == expected
@@ -51,7 +51,7 @@ listen 80;
 
     def test_proxy_listen(self):
         expected = """
-listen 80;
+listen 8000;
 """  # noqa
         settings.PROXIES_CONFIG.ssl_enabled = False
         assert get_listen_config(is_proxy=True) == expected

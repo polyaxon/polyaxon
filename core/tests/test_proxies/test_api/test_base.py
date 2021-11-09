@@ -26,7 +26,7 @@ class TestApiBase(BaseTestCase):
 
     def test_api_base_config(self):
         expected = """
-listen 80;
+listen 8000;
 
 
 error_log /polyaxon/logs/error.log warn;
@@ -157,7 +157,7 @@ location /tmp/ {
 
     def test_api_base_config_with_cdn_and_admin(self):
         expected = """
-listen 80;
+listen 8000;
 
 
 error_log /polyaxon/logs/error.log warn;

@@ -33,7 +33,9 @@ from polyaxon.proxies.schemas.timeout import get_timeout_config
 
 def get_base_config():
     config = [
-        get_listen_config(is_proxy=False, port=settings.PROXIES_CONFIG.streams_port)
+        get_listen_config(
+            is_proxy=False, port=settings.PROXIES_CONFIG.streams_target_port
+        )
     ]
     config += [
         get_logging_config(),

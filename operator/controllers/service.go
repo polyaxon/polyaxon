@@ -34,7 +34,7 @@ import (
 func (r *OperationReconciler) reconcileServiceOp(ctx context.Context, instance *operationv1.Operation) (ctrl.Result, error) {
 	// log := r.Log
 
-	ports := managers.GetPodPorts(instance.ServiceSpec.Template.Spec, managers.DefaultServicePort)
+	ports := managers.GetPodPorts(instance.ServiceSpec.Template.Spec, managers.DefaultTargetPort)
 	if instance.ServiceSpec.Ports != nil {
 		ports = instance.ServiceSpec.Ports
 	}

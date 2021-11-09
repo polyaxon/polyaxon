@@ -31,10 +31,14 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_NGINX_TIMEOUT,
     POLYAXON_KEYS_PROXY_API_HOST,
     POLYAXON_KEYS_PROXY_API_PORT,
+    POLYAXON_KEYS_PROXY_API_TARGET_PORT,
     POLYAXON_KEYS_PROXY_API_USE_RESOLVER,
     POLYAXON_KEYS_PROXY_AUTH_ENABLED,
     POLYAXON_KEYS_PROXY_AUTH_EXTERNAL,
     POLYAXON_KEYS_PROXY_AUTH_USE_RESOLVER,
+    POLYAXON_KEYS_PROXY_GATEWAY_HOST,
+    POLYAXON_KEYS_PROXY_GATEWAY_PORT,
+    POLYAXON_KEYS_PROXY_GATEWAY_TARGET_PORT,
     POLYAXON_KEYS_PROXY_NAMESPACES,
     POLYAXON_KEYS_PROXY_SERVICES,
     POLYAXON_KEYS_PROXY_SERVICES_PORT,
@@ -42,6 +46,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_PROXY_SSL_PATH,
     POLYAXON_KEYS_PROXY_STREAMS_HOST,
     POLYAXON_KEYS_PROXY_STREAMS_PORT,
+    POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT,
     POLYAXON_KEYS_STATIC_ROOT,
     POLYAXON_KEYS_STATIC_URL,
     POLYAXON_KEYS_UI_ADMIN_ENABLED,
@@ -54,13 +59,28 @@ class ProxiesSchema(BaseSchema):
     namespaces = fields.List(
         fields.Int(), allow_none=True, data_key=POLYAXON_KEYS_PROXY_NAMESPACES
     )
+    gateway_port = fields.Int(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_GATEWAY_PORT
+    )
+    gateway_target_port = fields.Int(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_GATEWAY_TARGET_PORT
+    )
+    gateway_host = fields.Str(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_GATEWAY_HOST
+    )
     streams_port = fields.Int(
         allow_none=True, data_key=POLYAXON_KEYS_PROXY_STREAMS_PORT
+    )
+    streams_target_port = fields.Int(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT
     )
     streams_host = fields.Str(
         allow_none=True, data_key=POLYAXON_KEYS_PROXY_STREAMS_HOST
     )
     api_port = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_PORT)
+    api_target_port = fields.Int(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_TARGET_PORT
+    )
     api_host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_HOST)
     api_use_resolver = fields.Bool(
         allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_USE_RESOLVER
@@ -112,10 +132,15 @@ class ProxiesConfig(BaseConfig):
     IDENTIFIER = "proxies"
     UNKNOWN_BEHAVIOUR = EXCLUDE
     REDUCED_ATTRIBUTES = [
+        POLYAXON_KEYS_PROXY_GATEWAY_PORT,
+        POLYAXON_KEYS_PROXY_GATEWAY_TARGET_PORT,
+        POLYAXON_KEYS_PROXY_GATEWAY_HOST,
         POLYAXON_KEYS_PROXY_NAMESPACES,
         POLYAXON_KEYS_PROXY_STREAMS_PORT,
+        POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT,
         POLYAXON_KEYS_PROXY_STREAMS_HOST,
         POLYAXON_KEYS_PROXY_API_PORT,
+        POLYAXON_KEYS_PROXY_API_TARGET_PORT,
         POLYAXON_KEYS_PROXY_API_HOST,
         POLYAXON_KEYS_PROXY_API_USE_RESOLVER,
         POLYAXON_KEYS_PROXY_SERVICES_PORT,
@@ -147,9 +172,14 @@ class ProxiesConfig(BaseConfig):
         auth_enabled=None,
         auth_external=None,
         auth_use_resolver=None,
+        gateway_port=None,
+        gateway_target_port=None,
+        gateway_host=None,
         streams_port=None,
+        streams_target_port=None,
         streams_host=None,
         api_port=None,
+        api_target_port=None,
         api_host=None,
         api_use_resolver=None,
         services_port=None,
@@ -174,12 +204,17 @@ class ProxiesConfig(BaseConfig):
         self.auth_enabled = auth_enabled or False
         self.auth_external = auth_external
         self.auth_use_resolver = auth_use_resolver or False
-        self.streams_port = streams_port or self.default_serving_port
+        self.gateway_port = gateway_port or self.default_port
+        self.gateway_target_port = gateway_target_port or self.default_target_port
+        self.gateway_host = gateway_host or "polyaxon-polyaxon-gateway"
+        self.streams_port = streams_port or self.default_port
+        self.streams_target_port = streams_target_port or self.default_target_port
         self.streams_host = streams_host or "polyaxon-polyaxon-streams"
-        self.api_port = api_port or self.default_serving_port
+        self.api_port = api_port or self.default_port
+        self.api_target_port = api_target_port or self.default_target_port
         self.api_host = api_host or "polyaxon-polyaxon-api"
         self.api_use_resolver = api_use_resolver or False
-        self.services_port = services_port or self.default_serving_port
+        self.services_port = services_port or self.default_port
         self.dns_use_resolver = dns_use_resolver or False
         self.dns_custom_cluster = dns_custom_cluster or "cluster.local"
         self.dns_backend = dns_backend or "kube-dns"
@@ -197,5 +232,9 @@ class ProxiesConfig(BaseConfig):
         self.ui_admin_enabled = ui_admin_enabled
 
     @property
-    def default_serving_port(self):
+    def default_target_port(self):
+        return 8000
+
+    @property
+    def default_port(self):
         return 80

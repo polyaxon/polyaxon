@@ -43,7 +43,11 @@ from polyaxon.proxies.schemas.timeout import get_timeout_config
 def get_base_config():
     resolver = get_resolver()
     auth = get_auth_config()
-    config = [get_listen_config(is_proxy=True)]
+    config = [
+        get_listen_config(
+            is_proxy=True, port=settings.PROXIES_CONFIG.gateway_target_port
+        )
+    ]
     if settings.PROXIES_CONFIG.ssl_enabled:
         config.append(get_ssl_config())
     config += [

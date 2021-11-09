@@ -75,6 +75,11 @@ func main() {
 	} else {
 		namespace = "polyaxon"
 	}
+	if config.GetBoolEnv(config.LeaderElection, false) {
+		enableLeaderElection = true
+	} else {
+		enableLeaderElection =  false
+	}
 
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "enable-leader-election", false,
