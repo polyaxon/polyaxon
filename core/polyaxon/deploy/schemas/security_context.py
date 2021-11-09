@@ -31,6 +31,9 @@ class SecurityContextSchema(BaseCamelSchema):
     enabled = fields.Bool(allow_none=True)
     user = fields.Int(allow_none=True)
     group = fields.Int(allow_none=True)
+    fs = fields.Int(allow_none=True)
+    allow_privilege_escalation = fields.Bool(allow_none=True)
+    run_as_non_root = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -44,10 +47,28 @@ class SecurityContextSchema(BaseCamelSchema):
 
 class SecurityContextConfig(BaseConfig):
     SCHEMA = SecurityContextSchema
-    REDUCED_ATTRIBUTES = ["enabled", "user", "group"]
+    REDUCED_ATTRIBUTES = [
+        "enabled",
+        "user",
+        "group",
+        "fs",
+        "allowPrivilegeEscalation",
+        "runAsNonRoot",
+    ]
 
-    def __init__(self, enabled=None, user=None, group=None):
+    def __init__(
+        self,
+        enabled=None,
+        user=None,
+        group=None,
+        fs=None,
+        allow_privilege_escalation=None,
+        run_as_non_root=None,
+    ):
         validate_security_context(user, group)
         self.enabled = enabled
         self.user = user
         self.group = group
+        self.fs = fs
+        self.allow_privilege_escalation = allow_privilege_escalation
+        self.run_as_non_root = run_as_non_root
