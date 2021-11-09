@@ -333,7 +333,7 @@ def update(ctx, _project, name, description, tags, private):
         sys.exit(1)
 
     try:
-        polyaxon_client = ProjectClient(owner=owner)
+        polyaxon_client = ProjectClient(owner=owner, project=project_name)
         response = polyaxon_client.update(update_dict)
     except (ApiException, HTTPError) as e:
         handle_cli_error(
