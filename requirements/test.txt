@@ -3,7 +3,7 @@ coverage<6.2
 faker<10.0.0
 flake8<4.1.0
 flaky<3.8.0
-isort<5.10.0
+isort<5.11.0
 mock<4.1.0
 pyflakes<2.5.0
 pytest<6.3.0
