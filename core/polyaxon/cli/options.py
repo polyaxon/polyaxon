@@ -23,6 +23,10 @@ OPTIONS_OWNER = {
     ),
 }
 
+OPTIONS_NAME = {
+    "args": ["--name", "-n"],
+}
+
 OPTIONS_PROJECT = {
     "args": ["--project", "-p"],
     "kwargs": dict(type=str, help="The project name, e.g. 'mnist' or 'acme/mnist'."),

@@ -22,7 +22,7 @@ from marshmallow import ValidationError
 
 from polyaxon import settings
 from polyaxon.cli.executor import docker_run, k8s_run, platform_run
-from polyaxon.cli.options import OPTIONS_PROJECT
+from polyaxon.cli.options import OPTIONS_NAME, OPTIONS_PROJECT
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.logger import clean_outputs
@@ -64,7 +64,7 @@ from polyaxon.utils.validation import validate_tags
     help="The Component Hub name containing the polyaxonfile to run.",
 )
 @click.option(
-    "--name",
+    *OPTIONS_NAME["args"],
     type=str,
     help="Name to give to this run, must be unique within the project, could be none.",
 )

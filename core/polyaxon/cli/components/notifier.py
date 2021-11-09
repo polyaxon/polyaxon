@@ -16,6 +16,8 @@
 
 import click
 
+from polyaxon.cli.options import OPTIONS_NAME
+
 
 @click.command()
 @click.option(
@@ -31,7 +33,7 @@ import click
     help="The project containing the operation.",
 )
 @click.option("--uuid", help="The run uuid.")
-@click.option("--name", help="The run name.")
+@click.option(*OPTIONS_NAME["args"], help="The run name.")
 @click.option(
     "--kind",
     help="The operation kind.",

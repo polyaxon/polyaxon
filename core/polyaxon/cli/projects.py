@@ -25,7 +25,7 @@ from urllib3.exceptions import HTTPError
 from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.init import init as init_project
-from polyaxon.cli.options import OPTIONS_OWNER, OPTIONS_PROJECT
+from polyaxon.cli.options import OPTIONS_NAME, OPTIONS_OWNER, OPTIONS_PROJECT
 from polyaxon.cli.utils import get_entity_details
 from polyaxon.client import ProjectClient
 from polyaxon.env_vars.getters import get_project_or_local
@@ -63,7 +63,9 @@ def project(ctx, _project):  # pylint:disable=redefined-outer-name
 
 @project.command()
 @click.option(
-    "--name", type=str, help="The project name, e.g. 'mnist' or 'acme/mnist'."
+    *OPTIONS_NAME["args"],
+    type=str,
+    help="The project name, e.g. 'mnist' or 'acme/mnist'."
 )
 @click.option("--description", type=str, help="Description of the project.")
 @click.option("--tags", type=str, help="Tags of the project, comma separated values.")
@@ -279,7 +281,9 @@ def delete(ctx, _project):
 @project.command()
 @click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.option(
-    "--name", type=str, help="Name of the project, must be unique for the same user."
+    *OPTIONS_NAME["args"],
+    type=str,
+    help="Name of the project, must be unique for the same user."
 )
 @click.option("--description", type=str, help="Description of the project.")
 @click.option(

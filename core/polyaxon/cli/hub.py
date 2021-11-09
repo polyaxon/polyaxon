@@ -28,6 +28,7 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.options import (
     OPTIONS_COMPONENT_HUB,
     OPTIONS_COMPONENT_VERSION,
+    OPTIONS_NAME,
     OPTIONS_OWNER,
 )
 from polyaxon.cli.utils import get_entity_details
@@ -132,7 +133,9 @@ def hub():
 
 @hub.command()
 @click.option(
-    "--name", type=str, help="The component hub name, e.g. 'kaniko' or 'acme/kaniko'."
+    *OPTIONS_NAME["args"],
+    type=str,
+    help="The component hub name, e.g. 'kaniko' or 'acme/kaniko'.",
 )
 @click.option("--description", type=str, help="Description of the component.")
 @click.option("--tags", type=str, help="Tags of the component, comma separated values.")
@@ -198,7 +201,7 @@ def create(name, description, tags, public):
     help="The component spec version to push.",
 )
 @click.option(
-    "--name",
+    *OPTIONS_NAME["args"],
     type=str,
     help="The component version name, e.g. 'kaniko' or 'kaniko:1.2' "
     "or 'acme/kaniko:latest' or 'acme/kaniko:dev'.",
@@ -517,7 +520,7 @@ def delete(component, version):
 @click.option(*OPTIONS_COMPONENT_HUB["args"], **OPTIONS_COMPONENT_HUB["kwargs"])
 @click.option(*OPTIONS_COMPONENT_VERSION["args"], **OPTIONS_COMPONENT_VERSION["kwargs"])
 @click.option(
-    "--name",
+    *OPTIONS_NAME["args"],
     type=str,
     help="Name of the component hub, must be unique for the same user.",
 )

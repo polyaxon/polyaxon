@@ -27,6 +27,7 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.options import (
     OPTIONS_MODEL_REGISTRY,
     OPTIONS_MODEL_VERSION,
+    OPTIONS_NAME,
     OPTIONS_OWNER,
 )
 from polyaxon.cli.utils import get_entity_details
@@ -103,7 +104,7 @@ def registry():
 
 @registry.command()
 @click.option(
-    "--name",
+    *OPTIONS_NAME["args"],
     type=str,
     help="The model registry name, e.g. 'model-A' or 'acme/model-A:latest'.",
 )
@@ -166,7 +167,7 @@ def create(name, description, tags, public):
 
 @registry.command()
 @click.option(
-    "--name",
+    *OPTIONS_NAME["args"],
     type=str,
     help="The model version name, e.g. 'kaniko' or 'kaniko:1.2' "
     "or 'acme/kaniko:latest' or 'acme/kaniko:dev'.",
@@ -482,7 +483,7 @@ def delete(model, version):
 @click.option(*OPTIONS_MODEL_REGISTRY["args"], **OPTIONS_MODEL_REGISTRY["kwargs"])
 @click.option(*OPTIONS_MODEL_VERSION["args"], **OPTIONS_MODEL_VERSION["kwargs"])
 @click.option(
-    "--name",
+    *OPTIONS_NAME["args"],
     type=str,
     help="Name of the model registry, must be unique for the same user.",
 )

@@ -24,7 +24,7 @@ from urllib3.exceptions import HTTPError
 from polyaxon.api import REWRITE_SERVICES_V1, SERVICES_V1
 from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.cli.options import OPTIONS_PROJECT, OPTIONS_RUN_UID
+from polyaxon.cli.options import OPTIONS_NAME, OPTIONS_PROJECT, OPTIONS_RUN_UID
 from polyaxon.client import RunClient, get_run_logs
 from polyaxon.constants.metadata import META_REWRITE_PATH
 from polyaxon.containers import contexts as container_contexts
@@ -435,7 +435,7 @@ def delete(ctx, project, uid):
 @ops.command()
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
-@click.option("--name", type=str, help="Name of the run (optional).")
+@click.option(*OPTIONS_NAME["args"], type=str, help="Name of the run (optional).")
 @click.option("--description", type=str, help="Description of the run (optional).")
 @click.option(
     "--tags", type=str, help="Tags of the run, comma separated values (optional)."
