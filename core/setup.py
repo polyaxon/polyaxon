@@ -91,7 +91,7 @@ setup(
         "docker": ["docker"],
         "git": ["gitpython"],
         "numpy": ["numpy"],
-        "polytune": ["scikit-learn==1.0", "hyperopt==0.2.5"],
+        "polytune": ["scikit-learn", "hyperopt"],
         "polyboard": [
             "Pillow",
             "matplotlib<3.3.3",

@@ -1559,7 +1559,7 @@ class Run(RunClient):
                 last_check=None,
                 events_path=CONTEXTS_EVENTS_SUBPATH_FORMAT.format(self._artifacts_path),
             )
-            self.sync_events_summaries(
+            self.sync_system_events_summaries(
                 last_check=None,
                 events_path=CONTEXTS_SYSTEM_RESOURCES_EVENTS_SUBPATH_FORMAT.format(
                     self._artifacts_path
