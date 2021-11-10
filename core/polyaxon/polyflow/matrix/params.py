@@ -555,7 +555,7 @@ class HpDateRangeSchema(BaseCamelSchema):
 
 
 class V1HpDateRange(BaseHpParamConfig, polyaxon_sdk.V1HpDateRange):
-    """`DateTimeRange` picks a value from a generated list of values using `[start, stop, step]`,
+    """`DateRange` picks a value from a generated list of values using `[start, stop, step]`,
     you can pass values in these forms:
       * `["2019-06-24", "2019-06-25", 3600 * 24]`
       * `{start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 1}`
@@ -565,7 +565,7 @@ class V1HpDateRange(BaseHpParamConfig, polyaxon_sdk.V1HpDateRange):
     ```yaml
     >>> params:
     >>>   paramTest:
-    >>>     kind: range
+    >>>     kind: daterange
     >>>     value: ["2019-06-22", "2019-07-25", 1]
     ```
 
@@ -635,7 +635,7 @@ class V1HpDateTimeRange(BaseHpParamConfig, polyaxon_sdk.V1HpDateTimeRange):
     ```yaml
     >>> params:
     >>>   paramTest:
-    >>>     kind: range
+    >>>     kind: datetimerange
     >>>     value: ["2019-06-22 21:00", "2019-06-25 21:00", 3600]
     ```
 
