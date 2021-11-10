@@ -179,7 +179,7 @@ class DeployConfigManager:
             )
 
     def _get_or_create_namespace(self):
-        click.echo("Checking {} namespace ...".format(self.deployment_namespace))
+        click.echo("Checking `{}` namespace ...".format(self.deployment_namespace))
         try:
             stdout = self.kubectl.execute(
                 args=["get", "namespace", self.deployment_namespace],
@@ -193,7 +193,7 @@ class DeployConfigManager:
             return
         # Create a namespace
         try:
-            click.echo("Creating {} namespace ...".format(self.deployment_namespace))
+            click.echo("Creating `{}` namespace ...".format(self.deployment_namespace))
             stdout = self.kubectl.execute(
                 args=["create", "namespace", self.deployment_namespace],
                 is_json=False,
@@ -201,6 +201,20 @@ class DeployConfigManager:
             )
             click.echo(stdout)
         except PolyaxonOperatorException:
+            return
+
+    def _check_namespace(self):
+        click.echo("Checking `{}` namespace ...".format(self.deployment_namespace))
+        try:
+            stdout = self.kubectl.execute(
+                args=["get", "namespace", self.deployment_namespace],
+                is_json=True,
+                stream=settings.CLIENT_CONFIG.debug,
+            )
+        except PolyaxonOperatorException:
+            stdout = None
+
+        if stdout:
             return
 
     def install_on_kubernetes(self):
@@ -291,6 +305,12 @@ class DeployConfigManager:
             self.install_on_heroku()
 
     def upgrade_on_kubernetes(self):
+        click.echo("Running checks for upgrade command ...")
+        if self.release_name:
+            click.echo("Deployment release name: `{}`".format(self.release_name))
+        if self.deployment_namespace:
+            click.echo("Deployment namespace: `{}`".format(self.deployment_namespace))
+        self._check_namespace()
         args = ["upgrade", self.release_name]
         if self.manager_path:
             args += [self.manager_path]
@@ -307,6 +327,7 @@ class DeployConfigManager:
                 "gateway.service.type=NodePort,deploymentType={}".format(self.type),
             ]
         if self.deployment_version:
+            click.echo("Deployment version: `{}`".format(self.deployment_version))
             args += ["--version", self.deployment_version]
         args += ["--namespace={}".format(self.deployment_namespace)]
         if self.dry_run:
