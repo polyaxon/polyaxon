@@ -258,8 +258,8 @@ class ClientConfig(BaseConfig):
         if self.connection_pool_maxsize:
             config.connection_pool_maxsize = self.connection_pool_maxsize
         if self.token:
-            config.api_key["Authorization"] = self.token
-            config.api_key_prefix["Authorization"] = self.authentication_type
+            config.api_key["ApiKey"] = self.token
+            config.api_key_prefix["ApiKey"] = self.authentication_type
         return config
 
     @staticmethod

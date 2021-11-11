@@ -20,6 +20,50 @@ from polyaxon import settings
 from polyaxon.constants.globals import NO_AUTH
 
 
+class ApiClient(polyaxon_sdk.ApiClient):
+    def call_api(
+        self,
+        resource_path,
+        method,
+        path_params=None,
+        query_params=None,
+        header_params=None,
+        body=None,
+        post_params=None,
+        files=None,
+        response_types_map=None,
+        auth_settings=None,
+        async_req=None,
+        _return_http_data_only=None,
+        collection_formats=None,
+        _preload_content=True,
+        _request_timeout=None,
+        _host=None,
+        _request_auth=None,
+    ):
+        if response_types_map and 200 in response_types_map:
+            response_types_map[201] = response_types_map[200]
+        return super().call_api(
+            resource_path,
+            method,
+            path_params,
+            query_params=query_params,
+            header_params=header_params,
+            body=body,
+            post_params=post_params,
+            files=files,
+            response_types_map=response_types_map,
+            auth_settings=auth_settings,
+            async_req=async_req,
+            _return_http_data_only=_return_http_data_only,
+            collection_formats=collection_formats,
+            _preload_content=_preload_content,
+            _request_timeout=_request_timeout,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+
 class PolyaxonClient:
     """Auto-configurable and high-level base client that abstract
     the need to set a configuration for each service.
@@ -71,9 +115,7 @@ class PolyaxonClient:
             self._config.token = token
 
         self._transport = None
-        self.api_client = polyaxon_sdk.ApiClient(
-            self.config.sdk_config, **self.config.client_header
-        )
+        self.api_client = ApiClient(self.config.sdk_config, **self.config.client_header)
         self._projects_v1 = None
         self._runs_v1 = None
         self._auth_v1 = None
@@ -93,9 +135,7 @@ class PolyaxonClient:
         self._agents_v1 = None
         self._component_hub_v1 = None
         self._model_registry_v1 = None
-        self.api_client = polyaxon_sdk.ApiClient(
-            self.config.sdk_config, **self.config.client_header
-        )
+        self.api_client = ApiClient(self.config.sdk_config, **self.config.client_header)
 
     @property
     def config(self):
