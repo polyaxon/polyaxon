@@ -2,6 +2,7 @@
 
 # V1ModelVersion
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -11,12 +12,12 @@ Name | Type | Description | Notes
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **liveState** | **Integer** |  |  [optional]
-**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**stage** | [**V1Stages**](V1Stages.md) |  |  [optional]
+**createdAt** | **OffsetDateTime** |  |  [optional]
+**updatedAt** | **OffsetDateTime** |  |  [optional]
+**stage** | **V1Stages** |  |  [optional]
 **stageConditions** | [**List&lt;V1StageCondition&gt;**](V1StageCondition.md) |  |  [optional]
 **run** | **String** |  |  [optional]
-**runInfo** | [**Object**](.md) |  |  [optional]
+**runInfo** | **Object** |  |  [optional]
 **metadata** | **String** |  |  [optional]
 **role** | **String** |  |  [optional]
 

@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package v1;
 
+option go_package = "v1/types";
+
 // File type specification
 message FileType {
     // File content

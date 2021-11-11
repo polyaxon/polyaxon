@@ -6,6 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **framework** | **String** |  | [optional] 
 **path** | **String** |  | [optional] 
-**spec** | [**Object**](.md) |  | [optional] 
+**spec** | **Object** |  | [optional] 
 
 

@@ -18,6 +18,7 @@ syntax = "proto3";
 
 package v1;
 
+option go_package = "v1/polyflow";
 
 // Cache specification
 // Cache is calculated based on inputs state as well as component version if used

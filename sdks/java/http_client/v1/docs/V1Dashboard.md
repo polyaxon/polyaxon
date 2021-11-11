@@ -2,6 +2,7 @@
 
 # V1Dashboard
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -13,8 +14,8 @@ Name | Type | Description | Notes
 **liveState** | **Integer** |  |  [optional]
 **spec** | [**V1DashboardSpec**](V1DashboardSpec.md) |  |  [optional]
 **orgLevel** | **Boolean** |  |  [optional]
-**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**createdAt** | **OffsetDateTime** |  |  [optional]
+**updatedAt** | **OffsetDateTime** |  |  [optional]
 
 
 

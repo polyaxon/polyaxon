@@ -9,6 +9,6 @@ Name | Type | Description | Notes
 **organization** | **String** |  | [optional] 
 **plan** | **String** |  | [optional] 
 **seats** | **Number** |  | [optional] 
-**details** | [**Object**](.md) |  | [optional] 
+**details** | **Object** |  | [optional] 
 
 

@@ -2,6 +2,7 @@
 
 # V1Bayes
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -10,7 +11,7 @@ Name | Type | Description | Notes
 **params** | **Map&lt;String, Object&gt;** |  |  [optional]
 **numInitialRuns** | **Integer** |  |  [optional]
 **maxIterations** | **Integer** |  |  [optional]
-**utilityFunction** | [**Object**](.md) |  |  [optional]
+**utilityFunction** | **Object** |  |  [optional]
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  |  [optional]
 **seed** | **Integer** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]

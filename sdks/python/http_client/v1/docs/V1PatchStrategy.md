@@ -1,6 +1,7 @@
 # V1PatchStrategy
 
 - replace: Replaces the keys  - isnull: Only set the keys if they do not exist or if they are null  - post_merge: Merge the all keys and replace by new one  - pre_merge: Merge the all keys and keep old ones
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

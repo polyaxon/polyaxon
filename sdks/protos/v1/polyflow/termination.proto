@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package v1;
 
+option go_package = "v1/polyflow";
+
 // Termination specification, it defines how to handle failures, job runtime, and cleanup policy.
 message Termination {
     // Max retries for a specific run

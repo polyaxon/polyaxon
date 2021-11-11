@@ -1,6 +1,7 @@
 # V1EventChartKind
 
 - plotly: Plotly chart  - bokeh: Bokeh chart  - vega: Vega chart
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

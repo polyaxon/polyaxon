@@ -3,6 +3,7 @@
 # V1TruncationStoppingPolicy
 
 Early stopping with truncation stopping, this policy stops a percentage of all running runs at every evaluation.
+
 ## Properties
 
 Name | Type | Description | Notes

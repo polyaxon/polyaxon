@@ -1,6 +1,7 @@
 # SearchView
 
 - any: Any view  - runs: Runs view  - analytics: Analytics view  - projects: Projects view
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

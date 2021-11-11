@@ -2,11 +2,12 @@
 
 # V1Event
 
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**timestamp** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**timestamp** | **OffsetDateTime** |  |  [optional]
 **step** | **Integer** | Global step of the event. |  [optional]
 **metric** | **Float** |  |  [optional]
 **image** | [**V1EventImage**](V1EventImage.md) |  |  [optional]

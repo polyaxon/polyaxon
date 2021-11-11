@@ -2,6 +2,7 @@
 
 # V1Init
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 **model** | **String** |  |  [optional]
 **connection** | **String** |  |  [optional]
 **path** | **String** |  |  [optional]
-**container** | [**Object**](.md) |  |  [optional]
+**container** | **Object** |  |  [optional]
 
 
 

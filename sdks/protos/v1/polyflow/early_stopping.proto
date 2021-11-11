@@ -22,6 +22,8 @@ import "google/protobuf/struct.proto";
 
 import "v1/polyflow/optimization.proto";
 
+option go_package = "v1/polyflow";
+
 // Early stopping with median stopping, this policy computes running medians across
 // all runs and stops those whose best performance is worse than the median
 // of the running runs.

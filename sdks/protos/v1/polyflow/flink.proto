@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
+option go_package = "v1/polyflow";
+
 // Flink specification
 message Flink {
     // Kind of runtime, should be equal to "flink"

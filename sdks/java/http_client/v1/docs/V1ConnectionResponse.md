@@ -2,6 +2,7 @@
 
 # V1ConnectionResponse
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -11,10 +12,10 @@ Name | Type | Description | Notes
 **agent** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
-**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**createdAt** | **OffsetDateTime** |  |  [optional]
+**updatedAt** | **OffsetDateTime** |  |  [optional]
 **liveState** | **Integer** |  |  [optional]
-**kind** | [**V1ConnectionKind**](V1ConnectionKind.md) |  |  [optional]
+**kind** | **V1ConnectionKind** |  |  [optional]
 
 
 

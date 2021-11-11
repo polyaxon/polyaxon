@@ -4,6 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | [**Object**](.md) |  | [optional] 
+**kind** | **Object** |  | [optional] 
 
 

@@ -18,11 +18,11 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/struct.proto";
-
 import "v1/polyflow/environment.proto";
 import "v1/polyflow/init.proto";
 import "v1/polyflow/k8s.proto";
+
+option go_package = "v1/polyflow";
 
 // Spark replica definition
 message SparkReplica {

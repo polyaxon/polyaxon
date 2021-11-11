@@ -21,6 +21,8 @@ package v1;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1/api";
+
 // Organization specification
 message Organization {
     // User

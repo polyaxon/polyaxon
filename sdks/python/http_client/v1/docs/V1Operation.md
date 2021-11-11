@@ -1,5 +1,6 @@
 # V1Operation
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -13,17 +14,17 @@ Name | Type | Description | Notes
 **cache** | [**V1Cache**](V1Cache.md) |  | [optional] 
 **termination** | [**V1Termination**](V1Termination.md) |  | [optional] 
 **plugins** | [**V1Plugins**](V1Plugins.md) |  | [optional] 
-**schedule** | [**object**](.md) |  | [optional] 
+**schedule** | **object** |  | [optional] 
 **events** | [**list[V1EventTrigger]**](V1EventTrigger.md) |  | [optional] 
 **hooks** | [**list[V1Hook]**](V1Hook.md) |  | [optional] 
 **dependencies** | **list[str]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 
 **conditions** | **str** |  | [optional] 
 **skip_on_upstream_skip** | **bool** |  | [optional] 
-**matrix** | [**object**](.md) |  | [optional] 
+**matrix** | **object** |  | [optional] 
 **joins** | [**dict(str, V1Join)**](V1Join.md) |  | [optional] 
 **params** | [**dict(str, V1Param)**](V1Param.md) |  | [optional] 
-**run_patch** | [**object**](.md) |  | [optional] 
+**run_patch** | **object** |  | [optional] 
 **patch_strategy** | [**V1PatchStrategy**](V1PatchStrategy.md) |  | [optional] 
 **is_preset** | **bool** |  | [optional] 
 **is_approved** | **bool** |  | [optional] 

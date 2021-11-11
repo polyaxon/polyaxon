@@ -1,5 +1,6 @@
 # V1ConnectionKind
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

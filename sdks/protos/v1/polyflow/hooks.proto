@@ -21,6 +21,8 @@ package v1;
 import "v1/polyflow/io.proto";
 import "v1/polyflow/status.proto";
 
+option go_package = "v1/polyflow";
+
 // Hook definition
 message Hook {
     // Component name to use

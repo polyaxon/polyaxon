@@ -2,6 +2,7 @@
 
 # V1IO
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -9,7 +10,7 @@ Name | Type | Description | Notes
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
 **type** | **String** |  |  [optional]
-**value** | [**Object**](.md) |  |  [optional]
+**value** | **Object** |  |  [optional]
 **isOptional** | **Boolean** |  |  [optional]
 **isList** | **Boolean** |  |  [optional]
 **isFlag** | **Boolean** |  |  [optional]

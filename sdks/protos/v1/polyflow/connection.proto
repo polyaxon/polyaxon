@@ -22,6 +22,8 @@ import "google/protobuf/struct.proto";
 
 import "v1/polyflow/k8s_resource.proto";
 
+option go_package = "v1/polyflow";
+
 // Bucket connection schema validation specification
 message BucketConnection {
     // Bucket

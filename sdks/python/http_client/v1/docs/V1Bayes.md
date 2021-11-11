@@ -1,5 +1,6 @@
 # V1Bayes
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -7,7 +8,7 @@ Name | Type | Description | Notes
 **params** | **dict(str, object)** |  | [optional] 
 **num_initial_runs** | **int** |  | [optional] 
 **max_iterations** | **int** |  | [optional] 
-**utility_function** | [**object**](.md) |  | [optional] 
+**utility_function** | **object** |  | [optional] 
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 
 **seed** | **int** |  | [optional] 
 **concurrency** | **int** |  | [optional] 

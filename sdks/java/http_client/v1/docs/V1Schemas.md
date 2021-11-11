@@ -2,6 +2,7 @@
 
 # V1Schemas
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -27,8 +28,8 @@ Name | Type | Description | Notes
 **k8sResource** | [**V1K8sResourceType**](V1K8sResourceType.md) |  |  [optional]
 **connection** | [**V1ConnectionType**](V1ConnectionType.md) |  |  [optional]
 **eventType** | [**V1EventType**](V1EventType.md) |  |  [optional]
-**matrixKind** | [**V1MatrixKind**](V1MatrixKind.md) |  |  [optional]
-**scheduleKind** | [**V1ScheduleKind**](V1ScheduleKind.md) |  |  [optional]
+**matrixKind** | **V1MatrixKind** |  |  [optional]
+**scheduleKind** | **V1ScheduleKind** |  |  [optional]
 **event** | [**V1Event**](V1Event.md) |  |  [optional]
 
 

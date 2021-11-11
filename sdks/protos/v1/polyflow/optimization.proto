@@ -18,8 +18,7 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/struct.proto";
-
+option go_package = "v1/polyflow";
 
 // Optimization enum for metrics
 enum Optimization {

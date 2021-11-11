@@ -2,6 +2,7 @@
 
 # V1TeamMember
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -10,8 +11,8 @@ Name | Type | Description | Notes
 **userEmail** | **String** |  |  [optional]
 **role** | **String** |  |  [optional]
 **orgRole** | **String** |  |  [optional]
-**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**createdAt** | **OffsetDateTime** |  |  [optional]
+**updatedAt** | **OffsetDateTime** |  |  [optional]
 
 
 

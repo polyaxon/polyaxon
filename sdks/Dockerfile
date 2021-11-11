@@ -11,7 +11,7 @@ RUN apt-get -y update && \
 
 # Install Go
 RUN mkdir -p /goroot && \
-  curl https://dl.google.com/go/go1.15.6.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
+  curl https://dl.google.com/go/go1.17.3.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
 
 # Set environment variables.
 ENV GOROOT /goroot
@@ -19,9 +19,9 @@ ENV GOPATH /gopath
 RUN mkdir -p $GOPATH/src
 ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
 
-# Install `protoc` v3.14.0
-RUN curl -OL https://github.com/google/protobuf/releases/download/v3.14.0/protoc-3.14.0-linux-x86_64.zip
-RUN unzip protoc-3.14.0-linux-x86_64.zip -d protoc3
+# Install `protoc` v3.19.1
+RUN curl -OL https://github.com/google/protobuf/releases/download/v3.19.1/protoc-3.19.1-linux-x86_64.zip
+RUN unzip protoc-3.19.1-linux-x86_64.zip -d protoc3
 RUN mv protoc3/bin/* /usr/bin/
 RUN mv protoc3/include/* /usr/local/include/
 
@@ -30,8 +30,9 @@ VOLUME /sdks
 COPY . /sdks
 WORKDIR /sdks
 RUN go get -u github.com/golang/protobuf/protoc-gen-go
-RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.16.0
-RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.16.0
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
 
 # HTML openapi

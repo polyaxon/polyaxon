@@ -2,6 +2,7 @@
 
 # V1TeamSettings
 
+
 ## Properties
 
 Name | Type | Description | Notes

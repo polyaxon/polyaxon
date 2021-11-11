@@ -1,5 +1,6 @@
 # V1SparkType
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

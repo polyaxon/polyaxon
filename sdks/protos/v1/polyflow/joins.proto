@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package v1;
 
+option go_package = "v1/polyflow";
+
 // JoinParam specification
 message JoinParam {
   // The value to pass, if no ref or search is passed then it corresponds to a literal value

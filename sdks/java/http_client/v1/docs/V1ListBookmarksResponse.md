@@ -2,6 +2,7 @@
 
 # V1ListBookmarksResponse
 
+
 ## Properties
 
 Name | Type | Description | Notes

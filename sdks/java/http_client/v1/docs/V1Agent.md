@@ -2,6 +2,7 @@
 
 # V1Agent
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -12,15 +13,15 @@ Name | Type | Description | Notes
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **liveState** | **Integer** |  |  [optional]
 **namespace** | **String** |  |  [optional]
-**versionApi** | [**Object**](.md) |  |  [optional]
+**versionApi** | **Object** |  |  [optional]
 **version** | **String** |  |  [optional]
 **content** | **String** |  |  [optional]
-**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**status** | [**V1Statuses**](V1Statuses.md) |  |  [optional]
+**createdAt** | **OffsetDateTime** |  |  [optional]
+**updatedAt** | **OffsetDateTime** |  |  [optional]
+**status** | **V1Statuses** |  |  [optional]
 **isReplica** | **Boolean** |  |  [optional]
 **isUiManaged** | **Boolean** |  |  [optional]
-**settings** | [**Object**](.md) |  |  [optional]
+**settings** | **Object** |  |  [optional]
 
 
 

@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
+option go_package = "v1/api";
+
 // Tag specification
 message Tag {
   // UUID

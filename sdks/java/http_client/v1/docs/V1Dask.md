@@ -2,6 +2,7 @@
 
 # V1Dask
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -17,7 +18,7 @@ Name | Type | Description | Notes
 **volumes** | **List&lt;Object&gt;** | Volumes is a list of volumes that can be mounted. |  [optional]
 **init** | [**List&lt;V1Init&gt;**](V1Init.md) |  |  [optional]
 **sidecars** | **List&lt;Object&gt;** |  |  [optional]
-**container** | [**Object**](.md) |  |  [optional]
+**container** | **Object** |  |  [optional]
 
 
 

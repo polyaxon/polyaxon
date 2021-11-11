@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/any.proto";
 
+option go_package = "v1/api";
+
 message KV {
   string key = 1;
   google.protobuf.Any value = 2;

@@ -25,6 +25,8 @@ import "v1/polyflow/operation.proto";
 import "v1/polyflow/environment.proto";
 import "v1/polyflow/k8s.proto";
 
+option go_package = "v1/polyflow";
+
 // Dag specificaiton
 message Dag {
     // Optional component kind, should be equal to 'dag'

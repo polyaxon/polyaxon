@@ -20,16 +20,18 @@ PYTHON := $(DOCKER_RUN) python
 GO := $(DOCKER_RUN) go
 SWAGGER := $(DOCKER_RUN) swagger
 DOCKER_PATH_AUTOGEN := /usr/local/bin/autogen/autogen
-PATH_SWAGGER_CLI := ~/bin/openapi-generator-cli-4.3.1.jar
+PATH_SWAGGER_CLI := ~/bin/openapi-generator-cli-5.3.0.jar
 LICENSE_OWNER := "Polyaxon, Inc."
 
 # Client
 PB_CLIENT := pb_client
 HTTP_CLIENT := http_client
 
+# Move -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.16.0/googleapis/ to -I/sdks/protos/google/api/
+# See https://github.com/grpc-ecosystem/grpc-gateway/issues/1935#issuecomment-803572170
 # Flags
-INCLUDE_FLAGS := -I/usr/local/include -I. -I/gopath/pkg/mod -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.16.0/third_party/googleapis/ -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.16.0
-API_FLAGS := --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=simple_operation_ids=true,logtostderr=true,allow_delete_body=true:swagger
+INCLUDE_FLAGS := -I/usr/local/include -I. -I/gopath/pkg/mod -I/sdks/protos/google/api -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway/v2\@v2.6.0
+API_FLAGS := --plugin=protoc-gen-openapiv2=/gopath/bin/protoc-gen-openapiv2 --swagger_out=simple_operation_ids=true,logtostderr=true,allow_delete_body=true:swagger
 PROTO_PATH := --proto_path=protos/
 
 # Proto files
@@ -112,7 +114,7 @@ generate-java-swagger:
 	$(DOCKER_RUN) find ./ -name "*.java" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2021 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-py-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -g python -o python/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-py.json
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -g python-legacy -o python/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-py.json
 	$(DOCKER_RUN) rm -rf python/$(HTTP_CLIENT)/$(VERSION)/test
 	$(DOCKER_RUN) find ./ -name "*.py" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2021 -c $(LICENSE_OWNER) -l apache {} \;
 
@@ -171,7 +173,6 @@ swagger-concat:
 	./concat.sh
 
 prepare: clean \
-	docker-build \
 	compile-swagger \
 	swagger-concat
 

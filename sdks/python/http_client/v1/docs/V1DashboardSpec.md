@@ -1,5 +1,6 @@
 # V1DashboardSpec
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

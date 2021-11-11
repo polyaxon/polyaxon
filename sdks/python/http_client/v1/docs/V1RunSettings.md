@@ -1,5 +1,6 @@
 # V1RunSettings
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -7,8 +8,8 @@ Name | Type | Description | Notes
 **agent** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  | [optional] 
 **queue** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  | [optional] 
 **artifacts_store** | [**V1SettingsCatalog**](V1SettingsCatalog.md) |  | [optional] 
-**tensorboard** | [**object**](.md) |  | [optional] 
-**build** | [**object**](.md) |  | [optional] 
+**tensorboard** | **object** |  | [optional] 
+**build** | **object** |  | [optional] 
 **component_version** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  | [optional] 
 **model_versions** | [**list[V1RunReferenceCatalog]**](V1RunReferenceCatalog.md) |  | [optional] 
 

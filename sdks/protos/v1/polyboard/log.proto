@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1/polyboard";
+
 // Log spec definition
 message Log {
     // Optional time when the entity was created

@@ -2,12 +2,13 @@
 
 # V1Hyperopt
 
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
-**algorithm** | [**V1HyperoptAlgorithms**](V1HyperoptAlgorithms.md) |  |  [optional]
+**algorithm** | **V1HyperoptAlgorithms** |  |  [optional]
 **params** | **Map&lt;String, Object&gt;** |  |  [optional]
 **numRuns** | **Integer** |  |  [optional]
 **maxIterations** | **Integer** |  |  [optional]

@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package v1;
 
+option go_package = "v1/polyflow";
+
 // Hub reference specification
 message HubRef {
     // Kind of reference, should be equal to "hub_ref"

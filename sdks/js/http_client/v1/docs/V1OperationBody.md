@@ -10,6 +10,6 @@ Name | Type | Description | Notes
 **name** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
-**meta_info** | [**Object**](.md) |  | [optional] 
+**meta_info** | **Object** |  | [optional] 
 
 

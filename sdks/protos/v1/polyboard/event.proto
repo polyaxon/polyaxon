@@ -23,6 +23,8 @@ import "google/protobuf/timestamp.proto";
 
 import "v1/polyboard/artifact.proto";
 
+option go_package = "v1/polyboard";
+
 // Chart spec definition
 message EventChart {
     // Chart kind

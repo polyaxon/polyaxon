@@ -24,6 +24,8 @@ import "google/protobuf/timestamp.proto";
 import "v1/polyflow/stage.proto";
 import "v1/api/stage.proto";
 
+option go_package = "v1/api";
+
 // Model regsitry specification
 message ModelRegistry {
     // UUID

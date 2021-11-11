@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/* tslint:disable */
+/* eslint-disable */
 export * from './runtime';
 export * from './apis';
 export * from './models';

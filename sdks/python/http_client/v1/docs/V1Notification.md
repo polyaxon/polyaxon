@@ -1,5 +1,6 @@
 # V1Notification
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

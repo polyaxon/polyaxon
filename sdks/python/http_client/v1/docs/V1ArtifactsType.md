@@ -1,5 +1,6 @@
 # V1ArtifactsType
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

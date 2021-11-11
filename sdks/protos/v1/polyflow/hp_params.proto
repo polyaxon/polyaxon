@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
+option go_package = "v1/polyflow";
+
 // HP Choice specification
 message HpChoice {
     // Kind of hp, should be equal to "choice"

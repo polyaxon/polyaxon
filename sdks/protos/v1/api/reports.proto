@@ -19,7 +19,8 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/struct.proto";
-import "google/protobuf/timestamp.proto";
+
+option go_package = "v1/api";
 
 // Dashboard section definition
 message SectionSpec {

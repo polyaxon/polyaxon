@@ -18,8 +18,8 @@ syntax = "proto3";
 
 package v1;
 
-import "google/api/annotations.proto";
-import "protoc-gen-swagger/options/annotations.proto";
+
+option go_package = "v1/api";
 
 // Version specification
 message Version {

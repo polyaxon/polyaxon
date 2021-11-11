@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
+option go_package = "v1/polyboard";
+
 // Artifact kind
 enum ArtifactKind {
     // Model asset/event

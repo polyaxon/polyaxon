@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **volumes** | **[Object]** | Volumes is a list of volumes that can be mounted. | [optional] 
 **init** | [**[V1Init]**](V1Init.md) |  | [optional] 
 **sidecars** | **[Object]** |  | [optional] 
-**container** | [**Object**](.md) |  | [optional] 
+**container** | **Object** |  | [optional] 
 **ports** | **[Number]** |  | [optional] 
 **rewritePath** | **Boolean** | Rewrite path to remove polyaxon base url(i.e. /v1/services/namespace/owner/project/). Default is false, the service shoud handle a base url. | [optional] 
 

@@ -22,6 +22,8 @@ import "google/protobuf/timestamp.proto";
 
 import "v1/polyflow/status.proto";
 
+option go_package = "v1/api";
+
 // Status condition specification
 message StatusCondition {
     // Status type

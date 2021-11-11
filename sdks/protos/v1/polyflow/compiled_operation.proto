@@ -30,6 +30,8 @@ import "v1/polyflow/plugins.proto";
 import "v1/polyflow/termination.proto";
 import "v1/polyflow/trigger_policy.proto";
 
+option go_package = "v1/polyflow";
+
 // CompiledOperation specification
 message CompiledOperation {
     // Spec version

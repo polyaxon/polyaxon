@@ -1,5 +1,6 @@
 # V1Organization
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -15,9 +16,9 @@ Name | Type | Description | Notes
 **queue** | **str** |  | [optional] 
 **preset** | **str** |  | [optional] 
 **is_cloud_viewable** | **bool** |  | [optional] 
-**auth** | [**object**](.md) |  | [optional] 
-**plan** | [**object**](.md) |  | [optional] 
-**usage** | [**object**](.md) |  | [optional] 
+**auth** | **object** |  | [optional] 
+**plan** | **object** |  | [optional] 
+**usage** | **object** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

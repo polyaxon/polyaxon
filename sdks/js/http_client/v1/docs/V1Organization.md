@@ -16,8 +16,8 @@ Name | Type | Description | Notes
 **queue** | **String** |  | [optional] 
 **preset** | **String** |  | [optional] 
 **is_cloud_viewable** | **Boolean** |  | [optional] 
-**auth** | [**Object**](.md) |  | [optional] 
-**plan** | [**Object**](.md) |  | [optional] 
-**usage** | [**Object**](.md) |  | [optional] 
+**auth** | **Object** |  | [optional] 
+**plan** | **Object** |  | [optional] 
+**usage** | **Object** |  | [optional] 
 
 

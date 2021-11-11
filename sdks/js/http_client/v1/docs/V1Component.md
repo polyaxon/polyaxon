@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **inputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **build** | [**V1Build**](V1Build.md) |  | [optional] 
-**run** | [**Object**](.md) |  | [optional] 
+**run** | **Object** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
 **isApproved** | **Boolean** |  | [optional] 
 **cost** | **Number** |  | [optional] 

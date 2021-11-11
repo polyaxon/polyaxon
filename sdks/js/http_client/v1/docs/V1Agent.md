@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **tags** | **[String]** |  | [optional] 
 **live_state** | **Number** |  | [optional] 
 **namespace** | **String** |  | [optional] 
-**version_api** | [**Object**](.md) |  | [optional] 
+**version_api** | **Object** |  | [optional] 
 **version** | **String** |  | [optional] 
 **content** | **String** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
@@ -18,6 +18,6 @@ Name | Type | Description | Notes
 **status** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
 **is_replica** | **Boolean** |  | [optional] 
 **is_ui_managed** | **Boolean** |  | [optional] 
-**settings** | [**Object**](.md) |  | [optional] 
+**settings** | **Object** |  | [optional] 
 
 

@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **stage** | [**V1Stages**](V1Stages.md) |  | [optional] 
 **stage_conditions** | [**[V1StageCondition]**](V1StageCondition.md) |  | [optional] 
 **run** | **String** |  | [optional] 
-**run_info** | [**Object**](.md) |  | [optional] 
+**run_info** | **Object** |  | [optional] 
 **metadata** | **String** |  | [optional] 
 **role** | **String** |  | [optional] 
 

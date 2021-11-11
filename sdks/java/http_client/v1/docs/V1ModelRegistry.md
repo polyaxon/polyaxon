@@ -2,6 +2,7 @@
 
 # V1ModelRegistry
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -14,8 +15,8 @@ Name | Type | Description | Notes
 **isPublic** | **Boolean** |  |  [optional]
 **bookmarked** | **Boolean** |  |  [optional]
 **liveState** | **Integer** |  |  [optional]
-**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**createdAt** | **OffsetDateTime** |  |  [optional]
+**updatedAt** | **OffsetDateTime** |  |  [optional]
 **readme** | **String** |  |  [optional]
 **settings** | [**V1ModelRegistrySettings**](V1ModelRegistrySettings.md) |  |  [optional]
 **role** | **String** |  |  [optional]

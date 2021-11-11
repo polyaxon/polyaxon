@@ -15,8 +15,8 @@ Name | Type | Description | Notes
 **compares** | **String** |  | [optional] 
 **heat** | **String** |  | [optional] 
 **events** | [**V1DashboardSpec**](V1DashboardSpec.md) |  | [optional] 
-**histograms** | [**Object**](.md) |  | [optional] 
-**trends** | [**Object**](.md) |  | [optional] 
+**histograms** | **Object** |  | [optional] 
+**trends** | **Object** |  | [optional] 
 **analytics** | [**V1AnalyticsSpec**](V1AnalyticsSpec.md) |  | [optional] 
 
 

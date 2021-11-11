@@ -2,6 +2,7 @@
 
 # V1ClaimConnection
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -9,7 +10,7 @@ Name | Type | Description | Notes
 **volumeClaim** | **String** |  |  [optional]
 **mountPath** | **String** |  |  [optional]
 **readOnly** | **Boolean** |  |  [optional]
-**kind** | [**Object**](.md) |  |  [optional]
+**kind** | **Object** |  |  [optional]
 
 
 

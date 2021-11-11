@@ -36,6 +36,8 @@ import "v1/types/event.proto";
 import "v1/polyboard/event.proto";
 import "v1/polyflow/operation.proto";
 
+option go_package = "v1/schemas/all";
+
 message Schemas {
     EarlyStopping earlyStopping = 1;
     Matrix matrix = 2;

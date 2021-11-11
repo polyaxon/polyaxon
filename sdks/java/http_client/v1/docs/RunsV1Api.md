@@ -1308,7 +1308,7 @@ public class Example {
     String namespace = "namespace_example"; // String | namespace
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project where the run will be assigned
-    String kind = "kind_example"; // String | The artifact kind
+    String kind = "model"; // String | The artifact kind
     String names = "names_example"; // String | Names query param.
     String runs = "runs_example"; // String | Runs query param.
     String orient = "orient_example"; // String | Orient query param.
@@ -2216,7 +2216,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project where the run will be assigned
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
-    String kind = "kind_example"; // String | The artifact kind
+    String kind = "model"; // String | The artifact kind
     String names = "names_example"; // String | Names query param.
     String orient = "orient_example"; // String | Orient query param.
     Boolean force = true; // Boolean | Force query param.
@@ -2303,7 +2303,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project where the run will be assigned
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
-    OffsetDateTime lastTime = new OffsetDateTime(); // OffsetDateTime | last time.
+    OffsetDateTime lastTime = OffsetDateTime.now(); // OffsetDateTime | last time.
     String lastFile = "lastFile_example"; // String | last file.
     Boolean force = true; // Boolean | Force query param.
     try {

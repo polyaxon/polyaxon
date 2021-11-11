@@ -1,5 +1,6 @@
 # V1Agent
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -9,7 +10,7 @@ Name | Type | Description | Notes
 **tags** | **list[str]** |  | [optional] 
 **live_state** | **int** |  | [optional] 
 **namespace** | **str** |  | [optional] 
-**version_api** | [**object**](.md) |  | [optional] 
+**version_api** | **object** |  | [optional] 
 **version** | **str** |  | [optional] 
 **content** | **str** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
@@ -17,7 +18,7 @@ Name | Type | Description | Notes
 **status** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
 **is_replica** | **bool** |  | [optional] 
 **is_ui_managed** | **bool** |  | [optional] 
-**settings** | [**object**](.md) |  | [optional] 
+**settings** | **object** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

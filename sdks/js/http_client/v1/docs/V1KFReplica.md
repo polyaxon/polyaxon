@@ -10,6 +10,6 @@ Name | Type | Description | Notes
 **volumes** | **[Object]** |  | [optional] 
 **init** | [**[V1Init]**](V1Init.md) |  | [optional] 
 **sidecars** | **[Object]** |  | [optional] 
-**container** | [**Object**](.md) |  | [optional] 
+**container** | **Object** |  | [optional] 
 
 

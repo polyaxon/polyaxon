@@ -9,6 +9,6 @@ Name | Type | Description | Notes
 **color** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
 **icon** | **String** |  | [optional] 
-**stats** | [**Object**](.md) |  | [optional] 
+**stats** | **Object** |  | [optional] 
 
 

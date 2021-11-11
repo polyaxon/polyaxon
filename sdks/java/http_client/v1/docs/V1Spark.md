@@ -2,6 +2,7 @@
 
 # V1Spark
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -9,10 +10,10 @@ Name | Type | Description | Notes
 **kind** | **String** |  |  [optional]
 **connections** | **List&lt;String&gt;** |  |  [optional]
 **volumes** | **List&lt;Object&gt;** | Volumes is a list of volumes that can be mounted. |  [optional]
-**type** | [**V1SparkType**](V1SparkType.md) |  |  [optional]
+**type** | **V1SparkType** |  |  [optional]
 **sparkVersion** | **String** | Spark version is the version of Spark the application uses. |  [optional]
 **pythonVersion** | **String** | Spark version is the version of Spark the application uses. |  [optional]
-**deployMode** | [**SparkDeployMode**](SparkDeployMode.md) |  |  [optional]
+**deployMode** | **SparkDeployMode** |  |  [optional]
 **mainClass** | **String** | MainClass is the fully-qualified main class of the Spark application. This only applies to Java/Scala Spark applications. |  [optional]
 **mainApplicationFile** | **String** | MainFile is the path to a bundled JAR, Python, or R file of the application. |  [optional]
 **arguments** | **List&lt;String&gt;** | Arguments is a list of arguments to be passed to the application. |  [optional]

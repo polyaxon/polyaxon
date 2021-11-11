@@ -28,6 +28,8 @@ import "v1/polyflow/plugins.proto";
 import "v1/polyflow/termination.proto";
 import "v1/polyflow/template.proto";
 
+option go_package = "v1/polyflow";
+
 // Component specification
 message Component {
     // Spec version

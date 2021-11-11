@@ -508,8 +508,8 @@ public class Example {
     String memberUser = "memberUser_example"; // String | User.
     String memberUserEmail = "memberUserEmail_example"; // String | Read-only User email.
     String memberRole = "memberRole_example"; // String | Role.
-    OffsetDateTime memberCreatedAt = new OffsetDateTime(); // OffsetDateTime | Optional time when the entity was created.
-    OffsetDateTime memberUpdatedAt = new OffsetDateTime(); // OffsetDateTime | Optional last time the entity was updated.
+    OffsetDateTime memberCreatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional time when the entity was created.
+    OffsetDateTime memberUpdatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional last time the entity was updated.
     String email = "email_example"; // String | Optional email.
     try {
       apiInstance.deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email);
@@ -892,8 +892,8 @@ public class Example {
     String memberUser = "memberUser_example"; // String | User.
     String memberUserEmail = "memberUserEmail_example"; // String | Read-only User email.
     String memberRole = "memberRole_example"; // String | Role.
-    OffsetDateTime memberCreatedAt = new OffsetDateTime(); // OffsetDateTime | Optional time when the entity was created.
-    OffsetDateTime memberUpdatedAt = new OffsetDateTime(); // OffsetDateTime | Optional last time the entity was updated.
+    OffsetDateTime memberCreatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional time when the entity was created.
+    OffsetDateTime memberUpdatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional last time the entity was updated.
     String email = "email_example"; // String | Optional email.
     try {
       V1OrganizationMember result = apiInstance.getOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email);
@@ -1134,9 +1134,9 @@ public class Example {
     String organizationUserEmail = "organizationUserEmail_example"; // String | Read-only User email.
     String organizationName = "organizationName_example"; // String | Name.
     Boolean organizationIsPublic = true; // Boolean | Optional flag to tell if this organization is public.
-    OffsetDateTime organizationCreatedAt = new OffsetDateTime(); // OffsetDateTime | Optional time when the entity was created.
-    OffsetDateTime organizationUpdatedAt = new OffsetDateTime(); // OffsetDateTime | Optional last time the entity was updated.
-    OffsetDateTime organizationSupportRevokeAt = new OffsetDateTime(); // OffsetDateTime | Optional time to revoke support access.
+    OffsetDateTime organizationCreatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional time when the entity was created.
+    OffsetDateTime organizationUpdatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional last time the entity was updated.
+    OffsetDateTime organizationSupportRevokeAt = OffsetDateTime.now(); // OffsetDateTime | Optional time to revoke support access.
     Integer organizationExpiration = 56; // Integer | Optional expiration for support.
     String organizationRole = "organizationRole_example"; // String | Current user's role in this org.
     String organizationQueue = "organizationQueue_example"; // String | Default queue.

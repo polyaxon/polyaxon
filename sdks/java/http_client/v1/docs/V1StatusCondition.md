@@ -2,16 +2,17 @@
 
 # V1StatusCondition
 
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**V1Statuses**](V1Statuses.md) |  |  [optional]
+**type** | **V1Statuses** |  |  [optional]
 **status** | **String** |  |  [optional]
 **reason** | **String** |  |  [optional]
 **message** | **String** |  |  [optional]
-**lastUpdateTime** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**lastTransitionTime** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**lastUpdateTime** | **OffsetDateTime** |  |  [optional]
+**lastTransitionTime** | **OffsetDateTime** |  |  [optional]
 
 
 

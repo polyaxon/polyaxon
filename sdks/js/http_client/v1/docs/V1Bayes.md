@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **params** | **{String: Object}** |  | [optional] 
 **numInitialRuns** | **Number** |  | [optional] 
 **maxIterations** | **Number** |  | [optional] 
-**utilityFunction** | [**Object**](.md) |  | [optional] 
+**utilityFunction** | **Object** |  | [optional] 
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 
 **seed** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 

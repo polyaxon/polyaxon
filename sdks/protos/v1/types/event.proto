@@ -20,6 +20,9 @@ package v1;
 
 import "v1/polyboard/artifact.proto";
 
+option go_package = "v1/types";
+
+
 // Event type specification
 message EventType {
     // Name of the event

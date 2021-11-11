@@ -2,6 +2,7 @@
 
 # V1TrialStart
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -11,7 +12,7 @@ Name | Type | Description | Notes
 **organization** | **String** |  |  [optional]
 **plan** | **String** |  |  [optional]
 **seats** | **Integer** |  |  [optional]
-**details** | [**Object**](.md) |  |  [optional]
+**details** | **Object** |  |  [optional]
 
 
 

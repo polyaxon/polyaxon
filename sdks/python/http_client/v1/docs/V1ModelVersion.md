@@ -1,5 +1,6 @@
 # V1ModelVersion
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 **stage** | [**V1Stages**](V1Stages.md) |  | [optional] 
 **stage_conditions** | [**list[V1StageCondition]**](V1StageCondition.md) |  | [optional] 
 **run** | **str** |  | [optional] 
-**run_info** | [**object**](.md) |  | [optional] 
+**run_info** | **object** |  | [optional] 
 **metadata** | **str** |  | [optional] 
 **role** | **str** |  | [optional] 
 

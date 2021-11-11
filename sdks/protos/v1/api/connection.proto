@@ -22,6 +22,8 @@ import "google/protobuf/timestamp.proto";
 
 import "v1/polyflow/connection.proto";
 
+option go_package = "v1/api";
+
 // Connection specification
 message ConnectionResponse {
     // UUID

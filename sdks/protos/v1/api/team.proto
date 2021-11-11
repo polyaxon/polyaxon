@@ -22,6 +22,8 @@ import "google/protobuf/timestamp.proto";
 
 import "v1/api/base.proto";
 
+option go_package = "v1/api";
+
 // Team specification
 message Team {
     // Uuid

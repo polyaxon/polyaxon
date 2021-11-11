@@ -1,5 +1,6 @@
 # V1UriType
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

@@ -1,5 +1,6 @@
 # V1Run
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -26,18 +27,18 @@ Name | Type | Description | Notes
 **bookmarked** | **bool** |  | [optional] 
 **live_state** | **int** |  | [optional] 
 **readme** | **str** |  | [optional] 
-**meta_info** | [**object**](.md) |  | [optional] 
+**meta_info** | **object** |  | [optional] 
 **kind** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
 **runtime** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
-**inputs** | [**object**](.md) |  | [optional] 
-**outputs** | [**object**](.md) |  | [optional] 
+**inputs** | **object** |  | [optional] 
+**outputs** | **object** |  | [optional] 
 **original** | [**V1Cloning**](V1Cloning.md) |  | [optional] 
 **pipeline** | [**V1Pipeline**](V1Pipeline.md) |  | [optional] 
 **status_conditions** | [**list[V1StatusCondition]**](V1StatusCondition.md) |  | [optional] 
 **role** | **str** |  | [optional] 
 **settings** | [**V1RunSettings**](V1RunSettings.md) |  | [optional] 
 **resources** | [**V1RunResources**](V1RunResources.md) |  | [optional] 
-**graph** | [**object**](.md) |  | [optional] 
+**graph** | **object** |  | [optional] 
 **merge** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -1,5 +1,6 @@
 # V1ScheduleKind
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

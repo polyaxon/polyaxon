@@ -1,5 +1,6 @@
 # V1Component
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -17,7 +18,7 @@ Name | Type | Description | Notes
 **inputs** | [**list[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**list[V1IO]**](V1IO.md) |  | [optional] 
 **build** | [**V1Build**](V1Build.md) |  | [optional] 
-**run** | [**object**](.md) |  | [optional] 
+**run** | **object** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
 **is_approved** | **bool** |  | [optional] 
 **cost** | **float** |  | [optional] 

@@ -1,12 +1,13 @@
 # V1IO
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **type** | **str** |  | [optional] 
-**value** | [**object**](.md) |  | [optional] 
+**value** | **object** |  | [optional] 
 **is_optional** | **bool** |  | [optional] 
 **is_list** | **bool** |  | [optional] 
 **is_flag** | **bool** |  | [optional] 

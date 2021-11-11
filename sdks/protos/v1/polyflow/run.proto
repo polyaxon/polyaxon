@@ -27,6 +27,8 @@ import "v1/polyflow/flink.proto";
 import "v1/polyflow/kubeflow.proto";
 import "v1/polyflow/ray.proto";
 
+option go_package = "v1/polyflow";
+
 message RunSchema {
     oneof run {
         Job job = 1;

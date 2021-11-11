@@ -1,6 +1,7 @@
 # V1EventCurveKind
 
 - roc: ROC curve  - pr: Precision Recall curve  - custom: Custom curve
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

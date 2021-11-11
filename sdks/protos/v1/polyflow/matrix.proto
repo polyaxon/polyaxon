@@ -21,8 +21,9 @@ package v1;
 import "google/protobuf/struct.proto";
 
 import "v1/polyflow/io.proto";
-import "v1/polyflow/k8s.proto";
 import "v1/polyflow/optimization.proto";
+
+option go_package = "v1/polyflow";
 
 enum MatrixKind {
     random = 0;

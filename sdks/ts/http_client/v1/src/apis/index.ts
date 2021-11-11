@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/* tslint:disable */
+/* eslint-disable */
 export * from './AgentsV1Api';
 export * from './ArtifactsStoresV1Api';
 export * from './AuthV1Api';

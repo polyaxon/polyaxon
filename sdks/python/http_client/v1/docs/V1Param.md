@@ -1,9 +1,10 @@
 # V1Param
 
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | [**object**](.md) |  | [optional] 
+**value** | **object** |  | [optional] 
 **ref** | **str** |  | [optional] 
 **connection** | **str** |  | [optional] 
 **to_init** | **bool** |  | [optional] 

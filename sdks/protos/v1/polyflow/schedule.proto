@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1/polyflow";
+
 enum ScheduleKind {
     cron = 0;
     interval = 1;

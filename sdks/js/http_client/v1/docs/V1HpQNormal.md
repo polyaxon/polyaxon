@@ -5,6 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  | [optional] [default to &#39;qnormal&#39;]
-**value** | [**Object**](.md) |  | [optional] 
+**value** | **Object** |  | [optional] 
 
 

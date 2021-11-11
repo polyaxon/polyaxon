@@ -20,6 +20,8 @@ package v1;
 
 import "v1/polyflow/k8s.proto";
 
+option go_package = "v1/polyflow";
+
 // Environment specification
 message Environment {
     // Optional Metadata labels to pass to the k8s

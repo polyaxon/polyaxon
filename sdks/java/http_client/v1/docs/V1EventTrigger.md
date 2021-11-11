@@ -2,11 +2,12 @@
 
 # V1EventTrigger
 
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kinds** | [**List&lt;V1EventKind&gt;**](V1EventKind.md) |  |  [optional]
+**kinds** | **List&lt;V1EventKind&gt;** |  |  [optional]
 **ref** | **String** |  |  [optional]
 
 

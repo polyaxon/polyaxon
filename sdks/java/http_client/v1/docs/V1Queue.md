@@ -2,6 +2,7 @@
 
 # V1Queue
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -15,8 +16,8 @@ Name | Type | Description | Notes
 **concurrency** | **Integer** |  |  [optional]
 **resource** | **String** |  |  [optional]
 **quota** | **String** |  |  [optional]
-**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**createdAt** | **OffsetDateTime** |  |  [optional]
+**updatedAt** | **OffsetDateTime** |  |  [optional]
 
 
 

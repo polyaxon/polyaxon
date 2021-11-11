@@ -2,18 +2,19 @@
 
 # AgentStateResponseAgentState
 
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schedules** | [**Object**](.md) |  |  [optional]
-**hooks** | [**Object**](.md) |  |  [optional]
-**watchdogs** | [**Object**](.md) |  |  [optional]
-**tuners** | [**Object**](.md) |  |  [optional]
-**queued** | [**Object**](.md) |  |  [optional]
-**stopping** | [**Object**](.md) |  |  [optional]
-**deleting** | [**Object**](.md) |  |  [optional]
-**apply** | [**Object**](.md) |  |  [optional]
+**schedules** | **Object** |  |  [optional]
+**hooks** | **Object** |  |  [optional]
+**watchdogs** | **Object** |  |  [optional]
+**tuners** | **Object** |  |  [optional]
+**queued** | **Object** |  |  [optional]
+**stopping** | **Object** |  |  [optional]
+**deleting** | **Object** |  |  [optional]
+**apply** | **Object** |  |  [optional]
 **full** | **Boolean** |  |  [optional]
 
 

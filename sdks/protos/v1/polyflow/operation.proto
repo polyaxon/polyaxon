@@ -33,6 +33,8 @@ import "v1/polyflow/trigger_policy.proto";
 import "v1/polyflow/patch_strategy.proto";
 import "v1/polyflow/template.proto";
 
+option go_package = "v1/polyflow";
+
 // Operation specification
 message Operation {
     // Spec version

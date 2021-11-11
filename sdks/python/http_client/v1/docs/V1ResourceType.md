@@ -1,6 +1,7 @@
 # V1ResourceType
 
 - int: Int resource  - float: Float resource
+
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

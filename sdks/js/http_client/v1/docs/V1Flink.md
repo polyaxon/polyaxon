@@ -5,6 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  | [optional] [default to &#39;flink&#39;]
-**spec** | [**Object**](.md) |  | [optional] 
+**spec** | **Object** |  | [optional] 
 
 

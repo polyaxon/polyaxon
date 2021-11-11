@@ -2,6 +2,7 @@
 
 # V1PolyaxonSidecarContainer
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -12,7 +13,7 @@ Name | Type | Description | Notes
 **sleepInterval** | **Integer** |  |  [optional]
 **syncInterval** | **Integer** |  |  [optional]
 **monitorLogs** | **Boolean** |  |  [optional]
-**resources** | [**Object**](.md) |  |  [optional]
+**resources** | **Object** |  |  [optional]
 
 
 
