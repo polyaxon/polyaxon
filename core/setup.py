@@ -81,7 +81,6 @@ setup(
         "requests>=2.20.1",
         "requests-toolbelt>=0.8.0",
         "sentry-sdk>=1.2.0",
-        "certifi>=2019.9.11",
         "psutil",
     ],
     extras_require={
