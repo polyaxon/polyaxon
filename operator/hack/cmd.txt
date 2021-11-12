@@ -1,7 +1,0 @@
-go mod init github.com/polyaxon/polyaxon/operator
-
-kubebuilder init --domain polyaxon.com --owner="Polyaxon, Inc" --license=apache2
-
-kubebuilder create api --group core --version v1alpha1 --kind PolyaxonKind
-
-make manifest

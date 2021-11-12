@@ -1,7 +1,0 @@
-domain: polyaxon.com
-repo: github.com/polyaxon/polyaxon/operator
-resources:
-- group: core
-  kind: Operation
-  version: v1
-version: "2"

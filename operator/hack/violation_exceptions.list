@@ -1,2 +1,0 @@
-API rule violation: list_type_missing,github.com/polyaxon/polyaxon/operator/api/v1,OperationStatus,Conditions
-API rule violation: list_type_missing,github.com/polyaxon/polyaxon/operator/api/v1,ServiceSpec,Ports
