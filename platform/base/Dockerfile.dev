@@ -10,4 +10,5 @@ COPY requirements/test.txt /base/requirements/test.txt
 RUN pip3 install --no-cache-dir -r /base/requirements/core.txt
 RUN pip3 install --no-cache-dir -r /base/requirements/test.txt
 RUN pip3 install --no-cache-dir -r /base/requirements/requirements-test.txt
+RUN pip3 install polyaxon-sdk
 RUN rm -rf /base

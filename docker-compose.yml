@@ -33,7 +33,6 @@ services:
       - ./public:/polyaxon/public
       - ./platform:/polyaxon/platform
       - ./core:/polyaxon/core
-      - ./sdks/python/http_client/v1:/polyaxon/sdks/python/http_client/v1
       - ~/.kube:/root/.kube
     ports:
       - "8000:8000"
