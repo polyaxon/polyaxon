@@ -33,7 +33,6 @@ services:
       - ./public:/polyaxon/public
       - ./platform:/polyaxon/platform
       - ./core:/polyaxon/core
-      - ./sdks/python/http_client/v1:/polyaxon/sdks/python/http_client/v1
       - ~/.kube:/root/.kube
     ports:
       - "8000:8000"
@@ -56,7 +55,6 @@ services:
     volumes:
       - ./platform:/polyaxon/platform
       - ./core:/polyaxon/core
-      - ./sdks/python/http_client/v1:/polyaxon/sdks/python/http_client/v1
       - ~/.kube:/root/.kube
     environment:
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
