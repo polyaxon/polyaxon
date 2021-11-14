@@ -57,6 +57,7 @@ def get_fs(
         token=get_aws_security_token(context_path=context_path, **kwargs),
         use_ssl=get_aws_use_ssl(context_path=context_path, **kwargs),
         config_kwargs=config_kwargs,
+        client_kwargs=client_kwargs,
         session=kwargs.get("session"),
         asynchronous=asynchronous,
         use_listings_cache=use_listings_cache,
