@@ -33,9 +33,12 @@ from polyaxon.cli.options import (
 )
 from polyaxon.cli.utils import get_entity_details
 from polyaxon.client import PolyaxonClient
-from polyaxon.constants.globals import DEFAULT_HUB, NO_AUTH
+from polyaxon.constants.globals import NO_AUTH
 from polyaxon.env_vars.getters import get_component_info
+from polyaxon.env_vars.getters.user import get_local_owner
+from polyaxon.env_vars.getters.versioned_entity import get_fqn_entity
 from polyaxon.exceptions import PolyaxonException
+from polyaxon.lifecycle import V1StageCondition, V1Stages
 from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile import get_specification
 from polyaxon.schemas.cli.client_config import ClientConfig
@@ -328,9 +331,11 @@ def ls(owner, component, query, sort, limit, offset):
             "Only an owner or a component is required, not both.", sys_exit=True
         )
     if component:
-        owner, component_hub, component_version, is_version = get_info(component, None)
+        owner, component_hub, component_version, is_version = get_info(
+            component, None, True
+        )
     else:
-        owner = owner or DEFAULT_HUB
+        owner = owner or get_local_owner(is_cli=True)
         component_hub = None
     if not owner:
         Printer.print_error(
@@ -445,7 +450,9 @@ def get(component, version):
     \b
     $ polyaxon hub get -p owner/my-component
     """
-    owner, component_hub, component_version, is_version = get_info(component, version)
+    owner, component_hub, component_version, is_version = get_info(
+        component, version, True
+    )
 
     try:
         polyaxon_client = get_current_or_public_client()
@@ -463,8 +470,9 @@ def get(component, version):
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e,
-            message="Could not get `{}`.".format(
-                component_version if is_version else component_hub
+            message="Could not get component {} `{}`.".format(
+                "version" if is_version else "hub",
+                get_fqn_entity(owner, component_hub, component_version, is_version),
             ),
             sys_exit=True,
         )
@@ -479,11 +487,7 @@ def delete(component, version):
     owner, component_hub, component_version, is_version = get_info(
         component, version, True
     )
-    full_entity = (
-        "{}/{}:{}".format(owner, component_hub, component_version)
-        if is_version
-        else "{}/{}".format(owner, component_hub)
-    )
+    full_entity = get_fqn_entity(owner, component_hub, component_version, is_version)
 
     if not click.confirm(
         "Are sure you want to delete component {} `{}`".format(
@@ -553,11 +557,7 @@ def update(component, version, name, description, tags, private):
     owner, component_hub, component_version, is_version = get_info(
         component, version, True
     )
-    full_entity = (
-        "{}/{}:{}".format(owner, component_hub, component_version)
-        if is_version
-        else "{}/{}".format(owner, component_hub)
-    )
+    full_entity = get_fqn_entity(owner, component_hub, component_version, is_version)
 
     update_dict = {}
     if name:
@@ -575,8 +575,8 @@ def update(component, version, name, description, tags, private):
 
     if not update_dict:
         Printer.print_warning(
-            "No argument was provided to update the component {}.".format(
-                "version" if is_version else "hub"
+            "No argument was provided to update the component {} `{}`.".format(
+                "version" if is_version else "hub", full_entity
             )
         )
         sys.exit(1)
@@ -606,6 +606,62 @@ def update(component, version, name, description, tags, private):
 
 
 @hub.command()
+@click.option(*OPTIONS_COMPONENT_VERSION["args"], **OPTIONS_COMPONENT_VERSION["kwargs"])
+@click.option(
+    "--to",
+    "-to",
+    type=click.Choice(V1Stages.allowable_values, case_sensitive=True),
+    help="Stage to transition to.",
+)
+@click.option(
+    "--message", type=str, help="Additional information to set with this stage change."
+)
+@clean_outputs
+def stage(version, to, message):
+    """Update stage for a component version.
+
+    Uses /docs/core/cli/#caching
+
+    Example:
+
+    \b
+    $ polyaxon hub stage --ver foobar:rc-12 --to=production
+
+    \b
+    $ polyaxon hub stage --ver amce/foobar:rc-12 --to=staging --message="Use carefully!"
+    """
+    owner, component_hub, component_version, is_version = get_info(None, version, True)
+    full_entity = get_fqn_entity(owner, component_hub, component_version, is_version)
+
+    if not to:
+        Printer.print_warning(
+            "No argument was provided to update the version stage, "
+            "please provide a correct `--to` value."
+        )
+        sys.exit(1)
+
+    condition = V1StageCondition(type=to, status=True, reason="UserStageUpdate")
+
+    if message:
+        condition.message = message
+
+    try:
+        polyaxon_client = PolyaxonClient()
+        polyaxon_client.component_hub_v1.create_component_version_stage(
+            owner, component_hub, component_version, body={"condition": condition}
+        )
+        Printer.print_success("Component version's stage was updated.")
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(
+            e,
+            message="Could not update the stage for component version `{}`.".format(
+                full_entity
+            ),
+        )
+        sys.exit(1)
+
+
+@hub.command()
 @click.option(*OPTIONS_COMPONENT_HUB["args"], **OPTIONS_COMPONENT_HUB["kwargs"])
 @click.option(*OPTIONS_COMPONENT_VERSION["args"], **OPTIONS_COMPONENT_VERSION["kwargs"])
 @click.option(
@@ -625,7 +681,9 @@ def update(component, version, name, description, tags, private):
 @clean_outputs
 def dashboard(component, version, yes, url):
     """Open this operation's dashboard details in browser."""
-    owner, component_hub, component_version, is_version = get_info(component, version)
+    owner, component_hub, component_version, is_version = get_info(
+        component, version, True
+    )
     subpath = (
         "{}/hub/{}/versions?version={}".format(owner, component_hub, component_version)
         if is_version

@@ -34,7 +34,9 @@ from polyaxon.cli.utils import get_entity_details
 from polyaxon.client import PolyaxonClient
 from polyaxon.env_vars.getters import get_model_info
 from polyaxon.env_vars.getters.user import get_local_owner
+from polyaxon.env_vars.getters.versioned_entity import get_fqn_entity
 from polyaxon.exceptions import PolyaxonException
+from polyaxon.lifecycle import V1StageCondition, V1Stages
 from polyaxon.logger import clean_outputs
 from polyaxon.utils.formatting import (
     Printer,
@@ -293,7 +295,7 @@ def ls(owner, model, query, sort, limit, offset):
     if model:
         owner, model_registry, model_version, is_version = get_info(model, None)
     elif not owner:
-        owner = get_local_owner(is_cli=True)
+        owner = owner or get_local_owner(is_cli=True)
 
     if not owner:
         Printer.print_error(
@@ -312,7 +314,7 @@ def ls(owner, model, query, sort, limit, offset):
                 owner, model_registry, **params
             )
         except (ApiException, HTTPError) as e:
-            message = "Could not get list of model version."
+            message = "Could not get list of model versions."
             handle_cli_error(e, message=message)
             sys.exit(1)
 
@@ -426,8 +428,9 @@ def get(model, version):
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e,
-            message="Could not get `{}`.".format(
-                model_version if is_version else model_registry
+            message="Could not get {} `{}`.".format(
+                "version" if is_version else "model",
+                get_fqn_entity(owner, model_registry, model_version, is_version),
             ),
             sys_exit=True,
         )
@@ -440,11 +443,7 @@ def get(model, version):
 def delete(model, version):
     """Delete a model registry or a model version."""
     owner, model_registry, model_version, is_version = get_info(model, version)
-    full_entity = (
-        "{}/{}:{}".format(owner, model_registry, model_version)
-        if is_version
-        else "{}/{}".format(owner, model_registry)
-    )
+    full_entity = get_fqn_entity(owner, model_registry, model_version, is_version)
 
     if not click.confirm(
         "Are sure you want to delete model {} `{}`".format(
@@ -514,11 +513,7 @@ def update(model, version, name, description, tags, private):
     $ polyaxon registry update --tags="foo, bar"
     """
     owner, model_registry, model_version, is_version = get_info(model, version)
-    full_entity = (
-        "{}/{}:{}".format(owner, model_registry, model_version)
-        if is_version
-        else "{}/{}".format(owner, model_registry)
-    )
+    full_entity = get_fqn_entity(owner, model_registry, model_version, is_version)
 
     update_dict = {}
     if name:
@@ -561,6 +556,62 @@ def update(model, version, name, description, tags, private):
             e,
             message="Could not update model {} `{}`.".format(
                 "version" if is_version else "registry", full_entity
+            ),
+        )
+        sys.exit(1)
+
+
+@registry.command()
+@click.option(*OPTIONS_MODEL_VERSION["args"], **OPTIONS_MODEL_VERSION["kwargs"])
+@click.option(
+    "--to",
+    "-to",
+    type=click.Choice(V1Stages.allowable_values, case_sensitive=True),
+    help="Stage to transition to.",
+)
+@click.option(
+    "--message", type=str, help="Additional information to set with this stage change."
+)
+@clean_outputs
+def stage(version, to, message):
+    """Update stage for a model version.
+
+    Uses /docs/core/cli/#caching
+
+    Example:
+
+    \b
+    $ polyaxon registry stage --ver foobar:rc-12 --to=production
+
+    \b
+    $ polyaxon registry stage --ver amce/foobar:rc-12 --to=staging --message="Use carefully!"
+    """
+    owner, model_registry, model_version, is_version = get_info(None, version)
+    full_entity = get_fqn_entity(owner, model_registry, model_version, is_version)
+
+    if not to:
+        Printer.print_warning(
+            "No argument was provided to update the version stage, "
+            "please provide a correct `--to` value."
+        )
+        sys.exit(1)
+
+    condition = V1StageCondition(type=to, status=True, reason="UserStageUpdate")
+
+    if message:
+        condition.message = message
+
+    try:
+        polyaxon_client = PolyaxonClient()
+        polyaxon_client.model_registry_v1.create_model_version_stage(
+            owner, model_registry, model_version, body={"condition": condition}
+        )
+        Printer.print_success("Model version's stage was updated.")
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(
+            e,
+            message="Could not update the stage for model version `{}`.".format(
+                full_entity
             ),
         )
         sys.exit(1)
