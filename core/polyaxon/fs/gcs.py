@@ -13,52 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
-
-import aiofiles
-
 from gcsfs import GCSFileSystem as BaseGCSFileSystem
-from gcsfs.checkers import get_consistency_checker
-from gcsfs.retry import retry_request, validate_response
 
 from polyaxon.connections.gcp.base import get_gc_credentials, get_project_id
 
 
 class GCSFileSystem(BaseGCSFileSystem):
     retries = 3
-
-    @retry_request(retries=retries)
-    async def _get_file_request(self, rpath, lpath, *args, headers=None, **kwargs):
-        consistency = kwargs.pop("consistency", self.consistency)
-
-        async with self.session.get(
-            url=rpath,
-            params=self._get_params(kwargs),
-            headers=self._get_headers(headers),
-            timeout=self.requests_timeout,
-        ) as r:
-            r.raise_for_status()
-            checker = get_consistency_checker(consistency)
-
-            os.makedirs(os.path.dirname(lpath), exist_ok=True)
-            async with aiofiles.open(lpath, "wb") as f2:
-                while True:
-                    data = await r.content.read(4096 * 32)
-                    if not data:
-                        break
-                    await f2.write(data)
-                    checker.update(data)
-
-            # validate http request
-            validate_response(r.status, data, rpath)
-            checker.validate_http_response(r)  # validate file consistency
-            return r.status, r.headers, r.request_info, data
-
-    async def _get_file(self, rpath, lpath, callback=None, **kwargs):
-        # TODO: Remove when https://github.com/dask/gcsfs/issues/433 is fixed
-        if await self._isdir(rpath):
-            return
-        await super()._get_file(rpath, lpath, callback=callback, **kwargs)
 
 
 def get_fs(
