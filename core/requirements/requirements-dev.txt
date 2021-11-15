@@ -5,7 +5,7 @@ GitPython<3.2.0
 
 numpy
 scikit-learn
-hyperopt
+hyperopt<=0.2.5
 nbconvert>=5.4,<6.0.0 # pin to fix #958
 gcsfs
 s3fs
