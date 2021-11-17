@@ -7,13 +7,7 @@
 [![GitHub](https://img.shields.io/badge/issue_tracker-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/issues)
 [![GitHub](https://img.shields.io/badge/roadmap-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/milestones)
 
-[![Operator](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Operator/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Operator%22)
 [![Core](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Core/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Core%22)
-[![Api](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Api/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Api%22)
-[![scheduler](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20scheduler/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Scheduler%22)
-
-[![Hub](https://github.com/polyaxon/polyaxon/workflows/Test%20hub/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Test+hub%22)
-[![Helm Charts](https://github.com/polyaxon/polyaxon/workflows/Helm%20Charts/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Helm+Charts%22)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/90c05b6b112548c1a88b950beceacb69)](https://www.codacy.com/app/polyaxon/polyaxon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon&amp;utm_campaign=Badge_Grade)
 
 <br>
