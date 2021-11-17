@@ -72,6 +72,10 @@ async def health(request: Request) -> Response:
     return Response(status_code=status.HTTP_200_OK)
 
 
+def clean_path(filepath: str):
+    return filepath.strip("/")
+
+
 async def get_logs(request: Request) -> UJSONResponse:
     run_uuid = request.path_params["run_uuid"]
     force = to_bool(request.query_params.get("force"), handle_none=True)
@@ -406,7 +410,7 @@ async def download_artifact(
             ),
             status_code=status.HTTP_400_BAD_REQUEST,
         )
-    subpath = "{}/{}".format(run_uuid, filepath).rstrip("/")
+    subpath = "{}/{}".format(run_uuid, clean_path(filepath)).rstrip("/")
     archived_path = await download_file(
         fs=await AppFS.get_fs(), subpath=subpath, check_cache=not force
     )
@@ -436,7 +440,7 @@ async def delete_artifact(request: Request) -> Response:
             content="A `path` query param is required to delete a file",
             status_code=status.HTTP_400_BAD_REQUEST,
         )
-    subpath = "{}/{}".format(run_uuid, filepath).rstrip("/")
+    subpath = "{}/{}".format(run_uuid, clean_path(filepath)).rstrip("/")
     is_deleted = await delete_file_or_dir(
         fs=await AppFS.get_fs(), subpath=subpath, is_file=True
     )
@@ -462,7 +466,7 @@ async def handle_artifacts(request: Request) -> Response:
 async def download_artifacts(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
     path = request.query_params.get("path", "")
-    subpath = "{}/{}".format(run_uuid, path).rstrip("/")
+    subpath = "{}/{}".format(run_uuid, clean_path(path)).rstrip("/")
     archived_path = await download_dir(
         fs=await AppFS.get_fs(), subpath=subpath, to_tar=True
     )
@@ -481,7 +485,7 @@ async def upload_artifacts(request: Request) -> Response:
 async def delete_artifacts(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
     path = request.query_params.get("path", "")
-    subpath = "{}/{}".format(run_uuid, path).rstrip("/")
+    subpath = "{}/{}".format(run_uuid, clean_path(path)).rstrip("/")
     is_deleted = await delete_file_or_dir(
         fs=await AppFS.get_fs(), subpath=subpath, is_file=False
     )
@@ -499,7 +503,7 @@ async def tree_artifacts(request: Request) -> UJSONResponse:
     run_uuid = request.path_params["run_uuid"]
     filepath = request.query_params.get("path", "")
     ls = await list_files(
-        fs=await AppFS.get_fs(), subpath=run_uuid, filepath=filepath, force=True
+        fs=await AppFS.get_fs(), subpath=run_uuid, filepath=clean_path(filepath), force=True
     )
     return UJSONResponse(ls)
 

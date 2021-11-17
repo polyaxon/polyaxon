@@ -73,6 +73,26 @@ DEFAULT_EXCLUDE = [
 ]
 
 
+def handle_run_statuses(status, conditions):
+    if not conditions:
+        return
+    Printer.print_header("Latest status:")
+    latest_status = Printer.add_status_color(
+        {"status": status}, status_key="status"
+    )
+    click.echo("{}\n".format(latest_status["status"]))
+
+    objects = list_dicts_to_tabulate(
+        [
+            Printer.add_status_color(o.to_dict(), status_key="type")
+            for o in conditions
+        ]
+    )
+    if objects:
+        Printer.print_header("Conditions:")
+        dict_tabulate(objects, is_list_dict=True)
+
+
 def get_run_details(run):  # pylint:disable=redefined-outer-name
     if run.description:
         Printer.print_header("Run description:")
@@ -110,6 +130,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
             "settings",
             "meta_info",
             "graph",
+            "merge",
         ],
     )
 
@@ -769,25 +790,6 @@ def statuses(ctx, project, uid, watch):
     $ polyaxon ops statuses -uid=8aac02e3a62a4f0aaa257c59da5eab80
     """
 
-    def _handle_run_statuses():
-        if not conditions:
-            return
-        Printer.print_header("Latest status:")
-        latest_status = Printer.add_status_color(
-            {"status": status}, status_key="status"
-        )
-        click.echo("{}\n".format(latest_status["status"]))
-
-        objects = list_dicts_to_tabulate(
-            [
-                Printer.add_status_color(o.to_dict(), status_key="type")
-                for o in conditions
-            ]
-        )
-        if objects:
-            Printer.print_header("Conditions:")
-            dict_tabulate(objects, is_list_dict=True)
-
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
         uid or ctx.obj.get("run_uuid"),
@@ -798,7 +800,7 @@ def statuses(ctx, project, uid, watch):
     if watch:
         try:
             for status, conditions in client.watch_statuses():
-                _handle_run_statuses()
+                handle_run_statuses(status, conditions)
         except (ApiException, HTTPError, PolyaxonClientException) as e:
             handle_cli_error(
                 e, message="Could get status for run `{}`.".format(run_uuid)
@@ -807,7 +809,7 @@ def statuses(ctx, project, uid, watch):
     else:
         try:
             status, conditions = client.get_statuses()
-            _handle_run_statuses()
+            handle_run_statuses(status, conditions)
         except (ApiException, HTTPError, PolyaxonClientException) as e:
             handle_cli_error(
                 e, message="Could get status for run `{}`.".format(run_uuid)
