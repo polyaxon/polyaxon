@@ -1,8 +1,0 @@
--r base.txt
-
-celery==5.1.2
-Django==3.2.9
-djangorestframework==3.12.4
-numpy<=1.22
-psycopg2-binary==2.9.2
-redis==3.5.3

@@ -1,4 +1,0 @@
-{
-  "POLYAXON_K8S_NAMESPACE": "default",
-  "POLYAXON_SERVICE": "monolith"
-}

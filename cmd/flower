@@ -1,9 +1,0 @@
-#!/bin/bash
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/environment
-
-$DIR/check
-
-if [ $? -eq 0 ]; then
-    docker-compose run --publish 8888:8888 --rm --name=polyaxon_flower flower
-fi
