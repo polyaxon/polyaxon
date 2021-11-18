@@ -110,6 +110,7 @@ class PolyaxonStore:
         timeout=None,
         headers=None,
         session=None,
+        show_progress=True,
     ):
         upload_size_max = os.environ.get(POLYAXON_KEYS_UPLOAD_SIZE)
         if not upload_size_max:
@@ -152,7 +153,13 @@ class PolyaxonStore:
         request_headers.update({"Content-Type": multipart_encoder.content_type})
 
         # Attach progress bar
-        progress_callback, callback_bar = create_progress_callback(multipart_encoder)
+        progress_callback = None
+        callback_bar = None
+        if show_progress:
+            progress_callback, callback_bar = create_progress_callback(
+                multipart_encoder
+            )
+
         multipart_encoder_monitor = MultipartEncoderMonitor(
             multipart_encoder, progress_callback
         )
@@ -170,7 +177,8 @@ class PolyaxonStore:
             )
         finally:
             # always make sure we clear the console
-            callback_bar.done()
+            if callback_bar:
+                callback_bar.done()
 
         return response
 
@@ -274,7 +282,9 @@ class PolyaxonStore:
             )
         return local_path
 
-    def upload_file(self, url: str, filepath: str, **kwargs):
+    def upload_file(
+        self, url: str, filepath: str, show_progress: bool = True, **kwargs
+    ):
         """This function uploads a single file or several files compressed in tar.gz.
 
         If the untar args is provided the server will decompress
@@ -287,7 +297,11 @@ class PolyaxonStore:
         }
         with get_files_by_paths("upload_file", [filepath]) as (files, files_size):
             return self.upload(
-                url, files=files, files_size=files_size, json_data=json_data
+                url,
+                files=files,
+                files_size=files_size,
+                json_data=json_data,
+                show_progress=show_progress,
             )
 
     def upload_dir(self, url: str, files: List[str], **kwargs):

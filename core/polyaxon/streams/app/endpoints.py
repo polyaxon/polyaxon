@@ -503,7 +503,10 @@ async def tree_artifacts(request: Request) -> UJSONResponse:
     run_uuid = request.path_params["run_uuid"]
     filepath = request.query_params.get("path", "")
     ls = await list_files(
-        fs=await AppFS.get_fs(), subpath=run_uuid, filepath=clean_path(filepath), force=True
+        fs=await AppFS.get_fs(),
+        subpath=run_uuid,
+        filepath=clean_path(filepath),
+        force=True,
     )
     return UJSONResponse(ls)
 

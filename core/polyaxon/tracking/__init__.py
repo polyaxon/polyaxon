@@ -217,6 +217,14 @@ def set_run_resource_logger():
 set_run_resource_logger.__doc__ = Run.set_run_resource_logger.__doc__
 
 
+def set_run_process_sidecar():
+    global TRACKING_RUN
+    TRACKING_RUN.set_run_process_sidecar()
+
+
+set_run_process_sidecar.__doc__ = Run.set_run_process_sidecar.__doc__
+
+
 def log_metric(name: str, value: float, step: int = None, timestamp: datetime = None):
     global TRACKING_RUN
     TRACKING_RUN.log_metric(

@@ -14,11 +14,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-NAME = "polyaxon"
-VERSION = "1.13.0-rc2"
-SCHEMA_VERSION = 1.1
-DESC = "Command Line Interface (CLI) and client to interact with Polyaxon API."
-URL = "https://github.com/polyaxon/polyaxon"
-AUTHOR = "Polyaxon, Inc."
-EMAIL = "contact@polyaxon.com"
-LICENSE = "Apache 2.0"
+from polyaxon.sidecar.container.monitors.artifacts import sync_artifacts
+from polyaxon.sidecar.container.monitors.logs import sync_logs

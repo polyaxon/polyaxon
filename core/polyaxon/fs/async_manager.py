@@ -88,63 +88,6 @@ async def upload_dir(fs: FSSystem, subpath: str) -> Optional[str]:
         return None
 
 
-async def sync_fs(
-    fs: FSSystem,
-    fw: FSWatcher,
-    store_base_path: str,
-):
-    rm_files = fw.get_files_to_rm()
-    logger.debug("rm_files {}".format(rm_files))
-
-    def get_store_path(subpath: str):
-        return os.path.join(store_base_path, subpath)
-
-    await asyncio.gather(
-        *[
-            ensure_async_execution(
-                fs=fs,
-                fct="rm_file",
-                is_async=fs.async_impl,
-                path=get_store_path(subpath),
-                recursive=False,
-            )
-            for (_, subpath) in rm_files
-        ],
-        return_exceptions=True
-    )
-    rm_dirs = fw.get_dirs_to_rm()
-    logger.debug("rm_dirs {}".format(rm_dirs))
-    await asyncio.gather(
-        *[
-            ensure_async_execution(
-                fs=fs,
-                fct="rm",
-                is_async=fs.async_impl,
-                path=get_store_path(subpath),
-                recursive=True,
-            )
-            for (_, subpath) in rm_dirs
-        ],
-        return_exceptions=True
-    )
-    put_files = fw.get_files_to_put()
-    logger.debug("put_files {}".format(put_files))
-    await asyncio.gather(
-        *[
-            ensure_async_execution(
-                fs=fs,
-                fct="put",
-                is_async=fs.async_impl,
-                lpath=os.path.join(r_base_path, subpath),
-                rpath=get_store_path(subpath),
-                recursive=False,
-            )
-            for (r_base_path, subpath) in put_files
-        ],
-        return_exceptions=True
-    )
-
-
 async def download_file(fs: FSSystem, subpath: str, check_cache=True) -> Optional[str]:
     path_from = os.path.join(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)

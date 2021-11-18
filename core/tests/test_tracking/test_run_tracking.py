@@ -211,6 +211,7 @@ class TestRunTracking(TestEnvVarsCase):
                 track_code=False,
                 track_env=False,
                 collect_artifacts=False,
+                auto_create=False,
             )
         assert exit_mock.call_count == 1
         artifacts_context = CONTEXT_ARTIFACTS_FORMAT.format(run.run_uuid)
@@ -358,7 +359,12 @@ class TestRunLogging(TestEnvVarsCase):
         os.environ[POLYAXON_KEYS_COLLECT_ARTIFACTS] = "false"
         os.environ[POLYAXON_KEYS_COLLECT_RESOURCES] = "false"
         with patch("polyaxon.tracking.run.Run._set_exit_handler") as exit_mock:
-            self.run = Run(project="owner.project", track_env=False, track_code=False)
+            self.run = Run(
+                project="owner.project",
+                track_env=False,
+                track_code=False,
+                auto_create=False,
+            )
         assert exit_mock.call_count == 1
         self.event_logger = EventFileWriter(run_path=self.run_path)
         self.resource_logger = ResourceFileWriter(run_path=self.run_path)

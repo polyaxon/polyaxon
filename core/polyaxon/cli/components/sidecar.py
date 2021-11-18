@@ -57,7 +57,7 @@ async def sidecar(
     """
     Start Polyaxon's sidecar command.
     """
-    from polyaxon.sidecar import start_sidecar
+    from polyaxon.sidecar.container import start_sidecar
 
     retry = 1
     while retry < max_retries:

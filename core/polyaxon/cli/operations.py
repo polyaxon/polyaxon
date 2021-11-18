@@ -77,16 +77,11 @@ def handle_run_statuses(status, conditions):
     if not conditions:
         return
     Printer.print_header("Latest status:")
-    latest_status = Printer.add_status_color(
-        {"status": status}, status_key="status"
-    )
+    latest_status = Printer.add_status_color({"status": status}, status_key="status")
     click.echo("{}\n".format(latest_status["status"]))
 
     objects = list_dicts_to_tabulate(
-        [
-            Printer.add_status_color(o.to_dict(), status_key="type")
-            for o in conditions
-        ]
+        [Printer.add_status_color(o.to_dict(), status_key="type") for o in conditions]
     )
     if objects:
         Printer.print_header("Conditions:")

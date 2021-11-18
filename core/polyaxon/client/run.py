@@ -155,12 +155,17 @@ class RunClient:
             if not self._is_offline
             else run_uuid or uuid.uuid4().hex
         )
+        default_runtime = (
+            V1RunKind.JOB
+            if self._is_offline or not settings.CLIENT_CONFIG.is_managed
+            else None
+        )
         self._run_data = polyaxon_sdk.V1Run(
             owner=self._owner,
             project=self._project,
             uuid=self._run_uuid,
-            kind=V1RunKind.JOB if self._is_offline else None,
-            runtime=V1RunKind.JOB if self._is_offline else None,
+            kind=default_runtime,
+            runtime=default_runtime,
             is_managed=False if self._is_offline else None,
         )
         self._namespace = None
@@ -913,6 +918,7 @@ class RunClient:
         path: str = None,
         untar: bool = False,
         overwrite: bool = True,
+        show_progress: bool = True,
     ):
         """Uploads a single artifact to the run's artifacts store path.
 
@@ -922,6 +928,7 @@ class RunClient:
             untar: bool, optional, if the file uploaded is tar.gz and
                  it should be decompressed on the artifacts store.
             overwrite: bool, optional, if the file uploaded should overwrite any previous content.
+            show_progress: bool, to show a progress bar.
 
         Returns:
             str
@@ -941,6 +948,7 @@ class RunClient:
             path=path or "",
             untar=untar,
             overwrite=overwrite,
+            show_progress=show_progress,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1017,7 +1025,7 @@ class RunClient:
         Args:
             path: str, the relative path of the artifact to return.
         """
-        return self.client.runs_v1.delete_run_artifact(
+        self.client.runs_v1.delete_run_artifact(
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,

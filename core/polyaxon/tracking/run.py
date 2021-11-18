@@ -51,6 +51,7 @@ from polyaxon.polyboard.processors import events_processors
 from polyaxon.polyboard.processors.events_processors import copy_file_or_dir_path
 from polyaxon.polyboard.processors.logs_processor import setup_logging
 from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
+from polyaxon.sidecar.processor import SidecarThread
 from polyaxon.utils.env import get_run_env
 from polyaxon.utils.fqn_utils import to_fqn_name
 from polyaxon.utils.path_utils import (
@@ -141,6 +142,7 @@ class Run(RunClient):
         name: str = None,
         description: str = None,
         tags: List[str] = None,
+        auto_create: bool = True,
     ):
         super().__init__(
             owner=owner,
@@ -155,9 +157,14 @@ class Run(RunClient):
         self._outputs_path = None
         self._event_logger = None
         self._resource_logger = None
+        self._sidecar = None
         self._exit_handler = None
 
-        if is_new or self._is_offline:
+        is_new = is_new or (
+            self._run_uuid is None and not settings.CLIENT_CONFIG.is_managed
+        )
+
+        if auto_create and (is_new or self._is_offline):
             super().create(name=name, description=description, tags=tags)
 
         if (
@@ -201,21 +208,21 @@ class Run(RunClient):
 
         # no artifacts path is set, we use the temp path
         if not self._artifacts_path:
-            self._artifacts_path = container_contexts.CONTEXT_ARTIFACTS_FORMAT.format(
+            artifacts_path = container_contexts.CONTEXT_ARTIFACTS_FORMAT.format(
                 self.run_uuid
             )
-            self._outputs_path = (
-                container_contexts.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
-                    self._artifacts_path
-                )
-            )
+            self.set_artifacts_path(artifacts_path)
 
         if self._artifacts_path and get_collect_artifacts(
-            arg=collect_artifacts, default=self._is_offline
+            arg=collect_artifacts, default=self._is_offline or is_new
         ):
             self.set_run_event_logger()
-            if get_collect_resources(arg=collect_resources, default=self._is_offline):
+            if get_collect_resources(
+                arg=collect_resources, default=self._is_offline or is_new
+            ):
                 self.set_run_resource_logger()
+            if not self._is_offline and not settings.CLIENT_CONFIG.is_managed:
+                self.set_run_process_sidecar()
 
     def _add_event(self, event: LoggedEventSpec):
         if self._event_logger:
@@ -434,6 +441,17 @@ class Run(RunClient):
         > to automatically sync your run's artifacts and outputs.
         """
         self._resource_logger = ResourceFileWriter(run_path=self._artifacts_path)
+
+    @client_handler(check_no_op=True)
+    def set_run_process_sidecar(self):
+        """Sets an sidecar process to sync artifacts.
+
+        > **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
+        > Be careful, this method is called automatically. Polyaxon has some processes
+        > to automatically sync your run's artifacts and outputs.
+        """
+        self._sidecar = SidecarThread(client=self, run_path=self._artifacts_path)
+        self._sidecar.start()
 
     def _set_exit_handler(self, is_new: bool = False):
         if self._is_offline or is_new:
@@ -1513,7 +1531,7 @@ class Run(RunClient):
         self._exit_handler = func
         atexit.register(self._exit_handler)
 
-    def _start(self):
+    def _start(self, is_new: bool = False):
         if self._is_offline:
             self.load_offline_run(artifacts_path=self._artifacts_path, run_client=self)
             if self.run_data.status:
@@ -1552,6 +1570,8 @@ class Run(RunClient):
             self._event_logger.close()
         if self._resource_logger:
             self._resource_logger.close()
+        if self._sidecar:
+            self._sidecar.close()
         if self._results:
             self.log_outputs(**self._results)
         if sync_artifacts:

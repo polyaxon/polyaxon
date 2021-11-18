@@ -14,5 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.sidecar.monitors.artifacts import sync_artifacts
-from polyaxon.sidecar.monitors.logs import sync_logs
+IGNORE_FOLDERS = ["plxlogs", ".git"]

@@ -212,7 +212,7 @@ class BaseAsyncManager:
         self._worker = None
 
     def write(self, event: Union[LoggedEventSpec, List[LoggedEventSpec]]):
-        """Enqueue the given event to be written asychronously."""
+        """Enqueue the given event to be written asynchronously."""
         with self._lock:
             if self._closed:
                 raise IOError("Writer is closed")
