@@ -15,7 +15,11 @@
 # limitations under the License.
 
 from polyaxon.polypod.compiler.contexts.kubeflow.mpi_job import MPIJobContextsManager
+from polyaxon.polypod.compiler.contexts.kubeflow.mx_job import MXJobContextsManager
 from polyaxon.polypod.compiler.contexts.kubeflow.pytroch_job import (
     PytorchJobContextsManager,
 )
 from polyaxon.polypod.compiler.contexts.kubeflow.tf_job import TfJobContextsManager
+from polyaxon.polypod.compiler.contexts.kubeflow.xgb_job import (
+    XGBoostJobContextsManager,
+)

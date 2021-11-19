@@ -23,9 +23,14 @@ from polyaxon.polyflow.run.base import BaseRun
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema
+from polyaxon.polyflow.run.kubeflow.scheduling_policy import SchedulingPolicySchema
 from polyaxon.polyflow.run.resources import V1RunResources
 from polyaxon.polyflow.run.utils import DestinationImageMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+
+
+class MPIJobImplementation(polyaxon_sdk.MPIJobImplementation):
+    pass
 
 
 class MPIJobSchema(BaseCamelSchema):
@@ -33,7 +38,13 @@ class MPIJobSchema(BaseCamelSchema):
     clean_pod_policy = fields.Str(
         allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.allowable_values)
     )
+    scheduling_policy = fields.Nested(SchedulingPolicySchema, allow_none=True)
     slots_per_worker = fields.Int(allow_none=True)
+    ssh_auth_mount_path = fields.Str(allow_none=True)
+    implementation = fields.Str(
+        allow_none=True,
+        validate=validate.OneOf(MPIJobImplementation.allowable_values),
+    )
     launcher = fields.Nested(KFReplicaSchema, allow_none=True)
     worker = fields.Nested(KFReplicaSchema, allow_none=True)
 
@@ -48,7 +59,10 @@ class V1MPIJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1MPIJob
     Args:
         kind: str, should be equal `mpijob`
         clean_pod_policy: str, one of [`All`, `Running`, `None`]
+        scheduling_policy: [V1SchedulingPolicy](/docs/experimentation/distributed/scheduling-policy/), optional  # noqa
         slots_per_worker: int, optional
+        ssh_auth_mount_path: str, optional
+        implementation: str, optional, one of [`OpenMPI`, `Intel`]
         launcher: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
         worker: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
 
@@ -58,7 +72,10 @@ class V1MPIJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1MPIJob
     >>> run:
     >>>   kind: mpijob
     >>>   cleanPodPolicy:
-    >>>   slots_per_worker:
+    >>>   schedulingPolicy:
+    >>>   slotsPerWorker:
+    >>>   sshAuthMountPath:
+    >>>   implementation:
     >>>   launcher:
     >>>   worker:
     ```
@@ -103,9 +120,60 @@ class V1MPIJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1MPIJob
     >>>  ...
     ```
 
+    ### schedulingPolicy
+
+    SchedulingPolicy encapsulates various scheduling policies of the distributed training
+    job, for example `minAvailable` for gang-scheduling.
+
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    >>>   schedulingPolicy:
+    >>>     ...
+    >>>  ...
+    ```
+
+     ### slotsPerWorker
+
+    Specifies the number of slots per worker used in hostfile.
+    Defaults to `1`.
+
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    >>>   slotsPerWorker: 2
+    >>>  ...
+    ```
+
+    ### sshAuthMountPath
+
+    The directory where SSH keys are mounted. Defaults to "/root/.ssh".
+
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    >>>   sshAuthMountPath: "/different/path/.ssh"
+    >>>  ...
+    ```
+
+    ### implementation
+
+    The MPI implementation. Options are "OpenMPI" (default) and "Intel".
+
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    >>>   implementation: "Intel"
+    >>>  ...
+    ```
+
     ### launcher
 
-    The launcher replica in the distributed mpijob
+    The launcher replica in the distributed mpijob, automatica
 
     ```yaml
     >>> run:
@@ -137,6 +205,9 @@ class V1MPIJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1MPIJob
     REDUCED_ATTRIBUTES = [
         "slotsPerWorker",
         "cleanPodPolicy",
+        "schedulingPolicy",
+        "sshAuthMountPath",
+        "implementation",
         "launcher",
         "worker",
     ]

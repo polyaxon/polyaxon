@@ -18,14 +18,14 @@ from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow import V1Notification, V1SchedulingPolicy
 from polyaxon.polyflow.environment import V1Environment
 from polyaxon.polyflow.termination import V1Termination
-from polyaxon.polypod.custom_resources import get_mpi_job_custom_resource
+from polyaxon.polypod.custom_resources import get_mx_job_custom_resource
 from tests.test_polypod.test_custom_resources.base_kubeflow import (
     BaseKubeflowCRDTestCase,
 )
 
 
-class TestMPIJobCRD(BaseKubeflowCRDTestCase):
-    def test_get_mpi_job_custom_resource_with_no_workers(self):
+class TestMXJobCRD(BaseKubeflowCRDTestCase):
+    def test_get_mx_job_custom_resource_with_no_workers(self):
         termination = V1Termination(max_retries=5, ttl=10, timeout=10)
         environment = V1Environment(
             labels={"foo": "bar"},
@@ -35,7 +35,7 @@ class TestMPIJobCRD(BaseKubeflowCRDTestCase):
             restart_policy="never",
         )
         custom_object = {
-            "mpiJobSpec": {"cleanPodPolicy": "All", "replicaSpecs": {}},
+            "mxJobSpec": {"cleanPodPolicy": "All", "replicaSpecs": {}},
             "termination": {
                 "backoffLimit": termination.max_retries,
                 "activeDeadlineSeconds": termination.timeout,
@@ -51,18 +51,20 @@ class TestMPIJobCRD(BaseKubeflowCRDTestCase):
             kind="Operation",
             api_version="core.polyaxon.com/v1",
             labels={"foo": "bar"},
-            annotations={"foo": "long-foo-bar" * 300},
             custom_object=custom_object,
+            annotations={"foo": "long-foo-bar" * 300},
         )
 
-        crd = get_mpi_job_custom_resource(
+        crd = get_mx_job_custom_resource(
             namespace="default",
             resource_name="foo",
-            launcher=None,
+            scheduler=None,
             worker=None,
-            slots_per_worker=None,
-            ssh_auth_mount_path=None,
-            implementation=None,
+            server=None,
+            tuner=None,
+            tuner_tracker=None,
+            tuner_server=None,
+            mode=None,
             clean_pod_policy=None,
             scheduling_policy=None,
             termination=termination,
@@ -75,7 +77,7 @@ class TestMPIJobCRD(BaseKubeflowCRDTestCase):
 
         assert crd == expected_crd
 
-    def test_get_mpi_job_custom_resource(self):
+    def test_get_mx_job_custom_resource(self):
         termination = V1Termination(max_retries=5, ttl=10, timeout=10)
         environment = V1Environment(
             labels={"foo": "bar"},
@@ -85,21 +87,19 @@ class TestMPIJobCRD(BaseKubeflowCRDTestCase):
             restart_policy="never",
         )
         notifications = [V1Notification(connections=["test"], trigger=V1Statuses.DONE)]
-        launcher, launcher_replica_template = self.get_replica(environment)
+        tuner, tuner_replica_template = self.get_replica(environment)
         worker, worker_replica_template = self.get_replica(environment)
         template_spec = {
             "cleanPodPolicy": "Running",
             "schedulingPolicy": {"minAvailable": 1},
-            "sshAuthMountPath": "/foo/bar",
-            "implementation": "Intel",
-            "slotsPerWorker": 12,
+            "jobMode": "MXTune",
             "replicaSpecs": {
-                "Launcher": launcher_replica_template,
                 "Worker": worker_replica_template,
+                "Tuner": tuner_replica_template,
             },
         }
         custom_object = {
-            "mpiJobSpec": template_spec,
+            "mxJobSpec": template_spec,
             "termination": {
                 "backoffLimit": termination.max_retries,
                 "activeDeadlineSeconds": termination.timeout,
@@ -120,22 +120,24 @@ class TestMPIJobCRD(BaseKubeflowCRDTestCase):
             custom_object=custom_object,
         )
 
-        crd = get_mpi_job_custom_resource(
+        crd = get_mx_job_custom_resource(
             namespace="default",
             resource_name="foo",
-            launcher=launcher,
+            scheduler=None,
             worker=worker,
-            slots_per_worker=12,
-            clean_pod_policy="Running",
-            ssh_auth_mount_path="/foo/bar",
-            implementation="Intel",
+            server=None,
+            tuner=tuner,
+            tuner_tracker=None,
+            tuner_server=None,
+            mode="MXTune",
             scheduling_policy=V1SchedulingPolicy(min_available=1),
+            clean_pod_policy="Running",
             termination=termination,
-            collect_logs=True,
-            sync_statuses=True,
-            notifications=notifications,
             labels=environment.labels,
             annotations={"foo": "bar"},
+            notifications=notifications,
+            collect_logs=True,
+            sync_statuses=True,
         )
 
         assert crd == expected_crd

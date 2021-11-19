@@ -27,6 +27,8 @@ class V1RunKind(polyaxon_sdk.V1RunKind):
         polyaxon_sdk.V1RunKind.MPIJOB,
         polyaxon_sdk.V1RunKind.TFJOB,
         polyaxon_sdk.V1RunKind.PYTORCHJOB,
+        polyaxon_sdk.V1RunKind.MXJOB,
+        polyaxon_sdk.V1RunKind.XGBJOB,
         polyaxon_sdk.V1RunKind.NOTIFIER,
         polyaxon_sdk.V1RunKind.WATCHDOG,
         polyaxon_sdk.V1RunKind.TUNER,

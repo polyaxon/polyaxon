@@ -27,8 +27,10 @@ from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1Plugins, V1R
 from polyaxon.polypod.compiler.contexts.job import JobContextsManager
 from polyaxon.polypod.compiler.contexts.kubeflow import (
     MPIJobContextsManager,
+    MXJobContextsManager,
     PytorchJobContextsManager,
     TfJobContextsManager,
+    XGBoostJobContextsManager,
 )
 from polyaxon.polypod.compiler.contexts.service import ServiceContextsManager
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
@@ -44,6 +46,8 @@ CONTEXTS_MANAGERS = {
     V1RunKind.SERVICE: ServiceContextsManager,
     V1RunKind.MPIJOB: MPIJobContextsManager,
     V1RunKind.TFJOB: TfJobContextsManager,
+    V1RunKind.MXJOB: MXJobContextsManager,
+    V1RunKind.XGBJOB: XGBoostJobContextsManager,
     V1RunKind.PYTORCHJOB: PytorchJobContextsManager,
 }
 

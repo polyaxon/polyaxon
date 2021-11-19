@@ -23,6 +23,7 @@ from polyaxon.polyflow.run.base import BaseRun
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema
+from polyaxon.polyflow.run.kubeflow.scheduling_policy import SchedulingPolicySchema
 from polyaxon.polyflow.run.resources import V1RunResources
 from polyaxon.polyflow.run.utils import DestinationImageMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
@@ -33,6 +34,7 @@ class TFJobSchema(BaseCamelSchema):
     clean_pod_policy = fields.Str(
         allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.allowable_values)
     )
+    scheduling_policy = fields.Nested(SchedulingPolicySchema, allow_none=True)
     chief = fields.Nested(KFReplicaSchema, allow_none=True)
     ps = fields.Nested(KFReplicaSchema, allow_none=True)
     worker = fields.Nested(KFReplicaSchema, allow_none=True)
@@ -49,6 +51,7 @@ class V1TFJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1TFJob):
     Args:
         kind: str, should be equal `tfjob`
         clean_pod_policy: str, one of [`All`, `Running`, `None`]
+        scheduling_policy: [V1SchedulingPolicy](/docs/experimentation/distributed/scheduling-policy/), optional  # noqa
         chief: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
         ps: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
         worker: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
@@ -60,6 +63,7 @@ class V1TFJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1TFJob):
     >>> run:
     >>>   kind: tfjob
     >>>   cleanPodPolicy:
+    >>>   schedulingPolicy:
     >>>   chief:
     >>>   ps:
     >>>   worker:
@@ -104,6 +108,20 @@ class V1TFJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1TFJob):
     >>> run:
     >>>   kind: tfjob
     >>>   cleanPodPolicy: 'All'
+    >>>  ...
+    ```
+
+    ### schedulingPolicy
+
+    SchedulingPolicy encapsulates various scheduling policies of the distributed training
+    job, for example `minAvailable` for gang-scheduling.
+
+
+    ```yaml
+    >>> run:
+    >>>   kind: tfjob
+    >>>   schedulingPolicy:
+    >>>     ...
     >>>  ...
     ```
 
@@ -171,6 +189,7 @@ class V1TFJob(BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1TFJob):
     IDENTIFIER = V1RunKind.TFJOB
     REDUCED_ATTRIBUTES = [
         "cleanPodPolicy",
+        "schedulingPolicy",
         "chief",
         "ps",
         "worker",

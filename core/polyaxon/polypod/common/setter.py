@@ -17,7 +17,7 @@
 
 from typing import Dict, List
 
-from polyaxon.polyflow import V1Notification, V1Termination
+from polyaxon.polyflow import V1Notification, V1SchedulingPolicy, V1Termination
 
 
 def set_termination(custom_object: Dict, termination: V1Termination) -> Dict:
@@ -69,9 +69,11 @@ def set_clean_pod_policy(template_spec: Dict, clean_pod_policy: str) -> Dict:
     return template_spec
 
 
-def set_slots_per_worker(template_spec: Dict, slots_per_worker: int) -> Dict:
-    if not slots_per_worker:
+def set_scheduling_policy(
+    template_spec: Dict, scheduling_policy: V1SchedulingPolicy = None
+) -> Dict:
+    if not scheduling_policy:
         return template_spec
 
-    template_spec["slotsPerWorker"] = slots_per_worker
+    template_spec["schedulingPolicy"] = scheduling_policy.to_light_dict()
     return template_spec

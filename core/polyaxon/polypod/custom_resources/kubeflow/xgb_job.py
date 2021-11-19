@@ -30,7 +30,7 @@ from polyaxon.polypod.custom_resources.kubeflow.common import get_kf_replicas_te
 from polyaxon.polypod.specs.replica import ReplicaSpec
 
 
-def get_pytorch_job_custom_resource(
+def get_xgb_job_custom_resource(
     resource_name: str,
     namespace: str,
     master: Optional[ReplicaSpec],
@@ -74,7 +74,7 @@ def get_pytorch_job_custom_resource(
         template_spec=template_spec, scheduling_policy=scheduling_policy
     )
 
-    custom_object = {"pytorchJobSpec": template_spec}
+    custom_object = {"xgboostJobSpec": template_spec}
     custom_object = set_termination(
         custom_object=custom_object, termination=termination
     )

@@ -17,19 +17,17 @@
 from typing import Dict, Iterable, Optional
 
 from polyaxon import pkg
-from polyaxon.polyflow import V1CompiledOperation, V1KFReplica, V1MPIJob, V1Plugins
-from polyaxon.polypod.compiler.converters.base import (
-    BaseConverter,
-    PlatformConverterMixin,
-)
-from polyaxon.polypod.custom_resources import get_mpi_job_custom_resource
-from polyaxon.polypod.mixins import MPIJobMixin
+from polyaxon.polyflow import V1CompiledOperation, V1KFReplica, V1MXJob, V1Plugins
+from polyaxon.polypod.compiler.converters import BaseConverter
+from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
+from polyaxon.polypod.custom_resources import get_mx_job_custom_resource
+from polyaxon.polypod.mixins import MXJobMixin
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.polypod.specs.replica import ReplicaSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 
 
-class MPIJobConverter(MPIJobMixin, BaseConverter):
+class MXJobConverter(MXJobMixin, BaseConverter):
     def get_resource(
         self,
         compiled_operation: V1CompiledOperation,
@@ -40,7 +38,7 @@ class MPIJobConverter(MPIJobMixin, BaseConverter):
         default_sa: str = None,
         default_auth: bool = False,
     ) -> Dict:
-        job = compiled_operation.run  # type: V1MPIJob
+        job = compiled_operation.run  # type: V1MXJob
 
         def _get_replica(replica: Optional[V1KFReplica]) -> Optional[ReplicaSpec]:
             if not replica:
@@ -66,22 +64,28 @@ class MPIJobConverter(MPIJobMixin, BaseConverter):
         kv_env_vars = compiled_operation.get_env_io()
         plugins = compiled_operation.plugins or V1Plugins()
         contexts = PluginsContextsSpec.from_config(plugins, default_auth=default_auth)
-        launcher = _get_replica(job.launcher)
+        scheduler = _get_replica(job.scheduler)
+        server = _get_replica(job.server)
         worker = _get_replica(job.worker)
+        tuner = _get_replica(job.tuner)
+        tuner_tracker = _get_replica(job.tuner_tracker)
+        tuner_server = _get_replica(job.tuner_server)
         labels = self.get_labels(version=pkg.VERSION, labels={})
 
-        return get_mpi_job_custom_resource(
+        return get_mx_job_custom_resource(
             namespace=self.namespace,
             resource_name=self.resource_name,
-            launcher=launcher,
+            scheduler=scheduler,
+            server=server,
             worker=worker,
-            clean_pod_policy=job.clean_pod_policy,
-            scheduling_policy=job.scheduling_policy,
-            slots_per_worker=job.slots_per_worker,
-            ssh_auth_mount_path=job.ssh_auth_mount_path,
-            implementation=job.implementation,
+            tuner=tuner,
+            tuner_tracker=tuner_tracker,
+            tuner_server=tuner_server,
+            mode=job.mode,
             termination=compiled_operation.termination,
             collect_logs=contexts.collect_logs,
+            clean_pod_policy=job.clean_pod_policy,
+            scheduling_policy=job.scheduling_policy,
             sync_statuses=contexts.sync_statuses,
             notifications=plugins.notifications,
             labels=labels,
@@ -89,5 +93,5 @@ class MPIJobConverter(MPIJobMixin, BaseConverter):
         )
 
 
-class PlatformMPIJobConverter(PlatformConverterMixin, MPIJobConverter):
+class PlatformMXJobConverter(PlatformConverterMixin, MXJobConverter):
     pass

@@ -25,10 +25,17 @@ from polyaxon.polyflow.run.kinds import (
     V1RunKind,
 )
 from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
-from polyaxon.polyflow.run.kubeflow.mpi_job import MPIJobSchema, V1MPIJob
+from polyaxon.polyflow.run.kubeflow.mpi_job import (
+    MPIJobImplementation,
+    MPIJobSchema,
+    V1MPIJob,
+)
+from polyaxon.polyflow.run.kubeflow.mx_job import MXJobMode, MXJobSchema, V1MXJob
 from polyaxon.polyflow.run.kubeflow.pytorch_job import PytorchJobSchema, V1PytorchJob
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema, V1KFReplica
+from polyaxon.polyflow.run.kubeflow.scheduling_policy import V1SchedulingPolicy
 from polyaxon.polyflow.run.kubeflow.tf_job import TFJobSchema, V1TFJob
+from polyaxon.polyflow.run.kubeflow.xgboost_job import V1XGBoostJob, XGBoostJobSchema
 from polyaxon.polyflow.run.notifier import NotifierJobSchema, V1NotifierJob
 from polyaxon.polyflow.run.patch import validate_run_patch
 from polyaxon.polyflow.run.ray import RaySchema, V1Ray
@@ -55,6 +62,8 @@ class RunSchema(BaseOneOfSchema):
         V1RunKind.MPIJOB: MPIJobSchema,
         V1RunKind.PYTORCHJOB: PytorchJobSchema,
         V1RunKind.TFJOB: TFJobSchema,
+        V1RunKind.MXJOB: MXJobSchema,
+        V1RunKind.XGBJOB: XGBoostJobSchema,
         V1RunKind.SPARK: SparkSchema,
         V1RunKind.FLINK: FlinkSchema,
         V1RunKind.DASK: DaskSchema,
@@ -88,6 +97,14 @@ class RunMixin:
     @property
     def is_tf_job_run(self):
         return self.get_run_kind() == V1RunKind.TFJOB
+
+    @property
+    def is_mx_job_run(self):
+        return self.get_run_kind() == V1RunKind.MXJOB
+
+    @property
+    def is_xgb_job_run(self):
+        return self.get_run_kind() == V1RunKind.XGBJOB
 
     @property
     def is_spark_run(self):
@@ -127,4 +144,10 @@ class RunMixin:
 
     @property
     def is_distributed_run(self):
-        return self.is_mpi_job_run or self.is_pytorch_job_run or self.is_tf_job_run
+        return (
+            self.is_mpi_job_run
+            or self.is_pytorch_job_run
+            or self.is_tf_job_run
+            or self.is_mx_job_run
+            or self.is_xgb_job_run
+        )

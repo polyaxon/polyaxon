@@ -17,7 +17,9 @@
 from polyaxon.polypod.custom_resources.job import get_job_custom_resource
 from polyaxon.polypod.custom_resources.kubeflow import (
     get_mpi_job_custom_resource,
+    get_mx_job_custom_resource,
     get_pytorch_job_custom_resource,
     get_tf_job_custom_resource,
+    get_xgb_job_custom_resource,
 )
 from polyaxon.polypod.custom_resources.service import get_service_custom_resource

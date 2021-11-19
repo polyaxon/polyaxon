@@ -16,8 +16,10 @@
 
 from polyaxon.containers.names import (
     MAIN_JOB_CONTAINER,
+    MXJOBS_CONTAINER,
     PYTORCHJOBS_CONTAINER,
     TFJOBS_CONTAINER,
+    XGBJOBS_CONTAINER,
 )
 from polyaxon.k8s.custom_resources import operation
 from polyaxon.polyflow import V1RunKind
@@ -73,6 +75,18 @@ class PytorchJobMixin(BaseMixin):
     MAIN_CONTAINER_ID = PYTORCHJOBS_CONTAINER
 
 
+class MXJobMixin(BaseMixin):
+    K8S_ANNOTATIONS_KIND = V1RunKind.MXJOB
+    K8S_LABELS_COMPONENT = "polyaxon-mxjobs"
+    MAIN_CONTAINER_ID = MXJOBS_CONTAINER
+
+
+class XGBoostJobMixin(BaseMixin):
+    K8S_ANNOTATIONS_KIND = V1RunKind.XGBJOB
+    K8S_LABELS_COMPONENT = "polyaxon-xgbjobs"
+    MAIN_CONTAINER_ID = XGBJOBS_CONTAINER
+
+
 class MPIJobMixin(BaseMixin):
     K8S_ANNOTATIONS_KIND = V1RunKind.MPIJOB
     K8S_LABELS_COMPONENT = "polyaxon-mpi-jobs"
@@ -85,5 +99,7 @@ MIXIN_MAPPING = {
     V1RunKind.SERVICE: ServiceMixin,
     V1RunKind.TFJOB: TFJobMixin,
     V1RunKind.PYTORCHJOB: PytorchJobMixin,
+    V1RunKind.MXJOB: MXJobMixin,
+    V1RunKind.XGBJOB: XGBoostJobMixin,
     V1RunKind.MPIJOB: MPIJobMixin,
 }

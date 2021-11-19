@@ -35,6 +35,8 @@ class BaseResolver:
         V1RunKind.MPIJOB,
         V1RunKind.TFJOB,
         V1RunKind.PYTORCHJOB,
+        V1RunKind.MXJOB,
+        V1RunKind.XGBJOB,
         V1RunKind.NOTIFIER,
         V1RunKind.CLEANER,
         V1RunKind.TUNER,

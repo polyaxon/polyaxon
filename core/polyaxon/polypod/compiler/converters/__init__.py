@@ -27,16 +27,22 @@ from polyaxon.polypod.compiler.converters.helpers import (
 from polyaxon.polypod.compiler.converters.job import JobConverter, PlatformJobConverter
 from polyaxon.polypod.compiler.converters.kubeflow import (
     MPIJobConverter,
+    MXJobConverter,
     PytorchJobConverter,
     TfJobConverter,
+    XGBoostJobConverter,
 )
 from polyaxon.polypod.compiler.converters.kubeflow.mpi_job import (
     PlatformMPIJobConverter,
 )
+from polyaxon.polypod.compiler.converters.kubeflow.mx_job import PlatformMXJobConverter
 from polyaxon.polypod.compiler.converters.kubeflow.pytroch_job import (
     PlatformPytorchJobConverter,
 )
 from polyaxon.polypod.compiler.converters.kubeflow.tf_job import PlatformTfJobConverter
+from polyaxon.polypod.compiler.converters.kubeflow.xgboost_job import (
+    PlatformXGBoostJobConverter,
+)
 from polyaxon.polypod.compiler.converters.service import (
     PlatformServiceConverter,
     ServiceConverter,
@@ -50,6 +56,8 @@ CORE_CONVERTERS = {
     V1RunKind.SERVICE: ServiceConverter,
     V1RunKind.MPIJOB: MPIJobConverter,
     V1RunKind.TFJOB: TfJobConverter,
+    V1RunKind.XGBJOB: XGBoostJobConverter,
+    V1RunKind.MXJOB: MXJobConverter,
     V1RunKind.PYTORCHJOB: PytorchJobConverter,
 }
 
@@ -62,4 +70,6 @@ PLATFORM_CONVERTERS = {
     V1RunKind.MPIJOB: PlatformMPIJobConverter,
     V1RunKind.TFJOB: PlatformTfJobConverter,
     V1RunKind.PYTORCHJOB: PlatformPytorchJobConverter,
+    V1RunKind.MXJOB: PlatformMXJobConverter,
+    V1RunKind.XGBJOB: PlatformXGBoostJobConverter,
 }

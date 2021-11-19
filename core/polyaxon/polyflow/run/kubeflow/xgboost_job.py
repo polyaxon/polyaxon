@@ -29,8 +29,8 @@ from polyaxon.polyflow.run.utils import DestinationImageMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
-class PytorchJobSchema(BaseCamelSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.PYTORCHJOB))
+class XGBoostJobSchema(BaseCamelSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.TFJOB))
     clean_pod_policy = fields.Str(
         allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.allowable_values)
     )
@@ -40,16 +40,16 @@ class PytorchJobSchema(BaseCamelSchema):
 
     @staticmethod
     def schema_config():
-        return V1PytorchJob
+        return V1XGBoostJob
 
 
-class V1PytorchJob(
-    BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1PytorchJob
+class V1XGBoostJob(
+    BaseConfig, BaseRun, DestinationImageMixin, polyaxon_sdk.V1XGBoostJob
 ):
-    """Kubeflow Pytorch-Job provides an interface to train distributed experiments with Pytorch.
+    """Kubeflow XGBoost-Job provides an interface to train distributed experiments with XGBoost.
 
     Args:
-        kind: str, should be equal `pytorchjob`
+        kind: str, should be equal `xgbjob`
         clean_pod_policy: str, one of [`All`, `Running`, `None`]
         scheduling_policy: [V1SchedulingPolicy](/docs/experimentation/distributed/scheduling-policy/), optional  # noqa
         master: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
@@ -59,7 +59,7 @@ class V1PytorchJob(
 
     ```yaml
     >>> run:
-    >>>   kind: pytorchjob
+    >>>   kind: xgbjob
     >>>   cleanPodPolicy:
     >>>   schedulingPolicy:
     >>>   master:
@@ -69,9 +69,9 @@ class V1PytorchJob(
     ## Python usage
 
     ```python
-    >>> from polyaxon.polyflow import V1KFReplica, V1PytorchJob
+    >>> from polyaxon.polyflow import V1KFReplica, V1XGBoost
     >>> from polyaxon.k8s import k8s_schemas
-    >>> pytorch_job = V1PytorchJob(
+    >>> xgb_job = V1XGBoost(
     >>>     clean_pod_policy='All',
     >>>     master=V1KFReplica(...),
     >>>     worker=V1KFReplica(...),
@@ -82,15 +82,14 @@ class V1PytorchJob(
 
     ### kind
 
-    The kind signals to the CLI, client, and other tools that this
-    component's runtime is a pytorchjob.
+    The kind signals to the CLI, client, and other tools that this component's runtime is a xgbjob.
 
     If you are using the python client to create the runtime,
     this field is not required and is set by default.
 
     ```yaml
     >>> run:
-    >>>   kind: pytorchjob
+    >>>   kind: xgbjob
     ```
 
     ### cleanPodPolicy
@@ -101,7 +100,7 @@ class V1PytorchJob(
 
     ```yaml
     >>> run:
-    >>>   kind: pytorchjob
+    >>>   kind: xgbjob
     >>>   cleanPodPolicy: 'All'
     >>>  ...
     ```
@@ -114,7 +113,7 @@ class V1PytorchJob(
 
     ```yaml
     >>> run:
-    >>>   kind: pytorchjob
+    >>>   kind: xgbjob
     >>>   schedulingPolicy:
     >>>     ...
     >>>  ...
@@ -122,13 +121,13 @@ class V1PytorchJob(
 
     ### master
 
-    The master replica in the distributed PytorchJob
+    The master replica in the distributed XGBoostJob.
 
     ```yaml
     >>> run:
-    >>>   kind: pytorchjob
-    >>>   master:
-    >>>     replicas: 1
+    >>>   kind: xgbjob
+    >>>   ps:
+    >>>     replicas: 2
     >>>     container:
     >>>       ...
     >>>  ...
@@ -136,59 +135,88 @@ class V1PytorchJob(
 
     ### worker
 
-    The workers do the actual work of training the model.
+    The server replica in the distributed XGBoostJob.
 
     ```yaml
     >>> run:
-    >>>   kind: pytorchjob
+    >>>   kind: xgbjob
     >>>   worker:
-    >>>     replicas: 3
+    >>>     replicas: 2
     >>>     container:
     >>>       ...
     >>>  ...
     ```
     """
 
-    SCHEMA = PytorchJobSchema
-    IDENTIFIER = V1RunKind.PYTORCHJOB
-    REDUCED_ATTRIBUTES = ["cleanPodPolicy", "schedulingPolicy", "master", "worker"]
+    SCHEMA = XGBoostJobSchema
+    IDENTIFIER = V1RunKind.XGBJOB
+    REDUCED_ATTRIBUTES = [
+        "cleanPodPolicy",
+        "schedulingPolicy",
+        "chief",
+        "ps",
+        "worker",
+        "evaluator",
+    ]
 
     def apply_image_destination(self, image: str):
-        if self.master:
-            self.master.container = self.master.container or V1Container()
-            self.master.container.image = image
+        if self.chief:
+            self.chief.container = self.chief.container or V1Container()
+            self.chief.container.image = image
+        if self.ps:
+            self.ps.container = self.ps.container or V1Container()
+            self.ps.container.image = image
         if self.worker:
             self.worker.container = self.worker.container or V1Container()
             self.worker.container.image = image
+        if self.evaluator:
+            self.evaluator.container = self.evaluator.container or V1Container()
+            self.evaluator.container.image = image
 
     def get_resources(self):
         resources = V1RunResources()
-        if self.master:
-            resources += self.master.get_resources()
+        if self.chief:
+            resources += self.chief.get_resources()
+        if self.ps:
+            resources += self.ps.get_resources()
         if self.worker:
             resources += self.worker.get_resources()
+        if self.evaluator:
+            resources += self.evaluator.get_resources()
         return resources
 
     def get_all_containers(self):
         containers = []
-        if self.master:
-            containers += self.master.get_all_containers()
+        if self.chief:
+            containers += self.chief.get_all_containers()
+        if self.ps:
+            containers += self.ps.get_all_containers()
         if self.worker:
             containers += self.worker.get_all_containers()
+        if self.evaluator:
+            containers += self.evaluator.get_all_containers()
         return containers
 
     def get_all_connections(self):
         connections = []
-        if self.master:
-            connections += self.master.get_all_connections()
+        if self.chief:
+            connections += self.chief.get_all_connections()
+        if self.ps:
+            connections += self.ps.get_all_connections()
         if self.worker:
             connections += self.worker.get_all_connections()
+        if self.evaluator:
+            connections += self.evaluator.get_all_connections()
         return connections
 
     def get_all_init(self):
         init = []
-        if self.master:
-            init += self.master.get_all_init()
+        if self.chief:
+            init += self.chief.get_all_init()
+        if self.ps:
+            init += self.ps.get_all_init()
         if self.worker:
             init += self.worker.get_all_init()
+        if self.evaluator:
+            init += self.evaluator.get_all_init()
         return init

@@ -15,7 +15,11 @@
 # limitations under the License.
 
 from polyaxon.polypod.compiler.converters.kubeflow.mpi_job import MPIJobConverter
+from polyaxon.polypod.compiler.converters.kubeflow.mx_job import MXJobConverter
 from polyaxon.polypod.compiler.converters.kubeflow.pytroch_job import (
     PytorchJobConverter,
 )
 from polyaxon.polypod.compiler.converters.kubeflow.tf_job import TfJobConverter
+from polyaxon.polypod.compiler.converters.kubeflow.xgboost_job import (
+    XGBoostJobConverter,
+)

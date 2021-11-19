@@ -80,6 +80,7 @@ class TfJobConverter(TFJobMixin, BaseConverter):
             termination=compiled_operation.termination,
             collect_logs=contexts.collect_logs,
             clean_pod_policy=job.clean_pod_policy,
+            scheduling_policy=job.scheduling_policy,
             sync_statuses=contexts.sync_statuses,
             notifications=plugins.notifications,
             labels=labels,

@@ -30,25 +30,39 @@ from polyaxon.polypod.custom_resources.kubeflow.common import get_kf_replicas_te
 from polyaxon.polypod.specs.replica import ReplicaSpec
 
 
-def get_pytorch_job_custom_resource(
+def get_mx_job_custom_resource(
     resource_name: str,
     namespace: str,
-    master: Optional[ReplicaSpec],
+    scheduler: Optional[ReplicaSpec],
+    server: Optional[ReplicaSpec],
     worker: Optional[ReplicaSpec],
+    tuner: Optional[ReplicaSpec],
+    tuner_tracker: Optional[ReplicaSpec],
+    tuner_server: Optional[ReplicaSpec],
     termination: V1Termination,
     collect_logs: bool,
     sync_statuses: bool,
     notifications: List[V1Notification],
     clean_pod_policy: Optional[str],
     scheduling_policy: Optional[V1SchedulingPolicy],
+    mode: Optional[str],
     labels: Dict[str, str],
     annotations: Dict[str, str],
 ) -> Dict:
     template_spec = {}
 
     get_kf_replicas_template(
-        replica_name="Master",
-        replica=master,
+        replica_name="Scheduler",
+        replica=scheduler,
+        namespace=namespace,
+        resource_name=resource_name,
+        labels=labels,
+        annotations=annotations,
+        template_spec=template_spec,
+    )
+    get_kf_replicas_template(
+        replica_name="Server",
+        replica=server,
         namespace=namespace,
         resource_name=resource_name,
         labels=labels,
@@ -58,6 +72,33 @@ def get_pytorch_job_custom_resource(
     get_kf_replicas_template(
         replica_name="Worker",
         replica=worker,
+        namespace=namespace,
+        resource_name=resource_name,
+        labels=labels,
+        annotations=annotations,
+        template_spec=template_spec,
+    )
+    get_kf_replicas_template(
+        replica_name="Tuner",
+        replica=tuner,
+        namespace=namespace,
+        resource_name=resource_name,
+        labels=labels,
+        annotations=annotations,
+        template_spec=template_spec,
+    )
+    get_kf_replicas_template(
+        replica_name="TunerTracker",
+        replica=tuner_tracker,
+        namespace=namespace,
+        resource_name=resource_name,
+        labels=labels,
+        annotations=annotations,
+        template_spec=template_spec,
+    )
+    get_kf_replicas_template(
+        replica_name="TunerServer",
+        replica=tuner_server,
         namespace=namespace,
         resource_name=resource_name,
         labels=labels,
@@ -74,7 +115,10 @@ def get_pytorch_job_custom_resource(
         template_spec=template_spec, scheduling_policy=scheduling_policy
     )
 
-    custom_object = {"pytorchJobSpec": template_spec}
+    if mode:
+        template_spec["jobMode"] = mode
+
+    custom_object = {"mxJobSpec": template_spec}
     custom_object = set_termination(
         custom_object=custom_object, termination=termination
     )

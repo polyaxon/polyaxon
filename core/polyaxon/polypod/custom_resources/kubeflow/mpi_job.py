@@ -17,12 +17,12 @@
 from typing import Dict, List, Optional
 
 from polyaxon.k8s.custom_resources.operation import get_operation_custom_object
-from polyaxon.polyflow import V1Notification, V1Termination
+from polyaxon.polyflow import V1Notification, V1SchedulingPolicy, V1Termination
 from polyaxon.polypod.common.setter import (
     set_clean_pod_policy,
     set_collect_logs,
     set_notify,
-    set_slots_per_worker,
+    set_scheduling_policy,
     set_sync_statuses,
     set_termination,
 )
@@ -40,6 +40,9 @@ def get_mpi_job_custom_resource(
     sync_statuses: bool,
     notifications: List[V1Notification],
     clean_pod_policy: Optional[str],
+    scheduling_policy: Optional[V1SchedulingPolicy],
+    ssh_auth_mount_path: Optional[str],
+    implementation: Optional[str],
     slots_per_worker: Optional[int],
     labels: Dict[str, str],
     annotations: Dict[str, str],
@@ -69,9 +72,17 @@ def get_mpi_job_custom_resource(
     template_spec = set_clean_pod_policy(
         template_spec=template_spec, clean_pod_policy=clean_pod_policy
     )
-    template_spec = set_slots_per_worker(
-        template_spec=template_spec, slots_per_worker=slots_per_worker
+
+    template_spec = set_scheduling_policy(
+        template_spec=template_spec, scheduling_policy=scheduling_policy
     )
+
+    if slots_per_worker:
+        template_spec["slotsPerWorker"] = slots_per_worker
+    if ssh_auth_mount_path:
+        template_spec["sshAuthMountPath"] = ssh_auth_mount_path
+    if implementation:
+        template_spec["implementation"] = implementation
 
     custom_object = {"mpiJobSpec": template_spec}
     custom_object = set_termination(

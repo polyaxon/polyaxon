@@ -407,7 +407,9 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
      * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments, data processing jobs, ...  # noqa
      * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks, streamlit, custom services or an API.  # noqa
      * [V1TFJob](/docs/experimentation/distributed/tf-jobs/): for running distributed Tensorflow training job.  # noqa
-     * [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/): for running distributed Pytorch training job.
+     * [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/): for running distributed Pytorch training job.  # noqa
+     * [V1MXJob](/docs/experimentation/distributed/mx-jobs/): for running distributed MXNet training job.  # noqa
+     * [V1XGBoostJob](/docs/experimentation/distributed/xgboost-jobs/): for running distributed XGBoost training job.  # noqa
      * [V1MPIJob](/docs/experimentation/distributed/mpi-jobs/): for running distributed MPI job.  # noqa
      * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
      * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.

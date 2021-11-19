@@ -46,7 +46,8 @@ class KFReplicaSchema(BaseCamelSchema):
 
 
 class V1KFReplica(BaseConfig, polyaxon_sdk.V1KFReplica):
-    """Kubeflow-Replica provides an interface to define a replica for TFJob/MPIJob/PytorchJob.
+    """Kubeflow-Replica provides an interface to define a replica for
+    TFJob/MPIJob/PytorchJob/MXJob/XGBoostJob.
 
     Args:
         replicas: int

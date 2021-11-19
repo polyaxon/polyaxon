@@ -77,6 +77,7 @@ class PytorchJobConverter(PytorchJobMixin, BaseConverter):
             worker=worker,
             termination=compiled_operation.termination,
             clean_pod_policy=job.clean_pod_policy,
+            scheduling_policy=job.scheduling_policy,
             collect_logs=contexts.collect_logs,
             sync_statuses=contexts.sync_statuses,
             notifications=plugins.notifications,

@@ -15,7 +15,7 @@
 # limitations under the License.
 from polyaxon.k8s.custom_resources.crd import get_custom_object
 from polyaxon.lifecycle import V1Statuses
-from polyaxon.polyflow import V1Notification
+from polyaxon.polyflow import V1Notification, V1SchedulingPolicy
 from polyaxon.polyflow.environment import V1Environment
 from polyaxon.polyflow.termination import V1Termination
 from polyaxon.polypod.custom_resources import get_pytorch_job_custom_resource
@@ -61,6 +61,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
             master=None,
             worker=None,
             clean_pod_policy=None,
+            scheduling_policy=None,
             termination=termination,
             collect_logs=False,
             sync_statuses=False,
@@ -71,7 +72,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
 
         assert crd == expected_crd
 
-    def test_get_job_custom_resource(self):
+    def test_get_pytorch_job_custom_resource(self):
         termination = V1Termination(max_retries=5, ttl=10, timeout=10)
         environment = V1Environment(
             labels={"foo": "bar"},
@@ -85,6 +86,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
         worker, worker_replica_template = self.get_replica(environment)
         template_spec = {
             "cleanPodPolicy": "Running",
+            "schedulingPolicy": {"minAvailable": 1},
             "replicaSpecs": {
                 "Master": master_replica_template,
                 "Worker": worker_replica_template,
@@ -117,6 +119,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
             resource_name="foo",
             master=master,
             worker=worker,
+            scheduling_policy=V1SchedulingPolicy(min_available=1),
             clean_pod_policy="Running",
             termination=termination,
             labels=environment.labels,
