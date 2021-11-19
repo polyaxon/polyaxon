@@ -1,0 +1,1 @@
+-e git+https://github.com/polyaxon/sdks.git@master#egg=polyaxon-sdk&subdirectory=python/http_client/v1
