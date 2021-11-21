@@ -1,3 +1,19 @@
+#!/usr/bin/python
+#
+# Copyright 2018-2021 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from __future__ import division
 
 import unittest
@@ -7,7 +23,7 @@ import numpy as np
 import pandas as pd
 from pandas.util.testing import assert_series_equal
 
-from pandas_summary import DataFrameSummary
+from datatile.summary.df import DataFrameSummary
 
 
 class DataFrameSummaryTest(unittest.TestCase):
@@ -169,7 +185,7 @@ class DataFrameSummaryTest(unittest.TestCase):
                              data=[str(count0), perc0, str(count1), perc1,
                                    self.size, 2, 0, '0%', DataFrameSummary.TYPE_BOOL],
                              name='dbool1',
-                             dtype=object).sort_index()
+                             dtype=object)
 
         assert_series_equal(self.dfs['dbool1'], expected)
 

@@ -1,37 +1,50 @@
-# pandas_summary
-An extension to [pandas](http://pandas.pydata.org/) dataframes describe function.
+# Datatile
 
-The module contains `DataFrameSummary` object that extend `describe()` with:
+<br>
+<p align="center">
+  <p align="center">
+    <img src="https://raw.githubusercontent.com/mouradmourafiq/datatile/master/artifacts/default-monochrome.svg" alt="datatile" height="200">
+  </p>
+</p>
+<br>
 
- * **properties**
-    * dfs.columns_stats: counts, uniques, missing, missing_perc, and type per column
-    * dsf.columns_types: a count of the types of columns
-    * dfs[column]: more in depth summary of the column
- * **function**
-    * summary(): extends the `describe()` function with the values with `columns_stats`
- 
+A library for managing, summarizing, and visualizing data.
 
-# Installation
+> **N.B.1**: `pandas-summary` was renamed to datatile, a more ambitious project with sevral planned features and enhancements to add support for visualizations, quality checks, linking summaries to versions, and integrations with third party libraries.
+
+## Installation
+
 The module can be easily installed with pip:
 
 ```conslole
-> pip install pandas-summary
+> pip install datatile
 ```
 
 This module depends on `numpy` and `pandas`. Optionally you can get also some nice visualisations if you have `matplotlib` installed.
 
-# Tests
+## Tests
+
 To run the tests, execute the command `python setup.py test`
 
-# Usage
-The module contains one class:
+## Usage
 
-## DataFrameSummary
+### DataFrameSummary
+
+An extension to [pandas](http://pandas.pydata.org/) dataframes describe function.
+
+The module contains `DataFrameSummary` object that extend `describe()` with:
+
+- **properties**
+  - dfs.columns_stats: counts, uniques, missing, missing_perc, and type per column
+  - dsf.columns_types: a count of the types of columns
+  - dfs[column]: more in depth summary of the column
+- **function**
+  - summary(): extends the `describe()` function with the values with `columns_stats`
 
 The `DataFrameSummary` expect a pandas `DataFrame` to summarise.
 
 ```python
-from pandas_summary import DataFrameSummary
+from datatile.df.summary import DataFrameSummary
 
 dfs = DataFrameSummary(df)
 ```
@@ -57,12 +70,12 @@ getting the columns stats
 dfs.columns_stats
 
 
-                      A            B        C              D              E 
-counts             5802         5794     5781           5781           4617   
-uniques            5802            3     5771            128            121   
-missing               0            8       21             21           1185   
-missing_perc         0%        0.14%    0.36%          0.36%         20.42%   
-types            unique  categorical  numeric        numeric        numeric 
+                      A            B        C              D              E
+counts             5802         5794     5781           5781           4617
+uniques            5802            3     5771            128            121
+missing               0            8       21             21           1185
+missing_perc         0%        0.14%    0.36%          0.36%         20.42%
+types            unique  categorical  numeric        numeric        numeric
 ```
 
 getting a single column summary, e.g. numerical column
@@ -102,6 +115,21 @@ types                                                                 numeric
 Name: A, dtype: object
 ```
 
-# Future development
+## Future development
 
-Summary analysis between columns, i.e. `dfs[[1, 2]]`
+### Summaries
+
+ * [ ] Add summary analysis between columns, i.e. `dfs[[1, 2]]`
+
+### Visualizations
+
+ * [ ] Add summary visualization with matplotlib.
+ * [ ] Add summary visualization with plotly.
+ * [ ] Add summary visualization with altair.
+ * [ ] Add predefined profiling.
+
+
+### Catalog and Versions
+
+ * [ ] Add possibility to persist summary and link to a specific version.
+ * [ ] Integrate with quality libraries.
