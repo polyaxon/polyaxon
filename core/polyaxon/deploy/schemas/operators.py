@@ -23,6 +23,8 @@ class OperatorsSchema(BaseCamelSchema):
     tfjob = fields.Bool(allow_none=True)
     pytorchjob = fields.Bool(allow_none=True)
     mpijob = fields.Bool(allow_none=True)
+    mxjob = fields.Bool(allow_none=True)
+    xgbjob = fields.Bool(allow_none=True)
     sparkjob = fields.Bool(allow_none=True)
 
     @staticmethod
@@ -36,6 +38,8 @@ class OperatorsConfig(BaseConfig):
         "tfjob",
         "pytorchjob",
         "mpijob",
+        "mxjob",
+        "xgbjob",
         "sparkjob",
     ]
 
@@ -44,9 +48,13 @@ class OperatorsConfig(BaseConfig):
         tfjob=None,
         pytorchjob=None,
         mpijob=None,
+        mxjob=None,
+        xgbjob=None,
         sparkjob=None,
     ):
         self.tfjob = tfjob
         self.pytorchjob = pytorchjob
         self.mpijob = mpijob
+        self.mxjob = mxjob
+        self.xgbjob = xgbjob
         self.sparkjob = sparkjob
