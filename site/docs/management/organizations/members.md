@@ -157,7 +157,7 @@ Please check [teams section](/docs/management/organizations/teams/) for more det
 
 > **Coming soon**
 
-Organization owners and managers can create space/group and allow delegate management to users following their team's roles instead of their organization roles.
+Organization owners and managers can create space/group and delegate management to users following their team's roles instead of their organization roles.
 
 When promoting a viewer or a member to the admin role on a specific team, the user cannot create projects/models/components and still requires an organization's level admin to perform those operations.
 
