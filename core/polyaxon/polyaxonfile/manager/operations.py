@@ -27,7 +27,7 @@ from polyaxon.polyaxonfile.specs import (
     get_specification,
     kinds,
 )
-from polyaxon.polyflow import V1Component, V1Init, V1Operation
+from polyaxon.polyflow import V1Component, V1Init, V1MatrixKind, V1Operation, V1Matrix
 from polyaxon.schemas import V1PatchStrategy
 from polyaxon.utils.bool_utils import to_bool
 
@@ -36,6 +36,10 @@ def get_op_specification(
     config: Union[V1Component, V1Operation] = None,
     hub: str = None,
     params: Dict = None,
+    hparams: Dict = None,
+    matrix_kind: str = None,
+    matrix_concurrency: int = None,
+    matrix: V1Matrix = None,
     presets: List[str] = None,
     queue: str = None,
     nocache: bool = None,
@@ -57,6 +61,18 @@ def get_op_specification(
                 "Params: `{}` must be a valid mapping".format(params)
             )
         op_data["params"] = params
+    if hparams:
+        if not isinstance(hparams, Mapping):
+            raise PolyaxonfileError(
+                "Hyper-Params: `{}` must be a valid mapping".format(hparams)
+            )
+        op_data["matrix"] = {
+            "kind": matrix_kind or V1MatrixKind.GRID,
+            "concurrency": matrix_concurrency or 1,
+            "params": hparams,
+        }
+    if matrix:
+        op_data["matrix"] = matrix if isinstance(matrix, Mapping) else matrix.to_light_dict()
     if presets:
         op_data["presets"] = presets
     if queue:

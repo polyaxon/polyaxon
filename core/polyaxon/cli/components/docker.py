@@ -61,6 +61,7 @@ def docker():
 @click.option("--copy-path", help="Copy generated files to a specific path.")
 @click.option(
     "--params",
+    "--param",
     "-P",
     metavar="NAME=VALUE",
     multiple=True,

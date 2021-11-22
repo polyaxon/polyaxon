@@ -117,10 +117,30 @@ from polyaxon.utils.validation import validate_tags
 )
 @click.option(
     "--params",
+    "--param",
     "-P",
     metavar="NAME=VALUE",
     multiple=True,
     help="A parameter to override the default params of the run, form -P name=value.",
+)
+@click.option(
+    "--hparams",
+    "--hparam",
+    "-HP",
+    metavar="NAME=VALUE",
+    multiple=True,
+    help="A hyper-parameter to override the default params of the run, "
+    "form: -HP name='range:start:stop:step' "
+    "or -HP name='range:[start,stop,step]' "
+    "or -HP name='choice:[v1,v2,v3,...]'",
+)
+@click.option(
+    "--matrix-kind", type=str, help="Matrix kind if hparams are provided, default grid."
+)
+@click.option(
+    "--matrix-concurrency",
+    type=int,
+    help="Matrix concurrency if hparams are provided, default 1.",
 )
 @click.option("--presets", type=str, help="Name of the presets to use for this run.")
 @click.option(
@@ -202,6 +222,9 @@ def run(
     watch,
     local,
     params,
+    hparams,
+    matrix_kind,
+    matrix_concurrency,
     presets,
     queue,
     nocache,
@@ -314,6 +337,9 @@ def run(
         url=url,
         hub=hub,
         params=params,
+        hparams=hparams,
+        matrix_kind=matrix_kind,
+        matrix_concurrency=matrix_concurrency,
         presets=presets,
         queue=queue,
         cache=cache,

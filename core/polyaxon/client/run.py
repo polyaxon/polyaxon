@@ -53,7 +53,7 @@ from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.events import V1Events
 from polyaxon.polyboard.logging.streamer import get_logs_streamer
-from polyaxon.polyflow import V1Operation, V1RunKind
+from polyaxon.polyflow import V1Operation, V1RunKind, V1Matrix
 from polyaxon.schemas.types import V1ArtifactsType
 from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
@@ -372,6 +372,7 @@ class RunClient:
         description: str = None,
         tags: Union[str, Sequence[str]] = None,
         params: Dict = None,
+        matrix: Union[Dict, V1Matrix] = None,
         presets: List[str] = None,
         queue: str = None,
         nocache: bool = None,
@@ -398,6 +399,7 @@ class RunClient:
                  it will override the tags in the operation if provided.
             params: dict, optional, a dictionary of parameters that will be
                  used to resolve the component's inputs/outputs.
+            matrix: dict or V1Matrix, a matrix definition.
             presets: List[str], optional, the name of the
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
@@ -424,6 +426,7 @@ class RunClient:
         op_spec = check_polyaxonfile(
             polyaxonfile=polyaxonfile,
             params=params,
+            matrix=matrix,
             presets=presets,
             queue=queue,
             nocache=nocache,
@@ -444,6 +447,7 @@ class RunClient:
         description: str = None,
         tags: Union[str, Sequence[str]] = None,
         params: Dict = None,
+        matrix: Union[Dict, V1Matrix] = None,
         presets: List[str] = None,
         queue: str = None,
         nocache: bool = None,
@@ -469,6 +473,7 @@ class RunClient:
                  it will override the tags in the operation if provided.
             params: dict, optional, a dictionary of parameters that will be
                  used to resolve the component's inputs/outputs.
+            matrix: dict or V1Matrix, a matrix definition.
             presets: List[str], optional, the name of the
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
@@ -495,6 +500,7 @@ class RunClient:
         op_spec = check_polyaxonfile(
             url=url,
             params=params,
+            matrix=matrix,
             presets=presets,
             queue=queue,
             nocache=nocache,
@@ -515,6 +521,7 @@ class RunClient:
         description: str = None,
         tags: Union[str, Sequence[str]] = None,
         params: Dict = None,
+        matrix: Union[Dict, V1Matrix] = None,
         presets: str = None,
         queue: str = None,
         nocache: bool = None,
@@ -539,6 +546,7 @@ class RunClient:
                  it will override the tags in the component if provided.
             params: dict, optional, a dictionary of parameters that will be
                  used to resolve the component's inputs/outputs.
+            matrix: dict or V1Matrix, a matrix definition.
             presets: List[str], optional, the name of the
                  [presets](/docs/core/scheduling-presets/).
             queue: str, optional, the name of the
@@ -565,6 +573,7 @@ class RunClient:
         op_spec = check_polyaxonfile(
             hub=component,
             params=params,
+            matrix=matrix,
             presets=presets,
             queue=queue,
             nocache=nocache,

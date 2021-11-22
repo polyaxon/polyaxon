@@ -26,9 +26,9 @@ from polyaxon.polyaxonfile.manager import (
     get_op_specification,
     is_supported_in_eager_mode,
 )
-from polyaxon.polyaxonfile.params import parse_params
+from polyaxon.polyaxonfile.params import parse_hparams, parse_params
 from polyaxon.polyaxonfile.specs import get_specification, kinds
-from polyaxon.polyflow import V1Dag, V1Init, V1Operation
+from polyaxon.polyflow import V1Dag, V1Init, V1Operation, V1Matrix
 from polyaxon.utils.formatting import Printer, dict_tabulate
 from polyaxon.utils.list_utils import to_list
 
@@ -91,7 +91,11 @@ def check_polyaxonfile(
     python_module: str = None,
     url: str = None,
     hub: str = None,
-    params: Dict = None,
+    params: Union[List[str], Dict] = None,
+    hparams: Union[List[str], Dict] = None,
+    matrix_kind: str = None,
+    matrix_concurrency: int = None,
+    matrix: V1Matrix = None,
     presets: List[str] = None,
     queue: str = None,
     nocache: bool = None,
@@ -139,6 +143,9 @@ def check_polyaxonfile(
     parsed_params = None
     if params:
         parsed_params = parse_params(params, is_cli=is_cli)
+    parsed_hparams = None
+    if hparams:
+        parsed_hparams = parse_hparams(hparams, is_cli=is_cli)
 
     if not any([os.path.isfile(f) for f in polyaxonfile]) and not any(
         [python_module, url, hub]
@@ -182,6 +189,10 @@ def check_polyaxonfile(
                 hub=hub,
                 config=plx_file,
                 params=parsed_params,
+                hparams=parsed_hparams,
+                matrix_kind=matrix_kind,
+                matrix_concurrency=matrix_concurrency,
+                matrix=matrix,
                 presets=presets,
                 queue=queue,
                 nocache=nocache,

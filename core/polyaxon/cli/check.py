@@ -45,6 +45,7 @@ from polyaxon.utils.formatting import Printer
 )
 @click.option(
     "--params",
+    "--param",
     "-P",
     metavar="NAME=VALUE",
     multiple=True,
