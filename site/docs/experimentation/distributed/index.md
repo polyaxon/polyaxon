@@ -21,27 +21,33 @@ or you should deploy the operator(s) before starting an execution.
 
 > When you start a distributed job, Polyaxon will stream and archive logs from all replicas.
 
-## TFJob
+## Training operator
 
-In order to run TFJobs you will need to deploy TFJob operator before executing a job from Polyaxon.
+In order to run TFJobs/MpiJobs/PytorchJobs/MXNetJobs/PytorchJobs you will need to deploy training operator before executing a job from Polyaxon.
+
+### TFJob
 
 Please check the [TFJob](/docs/experimentation/distributed/tf-jobs/) guide to learn about all details for running TfJobs in Polyaxon.
 
-## MpiJob
-
-In order to run MpiJobs you will need to deploy MpiJob operator before executing a job from Polyaxon.
+### MpiJob
 
 Please check the [MpiJob](/docs/experimentation/distributed/mpi-jobs/) guide to learn about all details for running MpiJobs in Polyaxon.
 
-## PytorchJob
-
-In order to run PytorchJobs you will need to deploy PytorchJob operator before executing a job from Polyaxon.
+### PytorchJob
 
 Please check the [PytorchJob](/docs/experimentation/distributed/pytorch-jobs/) guide to learn about all details for running PytorchJobs in Polyaxon.
 
+### MXNetJob
+
+Please check the [MXNetJob](/docs/experimentation/distributed/mxnet-jobs/) guide to learn about all details for running MXNetJobs in Polyaxon.
+
+### XGBoostJob
+
+Please check the [XGBoostJob](/docs/experimentation/distributed/xgboost-jobs/) guide to learn about all details for running XGBoostJobs in Polyaxon.
+
 ## Spark
 
-In order to run SparkJobs you will need to deploy spark-on-k8s-operator before executing a job from Polyaxon.
+In order to run SparkJobs you will need to deploy the spark-on-k8s-operator before executing a job from Polyaxon.
 
 Please check the [SparkJob](/docs/experimentation/distributed/spark-jobs/) guide to learn about all details for running SparkJobs in Polyaxon.
 

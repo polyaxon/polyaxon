@@ -53,7 +53,7 @@ from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.events import V1Events
 from polyaxon.polyboard.logging.streamer import get_logs_streamer
-from polyaxon.polyflow import V1Operation, V1RunKind, V1Matrix
+from polyaxon.polyflow import V1Matrix, V1Operation, V1RunKind
 from polyaxon.schemas.types import V1ArtifactsType
 from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference

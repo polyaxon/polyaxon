@@ -3,6 +3,15 @@ name: Polyaxon Core
 on: [push, pull_request]
 
 jobs:
+  library:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9, '3.10']
+    steps:
+    - run: |
+        pip install -U polyaxon
+        polyaxon version
   core:
 #    if: github.event.comment.body == 'test core'
     runs-on: ubuntu-latest
@@ -19,9 +28,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r core/requirements/requirements-test.txt
-        pip install -r core/requirements/requirements-master.txt
+        pip install -r src/requirements/requirements-test.txt
+        pip install -r src/requirements/requirements-master.txt
     - name: Test with pytest
       run: |
-        cd core
+        cd src
         pytest

@@ -28,7 +28,7 @@ from polyaxon.polyaxonfile.manager import (
 )
 from polyaxon.polyaxonfile.params import parse_hparams, parse_params
 from polyaxon.polyaxonfile.specs import get_specification, kinds
-from polyaxon.polyflow import V1Dag, V1Init, V1Operation, V1Matrix
+from polyaxon.polyflow import V1Dag, V1Init, V1Matrix, V1Operation
 from polyaxon.utils.formatting import Printer, dict_tabulate
 from polyaxon.utils.list_utils import to_list
 

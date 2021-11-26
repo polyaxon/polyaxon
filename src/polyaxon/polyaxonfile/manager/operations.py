@@ -27,7 +27,7 @@ from polyaxon.polyaxonfile.specs import (
     get_specification,
     kinds,
 )
-from polyaxon.polyflow import V1Component, V1Init, V1MatrixKind, V1Operation, V1Matrix
+from polyaxon.polyflow import V1Component, V1Init, V1Matrix, V1MatrixKind, V1Operation
 from polyaxon.schemas import V1PatchStrategy
 from polyaxon.utils.bool_utils import to_bool
 
@@ -72,7 +72,9 @@ def get_op_specification(
             "params": hparams,
         }
     if matrix:
-        op_data["matrix"] = matrix if isinstance(matrix, Mapping) else matrix.to_light_dict()
+        op_data["matrix"] = (
+            matrix if isinstance(matrix, Mapping) else matrix.to_light_dict()
+        )
     if presets:
         op_data["presets"] = presets
     if queue:

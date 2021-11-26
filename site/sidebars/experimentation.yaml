@@ -21,6 +21,8 @@
       link: /docs/experimentation/distributed/dask-jobs/
     - title: Kubeflow-Replica Specification
       link: /docs/experimentation/distributed/kubeflow-replica/
+    - title: Kubeflow-Replica Scheduling Policy
+      link: /docs/experimentation/distributed/kubeflow-scheduling-policy/
     - title: Spark-Replica Specification
       link: /docs/experimentation/distributed/spark-replica/
   - group: Services
