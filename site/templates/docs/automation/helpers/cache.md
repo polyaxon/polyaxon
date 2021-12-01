@@ -1,7 +1,7 @@
 ---
 title: "Cache Specification"
 sub_link: "helpers/cache"
-code_link: "src/polyaxon/polyflow/cache/__int__.py"
+code_link: "src/polyaxon/polyflow/cache/__init__.py"
 meta_title: "Cache - Polyaxon Automation Specification"
 meta_description: "Polyaxon provides a cache layer to reuse run executions by default."
 visibility: public

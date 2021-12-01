@@ -1,7 +1,7 @@
 ---
 title: "Events specification"
 sub_link: "events/specification"
-code_link: "src/polyaxon/polyflow/events/__int__.py"
+code_link: "src/polyaxon/polyflow/events/__init__.py"
 meta_title: "Polyaxon events specification - Polyaxon automation"
 meta_description: "Events specification for subscribing operations to specific external triggers or internal conditions."
 visibility: public
