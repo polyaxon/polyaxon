@@ -41,21 +41,25 @@ class TestSecurityContentConfig(BaseTestCase):
             SecurityContextConfig.from_dict(config_dict)
 
         with self.assertRaises(ValidationError):
-            config_dict = {"group": "foo"}
+            config_dict = {"runAsGroup": "foo"}
             SecurityContextConfig.from_dict(config_dict)
 
         with self.assertRaises(ValidationError):
-            config_dict = {"group": 120}
+            config_dict = {"runAsGroup": 120}
             SecurityContextConfig.from_dict(config_dict)
 
         with self.assertRaises(ValidationError):
-            config_dict = {"user": "sdf", "group": 120}
+            config_dict = {"runAsUser": "sdf", "runAsGroup": 120}
             SecurityContextConfig.from_dict(config_dict)
 
-        config_dict = {"user": 120, "group": 120}
+        with self.assertRaises(ValidationError):
+            config_dict = {"user": 120, "group": 120}
+            SecurityContextConfig.from_dict(config_dict)
+
+        config_dict = {"runAsUser": 120, "runAsGroup": 120}
         config = SecurityContextConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
-        config_dict = {"enabled": True, "user": 120, "group": 120}
+        config_dict = {"enabled": True, "runAsUser": 120, "runAsGroup": 120}
         config = SecurityContextConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict

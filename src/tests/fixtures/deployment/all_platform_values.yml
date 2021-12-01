@@ -428,8 +428,12 @@ encryptionSecret:
 # N.B. this is in beta
 securityContext:
   enabled: false
-  user: 2222
-  group: 2222
+  runAsUser: 2222
+  runAsGroup: 2222
+  fsGroup: 2222
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  fsGroupChangePolicy: "Always"
 
 ldap:
   enabled: false

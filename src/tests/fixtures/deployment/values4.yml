@@ -97,8 +97,12 @@ dns:
 
 securityContext:
   enabled: true
-  user: 2222
-  group: 2222
+  runAsUser: 2222
+  runAsGroup: 2222
+  fsGroup: 2222
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  fsGroupChangePolicy: "Always"
 
 passwordLength: 4
 

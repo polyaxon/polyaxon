@@ -179,8 +179,12 @@ class TestDeploymentConfig(BaseTestCase):
         }
         assert config.security_context is not None
         assert config.security_context.enabled is True
-        assert config.security_context.user == 2222
-        assert config.security_context.group == 2222
+        assert config.security_context.run_as_user == 2222
+        assert config.security_context.run_as_group == 2222
+        assert config.security_context.fs_group == 2222
+        assert config.security_context.allow_privilege_escalation is False
+        assert config.security_context.run_as_non_root is True
+        assert config.security_context.fs_group_change_policy == "Always"
         assert config.password_length == 4
 
     def test_read_deploy_config_values5(self):
