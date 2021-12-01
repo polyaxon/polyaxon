@@ -29,9 +29,10 @@ def validate_security_context(user, group):
 
 class SecurityContextSchema(BaseCamelSchema):
     enabled = fields.Bool(allow_none=True)
-    user = fields.Int(allow_none=True)
-    group = fields.Int(allow_none=True)
-    fs = fields.Int(allow_none=True)
+    run_as_user = fields.Int(allow_none=True)
+    run_as_group = fields.Int(allow_none=True)
+    fs_group = fields.Int(allow_none=True)
+    fs_group_change_policy = fields.Str(allow_none=True)
     allow_privilege_escalation = fields.Bool(allow_none=True)
     run_as_non_root = fields.Bool(allow_none=True)
 
@@ -42,16 +43,17 @@ class SecurityContextSchema(BaseCamelSchema):
     @validates_schema
     @check_partial
     def validate_security_context(self, data, **kwargs):
-        validate_security_context(data.get("user"), data.get("group"))
+        validate_security_context(data.get("run_as_user"), data.get("run_as_group"))
 
 
 class SecurityContextConfig(BaseConfig):
     SCHEMA = SecurityContextSchema
     REDUCED_ATTRIBUTES = [
         "enabled",
-        "user",
-        "group",
-        "fs",
+        "runAsUser",
+        "runAsGroup",
+        "fsGroup",
+        "fsGroupChangePolicy",
         "allowPrivilegeEscalation",
         "runAsNonRoot",
     ]
@@ -59,16 +61,18 @@ class SecurityContextConfig(BaseConfig):
     def __init__(
         self,
         enabled=None,
-        user=None,
-        group=None,
-        fs=None,
+        run_as_user=None,
+        run_as_group=None,
+        fs_group=None,
+        fs_group_change_policy=None,
         allow_privilege_escalation=None,
         run_as_non_root=None,
     ):
-        validate_security_context(user, group)
+        validate_security_context(run_as_user, run_as_group)
         self.enabled = enabled
-        self.user = user
-        self.group = group
-        self.fs = fs
+        self.run_as_user = run_as_user
+        self.run_as_group = run_as_group
+        self.fs_group = fs_group
+        self.fs_group_change_policy = fs_group_change_policy
         self.allow_privilege_escalation = allow_privilege_escalation
         self.run_as_non_root = run_as_non_root

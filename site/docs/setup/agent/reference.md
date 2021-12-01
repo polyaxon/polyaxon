@@ -337,13 +337,15 @@ agent:
 
 ## Security context
 
-
-| Parameter                          | Description                                                  | Default
-| -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `securityContext.enabled`          | enable security context                                      | `false`
-| `user`                             | security context UID                                         | `2222`
-| `group`                            | security context GID                                         | `2222`
-
+| Parameter                               | Description                                                                                         | Default
+| --------------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------
+| `enabled`                               | enable security context                                                                             | `false`
+| `runAsUser`                             | security context UID                                                                                | `2222`
+| `runAsGroup`                            | security context GID                                                                                | `2222`
+| `fsGroup`                               | security context FS                                                                                 | `2222`
+| `allowPrivilegeEscalation`              | Controls whether a process can gain more privileges than its parent process                         | `false`
+| `runAsNonRoot`                          | Indicates that the container must run as a non-root user                                            | `true`
+| `fsGroupChangePolicy`                   | defines behavior of changing ownership and permission of the volume before being exposed inside Pod |
 
 Polyaxon runs all containers as root by default, this configuration is often fine for several deployment,
 however, in some use cases it can expose a compliance issue for some teams.
@@ -355,8 +357,12 @@ Default configuration:
 ```yaml
 securityContext:
   enabled: false
-  user: 2222
-  group: 2222
+  runAsUser: 2222
+  runAsGroup: 2222
+  fsGroup: 2222
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  fsGroupChangePolicy:
 ```
 
 ### Enable security context
@@ -366,7 +372,7 @@ securityContext:
   enabled: true
 ```
 
-or enable with custom UID/GID other than 2222/2222:
+Or enable with custom UID/GID other than 2222/2222:
 
 ```yaml
 securityContext:
@@ -375,9 +381,17 @@ securityContext:
   group: 1111
 ```
 
+Define behavior of changing ownership and permission of the volume before being exposed inside Pod:
+
+```yaml
+securityContext:
+  enabled: true
+  fsGroupChangePolicy: OnRootMismatch
+```
+
 This will enable a security context to run all containers using a UID/GID == 1111/1111.
 
-> If you are using a host path or a volume for the artifacts store, make sure to allow the UID/GID to access it.
+> **N.B.** If you are using a host path or a volume for the artifacts store, make sure to allow the UID/GID to access it.
 
 ## Connections
 
