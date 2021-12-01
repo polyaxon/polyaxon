@@ -1,7 +1,7 @@
 ---
 title: "Run Client Reference"
 sub_link: "python-library/run-client"
-code_link: "core/polyaxon/client/run.py"
+code_link: "src/polyaxon/client/run.py"
 meta_title: "Run client - Polyaxon References"
 meta_description: "The run client allows to communicate with run APIs."
 visibility: public

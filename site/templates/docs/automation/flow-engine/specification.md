@@ -1,7 +1,7 @@
 ---
 title: "DAGs Specification"
 sub_link: "flow-engine/specification"
-code_link: "core/polyaxon/polyflow/run/dag.py"
+code_link: "src/polyaxon/polyflow/run/dag.py"
 meta_title: "DAGs - Polyaxon Automation Specification"
 meta_description: "DAG ()Directed Acyclic Graphs) is
     a collection of all the operations you want to run,

@@ -1,7 +1,7 @@
 ---
 title: "Dask-Job Specification"
 sub_link: "distributed/dask-jobs"
-code_link: "core/polyaxon/polyflow/run/dask.py"
+code_link: "src/polyaxon/polyflow/run/dask.py"
 meta_title: "Dask-Job Specification - Experimentation"
 meta_description: "Dask-Job provides an interface to run Dask jobs on Kubernetes."
 visibility: public

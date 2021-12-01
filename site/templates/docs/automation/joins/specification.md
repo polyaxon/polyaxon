@@ -1,7 +1,7 @@
 ---
 title: "Joins specification"
 sub_link: "joins/specification"
-code_link: "core/polyaxon/polyflow/joins/__int__.py"
+code_link: "src/polyaxon/polyflow/joins/__int__.py"
 meta_title: "Joins for aggregating results from upstream runs - Polyaxon automation"
 meta_description: "Joins for running a component based on the results of upstream or parallel runs and aggregating dynamically inputs, outputs, adn artifacts dynamically."
 visibility: public

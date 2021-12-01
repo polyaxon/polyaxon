@@ -1,7 +1,7 @@
 ---
 title: "Tracking Module"
 sub_link: "tracking/module"
-code_link: "core/polyaxon/tracking/__init__.py"
+code_link: "src/polyaxon/tracking/__init__.py"
 meta_title: "Tracking Module - Polyaxon Experimentation"
 meta_description: "Tracking module is an extension of Polyaxon client with tracking capabilities for logging parameters, 
 code versions, metrics, and outputs when running your machine learning code,

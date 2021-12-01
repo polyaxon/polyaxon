@@ -1,7 +1,7 @@
 ---
 title: "Job Specification"
 sub_link: "jobs/specification"
-code_link: "core/polyaxon/polyflow/run/job.py"
+code_link: "src/polyaxon/polyflow/run/job.py"
 meta_title: "Job Specification - Experimentation"
 meta_description: "Jobs are used to train machine learning models, process a dataset, 
 execute generic tasks on remote infrastructure and can be used to perform a variety of functions from compiling a model to running an ETL operation."

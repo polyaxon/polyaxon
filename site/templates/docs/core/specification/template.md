@@ -1,7 +1,7 @@
 ---
 title: "Template Specification"
 sub_link: "specification/template"
-code_link: "core/polyaxon/polyflow/templates/__init__.py"
+code_link: "src/polyaxon/polyflow/templates/__init__.py"
 meta_title: "Template  - Polyaxon Specification"
 meta_description: "Template is way for users to define specifications (components/operations) and signal to the CLI/API that they are not executable without modification."
 visibility: public

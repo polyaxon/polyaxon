@@ -1,7 +1,7 @@
 ---
 title: "Exact datetime Schedules"
 sub_link: "schedules/datetime"
-code_link: "core/polyaxon/polyflow/schedule/datetime.py"
+code_link: "src/polyaxon/polyflow/schedule/datetime.py"
 meta_title: "Exact datetime Schedules - Polyaxon Automation"
 meta_description: "Exact datetime schedules to trigger components at a specific time."
 visibility: public

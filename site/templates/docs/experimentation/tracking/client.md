@@ -1,7 +1,7 @@
 ---
 title: "Tracking Client"
 sub_link: "tracking/client"
-code_link: "core/polyaxon/tracking/run.py"
+code_link: "src/polyaxon/tracking/run.py"
 meta_title: "Tracking Run Client - Polyaxon Experimentation"
 meta_description: "Tracking client is an extension of Polyaxon client with tracking capabilities for logging parameters, 
 code versions, metrics, and outputs when running your machine learning code,

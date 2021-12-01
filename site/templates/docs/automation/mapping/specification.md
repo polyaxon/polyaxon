@@ -1,7 +1,7 @@
 ---
 title: "Mapping specification"
 sub_link: "mapping/specification"
-code_link: "core/polyaxon/polyflow/matrix/mapping.py"
+code_link: "src/polyaxon/polyflow/matrix/mapping.py"
 meta_title: "Mapping for running a component over a specific set of arguments - Polyaxon automation"
 meta_description: "Mapping for running a component over a specific set of arguments dynamically and for executing the runs in parallel."
 visibility: public

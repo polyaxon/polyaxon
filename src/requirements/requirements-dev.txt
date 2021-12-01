@@ -17,8 +17,8 @@ google-cloud-storage
 moto==2.0.5
 
 kubernetes_asyncio>=12.1.1
-starlette==0.16.0
-aiofiles==0.7.0
+starlette==0.17.1
+aiofiles==0.8.0
 
 altair==4.1.0
 matplotlib==3.2.1

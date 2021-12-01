@@ -15,6 +15,10 @@
       link: /docs/experimentation/distributed/pytorch-jobs/
     - title: MPI-Job Specification
       link: /docs/experimentation/distributed/mpi-jobs/
+    - title: MXNet-Job Specification
+      link: /docs/experimentation/distributed/mxnet-jobs/
+    - title: XGBoost-Job Specification
+      link: /docs/experimentation/distributed/xgboost-jobs/
     - title: Spark-Job Specification
       link: /docs/experimentation/distributed/spark-jobs/
     - title: Dask-Job Specification
