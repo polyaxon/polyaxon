@@ -214,7 +214,7 @@ dns:
   backend: "coredns"
 ```
 
-### Update the complete DNS prefix
+### Update DNS prefix to different system
 
 Since the DNS service is generally deployed on `kube-system` namespace, the default DNS prefix is `kube-dns.kube-system` or `coredns.kube-system` if you update the previous option.
 
@@ -222,7 +222,16 @@ You can also provide the complete DNS prefix, and not use the DNS backend option
 
 ```yaml
 dns:
-  prefix: kube-dns.other-kube-system
+  prefix: "kube-dns.other-kube-system"
+```
+
+### Update the DNS prefix for OpenShift
+
+OpenShift has a different DNS configuration, the default prefix is:
+
+```yaml
+dns:
+  prefix: "dns-default.openshift-dns"
 ```
 
 ### Update DNS cluster

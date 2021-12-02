@@ -113,6 +113,7 @@ class LifeCycle:
     """The Run LifeCycle is state machine for status transition."""
 
     WARNING_VALUES = {V1Statuses.UNSCHEDULABLE, V1Statuses.WARNING}
+    ALL_WARNING_VALUES = WARNING_VALUES | {V1Statuses.UNKNOWN}
     SAFE_STOP_VALUES = {
         V1Statuses.CREATED,
         V1Statuses.ON_SCHEDULE,
@@ -124,19 +125,15 @@ class LifeCycle:
         V1Statuses.ON_SCHEDULE,
         V1Statuses.RESUMING,
     }
-    COMPILABLE_VALUES = {
-        V1Statuses.CREATED,
-        V1Statuses.ON_SCHEDULE,
-        V1Statuses.RESUMING,
-        V1Statuses.RETRYING,
-    }
+    COMPILABLE_VALUES = PENDING_VALUES | {V1Statuses.RETRYING}
+    ALL_PENDING_VALUES = COMPILABLE_VALUES | {V1Statuses.COMPILED, V1Statuses.QUEUED}
     RUNNING_VALUES = {
         V1Statuses.SCHEDULED,
         V1Statuses.STARTING,
         V1Statuses.PROCESSING,
         V1Statuses.RUNNING,
     }
-    ON_K8S_VALUES = RUNNING_VALUES | WARNING_VALUES | {V1Statuses.UNKNOWN}
+    ON_K8S_VALUES = RUNNING_VALUES | ALL_WARNING_VALUES
     DONE_VALUES = {
         V1Statuses.FAILED,
         V1Statuses.UPSTREAM_FAILED,
