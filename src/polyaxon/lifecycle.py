@@ -317,3 +317,7 @@ class V1StatusCondition(ConditionMixin, polyaxon_sdk.V1StatusCondition):
 
 class V1StageCondition(ConditionMixin, polyaxon_sdk.V1StageCondition):
     pass
+
+
+class V1ProjectKind(polyaxon_sdk.V1ProjectKind):
+    pass
