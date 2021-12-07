@@ -533,7 +533,6 @@ def confusion_matrix(x, y, z=None, annotation=None):
         x=x,
         y=y,
         z=z,
-        annotation=annotation,
     )
 
 

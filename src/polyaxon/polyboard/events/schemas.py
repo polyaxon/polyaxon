@@ -190,7 +190,7 @@ class EventConfusionMatrixSchema(BaseSchema):
 class V1EventConfusionMatrix(BaseConfig, polyaxon_sdk.V1EventConfusionMatrix):
     IDENTIFIER = V1ArtifactKind.CONFUSION
     SCHEMA = EventConfusionMatrixSchema
-    REDUCED_ATTRIBUTES = ["x", "y", "z", "annotation"]
+    REDUCED_ATTRIBUTES = ["x", "y", "z"]
 
 
 class EventArtifactSchema(BaseSchema):

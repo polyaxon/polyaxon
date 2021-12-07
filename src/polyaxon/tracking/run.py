@@ -764,7 +764,6 @@ class Run(RunClient):
         x,
         y,
         z=None,
-        annotation=None,
         step: int = None,
         timestamp: datetime = None,
     ):
@@ -780,7 +779,6 @@ class Run(RunClient):
             x: List[float] or List[str] or numpy.array
             x: List[float] or List[str] or numpy.array
             z: List[List[float]] or List[List[str]] or numpy.array
-            annotation: List[List[str]], optional
             step: int, optional
             timestamp: datetime, optional
         """
@@ -791,14 +789,11 @@ class Run(RunClient):
             x=x,
             y=y,
             z=z,
-            annotation=annotation,
         )
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CONFUSION,
-            event=V1Event.make(
-                timestamp=timestamp, step=step, confusion_matrix=event_value
-            ),
+            event=V1Event.make(timestamp=timestamp, step=step, confusion=event_value),
         )
         self._add_event(logged_event)
 
