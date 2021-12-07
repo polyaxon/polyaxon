@@ -29,13 +29,15 @@ from polyaxon.polyboard.events import (
     V1EventAudio,
     V1EventChart,
     V1EventChartKind,
+    V1EventConfusionMatrix,
+    V1EventCurve,
+    V1EventCurveKind,
     V1EventDataframe,
     V1EventHistogram,
     V1EventImage,
     V1EventModel,
     V1EventVideo,
 )
-from polyaxon.polyboard.events.schemas import V1EventCurve, V1EventCurveKind
 from polyaxon.utils.np_utils import calculate_scale_factor, to_np
 from polyaxon.utils.path_utils import check_or_create_path, module_type
 
@@ -526,6 +528,15 @@ def curve(x, y, annotation=None):
     )
 
 
+def confusion_matrix(x, y, z=None, annotation=None):
+    return V1EventConfusionMatrix(
+        x=x,
+        y=y,
+        z=z,
+        annotation=annotation,
+    )
+
+
 def figure_to_image(figure, close=True):
     """Render matplotlib figure to numpy format.
 
@@ -818,7 +829,9 @@ def model_to_str(model):
 
             graph_def = model.as_graph_def()
             model = json_format.MessageToJson(graph_def, sort_keys=True)
-        except Exception as e:   # noqa
-            logger.warning("Could not convert Tensorflow graph to JSON", exc_info=True)
+        except Exception as e:  # noqa
+            logger.warning(
+                "Could not convert Tensorflow graph to JSON %s", e, exc_info=True
+            )
 
     return _model_to_str(model)

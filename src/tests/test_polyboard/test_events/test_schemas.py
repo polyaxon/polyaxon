@@ -28,6 +28,7 @@ from polyaxon.polyboard.events import (
 )
 from polyaxon.polyboard.events.schemas import (
     LoggedEventListSpec,
+    V1EventConfusionMatrix,
     V1EventCurve,
     V1EventDataframe,
     V1EventVideo,
@@ -520,6 +521,127 @@ class TestEventsV1(BaseTestCase):
             name="foo",
             kind="curve",
             data=os.path.abspath("tests/fixtures/polyboard/curve/curve_events.plx"),
+        )
+        assert events.name == "foo"
+        assert len(events.df.values) == 3
+        for i in range(3):
+            assert events.get_event_at(i).to_dict() == values[i].to_dict()
+
+    def test_confusion(self):
+        events = LoggedEventListSpec(
+            name="foo",
+            kind="confusion",
+            events=[
+                V1Event(
+                    timestamp=parse_datetime("2018-12-11 10:24:57"),
+                    confusion=V1EventConfusionMatrix(
+                        x=["foo", "bar", "moo"],
+                        y=[0.1, 0.3, 0.4],
+                        z=[
+                            [0.1, 0.3, 0.5],
+                            [1.0, 0.8, 0.6],
+                            [0.1, 0.3, 0.6],
+                            [0.4, 0.2, 0.2],
+                        ],
+                    ),
+                    step=12,
+                ),
+                V1Event(
+                    timestamp=parse_datetime("2018-12-11 11:24:57"),
+                    confusion=V1EventConfusionMatrix(
+                        x=["foo", "bar", "moo"],
+                        y=[0.1, 0.3, 0.4],
+                        z=[
+                            [0.1, 0.3, 0.5],
+                            [1.0, 0.8, 0.6],
+                            [0.1, 0.3, 0.6],
+                            [0.4, 0.2, 0.2],
+                        ],
+                        annotation=[
+                            ["text 0.1", "text 0.3", "text 0.5"],
+                            ["text 1.0", "text 0.8", "text 0.6"],
+                            ["text 0.1", "text 0.3", "text 0.6"],
+                            ["text 0.4", "text 0.2", "text 0.2"],
+                        ],
+                    ),
+                    step=13,
+                ),
+                V1Event(
+                    timestamp=parse_datetime("2018-12-11 12:24:57"),
+                    confusion=V1EventConfusionMatrix(
+                        x=["foo", "bar", "moo"],
+                        y=[0.1, 0.3, 0.4],
+                        z=[
+                            [0.1, 0.3, 0.5],
+                            [1.0, 0.8, 0.6],
+                            [0.1, 0.3, 0.6],
+                            [0.4, 0.2, 0.2],
+                        ],
+                    ),
+                    step=14,
+                ),
+            ],
+        )
+        events_dict = events.to_dict()
+        assert events_dict == events.from_dict(events_dict).to_dict()
+
+    def test_confusion_read_yaml(self):
+        values = [
+            V1Event(
+                timestamp=parse_datetime("2018-12-11 10:24:57"),
+                confusion=V1EventConfusionMatrix(
+                    x=["foo", "bar", "moo"],
+                    y=[0.1, 0.3, 0.4],
+                    z=[
+                        [0.1, 0.3, 0.5],
+                        [1.0, 0.8, 0.6],
+                        [0.1, 0.3, 0.6],
+                        [0.4, 0.2, 0.2],
+                    ],
+                ),
+                step=12,
+            ),
+            V1Event(
+                timestamp=parse_datetime("2018-12-11 10:25:57"),
+                confusion=V1EventConfusionMatrix(
+                    x=["foo", "bar", "moo"],
+                    y=[0.1, 0.3, 0.4],
+                    z=[
+                        [0.1, 0.3, 0.5],
+                        [1.0, 0.8, 0.6],
+                        [0.1, 0.3, 0.6],
+                        [0.4, 0.2, 0.2],
+                    ],
+                    annotation=[
+                        ["text 0.1", "text 0.3", "text 0.5"],
+                        ["text 1.0", "text 0.8", "text 0.6"],
+                        ["text 0.1", "text 0.3", "text 0.6"],
+                        ["text 0.4", "text 0.2", "text 0.2"],
+                    ],
+                ),
+                step=13,
+            ),
+            V1Event(
+                timestamp=parse_datetime("2018-12-11 10:26:57"),
+                confusion=V1EventConfusionMatrix(
+                    x=["foo", "bar", "moo"],
+                    y=[0.1, 0.3, 0.4],
+                    z=[
+                        [0.1, 0.3, 0.5],
+                        [1.0, 0.8, 0.6],
+                        [0.1, 0.3, 0.6],
+                        [0.4, 0.2, 0.2],
+                    ],
+                ),
+                step=14,
+            ),
+        ]
+        events = V1Events.read(
+            name="foo",
+            kind="confusion",
+            data=os.path.abspath(
+                "tests/fixtures/polyboard/confusion/confusion_events.plx"
+            ),
         )
         assert events.name == "foo"
         assert len(events.df.values) == 3

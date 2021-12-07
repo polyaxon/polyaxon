@@ -351,6 +351,30 @@ def log_curve(
 log_curve.__doc__ = Run.log_curve.__doc__
 
 
+def log_confusion_matrix(
+    name: str,
+    x,
+    y,
+    z: str = None,
+    annotation: str = None,
+    step: int = None,
+    timestamp: datetime = None,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_confusion_matrix(
+        name=name,
+        x=x,
+        y=y,
+        z=z,
+        annotation=annotation,
+        step=step,
+        timestamp=timestamp,
+    )
+
+
+log_confusion_matrix.__doc__ = Run.log_confusion_matrix.__doc__
+
+
 def log_image(
     data: Any,
     name: str = None,

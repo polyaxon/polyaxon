@@ -44,7 +44,7 @@ class EventImageSchema(BaseSchema):
 
 
 class V1EventImage(BaseConfig, polyaxon_sdk.V1EventImage):
-    IDENTIFIER = "image"
+    IDENTIFIER = V1ArtifactKind.IMAGE
     SCHEMA = EventImageSchema
     REDUCED_ATTRIBUTES = ["height", "width", "colorspace", "path"]
 
@@ -62,7 +62,7 @@ class EventVideoSchema(BaseSchema):
 
 
 class V1EventVideo(BaseConfig, polyaxon_sdk.V1EventVideo):
-    IDENTIFIER = "video"
+    IDENTIFIER = V1ArtifactKind.VIDEO
     SCHEMA = EventImageSchema
     REDUCED_ATTRIBUTES = ["height", "width", "colorspace", "path", "content_type"]
 
@@ -77,7 +77,7 @@ class EventDataframeSchema(BaseSchema):
 
 
 class V1EventDataframe(BaseConfig, polyaxon_sdk.V1EventDataframe):
-    IDENTIFIER = "dataframe"
+    IDENTIFIER = V1ArtifactKind.DATAFRAME
     SCHEMA = EventDataframeSchema
     REDUCED_ATTRIBUTES = ["path", "content_type"]
 
@@ -92,7 +92,7 @@ class EventHistogramSchema(BaseSchema):
 
 
 class V1EventHistogram(BaseConfig, polyaxon_sdk.V1EventHistogram):
-    IDENTIFIER = "histogram"
+    IDENTIFIER = V1ArtifactKind.HISTOGRAM
     SCHEMA = EventHistogramSchema
     REDUCED_ATTRIBUTES = ["values", "counts"]
 
@@ -110,7 +110,7 @@ class EventAudioSchema(BaseSchema):
 
 
 class V1EventAudio(BaseConfig, polyaxon_sdk.V1EventAudio):
-    IDENTIFIER = "audio"
+    IDENTIFIER = V1ArtifactKind.AUDIO
     SCHEMA = EventAudioSchema
     REDUCED_ATTRIBUTES = [
         "sample_rate",
@@ -137,7 +137,7 @@ class EventChartSchema(BaseSchema):
 
 
 class V1EventChart(BaseConfig, polyaxon_sdk.V1EventChart):
-    IDENTIFIER = "chart"
+    IDENTIFIER = V1ArtifactKind.CHART
     SCHEMA = EventChartSchema
     REDUCED_ATTRIBUTES = ["kind", "figure"]
 
@@ -171,9 +171,26 @@ class EventCurveSchema(BaseSchema):
 
 
 class V1EventCurve(BaseConfig, polyaxon_sdk.V1EventCurve):
-    IDENTIFIER = "curve"
+    IDENTIFIER = V1ArtifactKind.CURVE
     SCHEMA = EventCurveSchema
     REDUCED_ATTRIBUTES = ["kind", "x", "y", "annotation"]
+
+
+class EventConfusionMatrixSchema(BaseSchema):
+    x = fields.List(fields.Raw(), allow_none=True)
+    y = fields.List(fields.Raw(), allow_none=True)
+    z = fields.List(fields.Raw(), allow_none=True)
+    annotation = fields.List(fields.Raw(), allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return V1EventConfusionMatrix
+
+
+class V1EventConfusionMatrix(BaseConfig, polyaxon_sdk.V1EventConfusionMatrix):
+    IDENTIFIER = V1ArtifactKind.CONFUSION
+    SCHEMA = EventConfusionMatrixSchema
+    REDUCED_ATTRIBUTES = ["x", "y", "z", "annotation"]
 
 
 class EventArtifactSchema(BaseSchema):
@@ -204,7 +221,7 @@ class EventModelSchema(BaseSchema):
 
 
 class V1EventModel(BaseConfig, polyaxon_sdk.V1EventModel):
-    IDENTIFIER = "artifact"
+    IDENTIFIER = V1ArtifactKind.MODEL
     SCHEMA = EventModelSchema
     REDUCED_ATTRIBUTES = ["framework", "path", "spec"]
 
@@ -221,6 +238,7 @@ class EventSchema(BaseSchema):
     text = fields.Str(allow_none=True)
     chart = fields.Nested(EventChartSchema, allow_none=True)
     curve = fields.Nested(EventCurveSchema, allow_none=True)
+    confusion = fields.Nested(EventConfusionMatrixSchema, allow_none=True)
     artifact = fields.Nested(EventArtifactSchema, allow_none=True)
     model = fields.Nested(EventModelSchema, allow_none=True)
     dataframe = fields.Nested(EventDataframeSchema, allow_none=True)
@@ -231,50 +249,55 @@ class EventSchema(BaseSchema):
 
     @pre_load
     def pre_validate(self, data, **kwargs):
-        if data.get("image") is not None:
-            data["image"] = parser.get_dict(
-                key="image",
-                value=data["image"],
+        if data.get(V1ArtifactKind.IMAGE) is not None:
+            data[V1ArtifactKind.IMAGE] = parser.get_dict(
+                key=V1ArtifactKind.IMAGE,
+                value=data[V1ArtifactKind.IMAGE],
             )
-        if data.get("histogram") is not None:
-            data["histogram"] = parser.get_dict(
-                key="histogram",
-                value=data["histogram"],
+        if data.get(V1ArtifactKind.HISTOGRAM) is not None:
+            data[V1ArtifactKind.HISTOGRAM] = parser.get_dict(
+                key=V1ArtifactKind.HISTOGRAM,
+                value=data[V1ArtifactKind.HISTOGRAM],
             )
-        if data.get("audio") is not None:
-            data["audio"] = parser.get_dict(
-                key="audio",
-                value=data["audio"],
+        if data.get(V1ArtifactKind.AUDIO) is not None:
+            data[V1ArtifactKind.AUDIO] = parser.get_dict(
+                key=V1ArtifactKind.AUDIO,
+                value=data[V1ArtifactKind.AUDIO],
             )
-        if data.get("video") is not None:
-            data["video"] = parser.get_dict(
-                key="video",
-                value=data["video"],
+        if data.get(V1ArtifactKind.VIDEO) is not None:
+            data[V1ArtifactKind.VIDEO] = parser.get_dict(
+                key=V1ArtifactKind.VIDEO,
+                value=data[V1ArtifactKind.VIDEO],
             )
-        if data.get("chart") is not None:
-            data["chart"] = parser.get_dict(
-                key="chart",
-                value=data["chart"],
+        if data.get(V1ArtifactKind.CHART) is not None:
+            data[V1ArtifactKind.CHART] = parser.get_dict(
+                key=V1ArtifactKind.CHART,
+                value=data[V1ArtifactKind.CHART],
             )
-        if data.get("curve") is not None:
-            data["curve"] = parser.get_dict(
-                key="curve",
-                value=data["curve"],
+        if data.get(V1ArtifactKind.CURVE) is not None:
+            data[V1ArtifactKind.CURVE] = parser.get_dict(
+                key=V1ArtifactKind.CURVE,
+                value=data[V1ArtifactKind.CURVE],
+            )
+        if data.get(V1ArtifactKind.CONFUSION) is not None:
+            data[V1ArtifactKind.CONFUSION] = parser.get_dict(
+                key=V1ArtifactKind.CONFUSION,
+                value=data[V1ArtifactKind.CONFUSION],
             )
         if data.get("artifact") is not None:
             data["artifact"] = parser.get_dict(
                 key="artifact",
                 value=data["artifact"],
             )
-        if data.get("model") is not None:
-            data["model"] = parser.get_dict(
-                key="model",
-                value=data["model"],
+        if data.get(V1ArtifactKind.MODEL) is not None:
+            data[V1ArtifactKind.MODEL] = parser.get_dict(
+                key=V1ArtifactKind.MODEL,
+                value=data[V1ArtifactKind.MODEL],
             )
-        if data.get("dataframe") is not None:
-            data["dataframe"] = parser.get_dict(
-                key="dataframe",
-                value=data["dataframe"],
+        if data.get(V1ArtifactKind.DATAFRAME) is not None:
+            data[V1ArtifactKind.DATAFRAME] = parser.get_dict(
+                key=V1ArtifactKind.DATAFRAME,
+                value=data[V1ArtifactKind.DATAFRAME],
             )
 
         return data
@@ -294,29 +317,31 @@ class EventSchema(BaseSchema):
                 )
             return c
 
-        if values.get("metric") is not None:
+        if values.get(V1ArtifactKind.METRIC) is not None:
             count = increment(count)
-        if values.get("image") is not None:
+        if values.get(V1ArtifactKind.IMAGE) is not None:
             count = increment(count)
-        if values.get("histogram") is not None:
+        if values.get(V1ArtifactKind.HISTOGRAM) is not None:
             count = increment(count)
-        if values.get("audio") is not None:
+        if values.get(V1ArtifactKind.AUDIO) is not None:
             count = increment(count)
-        if values.get("video") is not None:
+        if values.get(V1ArtifactKind.VIDEO) is not None:
             count = increment(count)
-        if values.get("html") is not None:
+        if values.get(V1ArtifactKind.HTML) is not None:
             count = increment(count)
-        if values.get("text") is not None:
+        if values.get(V1ArtifactKind.TEXT) is not None:
             count = increment(count)
-        if values.get("chart") is not None:
+        if values.get(V1ArtifactKind.CHART) is not None:
             count = increment(count)
-        if values.get("curve") is not None:
+        if values.get(V1ArtifactKind.CURVE) is not None:
+            count = increment(count)
+        if values.get(V1ArtifactKind.CONFUSION) is not None:
             count = increment(count)
         if values.get("artifact") is not None:
             count = increment(count)
-        if values.get("model") is not None:
+        if values.get(V1ArtifactKind.MODEL) is not None:
             count = increment(count)
-        if values.get("dataframe") is not None:
+        if values.get(V1ArtifactKind.DATAFRAME) is not None:
             count = increment(count)
 
         if count != 1:
@@ -341,6 +366,7 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
         "text",
         "chart",
         "curve",
+        "confusion",
         "artifact",
         "model",
         "dataframe",
@@ -360,6 +386,7 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
         text: str = None,
         chart: V1EventChart = None,
         curve: V1EventCurve = None,
+        confusion: V1EventConfusionMatrix = None,
         artifact: V1EventArtifact = None,
         model: V1EventModel = None,
         dataframe: V1EventDataframe = None,
@@ -382,6 +409,7 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
             text=text,
             chart=chart,
             curve=curve,
+            confusion=confusion,
             artifact=artifact,
             model=model,
             dataframe=dataframe,
@@ -406,6 +434,8 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
             return self.chart.to_dict(dump=dump) if dump else self.chart
         if self.curve is not None:
             return self.curve.to_dict(dump=dump) if dump else self.curve
+        if self.confusion is not None:
+            return self.confusion.to_dict(dump=dump) if dump else self.confusion
         if self.artifact is not None:
             return self.artifact.to_dict(dump=dump) if dump else self.artifact
         if self.model is not None:

@@ -758,6 +758,51 @@ class Run(RunClient):
         self._add_event(logged_event)
 
     @client_handler(check_no_op=True, can_log_events=True)
+    def log_confusion_matrix(
+        self,
+        name: str,
+        x,
+        y,
+        z=None,
+        annotation=None,
+        step: int = None,
+        timestamp: datetime = None,
+    ):
+        """Logs a custom curve.
+
+        ```python
+        >>> log_confusion_matrix("confusion_test", x, y, step=10)
+        >>> log_confusion_matrix("confusion_test", x, y, z, annotation, step=11)
+        ```
+
+        Args:
+            name: str, name of the curve
+            x: List[float] or List[str] or numpy.array
+            x: List[float] or List[str] or numpy.array
+            z: List[List[float]] or List[List[str]] or numpy.array
+            annotation: List[List[str]], optional
+            step: int, optional
+            timestamp: datetime, optional
+        """
+        name = to_fqn_name(name)
+        self._log_has_events()
+
+        event_value = events_processors.confusion_matrix(
+            x=x,
+            y=y,
+            z=z,
+            annotation=annotation,
+        )
+        logged_event = LoggedEventSpec(
+            name=name,
+            kind=V1ArtifactKind.CONFUSION,
+            event=V1Event.make(
+                timestamp=timestamp, step=step, confusion_matrix=event_value
+            ),
+        )
+        self._add_event(logged_event)
+
+    @client_handler(check_no_op=True, can_log_events=True)
     def log_image(
         self,
         data,
