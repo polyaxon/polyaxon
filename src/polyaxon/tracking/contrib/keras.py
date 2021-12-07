@@ -33,6 +33,8 @@ except ImportError:
 
 
 class PolyaxonCallback(keras.callbacks.Callback):
+
+    @client_handler(check_no_op=True)
     def __init__(
         self,
         run=None,

@@ -793,3 +793,32 @@ def metrics_dict_to_list(metrics: Dict) -> List:
             )
         )
     return results
+
+
+def _model_to_str(model):
+    filetype = "txt"
+    if hasattr(model, "to_json"):
+        model = model.model.to_json()
+        filetype = "json"
+    elif hasattr(model, "to_yaml"):
+        model = model.to_yaml()
+        filetype = "yaml"
+
+    try:
+        return str(model), filetype
+    except Exception as e:
+        logger.warning("Could not convert model to a string. Error: %s" % e)
+
+
+def model_to_str(model):
+    # Tensorflow Graph Definition
+    if type(model).__name__ == "Graph":
+        try:
+            from google.protobuf import json_format
+
+            graph_def = model.as_graph_def()
+            model = json_format.MessageToJson(graph_def, sort_keys=True)
+        except Exception as e:   # noqa
+            logger.warning("Could not convert Tensorflow graph to JSON", exc_info=True)
+
+    return _model_to_str(model)

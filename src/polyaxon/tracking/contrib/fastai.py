@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from polyaxon import tracking
+from polyaxon.client.decorators import client_handler
 from polyaxon.exceptions import PolyaxonClientException
 
 try:
@@ -26,17 +27,20 @@ except ImportError:
 
 
 class PolyaxonCallback(Callback):
+    @client_handler(check_no_op=True)
     def __init__(self, log_model=False, run=None):
         self.log_model = log_model
         self.plx_run = tracking.get_or_create_run(run)
         self._plx_step = 0
 
+    @client_handler(check_no_op=True)
     def before_fit(self):
         if not self.plx_run:
             return
         try:
             self.plx_run.log_inputs(
-                n_epoch=str(self.learn.n_epoch), model_class=str(type(self.learn.model))
+                n_epoch=str(self.learn.n_epoch),
+                model_class=str(type(self.learn.model.__name__)),
             )
         except Exception:  # noqa
             print("Did not log all properties to Polyaxon.")
@@ -60,20 +64,24 @@ class PolyaxonCallback(Callback):
                 "that will be logged to Polyaxon.",
             )
 
+    @client_handler(check_no_op=True)
     def after_batch(self):
         # log loss and opt.hypers
-        if self.learn.training:
+        if self.training:
             self._plx_step += 1
-            metrics = {
-                "smooth_loss": to_detach(self.smooth_loss.clone()),
-                "raw_loss": to_detach(self.loss.clone()),
-                "train_iter": self.train_iter,
-            }
+            metrics = {}
+            if hasattr(self, "smooth_loss"):
+                metrics["smooth_loss"] = to_detach(self.smooth_loss.clone())
+            if hasattr(self, "loss"):
+                metrics["raw_loss"] = to_detach(self.loss.clone())
+            if hasattr(self, "train_iter"):
+                metrics["train_iter"] = self.train_iter
             for i, h in enumerate(self.learn.opt.hypers):
                 for k, v in h.items():
                     metrics[f"hypers_{k}"] = v
             self.plx_run.log_metrics(step=self._plx_step, **metrics)
 
+    @client_handler(check_no_op=True)
     def after_epoch(self):
         # log metrics
         self.plx_run.log_metrics(
