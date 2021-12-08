@@ -21,7 +21,7 @@ with more details in pages dedicated to each concept.
 
 A `User` is the entity that creates projects, starts experiments, creates jobs and pipelines, manages teams and clusters.
 
-<blockquote class="light">Please refer to <a href="/docs/management/organizations/user_profile/">management/users</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/management/organizations/user-profile/">management/users</a> for more details.</blockquote>
 
 ### Organization
 

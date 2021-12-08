@@ -1,6 +1,6 @@
 ---
 title: "User Profile"
-sub_link: "organizations/user_profile"
+sub_link: "organizations/user-profile"
 meta_title: "Polyaxon management tools and UI - Users"
 meta_description: "Member' profile page to manage token, bookmakrs, and profile settings."
 tags:

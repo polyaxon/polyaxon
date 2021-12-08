@@ -160,7 +160,7 @@ Hello, World
 For users on Polyaxon EE or Polyaxon Cloud, you will need to use:
 
  * A browser session with an authenticated user.
- * Add the auth header with a [valid auth token](/docs/management/organizations/user_profile/#token-management): `--header "Authorization: token AUTH_TOKEN"`.
+ * Add the auth header with a [valid auth token](/docs/management/organizations/user-profile/#token-management): `--header "Authorization: token AUTH_TOKEN"`.
 
 ## Complete example
 

@@ -40,7 +40,7 @@ You can use the tracking API to create a custom tracking experience with Tensorf
 
 ## Setup
 
-In order to use Polyaxon tracking with Tensorflow, you need to install Polyaxon Client
+In order to use Polyaxon tracking with Tensorflow, you need to install Polyaxon library
 
 ```bash
 pip install polyaxon

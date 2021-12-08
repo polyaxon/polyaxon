@@ -37,7 +37,7 @@ Polyaxon provides a [tracking API](/docs/experimentation/tracking/) to track exp
 
 ## Setup
 
-In order to use Polyaxon tracking with Ignite, you need to install Polyaxon Client
+In order to use Polyaxon tracking with Ignite, you need to install Polyaxon library
 
 ```bash
 pip install polyaxon

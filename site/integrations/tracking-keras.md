@@ -39,7 +39,7 @@ You can use the tracking API to create a custom tracking experience with Keras.
 
 ## Setup
 
-In order to use Polyaxon tracking with Keras, you need to install Polyaxon Client
+In order to use Polyaxon tracking with Keras, you need to install Polyaxon library
 
 ```bash
 pip install polyaxon

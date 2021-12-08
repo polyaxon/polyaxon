@@ -180,7 +180,7 @@ curl HOST:PORT/rewrite-services/v1/NAMESPACE/ORG/PROJECT/runs/UUID/api/v1/proba 
 {"prediction":{"class":"setosa","value":0}}
 ```
 
-Please note that if you are using Polyaxon Cloud or Polyaxon EE you will need to add a header with a [valid auth token](/docs/management/organizations/user_profile/#token-management):
+Please note that if you are using Polyaxon Cloud or Polyaxon EE you will need to add a header with a [valid auth token](/docs/management/organizations/user-profile/#token-management):
 
 ```bash
 --header "Authorization: token API_TOKEN"

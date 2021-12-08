@@ -21,8 +21,10 @@
       link: /docs/management/organizations/dashboards/
     - title: Connections
       link: /docs/management/organizations/connections/
+    - title: Service Accounts
+      link: /docs/management/organizations/service-accounts/
     - title: User Profile
-      link: /docs/management/organizations/user_profile/
+      link: /docs/management/organizations/user-profile/
     - title: Analytics
       link: /docs/management/organizations/analytics/
     - title: Activities
