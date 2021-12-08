@@ -33,37 +33,39 @@ Polyaxon provides native support for several KubeFlow components.
  3. Kubeflow KFServing:
     Polyaxon provides reusable components that can deploy models using KFServing.
 
-## Deploying Kubeflow operators
+## Deploying Kubeflow's training jobs operator
 
 For teams not running/using Kubeflow and want to use this integration,
-Polyaxon provides [Helm charts](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow) for the Kubeflow operators currently supported.
+Polyaxon provides a [Helm chart](https://github.com/polyaxon/charts/tree/master/trainingjobs) for the Kubeflow operators currently supported.
 
-These Helm charts will be maintained and supported by Polyaxon to allow users to deploy and manage Kubeflow Operators in an easy way.
+The Helm chart will be maintained and supported by Polyaxon to allow users to deploy and manage Kubeflow Training Jobs Operator in an easy way.
 
- * [TFJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/tfjob)
- * [PytorchJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/pytorchjob)
- * [MPIJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/tfjob)
+This operator requires [Helm](https://helm.sh/docs/intro/install/) to be installed.
 
-These operators require [Helm](https://helm.sh/docs/intro/install/) to be installed.
-
-We are also distributing these charts directly on our official Helm charts repo [https://charts.polyaxon.com](https://charts.polyaxon.com)
+We are also distributing the chart directly on our official Helm charts repo [https://charts.polyaxon.com](https://charts.polyaxon.com)
 
 ```bash
 helm repo add polyaxon https://charts.polyaxon.com
 helm repo update
 ```
 
-## Deploying/Deleting TFJob
+## Deploying/Deleting the TrainingJobs operator
 
-In order to use Kubeflow as a backend for running [distributed Tensorflow experiments](/integrations/tfjob/),
-you need to deploy TFJob on the same namespace where Polyaxon was deployed
+In order to use Kubeflow as a backend for running:
+  * [distributed Tensorflow experiments](/integrations/tfjob/)
+  * [distributed Pytorch experiments](/integrations/pytorchjob/)
+  * [distributed MPI experiments](/integrations/mpijob/)
+  * [distributed MXNet experiments](/integrations/mxnetjob/)
+  * [distributed XGBoost experiments](/integrations/xgboostjob/)
+
+you need to deploy `polyaxon/trainingjobs` on the same namespace where Polyaxon (CE or Agent) is deployed
 
 ```bash
-helm install plxtf polyaxon/tfjob --namespace=polyaxon
+helm install trainingjobs polyaxon/trainingjobs --namespace=polyaxon
 ```
 
 ```bash
-helm install del plxtf --purge
+helm del trainingjobs --purge
 ```
 
 ## Deploying/Deleting PytorchJob
@@ -77,17 +79,4 @@ helm install plxpytorch polyaxon/pytorchjob --namespace=polyaxon
 
 ```bash
 helm install del plxpytorch --purge
-```
-
-## Deploying/Deleting MpiJob
-
-In order to use Kubeflow as a backend for running [distributed experiments using MPI](/integrations/mpijob/),
-you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
-
-```bash
-helm install plxmpi polyaxon/mpijob --namespace=polyaxon
-```
-
-```bash
-helm install del plxmpi --purge
 ```
