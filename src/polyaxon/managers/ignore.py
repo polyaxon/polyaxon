@@ -84,15 +84,14 @@ def translate(pat):
 
     res = "(?ms)"
 
-    if "/" not in pat[:-1]:
-        res += "(.*/)?"
-
     if pat.startswith("**/"):
         pat = pat[2:]
         res += "(.*/)?"
 
     if pat.startswith("/"):
         pat = pat[1:]
+    else:
+        res += "(.*/)?"
 
     for i, segment in enumerate(pat.split("/")):
         if segment == "**":
