@@ -180,7 +180,6 @@ class EventConfusionMatrixSchema(BaseSchema):
     x = fields.List(fields.Raw(), allow_none=True)
     y = fields.List(fields.Raw(), allow_none=True)
     z = fields.List(fields.Raw(), allow_none=True)
-    annotation = fields.List(fields.Raw(), allow_none=True)
 
     @staticmethod
     def schema_config():

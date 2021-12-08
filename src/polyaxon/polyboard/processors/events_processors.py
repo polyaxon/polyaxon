@@ -528,7 +528,32 @@ def curve(x, y, annotation=None):
     )
 
 
-def confusion_matrix(x, y, z=None, annotation=None):
+def confusion_matrix(x, y, z):
+    try:
+        x_len = len(x)
+        y_len = len(y)
+        z_len = len(z)
+        if x_len != y_len or x_len != z_len:
+            raise ValueError(
+                "Received invalid data for confusion matrix. "
+                "All arrays must have the same structure: "
+                "[len(x): {}, len(y): {}, len(z): {}]".format(
+                    x_len, y_len, z_len,
+                )
+            )
+        zi_len = [len(zi) for zi in z]
+        if len(set(zi_len)) != 1 or zi_len[0] != z_len:
+            raise ValueError(
+                "Received invalid data for confusion matrix. "
+                "Current structure: [len(x): {}, len(y): {}, len(z): {}]. "
+                "The z array has different nested structures: {}".format(
+                    x_len, y_len, z_len, zi_len
+                )
+            )
+    except Exception as e:  # noqa
+        raise ValueError(
+            "Received invalid data for confusion matrix. Error {}".format(e)
+        )
     return V1EventConfusionMatrix(
         x=x,
         y=y,

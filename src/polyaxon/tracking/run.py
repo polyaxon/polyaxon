@@ -763,15 +763,21 @@ class Run(RunClient):
         name: str,
         x,
         y,
-        z=None,
+        z,
         step: int = None,
         timestamp: datetime = None,
     ):
         """Logs a custom curve.
 
         ```python
-        >>> log_confusion_matrix("confusion_test", x, y, step=10)
-        >>> log_confusion_matrix("confusion_test", x, y, z, annotation, step=11)
+        >>> z = [[0.1, 0.3, 0.5, 0.2],
+        >>>      [1.0, 0.8, 0.6, 0.1],
+        >>>      [0.1, 0.3, 0.6, 0.9],
+        >>>      [0.6, 0.4, 0.2, 0.2]]
+        >>>
+        >>> x = ['healthy', 'multiple diseases', 'rust', 'scab']
+        >>> y = ['healthy', 'multiple diseases', 'rust', 'scab']
+        >>> log_confusion_matrix("confusion_test", x, y, z, step=11)
         ```
 
         Args:
@@ -785,11 +791,20 @@ class Run(RunClient):
         name = to_fqn_name(name)
         self._log_has_events()
 
-        event_value = events_processors.confusion_matrix(
-            x=x,
-            y=y,
-            z=z,
-        )
+        try:
+            event_value = events_processors.confusion_matrix(
+                x=x,
+                y=y,
+                z=z,
+            )
+        except ValueError as e:
+            logger.warning(
+                "Confusion matrix %s could not be logged, "
+                "please make sure you are passing 3 lists/arrays "
+                "with the same length. "
+                "Error %s", name, e
+            )
+            return
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CONFUSION,
