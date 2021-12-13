@@ -395,6 +395,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     >>>   build:
     >>>     hubRef: kaniko
     >>>   ...
+    ```
 
     ### runPatch
 
