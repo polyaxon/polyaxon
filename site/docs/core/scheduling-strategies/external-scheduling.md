@@ -22,7 +22,7 @@ There are several examples of integrating Polyaxon with some well known [orchest
 If you are using Polyaxon Cloud or Polyaxon EE and you want to automate and submit operations using Polyaxon API, clients, or CLI via an external system, 
 we suggest that you create a token specific to those systems.  
 
-Please check the [token management section](/docs/management/organizations/user-profile/#token-management) for more details.
+Please check the [token management section](/docs/management/organizations/user-profile/#token-management) or the [service accounts section](/docs/management/organizations/service-accounts/) for more details.
 
 ## Accessible API
 
