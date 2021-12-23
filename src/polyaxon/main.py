@@ -20,17 +20,18 @@ import click
 
 from polyaxon import settings
 from polyaxon.cli.admin import admin
+from polyaxon.cli.artifacts import artifacts
 from polyaxon.cli.auth import login, logout, whoami
 from polyaxon.cli.check import check
 from polyaxon.cli.completion import completion
+from polyaxon.cli.components import components
 from polyaxon.cli.config import config
 from polyaxon.cli.dashboard import dashboard
-from polyaxon.cli.hub import hub
 from polyaxon.cli.init import init
+from polyaxon.cli.models import models
 from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
-from polyaxon.cli.registry import registry
 from polyaxon.cli.run import run
 from polyaxon.cli.session import set_versions_config
 from polyaxon.cli.version import check_cli_version, upgrade, version
@@ -174,25 +175,27 @@ cli.add_command(check)
 cli.add_command(init)
 cli.add_command(project)
 cli.add_command(ops)
-cli.add_command(hub)
-cli.add_command(registry)
+cli.add_command(artifacts)
+cli.add_command(components)
+cli.add_command(models)
 cli.add_command(run)
 cli.add_command(dashboard)
 cli.add_command(admin)
 cli.add_command(port_forward)
 cli.add_command(completion)
+
 if settings.CLIENT_CONFIG.is_ops:
 
-    from polyaxon.cli.components.agent import agent
-    from polyaxon.cli.components.clean_artifacts import clean_artifacts
-    from polyaxon.cli.components.clean_ops import clean_ops
-    from polyaxon.cli.components.docker import docker
-    from polyaxon.cli.components.initializer import initializer
-    from polyaxon.cli.components.notifier import notify
-    from polyaxon.cli.components.proxies import proxy
-    from polyaxon.cli.components.sidecar import sidecar
-    from polyaxon.cli.components.tuner import tuner
-    from polyaxon.cli.components.wait import wait
+    from polyaxon.cli.services.agent import agent
+    from polyaxon.cli.services.clean_artifacts import clean_artifacts
+    from polyaxon.cli.services.clean_ops import clean_ops
+    from polyaxon.cli.services.docker import docker
+    from polyaxon.cli.services.initializer import initializer
+    from polyaxon.cli.services.notifier import notify
+    from polyaxon.cli.services.proxies import proxy
+    from polyaxon.cli.services.sidecar import sidecar
+    from polyaxon.cli.services.tuner import tuner
+    from polyaxon.cli.services.wait import wait
 
     cli.add_command(agent)
     cli.add_command(clean_artifacts)

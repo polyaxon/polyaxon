@@ -538,7 +538,9 @@ def confusion_matrix(x, y, z):
                 "Received invalid data for confusion matrix. "
                 "All arrays must have the same structure: "
                 "[len(x): {}, len(y): {}, len(z): {}]".format(
-                    x_len, y_len, z_len,
+                    x_len,
+                    y_len,
+                    z_len,
                 )
             )
         zi_len = [len(zi) for zi in z]

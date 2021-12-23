@@ -317,3 +317,13 @@ class V1StatusCondition(ConditionMixin, polyaxon_sdk.V1StatusCondition):
 
 class V1StageCondition(ConditionMixin, polyaxon_sdk.V1StageCondition):
     pass
+
+
+class V1ProjectVersionKind(polyaxon_sdk.V1ProjectVersionKind):
+    pass
+
+
+class V1ProjectFeature(V1ProjectVersionKind):
+    RUNTIME = "runtime"
+
+    allowable_values = V1ProjectVersionKind.allowable_values + [RUNTIME]

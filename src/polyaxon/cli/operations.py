@@ -483,7 +483,7 @@ def update(ctx, project, uid, name, description, tags):
     if name:
         update_dict["name"] = name
 
-    if description:
+    if description is not None:
         update_dict["description"] = description
 
     tags = validate_tags(tags)

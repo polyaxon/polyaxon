@@ -1,11 +1,13 @@
 - groups:
   - group: V1
     items:
+    - title: V1.16
+      link: /docs/releases/1-16/
     - title: V1.15
       link: /docs/releases/1-15/
-    - title: V1.14
+    - title: V1.14 [Latest]
       link: /docs/releases/1-14/
-    - title: V1.13 [Latest]
+    - title: V1.13
       link: /docs/releases/1-13/
     - title: V1.12
       link: /docs/releases/1-12/

@@ -25,6 +25,7 @@ from polyaxon import pkg
 from polyaxon.containers import contexts as container_contexts
 from polyaxon.env_vars.keys import POLYAXON_KEYS_USE_GIT_REGISTRY
 from polyaxon.exceptions import PolyaxonfileError
+from polyaxon.lifecycle import V1ProjectVersionKind
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
@@ -104,10 +105,9 @@ class TestPolyaxonfiles(BaseTestCase):
         del os.environ[POLYAXON_KEYS_USE_GIT_REGISTRY]
 
     def test_from_public_hub(self):
-        with patch(
-            "polyaxon_sdk.ComponentHubV1Api.get_component_version"
-        ) as request_mock:
+        with patch("polyaxon_sdk.ProjectsV1Api.get_version") as request_mock:
             request_mock.return_value = MagicMock(
+                kind=V1ProjectVersionKind.COMPONENT,
                 content=os.path.abspath("tests/fixtures/plain/simple_job.yml"),
             )
             operation = check_polyaxonfile(hub="component:12", is_cli=False, to_op=True)
@@ -117,10 +117,9 @@ class TestPolyaxonfiles(BaseTestCase):
         assert operation.hub_ref == "component:12"
 
     def test_from_hub(self):
-        with patch(
-            "polyaxon_sdk.ComponentHubV1Api.get_component_version"
-        ) as request_mock:
+        with patch("polyaxon_sdk.ProjectsV1Api.get_version") as request_mock:
             request_mock.return_value = MagicMock(
+                kind=V1ProjectVersionKind.COMPONENT,
                 content=os.path.abspath("tests/fixtures/plain/simple_job.yml"),
             )
             operation = check_polyaxonfile(

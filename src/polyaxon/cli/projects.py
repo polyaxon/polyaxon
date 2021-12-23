@@ -318,7 +318,7 @@ def update(ctx, _project, name, description, tags, private):
     if name:
         update_dict["name"] = name
 
-    if description:
+    if description is not None:
         update_dict["description"] = description
 
     tags = validate_tags(tags)

@@ -165,9 +165,10 @@ def _read_from_public_hub(hub: str):
 
 
 def _read_from_polyaxon_hub(hub: str):
-    from polyaxon.client import PolyaxonClient
+    from polyaxon.client import PolyaxonClient, ProjectClient
     from polyaxon.constants.globals import DEFAULT_HUB, NO_AUTH
     from polyaxon.env_vars.getters import get_component_info
+    from polyaxon.lifecycle import V1ProjectVersionKind
     from polyaxon.schemas.cli.client_config import ClientConfig
 
     owner, component, version = get_component_info(hub)
@@ -181,8 +182,9 @@ def _read_from_polyaxon_hub(hub: str):
             )
         else:
             client = PolyaxonClient()
-        response = client.component_hub_v1.get_component_version(
-            owner, component, version
+        client = ProjectClient(owner=owner, project=component, client=client)
+        response = client.get_version(
+            kind=V1ProjectVersionKind.COMPONENT, version=version
         )
         return _read_from_stream(response.content)
     except (ApiException, HTTPError) as e:

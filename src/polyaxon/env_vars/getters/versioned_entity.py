@@ -113,11 +113,3 @@ def get_model_info(entity: str, entity_name: str, is_cli: bool = False):
         else:
             raise PolyaxonClientException(message)
     return owner, entity_namespace, version
-
-
-def get_fqn_entity(owner, entity, version, is_version):
-    return (
-        "{}/{}:{}".format(owner, entity, version)
-        if is_version
-        else "{}/{}".format(owner, entity)
-    )

@@ -802,7 +802,9 @@ class Run(RunClient):
                 "Confusion matrix %s could not be logged, "
                 "please make sure you are passing 3 lists/arrays "
                 "with the same length. "
-                "Error %s", name, e
+                "Error %s",
+                name,
+                e,
             )
             return
         logged_event = LoggedEventSpec(

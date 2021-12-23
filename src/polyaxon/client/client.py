@@ -98,8 +98,6 @@ class PolyaxonClient:
     >>> client.auth_v1
     >>> client.users_v1
     >>> client.agents_v1
-    >>> client.component_hub_v1
-    >>> client.model_registry_v1
     ```
     """
 
@@ -122,8 +120,6 @@ class PolyaxonClient:
         self._users_v1 = None
         self._versions_v1 = None
         self._agents_v1 = None
-        self._component_hub_v1 = None
-        self._model_registry_v1 = None
 
     def reset(self):
         self._transport = None
@@ -133,8 +129,6 @@ class PolyaxonClient:
         self._users_v1 = None
         self._versions_v1 = None
         self._agents_v1 = None
-        self._component_hub_v1 = None
-        self._model_registry_v1 = None
         self.api_client = ApiClient(self.config.sdk_config, **self.config.client_header)
 
     @property
@@ -176,18 +170,6 @@ class PolyaxonClient:
         if not self._agents_v1:
             self._agents_v1 = polyaxon_sdk.AgentsV1Api(self.api_client)
         return self._agents_v1
-
-    @property
-    def component_hub_v1(self):
-        if not self._component_hub_v1:
-            self._component_hub_v1 = polyaxon_sdk.ComponentHubV1Api(self.api_client)
-        return self._component_hub_v1
-
-    @property
-    def model_registry_v1(self):
-        if not self._model_registry_v1:
-            self._model_registry_v1 = polyaxon_sdk.ModelRegistryV1Api(self.api_client)
-        return self._model_registry_v1
 
     def sanitize_for_serialization(self, value):
         return self.api_client.sanitize_for_serialization(value)

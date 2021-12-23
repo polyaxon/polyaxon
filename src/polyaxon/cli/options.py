@@ -32,13 +32,6 @@ OPTIONS_PROJECT = {
     "kwargs": dict(type=str, help="The project name, e.g. 'mnist' or 'acme/mnist'."),
 }
 
-OPTIONS_MODEL_REGISTRY = {
-    "args": ["--model", "-m"],
-    "kwargs": dict(
-        type=str, help="The model registry name, e.g. 'model-a' or 'acme/model-a'."
-    ),
-}
-
 OPTIONS_MODEL_VERSION = {
     "args": ["--version", "-ver"],
     "kwargs": dict(
@@ -47,18 +40,20 @@ OPTIONS_MODEL_VERSION = {
     ),
 }
 
-OPTIONS_COMPONENT_HUB = {
-    "args": ["--component", "-c"],
-    "kwargs": dict(
-        type=str, help="The component hub name, e.g. 'kaniko' or 'acme/kaniko'."
-    ),
-}
-
 OPTIONS_COMPONENT_VERSION = {
     "args": ["--version", "-ver"],
     "kwargs": dict(
         type=str,
         help="The component version, e.g. 'kaniko:test' or 'acme/kaniko:test'.",
+    ),
+}
+
+
+OPTIONS_ARTIFACT_VERSION = {
+    "args": ["--version", "-ver"],
+    "kwargs": dict(
+        type=str,
+        help="The artifact version, e.g. 'dataset:test' or 'acme/dataset:test'.",
     ),
 }
 
