@@ -22,7 +22,7 @@ Sometimes you may need to start a Tensorboard that was logged outside of Polyaxo
 
 Polyaxon provides a couple more Tensorboard versions that expect S3, GCS, Azure, ... These versions will load the path and pass the outputs to a Tensorboard service.
 
-Please check the all versions on the [Tensorboard component hub](https://cloud.polyaxon.com/ui/polyaxon/hub/tensorboard/versions) for more details.
+Please check the all versions on the [Tensorboard component hub](https://cloud.polyaxon.com/ui/polyaxon/tensorboard/components) for more details.
 
 Or run the following command:
 

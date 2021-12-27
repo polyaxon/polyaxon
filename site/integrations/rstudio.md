@@ -23,7 +23,7 @@ Polyaxon makes it easy to start an RStudio session on your cluster.
 
 ## Overview
 
-Polyaxon schedules RStudio sessions based on this [component](https://cloud.polyaxon.com/ui/polyaxon/hub/rstudio/versions?version=latest).
+Polyaxon schedules RStudio sessions based on this [component](https://cloud.polyaxon.com/ui/polyaxon/rstudio/components/latest).
 
 ## Create a new session using the CLI
 
@@ -107,7 +107,7 @@ runPatch:
 ## Forking and customizing the component
 
 If you need to expose the `rstudio` component with your predefined configuration without requiring end-users to create operations, 
-we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/hub/rstudio/versions?version=latest) and customize it.
+we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/rstudio/components/latest) and customize it.
 
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can either start new sessions using:
 
@@ -126,7 +126,7 @@ polyaxon run --hub acme/rstudio
 
 ## Versions
 
-All `rstudio` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/hub/rstudio/versions)
+All `rstudio` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/rstudio/components)
 
 ```bash
 polyaxon hub ls -c rstudio

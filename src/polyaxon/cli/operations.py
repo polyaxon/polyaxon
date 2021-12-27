@@ -25,6 +25,7 @@ from polyaxon.api import REWRITE_SERVICES_V1, SERVICES_V1
 from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.options import OPTIONS_NAME, OPTIONS_PROJECT, OPTIONS_RUN_UID
+from polyaxon.cli.utils import handle_output
 from polyaxon.client import RunClient, get_run_logs
 from polyaxon.constants.metadata import META_REWRITE_PATH
 from polyaxon.containers import contexts as container_contexts
@@ -185,10 +186,27 @@ def ops(ctx, project, uid):
     help="Optional path to use to where offline runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
+@click.option(
+    "--output",
+    "-o",
+    type=str,
+    help="Optional flag to print the results as a json object or store the results as json file",
+)
 @click.pass_context
 @clean_outputs
 def ls(
-    ctx, project, io, to_csv, query, sort, limit, offset, columns, offline, offline_path
+    ctx,
+    project,
+    io,
+    to_csv,
+    query,
+    sort,
+    limit,
+    offset,
+    columns,
+    offline,
+    offline_path,
+    output,
 ):
     """List runs for this project.
 
@@ -257,6 +275,10 @@ def ls(
             )
             sys.exit(1)
 
+        if output:
+            config = polyaxon_client.client.sanitize_for_serialization(response)
+            handle_output(config, output)
+            return
         meta = get_meta_response(response)
         if meta:
             Printer.print_header(
@@ -336,9 +358,15 @@ def ls(
     help="Optional path to use to where offline runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
+@click.option(
+    "--output",
+    "-o",
+    type=str,
+    help="Optional flag to print the response as a json object or store the response as json file",
+)
 @click.pass_context
 @clean_outputs
-def get(ctx, project, uid, offline, offline_path):
+def get(ctx, project, uid, offline, offline_path, output):
     """Get run.
 
     Uses /docs/core/cli/#caching
@@ -391,6 +419,9 @@ def get(ctx, project, uid, offline, offline_path):
                 owner=owner,
                 project=project_name,
             )
+            if output:
+                handle_output(config, output)
+                return
             run_data = polyaxon_client.run_data
         except (ApiException, HTTPError) as e:
             handle_cli_error(

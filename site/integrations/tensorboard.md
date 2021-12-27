@@ -23,7 +23,7 @@ Polyaxon integrates with Tensorboard to visualize and debug deep learning models
 
 ## Overview
 
-Polyaxon provides several ways for using Tensorboard, you can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/hub/tensorboard/versions) for more details.
+Polyaxon provides several ways for using Tensorboard, you can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/tensorboard/components) for more details.
 
 > **Note**: The default version `latest` targets a single run, and it has the same component's content as `tensorboard:single-run`. 
 
@@ -114,7 +114,7 @@ runPatch:
 ## Forking and customizing the component
 
 If you need to expose the `tensorboard` component with your predefined configuration without requiring end-users to create operations, 
-we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/hub/tensorboard/versions?version=latest) and customize it.
+we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/tensorboard/components/latest) and customize it.
 
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can either start new sessions using:
 
@@ -133,7 +133,7 @@ polyaxon run --hub acme/tensorboard
 
 ## Versions
 
-All `tensorboard` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/hub/tensorboard/versions)
+All `tensorboard` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/tensorboard/components)
 
 ```bash
 polyaxon hub ls -c tensorboard

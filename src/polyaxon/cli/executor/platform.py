@@ -30,6 +30,7 @@ from polyaxon.cli.operations import approve
 from polyaxon.cli.operations import logs as run_logs
 from polyaxon.cli.operations import statuses
 from polyaxon.cli.operations import upload as run_upload
+from polyaxon.cli.utils import handle_output
 from polyaxon.client import RunClient
 from polyaxon.constants.globals import DEFAULT_UPLOADS_PATH
 from polyaxon.constants.metadata import (
@@ -63,6 +64,7 @@ def run(
     upload_from: str,
     watch: bool,
     eager: bool,
+    output: str = None,
 ):
 
     polyaxon_client = RunClient(owner=owner, project=project_name)
@@ -89,6 +91,11 @@ def run(
                 meta_info=meta_info,
                 pending=pending,
             )
+            if output:
+                handle_output(
+                    polyaxon_client.client.sanitize_for_serialization(response), output
+                )
+                return
             Printer.print_success("A new run `{}` was created".format(response.uuid))
             if not eager:
                 cache_run(response)
@@ -147,7 +154,8 @@ def run(
         )
         ctx.invoke(approve)
 
-    click.echo("Creating a new run...")
+    if not output:
+        click.echo("Creating a new run...")
     run_meta_info = None
     if eager:
         run_meta_info = {META_EAGER_MODE: True}
@@ -157,6 +165,8 @@ def run(
     run_instance = create_run(
         not eager, run_meta_info, pending=V1RunPending.UPLOAD if upload else None
     )
+    if not run_instance:
+        return
 
     runs_to_watch = [RunWatchSpec(run_instance.uuid, run_instance.name)]
 

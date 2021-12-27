@@ -203,6 +203,12 @@ from polyaxon.utils.validation import validate_tags
     help="If provided, Polyaxon will ignore template definition and "
     "submit the manifest to be checked by the API.",
 )
+@click.option(
+    "--output",
+    "-o",
+    type=str,
+    help="Optional flag to print the response as a json object or store the response as json file",
+)
 @click.pass_context
 @clean_outputs
 def run(
@@ -234,6 +240,7 @@ def run(
     git_preset,
     git_revision,
     ignore_template,
+    output,
 ):
     """Run polyaxonfile specification.
 
@@ -410,4 +417,5 @@ def run(
             upload_from=upload_from,
             watch=watch,
             eager=eager,
+            output=output,
         )

@@ -518,7 +518,7 @@ class CompiledOperationSpecification(BaseSpecification):
             )
 
     @classmethod
-    def _get_distributed_init_model_versions(
+    def _get_distributed_init_model_refs(
         cls,
         compiled_operation: V1CompiledOperation,
     ) -> Set[str]:
@@ -527,7 +527,7 @@ class CompiledOperationSpecification(BaseSpecification):
         def _get_resolve_models(replica):
             if replica and replica.init:
                 return init_model_version_names | set(
-                    [i.model for i in replica.init if i.model]
+                    [i.model_ref for i in replica.init if i.model_ref]
                 )
             return init_model_version_names
 
@@ -582,7 +582,7 @@ class CompiledOperationSpecification(BaseSpecification):
         return init_model_version_names
 
     @classmethod
-    def _get_init_model_versions(
+    def _get_init_model_refs(
         cls,
         compiled_operation: V1CompiledOperation,
     ) -> Set[str]:
@@ -590,32 +590,137 @@ class CompiledOperationSpecification(BaseSpecification):
         if compiled_operation and not compiled_operation.has_pipeline:
             if compiled_operation.run.init:
                 init_model_version_names |= set(
-                    [i.model for i in compiled_operation.run.init if i.model]
+                    [i.model_ref for i in compiled_operation.run.init if i.model_ref]
                 )
         return init_model_version_names
 
     @classmethod
-    def get_init_model_versions(
+    def get_init_model_refs(
         cls,
         config: V1CompiledOperation,
     ) -> Set[str]:
         if config.is_distributed_run:
-            return cls._get_distributed_init_model_versions(
+            return cls._get_distributed_init_model_refs(
                 compiled_operation=config,
             )
         else:
-            return cls._get_init_model_versions(
+            return cls._get_init_model_refs(
                 compiled_operation=config,
             )
 
     @classmethod
-    def _clean_distributed_init_model_versions(
+    def _get_distributed_init_artifact_refs(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        init_artifact_version_names = set()
+
+        def _get_resolve_artifacts(replica):
+            if replica and replica.init:
+                return init_artifact_version_names | set(
+                    [i.artifact_ref for i in replica.init if i.model_ref]
+                )
+            return init_artifact_version_names
+
+        if compiled_operation.is_mpi_job_run:
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.launcher
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.worker
+            )
+        elif compiled_operation.is_tf_job_run:
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.chief
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.worker
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.ps
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.evaluator
+            )
+        elif compiled_operation.is_pytorch_job_run:
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.master
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.worker
+            )
+        elif compiled_operation.is_mx_job_run:
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.scheduler
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.worker
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.server
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.tuner
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.tuner_tracker
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.tuner_server
+            )
+        elif compiled_operation.is_xgb_job_run:
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.master
+            )
+            init_artifact_version_names = _get_resolve_artifacts(
+                compiled_operation.run.worker
+            )
+
+        return init_artifact_version_names
+
+    @classmethod
+    def _get_init_artifact_refs(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        init_artifact_version_names = set()
+        if compiled_operation and not compiled_operation.has_pipeline:
+            if compiled_operation.run.init:
+                init_artifact_version_names |= set(
+                    [
+                        i.artifact_ref
+                        for i in compiled_operation.run.init
+                        if i.artifact_ref
+                    ]
+                )
+        return init_artifact_version_names
+
+    @classmethod
+    def get_init_artifact_refs(
+        cls,
+        config: V1CompiledOperation,
+    ) -> Set[str]:
+        if config.is_distributed_run:
+            return cls._get_distributed_init_artifact_refs(
+                compiled_operation=config,
+            )
+        else:
+            return cls._get_init_artifact_refs(
+                compiled_operation=config,
+            )
+
+    @classmethod
+    def _clean_distributed_init_version_refs(
         cls,
         compiled_operation: V1CompiledOperation,
     ) -> V1CompiledOperation:
         def _clean_resolve_models(replica):
             if replica and replica.init:
-                replica.init = [i for i in replica.init if i.model is None]
+                replica.init = [
+                    i
+                    for i in replica.init
+                    if (i.model_ref is None and i.artifact_ref is None)
+                ]
                 return replica
             return replica
 
@@ -674,27 +779,29 @@ class CompiledOperationSpecification(BaseSpecification):
         return compiled_operation
 
     @classmethod
-    def _clean_init_model_versions(
+    def _clean_init_version_refs(
         cls,
         compiled_operation: V1CompiledOperation,
     ) -> V1CompiledOperation:
         if compiled_operation and not compiled_operation.has_pipeline:
             if compiled_operation.run.init:
                 compiled_operation.run.init = [
-                    i for i in compiled_operation.run.init if i.model is None
+                    i
+                    for i in compiled_operation.run.init
+                    if (i.model_ref is None and i.artifact_ref is None)
                 ]
         return compiled_operation
 
     @classmethod
-    def clean_init_model_versions(
+    def clean_init_version_refs(
         cls,
         config: V1CompiledOperation,
     ) -> V1CompiledOperation:
         if config.is_distributed_run:
-            return cls._clean_distributed_init_model_versions(
+            return cls._clean_distributed_init_version_refs(
                 compiled_operation=config,
             )
         else:
-            return cls._clean_init_model_versions(
+            return cls._clean_init_version_refs(
                 compiled_operation=config,
             )

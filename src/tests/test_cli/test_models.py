@@ -29,13 +29,13 @@ class TestCliModels(BaseCommandTestCase):
     @patch("polyaxon_sdk.ProjectsV1Api.patch_version")
     @patch("polyaxon_sdk.ProjectsV1Api.get_version")
     def test_create_model(self, get_version, patch_version, create_version):
-        self.runner.invoke(models, ["push"])
+        self.runner.invoke(models, ["register"])
         assert create_version.call_count == 0
         assert patch_version.call_count == 0
         assert get_version.call_count == 0
 
         get_version.return_value = None
-        self.runner.invoke(models, ["push", "--project=owner/foo"])
+        self.runner.invoke(models, ["register", "--project=owner/foo"])
         assert get_version.call_count == 1
         assert patch_version.call_count == 0
         assert create_version.call_count == 1
@@ -43,11 +43,11 @@ class TestCliModels(BaseCommandTestCase):
         get_version.return_value = MagicMock(
             kind=V1ProjectVersionKind.MODEL,
         )
-        self.runner.invoke(models, ["push", "--project=owner/foo"])
+        self.runner.invoke(models, ["register", "--project=owner/foo"])
         assert get_version.call_count == 2
         assert patch_version.call_count == 0
         assert create_version.call_count == 1
-        self.runner.invoke(models, ["push", "--project=owner/foo", "--force"])
+        self.runner.invoke(models, ["register", "--project=owner/foo", "--force"])
         assert get_version.call_count == 3
         assert patch_version.call_count == 1
         assert create_version.call_count == 1

@@ -22,7 +22,7 @@ Polyaxon allows users to build container images using the Kaniko project.
 
 ## Overview
 
-Polyaxon provides a simple component for building containers with Kaniko, you can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/hub/kaniko/versions) for more details.
+Polyaxon provides a simple component for building containers with Kaniko, you can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/kaniko/components) for more details.
 
 All versions of this component expect a `destination`; this is the `image:tag` that the component will push the image to.
 Since, you will need to provide auth and other information to resolve the registry, 
@@ -40,7 +40,7 @@ You can additionally customize some other aspects about this built-in component:
  * cache: default is `true`
  * cache_ttl
  
-Please see the [component's definition](https://cloud.polyaxon.com/ui/polyaxon/hub/kaniko/versions?version=latest) for more details about the implementation.
+Please see the [component's definition](https://cloud.polyaxon.com/ui/polyaxon/kaniko/components/latest) for more details about the implementation.
 
 ## Setting a registry connection
 
@@ -177,7 +177,7 @@ runPatch:
 ## Forking and customizing the component
 
 If you need to expose the `kaniko` component with your predefined configuration or if you need to expose more [flags based on GoogleContainerTools/kaniko repo](https://github.com/GoogleContainerTools/kaniko),
-we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/hub/kaniko/versions?version=latest) and customize it.
+we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/kaniko/components/latest) and customize it.
 
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can build container using:
 
@@ -195,7 +195,7 @@ polyaxon run --hub acme/kaniko
 
 ## Versions
 
-All `kaniko` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/hub/kaniko/versions)
+All `kaniko` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/kaniko/components)
 
 ```bash
 polyaxon hub ls -c kaniko

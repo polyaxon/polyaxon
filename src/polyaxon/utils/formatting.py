@@ -18,7 +18,6 @@ import json
 import sys
 import urllib.parse as urlparse
 
-from collections import OrderedDict
 from typing import Dict, List, Tuple
 from urllib.parse import parse_qs
 
@@ -87,7 +86,7 @@ def list_dicts_to_tabulate(
     upper_keys: bool = True,
 ):
     exclude_attrs = exclude_attrs or {}
-    results = OrderedDict()
+    results = {}
     if include_attrs:  # If include_attrs disable exclude_attrs
         exclude_attrs = {}
     for d_value in list_dicts:
@@ -120,7 +119,7 @@ def list_dicts_to_csv(
     if include_attrs:  # If include_attrs disable exclude_attrs
         exclude_attrs = {}
     for d_value in list_dicts:
-        result = OrderedDict()
+        result = {}
         for k, v in d_value.items():
             if k in exclude_attrs:
                 continue
@@ -134,7 +133,7 @@ def list_dicts_to_csv(
 
 def dict_to_tabulate(d_value, exclude_attrs=None, humanize_values=True):
     exclude_attrs = exclude_attrs or {}
-    results = OrderedDict()
+    results = {}
     for k, v in d_value.items():
         if k in exclude_attrs:
             continue

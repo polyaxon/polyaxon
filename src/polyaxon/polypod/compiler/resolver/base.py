@@ -202,7 +202,10 @@ class BaseResolver:
         self.connection_by_names = polypod_config.connection_by_names
         self.artifacts_store = polypod_config.artifacts_store
 
-    def resolve_models(self):
+    def resolve_init_refs(self):
+        pass
+
+    def clean_init_refs(self):
         pass
 
     def resolve_actions(self):
@@ -292,10 +295,11 @@ class BaseResolver:
         self.resolve_connections_params()
         self.apply_operation_contexts()
         self.resolve_io()
+        self.resolve_init_refs()
         self.resolve_access()
         self.resolve_connections()
-        self.resolve_models()
         self.resolve_artifacts_lineage()
+        self.clean_init_refs()
         self.resolve_state()
         self.apply_runtime_contexts()
         self.persist_state()

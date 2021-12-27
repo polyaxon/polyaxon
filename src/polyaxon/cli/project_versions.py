@@ -93,6 +93,7 @@ def list_project_versions(
             "readme",
             "description",
             "owner",
+            "project",
             "role",
             "content",
         ],

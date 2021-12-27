@@ -23,7 +23,7 @@ Polyaxon makes it easy to start a VSCode session on your GPU cluster.
 
 ## Overview
 
-Polyaxon schedules VSCode sessions based on this [component](https://cloud.polyaxon.com/ui/polyaxon/hub/vscode/versions?version=latest).
+Polyaxon schedules VSCode sessions based on this [component](https://cloud.polyaxon.com/ui/polyaxon/vscode/components/latest).
 
 ## Create a new session using the CLI
 
@@ -107,7 +107,7 @@ runPatch:
 ## Forking and customizing the component
 
 If you need to expose the `vscode` component with your predefined configuration without requiring end-users to create operations, 
-we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/hub/vscode/versions?version=latest) and customize it.
+we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/vscode/components/latest) and customize it.
 
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can either start new sessions using:
 
@@ -126,7 +126,7 @@ polyaxon run --hub acme/vscode
 
 ## Versions
 
-All `vscode` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/hub/vscode/versions)
+All `vscode` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/vscode/components)
 
 ```bash
 polyaxon hub ls -c vscode

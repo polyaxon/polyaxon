@@ -115,11 +115,11 @@ def ls(ctx, project, query, sort, limit, offset):
     "--force",
     is_flag=True,
     default=False,
-    help="Flag to force push if the version already exists.",
+    help="Flag to force register if the version already exists.",
 )
 @click.pass_context
 @clean_outputs
-def push(
+def register(
     ctx,
     project,
     version,
@@ -137,16 +137,16 @@ def push(
     Example:
 
     \b
-    $ polyaxon components push --name=version-name --connection=dataset-gcs --run=uuid
+    $ polyaxon components register --name=version-name --connection=dataset-gcs --run=uuid
 
     \b
-    $ polyaxon components push --project=images-dataset --connection=dataset-gcs --description="..."
+    $ polyaxon components register --project=images-dataset --connection=dataset-gcs --description="..."
 
     \b
-    $ polyaxon components push -p images-dataset -ver latest --run=uuid --artifacts=lin1,lin2
+    $ polyaxon components register -p images-dataset -ver latest --run=uuid --artifacts=lin1,lin2
 
     \b
-    $ polyaxon components push -p owner/name -ver v1 --tags="tag1,tag2"
+    $ polyaxon components register -p owner/name -ver v1 --tags="tag1,tag2"
     """
     version = version or ctx.obj.get("version")
     owner, project_name = get_project_or_local(

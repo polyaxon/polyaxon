@@ -116,11 +116,11 @@ def ls(ctx, project, query, sort, limit, offset):
     "--force",
     is_flag=True,
     default=False,
-    help="Flag to force push if the version already exists.",
+    help="Flag to force register if the version already exists.",
 )
 @click.pass_context
 @clean_outputs
-def push(
+def register(
     ctx,
     project,
     version,
@@ -138,16 +138,16 @@ def push(
     Example:
 
     \b
-    $ polyaxon models push --artifacts=model,env --run=uuid
+    $ polyaxon models register --artifacts=model,env --run=uuid
 
     \b
-    $ polyaxon models push -f polyaxonfile.yaml --project=kaniko --description="..."
+    $ polyaxon models register -f polyaxonfile.yaml --project=kaniko --description="..."
 
     \b
-    $ polyaxon models push -f polyaxonfile.yaml -p kaniko -ver latest --run=uuid
+    $ polyaxon models register -f polyaxonfile.yaml -p kaniko -ver latest --run=uuid
 
     \b
-    $ polyaxon models push -f polyaxonfile.yaml -p owner/name -ver v1 --tags="tag1,tag2"
+    $ polyaxon models register -f polyaxonfile.yaml -p owner/name -ver v1 --tags="tag1,tag2"
     """
     version = version or ctx.obj.get("version")
     owner, project_name = get_project_or_local(

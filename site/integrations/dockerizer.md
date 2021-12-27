@@ -39,7 +39,7 @@ You can additionally customize some other aspects about this built-in component:
  * context: default is `{{ globals.artifacts_path }}`
  * nocache: default is `false`
  
-Please see the [component's definition](https://cloud.polyaxon.com/ui/polyaxon/hub/dockerizer/versions?version=latest) for more details about the implementation.
+Please see the [component's definition](https://cloud.polyaxon.com/ui/polyaxon/dockerizer/components/latest) for more details about the implementation.
 
 ## Setting a registry connection
 
@@ -176,7 +176,7 @@ runPatch:
 ## Forking and customizing the component
 
 If you need to expose the `dockerizer` component with your predefined configuration,
-we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/hub/dockerizer/versions?version=latest) and customize it.
+we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/dockerizer/components/latest) and customize it.
 
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can build container using:
 
@@ -194,7 +194,7 @@ polyaxon run --hub acme/dockerizer
 
 ## Versions
 
-All `dockerizer` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/hub/dockerizer/versions).
+All `dockerizer` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/dockerizer/components/).
 
 You can also run:
 

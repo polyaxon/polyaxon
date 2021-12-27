@@ -23,7 +23,7 @@ Polyaxon makes it easy to start a JupyterLab session on your GPU cluster.
 
 ## Overview
 
-Polyaxon schedules JupyterLab sessions based on this [component](https://cloud.polyaxon.com/ui/polyaxon/hub/jupyterlab/versions?version=latest).
+Polyaxon schedules JupyterLab sessions based on this [component](https://cloud.polyaxon.com/ui/polyaxon/jupyterlab/components/latest).
 
 ## Create a new session using the CLI
 
@@ -102,7 +102,7 @@ runPatch:
 ## Forking and customizing the component
 
 If you need to expose the `jupyterlab` component with your predefined configuration without requiring end-users to create operations, 
-we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/hub/jupyterlab/versions?version=latest) and customize it.
+we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/jupyterlab/components/latest) and customize it.
 
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can either start new sessions using:
 
@@ -121,7 +121,7 @@ polyaxon run --hub acme/jupyterlab
 
 ## Versions
 
-All `jupyterlab` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/hub/jupyterlab/versions)
+All `jupyterlab` versions can be found on the [component hub](https://cloud.polyaxon.com/ui/polyaxon/jupyterlab/components)
 
 ```bash
 polyaxon hub ls -c jupyterlab
