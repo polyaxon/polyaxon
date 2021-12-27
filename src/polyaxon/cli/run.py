@@ -207,7 +207,8 @@ from polyaxon.utils.validation import validate_tags
     "--output",
     "-o",
     type=str,
-    help="Optional flag to print the response as a json object or store the response as json file",
+    help="Optional flag to print the response as a json object or store the response as json file."
+    "Example `-o json` or `-o path=./data.json`",
 )
 @click.pass_context
 @clean_outputs
