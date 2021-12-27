@@ -44,7 +44,7 @@ The module contains `DataFrameSummary` object that extend `describe()` with:
 The `DataFrameSummary` expect a pandas `DataFrame` to summarise.
 
 ```python
-from datatile.df.summary import DataFrameSummary
+from datatile.summary.df import DataFrameSummary
 
 dfs = DataFrameSummary(df)
 ```
