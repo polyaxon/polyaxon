@@ -1,0 +1,43 @@
+version: "3.4"
+
+x-defaults: &defaults
+  env_file:
+  - compose/components.env
+
+services:
+  postgres:
+    image: postgres:12.3-alpine
+    environment:
+      POSTGRES_USER: "polyaxon"
+      POSTGRES_PASSWORD: "polyaxon"
+    networks:
+      - polyaxon
+
+  redis:
+    image: redis:5.0.4-alpine
+    networks:
+      - polyaxon
+
+  api:
+    <<: *defaults
+    build:
+      context: .
+      dockerfile: ./src/base/Dockerfile.dev
+    networks:
+      - polyaxon
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./src:/polyaxon/platform
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8000:80"
+      - "9000:443"
+    environment:
+      DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
+
+networks:
+  polyaxon:
+

@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Polyaxon Admin {% endblock %}
+{% block extrastyle %}
+<link href="{% static 'vendors/fonts/fonts.css' %}?version={{ ui_assets_version }}" media="all" rel="stylesheet" type="text/css"/>
+{% if frontend_debug %}
+<link href="{% static 'css/global.css' %}?version={{ ui_assets_version }}" media="all" rel="stylesheet" type="text/css"/>
+{% else %}
+<link href="{% static 'dist/css/global.min.css' %}?version={{ ui_assets_version }}" media="all" rel="stylesheet" type="text/css"/>
+{%  endif %}
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a class="brand" href="{% url 'admin:index' %}">
+        <img src="{% static 'images/logo_white.svg' %}?version={{ ui_assets_version }}" alt="Polyaxon"> Polyaxon
+    </a> [Admin]
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

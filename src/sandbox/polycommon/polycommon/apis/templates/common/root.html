@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Polyaxon</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}?version={{ ui_assets_version }}"/>
+    <link href="{% static 'vendors/fonts/fonts.css' %}?version={{ ui_assets_version }}" media="all" rel="stylesheet" type="text/css"/>
+    <base href="{{ ui_base_url }}">
+    {% block styles %}
+    {% endblock %}
+    {% if frontend_debug %}
+    <link href="{% static 'css/global.css' %}?version={{ ui_assets_version }}" media="all" rel="stylesheet" type="text/css"/>
+    {% else %}
+    <link href="{% static 'dist/css/global.min.css' %}?version={{ ui_assets_version }}" media="all" rel="stylesheet" type="text/css"/>
+    {%  endif %}
+</head>
+
+<body class="{% block bodyclass %}{% endblock %}">
+<div id="container">
+{% block header %}{% endblock %}
+{% block index %}{% endblock %}
+{% block footer %}{% endblock %}
+</div>
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

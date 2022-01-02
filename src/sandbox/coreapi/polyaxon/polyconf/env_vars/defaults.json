@@ -1,0 +1,16 @@
+{
+  "POLYAXON_PASSWORD_LENGTH": "6",
+  "POLYAXON_DB_ENGINE": "django.db.backends.postgresql",
+  "POLYAXON_DB_NAME": "polyaxon",
+  "POLYAXON_DB_USER": "polyaxon",
+  "POLYAXON_DB_PASSWORD": "polyaxon",
+  "POLYAXON_DB_HOST": "postgres",
+  "POLYAXON_DB_PORT": "5432",
+  "POLYAXON_MEDIA_ROOT": "",
+  "POLYAXON_MEDIA_URL": "",
+  "POLYAXON_FRONTEND_DEBUG": false,
+  "POLYAXON_CELERY_TASK_ALWAYS_EAGER": false,
+  "POLYAXON_INTERNAL_EXCHANGE": "internal",
+  "POLYAXON_ENVIRONMENT": "local",
+  "POLYAXON_SERVICE": "monolith"
+}

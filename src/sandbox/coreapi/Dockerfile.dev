@@ -1,0 +1,28 @@
+FROM polyaxon-base-dev
+
+# This dockerfile is intended for dev only purposes
+LABEL maintainer="Polyaxon, Inc. <contact@polyaxon.com>"
+
+RUN apt-get -y update && \
+    apt-get -y install nginx && \
+    apt-get -y install libldap2-dev libsasl2-dev && \
+    apt-get autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY /platform/coreapi/requirements /requirements/
+RUN pip3 install --no-cache-dir -r /requirements/requirements-dev.txt
+
+VOLUME /polyaxon
+COPY /core /polyaxon/core
+COPY /sdks/python/http_client/v1 /polyaxon/sdks/python/http_client/v1
+COPY /platform /polyaxon/platform
+WORKDIR /polyaxon
+
+ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/sdks/python/http_client/v1"
+ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/core"
+ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/platform/polycommon"
+ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/platform/coredb"
+RUN pip3 install -e /polyaxon/core
+
+WORKDIR /polyaxon/platform/coreapi
