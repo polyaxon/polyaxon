@@ -28,8 +28,8 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r src/requirements/requirements-test.txt
-        pip install -r src/requirements/requirements-master.txt
+        pip install -r src/core/requirements/requirements-test.txt
+        pip install -r src/core/requirements/requirements-master.txt
     - name: Test with pytest
       run: |
         cd src/core
