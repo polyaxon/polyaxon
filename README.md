@@ -93,11 +93,24 @@ Please check [polyaxon installation guide](https://polyaxon.com/docs/setup/)
     Dashboard page will now open in your browser. Continue? [Y/n]: y
     ```
 
+<br>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/compare.png" alt="compare" width="400">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/dashboards.png" alt="dashboards" width="400">
+</p>
+<br>
+
  * Notebook
     ```bash
     # Start Jupyter notebook for your project
     $ polyaxon run --hub notebook
     ```
+
+<br>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/notebook.png" alt="compare" width="400">
+</p>
+<br>
 
  * Tensorboard
     ```bash
@@ -107,10 +120,7 @@ Please check [polyaxon installation guide](https://polyaxon.com/docs/setup/)
 
 <br>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/compare.png" alt="compare" width="400">
-  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/dashboards.png" alt="dashboards" width="400">
   <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/tensorboard.png" alt="tensorboard" width="400">
-  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/notebook.png" alt="compare" width="400">
 </p>
 <br>
 
