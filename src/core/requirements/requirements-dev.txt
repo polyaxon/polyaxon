@@ -1,4 +1,4 @@
--r ../../requirements/base.txt
+-r ../../../requirements/base.txt
 
 docker
 GitPython<3.2.0
