@@ -2,7 +2,7 @@
 title: "Service Accounts"
 sub_link: "organizations/service-accounts"
 meta_title: "Polyaxon management tools and UI - Service Accounts"
-meta_description: "Polyaxon managers can create service accounts to issue organization level tokens for CE(Continuous Integration)/CD(Continuous Delivery)/CT(Continuous Testing)."
+meta_description: "Polyaxon managers can create service accounts to issue organization level tokens for CE(Continuous Integration)/CD(Continuous Delivery)/CT(Continuous Training)."
 tags:
   - concepts
   - polyaxon
@@ -12,7 +12,7 @@ sidebar: "management"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-Users with the `owner` or `manager` role can create service accounts to issue organization's level tokens for CE(Continuous Integration)/CD(Continuous Delivery)/CT(Continuous Testing): 
+Users with the `owner` or `manager` role can create service accounts to issue organization's level tokens for CI(Continuous Integration)/CD(Continuous Delivery)/CT(Continuous Training): 
 
  * Service accounts are not tied to a specific user and do not use any user's API tokens.
  * Each service account can have one or multiple tokens with different expiration configuration.
