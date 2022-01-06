@@ -1,16 +1,25 @@
+.pytest_cache/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
+.mypy_cache/
+.vscode/
+
+# temp files
+*~
 
 # C extensions
 *.so
 
 # Distribution / packaging
 .Python
-env/
+docker/environment/
 build/
 develop-eggs/
+tsconfig.tsbuildinfo
 dist/
+pydist/
 downloads/
 eggs/
 .eggs/
@@ -19,6 +28,7 @@ lib64/
 parts/
 sdist/
 var/
+public/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -42,19 +52,10 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *,cover
+.hypothesis/
 
 # Translations
 *.mo
-*.pot
-
-# Django stuff:
-*.log
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
 
 # Mr Developer
 .mr.developer.cfg
@@ -62,12 +63,114 @@ target/
 .project
 .settings/
 .idea/
+.DS_Store
 
-# ipython checkpoints
-.ipynb_checkpoints/
-# tensorflow
-ops_logs/
+# fab files
+fabsettings.py
+fabfile.py
+fab_templates/
+
+# graphviz files
+*_graphviz.png
+*_graphviz.dot
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# IPython Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# locals
+local.py
+
+# celery beat schedule file
+celerybeat-schedule*
+celeryev.pid
+celeryd*pid
+celeryd*log
+
+# dotenv
+.env
+
+# virtualenv
+venv/
+ENV/
 
 # data
-/udacity/notMNIST_small/
-/udacity/notMNIST_large/
+big_data/
+examples/data/
+data/
+
+# environment vars
+local.json
+
+# project
+logs/
+/wheels/*
+setup.log
+reports/
+media/
+/**/static/debug_toolbar
+/**/static/rest_framework
+/**/static/css
+
+# npm modules and transpiled typescript files
+client/dist/
+client/node_modules/
+client/packages/sdk/dist/
+client/packages/sdk/src/
+client/packages/ui/dist/
+client/packages/ui/lib/
+client/packages/ui/es/
+client/packages/ui/test-env/
+client/packages/ui/types/
+client/packages/ui/ui.d.ts
+client/**/node_modules/
+client/npm-debug.log
+deploy/dist/
+deploy/node_modules/
+deploy/npm-debug.log
+/examples/polyaxon-logs/
+wip/
+
+# don't ignore static dist
+!static/v1/dist
+lastfailed
+
+# Ignore local.env.ts
+dev.env.ts
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Kubernetes Generated files - skip generated files, except for vendored files
+
+!vendor/**/zz_generated.*
+client/.awcache/
+
+
+# ignore dev/test values
+values.*.dev.yaml
+values.*.test.yaml
+values.*.test.json
+values.*.test.sh
+
+# Chart dependencies
+**/charts/*.tgz

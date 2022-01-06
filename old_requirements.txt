@@ -1,6 +1,0 @@
-scipy==0.18.1
-pandas==0.18.1
-tensorflow==0.11.0
-matplotlib==1.5.1
-jupyter==1.0.0
-scikit-learn==0.18
