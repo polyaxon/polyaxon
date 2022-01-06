@@ -15,4 +15,4 @@
 
 # TraceML
 
-Engine for ML/Data tracking, visualization, dashboards, and model UI for Polyaxon.
+Engine for ML/Data tracking, visualization, and dashboards for Polyaxon.
