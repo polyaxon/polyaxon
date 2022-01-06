@@ -1,18 +1,38 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
+#!/usr/bin/python
+#
+# Copyright 2018-2021 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import os
 
-import six
+from collections import OrderedDict
+from collections.abc import Mapping
+from datetime import timezone
 
-from collections import Mapping, OrderedDict
+import ujson
 
-from hestia.humanize import humanize_timesince
-from hestia.tz_utils import get_time_zone
-from hestia.units import to_percentage, to_unit_memory
 from marshmallow import RAISE, Schema, ValidationError, post_dump, post_load
-from marshmallow.utils import EXCLUDE, utc
+from marshmallow.utils import EXCLUDE
 
+from polyaxon_schemas.pkg import SCHEMA_VERSION
+from polyaxon_schemas.config_reader.spec import ConfigSpec
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
-from polyaxon_schemas.utils import to_camel_case
+from polyaxon_schemas.patch_strategy import V1PatchStrategy
+from polyaxon_schemas.utils.dict_utils import deep_update
+from polyaxon_schemas.utils.humanize import humanize_timesince
+from polyaxon_schemas.utils.string_utils import to_camel_case
+from polyaxon_schemas.utils.tz_utils import get_timezone
+from polyaxon_schemas.utils.units import to_percentage, to_unit_memory
 
 
 class BaseSchema(Schema):
@@ -21,21 +41,27 @@ class BaseSchema(Schema):
     class Meta:
         unknown = RAISE
         ordered = True
+        render_module = ujson
 
     @post_load
-    def make(self, data):
+    def make(self, data, **kwargs):
         return self.schema_config()(**data)
 
     @post_dump
-    def unmake(self, data):
+    def unmake(self, data, **kwargs):
         return self.schema_config().remove_reduced_attrs(data)
 
     @staticmethod
     def schema_config():
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
-class BaseConfig(object):
+class BaseCamelSchema(BaseSchema):
+    def on_bind_field(self, field_name, field_obj):
+        field_obj.data_key = to_camel_case(field_obj.data_key or field_name)
+
+
+class BaseConfig:
     """Base for config classes."""
 
     SCHEMA = None
@@ -48,31 +74,60 @@ class BaseConfig(object):
     PERCENT_ATTRIBUTES = []
     ROUNDING = 2
     UNKNOWN_BEHAVIOUR = RAISE
+    WRITE_MODE = 0o777
+    FIELDS_MANUAL_PATCH = []
+    FIELDS_SAME_KIND_PATCH = []
 
-    def to_light_dict(self,
-                      humanize_values=False,
-                      include_attrs=None,
-                      exclude_attrs=None,
-                      unknown=None):
+    @staticmethod
+    def _dump(obj_dict):
+        return ujson.dumps(obj_dict)
+
+    def to_light_dict(
+        self,
+        humanize_values=False,
+        include_attrs=None,
+        exclude_attrs=None,
+        unknown=None,
+        dump=False,
+    ):
         unknown = unknown or self.UNKNOWN_BEHAVIOUR
         obj_dict = self.to_dict(humanize_values=humanize_values, unknown=unknown)
         if all([include_attrs, exclude_attrs]):
             raise PolyaxonSchemaError(
-                'Only one value `include_attrs` or `exclude_attrs` is allowed.')
+                "Only one value `include_attrs` or `exclude_attrs` is allowed."
+            )
         if not any([include_attrs, exclude_attrs]):  # Use Default setup attrs
             include_attrs = self.DEFAULT_INCLUDE_ATTRIBUTES
             exclude_attrs = self.DEFAULT_EXCLUDE_ATTRIBUTES
 
         if include_attrs:
-            exclude_attrs = set(six.iterkeys(obj_dict)) - set(include_attrs)
+            exclude_attrs = set(obj_dict.keys()) - set(include_attrs)
         for attr in exclude_attrs:
             obj_dict.pop(attr, None)
 
+        if dump:
+            return self._dump(obj_dict)
         return obj_dict
 
-    def to_dict(self, humanize_values=False, unknown=None):
+    def to_dict(
+        self,
+        humanize_values=False,
+        unknown=None,
+        dump=False,
+        include_kind=False,
+        include_version=False,
+    ):
         unknown = unknown or self.UNKNOWN_BEHAVIOUR
-        return self.obj_to_dict(self, humanize_values=humanize_values, unknown=unknown)
+        obj = self.obj_to_dict(
+            self,
+            humanize_values=humanize_values,
+            unknown=unknown,
+            include_kind=include_kind,
+            include_version=include_version,
+        )
+        if dump:
+            return self._dump(obj)
+        return obj
 
     def to_schema(self):
         return self.obj_to_schema(self)
@@ -89,18 +144,33 @@ class BaseConfig(object):
         return humanized_attrs
 
     @classmethod
-    def obj_to_dict(cls, obj, humanize_values=False, unknown=None):
+    def obj_to_dict(
+        cls,
+        obj,
+        humanize_values=False,
+        unknown=None,
+        include_kind=False,
+        include_version=False,
+    ):
         unknown = unknown or cls.UNKNOWN_BEHAVIOUR
         humanized_attrs = cls.humanize_attrs(obj) if humanize_values else {}
-        data_dict = cls.SCHEMA(unknown=unknown).dump(obj)  # pylint: disable=not-callable
+        data_dict = cls.SCHEMA(unknown=unknown).dump(  # pylint: disable=not-callable
+            obj
+        )
 
-        for k, v in six.iteritems(humanized_attrs):
+        if include_kind and "kind" not in data_dict and hasattr(obj, "kind"):
+            data_dict["kind"] = obj.IDENTIFIER
+
+        if include_version and "version" not in data_dict:
+            data_dict["version"] = SCHEMA_VERSION
+
+        for k, v in humanized_attrs.items():
             data_dict[k] = v
         return data_dict
 
     @classmethod
     def remove_reduced_attrs(cls, data):
-        obj_dict = OrderedDict((key, value) for (key, value) in six.iteritems(data))
+        obj_dict = OrderedDict((key, value) for (key, value) in data.items())
         for attr in cls.REDUCED_ATTRIBUTES:
             if obj_dict[attr] is None:
                 del obj_dict[attr]
@@ -112,23 +182,169 @@ class BaseConfig(object):
         return {cls.IDENTIFIER: cls.obj_to_dict(obj)}
 
     @classmethod
-    def from_dict(cls, value, unknown=None):
+    def from_dict(cls, value, unknown=None, partial: bool = False):
         unknown = unknown or cls.UNKNOWN_BEHAVIOUR
-        return cls.SCHEMA(unknown=unknown).load(value)  # pylint: disable=not-callable
+        return cls.SCHEMA(unknown=unknown).load(  # pylint: disable=not-callable
+            value, partial=partial
+        )
+
+    @classmethod
+    def read(cls, values, unknown=None, partial: bool = False, config_type=None):
+        values = ConfigSpec.read_from(values, config_type=config_type)
+        return cls.from_dict(values, unknown=unknown, partial=partial)
+
+    @classmethod
+    def init_file(cls, filepath: str, config=None):
+        if not os.path.exists(filepath):
+            cls.write(config or cls(), filepath=filepath)
+            os.chmod(filepath, cls.WRITE_MODE)
+
+    def write(self, filepath: str):
+        with open(filepath, "w") as config_file:
+            config_file.write(self.to_dict(dump=True))
+
+    def clone(self):
+        return self.from_dict(self.to_dict())
+
+    @staticmethod
+    def patch_normal_merge(current_value, value, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
+
+        if isinstance(current_value, Mapping):
+            if strategy == V1PatchStrategy.POST_MERGE:
+                return deep_update(current_value, value)
+            elif strategy == V1PatchStrategy.PRE_MERGE:
+                return deep_update(value, current_value)
+        elif isinstance(current_value, list):
+            if strategy == V1PatchStrategy.POST_MERGE:
+                return current_value + [i for i in value if i not in current_value]
+            elif strategy == V1PatchStrategy.PRE_MERGE:
+                return value + [i for i in current_value if i not in value]
+        elif isinstance(current_value, BaseConfig):
+            return current_value.patch(value, strategy=strategy)
+        elif hasattr(current_value, "to_dict"):
+            if strategy == V1PatchStrategy.POST_MERGE:
+                return deep_update(current_value.to_dict(), value.to_dict())
+            elif strategy == V1PatchStrategy.PRE_MERGE:
+                return deep_update(value.to_dict(), current_value.to_dict())
+        else:
+            if strategy == V1PatchStrategy.POST_MERGE:
+                return value
+            elif strategy == V1PatchStrategy.PRE_MERGE:
+                return current_value
+
+    @classmethod
+    def patch_swagger_field(cls, config, values, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
+
+        openapi_types = getattr(config, "openapi_types", {})
+        for key in openapi_types:
+            value = getattr(values, key, None)
+            if value is None:
+                continue
+
+            current_value = getattr(config, key, None)
+            if current_value is None:
+                setattr(
+                    config, key, value
+                )  # handles also V1PatchStrategy.ISNULL implicitly
+                continue
+
+            if strategy == V1PatchStrategy.ISNULL:
+                continue
+            if strategy == V1PatchStrategy.REPLACE:
+                setattr(config, key, value)
+                continue
+
+            setattr(config, key, cls.patch_normal_merge(current_value, value, strategy))
+
+    @classmethod
+    def patch_obj(cls, config, values, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
+
+        for key in config.SCHEMA._declared_fields.keys():
+            if key in cls.FIELDS_MANUAL_PATCH:
+                continue
+
+            value = getattr(values, key, None)
+            if value is None:
+                continue
+
+            current_value = getattr(config, key, None)
+            if current_value is None:
+                setattr(
+                    config, key, value
+                )  # handles also V1PatchStrategy.ISNULL implicitly
+                continue
+
+            if (
+                isinstance(current_value, BaseConfig)
+                and key not in cls.FIELDS_SAME_KIND_PATCH
+            ):
+                current_value.patch(value, strategy=strategy)
+                continue
+
+            if not isinstance(current_value, BaseConfig) and hasattr(
+                current_value, "openapi_types"
+            ):
+                cls.patch_swagger_field(current_value, value, strategy)
+                continue
+
+            if strategy == V1PatchStrategy.ISNULL:
+                continue
+            if strategy == V1PatchStrategy.REPLACE:
+                setattr(config, key, value)
+                continue
+
+            # We only handle merge strategies
+            def normal_merge():
+                setattr(
+                    config, key, cls.patch_normal_merge(current_value, value, strategy)
+                )
+
+            def same_kind_merge():
+                # If the same kind resume merge patch using base logic
+                if current_value.kind == value.kind:
+                    normal_merge()
+                # Not same kind use post/pre replace
+                else:
+                    if strategy == V1PatchStrategy.POST_MERGE:
+                        setattr(config, key, value)
+                    elif strategy == V1PatchStrategy.PRE_MERGE:
+                        setattr(config, key, current_value)
+
+            if key in cls.FIELDS_SAME_KIND_PATCH:
+                same_kind_merge()
+            else:
+                normal_merge()
+
+        return config
+
+    def patch(self, values, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
+        return self.patch_obj(self, values, strategy)
 
     @staticmethod
     def localize_date(dt):
         if not dt:
             return dt
         if not dt.tzinfo:
-            dt = utc.localize(dt)
-        return dt.astimezone(get_time_zone())
+            dt = timezone.utc.localize(dt)
+        return dt.astimezone(get_timezone())
 
     @classmethod
-    def to_jsonschema(cls):
+    def to_jsonschema(cls, dump: bool = True):
         from marshmallow_jsonschema import JSONSchema  # pylint:disable=import-error
 
-        return JSONSchema().dump(cls.SCHEMA())  # pylint:disable=not-callable
+        value = JSONSchema().dump(cls.SCHEMA())  # pylint:disable=not-callable
+        if dump:
+            return cls._dump(value)
+        return value
+
+    @classmethod
+    def write_jsonschema(cls, filepath: str):
+        with open(filepath, "w") as config_file:
+            config_file.write(cls.to_jsonschema(dump=True))
 
 
 class BaseOneOfSchema(Schema):
@@ -142,7 +358,8 @@ class BaseOneOfSchema(Schema):
     schema and adds an extra "type" field with name of object type.
     Deserialization is reverse.
     """
-    TYPE_FIELD = 'type'
+
+    TYPE_FIELD = "type"
     TYPE_FIELD_REMOVE = True
     SCHEMAS = {}
 
@@ -151,9 +368,9 @@ class BaseOneOfSchema(Schema):
 
     def get_obj_type(self, obj):
         """Returns name of object schema"""
-        return obj.IDENTIFIER
+        return obj.IDENTIFIER or getattr(obj, self.TYPE_FIELD)
 
-    def dump(self, obj, many=None):
+    def dump(self, obj, *, many=None):
         result_data = []
         result_errors = {}
         many = self.many if many is None else bool(many)
@@ -180,25 +397,25 @@ class BaseOneOfSchema(Schema):
     def _dump(self, obj):
         obj_type = self.get_obj_type(obj)
         if not obj_type:
-            return None, {'_schema': 'Unknown object class: %s' % obj.__class__.__name__}
+            return (
+                None,
+                {"_schema": "Unknown object class: %s" % obj.__class__.__name__},
+            )
 
         type_schema = self.SCHEMAS.get(obj_type)
         if not type_schema:
-            return None, {'_schema': 'Unsupported object type: %s' % obj_type}
+            return None, {"_schema": "Unsupported object type: %s" % obj_type}
 
-        schema = (
-            type_schema if isinstance(type_schema, Schema)
-            else type_schema()
-        )
+        schema = type_schema if isinstance(type_schema, Schema) else type_schema()
 
-        schema.context.update(getattr(self, 'context', {}))
+        schema.context.update(getattr(self, "context", {}))
 
         result = schema.dump(obj, many=False)
         if result is not None:
             result[self.TYPE_FIELD] = obj_type
         return result
 
-    def load(self, data, many=None, partial=None, unknown=None):
+    def load(self, data, many=None, *, partial=None, unknown=None):
         result_data = []
         result_errors = {}
         many = self.many if many is None else bool(many)
@@ -230,7 +447,7 @@ class BaseOneOfSchema(Schema):
 
     def _load(self, data, partial=None, unknown=None):
         if not isinstance(data, dict):
-            raise ValidationError({'_schema': 'Invalid data type: %s' % data})
+            raise ValidationError({"_schema": "Invalid data type: %s" % data})
 
         data = dict(data)
         unknown = unknown or self.unknown
@@ -240,31 +457,27 @@ class BaseOneOfSchema(Schema):
             data.pop(self.TYPE_FIELD)
 
         if not data_type:
-            raise ValidationError({
-                self.TYPE_FIELD: ['Missing data for required field.']
-            })
+            raise ValidationError(
+                {self.TYPE_FIELD: ["Missing data for required field."]}
+            )
 
         try:
             type_schema = self.SCHEMAS.get(data_type)
         except TypeError:
             # data_type could be unhashable
-            raise ValidationError({
-                self.TYPE_FIELD: ['Invalid value: %s' % data_type]
-            })
+            raise ValidationError({self.TYPE_FIELD: ["Invalid value: %s" % data_type]})
         if not type_schema:
-            raise ValidationError({
-                self.TYPE_FIELD: ['Unsupported value: %s' % data_type],
-            })
+            raise ValidationError(
+                {self.TYPE_FIELD: ["Unsupported value: %s" % data_type]}
+            )
 
-        schema = (
-            type_schema if isinstance(type_schema, Schema) else type_schema()
-        )
+        schema = type_schema if isinstance(type_schema, Schema) else type_schema()
 
-        schema.context.update(getattr(self, 'context', {}))
+        schema.context.update(getattr(self, "context", {}))
 
         return schema.load(data, many=False, partial=partial, unknown=unknown)
 
-    def validate(self, data, many=None, partial=None):
+    def validate(self, data, *, many=None, partial=None):
         try:
             self.load(data, many=many, partial=partial)
         except ValidationError as ve:
@@ -284,7 +497,7 @@ class BaseMultiSchema(Schema):
     @post_dump(pass_original=True, pass_many=True)
     def handle_multi_schema_dump(self, data, pass_many, original):
         def handle_item(item):
-            if hasattr(item, 'get_config'):
+            if hasattr(item, "get_config"):
                 return self.__configs__[item.__class__.__name__].obj_to_schema(item)
             return item.to_schema()
 
@@ -298,23 +511,29 @@ class BaseMultiSchema(Schema):
         def make(key, val=None):
             key = to_camel_case(key) if self.__support_snake_case__ else key
             try:
-                return (self.__configs__[key].from_dict(val, unknown=EXCLUDE) if val else
-                        self.__configs__[key]())
+                return (
+                    self.__configs__[key].from_dict(val, unknown=EXCLUDE)
+                    if val
+                    else self.__configs__[key]()
+                )
             except KeyError:
-                raise ValidationError("`{}` is not a valid value for schema `{}`".format(
-                    key, self.__multi_schema_name__))
+                raise ValidationError(
+                    "`{}` is not a valid value for schema `{}`".format(
+                        key, self.__multi_schema_name__
+                    )
+                )
 
         def handle_item(item):
-            if isinstance(item, six.string_types):
+            if isinstance(item, str):
                 return make(item)
 
             if isinstance(item, Mapping):
-                if 'class_name' in item:
-                    return make(item['class_name'], item['config'])
-                if 'model_type' in item:
-                    return make(item.pop('model_type'), item)
+                if "class_name" in item:
+                    return make(item["class_name"], item["config"])
+                if "model_type" in item:
+                    return make(item.pop("model_type"), item)
                 assert len(item) == 1
-                key, val = list(six.iteritems(item))[0]
+                key, val = list(item.items())[0]
                 return make(key, val)
 
         if pass_many:
@@ -323,4 +542,5 @@ class BaseMultiSchema(Schema):
         return handle_item(original)
 
 
-NAME_REGEX = r'^[-a-zA-Z0-9_]+\Z'
+NAME_REGEX = r"^[-a-zA-Z0-9_]+\Z"
+FULLY_QUALIFIED_NAME_REGEX = r"^[-a-zA-Z0-9_]+(:[-a-zA-Z0-9_.]+)?\Z"

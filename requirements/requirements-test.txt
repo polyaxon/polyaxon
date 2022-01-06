@@ -1,3 +1,0 @@
--r requirements.txt
-
-polyaxon-pip-tests==0.0.3

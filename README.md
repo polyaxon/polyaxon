@@ -1,14 +1,21 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/polyaxon/polyaxon-schemas.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon-schemas)
-[![PyPI version](https://badge.fury.io/py/polyaxon-schemas.svg)](https://badge.fury.io/py/polyaxon-schemas)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3bf5388afaa141b19e4cfc4fe58876c0)](https://www.codacy.com/app/polyaxon/polyaxon-schemas?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon-schemas&amp;utm_campaign=Badge_Grade)
-[![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
+[![License: Apache 2](https://img.shields.io/badge/License-apache2-blue.svg?style=flat&longCache=true)](LICENSE)
+[![Polyaxon Core](https://github.com/polyaxon/polyaxon/actions/workflows/schemas.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/schemas.yml)
+[![Slack](https://img.shields.io/badge/Slack-1.4k%20members-blue.svg?style=flat&logo=slack&longCache=true)](https://polyaxon.com/slack/)
+[![Docs](https://img.shields.io/badge/docs-stable-brightgreen.svg?style=flat&longCache=true)](https://polyaxon.com/docs/)
+[![GitHub](https://img.shields.io/badge/issue_tracker-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/issues)
+[![GitHub](https://img.shields.io/badge/roadmap-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/milestones)
 
-# Polyaxon-schemas
+# Polyaxon Schemas
 
-Schema definitions and validation for Polyaxon.
-
-
-# License
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-schemas.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-schemas?ref=badge_large)
+<br>
+<p align="center">
+  <p align="center">
+    <a href="https://polyaxon.com/?utm_source=github&utm_medium=schemas-logo" target="_blank">
+        <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/packages/schemas.svg" alt="traceml" height="120">
+    </a>
+  </p>
+    <p align="center">
+       Schema definitions and validation for Polyaxon.
+    </p>
+</p>
+<br>  
