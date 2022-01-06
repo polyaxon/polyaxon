@@ -2,6 +2,6 @@ global-exclude *.py[cod]
 prune tests
 prune __pycache__
 prune requirements
-include README.md
-include LICENSE
-include CONTRIBUTING.md
+include ../README.md
+include ../LICENSE
+include ../CONTRIBUTING.md
