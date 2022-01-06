@@ -1,0 +1,25 @@
+name: Datatile
+
+on: [push, pull_request]
+
+jobs:
+  core:
+#    if: github.event.comment.body == 'test core'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.6', '3.7', '3.8', '3.9'] # , '3.10.0']
+
+    steps:
+    - uses: actions/checkout@v2.4.0
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pandas
+    - name: Test with pytest
+      run: |
+        pytest
