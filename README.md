@@ -8,7 +8,7 @@
 <br>
 <p align="center">
   <p align="center">
-    <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/packages/traceml.svg" alt="traceml" height="200">
+    <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/packages/traceml.svg" alt="traceml" height="120">
   </p>
 </p>
 <br>
