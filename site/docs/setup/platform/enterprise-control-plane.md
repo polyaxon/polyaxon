@@ -85,7 +85,7 @@ streams:
 Polyaxon control plane requires the scheduler to be running. e.g. using redis:
 
 ```yaml
-borker: redis
+broker: redis
 redis:
   enabled: true
 scheduler:
