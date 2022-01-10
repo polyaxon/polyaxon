@@ -83,7 +83,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
         annotations: Dict, optional
         node_selector: Dict, optional
         affinity: V1Affinity, optional
-        tolerations: V1Affinity, optional
+        tolerations: List[V1Toleration], optional
         node_name: str, optional
         service_account_name: str, optional
         host_aliases: V1HostAlias, optional

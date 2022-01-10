@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import polyaxon_sdk
 
 from marshmallow import fields
@@ -27,7 +26,7 @@ from polyaxon.schemas.fields.swagger import SwaggerField
 
 def get_init_resources() -> k8s_schemas.V1ResourceRequirements:
     return k8s_schemas.V1ResourceRequirements(
-        limits={"cpu": "1", "memory": "200Mi"},
+        limits={"cpu": "1", "memory": "500Mi"},
         requests={"cpu": "0.1", "memory": "60Mi"},
     )
 
@@ -135,7 +134,7 @@ def get_default_init_container(schema=True):
         "imageTag": pkg.VERSION,
         "imagePullPolicy": PullPolicy.IF_NOT_PRESENT.value,
         "resources": {
-            "limits": {"cpu": "1", "memory": "200Mi"},
+            "limits": {"cpu": "1", "memory": "500Mi"},
             "requests": {"cpu": "0.1", "memory": "60Mi"},
         },
     }

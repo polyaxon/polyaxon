@@ -16,10 +16,11 @@
 from typing import List
 
 from polyaxon.auxiliaries import get_default_cleaner_container
-from polyaxon.auxiliaries.cleaner import get_batch_cleaner_container
+from polyaxon.auxiliaries.cleaner import V1PolyaxonCleaner, get_batch_cleaner_container
 from polyaxon.polyflow import (
     V1CleanerJob,
     V1Component,
+    V1Environment,
     V1Operation,
     V1Plugins,
     V1Termination,
@@ -28,7 +29,11 @@ from polyaxon.schemas.types import V1ConnectionType
 
 
 def get_cleaner_operation(
-    connection: V1ConnectionType, run_uuid: str, run_kind: str
+    connection: V1ConnectionType,
+    run_uuid: str,
+    run_kind: str,
+    environment: V1Environment = None,
+    cleaner: V1PolyaxonCleaner = None,
 ) -> V1Operation:
     return V1Operation(
         termination=V1Termination(max_retries=1),
@@ -43,8 +48,11 @@ def get_cleaner_operation(
                 sync_statuses=False,
             ),
             run=V1CleanerJob(
+                environment=environment,
                 connections=[connection.name],
-                container=get_default_cleaner_container(connection, run_uuid, run_kind),
+                container=get_default_cleaner_container(
+                    connection, run_uuid, run_kind, cleaner
+                ),
             ),
         ),
     )
@@ -53,6 +61,8 @@ def get_cleaner_operation(
 def get_batch_cleaner_operation(
     connection: V1ConnectionType,
     paths: List[str],
+    environment: V1Environment = None,
+    cleaner: V1PolyaxonCleaner = None,
 ) -> V1Operation:
     return V1Operation(
         termination=V1Termination(max_retries=1),
@@ -67,8 +77,9 @@ def get_batch_cleaner_operation(
                 sync_statuses=False,
             ),
             run=V1CleanerJob(
+                environment=environment,
                 connections=[connection.name],
-                container=get_batch_cleaner_container(connection, paths),
+                container=get_batch_cleaner_container(connection, paths, cleaner),
             ),
         ),
     )

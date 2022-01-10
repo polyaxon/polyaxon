@@ -14,14 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.auxiliaries.cleaner import get_default_cleaner_container
+from polyaxon.auxiliaries.cleaner import (
+    PolyaxonCleanerSchema,
+    V1PolyaxonCleaner,
+    get_default_cleaner_container,
+)
 from polyaxon.auxiliaries.init import (
     PolyaxonInitContainerSchema,
     V1PolyaxonInitContainer,
     get_default_init_container,
     get_init_resources,
 )
-from polyaxon.auxiliaries.notifier import get_default_notification_container
+from polyaxon.auxiliaries.notifier import (
+    PolyaxonNotifierSchema,
+    V1PolyaxonNotifier,
+    get_default_notification_container,
+)
 from polyaxon.auxiliaries.sidecar import (
     PolyaxonSidecarContainerSchema,
     V1PolyaxonSidecarContainer,

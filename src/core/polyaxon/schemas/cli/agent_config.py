@@ -18,16 +18,26 @@ from typing import List
 from marshmallow import EXCLUDE, ValidationError, fields, pre_load, validates_schema
 
 from polyaxon.auxiliaries import (
+    PolyaxonCleanerSchema,
     PolyaxonInitContainerSchema,
+    PolyaxonNotifierSchema,
     PolyaxonSidecarContainerSchema,
+)
+from polyaxon.auxiliaries.default_scheduling import (
+    DefaultSchedulingSchema,
+    V1DefaultScheduling,
 )
 from polyaxon.containers.contexts import CONTEXT_ARTIFACTS_ROOT
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
+    POLYAXON_KEYS_AGENT_CLEANER,
     POLYAXON_KEYS_AGENT_COMPRESSED_LOGS,
     POLYAXON_KEYS_AGENT_CONNECTIONS,
+    POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
+    POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
     POLYAXON_KEYS_AGENT_INIT,
     POLYAXON_KEYS_AGENT_IS_REPLICA,
+    POLYAXON_KEYS_AGENT_NOTIFIER,
     POLYAXON_KEYS_AGENT_RUNS_SA,
     POLYAXON_KEYS_AGENT_SECRET_NAME,
     POLYAXON_KEYS_AGENT_SIDECAR,
@@ -75,6 +85,22 @@ class AgentSchema(BaseSchema):
     )
     init = fields.Nested(
         PolyaxonInitContainerSchema, allow_none=True, data_key=POLYAXON_KEYS_AGENT_INIT
+    )
+    notifier = fields.Nested(
+        PolyaxonNotifierSchema, allow_none=True, data_key=POLYAXON_KEYS_AGENT_NOTIFIER
+    )
+    cleaner = fields.Nested(
+        PolyaxonCleanerSchema, allow_none=True, data_key=POLYAXON_KEYS_AGENT_CLEANER
+    )
+    default_scheduling = fields.Nested(
+        DefaultSchedulingSchema,
+        allow_none=True,
+        data_key=POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
+    )
+    default_image_pull_secrets = fields.List(
+        fields.Str(),
+        allow_none=True,
+        data_key=POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
     )
     artifacts_store = fields.Nested(
         ConnectionTypeSchema,
@@ -164,6 +190,65 @@ class AgentSchema(BaseSchema):
         if init:
             data[POLYAXON_KEYS_AGENT_INIT] = init
 
+        cleaner = data.get(POLYAXON_KEYS_AGENT_CLEANER)
+        try:
+            cleaner = parser.get_dict(
+                key=POLYAXON_KEYS_AGENT_CLEANER, value=cleaner, is_optional=True
+            )
+        except PolyaxonSchemaError as e:
+            raise ValidationError(
+                "Received an invalid cleaner `{}`".format(cleaner)
+            ) from e
+        if cleaner:
+            data[POLYAXON_KEYS_AGENT_CLEANER] = cleaner
+
+        notifier = data.get(POLYAXON_KEYS_AGENT_NOTIFIER)
+        try:
+            notifier = parser.get_dict(
+                key=POLYAXON_KEYS_AGENT_NOTIFIER, value=notifier, is_optional=True
+            )
+        except PolyaxonSchemaError as e:
+            raise ValidationError(
+                "Received an invalid notifier `{}`".format(notifier)
+            ) from e
+        if notifier:
+            data[POLYAXON_KEYS_AGENT_NOTIFIER] = notifier
+
+        default_scheduling = data.get(POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING)
+        try:
+            default_scheduling = parser.get_dict(
+                key=POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
+                value=default_scheduling,
+                is_optional=True,
+            )
+        except PolyaxonSchemaError as e:
+            raise ValidationError(
+                "Received an invalid default_scheduling `{}`".format(default_scheduling)
+            ) from e
+        if default_scheduling:
+            data[POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING] = default_scheduling
+
+        default_image_pull_secrets = data.get(
+            POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS
+        )
+        try:
+            default_image_pull_secrets = parser.get_string(
+                key=POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
+                value=default_image_pull_secrets,
+                is_optional=True,
+                is_list=True,
+            )
+        except PolyaxonSchemaError as e:
+            raise ValidationError(
+                "Received an invalid default_image_pull_secrets `{}`".format(
+                    default_image_pull_secrets
+                )
+            ) from e
+        if default_image_pull_secrets:
+            data[
+                POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS
+            ] = default_image_pull_secrets
+
         return data
 
 
@@ -174,6 +259,8 @@ class AgentConfig(BaseConfig):
     REDUCED_ATTRIBUTES = [
         POLYAXON_KEYS_AGENT_SIDECAR,
         POLYAXON_KEYS_AGENT_INIT,
+        POLYAXON_KEYS_AGENT_NOTIFIER,
+        POLYAXON_KEYS_AGENT_CLEANER,
         POLYAXON_KEYS_AGENT_IS_REPLICA,
         POLYAXON_KEYS_AGENT_COMPRESSED_LOGS,
         POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
@@ -182,6 +269,8 @@ class AgentConfig(BaseConfig):
         POLYAXON_KEYS_AGENT_SECRET_NAME,
         POLYAXON_KEYS_AGENT_RUNS_SA,
         POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
+        POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
+        POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
     ]
 
     def __init__(
@@ -191,12 +280,16 @@ class AgentConfig(BaseConfig):
         compressed_logs=None,
         sidecar=None,
         init=None,
+        notifier=None,
+        cleaner=None,
         artifacts_store=None,
         connections=None,
         app_secret_name=None,
         agent_secret_name=None,
         runs_sa=None,
         spawner_refresh_interval=None,
+        default_scheduling=None,
+        default_image_pull_secrets=None,
         **kwargs
     ):
         self.namespace = namespace
@@ -204,12 +297,20 @@ class AgentConfig(BaseConfig):
         self.compressed_logs = compressed_logs
         self.sidecar = sidecar
         self.init = init
+        self.notifier = notifier
+        self.cleaner = cleaner
         self.artifacts_store = artifacts_store
         self.connections = connections or []
         self.app_secret_name = app_secret_name
         self.agent_secret_name = agent_secret_name
         self.runs_sa = runs_sa
         self.spawner_refresh_interval = spawner_refresh_interval
+        self.default_image_pull_secrets = default_image_pull_secrets
+        self.default_scheduling = default_scheduling
+        if not self.default_scheduling and self.default_image_pull_secrets:
+            self.default_scheduling = V1DefaultScheduling()
+        if self.default_scheduling and not self.default_scheduling.image_pull_secrets:
+            self.default_scheduling.image_pull_secrets = self.default_image_pull_secrets
         self._all_connections = []
         self.set_all_connections()
         self._secrets = None

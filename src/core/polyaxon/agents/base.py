@@ -150,6 +150,8 @@ class BaseAgent:
                 pool.submit(self.submit_run, run_data)
             for run_data in state.queued or []:
                 pool.submit(self.submit_run, run_data)
+            for run_data in state.checks or []:
+                pool.submit(self.check_run, run_data)
             for run_data in state.stopping or []:
                 pool.submit(self.stop_run, run_data)
             for run_data in state.apply or []:
@@ -416,6 +418,19 @@ class BaseAgent:
                 run_owner=run_owner, run_project=run_project, run_uuid=run_uuid, exc=e
             )
             self.clean_run(run_uuid=run_uuid, run_kind=run_data[1])
+
+    def check_run(self, run_data: Tuple[str, str]):
+        run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])
+        try:
+            self.spawner.get(run_uuid=run_uuid, run_kind=run_data[1])
+        except ApiException as e:
+            if e.status == 404:
+                logger.info(
+                    "Run does not exist anymore, it could have been stopped or deleted."
+                )
+                self.log_run_stopped(
+                    run_owner=run_owner, run_project=run_project, run_uuid=run_uuid
+                )
 
     def stop_run(self, run_data: Tuple[str, str]):
         run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])

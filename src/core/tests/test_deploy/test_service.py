@@ -17,12 +17,12 @@
 from marshmallow import ValidationError
 
 from polyaxon.deploy.schemas.service import (
+    DeploymentService,
     ExternalService,
     ExternalServicesConfig,
     PostgresqlConfig,
     RabbitmqConfig,
     RedisConfig,
-    Service,
     ThirdPartyService,
 )
 from tests.utils import BaseTestCase
@@ -39,23 +39,23 @@ class TestService(BaseTestCase):
 
         for config_dict in bad_config_dicts:
             with self.assertRaises(ValidationError):
-                Service.from_dict(config_dict)
+                DeploymentService.from_dict(config_dict)
 
         config_dict = {"image": "foo", "imageTag": "bar", "imagePullPolicy": "Always"}
 
-        config = Service.from_dict(config_dict)
+        config = DeploymentService.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
         config_dict = {"image": "foo", "replicas": 12, "concurrency": 12}
 
-        config = Service.from_dict(config_dict)
+        config = DeploymentService.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
         config_dict = {
             "resources": {"requests": {"cpu": 2}, "limits": {"memory": "500Mi"}}
         }
 
-        config = Service.from_dict(config_dict)
+        config = DeploymentService.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
     def test_third_party_service(self):

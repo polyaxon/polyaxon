@@ -67,6 +67,24 @@ gateway:
     nodePort: 31833
     annotations: {}
 
+  imagePullSecrets: ["foo", "bar"]
+  nodeSelector:
+    foo: bar
+  tolerations: []
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-gateway"
+          topologyKey: "kubernetes.io/hostname"
+
+
 streams:
   image: polyaxon/polyaxon-streams
   imageTag: 1.0.9
@@ -93,6 +111,23 @@ streams:
     cputhreshold: 70
     minpods: 1
     maxpods: 4
+
+  imagePullSecrets: ["foo", "bar"]
+  nodeSelector:
+    foo: bar
+  tolerations: []
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-streams"
+          topologyKey: "kubernetes.io/hostname"
 
 init:
   image: polyaxon/polyaxon-init
@@ -136,6 +171,22 @@ agent:
     requests:
       cpu: 128m
       memory: 300Mi
+  imagePullSecrets: ["foo", "bar"]
+  nodeSelector:
+    foo: bar
+  tolerations: []
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-agent"
+          topologyKey: "kubernetes.io/hostname"
 
 operator:
   enabled: false
@@ -150,6 +201,77 @@ operator:
     requests:
       cpu: 100m
       memory: 20Mi
+
+  imagePullSecrets: ["foo", "bar"]
+  nodeSelector:
+    foo: bar
+  tolerations: []
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-operator"
+          topologyKey: "kubernetes.io/hostname"
+
+notifier:
+  image: polyaxon/polyaxon-events-handlers
+  imageTag: 1.14.0
+  imagePullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  nodeSelector:
+    foo: bar
+  tolerations: []
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-helper"
+          topologyKey: "kubernetes.io/hostname"
+
+cleaner:
+  image: polyaxon/polyaxon-init
+  imageTag: 1.14.0
+  imagePullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  nodeSelector:
+    foo: bar
+  tolerations: []
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-helper"
+          topologyKey: "kubernetes.io/hostname"
 
 securityContext:
   enabled: false

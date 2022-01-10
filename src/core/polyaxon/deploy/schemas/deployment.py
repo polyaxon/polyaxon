@@ -16,6 +16,13 @@
 
 from marshmallow import ValidationError, fields, validate, validates_schema
 
+from polyaxon.auxiliaries import (
+    PolyaxonCleanerSchema,
+    PolyaxonInitContainerSchema,
+    PolyaxonNotifierSchema,
+    PolyaxonSidecarContainerSchema,
+)
+from polyaxon.auxiliaries.default_scheduling import DefaultSchedulingSchema
 from polyaxon.deploy.schemas.auth import AuthSchema
 from polyaxon.deploy.schemas.deployment_types import DeploymentCharts, DeploymentTypes
 from polyaxon.deploy.schemas.email import EmailSchema
@@ -28,14 +35,13 @@ from polyaxon.deploy.schemas.security_context import SecurityContextSchema
 from polyaxon.deploy.schemas.service import (
     AgentServiceSchema,
     ApiServiceSchema,
+    DeploymentServiceSchema,
     ExternalServicesSchema,
-    HelperServiceSchema,
     HooksSchema,
     OperatorServiceSchema,
     PostgresqlSchema,
     RabbitmqSchema,
     RedisSchema,
-    ServiceSchema,
     WorkerServiceSchema,
 )
 from polyaxon.deploy.schemas.service_types import ServiceTypes
@@ -79,7 +85,7 @@ def check_postgres(postgresql, external_services):
 def check_rabbitmq(rabbitmq, external_services, broker):
     rabbitmq_enabled = rabbitmq and rabbitmq.enabled
     external_rabbitmq = None
-    rabbitmq_borker = broker != "redis"
+    rabbitmq_broker = broker != "redis"
     if external_services:
         external_rabbitmq = external_services.rabbitmq
 
@@ -89,7 +95,7 @@ def check_rabbitmq(rabbitmq, external_services, broker):
             "not both!"
         )
     rabbitmq_used = rabbitmq_enabled or external_rabbitmq
-    if rabbitmq_used and not rabbitmq_borker:
+    if rabbitmq_used and not rabbitmq_broker:
         raise ValidationError(
             "rabbitmq is enabled but you are using a different broker backend!"
         )
@@ -233,16 +239,20 @@ class DeploymentSchema(BaseCamelSchema):
     scheduler = fields.Nested(WorkerServiceSchema, allow_none=True)
     compiler = fields.Nested(WorkerServiceSchema, allow_none=True)
     worker = fields.Nested(WorkerServiceSchema, allow_none=True)
-    beat = fields.Nested(ServiceSchema, allow_none=True)
+    beat = fields.Nested(DeploymentServiceSchema, allow_none=True)
     agent = fields.Nested(AgentServiceSchema, allow_none=True)
     operator = fields.Nested(OperatorServiceSchema, allow_none=True)
-    init = fields.Nested(HelperServiceSchema, allow_none=True)
-    sidecar = fields.Nested(HelperServiceSchema, allow_none=True)
-    tables_hook = fields.Nested(ServiceSchema, allow_none=True)
-    clean_hooks = fields.Nested(ServiceSchema, allow_none=True)
-    api_hooks = fields.Nested(ServiceSchema, allow_none=True)
+    init = fields.Nested(PolyaxonInitContainerSchema, allow_none=True)
+    sidecar = fields.Nested(PolyaxonSidecarContainerSchema, allow_none=True)
+    notifier = fields.Nested(PolyaxonNotifierSchema, allow_none=True)
+    cleaner = fields.Nested(PolyaxonCleanerSchema, allow_none=True)
+    default_scheduling = fields.Nested(DefaultSchedulingSchema, allow_none=True)
+    default_image_pull_secrets = fields.List(fields.Str(), allow_none=True)
+    tables_hook = fields.Nested(HooksSchema, allow_none=True)
+    clean_hooks = fields.Nested(HooksSchema, allow_none=True)
+    api_hooks = fields.Nested(HooksSchema, allow_none=True)
     hooks = fields.Nested(HooksSchema, allow_none=True)
-    flower = fields.Nested(ServiceSchema, allow_none=True)
+    flower = fields.Nested(DeploymentServiceSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
     redis = fields.Nested(RedisSchema, allow_none=True)
     rabbitmq = fields.Nested(RabbitmqSchema, data_key="rabbitmq-ha", allow_none=True)
@@ -370,6 +380,10 @@ class DeploymentConfig(BaseConfig):
         operator=None,
         init=None,
         sidecar=None,
+        notifier=None,
+        cleaner=None,
+        default_scheduling=None,
+        default_image_pull_secrets=None,
         tables_hook=None,
         clean_hooks=None,
         api_hooks=None,
@@ -456,6 +470,10 @@ class DeploymentConfig(BaseConfig):
         self.operator = operator
         self.init = init
         self.sidecar = sidecar
+        self.notifier = notifier
+        self.cleaner = cleaner
+        self.default_scheduling = default_scheduling
+        self.default_image_pull_secrets = default_image_pull_secrets
         self.tables_hook = tables_hook
         self.clean_hooks = clean_hooks
         self.api_hooks = api_hooks

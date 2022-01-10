@@ -14,41 +14,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from marshmallow import EXCLUDE, fields
+from marshmallow import fields
 
 from polyaxon.deploy.schemas.celery import CelerySchema
-from polyaxon.k8s import k8s_schemas
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
-from polyaxon.schemas.fields.swagger import SwaggerField
+from polyaxon.schemas.services import BaseServiceConfig, BaseServiceSchema
 
 
-class ServiceSchema(BaseCamelSchema):
+class DeploymentServiceSchema(BaseServiceSchema):
     enabled = fields.Bool(allow_none=True)
-    image = fields.Str(allow_none=True)
-    image_tag = fields.Str(allow_none=True)
-    image_pull_policy = fields.Str(allow_none=True)
     replicas = fields.Int(allow_none=True)
     concurrency = fields.Int(allow_none=True)
-    resources = SwaggerField(cls=k8s_schemas.V1ResourceRequirements, allow_none=True)
-
-    class Meta:
-        unknown = EXCLUDE
 
     @staticmethod
     def schema_config():
-        return Service
+        return DeploymentService
 
 
-class Service(BaseConfig):
-    SCHEMA = ServiceSchema
-    REDUCED_ATTRIBUTES = [
+class DeploymentService(BaseServiceConfig):
+    SCHEMA = DeploymentServiceSchema
+    REDUCED_ATTRIBUTES = BaseServiceConfig.REDUCED_ATTRIBUTES + [
         "enabled",
-        "image",
-        "imageTag",
-        "imagePullPolicy",
         "replicas",
         "concurrency",
-        "resources",
     ]
 
     def __init__(
@@ -60,17 +48,27 @@ class Service(BaseConfig):
         replicas=None,
         concurrency=None,
         resources=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        image_pull_secrets=None,
     ):
+        super().__init__(
+            image=image,
+            image_tag=image_tag,
+            image_pull_policy=image_pull_policy,
+            resources=resources,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            image_pull_secrets=image_pull_secrets,
+        )
         self.enabled = enabled
-        self.image = image
-        self.image_tag = image_tag
-        self.image_pull_policy = image_pull_policy
         self.replicas = replicas
         self.concurrency = concurrency
-        self.resources = resources
 
 
-class WorkerServiceSchema(ServiceSchema):
+class WorkerServiceSchema(DeploymentServiceSchema):
     celery = fields.Nested(CelerySchema, allow_none=True)
 
     @staticmethod
@@ -78,9 +76,9 @@ class WorkerServiceSchema(ServiceSchema):
         return WorkerServiceConfig
 
 
-class WorkerServiceConfig(Service):
+class WorkerServiceConfig(DeploymentService):
     SCHEMA = WorkerServiceSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["celery"]
+    REDUCED_ATTRIBUTES = DeploymentService.REDUCED_ATTRIBUTES + ["celery"]
 
     def __init__(
         self,
@@ -91,6 +89,10 @@ class WorkerServiceConfig(Service):
         replicas=None,
         concurrency=None,
         resources=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        image_pull_secrets=None,
         celery=None,
     ):
         super().__init__(
@@ -101,52 +103,15 @@ class WorkerServiceConfig(Service):
             replicas=replicas,
             concurrency=concurrency,
             resources=resources,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            image_pull_secrets=image_pull_secrets,
         )
         self.celery = celery
 
 
-class HelperServiceSchema(ServiceSchema):
-    sleep_interval = fields.Int(allow_none=True)
-    sync_interval = fields.Int(allow_none=True)
-
-    @staticmethod
-    def schema_config():
-        return HelperServiceConfig
-
-
-class HelperServiceConfig(Service):
-    SCHEMA = HelperServiceSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + [
-        "sleepInterval",
-        "syncInterval",
-    ]
-
-    def __init__(
-        self,
-        enabled=None,
-        image=None,
-        image_tag=None,
-        image_pull_policy=None,
-        replicas=None,
-        concurrency=None,
-        resources=None,
-        sleep_interval=None,
-        sync_interval=None,
-    ):
-        super().__init__(
-            enabled=enabled,
-            image=image,
-            image_tag=image_tag,
-            image_pull_policy=image_pull_policy,
-            replicas=replicas,
-            concurrency=concurrency,
-            resources=resources,
-        )
-        self.sleep_interval = sleep_interval
-        self.sync_interval = sync_interval
-
-
-class AgentServiceSchema(ServiceSchema):
+class AgentServiceSchema(DeploymentServiceSchema):
     instance = fields.String(allow_none=True)
     token = fields.String(allow_none=True)
     is_replica = fields.Bool(allow_none=True)
@@ -157,9 +122,9 @@ class AgentServiceSchema(ServiceSchema):
         return AgentServiceConfig
 
 
-class AgentServiceConfig(Service):
+class AgentServiceConfig(DeploymentService):
     SCHEMA = AgentServiceSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + [
+    REDUCED_ATTRIBUTES = DeploymentService.REDUCED_ATTRIBUTES + [
         "instance",
         "token",
         "isReplica",
@@ -175,6 +140,10 @@ class AgentServiceConfig(Service):
         replicas=None,
         concurrency=None,
         resources=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        image_pull_secrets=None,
         instance=None,
         token=None,
         is_replica=None,
@@ -188,6 +157,10 @@ class AgentServiceConfig(Service):
             replicas=replicas,
             concurrency=concurrency,
             resources=resources,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            image_pull_secrets=image_pull_secrets,
         )
         self.instance = instance
         self.token = token
@@ -195,7 +168,7 @@ class AgentServiceConfig(Service):
         self.compressed_logs = compressed_logs
 
 
-class OperatorServiceSchema(ServiceSchema):
+class OperatorServiceSchema(DeploymentServiceSchema):
     skip_crd = fields.Bool(allow_none=True, data_key="skipCRD")
 
     @staticmethod
@@ -203,9 +176,9 @@ class OperatorServiceSchema(ServiceSchema):
         return OperatorServiceConfig
 
 
-class OperatorServiceConfig(Service):
+class OperatorServiceConfig(DeploymentService):
     SCHEMA = OperatorServiceSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["skipCRD"]
+    REDUCED_ATTRIBUTES = DeploymentService.REDUCED_ATTRIBUTES + ["skipCRD"]
 
     def __init__(
         self,
@@ -216,6 +189,10 @@ class OperatorServiceConfig(Service):
         replicas=None,
         concurrency=None,
         resources=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        image_pull_secrets=None,
         skip_crd=None,
     ):
         super().__init__(
@@ -226,11 +203,15 @@ class OperatorServiceConfig(Service):
             replicas=replicas,
             concurrency=concurrency,
             resources=resources,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            image_pull_secrets=image_pull_secrets,
         )
         self.skip_crd = skip_crd
 
 
-class ApiServiceSchema(ServiceSchema):
+class ApiServiceSchema(DeploymentServiceSchema):
     service = fields.Dict(allow_none=True)
 
     @staticmethod
@@ -238,8 +219,9 @@ class ApiServiceSchema(ServiceSchema):
         return ApiServiceConfig
 
 
-class ApiServiceConfig(Service):
+class ApiServiceConfig(DeploymentService):
     SCHEMA = ApiServiceSchema
+    REDUCED_ATTRIBUTES = DeploymentService.REDUCED_ATTRIBUTES + ["service"]
 
     def __init__(
         self,
@@ -250,6 +232,10 @@ class ApiServiceConfig(Service):
         replicas=None,
         concurrency=None,
         resources=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        image_pull_secrets=None,
         service=None,
     ):
         super().__init__(
@@ -260,11 +246,15 @@ class ApiServiceConfig(Service):
             replicas=replicas,
             concurrency=concurrency,
             resources=resources,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            image_pull_secrets=image_pull_secrets,
         )
         self.service = service
 
 
-class HooksSchema(ServiceSchema):
+class HooksSchema(DeploymentServiceSchema):
     load_fixtures = fields.Bool(allow_none=True)
 
     @staticmethod
@@ -272,9 +262,9 @@ class HooksSchema(ServiceSchema):
         return HooksConfig
 
 
-class HooksConfig(Service):
+class HooksConfig(DeploymentService):
     SCHEMA = HooksSchema
-    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["loadFixtures"]
+    REDUCED_ATTRIBUTES = DeploymentService.REDUCED_ATTRIBUTES + ["loadFixtures"]
 
     def __init__(
         self,
@@ -285,6 +275,10 @@ class HooksConfig(Service):
         replicas=None,
         concurrency=None,
         resources=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        image_pull_secrets=None,
         load_fixtures=None,
     ):
         super().__init__(
@@ -295,36 +289,26 @@ class HooksConfig(Service):
             replicas=replicas,
             concurrency=concurrency,
             resources=resources,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            image_pull_secrets=image_pull_secrets,
         )
         self.load_fixtures = load_fixtures
 
 
-class ThirdPartyServiceSchema(ServiceSchema):
-    enabled = fields.Bool(allow_none=True)
+class ThirdPartyServiceSchema(DeploymentServiceSchema):
     persistence = fields.Dict(allow_none=True)
-    node_selector = fields.Dict(allow_none=True)
-    affinity = fields.Dict(allow_none=True)
-    tolerations = fields.List(fields.Dict(allow_none=True), allow_none=True)
 
     @staticmethod
     def schema_config():
         return ThirdPartyService
 
 
-class ThirdPartyService(Service):
+class ThirdPartyService(DeploymentService):
     SCHEMA = ThirdPartyServiceSchema
-    REDUCED_ATTRIBUTES = [
-        "enabled",
-        "image",
-        "imageTag",
-        "imagePullPolicy",
-        "replicas",
-        "concurrency",
-        "resources",
+    REDUCED_ATTRIBUTES = DeploymentService.REDUCED_ATTRIBUTES + [
         "persistence",
-        "nodeSelector",
-        "affinity",
-        "tolerations",
     ]
 
     def __init__(
@@ -335,23 +319,25 @@ class ThirdPartyService(Service):
         image_pull_policy=None,
         replicas=None,
         resources=None,
-        persistence=None,
         node_selector=None,
         affinity=None,
         tolerations=None,
+        image_pull_secrets=None,
+        persistence=None,
     ):
         super().__init__(
+            enabled=enabled,
             image=image,
             image_tag=image_tag,
             image_pull_policy=image_pull_policy,
             replicas=replicas,
             resources=resources,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            image_pull_secrets=image_pull_secrets,
         )
-        self.enabled = enabled
         self.persistence = persistence
-        self.node_selector = node_selector
-        self.affinity = affinity
-        self.tolerations = tolerations
 
 
 class PostgresqlSchema(ThirdPartyServiceSchema):
