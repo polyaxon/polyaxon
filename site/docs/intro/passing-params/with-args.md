@@ -107,7 +107,7 @@ matrix:
 ```
 
 You should notice that the CLI uses the following format: `kind:value` to pass [hyperparameters](/docs/automation/optimization-engine/params/), in this case it passes the `choice` kind.
-Another important aspect to notice is that that matrix is of kind [grid search](/docs/automation/optimization-engine/grid-search/) and it runs the operations sequentially by setting the `concurrency` to `1`.
+Another important aspect to notice is that matrix is of kind [grid search](/docs/automation/optimization-engine/grid-search/) and it runs the operations sequentially by setting the `concurrency` to `1`.
 You can configure those options via CLI as well by passing the following extra arguments `--matrix-kind`, `--matrix-concurrency`, and `--matrix-num-runs`.
 
 The CLI arg `-HP` is a nice way to avoid creating configuration files when iterating, however if you are to create a complex operation with multiple inputs/outputs and complex matrix defintion, 
