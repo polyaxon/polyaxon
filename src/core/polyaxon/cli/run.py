@@ -142,6 +142,11 @@ from polyaxon.utils.validation import validate_tags
     type=int,
     help="Matrix concurrency if hparams are provided, default 1.",
 )
+@click.option(
+    "--matrix-num-runs",
+    type=int,
+    help="Matrix maximum number of runs to create, default all.",
+)
 @click.option("--presets", type=str, help="Name of the presets to use for this run.")
 @click.option(
     "--queue",
@@ -232,6 +237,7 @@ def run(
     hparams,
     matrix_kind,
     matrix_concurrency,
+    matrix_num_runs,
     presets,
     queue,
     nocache,
@@ -348,6 +354,7 @@ def run(
         hparams=hparams,
         matrix_kind=matrix_kind,
         matrix_concurrency=matrix_concurrency,
+        matrix_num_runs=matrix_num_runs,
         presets=presets,
         queue=queue,
         cache=cache,

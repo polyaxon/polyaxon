@@ -32,8 +32,8 @@ def get_init_resources() -> k8s_schemas.V1ResourceRequirements:
 
 
 class PolyaxonInitContainerSchema(BaseCamelSchema):
-    image = fields.Str(required=True)
-    image_tag = fields.Str(required=True)
+    image = fields.Str(allow_none=True)
+    image_tag = fields.Str(allow_none=True)
     image_pull_policy = fields.Str(allow_none=True)
     resources = SwaggerField(cls=k8s_schemas.V1ResourceRequirements, allow_none=True)
 

@@ -35,7 +35,8 @@ class PolyaxonNotifierSchema(BaseServiceSchema):
 
 
 class V1PolyaxonNotifier(BaseServiceConfig):
-    """Polyaxon notifier is a helper job that gets scheduled to clean artifacts when a run is deleted.
+    """Polyaxon notifier is a helper job that gets scheduled to handle post-done events
+    and send webhooks for operations annotated with `hooks` or `notifications`.
 
     Polyaxon CE and Polyaxon Agent are deployed with default values for the notifier,
     however if you need to control or update one or several aspects
