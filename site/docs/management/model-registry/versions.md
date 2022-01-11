@@ -43,7 +43,7 @@ When a user create a run that tracks a model, users can promote a model version 
 
 Once a component is registered, any future run will be linked to it. Users can filter all runs using a specific component version:
 
-![version-promoted](../../../../content/images/dashboard/hub/version-promoted.png)
+![version-promoted](../../../../content/images/dashboard/registry/version-promoted.png)
 
 ## Model version overview and definition
 
