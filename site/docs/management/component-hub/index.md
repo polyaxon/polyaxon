@@ -26,11 +26,13 @@ Polyaxon Component Hub is a product for managing versioned and reusable componen
 `Component` is the entity in Polyaxon that defines a runtime, it allows to package a containerize workload or a whole workflow,
 and makes it repeatable, portable, and sharable.
 
-Polyaxon Component Hub gives you the extra utilities and features to manage access, security, and versioning.
+Polyaxon Component Hub gives you the extra utilities and features to manage access, security, and versioning, it also allows running the component versions using `--hub` or `hubRef:`.
 
 ## Understanding the component hub
 
-Each component can have multiple versions, similar to docker images, to avoid breaking old experiments and workflows.
+Each project in Polyaxon UI can register component versions. Alternatively a project can be created with the sole purpose to list versions of a the same component, e.g. [tensorboard](https://cloud.polyaxon.com/ui/polyaxon/tensorboard).
+
+By declaring a project as a component hub, it can have multiple versions, similar to docker images, to avoid breaking old experiments and workflows.
 
 Each component can list all versions, their stage, their specification, and their usage.
 
@@ -44,8 +46,10 @@ You can create and manage components and versions using the API, CLI or the dash
 > Please check the component management guide. 
 
 Each component version uses a definition which is the same [specification](/docs/core/specification/component/) that is used for running inline components.
-By using `:tag`, you can add new versions to a component, Polyaxon uses the `owner/component-name` as a namespace for the component,
-and will default to `component-name:version` when an owner is not specified. This is the public component managed by Polyaxon itself.
+By using `:tag`, you can add new versions to a component, Polyaxon uses the `owner/project-name` as a namespace for the component,
+and will default to `latest` tag if no `:version` is provided. 
+
+Please note that When an owner is not specified, the public components managed by Polyaxon will be used, for example `notebook:tensorflow`.
 
 > Please check the component version management guide.
 

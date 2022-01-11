@@ -298,7 +298,7 @@ Dependent charts can also have values overwritten. Preface values with
 
 ### Node Selectors
 
-Polyaxon comes with a couple of node selectors options to assign pods to nodes for polyaxon's core platform
+Polyaxon comes with a couple of node selectors options to assign pods to nodes for polyaxon's core platform.
 
 Additionally every dependency in the helm package, exposes a node selector option.
 
@@ -308,7 +308,33 @@ particular nodes or to prefer to run on particular nodes.
 
 ```yaml
 nodeSelector:
+  # Global node selector
   ...
+
+api:
+  nodeSelector:
+    # If null, the global node selector will be used
+    ...
+
+scheduler:
+  nodeSelector:
+    # If null, the global node selector will be used
+    ...
+
+gateway:
+  nodeSelector:
+    # If null, the global node selector will be used
+    ...
+
+streams:
+  nodeSelector:
+    # If null, the global node selector will be used
+    ...
+
+operator:
+  nodeSelector:
+    # If null, the global node selector will be used
+    ...
 
 postgresql:
   nodeSelector:
@@ -335,7 +361,34 @@ Polyaxon provides tolerations option for the core platform, as well as for all d
 
 ```yaml
 tolerations:
+  # Global tolerations
   ...
+
+api:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+
+scheduler:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+
+gateway:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+
+streams:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+
+operator:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+
 
 postgresql:
   tolerations:
@@ -374,6 +427,7 @@ affinity:
               values:
               - "polyaxon-core"
           topologyKey: "kubernetes.io/hostname"
+
 ```
 
 You can update your config deployment file to set affinity for each dependency:
@@ -381,7 +435,33 @@ You can update your config deployment file to set affinity for each dependency:
 
 ```yaml
 affinity:
+  # Global affinity
   ...
+
+api:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+
+scheduler:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+
+gateway:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+
+streams:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+
+operator:
+  affinity:
+    # If null, the global affinity will be used
+    ...
 
 postgresql:
   affinity:

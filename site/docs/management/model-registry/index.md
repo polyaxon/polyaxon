@@ -16,7 +16,7 @@ sidebar: "management"
 
 ## Model Registry
 
-Polyaxon Model Registry is a models store and a system that provides:
+Polyaxon users can use turn a project to provides a model registry, such project provides:
  * APIs and a UI.
  * It can be used with your teams' configuration and access control settings to enable collaborative model management.
  * Logging and lineage using the experimentation feature.

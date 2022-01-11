@@ -77,3 +77,11 @@
       link: /docs/management/model-registry/models/
     - title: Versions
       link: /docs/management/model-registry/versions/
+#  - group: Artifacts
+#    items:
+#    - title: Overview
+#      link: /docs/management/artifacts/
+#    - title: Models
+#      link: /docs/management/artifacts/models/
+#    - title: Versions
+#      link: /docs/management/artifacts/versions/

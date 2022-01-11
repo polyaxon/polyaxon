@@ -289,7 +289,32 @@ particular nodes or to prefer to run on particular nodes.
 
 ```yaml
 nodeSelector:
+  # Global nodeSelector
   ...
+
+gateway:
+  nodeSelector:
+    # If null, the global nodeSelector will be used
+    ...
+
+streams:
+  nodeSelector:
+    # If null, the global nodeSelector will be used
+    ...
+
+operator:
+  nodeSelector:
+    # If null, the global nodeSelector will be used
+    ...
+
+agent:
+  nodeSelector:
+    # If null, the global nodeSelector will be used
+    ...
+cleaner:
+  nodeSelector:
+    # If null, the global nodeSelector will be used
+    ...
 ```
 
 ### Tolerations
@@ -298,7 +323,32 @@ If one or more taints are applied to a node, and you want to make sure some pods
 
 ```yaml
 tolerations:
+  # Global tolerations
   ...
+
+gateway:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+
+streams:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+
+operator:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+
+agent:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
+cleaner:
+  tolerations:
+    # If null, the global tolerations will be used
+    ...
 ```
 
 ### Affinity
@@ -310,6 +360,7 @@ Polyaxon's default affinity:
 
 ```yaml
 affinity:
+  # Global affinity
   podAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 100
@@ -321,6 +372,31 @@ affinity:
               values:
               - "polyaxon-core"
           topologyKey: "kubernetes.io/hostname"
+
+gateway:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+
+streams:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+
+operator:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+
+agent:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+cleaner:
+  affinity:
+    # If null, the global affinity will be used
+    ...
+
 ```
 
 ## Control Plane

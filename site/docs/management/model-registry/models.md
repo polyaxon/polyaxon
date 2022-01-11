@@ -15,32 +15,35 @@ sidebar: "management"
 
 ## Overview
 
-Model is an abstraction that defines a model created in Polyaxon or other system, it can:
+A `Model` is an abstraction that defines a model created in Polyaxon or other system, it can:
  * have multiple versions.
  * be published publicly or privately within your organization.
  * define team and project level permissions.
 
-## Model create
+## Model project creation
 
-You can create your models using the CLI, API, or the UI.
-
-### CLI
-
-```bash
-polyaxon registry create --name OWNER_NAME/MODEL_NAME --description ... --tags tag1,tag2,... 
-```
-
-### UI
+You can version your models in each project or create a project to manage models from multiple projects using the CLI, API, or the UI.
 
 ![model-create](../../../../content/images/dashboard/registry/model-create.png)
 
+Alternatively you can create a project using the CLI:
+
+```bash
+polyaxon project create --name OWNER_NAME/MODEL_NAME --description ... --tags tag1,tag2,... 
+``` 
+
+And then configure the project features using the UI
+
+![model-features](../../../../content/images/dashboard/registry/model-features.png)
+
 ## Model overview
 
+You can view a model overview using the project CLI or UI.
 
 ### CLI
 
 ```bash
-polyaxon registry get -m OWNER_NAME/MODEL_NAME
+polyaxon project get -m OWNER_NAME/MODEL_NAME
 ```
 
 ### UI
@@ -52,7 +55,7 @@ polyaxon registry get -m OWNER_NAME/MODEL_NAME
 ### CLI
 
 ```bash
-polyaxon registry ls -m OWNER_NAME/MODEL_NAME --query ... --sort ...
+polyaxon models ls -m OWNER_NAME/MODEL_NAME --query ... --sort ...
 ```
 
 ### UI
@@ -66,13 +69,13 @@ polyaxon registry ls -m OWNER_NAME/MODEL_NAME --query ... --sort ...
 Updating
 
 ```bash
-polyaxon registry update -m ...
+polyaxon project update -m ...
 ```
 
 Deleting
 
 ```bash
-polyaxon registry delete -m ...
+polyaxon project delete -m ...
 ```
 
 ### UI

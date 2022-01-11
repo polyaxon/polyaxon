@@ -12,7 +12,9 @@ sidebar: "management"
 
 ## Create a new project
 
-To create a project, you can either use the Polyaxon Dashboard or the Polyaxon CLI.
+You can create a project to store component versions using the CLI, API, or the UI.
+
+### CLI
 
 A project consists of a required argument `--name`, an optional argument `--description`,
 and a flag `--private` with a default value set to `True`.
@@ -28,12 +30,26 @@ polyaxon project create --name=mnist --description='Classification of handwritte
 
 All projects are created by default `private`, you can change this behavior by adding `--public`
 
+### UI
+
 To create projects with the UI
 
 ![project-create](../../../../content/images/dashboard/projects/create.png)
 
+### Project features
+
+Project features allows to set the purpose of a project. Most project should take advantage of all features, but sometimes the purpose of a project is to store components, models, or artifacts only.
+
 ## Project overview
 
-Every project can manage jobs, services, dags, and matrix executions.
+Every project can manage jobs, services, dags, and matrix executions. It also allows to promote runs to model or artifact versions, and store runnable components.
+
+### CLI
+
+```bash
+polyaxon project get -c OWNER_NAME/COMPONENT_NAME
+```
+
+### UI
 
 ![project-overview](../../../../content/images/dashboard/projects/overview.png)

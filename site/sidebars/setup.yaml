@@ -53,6 +53,10 @@
       link: /docs/setup/auxiliaries/init/
     - title: Sidecar Container
       link: /docs/setup/auxiliaries/sidecar/
+    - title: Cleaner Job
+      link: /docs/setup/auxiliaries/cleaner/
+    - title: Notifier Job
+      link: /docs/setup/auxiliaries/notifier/
   - group: Deployment Strategies
     items:
     - title: Overview

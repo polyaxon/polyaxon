@@ -15,34 +15,36 @@ sidebar: "management"
 
 ## Overview
 
-Component is the abstraction that defines the runtime in Polyaxon, it can:
+A `Component` is the abstraction that defines the runtime in Polyaxon, it can:
  * have multiple versions.
  * be published publicly or privately within your organization.
  * define team level permissions.
  * can have multiple versions, similar to docker images, to avoid breaking old experiments and workflows.
 
+## Component project creation
 
-## Component create
-
-You can create your components using the CLI, API, or the UI.
-
-### CLI
-
-```bash
-polyaxon hub create --name OWNER_NAME/COMPONENT_NAME --description ... --tags tag1,tag2,... 
-```
-
-### UI
+In order to store multiple related versions of a Polyaxonfile, users can create a project that enables only the `component` feature:
 
 ![component-create](../../../../content/images/dashboard/hub/component-create.png)
 
+Alternatively you can create a project using the CLI:
+
+```bash
+polyaxon project create --name OWNER_NAME/COMPONENT_NAME --description ... --tags tag1,tag2,... 
+``` 
+
+And then configure the project features using the UI
+
+![component-features](../../../../content/images/dashboard/hub/component-features.png)
+
 ## Component overview
 
+You can view a component overview using the project CLI or UI.
 
 ### CLI
 
 ```bash
-polyaxon hub get -c OWNER_NAME/COMPONENT_NAME
+polyaxon project get -c OWNER_NAME/COMPONENT_NAME
 ```
 
 ### UI
@@ -54,7 +56,7 @@ polyaxon hub get -c OWNER_NAME/COMPONENT_NAME
 ### CLI
 
 ```bash
-polyaxon hub ls -c OWNER_NAME/COMPONENT_NAME --query ... --sort ...
+polyaxon components ls -c OWNER_NAME/PROJECT_NAME --query ... --sort ...
 ```
 
 ### UI
@@ -68,18 +70,16 @@ polyaxon hub ls -c OWNER_NAME/COMPONENT_NAME --query ... --sort ...
 Updating
 
 ```bash
-polyaxon hub update -c ...
+polyaxon project update -n ...
 ```
 
 Deleting
 
-```bash
-polyaxon hub delete -c ...
-```
 
-### UI
+```bash
+polyaxon project delete -n ...
+```
 
 You can manage a component using the UI, you can also manage who can contribute and have access to the component and its versions
  
 ![component-admin](../../../../content/images/dashboard/hub/component-admin.png)
-

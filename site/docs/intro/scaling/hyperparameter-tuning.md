@@ -74,6 +74,14 @@ If you don't provide the `--eager` flag Polyaxon will:
 
 > For more details check the [grid search reference](/docs/automation/optimization-engine/grid-search/)
 
+You can also use the CLI to run this operation without creating a Polyaxonfile:
+
+```bash
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -HP learning_rate='linspace:[0.001,0.1,5]' -HP conv_activation='choice:[0.25, 0.3]' -HP dropout='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
+```
+
+Please make sure to add `--eager` if you are on Polyaxon CE. 
+
 ## Random search
 
 The `hyperparams_random.yaml` polyaxonfile is similar to the grid search polyaxonfile, the only difference is that it defines a random search matrix section:
@@ -109,6 +117,14 @@ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-sta
 Random search also provides access to the continuous distributions in addition to the discrete distributions.
 
 > For more details check the [random search reference](/docs/automation/optimization-engine/random-search/)
+
+You can also use the CLI to run this operation without creating a Polyaxonfile:
+
+```bash
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml --matrix-kind random --matrix-num-runs 10 -HP learning_rate='linspace:[0.001,0.1,5]' -HP conv_activation='choice:[0.25, 0.3]' -HP dropout='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
+```
+
+Please make sure to add `--eager` if you are on Polyaxon CE.
 
 ## Learn More
 

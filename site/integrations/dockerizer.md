@@ -22,7 +22,7 @@ Polyaxon allows users to build container images using a native builder.
 
 ## Overview
 
-Polyaxon provides a simple component for building containers with a native builder, you can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/hub/dockerizer/versions) for more details.
+Polyaxon provides a simple component for building containers with a native builder, you can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/dockerizer/versions) for more details.
 
 All versions of this component expect a `destination`; this is the `image:tag` that the component will push the image to.
 Since, you will need to provide auth and other information to resolve the registry, 

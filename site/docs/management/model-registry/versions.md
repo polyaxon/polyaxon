@@ -28,19 +28,29 @@ You can create your model versions using the CLI, API, or the UI.
 ### CLI
 
 ```bash
-polyaxon registry push --name OWNER_NAME/MODEL_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml 
+polyaxon models push --name OWNER_NAME/MODEL_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml 
 ```
 
 ### UI
 
 ![version-create](../../../../content/images/dashboard/registry/version-create.png)
 
+## Model version creation from a run
+
+When a user create a run that tracks a model, users can promote a model version directly from a run:
+
+![version-promote](../../../../content/images/dashboard/registry/version-promote.png)
+
+Once a component is registered, any future run will be linked to it. Users can filter all runs using a specific component version:
+
+![version-promoted](../../../../content/images/dashboard/hub/version-promoted.png)
+
 ## Model version overview and definition
 
 ### CLI
 
 ```bash
-polyaxon registry get -ver OWNER_NAME/MODEL_NAME[:tag]
+polyaxon models get -ver OWNER_NAME/MODEL_NAME[:tag]
 ```
 
 ### UI
@@ -54,19 +64,19 @@ polyaxon registry get -ver OWNER_NAME/MODEL_NAME[:tag]
 You can override a model version with push:
 
 ```bash
-polyaxon registry push --name ...
+polyaxon models push --name ...
 ```
 
 Or update specific info:
 
 ```bash
-polyaxon registry update -ver ...
+polyaxon models update -ver ...
 ```
 
 and delete  
 
 ```bash
-polyaxon registry delete -ver ...
+polyaxon models delete -ver ...
 ```
 
 ### UI

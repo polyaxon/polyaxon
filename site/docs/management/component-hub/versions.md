@@ -18,28 +18,38 @@ sidebar: "management"
 A component can have one or more versions, each version:
  * Conveys useful information about a specific component version/variant.
  * Reflects changes in the logic of your component where previous versions are still used or referenced by runs.
- * can have multiple versions, similar to docker images, to avoid breaking old experiments and workflows.
+ * Can have multiple versions, similar to docker images, to avoid breaking old experiments and workflows.
 
-## Component version create
+## Component version creation
 
 You can create your component versions using the CLI, API, or the UI.
 
 ### CLI
 
 ```bash
-polyaxon hub push --name OWNER_NAME/COMPONENT_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml 
+polyaxon components push --name OWNER_NAME/COMPONENT_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml 
 ```
 
 ### UI
 
 ![version-create](../../../../content/images/dashboard/hub/version-create.png)
 
+## Component version creation from a run
+
+When a user create a run, Polyaxon by default snapshot the component used and tag the run with the component version. Users can optionally promote a component version directly from a run:
+
+![version-promote](../../../../content/images/dashboard/hub/version-promote.png)
+
+Once a component is registered, any future run will be linked to it. Users can filter all runs using a specific component version:
+
+![version-promoted](../../../../content/images/dashboard/hub/version-promoted.png)
+
 ## Component version overview and definition
 
 ### CLI
 
 ```bash
-polyaxon hub get -ver OWNER_NAME/COMPONENT_NAME[:tag]
+polyaxon components get -ver VERSION_NAME -p OWNER/PROJECT_NAME
 ```
 
 ### UI
@@ -57,19 +67,19 @@ polyaxon hub get -ver OWNER_NAME/COMPONENT_NAME[:tag]
 You can override a component version with push:
 
 ```bash
-polyaxon hub push --name ...
+polyaxon components push -f ./path/to/polyaxonfile.yaml -ver VERSION_NAME ...
 ```
 
 Or update specific info:
 
 ```bash
-polyaxon hub update -ver ...
+polyaxon components update -ver ...
 ```
 
 and delete  
 
 ```bash
-polyaxon hub delete -ver ...
+polyaxon components delete -ver ...
 ```
 
 ### UI

@@ -79,6 +79,41 @@ message  test 1
 ....
 ```
 
+## Multirun
+
+Sometimes users might need to run the same job and pass different params, one way to do that is by invoking the CLI multiple times,
+another way is to use `-HP`(`--hparams`) instead of `-P`(`--params`).
+
+To pass `test 1` and `test 2` to our program without invoking the CLI multiple times:
+
+```bash
+polyaxon run -f echo.yaml -HP message='choice:["test 1","test 2"]'
+```
+
+> **Note**: If you are using Polyaxon CE you should add `--eager`.
+
+This command will automatically create a [grid search](/docs/intro/scaling/hyperparameter-tuning/#grid-search) with the following matrix configuration:
+
+```yaml
+matrix:
+  kind: grid
+  params:
+    message:
+      kind: choice
+      value:
+        - test 1
+        - test 2
+  concurrency: 1
+```
+
+You should notice that the CLI uses the following format: `kind:value` to pass [hyperparameters](/docs/automation/optimization-engine/params/), in this case it passes the `choice` kind.
+Another important aspect to notice is that that matrix is of kind [grid search](/docs/automation/optimization-engine/grid-search/) and it runs the operations sequentially by setting the `concurrency` to `1`.
+You can configure those options via CLI as well by passing the following extra arguments `--matrix-kind`, `--matrix-concurrency`, and `--matrix-num-runs`.
+
+The CLI arg `-HP` is a nice way to avoid creating configuration files when iterating, however if you are to create a complex operation with multiple inputs/outputs and complex matrix defintion, 
+we suggest that you use a proper Polyaxonfile. 
+See the intro for the hyperparameter tuning in this [section](/docs/intro/scaling/hyperparameter-tuning/) and the [optimization engine reference](/docs/automation/optimization-engine/).
+
 ## Creating a custom program
 
 Since most Polyaxon's users are data-scientists or machine learning engineers, they generally write their programs in Python, so the content of these tutorials will be in Python as well.

@@ -23,6 +23,20 @@ The general settings page lets you change the project's details
 ![project-settings](../../../../content/images/dashboard/projects/settings.png)
 
 
+Users can also use the CLI to perform admin operations:
+
+Updates
+
+```bash
+polyaxon project update -c ...
+```
+
+Deletion
+
+```bash
+polyaxon project delete -c ...
+```
+
 ## Default Queue and Preset
 
 When a project is created, it will use the default organization queue and the default organization preset if defined.
