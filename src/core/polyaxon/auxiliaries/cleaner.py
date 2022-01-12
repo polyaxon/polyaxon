@@ -196,16 +196,18 @@ def get_default_cleaner_container(
         store.kind.replace("_", "-"), subpath
     )
     wait_args = "polyaxon wait --uuid={} --kind={}".format(run_uuid, run_kind)
-    image = "polyaxon/polyaxon-init:{}".format(pkg.VERSION)
+    image = "polyaxon/polyaxon-init"
+    image_tag = pkg.VERSION
     image_pull_policy = PullPolicy.IF_NOT_PRESENT.value
     resources = get_cleaner_resources()
     if cleaner:
         image = cleaner.image or image
+        image_tag = cleaner.image_tag or image_tag
         image_pull_policy = cleaner.image_pull_policy or image_pull_policy
         resources = cleaner.resources or resources
     return k8s_schemas.V1Container(
         name=MAIN_JOB_CONTAINER,
-        image=image,
+        image="{}:{}".format(image, image_tag),
         image_pull_policy=image_pull_policy,
         command=["/bin/bash", "-c"],
         args=["{} && {}".format(wait_args, clean_args)],
