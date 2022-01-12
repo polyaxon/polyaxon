@@ -19,6 +19,10 @@ from polyaxon.auxiliaries.cleaner import (
     V1PolyaxonCleaner,
     get_default_cleaner_container,
 )
+from polyaxon.auxiliaries.default_scheduling import (
+    DefaultSchedulingSchema,
+    V1DefaultScheduling,
+)
 from polyaxon.auxiliaries.init import (
     PolyaxonInitContainerSchema,
     V1PolyaxonInitContainer,

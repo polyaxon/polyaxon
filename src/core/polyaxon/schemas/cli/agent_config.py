@@ -18,13 +18,11 @@ from typing import List
 from marshmallow import EXCLUDE, ValidationError, fields, pre_load, validates_schema
 
 from polyaxon.auxiliaries import (
+    DefaultSchedulingSchema,
     PolyaxonCleanerSchema,
     PolyaxonInitContainerSchema,
     PolyaxonNotifierSchema,
     PolyaxonSidecarContainerSchema,
-)
-from polyaxon.auxiliaries.default_scheduling import (
-    DefaultSchedulingSchema,
     V1DefaultScheduling,
 )
 from polyaxon.containers.contexts import CONTEXT_ARTIFACTS_ROOT
