@@ -221,7 +221,7 @@ operator:
 
 notifier:
   image: polyaxon/polyaxon-events-handlers
-  imageTag: 1.14.0
+  imageTag: 1.0.1
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -248,7 +248,7 @@ notifier:
 
 cleaner:
   image: polyaxon/polyaxon-init
-  imageTag: 1.14.0
+  imageTag: 1.0.1
   imagePullPolicy: IfNotPresent
   resources:
     limits:
