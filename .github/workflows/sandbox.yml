@@ -12,10 +12,10 @@ jobs:
         cmd/rebuild
     - name: test-polycommon
       run: |
-        cmd/test platform/polycommon module
+        cmd/test sandbox/polycommon module
     - name: test-coredb
       run: |
-        cmd/test platform/coredb module --create-db
+        cmd/test sandbox/coredb module --create-db
     - name: test-coreapi
       run: |
         cmd/test platform/coreapi
