@@ -148,21 +148,39 @@ annotations:
 
 ### GKE ingress
 
-To use an ingress on GKE, the configuration should look like:
-
-```yaml
-ingress:
-  enabled: true
-  hostName: polyaxon.acme.com
-  pathType: ImplementationSpecific
-  path: /*
-  annotations:
-    kubernetes.io/ingress.class: "gce"
-    kubernetes.io/ingress.global-static-ip-name: IP_NAME
-    networking.gke.io/managed-certificates: INGRESS_TLS_CERT_NAME
-    kubernetes.io/ingress.allow-http: "false"
-    ingress.kubernetes.io/rewrite-target: "/"
-```
+ 1. Create static IP using `gcloud compute addresses create IP_NAME --global`
+ 3. Make sure to a DNS record to point to the IP address (`xx.xx.xx.xx`) created in step 1 to a subdomain `polyaxon` of type record `A`.
+ 2. Deploy a managed certificate with `kubectl apply -f polyaxon-certificate.yaml`, the content should be:
+    ```yaml
+    apiVersion: networking.gke.io/v1
+    kind: ManagedCertificate
+    metadata:
+      name: INGRESS_TLS_CERT_NAME
+    spec:
+      domains:
+        - polyaxon.acme.com
+    ``` 
+ 3. The gateway must be change to use node port in GKE for the ingress to function correctly:
+    ```yaml
+    gateway:
+      scheme: https
+      service:
+        type: NodePort
+    ```
+ 4. The configuration for the GKE ingress should look like:
+    ```yaml
+    ingress:
+      enabled: true
+      hostName: polyaxon.acme.com
+      pathType: ImplementationSpecific
+      path: /*
+      annotations:
+        kubernetes.io/ingress.class: "gce"
+        kubernetes.io/ingress.global-static-ip-name: IP_NAME
+        networking.gke.io/managed-certificates: INGRESS_TLS_CERT_NAME
+        kubernetes.io/ingress.allow-http: "false"
+        ingress.kubernetes.io/rewrite-target: "/"
+    ```
 
 ### NGINX ingress
 
