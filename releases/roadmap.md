@@ -16,9 +16,7 @@ sidebar: "releases"
 ### Core
  
  * **New**: Add support for annotations in the connections specification.
- * **Enhancement**: Improve upload logic when streams service is configured with multiple replicas.
- * **Enhancement**: Add mid-runtime update with `apply` logic.
- * **Fix**: Issue with unit sanitization and prevent compiler from raising an error.  
+ * **Enhancement**: Add mid-runtime update with `apply` logic.  
 
 ### Sidecar
 
@@ -65,9 +63,6 @@ sidebar: "releases"
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
  * **Enhancement**: Do not render large artifacts and provide preview button.
- * **Enhancement**: Improve logs viewer to better handle long log lines.
- * **Enhancement**: Add missing `id` / `uid` / `uuid` from the search suggestions.
- * **Enhancement**: Issue with new dashboard sections minimized by default.
 
 ### Tracking
 
@@ -100,6 +95,5 @@ sidebar: "releases"
  * **Enhancement**: Add more informative messages and handling when scaling down usage/agents/seats or when downgrading to a plan missing a specific feature.
  * **Enhancement**: Add support for resuming pipelines and matrix operations.
  * **Enhancement**: Improve resuming or restarting an operation that is part of a pipeline.
- * **Enhancement**: Improve Tags API and UI.
  * **Enhancement**: Investigate the new `suspend` feature to provide immediate concurrency change instead of the current [draining logic](/faq/How-does-changing-concurrency-work/).
  * **Fix**: Regression in metric early stopping policies.
