@@ -19,7 +19,7 @@ import pytest
 
 from polyaxon.deploy.operators.kubectl import KubectlOperator
 from polyaxon.exceptions import PolyaxonOperatorException
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 DUMMY_RETURN_VALUE = object()
 

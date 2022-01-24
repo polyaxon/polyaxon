@@ -28,7 +28,7 @@ from tabulate import tabulate
 from polyaxon.schemas.api.resources import ContainerResourcesConfig
 from polyaxon.utils.humanize import humanize_timesince
 from polyaxon.utils.list_utils import to_list
-from polyaxon.utils.units import to_percentage, to_unit_memory
+from traceml.processors.units_processors import to_percentage, to_unit_memory
 
 
 def get_meta_response(response):

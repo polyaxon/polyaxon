@@ -20,7 +20,7 @@ from unittest.mock import patch
 
 from polyaxon.polyflow.matrix import V1GridSearch
 from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polytune_mark

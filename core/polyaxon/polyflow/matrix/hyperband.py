@@ -17,9 +17,9 @@ import math
 
 from typing import Tuple
 
-import polyaxon_sdk
-
 from marshmallow import fields, validate
+
+import polyaxon_sdk
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.base import BaseSearchConfig

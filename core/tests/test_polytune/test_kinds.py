@@ -17,7 +17,7 @@
 import pytest
 
 from polyaxon.polyflow import V1MatrixKind
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polytune_mark

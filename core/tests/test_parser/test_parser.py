@@ -33,7 +33,7 @@ from polyaxon.schemas.types import (
     V1UriType,
     V1WasbType,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.parser_mark

@@ -19,10 +19,10 @@ import ast
 from collections.abc import Mapping
 from typing import Any, Union
 
-import polyaxon_sdk
-
 from marshmallow import fields, validate, validates_schema
 from marshmallow.exceptions import ValidationError
+
+import polyaxon_sdk
 
 from polyaxon import types
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig, BaseOneOfSchema

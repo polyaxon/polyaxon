@@ -33,7 +33,7 @@ from polyaxon.polypod.common.volumes import get_volume_name
 from polyaxon.polypod.init.git import get_git_init_container, get_repo_context_args
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

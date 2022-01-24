@@ -16,8 +16,6 @@
 
 import pytest
 
-from polyaxon_sdk import V1BucketConnection
-
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
     V1ClaimConnection,
@@ -35,7 +33,8 @@ from polyaxon.polypod.common.volumes import get_volume, get_volume_name
 from polyaxon.polypod.main.volumes import get_volume_mounts
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
+from polyaxon_sdk import V1BucketConnection
 
 
 @pytest.mark.polypod_mark

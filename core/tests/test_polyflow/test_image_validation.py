@@ -19,7 +19,7 @@ import pytest
 from marshmallow import ValidationError
 
 from polyaxon.schemas.fields.docker_image import validate_image
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polyflow_mark

@@ -24,7 +24,7 @@ from marshmallow import ValidationError
 from polyaxon import types
 from polyaxon.polyflow.io import V1IO
 from polyaxon.polyflow.params import ParamSpec, V1Param
-from tests.utils import BaseTestCase, assert_equal_dict
+from polyaxon.utils.test_utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.polyflow_mark

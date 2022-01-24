@@ -20,7 +20,7 @@ from mock import MagicMock
 
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.containers import get_container_command_args
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.container_mark

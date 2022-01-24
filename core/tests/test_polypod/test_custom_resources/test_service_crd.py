@@ -21,7 +21,7 @@ from polyaxon.polyflow.environment import V1Environment
 from polyaxon.polyflow.termination import V1Termination
 from polyaxon.polypod.custom_resources import get_service_custom_resource
 from polyaxon.polypod.pod.spec import get_pod_spec, get_pod_template_spec
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestServiceCRD(BaseTestCase):

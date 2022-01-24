@@ -20,7 +20,7 @@ from unittest.mock import patch
 
 from polyaxon.polyflow.matrix import V1RandomSearch
 from polyaxon.polytune.search_managers.random_search.manager import RandomSearchManager
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polytune_mark

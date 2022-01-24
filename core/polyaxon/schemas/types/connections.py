@@ -15,9 +15,9 @@
 # limitations under the License.
 from typing import Optional
 
-import polyaxon_sdk
-
 from marshmallow import fields, pre_load, validate
+
+import polyaxon_sdk
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (

@@ -1,0 +1,38 @@
+name: Traceml
+
+on: [push, pull_request]
+
+jobs:
+  library:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9, '3.10']
+    steps:
+    - run: |
+        pip install -U traceml
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9] #, '3.10']
+
+    steps:
+    - uses: actions/checkout@v2.4.0
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Upgrade pip
+      run: |
+        which python
+        python -m pip install --upgrade pip
+    - name: Install dependencies
+      run: pip install -r requirements/test.txt
+    - name: Install master dependencies
+      run: pip install -r traceml/requirements/master.txt
+    - name: Test with pytest
+      run: |
+        cd traceml
+        pip install -e ".[dev]"
+        pytest -vv

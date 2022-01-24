@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from polyaxon.k8s.custom_resources.crd import get_custom_object
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestCRD(BaseTestCase):

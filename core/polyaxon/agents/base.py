@@ -19,9 +19,9 @@ import traceback
 from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, Tuple
 
-import polyaxon_sdk
-
 from kubernetes.client.rest import ApiException
+
+import polyaxon_sdk
 
 from polyaxon import live_state, settings
 from polyaxon.agents import converter

@@ -43,7 +43,7 @@ from polyaxon.schemas.types import (
     V1K8sResourceType,
 )
 from polyaxon.services.headers import PolyaxonServices
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class DummyConverter(PlatformJobConverter):

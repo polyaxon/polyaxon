@@ -19,7 +19,7 @@ import os
 from polyaxon.config_reader.manager import ConfigManager
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.types import V1AuthType, V1UriType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestConfigManager(BaseTestCase):

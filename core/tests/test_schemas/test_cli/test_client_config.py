@@ -22,7 +22,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_VERIFY_SSL,
 )
 from polyaxon.schemas.cli.client_config import ClientConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.schemas_mark

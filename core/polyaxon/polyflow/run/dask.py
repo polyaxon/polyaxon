@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import polyaxon_sdk
-
 from marshmallow import fields, validate
+
+import polyaxon_sdk
 
 from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.k8s import k8s_schemas

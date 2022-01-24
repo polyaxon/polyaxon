@@ -20,7 +20,7 @@ from marshmallow import ValidationError
 
 from polyaxon.polyflow import V1Build, V1EventKind, V1Hook, V1Param, V1RunKind
 from polyaxon.polyflow.operations import V1Operation
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.ops_mark

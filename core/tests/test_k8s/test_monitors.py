@@ -15,11 +15,11 @@
 # limitations under the License.
 
 from polyaxon.k8s.monitor import is_container_terminated
+from polyaxon.utils.test_utils import BaseTestCase
 from tests.test_k8s.fixtures import (
     status_run_job_event,
     status_run_job_event_with_conditions,
 )
-from tests.utils import BaseTestCase
 
 
 class TestK8SMonitor(BaseTestCase):

@@ -17,8 +17,8 @@ import pytest
 
 from starlette.exceptions import HTTPException
 
+from polyaxon.utils.test_utils import BaseTestCase
 from tests.test_streams.base import get_streams_client, set_store
-from tests.utils import BaseTestCase
 
 
 @pytest.mark.streams_mark

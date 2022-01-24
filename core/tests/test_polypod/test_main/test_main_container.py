@@ -36,7 +36,7 @@ from polyaxon.polypod.common.mounts import (
 from polyaxon.polypod.main.container import get_main_container
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

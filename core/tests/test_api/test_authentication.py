@@ -18,7 +18,7 @@ import pytest
 
 from polyaxon.env_vars.keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
 from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.api_mark

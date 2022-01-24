@@ -20,7 +20,7 @@ import hyperopt
 
 from polyaxon.polyflow.matrix.hyperopt import V1Hyperopt
 from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polytune_mark

@@ -19,7 +19,7 @@ from polyaxon import settings
 from polyaxon.proxies.schemas.listen import get_listen_config
 from polyaxon.proxies.schemas.logging import get_logging_config
 from polyaxon.proxies.schemas.timeout import get_timeout_config
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

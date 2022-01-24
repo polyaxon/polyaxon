@@ -20,7 +20,6 @@ from typing import Callable, List, Optional, Union
 
 import click
 
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.dashboard import get_dashboard_url
@@ -37,6 +36,7 @@ from polyaxon.utils.formatting import (
 )
 from polyaxon.utils.query_params import get_query_params
 from polyaxon.utils.validation import validate_tags
+from polyaxon_sdk.rest import ApiException
 
 
 def get_version_details(response, content_callback: Callable = None):

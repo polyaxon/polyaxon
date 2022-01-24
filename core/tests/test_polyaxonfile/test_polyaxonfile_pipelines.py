@@ -35,7 +35,7 @@ from polyaxon.polyflow.early_stopping import (
 from polyaxon.polyflow.matrix import V1GridSearch, V1Hyperband, V1RandomSearch
 from polyaxon.polyflow.matrix.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.run import V1Dag
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

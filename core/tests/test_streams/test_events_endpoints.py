@@ -20,12 +20,11 @@ import shutil
 
 from polyaxon import settings
 from polyaxon.polyboard.artifacts import V1ArtifactKind
-from polyaxon.polyboard.events import V1Event, V1Events
-from polyaxon.polyboard.events.schemas import LoggedEventListSpec
+from polyaxon.polyboard.events import LoggedEventListSpec, V1Event, V1Events
 from polyaxon.streams.app.main import STREAMS_URL
 from polyaxon.utils.path_utils import create_path
+from polyaxon.utils.test_utils import BaseTestCase
 from tests.test_streams.base import get_streams_client, set_store
-from tests.utils import BaseTestCase
 
 
 @pytest.mark.streams_mark

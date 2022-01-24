@@ -23,7 +23,7 @@ from azure.storage.blob import BlobPrefix, BlobProperties
 from polyaxon.connections.azure.azure_blobstore import AzureBlobStoreService
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.utils.date_utils import to_datetime
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 AZURE_MODULE = "polyaxon.connections.azure.azure_blobstore.{}"
 

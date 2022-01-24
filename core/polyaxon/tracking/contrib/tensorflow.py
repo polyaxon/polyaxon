@@ -14,61 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon import tracking
-from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.tracking.contrib.tensorboard import PolyaxonTensorboardLogger
+# To keep backwards compatibility
 
-try:
-    import tensorflow as tf
-except ImportError:
-    raise PolyaxonClientException("tensorflow is required to use PolyaxonCallback")
+from traceml.integrations.tensorflow import Callback
 
-SessionRunHook = None
-
-try:
-    from tensorflow.train import SessionRunHook  # noqa
-except ImportError:
-    pass
-
-if not SessionRunHook:
-    raise PolyaxonClientException("tensorflow is required to use PolyaxonCallback")
-
-
-class PolyaxonCallback(SessionRunHook):
-    def __init__(
-        self,
-        summary_op=None,
-        steps_per_log=1000,
-        run=None,
-        log_image: bool = False,
-        log_histo: bool = False,
-        log_tensor: bool = False,
-    ):
-        self._summary_op = summary_op
-        self._steps_per_log = steps_per_log
-        self.run = tracking.get_or_create_run(run)
-        self._log_image = log_image
-        self._log_histo = log_histo
-        self._log_tensor = log_tensor
-
-    def begin(self):
-        if self._summary_op is None:
-            self._summary_op = tf.summary.merge_all()
-        self._step = -1
-
-    def before_run(self, run_context):
-        self._step += 1
-        return tf.train.SessionRunArgs({"summary": self._summary_op})
-
-    def after_run(self, run_context, run_values):
-        if self._step % self._steps_per_log == 0:
-            PolyaxonTensorboardLogger.process_summary(
-                run_values.results["summary"],
-                run=self.run,
-                log_image=self._log_image,
-                log_histo=self._log_histo,
-                log_tensor=self._log_tensor,
-            )
-
-
-PolyaxonSessionRunHook = PolyaxonCallback
+# alias
+PolyaxonCallback = Callback
+PolyaxonSessionRunHook = Callback

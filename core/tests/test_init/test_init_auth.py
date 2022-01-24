@@ -24,7 +24,7 @@ from polyaxon import settings
 from polyaxon.env_vars.keys import POLYAXON_KEYS_RUN_INSTANCE
 from polyaxon.exceptions import PolyaxonContainerException
 from polyaxon.init.auth import create_auth_context
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.init_mark

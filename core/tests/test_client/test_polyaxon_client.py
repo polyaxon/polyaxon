@@ -23,7 +23,7 @@ from polyaxon import settings
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.constants.globals import NO_AUTH
 from polyaxon.schemas.cli.client_config import ClientConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.client_mark

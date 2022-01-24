@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from polyaxon.constants.globals import UNKNOWN
-from polyaxon.utils.units import to_cpu_value, to_memory_bytes
+from traceml.processors.units_processors import to_cpu_value, to_memory_bytes
 
 
 class NodeLifeCycle:

@@ -18,9 +18,8 @@ import pytest
 
 from mock import MagicMock, patch
 
-from polyaxon_sdk import V1ProjectVersionKind
-
 from polyaxon.cli.artifacts import artifacts
+from polyaxon_sdk import V1ProjectVersionKind
 from tests.test_cli.utils import BaseCommandTestCase
 
 

@@ -18,9 +18,9 @@ from collections import namedtuple
 from collections.abc import Mapping
 from typing import Dict, Optional
 
-import polyaxon_sdk
-
 from marshmallow import ValidationError, fields, validates_schema
+
+import polyaxon_sdk
 
 from polyaxon import types
 from polyaxon.contexts import refs as contexts_refs

@@ -41,7 +41,7 @@ from polyaxon.polypod.common.env_vars import (
 from polyaxon.polypod.main.env_vars import get_env_vars
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

@@ -26,7 +26,7 @@ from polyaxon.pql.parser import (
     split_query,
     tokenize_query,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestParser(BaseTestCase):

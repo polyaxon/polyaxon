@@ -19,7 +19,7 @@ from mock import patch
 from polyaxon import settings
 from polyaxon.client import RunClient
 from polyaxon.stores.polyaxon_store import PolyaxonStore
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestPolyaxonStore(BaseTestCase):

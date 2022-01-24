@@ -15,9 +15,9 @@
 # limitations under the License.
 import os
 
-import polyaxon_sdk
-
 from marshmallow import fields
+
+import polyaxon_sdk
 
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject

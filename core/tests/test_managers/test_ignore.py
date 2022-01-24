@@ -20,7 +20,7 @@ from unittest.mock import mock_open, patch
 
 from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.utils import cli_constants
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

@@ -15,9 +15,9 @@
 # limitations under the License.
 from typing import Dict, List
 
-import polyaxon_sdk
-
 from marshmallow import fields, validate
+
+import polyaxon_sdk
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyflow.io import V1IO, IOSchema

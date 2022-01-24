@@ -16,7 +16,7 @@
 from mock import patch
 
 from polyaxon.env_vars.getters import get_project_run_or_local, get_run_or_local
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestRunEnvVars(BaseTestCase):

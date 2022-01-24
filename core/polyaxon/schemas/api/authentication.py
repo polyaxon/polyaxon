@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import polyaxon_sdk
-
 from marshmallow import EXCLUDE, fields
+
+import polyaxon_sdk
 
 from polyaxon.env_vars.keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
 from polyaxon.schemas.base import BaseConfig, BaseSchema

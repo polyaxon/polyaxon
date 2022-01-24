@@ -26,7 +26,7 @@ from polyaxon.polyflow.io import V1IO
 from polyaxon.polyflow.operations import V1Operation
 from polyaxon.polyflow.params import V1Param, ops_params
 from polyaxon.polyflow.run import V1Dag
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.workflow_mark

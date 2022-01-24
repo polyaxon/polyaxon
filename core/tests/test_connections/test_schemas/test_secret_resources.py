@@ -17,7 +17,7 @@
 from marshmallow.exceptions import ValidationError
 
 from polyaxon.connections.schemas import V1K8sResourceSchema, validate_k8s_resource
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestSecretResourceValidation(BaseTestCase):

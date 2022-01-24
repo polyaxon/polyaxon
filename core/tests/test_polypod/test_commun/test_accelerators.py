@@ -23,7 +23,7 @@ from polyaxon.polypod.common.accelerators import (
     requests_gpu,
     requests_tpu,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

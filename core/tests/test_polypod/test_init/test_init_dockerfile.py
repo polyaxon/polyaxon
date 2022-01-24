@@ -33,7 +33,7 @@ from polyaxon.polypod.common.volumes import get_volume_name
 from polyaxon.polypod.init.dockerfile import get_dockerfile_init_container
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types.dockerfile import V1DockerfileType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

@@ -23,8 +23,8 @@ from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.contexts import resolve_contexts
 from polyaxon.schemas.types import V1ConnectionType
+from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon.utils.tz_utils import now
-from tests.utils import BaseTestCase
 
 
 class V1CloningKin(object):

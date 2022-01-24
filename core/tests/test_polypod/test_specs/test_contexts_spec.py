@@ -20,7 +20,7 @@ import pytest
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyflow import V1CompiledOperation, V1Plugins, V1RunKind
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

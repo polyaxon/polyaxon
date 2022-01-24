@@ -17,7 +17,7 @@
 import pytest
 
 from polyaxon.schemas.api.user import UserConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.api_mark

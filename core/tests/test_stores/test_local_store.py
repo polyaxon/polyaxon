@@ -20,7 +20,7 @@ import time
 
 from polyaxon.stores.local_store import LocalStore
 from polyaxon.utils.date_utils import to_datetime
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestLocalStore(BaseTestCase):

@@ -21,8 +21,8 @@ from datetime import timedelta
 
 from polyaxon.env_vars.keys import POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK
 from polyaxon.schemas.cli.checks_config import ChecksConfig
+from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon.utils.tz_utils import now
-from tests.utils import BaseTestCase
 
 
 @pytest.mark.schemas_mark

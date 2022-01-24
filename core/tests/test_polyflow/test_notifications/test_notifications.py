@@ -19,7 +19,7 @@ import pytest
 from marshmallow import ValidationError
 
 from polyaxon.polyflow.notifications import V1Notification
-from tests.utils import BaseTestCase, assert_equal_dict
+from polyaxon.utils.test_utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.plugins_mark

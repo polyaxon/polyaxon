@@ -34,7 +34,7 @@ from polyaxon.polypod.init.artifacts import (
 )
 from polyaxon.polypod.init.store import get_base_store_container, get_volume_args
 from polyaxon.schemas.types import V1ArtifactsType, V1ConnectionType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

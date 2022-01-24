@@ -30,7 +30,7 @@ from polyaxon.init.git import (
     has_cred_access,
     has_ssh_access,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.init_mark

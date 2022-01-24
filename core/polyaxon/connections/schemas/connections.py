@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import polyaxon_sdk
-
 from marshmallow import INCLUDE, ValidationError, fields, post_dump
+
+import polyaxon_sdk
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig, BaseOneOfSchema

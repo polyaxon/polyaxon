@@ -20,8 +20,6 @@ from typing import Dict, List, Union
 
 import polyaxon_sdk
 
-from polyaxon_sdk.rest import ApiException
-
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.constants.globals import DEFAULT
@@ -30,6 +28,7 @@ from polyaxon.lifecycle import V1ProjectVersionKind, V1StageCondition
 from polyaxon.utils.fqn_utils import get_entity_full_name, get_entity_info
 from polyaxon.utils.query_params import get_query_params
 from polyaxon.utils.validation import validate_tags
+from polyaxon_sdk.rest import ApiException
 
 
 class ProjectClient:

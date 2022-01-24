@@ -207,3 +207,7 @@ if settings.CLIENT_CONFIG.is_ops:
     cli.add_command(sidecar)
     cli.add_command(tuner)
     cli.add_command(wait)
+
+
+def main():
+    cli(auto_envvar_prefix="POLYAXON_CLI")

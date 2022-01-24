@@ -20,8 +20,6 @@ import time
 
 from typing import Dict
 
-from polyaxon_sdk import V1Agent
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon import pkg, settings
@@ -30,6 +28,8 @@ from polyaxon.auxiliaries import V1PolyaxonInitContainer, V1PolyaxonSidecarConta
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.versions import clean_version_for_check
+from polyaxon_sdk import V1Agent
+from polyaxon_sdk.rest import ApiException
 
 
 class Agent(BaseAgent):

@@ -17,7 +17,7 @@
 import pytest
 
 from polyaxon.schemas.cli.cli_config import CliConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.schemas_mark

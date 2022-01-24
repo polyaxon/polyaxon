@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import polyaxon_sdk
-
 from marshmallow import fields, validate
+
+import polyaxon_sdk
 
 from polyaxon.polyflow.optimization import V1Optimization
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig, BaseOneOfSchema

@@ -19,7 +19,7 @@ import pytest
 from polyaxon.agents.spawners.async_spawner import AsyncSpawner
 from polyaxon.exceptions import PolyaxonAgentError
 from polyaxon.polyflow import V1RunKind
-from tests.utils import AsyncMock
+from polyaxon.utils.test_utils import AsyncMock
 
 
 @pytest.mark.asyncio

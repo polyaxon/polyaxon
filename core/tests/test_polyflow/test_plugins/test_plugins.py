@@ -17,7 +17,7 @@
 import pytest
 
 from polyaxon.polyflow.plugins import V1Plugins
-from tests.utils import BaseTestCase, assert_equal_dict
+from polyaxon.utils.test_utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.plugins_mark

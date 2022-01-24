@@ -21,7 +21,6 @@ from typing import Dict, List
 
 import click
 
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.dashboard import get_dashboard_url
@@ -44,6 +43,7 @@ from polyaxon.schemas import V1RunPending
 from polyaxon.schemas.types import V1ArtifactsType
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
+from polyaxon_sdk.rest import ApiException
 
 
 class RunWatchSpec(namedtuple("RunWatchSpec", "uuid name")):

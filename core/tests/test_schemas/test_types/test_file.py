@@ -17,7 +17,7 @@
 import pytest
 
 from polyaxon.schemas.types.file import V1FileType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.init_mark

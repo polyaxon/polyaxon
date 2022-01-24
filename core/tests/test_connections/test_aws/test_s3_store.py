@@ -25,7 +25,7 @@ from moto import mock_s3
 from polyaxon.connections.aws.s3 import S3Service
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.utils.date_utils import to_datetime
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestAwsStore(BaseTestCase):

@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.containers.contexts import CONTEXT_MOUNT_AUTH
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.schemas.api.authentication import AccessTokenConfig
+from polyaxon_sdk.rest import ApiException
 
 
 def create_context_auth(access_token, context_auth_path=None):

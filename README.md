@@ -7,8 +7,10 @@
 [![GitHub](https://img.shields.io/badge/issue_tracker-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/issues)
 [![GitHub](https://img.shields.io/badge/roadmap-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/milestones)
 
-[![Polyaxon Core](https://github.com/polyaxon/polyaxon/actions/workflows/core.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/core.yml)
-[![Polyaxon Sandbox](https://github.com/polyaxon/polyaxon/actions/workflows/sandbox.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/sandbox.yml)
+[![CLI](https://github.com/polyaxon/polyaxon/actions/workflows/core.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/core.yml)
+[![Traceml](https://github.com/polyaxon/polyaxon/actions/workflows/traceml.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/traceml.yml)
+[![Datatile](https://github.com/polyaxon/polyaxon/actions/workflows/datatile.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/datatile.yml)
+[![Platform](https://github.com/polyaxon/polyaxon/actions/workflows/platform.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/platform.yml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/90c05b6b112548c1a88b950beceacb69)](https://www.codacy.com/app/polyaxon/polyaxon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon&amp;utm_campaign=Badge_Grade)
 
 <br>

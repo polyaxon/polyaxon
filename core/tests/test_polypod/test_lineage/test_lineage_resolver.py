@@ -36,7 +36,7 @@ from polyaxon.polypod.compiler.lineage.io_collector import collect_io_artifacts
 from polyaxon.polypod.compiler.resolver import BaseResolver
 from polyaxon.schemas.cli.agent_config import AgentConfig
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

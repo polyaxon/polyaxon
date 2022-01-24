@@ -16,7 +16,7 @@
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.pod.spec import get_pod_spec, get_pod_template_spec
 from polyaxon.polypod.specs.replica import ReplicaSpec
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class BaseKubeflowCRDTestCase(BaseTestCase):

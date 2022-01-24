@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from polyaxon import settings
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class BaseTestCaseTransport(BaseTestCase):

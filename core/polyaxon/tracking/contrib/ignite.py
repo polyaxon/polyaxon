@@ -14,21 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.tracking import Run
+# To keep backwards compatibility
 
-try:
-    from ignite.contrib.handlers.polyaxon_logger import (
-        PolyaxonLogger as _PolyaxonLogger,
-    )
-except ImportError:
-    raise PolyaxonClientException("ignite is required to use PolyaxonCallback")
-
-
-class PolyaxonLogger(_PolyaxonLogger):
-    def __init__(self, *args, **kwargs):
-        self.experiment = kwargs.get("run", Run(*args, **kwargs))
-
+from traceml.integrations.ignite import Logger
 
 # alias
-PolyaxonIgniteLogger = PolyaxonLogger
+PolyaxonLogger = Logger
+PolyaxonIgniteLogger = Logger

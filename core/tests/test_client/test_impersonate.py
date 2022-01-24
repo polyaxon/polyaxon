@@ -23,7 +23,7 @@ from mock import patch
 
 from polyaxon.client.impersonate import create_context_auth, impersonate
 from polyaxon.schemas.api.authentication import AccessTokenConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.client_mark

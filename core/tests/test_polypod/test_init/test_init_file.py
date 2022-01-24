@@ -31,7 +31,7 @@ from polyaxon.polypod.common.mounts import (
 from polyaxon.polypod.init.file import get_file_init_container
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1FileType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

@@ -53,7 +53,7 @@ from polyaxon.polypod.common.env_vars import (
     get_str_var,
 )
 from polyaxon.schemas.types import V1K8sResourceType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

@@ -38,7 +38,7 @@ from polyaxon.polypod.common.volumes import (
     get_volume_from_secret,
 )
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

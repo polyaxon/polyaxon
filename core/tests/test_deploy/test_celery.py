@@ -17,7 +17,7 @@
 from marshmallow import ValidationError
 
 from polyaxon.deploy.schemas.celery import CeleryConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestCeleryConfig(BaseTestCase):

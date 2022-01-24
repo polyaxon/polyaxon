@@ -19,7 +19,6 @@ import sys
 
 import click
 
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.errors import handle_cli_error
@@ -36,6 +35,7 @@ from polyaxon.utils import cli_constants, indentation
 from polyaxon.utils.cache import get_local_project
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.path_utils import create_init_file
+from polyaxon_sdk.rest import ApiException
 
 
 def create_polyaxonfile():

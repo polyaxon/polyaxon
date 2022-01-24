@@ -38,7 +38,7 @@ from polyaxon.utils.path_utils import (
     untar_file,
 )
 from polyaxon.utils.requests_utils import create_progress_callback, progress_bar
-from polyaxon.utils.units import format_sizeof
+from traceml.processors.units_processors import format_sizeof
 
 
 class PolyaxonStore:

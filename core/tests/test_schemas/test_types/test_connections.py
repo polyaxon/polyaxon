@@ -24,7 +24,7 @@ from polyaxon.connections.schemas import (
 )
 from polyaxon.connections.schemas.connections import V1CustomConnection
 from polyaxon.schemas.types import V1ConnectionType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.parser_mark

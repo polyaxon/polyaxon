@@ -42,7 +42,7 @@ from polyaxon.polyflow.matrix import (
 )
 from polyaxon.polyflow.matrix.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.termination import V1Termination
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

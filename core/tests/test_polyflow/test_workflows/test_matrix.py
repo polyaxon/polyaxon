@@ -45,7 +45,7 @@ from polyaxon.polytune.matrix.utils import (
     sample,
     to_numpy,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.workflow_mark

@@ -18,7 +18,7 @@ from marshmallow import ValidationError
 
 from polyaxon.deploy import reader
 from polyaxon.deploy.schemas.deployment import DeploymentConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestDeploymentConfig(BaseTestCase):

@@ -22,7 +22,7 @@ from mock import MagicMock, mock
 from polyaxon import settings
 from polyaxon.client import RunClient
 from polyaxon.lifecycle import V1Statuses
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.client_mark

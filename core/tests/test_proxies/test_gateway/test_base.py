@@ -17,7 +17,7 @@ import pytest
 
 from polyaxon import settings
 from polyaxon.proxies.schemas.gateway import get_base_config
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

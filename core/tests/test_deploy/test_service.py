@@ -25,7 +25,7 @@ from polyaxon.deploy.schemas.service import (
     RedisConfig,
     ThirdPartyService,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestService(BaseTestCase):

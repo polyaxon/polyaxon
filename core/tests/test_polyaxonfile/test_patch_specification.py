@@ -22,8 +22,8 @@ from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpeci
 from polyaxon.polyflow import V1Component, V1EventKind, V1Operation, V1RunKind
 from polyaxon.schemas.patch_strategy import V1PatchStrategy
 from polyaxon.utils.dict_utils import deep_update
+from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon.utils.tz_utils import now
-from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

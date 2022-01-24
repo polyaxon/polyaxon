@@ -20,7 +20,7 @@ from polyaxon.auxiliaries import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.containers.names import INIT_AUTH_CONTAINER
 from polyaxon.polypod.common.mounts import get_auth_context_mount
 from polyaxon.polypod.init.auth import get_auth_context_container
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

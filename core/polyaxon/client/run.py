@@ -24,12 +24,11 @@ from datetime import datetime
 from typing import Dict, List, Optional, Sequence, Tuple, Union
 
 import click
-import polyaxon_sdk
 import ujson
 
-from polyaxon_sdk import V1Run
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
+
+import polyaxon_sdk
 
 from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
@@ -51,7 +50,6 @@ from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.events import V1Events
-from polyaxon.polyboard.logging.streamer import get_logs_streamer
 from polyaxon.polyflow import V1Matrix, V1Operation, V1RunKind
 from polyaxon.schemas.types import V1ArtifactsType
 from polyaxon.stores.polyaxon_store import PolyaxonStore
@@ -72,6 +70,9 @@ from polyaxon.utils.path_utils import (
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.tz_utils import now
 from polyaxon.utils.validation import validate_tags
+from polyaxon_sdk import V1Run
+from polyaxon_sdk.rest import ApiException
+from traceml.logging.streamer import get_logs_streamer
 
 
 class RunClient:

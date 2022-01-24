@@ -17,7 +17,7 @@
 from marshmallow import ValidationError
 
 from polyaxon.deploy.schemas.ingress import IngressConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestIngressConfig(BaseTestCase):

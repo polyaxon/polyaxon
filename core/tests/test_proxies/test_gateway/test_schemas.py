@@ -29,7 +29,7 @@ from polyaxon.proxies.schemas.gateway.services import (
 )
 from polyaxon.proxies.schemas.gateway.ssl import get_ssl_config
 from polyaxon.proxies.schemas.gateway.streams import get_streams_location_config
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

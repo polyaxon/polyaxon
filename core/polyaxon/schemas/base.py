@@ -32,7 +32,7 @@ from polyaxon.utils.dict_utils import deep_update
 from polyaxon.utils.humanize import humanize_timesince
 from polyaxon.utils.string_utils import to_camel_case
 from polyaxon.utils.tz_utils import get_timezone
-from polyaxon.utils.units import to_percentage, to_unit_memory
+from traceml.processors.units_processors import to_percentage, to_unit_memory
 
 
 class BaseSchema(Schema):

@@ -17,10 +17,10 @@
 import sys
 
 import click
-import polyaxon_sdk
 
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
+
+import polyaxon_sdk
 
 from polyaxon import settings
 from polyaxon.cli.dashboard import get_dashboard_url
@@ -33,6 +33,7 @@ from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.user import UserConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
 from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
+from polyaxon_sdk.rest import ApiException
 
 
 @click.command()

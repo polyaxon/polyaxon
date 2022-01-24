@@ -16,7 +16,7 @@
 
 from polyaxon.env_vars.getters import get_component_info, get_versioned_entity_full_name
 from polyaxon.exceptions import PolyaxonSchemaError
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestComponentEnvVars(BaseTestCase):

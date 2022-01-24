@@ -17,9 +17,9 @@
 from collections.abc import Mapping
 from typing import Set
 
-import polyaxon_sdk
-
 from marshmallow import fields, validate
+
+import polyaxon_sdk
 
 from polyaxon import types
 from polyaxon.contexts import sections as contexts_sections

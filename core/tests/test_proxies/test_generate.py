@@ -23,7 +23,7 @@ from polyaxon.proxies.generators import (
     generate_gateway_conf,
     generate_streams_conf,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

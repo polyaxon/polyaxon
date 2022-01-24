@@ -22,7 +22,7 @@ import time
 from polyaxon.connections.gcp.gcs import GCSService
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.utils.date_utils import to_datetime
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 GCP_BASE_MODULE = "polyaxon.connections.gcp.base.{}"
 GCP_MODULE = "polyaxon.connections.gcp.service.{}"

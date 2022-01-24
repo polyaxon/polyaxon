@@ -30,6 +30,47 @@ with open(os.path.join("./polyaxon/pkg.py"), encoding="utf8") as f:
     pkg = {}
     exec(f.read(), pkg)
 
+with open("requirements/requirements.txt") as requirements_file:
+    requirements = requirements_file.read().splitlines()
+
+if os.environ.get("USE_PROD_PACKAGES"):
+    requirements += [
+        "polyaxon-sdk=={}".format(pkg["VERSION"]),
+        "traceml=={}".format(pkg["VERSION"]),
+    ]
+
+with open("requirements/dev.txt") as requirements_file:
+    dev_requirements = requirements_file.read().splitlines()
+
+extra = {
+    "dev": dev_requirements,
+    "gcs": ["gcsfs"],
+    "s3": ["s3fs"],
+    "azure": ["adlfs"],
+    "docker": ["docker"],
+    "git": ["gitpython"],
+    "numpy": ["numpy"],
+    "polytune": ["scikit-learn", "hyperopt"],
+    "polyboard": [
+        "Pillow",
+        "matplotlib<3.3.3",
+        "moviepy",
+        "plotly",
+        "bokeh",
+        "pandas",
+        "altair",
+    ],
+    "streams": [
+        "kubernetes_asyncio>=12.1.1",
+        "starlette==0.17.1",
+        "aiofiles==0.8.0",
+        "uvicorn[standard]==0.15.0",
+        "uvloop==0.16.0",
+        "python-multipart==0.0.5",
+        "pandas",
+    ],
+}
+
 setup(
     name=pkg["NAME"],
     version=pkg["VERSION"],
@@ -67,48 +108,8 @@ setup(
         "tensorFlow",
         "pytorch",
     ],
-    install_requires=[
-        "click>=7.1.1,<9.0.0",
-        "tabulate<0.9.0",
-        "Jinja2>=2.10.3",
-        "kubernetes>=10.0.1",
-        "marshmallow<3.15.0",
-        "python-dateutil>=2.7.3",
-        "pytz>=2019.2",
-        "PyYAML>=5.1",
-        "ujson>=1.35",
-        "requests>=2.20.1",
-        "requests-toolbelt>=0.8.0",
-        "sentry-sdk>=1.2.0",
-        "psutil",
-    ],
-    extras_require={
-        "gcs": ["gcsfs"],
-        "s3": ["s3fs"],
-        "azure": ["adlfs"],
-        "docker": ["docker"],
-        "git": ["gitpython"],
-        "numpy": ["numpy"],
-        "polytune": ["scikit-learn", "hyperopt"],
-        "polyboard": [
-            "Pillow",
-            "matplotlib<3.3.3",
-            "moviepy",
-            "plotly",
-            "bokeh",
-            "pandas",
-            "altair",
-        ],
-        "streams": [
-            "kubernetes_asyncio>=12.1.1",
-            "starlette==0.17.1",
-            "aiofiles==0.8.0",
-            "uvicorn[standard]==0.15.0",
-            "uvloop==0.16.0",
-            "python-multipart==0.0.5",
-            "pandas",
-        ],
-    },
+    install_requires=requirements,
+    extras_require=extra,
     entry_points={
         "console_scripts": ["polyaxon = polyaxon.main:cli", "plx = polyaxon.main:cli"]
     },

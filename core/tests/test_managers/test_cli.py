@@ -23,8 +23,8 @@ from mock import patch
 
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.schemas.cli.cli_config import CliConfig
+from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon.utils.tz_utils import now
-from tests.utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

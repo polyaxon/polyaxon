@@ -25,7 +25,7 @@ from polyaxon.connections.schemas import (
     V1HostPathConnection,
     validate_connection,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestV1BucketConnection(BaseTestCase):

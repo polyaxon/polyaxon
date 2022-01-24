@@ -21,7 +21,7 @@ import uuid
 from polyaxon.env_vars.keys import POLYAXON_KEYS_RUN_INSTANCE
 from polyaxon.exceptions import PolyaxonContainerException
 from polyaxon.sidecar.container import start_sidecar
-from tests.utils import patch_settings
+from polyaxon.utils.test_utils import patch_settings
 
 
 @pytest.mark.asyncio

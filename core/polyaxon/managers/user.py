@@ -16,10 +16,9 @@
 
 import sys
 
-from polyaxon_sdk import V1User
-
 from polyaxon.managers.base import BaseConfigManager
 from polyaxon.utils.formatting import Printer
+from polyaxon_sdk import V1User
 
 
 class UserConfigManager(BaseConfigManager):

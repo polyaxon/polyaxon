@@ -18,7 +18,7 @@ import pytest
 
 from polyaxon.polyflow import V1Mapping
 from polyaxon.polytune.search_managers.mapping.manager import MappingManager
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polytune_mark

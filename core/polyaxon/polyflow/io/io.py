@@ -15,9 +15,9 @@
 # limitations under the License.
 from typing import Any, List
 
-import polyaxon_sdk
-
 from marshmallow import ValidationError, fields, validate, validates_schema
+
+import polyaxon_sdk
 
 from polyaxon import types
 from polyaxon.exceptions import PolyaxonSchemaError

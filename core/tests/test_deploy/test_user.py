@@ -17,7 +17,7 @@
 from marshmallow import ValidationError
 
 from polyaxon.deploy.schemas.root_user import RootUserConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestRootUserConfig(BaseTestCase):

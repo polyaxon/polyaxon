@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import polyaxon_sdk
-
 from marshmallow import EXCLUDE, fields
+
+import polyaxon_sdk
 
 from polyaxon.api import get_default_host
 from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT

@@ -22,7 +22,7 @@ from urllib3.exceptions import ReadTimeoutError
 from polyaxon.builds.builder import DockerBuilder, DockerPusher, build, build_and_push
 from polyaxon.exceptions import PolyaxonBuildException
 from polyaxon.schemas.types import V1UriType
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.api_builds

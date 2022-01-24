@@ -17,7 +17,7 @@
 from marshmallow import ValidationError
 
 from polyaxon.deploy.schemas.email import EmailConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestEmailConfig(BaseTestCase):

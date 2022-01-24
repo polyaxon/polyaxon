@@ -15,11 +15,11 @@
 # limitations under the License.
 import functools
 
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon import settings
 from polyaxon.logger import logger
+from polyaxon_sdk.rest import ApiException
 
 
 def client_handler(

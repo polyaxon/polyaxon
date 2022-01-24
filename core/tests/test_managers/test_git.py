@@ -18,7 +18,7 @@ import pytest
 
 from polyaxon.managers.git import GitConfigManager
 from polyaxon.polyflow import V1Init
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

@@ -20,7 +20,7 @@ import pytest
 from polyaxon.agents.spawners.spawner import Spawner
 from polyaxon.exceptions import PolyaxonAgentError
 from polyaxon.polyflow import V1RunKind
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.agent_mark

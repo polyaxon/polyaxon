@@ -24,7 +24,7 @@ from polyaxon.schemas.types.dockerfile import (
     POLYAXON_DOCKERFILE_NAME,
     V1DockerfileType,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.init_mark

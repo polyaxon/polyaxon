@@ -27,7 +27,7 @@ from polyaxon.connections.aws.base import (
     get_aws_resource,
     get_aws_session,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestAwsClient(BaseTestCase):

@@ -17,7 +17,7 @@
 import os
 
 from polyaxon.connections.reader import get_from_env
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestReader(BaseTestCase):

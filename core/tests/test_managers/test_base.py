@@ -20,7 +20,7 @@ import pytest
 from mock import patch
 
 from polyaxon.managers.base import BaseConfigManager
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

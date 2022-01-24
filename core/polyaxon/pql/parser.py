@@ -20,7 +20,7 @@ from collections import defaultdict, namedtuple
 from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple
 
 from polyaxon.exceptions import PQLException
-from polyaxon.utils.units import to_cpu_value, to_memory_bytes
+from traceml.processors.units_processors import to_cpu_value, to_memory_bytes
 
 
 class QueryOpSpec(namedtuple("QueryOpSpec", "op negation params")):

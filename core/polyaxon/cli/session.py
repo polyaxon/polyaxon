@@ -19,7 +19,6 @@ import uuid
 
 import click
 
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon import pkg
@@ -34,6 +33,7 @@ from polyaxon.services.headers import PolyaxonServices
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.tz_utils import now
 from polyaxon.utils.versions import clean_version_for_compatibility
+from polyaxon_sdk.rest import ApiException
 
 
 def session_expired():

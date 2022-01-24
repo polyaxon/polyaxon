@@ -26,7 +26,7 @@ from polyaxon.polyflow.matrix.bayes import (
     V1Bayes,
 )
 from polyaxon.polyflow.optimization import V1Optimization, V1OptimizationMetric
-from tests.utils import BaseTestCase, assert_equal_dict
+from polyaxon.utils.test_utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.workflow_mark

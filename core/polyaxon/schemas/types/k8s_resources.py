@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import polyaxon_sdk
-
 from marshmallow import fields
+
+import polyaxon_sdk
 
 from polyaxon.connections.schemas import K8sResourceSchema
 from polyaxon.schemas.base import BaseCamelSchema

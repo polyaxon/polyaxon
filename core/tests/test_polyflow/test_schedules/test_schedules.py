@@ -24,8 +24,8 @@ from polyaxon.polyflow.schedules import (
     V1DateTimeSchedule,
     V1IntervalSchedule,
 )
+from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon.utils.tz_utils import now
-from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyflow_mark

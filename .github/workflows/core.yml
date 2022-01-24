@@ -1,4 +1,4 @@
-name: Polyaxon Core
+name: Polyaxon CLI
 
 on: [push, pull_request]
 
@@ -12,12 +12,12 @@ jobs:
     - run: |
         pip install -U polyaxon
         polyaxon version
-  core:
+  tests:
 #    if: github.event.comment.body == 'test core'
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.6', '3.7', '3.8', '3.9'] # , '3.10.0']
+        python-version: [3.7, 3.8, 3.9] #, '3.10']
 
     steps:
     - uses: actions/checkout@v2.4.0
@@ -25,12 +25,16 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Upgrade pip
       run: |
+        which python
         python -m pip install --upgrade pip
-        pip install -r src/core/requirements/requirements-test.txt
-        pip install -r src/core/requirements/requirements-master.txt
+    - name: Install dependencies
+      run: pip install -r requirements/test.txt
+    - name: Install master dependencies
+      run: pip install -r core/requirements/master.txt
     - name: Test with pytest
       run: |
-        cd src/core
-        pytest
+        cd core
+        pip install -e ".[dev]"
+        pytest -vv

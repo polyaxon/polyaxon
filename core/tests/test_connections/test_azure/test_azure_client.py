@@ -20,7 +20,7 @@ from azure.storage.blob import BlobServiceClient
 
 from polyaxon.connections.azure.azure_blobstore import get_blob_service_connection
 from polyaxon.exceptions import PolyaxonConnectionError
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestAzureClient(BaseTestCase):

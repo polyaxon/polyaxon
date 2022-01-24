@@ -22,8 +22,8 @@ from polyaxon import types
 from polyaxon.polyflow import V1RunKind
 from polyaxon.polyflow.operations import V1CompiledOperation
 from polyaxon.polyflow.params import ops_params
+from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon.utils.tz_utils import now
-from tests.utils import BaseTestCase
 
 
 @pytest.mark.ops_mark

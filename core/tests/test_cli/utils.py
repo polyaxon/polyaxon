@@ -18,7 +18,7 @@ from mock import patch
 
 from click.testing import CliRunner
 
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class BaseCommandTestCase(BaseTestCase):

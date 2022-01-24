@@ -19,7 +19,7 @@ import pytest
 from marshmallow import ValidationError
 
 from polyaxon.polyflow import V1Cache
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.components_mark

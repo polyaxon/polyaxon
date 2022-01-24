@@ -20,8 +20,8 @@ from marshmallow import ValidationError
 
 from polyaxon import types
 from polyaxon.polyflow import V1Component, V1RunKind, ops_params
+from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon.utils.tz_utils import local_datetime, now
-from tests.utils import BaseTestCase
 
 
 @pytest.mark.components_mark

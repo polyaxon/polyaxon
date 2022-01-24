@@ -22,7 +22,7 @@ from polyaxon.polyaxonfile import (
     DEFAULT_POLYAXON_FILE_NAME,
     check_default_path,
 )
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

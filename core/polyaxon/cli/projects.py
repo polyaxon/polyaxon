@@ -18,8 +18,6 @@ import sys
 
 import click
 
-from polyaxon_sdk import V1Project
-from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.dashboard import get_dashboard_url
@@ -42,6 +40,8 @@ from polyaxon.utils.formatting import (
     list_dicts_to_tabulate,
 )
 from polyaxon.utils.validation import validate_tags
+from polyaxon_sdk import V1Project
+from polyaxon_sdk.rest import ApiException
 
 
 @click.group()

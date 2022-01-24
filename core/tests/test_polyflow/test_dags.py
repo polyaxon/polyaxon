@@ -20,7 +20,7 @@ from mock import MagicMock
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyflow import dags
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polyflow_mark

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from polyaxon.deploy.schemas.rbac import RBACConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestRBACConfig(BaseTestCase):

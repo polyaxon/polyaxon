@@ -18,7 +18,7 @@ import pytest
 
 from polyaxon.polyaxonfile.specs.libs.parser import Parser
 from polyaxon.polyflow.operators import ForConfig, IfConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.polyflow_mark

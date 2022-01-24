@@ -28,7 +28,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_K8S_NAMESPACE,
 )
 from polyaxon.schemas.cli.agent_config import AgentConfig
-from tests.utils import BaseTestCase
+from polyaxon.utils.test_utils import BaseTestCase
 
 
 @pytest.mark.schemas_mark
