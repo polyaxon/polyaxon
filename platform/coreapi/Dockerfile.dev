@@ -15,7 +15,7 @@ RUN pip3 install --no-cache-dir -r /requirements/requirements-dev.txt
 
 VOLUME /polyaxon
 COPY /core /polyaxon/core
-COPY /sdks/python/http_client/v1 /polyaxon/sdks/python/http_client/v1
+COPY /traceml /polyaxon/traceml
 COPY /platform /polyaxon/platform
 WORKDIR /polyaxon
 

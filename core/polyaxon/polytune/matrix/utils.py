@@ -219,7 +219,7 @@ def to_numpy(matrix):
         )
 
 
-def sample(matrix, size=None, rand_generator=None):
+def _sample(matrix, size=None, rand_generator=None):
     size = None if size == 1 else size
 
     if matrix.IDENTIFIER == V1HpChoice.IDENTIFIER:
@@ -282,3 +282,15 @@ def sample(matrix, size=None, rand_generator=None):
 
     if matrix.IDENTIFIER == V1HpQLogNormal.IDENTIFIER:
         return dist_sample(dist.qlognormal, matrix.value, size, rand_generator)
+
+
+def sample(matrix, size=None, rand_generator=None):
+    try:
+        return _sample(matrix, size=size, rand_generator=rand_generator)
+    except Exception as e:
+        raise ValidationError(
+            "Could not sample from matrix value: {} for kind: {} with size: {}".format(
+                matrix.value,
+                matrix.IDENTIFIER,
+                size
+        )) from e
