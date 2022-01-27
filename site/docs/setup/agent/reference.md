@@ -148,8 +148,8 @@ annotations:
 
 ### GKE ingress
 
- 1. Create static IP using `gcloud compute addresses create IP_NAME --global`
- 3. Make sure to a DNS record to point to the IP address (`xx.xx.xx.xx`) created in step 1 to a subdomain `polyaxon` of type record `A`.
+ 1. Create a static IP using `gcloud compute addresses create IP_NAME --global`
+ 3. Make sure to create a DNS record to point to the IP address (`xx.xx.xx.xx`) created in step 1 to a subdomain (`polyaxon`) of type record `A`.
  2. Deploy a managed certificate with `kubectl apply -f polyaxon-certificate.yaml`, the content should be:
     ```yaml
     apiVersion: networking.gke.io/v1
@@ -160,7 +160,7 @@ annotations:
       domains:
         - polyaxon.acme.com
     ``` 
- 3. The gateway must be change to use node port in GKE for the ingress to function correctly:
+ 3. The gateway must be changed to use a node port service type in GKE for the ingress to function correctly:
     ```yaml
     gateway:
       scheme: https

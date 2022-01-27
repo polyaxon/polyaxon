@@ -290,7 +290,6 @@ def sample(matrix, size=None, rand_generator=None):
     except Exception as e:
         raise ValidationError(
             "Could not sample from matrix value: {} for kind: {} with size: {}".format(
-                matrix.value,
-                matrix.IDENTIFIER,
-                size
-        )) from e
+                matrix.value, matrix.IDENTIFIER, size
+            )
+        ) from e
