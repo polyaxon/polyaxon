@@ -29,6 +29,7 @@ from polyaxon.deploy.schemas.email import EmailSchema
 from polyaxon.deploy.schemas.ingress import IngressSchema
 from polyaxon.deploy.schemas.intervals import IntervalsSchema
 from polyaxon.deploy.schemas.operators import OperatorsSchema
+from polyaxon.deploy.schemas.proxy import ProxySchema
 from polyaxon.deploy.schemas.rbac import RBACSchema
 from polyaxon.deploy.schemas.root_user import RootUserSchema
 from polyaxon.deploy.schemas.security_context import SecurityContextSchema
@@ -273,6 +274,7 @@ class DeploymentSchema(BaseCamelSchema):
     debug_mode = fields.Bool(allow_none=True)
     organization_key = fields.Str(allow_none=True)
     auth = fields.Nested(AuthSchema, allow_none=True)
+    proxy = fields.Nested(ProxySchema, allow_none=True)
     ui = fields.Nested(UISchema, allow_none=True)
     include_chart_revision = fields.Bool(allow_none=True)
     operators = fields.Nested(OperatorsSchema, allow_none=True)
@@ -408,6 +410,7 @@ class DeploymentConfig(BaseConfig):
         external_services=None,
         debug_mode=None,
         auth=None,
+        proxy=None,
         organization_key=None,
         dns=None,
         ui=None,
@@ -498,6 +501,7 @@ class DeploymentConfig(BaseConfig):
         self.external_services = external_services
         self.debug_mode = debug_mode
         self.auth = auth
+        self.proxy = proxy
         self.organization_key = organization_key
         self.ui = ui
         self.operators = operators

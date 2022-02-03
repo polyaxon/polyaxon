@@ -363,6 +363,7 @@ class TestEnvVars(BaseTestCase):
                 api_host="localhost",
                 api_version="v1",
                 run_instance="foo.bar.runs.run_uuid",
+                use_proxy_env_vars_use_in_ops=False,
             )
 
     def test_get_service_env_vars(self):
@@ -378,6 +379,7 @@ class TestEnvVars(BaseTestCase):
             api_host="localhost",
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
+            use_proxy_env_vars_use_in_ops=False,
         )
         assert len(env_vars) == 7
         env_var_names = [env_var.name for env_var in env_vars]
@@ -401,6 +403,7 @@ class TestEnvVars(BaseTestCase):
             api_host="localhost",
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
+            use_proxy_env_vars_use_in_ops=False,
         )
         assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]
@@ -429,6 +432,7 @@ class TestEnvVars(BaseTestCase):
             api_host="localhost",
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
+            use_proxy_env_vars_use_in_ops=False,
         )
         assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]

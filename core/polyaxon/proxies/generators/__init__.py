@@ -15,5 +15,8 @@
 # limitations under the License.
 
 from polyaxon.proxies.generators.api import generate_api_conf
-from polyaxon.proxies.generators.gateway import generate_gateway_conf
+from polyaxon.proxies.generators.gateway import (
+    generate_forward_proxy_cmd,
+    generate_gateway_conf,
+)
 from polyaxon.proxies.generators.streams import generate_streams_conf

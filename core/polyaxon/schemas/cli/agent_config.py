@@ -40,6 +40,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_SECRET_NAME,
     POLYAXON_KEYS_AGENT_SIDECAR,
     POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
+    POLYAXON_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS,
     POLYAXON_KEYS_K8S_APP_SECRET_NAME,
     POLYAXON_KEYS_K8S_NAMESPACE,
 )
@@ -89,6 +90,9 @@ class AgentSchema(BaseSchema):
     )
     cleaner = fields.Nested(
         PolyaxonCleanerSchema, allow_none=True, data_key=POLYAXON_KEYS_AGENT_CLEANER
+    )
+    use_proxy_env_vars_use_in_ops = fields.Bool(
+        allow_none=True, data_key=POLYAXON_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS
     )
     default_scheduling = fields.Nested(
         DefaultSchedulingSchema,
@@ -267,6 +271,7 @@ class AgentConfig(BaseConfig):
         POLYAXON_KEYS_AGENT_SECRET_NAME,
         POLYAXON_KEYS_AGENT_RUNS_SA,
         POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
+        POLYAXON_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS,
         POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
         POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
     ]
@@ -287,6 +292,7 @@ class AgentConfig(BaseConfig):
         runs_sa=None,
         spawner_refresh_interval=None,
         default_scheduling=None,
+        use_proxy_env_vars_use_in_ops=None,
         default_image_pull_secrets=None,
         **kwargs
     ):
@@ -304,6 +310,7 @@ class AgentConfig(BaseConfig):
         self.runs_sa = runs_sa
         self.spawner_refresh_interval = spawner_refresh_interval
         self.default_image_pull_secrets = default_image_pull_secrets
+        self.use_proxy_env_vars_use_in_ops = use_proxy_env_vars_use_in_ops
         self.default_scheduling = default_scheduling
         if not self.default_scheduling and self.default_image_pull_secrets:
             self.default_scheduling = V1DefaultScheduling()

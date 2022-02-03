@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from marshmallow import EXCLUDE, fields
+from marshmallow import EXCLUDE, fields, validate
 
 from polyaxon.api import STATIC_V1
 from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
@@ -36,11 +36,14 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_PROXY_AUTH_ENABLED,
     POLYAXON_KEYS_PROXY_AUTH_EXTERNAL,
     POLYAXON_KEYS_PROXY_AUTH_USE_RESOLVER,
+    POLYAXON_KEYS_PROXY_FORWARD_PROXY_HOST,
+    POLYAXON_KEYS_PROXY_FORWARD_PROXY_KIND,
+    POLYAXON_KEYS_PROXY_FORWARD_PROXY_PORT,
     POLYAXON_KEYS_PROXY_GATEWAY_HOST,
     POLYAXON_KEYS_PROXY_GATEWAY_PORT,
     POLYAXON_KEYS_PROXY_GATEWAY_TARGET_PORT,
+    POLYAXON_KEYS_PROXY_HAS_FORWARD_PROXY,
     POLYAXON_KEYS_PROXY_NAMESPACES,
-    POLYAXON_KEYS_PROXY_SERVICES,
     POLYAXON_KEYS_PROXY_SERVICES_PORT,
     POLYAXON_KEYS_PROXY_SSL_ENABLED,
     POLYAXON_KEYS_PROXY_SSL_PATH,
@@ -121,6 +124,20 @@ class ProxiesSchema(BaseSchema):
     ui_admin_enabled = fields.Bool(
         allow_none=True, data_key=POLYAXON_KEYS_UI_ADMIN_ENABLED
     )
+    has_forward_proxy = fields.Bool(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_HAS_FORWARD_PROXY
+    )
+    forward_proxy_port = fields.Int(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_FORWARD_PROXY_PORT
+    )
+    forward_proxy_host = fields.Str(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_FORWARD_PROXY_HOST
+    )
+    forward_proxy_kind = fields.Str(
+        allow_none=True,
+        data_key=POLYAXON_KEYS_PROXY_FORWARD_PROXY_KIND,
+        validate=validate.OneOf(["transparent", "connect"]),
+    )
 
     @staticmethod
     def schema_config():
@@ -153,7 +170,6 @@ class ProxiesConfig(BaseConfig):
         POLYAXON_KEYS_DNS_CUSTOM_CLUSTER,
         POLYAXON_KEYS_DNS_BACKEND,
         POLYAXON_KEYS_DNS_PREFIX,
-        POLYAXON_KEYS_PROXY_SERVICES,
         POLYAXON_KEYS_NGINX_TIMEOUT,
         POLYAXON_KEYS_NGINX_INDENT_CHAR,
         POLYAXON_KEYS_NGINX_INDENT_WIDTH,
@@ -163,6 +179,10 @@ class ProxiesConfig(BaseConfig):
         POLYAXON_KEYS_STATIC_ROOT,
         POLYAXON_KEYS_STATIC_URL,
         POLYAXON_KEYS_UI_ADMIN_ENABLED,
+        POLYAXON_KEYS_PROXY_HAS_FORWARD_PROXY,
+        POLYAXON_KEYS_PROXY_FORWARD_PROXY_PORT,
+        POLYAXON_KEYS_PROXY_FORWARD_PROXY_HOST,
+        POLYAXON_KEYS_PROXY_FORWARD_PROXY_KIND,
     ]
 
     def __init__(
@@ -197,6 +217,10 @@ class ProxiesConfig(BaseConfig):
         static_root=None,
         static_url=None,
         ui_admin_enabled=None,
+        has_forward_proxy=None,
+        forward_proxy_port=None,
+        forward_proxy_host=None,
+        forward_proxy_kind=None,
         **kwargs
     ):
         self.namespace = namespace
@@ -230,6 +254,10 @@ class ProxiesConfig(BaseConfig):
         self.static_root = static_root or "/{}".format(STATIC_V1)
         self.static_url = static_url
         self.ui_admin_enabled = ui_admin_enabled
+        self.has_forward_proxy = has_forward_proxy
+        self.forward_proxy_port = forward_proxy_port
+        self.forward_proxy_host = forward_proxy_host
+        self.forward_proxy_kind = forward_proxy_kind
 
     @property
     def default_target_port(self):

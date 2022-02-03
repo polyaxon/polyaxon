@@ -73,7 +73,9 @@ async def process_operation_event(
                     try:
                         sample = int(sample)
                         if event_df.df.shape[0] > sample:
-                            event_df.df = event_df.df.sample(n=sample, random_state=0).sort_index()
+                            event_df.df = event_df.df.sample(
+                                n=sample, random_state=0
+                            ).sort_index()
                     except Exception as e:
                         logger.warning("Could not sample event dataframe, error %s", e)
                 return {

@@ -15,6 +15,6 @@
 # limitations under the License.
 
 
-def write_to_conf_file(name, content, path=None):
-    with open("{}/{}.conf".format(path or ".", name), "w") as f:
+def write_to_conf_file(name, content, path=None, ext: str = "conf"):
+    with open("{}/{}.{}".format(path or ".", name, ext), "w") as f:
         f.write(content)

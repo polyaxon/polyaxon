@@ -1086,7 +1086,7 @@ location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
 
 
 @pytest.mark.proxies_mark
-class TestGatewaySTreamsSchemas(BaseTestCase):
+class TestGatewayStreamsSchemas(BaseTestCase):
     SET_PROXIES_SETTINGS = True
 
     def test_streams_location_with_auth_config(self):
@@ -1376,6 +1376,77 @@ location /static/ {
 """  # noqa
         assert get_api_location_config(resolver="") == expected
 
+        # Add proxy
+        settings.PROXIES_CONFIG.has_forward_proxy = True
+        settings.PROXIES_CONFIG.forward_proxy_port = 443
+        settings.PROXIES_CONFIG.forward_proxy_host = "moo.foo.com"
+        expected = r"""
+location = / {
+    proxy_ssl_server_name on;
+    proxy_pass https://127.0.0.1:8443;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+
+
+location /api/v1/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://127.0.0.1:8443;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+
+
+location /ui/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://127.0.0.1:8443;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+
+
+location /sso/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://127.0.0.1:8443;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+
+
+location /static/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://127.0.0.1:8443;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+"""  # noqa
+        assert get_api_location_config(resolver="") == expected
+
     def test_auth_config(self):
         settings.PROXIES_CONFIG.auth_enabled = True
         expected = r"""
@@ -1401,6 +1472,7 @@ location = /auth/v1/ {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Origin-URI $request_uri;
     proxy_set_header X-Origin-Method $request_method;
+    proxy_set_header Host $http_host;
     internal;
 }
 """  # noqa
@@ -1423,6 +1495,7 @@ location = /auth/v1/ {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Origin-URI $request_uri;
     proxy_set_header X-Origin-Method $request_method;
+    proxy_set_header Host $http_host;
     internal;
 }
 """  # noqa
@@ -1441,6 +1514,7 @@ location = /auth/v1/ {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Origin-URI $request_uri;
     proxy_set_header X-Origin-Method $request_method;
+    proxy_set_header Host $http_host;
     internal;
 }
 """  # noqa
@@ -1461,12 +1535,36 @@ location = /auth/v1/ {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Origin-URI $request_uri;
     proxy_set_header X-Origin-Method $request_method;
+    proxy_set_header Host cloud.polyaxon.com;
+    internal;
+}
+"""  # noqa
+        assert get_auth_location_config(resolver="") == expected
+
+        # Add proxy
+        settings.PROXIES_CONFIG.has_forward_proxy = True
+        settings.PROXIES_CONFIG.forward_proxy_port = 443
+        settings.PROXIES_CONFIG.forward_proxy_host = "123.123.123.123"
+
+        expected = r"""
+location = /auth/v1/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://127.0.0.1:8443;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Origin-URI $request_uri;
+    proxy_set_header X-Origin-Method $request_method;
+    proxy_set_header Host cloud.polyaxon.com;
     internal;
 }
 """  # noqa
         assert get_auth_location_config(resolver="") == expected
 
         # Use resolver but do not enable it for auth
+        settings.PROXIES_CONFIG.has_forward_proxy = False
         settings.PROXIES_CONFIG.dns_use_resolver = True
         settings.PROXIES_CONFIG.dns_prefix = "coredns.kube-system"
         settings.PROXIES_CONFIG.dns_custom_cluster = "cluster.local"
@@ -1484,7 +1582,28 @@ location = /auth/v1/ {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Origin-URI $request_uri;
     proxy_set_header X-Origin-Method $request_method;
+    proxy_set_header Host cloud.polyaxon.com;
     internal;
 }
 """  # noqa
         assert get_auth_location_config(resolver=resolver) == expected
+
+        # Add proxy
+        settings.PROXIES_CONFIG.has_forward_proxy = True
+
+        expected = r"""
+location = /auth/v1/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://127.0.0.1:8443;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Origin-URI $request_uri;
+    proxy_set_header X-Origin-Method $request_method;
+    proxy_set_header Host cloud.polyaxon.com;
+    internal;
+}
+"""  # noqa
+        assert get_auth_location_config(resolver="") == expected

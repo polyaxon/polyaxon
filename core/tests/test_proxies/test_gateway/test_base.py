@@ -284,6 +284,7 @@ location = /auth/v1/ {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Origin-URI $request_uri;
     proxy_set_header X-Origin-Method $request_method;
+    proxy_set_header Host $http_host;
     internal;
 }
 

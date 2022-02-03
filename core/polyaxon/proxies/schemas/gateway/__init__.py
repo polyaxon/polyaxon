@@ -15,5 +15,6 @@
 # limitations under the License.
 
 from polyaxon.proxies.schemas.gateway.base import get_base_config
+from polyaxon.proxies.schemas.gateway.forward import get_forward_cmd
 from polyaxon.proxies.schemas.gateway.main import get_main_config
 from polyaxon.proxies.schemas.gateway.redirect import get_redirect_config

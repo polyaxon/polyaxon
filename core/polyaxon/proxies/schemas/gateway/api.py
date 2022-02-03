@@ -24,6 +24,7 @@ from polyaxon.api import (
 from polyaxon.proxies.schemas.base import clean_config, get_config
 from polyaxon.proxies.schemas.urls import (
     get_header_host,
+    get_service_proxy,
     get_service_url,
     get_ssl_server_name,
 )
@@ -75,6 +76,8 @@ def get_api_location_config(resolver: str, auth=str):
         auth = ""
     ssl_server_name = get_ssl_server_name(service)
     header_host = get_header_host(service)
+    if settings.PROXIES_CONFIG.has_forward_proxy:
+        service = get_service_proxy()
     config = [
         get_api_config(
             path="= /",

@@ -262,6 +262,11 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.auth.use_resolver is True
         assert config.operator.enabled is False
         assert config.operator.skip_crd is True
+        assert config.proxy.enabled is True
+        assert config.proxy.https_proxy == "foo:34/bar"
+        assert config.proxy.host == "12.12.12.12"
+        assert config.proxy.port == 8080
+        assert config.proxy.kind == "transparent"
 
     def test_read_deploy_config_pgsql_values(self):
         config = reader.read("tests/fixtures/deployment/external_pgsql_values.yml")

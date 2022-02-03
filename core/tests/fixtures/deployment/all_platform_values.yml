@@ -674,3 +674,12 @@ ui:
   offline: true
   adminEnabled: true
   staticUrl: https://ffo.com
+
+proxy:
+  enabled: true
+  httpProxy: "foo:34/bar"
+  httpsProxy: "foo:34/bar"
+  noProxy: "foo:34/bar"
+  host: 12.12.12.12
+  port: 8080
+  kind: transparent

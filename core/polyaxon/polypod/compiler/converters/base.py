@@ -31,6 +31,7 @@ from polyaxon.polypod.common.containers import ensure_container_name, sanitize_c
 from polyaxon.polypod.common.env_vars import (
     get_base_env_vars,
     get_env_var,
+    get_proxy_env_vars,
     get_service_env_vars,
 )
 from polyaxon.polypod.common.mounts import get_mounts
@@ -193,15 +194,21 @@ class BaseConverter(ConverterAbstract):
     def get_main_env_vars(
         self, external_host: bool = False, **kwargs
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
-        return get_base_env_vars()
+        return get_base_env_vars(settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops)
 
     def get_polyaxon_sidecar_service_env_vars(
         self,
         external_host: bool = False,
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
+        env = []
         if settings.CLIENT_CONFIG.no_api:
-            return [get_env_var(name=POLYAXON_KEYS_NO_API, value=True)]
-        return None
+            env += [get_env_var(name=POLYAXON_KEYS_NO_API, value=True)]
+        proxy_env = get_proxy_env_vars(
+            settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops
+        )
+        if proxy_env:
+            env += proxy_env
+        return env
 
     def get_auth_service_env_vars(
         self, external_host: bool = False
@@ -211,9 +218,15 @@ class BaseConverter(ConverterAbstract):
     def get_init_service_env_vars(
         self, external_host: bool = False
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
+        env = []
         if settings.CLIENT_CONFIG.no_api:
-            return [get_env_var(name=POLYAXON_KEYS_NO_API, value=True)]
-        return None
+            env += [get_env_var(name=POLYAXON_KEYS_NO_API, value=True)]
+        proxy_env = get_proxy_env_vars(
+            settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops
+        )
+        if proxy_env:
+            env += proxy_env
+        return env
 
     def get_main_container(
         self,
@@ -466,6 +479,9 @@ class BaseConverter(ConverterAbstract):
                     artifacts_store=artifacts_store,
                     run_path=self.run_path,
                     auto_resume=contexts.auto_resume,
+                    env=get_proxy_env_vars(
+                        settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops
+                    ),
                 ),
                 check_none=True,
             )
@@ -608,6 +624,7 @@ class PlatformConverterMixin(ConverterAbstract):
             api_host=self.get_api_host(external_host),
             api_version=VERSION_V1,
             run_instance=self.run_instance,
+            use_proxy_env_vars_use_in_ops=settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops,
         )
 
     def get_main_env_vars(self, external_host: bool = False, **kwargs):

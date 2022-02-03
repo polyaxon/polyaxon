@@ -18,8 +18,10 @@ import os
 import pytest
 import tempfile
 
+from polyaxon import settings
 from polyaxon.proxies.generators import (
     generate_api_conf,
+    generate_forward_proxy_cmd,
     generate_gateway_conf,
     generate_streams_conf,
 )
@@ -45,6 +47,44 @@ class TestGenerate(BaseTestCase):
             "polyaxon.base.conf",
             "polyaxon.redirect.conf",
         }
+
+    def test_generate_forward_proxy_conf(self):
+        tmp_dir = tempfile.mkdtemp()
+        assert os.listdir(tmp_dir) == []
+        generate_forward_proxy_cmd(path=tmp_dir)
+        assert os.listdir(tmp_dir) == []
+
+        settings.PROXIES_CONFIG.has_forward_proxy = True
+        settings.PROXIES_CONFIG.forward_proxy_port = 443
+        settings.PROXIES_CONFIG.forward_proxy_host = "123.123.123.123"
+        generate_forward_proxy_cmd(path=tmp_dir)
+        assert os.listdir(tmp_dir) == ["forward_proxy.sh"]
+
+    def test_generate_forward_proxy_conf_valid_kind(self):
+        tmp_dir = tempfile.mkdtemp()
+        assert os.listdir(tmp_dir) == []
+        settings.PROXIES_CONFIG.forward_proxy_kind = "connect"
+        generate_forward_proxy_cmd(path=tmp_dir)
+        assert os.listdir(tmp_dir) == []
+
+        settings.PROXIES_CONFIG.has_forward_proxy = True
+        settings.PROXIES_CONFIG.forward_proxy_port = 443
+        settings.PROXIES_CONFIG.forward_proxy_host = "123.123.123.123"
+        generate_forward_proxy_cmd(path=tmp_dir)
+        assert os.listdir(tmp_dir) == ["forward_proxy.sh"]
+
+    def test_generate_forward_proxy_conf_wrong_kind(self):
+        tmp_dir = tempfile.mkdtemp()
+        assert os.listdir(tmp_dir) == []
+        settings.PROXIES_CONFIG.forward_proxy_kind = "foo"
+        generate_forward_proxy_cmd(path=tmp_dir)
+        assert os.listdir(tmp_dir) == []
+
+        settings.PROXIES_CONFIG.has_forward_proxy = True
+        settings.PROXIES_CONFIG.forward_proxy_port = 443
+        settings.PROXIES_CONFIG.forward_proxy_host = "123.123.123.123"
+        generate_forward_proxy_cmd(path=tmp_dir)
+        assert os.listdir(tmp_dir) == []
 
     def test_generate_streams_conf(self):
         tmp_dir = tempfile.mkdtemp()

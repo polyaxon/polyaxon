@@ -73,6 +73,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
 
         self.converter.internal_auth = True
@@ -96,6 +97,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
 
         self.converter.internal_auth = False
@@ -119,6 +121,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         env_vars = self.converter.get_service_env_vars(
             service_header="sa-foo",
@@ -142,6 +145,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         # Setting an env var for the POLYAXON_KEYS_PLATFORM_HOST
         current = os.environ.get(POLYAXON_KEYS_PLATFORM_HOST)
@@ -167,6 +171,7 @@ class TestBaseConverter(BaseTestCase):
             api_host="foo",
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         if current:
             os.environ[POLYAXON_KEYS_PLATFORM_HOST] = current
@@ -198,6 +203,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
 
         self.converter.internal_auth = False
@@ -214,6 +220,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         env_vars = self.converter.get_auth_service_env_vars(external_host=True)
         # Default platform host
@@ -229,6 +236,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         # Setting an env var for the POLYAXON_KEYS_PLATFORM_HOST
         current = os.environ.get(POLYAXON_KEYS_PLATFORM_HOST)
@@ -246,6 +254,7 @@ class TestBaseConverter(BaseTestCase):
             api_host="foo",
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         if current:
             os.environ[POLYAXON_KEYS_PLATFORM_HOST] = current
@@ -267,6 +276,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
 
         self.converter.internal_auth = False
@@ -283,6 +293,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         env_vars = self.converter.get_polyaxon_sidecar_service_env_vars(
             external_host=True
@@ -300,6 +311,7 @@ class TestBaseConverter(BaseTestCase):
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         # Setting an env var for the POLYAXON_KEYS_PLATFORM_HOST
         current = os.environ.get(POLYAXON_KEYS_PLATFORM_HOST)
@@ -319,6 +331,7 @@ class TestBaseConverter(BaseTestCase):
             api_host="foo",
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
+            use_proxy_env_vars_use_in_ops=False,
         )
         if current:
             os.environ[POLYAXON_KEYS_PLATFORM_HOST] = current

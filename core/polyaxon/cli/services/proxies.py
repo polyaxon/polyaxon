@@ -30,6 +30,7 @@ def proxy(component, path, root):
     """Create api proxy."""
     from polyaxon.proxies.generators import (
         generate_api_conf,
+        generate_forward_proxy_cmd,
         generate_gateway_conf,
         generate_streams_conf,
     )
@@ -46,5 +47,6 @@ def proxy(component, path, root):
         generate_streams_conf(path=path, root=root)
     elif component == "gateway":
         generate_gateway_conf(path=path, root=root)
+        generate_forward_proxy_cmd(path=path)
     else:
         raise PolyaxonException("Component {} is not recognized".format(component))

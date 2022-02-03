@@ -31,6 +31,7 @@ from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.mounts import get_artifacts_context_mount
 from polyaxon.polypod.init.store import get_base_store_container, get_volume_args
 from polyaxon.schemas.types import V1ArtifactsType, V1ConnectionType
+from polyaxon.utils.list_utils import to_list
 
 
 def get_artifacts_store_args(artifacts_path: str, clean: bool) -> str:
@@ -62,10 +63,12 @@ def get_artifacts_path_container(
     artifacts_store: V1ConnectionType,
     run_path: str,
     auto_resume: bool,
+    env: List[k8s_schemas.V1EnvVar] = None,
 ) -> Optional[k8s_schemas.V1Container]:
     if not artifacts_store:
         raise PolypodException("Init artifacts container requires a store.")
 
+    env = to_list(env, check_none=True)
     init_args = init_artifact_context_args(run_path=run_path)
     if auto_resume:
         init_args.append(
@@ -87,7 +90,7 @@ def get_artifacts_path_container(
         container=container,
         polyaxon_init=polyaxon_init,
         store=artifacts_store,
-        env=[],
+        env=env,
         env_from=[],
         volume_mounts=[get_artifacts_context_mount()],
         # If we are dealing with a volume we need to make sure the path exists for the user

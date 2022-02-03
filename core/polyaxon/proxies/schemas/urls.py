@@ -39,3 +39,7 @@ def get_header_host(url: str):
     if has_https(url):
         return "proxy_set_header Host {};".format(urlparse(url).netloc.split(":")[0])
     return "proxy_set_header Host $http_host;"
+
+
+def get_service_proxy(port: int = 8443):
+    return "https://127.0.0.1:{}".format(port)

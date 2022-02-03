@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import json
+import os
 
 from typing import Any, Iterable, List, Optional
 
@@ -218,8 +219,8 @@ def get_env_from_k8s_resources(
     return env_vars
 
 
-def get_base_env_vars():
-    return [
+def get_base_env_vars(use_proxy_env_vars_use_in_ops: bool):
+    env = [
         get_from_field_ref(
             name=POLYAXON_KEYS_K8S_NODE_NAME, field_path="spec.nodeName"
         ),
@@ -228,6 +229,8 @@ def get_base_env_vars():
         ),
         get_from_field_ref(name=POLYAXON_KEYS_K8S_POD_ID, field_path="metadata.name"),
     ]
+    env += get_proxy_env_vars(use_proxy_env_vars_use_in_ops)
+    return env
 
 
 def get_service_env_vars(
@@ -242,8 +245,9 @@ def get_service_env_vars(
     api_host: str,
     api_version: str,
     run_instance: str,
+    use_proxy_env_vars_use_in_ops: bool,
 ) -> List[k8s_schemas.V1EnvVar]:
-    env_vars = get_base_env_vars() + [
+    env_vars = get_base_env_vars(use_proxy_env_vars_use_in_ops) + [
         get_env_var(name=POLYAXON_KEYS_HOST, value=api_host),
         get_env_var(name=POLYAXON_KEYS_IS_MANAGED, value=True),
         get_env_var(name=POLYAXON_KEYS_API_VERSION, value=api_version),
@@ -320,3 +324,36 @@ def get_connection_env_var(
     env_vars += [get_env_var(context_secret_env_name, secret.schema.mount_path)]
 
     return env_vars
+
+
+def get_proxy_env_var(key: str):
+    value = os.environ.get(key)
+    if not value:
+        value = os.environ.get(key.lower())
+    if not value:
+        value = os.environ.get(key.upper())
+
+    return value
+
+
+def add_proxy_env_var(name: str, value: str) -> List[k8s_schemas.V1EnvVar]:
+    return [
+        get_env_var(name.upper(), value),
+        get_env_var(name, value),
+    ]
+
+
+def get_proxy_env_vars(use_proxy_env_vars_use_in_ops: bool):
+    if use_proxy_env_vars_use_in_ops:
+        env_vars = []
+        https_proxy = get_proxy_env_var("HTTPS_PROXY")
+        if https_proxy:
+            env_vars += add_proxy_env_var(name="HTTPS_PROXY", value=https_proxy)
+        http_proxy = get_proxy_env_var("HTTP_PROXY")
+        if http_proxy:
+            env_vars += add_proxy_env_var(name="HTTP_PROXY", value=http_proxy)
+        no_proxy = get_proxy_env_var("NO_PROXY")
+        if no_proxy:
+            env_vars += add_proxy_env_var(name="NO_PROXY", value=no_proxy)
+        return []
+    return []

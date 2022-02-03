@@ -17,7 +17,12 @@
 from polyaxon import settings
 from polyaxon.api import AUTH_V1_LOCATION
 from polyaxon.proxies.schemas.base import get_config
-from polyaxon.proxies.schemas.urls import get_service_url, get_ssl_server_name
+from polyaxon.proxies.schemas.urls import (
+    get_header_host,
+    get_service_proxy,
+    get_service_url,
+    get_ssl_server_name,
+)
 
 AUTH_OPTIONS = r"""
     auth_request     {auth_api};
@@ -45,6 +50,7 @@ location = {auth_api} {{
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Origin-URI $request_uri;
     proxy_set_header X-Origin-Method $request_method;
+    {header_host}
     internal;
 }}
 """
@@ -57,6 +63,9 @@ def get_auth_location_config(resolver: str):
     )
     if not settings.PROXIES_CONFIG.auth_use_resolver:
         resolver = ""
+    header_host = get_header_host(service)
+    if settings.PROXIES_CONFIG.has_forward_proxy:
+        service = get_service_proxy()
     return get_config(
         options=AUTH_LOCATION_CONFIG if settings.PROXIES_CONFIG.auth_enabled else "",
         indent=0,
@@ -64,4 +73,5 @@ def get_auth_location_config(resolver: str):
         auth_api=AUTH_V1_LOCATION,
         resolver=resolver,
         ssl_server_name=get_ssl_server_name(service),
+        header_host=header_host,
     )
