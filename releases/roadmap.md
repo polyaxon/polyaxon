@@ -75,12 +75,6 @@ sidebar: "releases"
 
 ### Commercial
 
- * **New**: Add global search (cmd + k), a single global search field to provide easy access to:
-   * Projects
-   * Models
-   * Components
-   * Connections
-   * Operations
  * **New**: Add notification center to allow users to control and manage notifications using the UI.
  * **New**: Add selection reports, this is similar to selection in v0 but the new implementation will support all the new features and dashboard flexibility (events, artifacts, lineages, comparison, custom columns selection, multi-field sorting, ...):
    * Allows adding single runs to a report from the run's overview page.
