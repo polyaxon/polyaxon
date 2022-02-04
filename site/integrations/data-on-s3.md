@@ -106,7 +106,7 @@ To use the artifacts initializer to load the dataset
 run:
   kind: job
   init:
-   - artifacts: [dirs: [...], files: [...]]
+   - artifacts: {dirs: [...], files: [...]}
      connection: "s3-dataset1"
 ```
 

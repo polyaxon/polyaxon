@@ -96,6 +96,6 @@ To use the artifacts initializer to load the dataset
 run:
   kind: job
   init:
-   - artifacts: [dirs: [...], files: [...]]
+   - artifacts: {dirs: [...], files: [...]}
      connection: "dataset1"
 ```

@@ -21,6 +21,7 @@ INIT_COMMAND = (
 )
 
 DEFAULT_IGNORE_LIST = """
+./.polyaxon
 .git
 .eggs
 eggs
@@ -32,7 +33,36 @@ var
 *.pyc
 *.swp
 .DS_Store
-./.polyaxon
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+.mypy_cache/
+.vscode/
+.mr.developer.cfg
+.pydevproject
+.project
+.settings/
+.idea/
+.DS_Store
+# temp files
+*~
+# C extensions
+*.so
+# Distribution / packaging
+.Python
+dist/
+pydist/
+*.egg-info/
+.installed.cfg
+*.egg
+# PyInstaller
+*.manifest
+*.spec
+# IPython Notebook
+.ipynb_checkpoints
+# pyenv
+.python-version
 """
 
 INIT_FILE_PATH = "polyaxonfile.yaml"
