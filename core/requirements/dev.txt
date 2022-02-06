@@ -1,16 +1,16 @@
 docker
 GitPython<3.2.0
 
-numpy
+numpy<=1.23
+scipy<1.8.0
 pandas
-ipython
-
-nbconvert>=5.4,<6.0.0 # pin to fix #958
-hyperopt<=0.2.5
 scikit-learn
-gcsfs
-s3fs
-adlfs
+hyperopt<=0.2.5
+nbconvert>=5.4,<6.0.0 # pin to fix #958
+adlfs==2021.10.0
+fsspec==2021.11.1
+gcsfs==2021.11.1
+s3fs==2021.11.1
 
 # Remove this
 google-cloud-storage
@@ -20,4 +20,3 @@ moto==2.0.5
 kubernetes_asyncio>=12.1.1
 starlette==0.17.1
 aiofiles==0.8.0
-

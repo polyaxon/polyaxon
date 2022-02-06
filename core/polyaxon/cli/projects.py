@@ -186,6 +186,8 @@ def ls(owner, query, sort, limit, offset):
             "owner",
             "user_email",
             "role",
+            "excluded_features",
+            "excluded_runtimes",
             "settings",
         ],
     )

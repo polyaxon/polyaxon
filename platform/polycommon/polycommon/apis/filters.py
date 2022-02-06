@@ -17,9 +17,9 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.filters import OrderingFilter as BaseOrderingFilter
 
-from django.db.models.fields.json import KeyTransform
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import F
+from django.db.models.fields.json import KeyTransform
 
 from polyaxon.exceptions import PQLException
 from polyaxon.utils.string_utils import strip_spaces
