@@ -21,6 +21,7 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 class ProxySchema(BaseCamelSchema):
     enabled = fields.Bool(allow_none=True)
+    use_in_ops = fields.Bool(allow_none=True)
     http_proxy = fields.Str(allow_none=True)
     https_proxy = fields.Str(allow_none=True)
     no_proxy = fields.Str(allow_none=True)
@@ -37,6 +38,7 @@ class ProxyConfig(BaseConfig):
     SCHEMA = ProxySchema
     REDUCED_ATTRIBUTES = [
         "enabled",
+        "useInOps",
         "httpProxy",
         "httpsProxy",
         "noProxy",
@@ -48,6 +50,7 @@ class ProxyConfig(BaseConfig):
     def __init__(
         self,
         enabled=None,
+        use_in_ops=None,
         http_proxy=None,
         https_proxy=None,
         no_proxy=None,
@@ -56,6 +59,7 @@ class ProxyConfig(BaseConfig):
         kind=None,
     ):
         self.enabled = enabled
+        self.use_in_ops = use_in_ops
         self.http_proxy = http_proxy
         self.https_proxy = https_proxy
         self.no_proxy = no_proxy

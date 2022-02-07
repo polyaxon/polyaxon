@@ -262,6 +262,36 @@ dns:
 ```
 
 
+## Proxy
+
+This section allows admins to set the configuration for a corporate proxy.
+
+
+| Parameter          | Description                                                       | Default
+| ------------------ | ----------------------------------------------------------------- | ----------------------------------------------------------
+| `proxy.enabled`    | To use enable proxy section                                       | `false`
+| `proxy.httpsProxy` | To set the environment variables `https_proxy` and `HTTPS_PROXY`  | ``
+| `proxy.httpProxy`  | To set the environment variables `http_proxy` and `HTTP_PROXY`    | ``
+| `proxy.noProxy`    | To set the environment variables `no_proxy` and `NO_PROXY`        | ``
+| `proxy.host`       | Proxy host or ip value                                            | ``
+| `proxy.port`       | Proxy port value                                                  | ``
+| `proxy.kind`       | Proxy kind (transparent or connect)                               | `connect`
+
+Example:
+
+```yaml
+proxy:
+  enabled: false
+  useInOps: true
+  httpProxy: "12.12.12.12:8080"
+  httpsProxy: "12.12.12.12:8080"
+  noProxy: "12.12.12.12:8080"
+  host: "12.12.12.12"
+  port: 8080
+  kind: transparent or connect
+```
+
+
 ## Auth
 
 When you deploy an agent all traffic will be checked by the control plane to ensure that:
