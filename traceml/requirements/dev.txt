@@ -1,7 +1,6 @@
 pandas
 ipython
 scikit-learn
-hyperopt<=0.2.5
 nbconvert>=5.4,<6.0.0 # pin to fix #9
 altair==4.1.0
 matplotlib==3.2.1

@@ -26,7 +26,7 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
-with open(os.path.join("./traceml/pkg.py"), encoding="utf8") as f:
+with open(os.path.join("./hypertune/pkg.py"), encoding="utf8") as f:
     pkg = {}
     exec(f.read(), pkg)
 
@@ -39,13 +39,7 @@ extra = {
     "dev": dev_requirements,
     "all": [
         "scikit-learn",
-        "Pillow",
-        "matplotlib<3.3.3",
-        "moviepy",
-        "plotly",
-        "bokeh",
-        "pandas",
-        "altair",
+        "hyperopt",
     ],
 }
 
@@ -89,8 +83,12 @@ setup(
         "plotly",
         "visualization",
         "analytics",
+        "hyperopt",
+        "scikit-learn",
+        "optimization",
+        "bayesian-optimization",
     ],
-    install_requires=[],
+    install_requires=["numpy"],
     extras_require=extra,
     python_requires=">=3.5",
     classifiers=[

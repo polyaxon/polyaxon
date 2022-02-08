@@ -42,15 +42,13 @@ def tuner():
 @click.option("--iteration", type=int, help="The current iteration.")
 def bayes(matrix, configs, metrics, iteration):
     """Create suggestions based on bayesian optimization."""
-    from polyaxon.client import RunClient
-    from polyaxon.polyflow import V1Bayes
-    from polyaxon.polytune.iteration_lineage import (
-        handle_iteration,
-        handle_iteration_failure,
-    )
-    from polyaxon.polytune.search_managers.bayesian_optimization.manager import (
+    from hypertune.iteration_lineage import handle_iteration, handle_iteration_failure
+    from hypertune.search_managers.bayesian_optimization.manager import (
         BayesSearchManager,
     )
+
+    from polyaxon.client import RunClient
+    from polyaxon.polyflow import V1Bayes
 
     matrix = V1Bayes.read(matrix)
     if configs:
@@ -106,13 +104,11 @@ def bayes(matrix, configs, metrics, iteration):
 )
 def hyperband(matrix, configs, metrics, iteration, bracket_iteration):
     """Create suggestions based on hyperband."""
+    from hypertune.iteration_lineage import handle_iteration, handle_iteration_failure
+    from hypertune.search_managers.hyperband.manager import HyperbandManager
+
     from polyaxon.client import RunClient
     from polyaxon.polyflow import V1Hyperband
-    from polyaxon.polytune.iteration_lineage import (
-        handle_iteration,
-        handle_iteration_failure,
-    )
-    from polyaxon.polytune.search_managers.hyperband.manager import HyperbandManager
 
     matrix = V1Hyperband.read(matrix)
     matrix.set_tuning_params()
@@ -166,13 +162,11 @@ def hyperband(matrix, configs, metrics, iteration, bracket_iteration):
 @click.option("--iteration", type=int, help="The current iteration.")
 def hyperopt(matrix, configs, metrics, iteration):
     """Create suggestions based on hyperopt."""
+    from hypertune.iteration_lineage import handle_iteration, handle_iteration_failure
+    from hypertune.search_managers.hyperopt.manager import HyperoptManager
+
     from polyaxon.client import RunClient
     from polyaxon.polyflow import V1Hyperopt
-    from polyaxon.polytune.iteration_lineage import (
-        handle_iteration,
-        handle_iteration_failure,
-    )
-    from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
 
     matrix = V1Hyperopt.read(matrix)
     if configs:

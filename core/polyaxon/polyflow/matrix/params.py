@@ -276,17 +276,6 @@ def validate_pchoice(values):
         raise ValidationError("The distribution of different outcomes should sum to 1.")
 
 
-def pchoice(values, size=None, rand_generator=None):
-    rand_generator = rand_generator or np.random
-    keys = [v[0] for v in values]
-    dists = [v[1] for v in values]
-    validate_pchoice(dists)
-    indices = rand_generator.multinomial(1, dists, size=size)
-    if size is None:
-        return keys[indices.argmax()]
-    return [keys[ind.argmax()] for ind in indices]
-
-
 class Dist(Range):
     CHECK_ORDER = False
 

@@ -17,6 +17,7 @@
 import numpy as np
 import pytest
 
+from hypertune.matrix.utils import get_length, get_max, get_min, sample, to_numpy
 from marshmallow import fields
 from marshmallow.exceptions import ValidationError
 
@@ -37,13 +38,6 @@ from polyaxon.polyflow.matrix.params import (
     V1HpQUniform,
     V1HpRange,
     V1HpUniform,
-)
-from polyaxon.polytune.matrix.utils import (
-    get_length,
-    get_max,
-    get_min,
-    sample,
-    to_numpy,
 )
 from polyaxon.utils.test_utils import BaseTestCase
 

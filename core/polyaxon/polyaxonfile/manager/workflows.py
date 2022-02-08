@@ -95,17 +95,15 @@ def get_eager_matrix_operations(
     except ImportError as e:
         if is_cli:
             Printer.print_error(
-                "numpy is required for the eager mode, "
-                "please run 'pip install polyaxon[numpy]'",
+                "numpy and hypertune is required for the eager mode, "
+                "please run 'pip install polyaxon hypertune'",
                 sys_exit=True,
             )
         raise e
 
-    from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager
-    from polyaxon.polytune.search_managers.mapping.manager import MappingManager
-    from polyaxon.polytune.search_managers.random_search.manager import (
-        RandomSearchManager,
-    )
+    from hypertune.search_managers.grid_search.manager import GridSearchManager
+    from hypertune.search_managers.mapping.manager import MappingManager
+    from hypertune.search_managers.random_search.manager import RandomSearchManager
 
     if compiled_operation.has_random_search_matrix:
         suggestions = RandomSearchManager(compiled_operation.matrix).get_suggestions()
