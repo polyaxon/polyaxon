@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import urllib3
 
 from marshmallow import EXCLUDE, fields
 
@@ -251,6 +252,8 @@ class ClientConfig(BaseConfig):
         config.verify_ssl = clean_verify_ssl(
             host=config.host, verify_ssl=self.verify_ssl
         )
+        if config.verify_ssl is False:
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         config.ssl_ca_cert = self.ssl_ca_cert
         config.cert_file = self.cert_file
         config.key_file = self.key_file

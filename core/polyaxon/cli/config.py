@@ -162,7 +162,7 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 
     should_purge = False
     for key, value in kwargs.items():
-        if key == "host":
+        if key == "host" and value is not None:
             should_purge = True
         if value is not None:
             setattr(_config, key, value)
