@@ -138,16 +138,16 @@ def register(
     Example:
 
     \b
-    $ polyaxon models register --artifacts=model,env --run=uuid
+    $ polyaxon models register --version=version-name --run-uid=uuid
 
     \b
-    $ polyaxon models register -f polyaxonfile.yaml --project=kaniko --description="..."
+    $ polyaxon models register --content='{"foo": "bar"}' --project=ml-project --description="..."
 
     \b
-    $ polyaxon models register -f polyaxonfile.yaml -p kaniko -ver latest --run=uuid
+    $ polyaxon models register -p ml-project -ver latest --run-uid=uuid --artifacts=model-ref
 
     \b
-    $ polyaxon models register -f polyaxonfile.yaml -p owner/name -ver v1 --tags="tag1,tag2"
+    $ polyaxon models register -p owner/name -ver v1 --tags="tag1,tag2"
     """
     version = version or ctx.obj.get("version")
     owner, project_name = get_project_or_local(
@@ -174,7 +174,7 @@ def register(
 @click.pass_context
 @clean_outputs
 def get(ctx, project, version):
-    """Get info for a model version by name, name & version, owner/name & tag.
+    """Get info for a model version by name.
 
     Examples:
 

@@ -131,22 +131,22 @@ def register(
     connection,
     force,
 ):
-    """Push a new artifact version.
+    """Register a new artifact version.
     If the name corresponds to an existing artifact version, it will be updated.
 
     Example:
 
     \b
-    $ polyaxon components register --name=version-name --connection=dataset-gcs --run=uuid
+    $ polyaxon artifacts register --version=version-name --connection=dataset-gcs --run-uid=uuid
 
     \b
-    $ polyaxon components register --project=images-dataset --connection=dataset-gcs --description="..."
+    $ polyaxon artifacts register --project=images-dataset --connection=dataset-gcs --description="..."
 
     \b
-    $ polyaxon components register -p images-dataset -ver latest --run=uuid --artifacts=lin1,lin2
+    $ polyaxon artifacts register -p images-dataset --content='{"foo": "bar"}' -ver latest --run-uid=uuid --artifacts=lin1,lin2
 
     \b
-    $ polyaxon components register -p owner/name -ver v1 --tags="tag1,tag2"
+    $ polyaxon artifacts register -p owner/name -ver v1 --tags="tag1,tag2"
     """
     version = version or ctx.obj.get("version")
     owner, project_name = get_project_or_local(
@@ -173,7 +173,7 @@ def register(
 @click.pass_context
 @clean_outputs
 def get(ctx, project, version):
-    """Get info for an artifact version by name, name & version, owner/name & tag.
+    """Get info for an artifact version by name.
 
     Examples:
 
@@ -185,7 +185,7 @@ def get(ctx, project, version):
     To get by specific owner/name
 
     \b
-    $ polyaxon artifacts get -p owner/data-versioning
+    $ polyaxon artifacts get -p owner/data-versioning -ver rc1
     """
     version = version or ctx.obj.get("version") or "latest"
     owner, project_name = get_project_or_local(
