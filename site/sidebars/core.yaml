@@ -73,6 +73,12 @@
       link: /docs/core/cli/run/
     - title: Ops
       link: /docs/core/cli/ops/
+    - title: Components
+      link: /docs/core/cli/components/
+    - title: Models
+      link: /docs/core/cli/models/
+    - title: Artifacts
+      link: /docs/core/cli/artifacts/
     - title: Dashboard
       link: /docs/core/cli/dashboard/
     - title: Init
