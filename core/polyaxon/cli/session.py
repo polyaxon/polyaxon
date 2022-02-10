@@ -78,7 +78,7 @@ def get_compatibility(
                 e,
                 message="Could parse the version {}.".format(version),
             )
-    polyaxon_client = PolyaxonClient(config=ClientConfig(), token=NO_AUTH)
+    polyaxon_client = PolyaxonClient(config=ClientConfig(verify_ssl=False), token=NO_AUTH)
     try:
         return polyaxon_client.versions_v1.get_compatibility(
             uuid=key,

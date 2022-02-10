@@ -1441,8 +1441,8 @@ class RunClient:
             path: str, optional, path of where the data is coming from.
             summary: Dict, optional, additional summary information to log about data
                  in the lineage table.
-            is_input: bool, if the data reference is an input or outputs.
-            content: the data content.
+            is_input: bool, optional, if the data reference is an input or outputs.
+            content: optional, if the data content is passed, polyaxon will calculate the hash.
         """
         summary = summary or {}
         if hash:
