@@ -427,6 +427,10 @@ def get(ctx, project, uid, offline, offline_path, output):
                 project=project_name,
             )
             if output:
+                run_url = get_dashboard_url(
+                    subpath="{}/{}/runs/{}".format(owner, project_name, run_uuid)
+                )
+                config["url"] = run_url
                 handle_output(config, output)
                 return
             run_data = polyaxon_client.run_data

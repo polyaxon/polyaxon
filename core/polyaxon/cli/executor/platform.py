@@ -91,23 +91,20 @@ def run(
                 meta_info=meta_info,
                 pending=pending,
             )
+            run_url = get_dashboard_url(
+                subpath="{}/{}/runs/{}".format(owner, project_name, response.uuid)
+            )
             if output:
-                handle_output(
-                    polyaxon_client.client.sanitize_for_serialization(response), output
+                response_data = polyaxon_client.client.sanitize_for_serialization(
+                    response
                 )
+                response_data["url"] = run_url
+                handle_output(response_data, output)
                 return
             Printer.print_success("A new run `{}` was created".format(response.uuid))
             if not eager:
                 cache_run(response)
-                click.echo(
-                    "You can view this run on Polyaxon UI: {}".format(
-                        get_dashboard_url(
-                            subpath="{}/{}/runs/{}".format(
-                                owner, project_name, response.uuid
-                            )
-                        )
-                    )
-                )
+                click.echo("You can view this run on Polyaxon UI: {}".format(run_url))
             return response
         except (ApiException, HTTPError) as e:
             handle_cli_error(

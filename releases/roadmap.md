@@ -63,6 +63,7 @@ sidebar: "releases"
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
  * **Enhancement**: Do not render large artifacts and provide preview button.
+ * **Fix**: Issue with heat fields not persisted with saved queries. 
 
 ### Tracking
 
