@@ -19,7 +19,7 @@ import factory
 from coredb.abstracts.getter import get_project_model
 
 
-class ProjectFactory(factory.DjangoModelFactory):
+class ProjectFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence("project-{}".format)
 
     class Meta:

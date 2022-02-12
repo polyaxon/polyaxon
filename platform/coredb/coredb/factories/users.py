@@ -7,7 +7,7 @@ from django.conf import settings
 fake = FakerFactory.create()
 
 
-class UserFactory(factory.DjangoModelFactory):
+class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = settings.AUTH_USER_MODEL
 

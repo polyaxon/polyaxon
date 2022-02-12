@@ -15,12 +15,13 @@ RUN pip3 install --no-cache-dir -r /requirements/requirements-dev.txt
 
 VOLUME /polyaxon
 COPY /core /polyaxon/core
-COPY /traceml /polyaxon/traceml
+COPY /sdks/python/http_client/v1 /polyaxon/sdks/python/http_client/v1
 COPY /platform /polyaxon/platform
 WORKDIR /polyaxon
 
 ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/sdks/python/http_client/v1"
 ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/traceml"
+ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/hypertune"
 ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/core"
 ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/platform/polycommon"
 ENV PYTHONPATH="${PYTHONPATH}:/polyaxon/platform/coredb"

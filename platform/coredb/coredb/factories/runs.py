@@ -21,7 +21,7 @@ from coredb.factories.projects import ProjectFactory
 from coredb.factories.users import UserFactory
 
 
-class RunFactory(factory.DjangoModelFactory):
+class RunFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)
     original = None
