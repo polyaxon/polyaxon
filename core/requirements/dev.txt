@@ -18,5 +18,5 @@ google-cloud-storage
 moto==2.0.5
 
 kubernetes_asyncio>=12.1.1
-starlette==0.17.1
+starlette==0.18.0
 aiofiles==0.8.0
