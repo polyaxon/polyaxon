@@ -168,7 +168,7 @@ class HyperoptManager(BaseManager):
         minimize.catch_eval_exceptions = False
         new_ids = minimize.trials.new_trial_ids(self.config.num_runs)
         minimize.trials.refresh()
-        random_state = minimize.rstate.randint(2 ** 31 - 1)
+        random_state = minimize.rstate.randint(2**31 - 1)
         new_trials = self.run_algorithm(
             is_first, new_ids, minimize.domain, hyperopt_trials, random_state
         )

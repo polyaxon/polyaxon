@@ -75,7 +75,7 @@ class MemoizeTest(TestCase):
         @memoize
         def wrapped_function(a, b):
             self.execution_count += 1
-            return a ** b
+            return a**b
 
         wrapped_function(2, 3)
         result = wrapped_function(2, 3)
@@ -112,7 +112,7 @@ class MemoizeMethodTest(TestCase):
             @memoize_method
             def test2(self, a, b):
                 self.test2_execution_count += 1
-                return a ** b
+                return a**b
 
         self.obj1 = TestClass()
         self.obj2 = TestClass()

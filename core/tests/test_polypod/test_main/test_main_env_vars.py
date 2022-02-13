@@ -135,18 +135,15 @@ class TestMainEnvVars(BaseTestCase):
             )
 
         # Valid kv env vars
-        assert (
-            get_env_vars(
-                contexts=None,
-                log_level=None,
-                kv_env_vars=[["key1", "val1"], ["key2", "val2"]],
-                artifacts_store_name=None,
-                connections=None,
-                secrets=None,
-                config_maps=None,
-            )
-            == get_kv_env_vars([["key1", "val1"], ["key2", "val2"]])
-        )
+        assert get_env_vars(
+            contexts=None,
+            log_level=None,
+            kv_env_vars=[["key1", "val1"], ["key2", "val2"]],
+            artifacts_store_name=None,
+            connections=None,
+            secrets=None,
+            config_maps=None,
+        ) == get_kv_env_vars([["key1", "val1"], ["key2", "val2"]])
 
     def test_get_env_vars_with_artifacts_store(self):
         assert (
@@ -211,95 +208,92 @@ class TestMainEnvVars(BaseTestCase):
             == []
         )
 
-        assert (
-            get_env_vars(
-                contexts=PluginsContextsSpec.from_config(
-                    V1Plugins(
-                        collect_logs=False,
-                        collect_artifacts=True,
-                        collect_resources=False,
-                    )
-                ),
-                log_level=None,
-                kv_env_vars=None,
-                artifacts_store_name=None,
-                connections=None,
-                secrets=None,
-                config_maps=None,
-            )
-            == [get_env_var(name=POLYAXON_KEYS_COLLECT_ARTIFACTS, value=True)]
-        )
+        assert get_env_vars(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    collect_logs=False,
+                    collect_artifacts=True,
+                    collect_resources=False,
+                )
+            ),
+            log_level=None,
+            kv_env_vars=None,
+            artifacts_store_name=None,
+            connections=None,
+            secrets=None,
+            config_maps=None,
+        ) == [get_env_var(name=POLYAXON_KEYS_COLLECT_ARTIFACTS, value=True)]
 
     def test_get_env_vars_with_secrets(self):
-        assert (
-            get_env_vars(
-                contexts=None,
-                log_level=None,
-                kv_env_vars=None,
-                artifacts_store_name=None,
-                connections=None,
-                secrets=[self.resource1, self.resource2],
-                config_maps=None,
-            )
-            == get_items_from_secret(secret=self.resource1)
-            + get_items_from_secret(secret=self.resource2)
+        assert get_env_vars(
+            contexts=None,
+            log_level=None,
+            kv_env_vars=None,
+            artifacts_store_name=None,
+            connections=None,
+            secrets=[self.resource1, self.resource2],
+            config_maps=None,
+        ) == get_items_from_secret(secret=self.resource1) + get_items_from_secret(
+            secret=self.resource2
         )
 
-        assert (
-            get_env_vars(
-                contexts=None,
-                log_level=None,
-                kv_env_vars=None,
-                artifacts_store_name=None,
-                connections=None,
-                secrets=[
-                    self.resource1,
-                    self.resource2,
-                    self.resource3,
-                    self.resource4,
-                ],
-                config_maps=None,
-            )
-            == get_items_from_secret(secret=self.resource1)
-            + get_items_from_secret(secret=self.resource2)
-            + get_items_from_secret(secret=self.resource3)
-            + get_items_from_secret(secret=self.resource4)
+        assert get_env_vars(
+            contexts=None,
+            log_level=None,
+            kv_env_vars=None,
+            artifacts_store_name=None,
+            connections=None,
+            secrets=[
+                self.resource1,
+                self.resource2,
+                self.resource3,
+                self.resource4,
+            ],
+            config_maps=None,
+        ) == get_items_from_secret(secret=self.resource1) + get_items_from_secret(
+            secret=self.resource2
+        ) + get_items_from_secret(
+            secret=self.resource3
+        ) + get_items_from_secret(
+            secret=self.resource4
         )
 
     def test_get_env_vars_with_config_maps(self):
-        assert (
-            get_env_vars(
-                contexts=None,
-                log_level=None,
-                kv_env_vars=None,
-                artifacts_store_name=None,
-                connections=None,
-                secrets=None,
-                config_maps=[self.resource1, self.resource2],
-            )
-            == get_items_from_config_map(config_map=self.resource1)
-            + get_items_from_config_map(config_map=self.resource2)
+        assert get_env_vars(
+            contexts=None,
+            log_level=None,
+            kv_env_vars=None,
+            artifacts_store_name=None,
+            connections=None,
+            secrets=None,
+            config_maps=[self.resource1, self.resource2],
+        ) == get_items_from_config_map(
+            config_map=self.resource1
+        ) + get_items_from_config_map(
+            config_map=self.resource2
         )
 
-        assert (
-            get_env_vars(
-                contexts=None,
-                log_level=None,
-                kv_env_vars=None,
-                artifacts_store_name=None,
-                connections=None,
-                secrets=None,
-                config_maps=[
-                    self.resource1,
-                    self.resource2,
-                    self.resource3,
-                    self.resource4,
-                ],
-            )
-            == get_items_from_config_map(config_map=self.resource1)
-            + get_items_from_config_map(config_map=self.resource2)
-            + get_items_from_config_map(config_map=self.resource3)
-            + get_items_from_config_map(config_map=self.resource4)
+        assert get_env_vars(
+            contexts=None,
+            log_level=None,
+            kv_env_vars=None,
+            artifacts_store_name=None,
+            connections=None,
+            secrets=None,
+            config_maps=[
+                self.resource1,
+                self.resource2,
+                self.resource3,
+                self.resource4,
+            ],
+        ) == get_items_from_config_map(
+            config_map=self.resource1
+        ) + get_items_from_config_map(
+            config_map=self.resource2
+        ) + get_items_from_config_map(
+            config_map=self.resource3
+        ) + get_items_from_config_map(
+            config_map=self.resource4
         )
 
     def test_get_env_vars_with_all(self):

@@ -221,14 +221,14 @@ class TestAwsStore(BaseTestCase):
         store.connection.create_bucket(Bucket="bucket")
         store.connection.put_object(Bucket="bucket", Key="my_key", Body=b"M\xC3\xA9nar")
 
-        self.assertEqual(store.read_key("my_key", "bucket"), u"Ménar")
+        self.assertEqual(store.read_key("my_key", "bucket"), "Ménar")
 
     @mock_s3
     def test_upload_string(self):
         store = S3Service()
         store.connection.create_bucket(Bucket="bucket")
 
-        store.upload_string(u"Ménar", "my_key", "bucket")
+        store.upload_string("Ménar", "my_key", "bucket")
         body = store.resource.Object("bucket", "my_key").get()["Body"].read()
 
         self.assertEqual(body, b"M\xC3\xA9nar")

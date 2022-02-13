@@ -63,7 +63,7 @@ class TestRunResources(BaseTestCase):
                 },
             }
         )
-        expected.memory = 64 * (1024 ** 2)
+        expected.memory = 64 * (1024**2)
         expected.cpu = 0.25
         expected.gpu = 2
         expected.custom = 8
@@ -97,7 +97,7 @@ class TestRunResources(BaseTestCase):
                 },
             ),
         )
-        expected.memory = 64 * (1024 ** 2)
+        expected.memory = 64 * (1024**2)
         expected.cpu = 0.25
         expected.gpu = 2
         expected.custom = 8
@@ -105,7 +105,7 @@ class TestRunResources(BaseTestCase):
 
     def test_from_container_obj_multi_representation(self):
         expected = V1RunResources(
-            memory=64 * (1024 ** 2), cpu=0.25, gpu=2, custom=8, cost=0
+            memory=64 * (1024**2), cpu=0.25, gpu=2, custom=8, cost=0
         )
         container = k8s_schemas.V1Container(
             resources=k8s_schemas.V1ResourceRequirements(
@@ -149,7 +149,7 @@ class TestRunResources(BaseTestCase):
         assert V1RunResources.from_container(container) == expected
 
         expected = V1RunResources(
-            memory=129 * 1000 ** 2, cpu=0.00000025, gpu=2, custom=8, cost=0
+            memory=129 * 1000**2, cpu=0.00000025, gpu=2, custom=8, cost=0
         )
         container = k8s_schemas.V1Container(
             resources=k8s_schemas.V1ResourceRequirements(

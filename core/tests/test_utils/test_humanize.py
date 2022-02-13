@@ -86,8 +86,8 @@ class HumanizeTimesinceTest(TestCase):
 
     def test_humanize_timesince_few_seconds(self):
         self.assertEqual(
-            u"Last update: " + humanize_timesince(local_datetime(now())),
-            u"Last update: a few seconds ago",
+            "Last update: " + humanize_timesince(local_datetime(now())),
+            "Last update: a few seconds ago",
         )
 
 

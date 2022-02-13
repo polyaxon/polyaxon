@@ -381,14 +381,14 @@ class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
 
     def get_num_runs_to_keep(self, num_runs, bracket_iteration):
         """Return the number of configs to keep and resume."""
-        num_runs = num_runs * (self.eta ** -bracket_iteration)
+        num_runs = num_runs * (self.eta**-bracket_iteration)
         return int(num_runs / self.eta)
 
     def get_num_runs(self, bracket):
         # n: initial number of configs
         return int(
             math.ceil(
-                (self.B / self.max_iterations) * (self.eta ** bracket) / (bracket + 1)
+                (self.B / self.max_iterations) * (self.eta**bracket) / (bracket + 1)
             )
         )
 

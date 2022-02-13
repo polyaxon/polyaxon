@@ -685,7 +685,16 @@ class TestV1IOs(BaseTestCase):
             is_context=True,
             arg_format="{{foo}}",
         )
-        assert (
+        assert ParamSpec(
+            name="foo",
+            type=types.STR,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=True,
+            arg_format=None,
+        ).param.value == {"key": "value"}
+        assert str(
             ParamSpec(
                 name="foo",
                 type=types.STR,
@@ -694,23 +703,8 @@ class TestV1IOs(BaseTestCase):
                 is_list=False,
                 is_context=True,
                 arg_format=None,
-            ).param.value
-            == {"key": "value"}
-        )
-        assert (
-            str(
-                ParamSpec(
-                    name="foo",
-                    type=types.STR,
-                    param=param,
-                    is_flag=False,
-                    is_list=False,
-                    is_context=True,
-                    arg_format=None,
-                )
             )
-            == json.dumps({"key": "value"})
-        )
+        ) == json.dumps({"key": "value"})
 
         # Regex validation runs: invalid params
         with self.assertRaises(ValidationError):

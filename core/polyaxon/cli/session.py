@@ -64,6 +64,7 @@ def get_compatibility(
     version: str,
     is_cli: bool = True,
     set_config: bool = True,
+    polyaxon_client: PolyaxonClient = None,
 ):
     if not key:
         installation = CliConfigManager.get_value("installation") or {}
@@ -78,7 +79,7 @@ def get_compatibility(
                 e,
                 message="Could parse the version {}.".format(version),
             )
-    polyaxon_client = PolyaxonClient(
+    polyaxon_client = polyaxon_client or PolyaxonClient(
         config=ClientConfig(verify_ssl=False), token=NO_AUTH
     )
     try:
@@ -149,7 +150,11 @@ def set_versions_config(
     compatibility = None
     if set_compatibility:
         compatibility = get_compatibility(
-            key=key, service=service, version=version, is_cli=is_cli
+            key=key,
+            service=service,
+            version=version,
+            is_cli=is_cli,
+            polyaxon_client=polyaxon_client if polyaxon_client.config.token else None,
         )
     log_handler = None
     if set_handler:

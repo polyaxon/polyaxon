@@ -418,14 +418,11 @@ class TestParser(BaseTestCase):
                 strong_type=True,
             )
 
-        assert (
-            parser.get_string(
-                key="string_list_error_key_2",
-                value=["123", 12.3],
-                is_list=True,
-            )
-            == ["123", "12.3"]
-        )
+        assert parser.get_string(
+            key="string_list_error_key_2",
+            value=["123", 12.3],
+            is_list=True,
+        ) == ["123", "12.3"]
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_string(
                 key="string_list_error_key_2",

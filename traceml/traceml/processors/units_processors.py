@@ -34,9 +34,9 @@ def to_cpu_value(cpu_definition: Union[str, int, float]) -> float:
     if cpu_unit == "m":
         cpu = _sanitize_value(cpu_value) / 1000
     elif cpu_unit == "u":
-        cpu = _sanitize_value(cpu_value) / 1000 ** 2
+        cpu = _sanitize_value(cpu_value) / 1000**2
     elif cpu_unit == "n":
-        cpu = _sanitize_value(cpu_value) / 1000 ** 3
+        cpu = _sanitize_value(cpu_value) / 1000**3
     else:
         cpu = cpu_definition
     return _sanitize_value(cpu)
@@ -54,20 +54,20 @@ def to_memory_bytes(mem_definition: Union[str, int, float]) -> int:
 
     fixed_point_unit_multiplier = {
         "k": 1000,
-        "m": 1000 ** 2,
-        "g": 1000 ** 3,
-        "t": 1000 ** 4,
-        "p": 1000 ** 5,
-        "e": 1000 ** 6,
+        "m": 1000**2,
+        "g": 1000**3,
+        "t": 1000**4,
+        "p": 1000**5,
+        "e": 1000**6,
     }
 
     power_two_unit_multiplier = {
         "ki": 1024,
-        "mi": 1024 ** 2,
-        "gi": 1024 ** 3,
-        "ti": 1024 ** 4,
-        "pi": 1024 ** 5,
-        "ei": 1024 ** 6,
+        "mi": 1024**2,
+        "gi": 1024**3,
+        "ti": 1024**4,
+        "pi": 1024**5,
+        "ei": 1024**6,
     }
 
     mem_definition = mem_definition.lower()

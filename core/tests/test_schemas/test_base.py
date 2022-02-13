@@ -20,7 +20,7 @@ from marshmallow import Schema, ValidationError, fields
 from polyaxon.schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
 from polyaxon.utils.test_utils import BaseTestCase
 
-REQUIRED_ERROR = u"Missing data for required field."
+REQUIRED_ERROR = "Missing data for required field."
 
 
 class FooSchema(BaseSchema):

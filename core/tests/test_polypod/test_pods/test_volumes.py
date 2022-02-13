@@ -185,96 +185,84 @@ class TestPodVolumes(BaseTestCase):
         ]
 
     def test_auth_context(self):
-        assert (
-            get_pod_volumes(
-                contexts=PluginsContextsSpec.from_config(
-                    V1Plugins(
-                        docker=False,
-                        shm=False,
-                        auth=True,
-                        collect_artifacts=False,
-                        collect_logs=False,
-                    )
-                ),
-                artifacts_store=None,
-                init_connections=[],
-                connections=[],
-                connection_by_names={},
-                secrets=[],
-                config_maps=[],
-                volumes=[],
-            )
-            == [get_configs_context_volume()]
-        )
+        assert get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=False,
+                    shm=False,
+                    auth=True,
+                    collect_artifacts=False,
+                    collect_logs=False,
+                )
+            ),
+            artifacts_store=None,
+            init_connections=[],
+            connections=[],
+            connection_by_names={},
+            secrets=[],
+            config_maps=[],
+            volumes=[],
+        ) == [get_configs_context_volume()]
 
     def test_docker_context(self):
-        assert (
-            get_pod_volumes(
-                contexts=PluginsContextsSpec.from_config(
-                    V1Plugins(
-                        docker=True,
-                        shm=False,
-                        auth=False,
-                        collect_artifacts=False,
-                        collect_logs=False,
-                    )
-                ),
-                artifacts_store=None,
-                init_connections=[],
-                connections=[],
-                connection_by_names={},
-                secrets=[],
-                config_maps=[],
-                volumes=[],
-            )
-            == [get_docker_context_volume()]
-        )
+        assert get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=False,
+                    auth=False,
+                    collect_artifacts=False,
+                    collect_logs=False,
+                )
+            ),
+            artifacts_store=None,
+            init_connections=[],
+            connections=[],
+            connection_by_names={},
+            secrets=[],
+            config_maps=[],
+            volumes=[],
+        ) == [get_docker_context_volume()]
 
     def test_shm_context(self):
-        assert (
-            get_pod_volumes(
-                contexts=PluginsContextsSpec.from_config(
-                    V1Plugins(
-                        docker=False,
-                        shm=True,
-                        auth=False,
-                        collect_artifacts=False,
-                        collect_logs=False,
-                    )
-                ),
-                artifacts_store=None,
-                init_connections=[],
-                connections=[],
-                connection_by_names={},
-                secrets=[],
-                config_maps=[],
-                volumes=[],
-            )
-            == [get_shm_context_volume()]
-        )
+        assert get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=False,
+                    shm=True,
+                    auth=False,
+                    collect_artifacts=False,
+                    collect_logs=False,
+                )
+            ),
+            artifacts_store=None,
+            init_connections=[],
+            connections=[],
+            connection_by_names={},
+            secrets=[],
+            config_maps=[],
+            volumes=[],
+        ) == [get_shm_context_volume()]
 
     def test_passing_volumes(self):
-        assert (
-            get_pod_volumes(
-                contexts=PluginsContextsSpec.from_config(
-                    V1Plugins(
-                        docker=False,
-                        shm=False,
-                        auth=False,
-                        collect_artifacts=False,
-                        collect_logs=False,
-                    )
-                ),
-                artifacts_store=None,
-                init_connections=[],
-                connections=[],
-                connection_by_names={},
-                secrets=[],
-                config_maps=[],
-                volumes=[self.vol1, self.vol2, self.vol3],
-            )
-            == [self.vol1, self.vol2, self.vol3]
-        )
+        assert get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=False,
+                    shm=False,
+                    auth=False,
+                    collect_artifacts=False,
+                    collect_logs=False,
+                )
+            ),
+            artifacts_store=None,
+            init_connections=[],
+            connections=[],
+            connection_by_names={},
+            secrets=[],
+            config_maps=[],
+            volumes=[self.vol1, self.vol2, self.vol3],
+        ) == [self.vol1, self.vol2, self.vol3]
 
     @staticmethod
     def assert_artifacts_store(store, results):

@@ -77,7 +77,7 @@ class HyperbandManager(BaseManager):
 
     def get_n_resources(self, n_resources, bracket_iteration):
         """Return the number of iterations to run for this barcket_i"""
-        return n_resources * self.config.eta ** bracket_iteration
+        return n_resources * self.config.eta**bracket_iteration
 
     def get_n_resources_for_iteration(self, iteration, bracket_iteration):
         """Return the number of iterations to run for this barcket_i
