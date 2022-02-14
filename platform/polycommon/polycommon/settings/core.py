@@ -30,7 +30,7 @@ def set_core(context, config: ConfigManager):
     context["WSGI_APPLICATION"] = "polyconf.wsgi.application"
     context["TIME_ZONE"] = config.timezone
     context["LANGUAGE_CODE"] = "en"
-    context["LANGUAGES"] = (("en", u"English"),)
+    context["LANGUAGES"] = (("en", "English"),)
 
     context["USE_I18N"] = True
     context["USE_L10N"] = True
