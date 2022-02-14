@@ -37,6 +37,14 @@ def collect_dag_components(dag: V1Dag, path_context: str = None):
     """Collect components that cannot be resolved by the scheduler"""
     for op in dag.operations:
         op_name = op.name
+        schedule = op.get_schedule_kind()
+        if schedule is not None:
+            raise PolyaxonSchemaError(
+                "Pipeline op with name `{}` defines a schedule of kind `{}`.\n"
+                "Nesting schedules inside DAGs is not allowed".format(
+                    op_name, schedule,
+                )
+            )
         if op.has_url_reference or op.has_path_reference or op.has_hub_reference:
             try:
                 op = collect_references(op, path_context)

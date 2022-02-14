@@ -24,5 +24,5 @@ def validate_tags(tags):
     if isinstance(tags, str):
         tags = [tag.strip() for tag in tags.split(",")]
     tags = to_list(tags)
-    tags = [tag for tag in tags if (tag and isinstance(tag, str))]
-    return tags
+    tags = [tag.strip() for tag in tags if (tag and isinstance(tag, str))]
+    return [t for t in tags if t]
