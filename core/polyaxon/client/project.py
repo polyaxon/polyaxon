@@ -341,9 +341,9 @@ class ProjectClient:
             to_update = False
 
         if tags is not None:
-            tags = validate_tags(tags)
+            tags = validate_tags(tags, validate_yaml=True)
         if artifacts is not None:
-            artifacts = validate_tags(artifacts)
+            artifacts = validate_tags(artifacts, validate_yaml=True)
 
         if to_update:
             version_config = polyaxon_sdk.V1ProjectVersion()

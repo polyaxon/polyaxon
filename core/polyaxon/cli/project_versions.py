@@ -220,7 +220,7 @@ def update_project_version(
     if description:
         update_dict["description"] = description
 
-    tags = validate_tags(tags)
+    tags = validate_tags(tags, validate_yaml=True)
     if tags:
         update_dict["tags"] = tags
 

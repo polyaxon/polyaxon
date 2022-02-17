@@ -329,7 +329,7 @@ class RunClient:
         Returns:
             V1Run, run instance from the response.
         """
-        tags = validate_tags(tags)
+        tags = validate_tags(tags, validate_yaml=True)
         if self._is_offline:
             self._run_data.name = name
             self._run_data.description = description
@@ -1135,7 +1135,7 @@ class RunClient:
         if description:
             body.description = description
         if tags:
-            tags = validate_tags(tags)
+            tags = validate_tags(tags, validate_yaml=True)
             body.tags = tags
         if copy or copy_dirs or copy_files:
             if copy_dirs or copy_files:
@@ -1296,7 +1296,7 @@ class RunClient:
                  on the Polyaxonfile.
             async_req: bool, optional, default: False, execute request asynchronously.
         """
-        tags = validate_tags(tags)
+        tags = validate_tags(tags, validate_yaml=True)
         patch_dict = {"tags": tags}
         if reset is False:
             patch_dict["merge"] = True

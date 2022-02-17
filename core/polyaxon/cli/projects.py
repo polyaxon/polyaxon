@@ -98,7 +98,7 @@ def create(ctx, name, description, tags, public, init):
         name or ctx.obj.get("project"), is_cli=True, entity_name="project"
     )
 
-    tags = validate_tags(tags)
+    tags = validate_tags(tags, validate_yaml=True)
 
     if not owner:
         Printer.print_error(
@@ -323,7 +323,7 @@ def update(ctx, _project, name, description, tags, private):
     if description is not None:
         update_dict["description"] = description
 
-    tags = validate_tags(tags)
+    tags = validate_tags(tags, validate_yaml=True)
     if tags:
         update_dict["tags"] = tags
 

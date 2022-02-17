@@ -17,9 +17,14 @@
 from polyaxon.utils.list_utils import to_list
 
 
-def validate_tags(tags):
+def validate_tags(tags, validate_yaml: bool = False):
     if not tags:
         return None
+
+    if validate_yaml and isinstance(tags, str) and ("[" in tags and "]" in tags):
+        import yaml
+
+        tags = yaml.safe_load(tags)
 
     if isinstance(tags, str):
         tags = [tag.strip() for tag in tags.split(",")]

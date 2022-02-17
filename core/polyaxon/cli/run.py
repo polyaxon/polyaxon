@@ -373,7 +373,7 @@ def run(
         sys.exit(1)
 
     owner, project_name = get_project_or_local(project, is_cli=True)
-    tags = validate_tags(tags)
+    tags = validate_tags(tags, validate_yaml=True)
 
     if local:
         try:

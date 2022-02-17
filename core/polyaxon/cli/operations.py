@@ -300,7 +300,7 @@ def ls(
         results = response.results
 
     objects = [Printer.add_status_color(o.to_dict()) for o in results]
-    columns = validate_tags(columns)
+    columns = validate_tags(columns, validate_yaml=True)
     if io:
         objects, prefixed_columns = flatten_keys(
             objects=objects,
@@ -528,7 +528,7 @@ def update(ctx, project, uid, name, description, tags):
     if description is not None:
         update_dict["description"] = description
 
-    tags = validate_tags(tags)
+    tags = validate_tags(tags, validate_yaml=True)
     if tags:
         update_dict["tags"] = tags
 
