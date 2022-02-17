@@ -67,6 +67,7 @@ sidebar: "releases"
 
 ### Tracking
 
+ * **New**: Add progress logger, e.g. `log_progress(0.3)` which will show a progress UI widget on the run's overview page.
  * **New**: Add support for logging data versions, summaries, reports, and quality.
  * **Enhancement**: Re-enable histogram logging.
 

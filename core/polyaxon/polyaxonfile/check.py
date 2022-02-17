@@ -42,7 +42,8 @@ def collect_dag_components(dag: V1Dag, path_context: str = None):
             raise PolyaxonSchemaError(
                 "Pipeline op with name `{}` defines a schedule of kind `{}`.\n"
                 "Nesting schedules inside DAGs is not allowed".format(
-                    op_name, schedule,
+                    op_name,
+                    schedule,
                 )
             )
         if op.has_url_reference or op.has_path_reference or op.has_hub_reference:

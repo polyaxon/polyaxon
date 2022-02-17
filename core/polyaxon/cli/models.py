@@ -100,9 +100,11 @@ def ls(ctx, project, query, sort, limit, offset):
 @click.option("--description", type=str, help="Description of the version.")
 @click.option("--tags", type=str, help="Tags of the version, comma separated values.")
 @click.option(
-    "--content", type=str, help="Additional content/metadata to save with the model version."
+    "--content",
+    type=str,
+    help="Additional content/metadata to save with the artifact version.",
 )
-@click.option("--run-uid", type=str, help="The run to promote an a model version.")
+@click.option("--run-uid", type=str, help="The run to promote as an artifact version.")
 @click.option(
     "--artifacts",
     "artifacts_",

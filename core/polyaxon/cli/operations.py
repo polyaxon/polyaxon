@@ -996,7 +996,7 @@ def artifacts(ctx, project, uid, path, path_to, no_untar):
     $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 path="events/only"
 
     \b
-    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 path_to="this/path"
+    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 path-to="this/path"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -1059,10 +1059,10 @@ def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
     $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80 path_from="path/to/upload"
+    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80 path-from="path/to/upload"
 
     \b
-    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80 path_to="path/to/upload/to"
+    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80 path-to="path/to/upload/to"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),

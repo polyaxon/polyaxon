@@ -30,3 +30,37 @@ Polyaxon provides several scheduling interfaces to automate the process of creat
  * [Cron schedules](/docs/automation/schedules/cron/)
  * [Interval schedules](/docs/automation/schedules/interval/)
  * [Exact time schedules](/docs/automation/schedules/datetime/)
+
+
+## Cache
+
+When running operations on schedule, Polyaxon will automatically check if an operation has changed and will trigger a cache hit if no changes were detected.
+If you intend to run the same operation (same manifest and same inputs/outputs/params) without changes, we suggest that you disable the cache:
+
+```yaml
+version: 1.1
+kind: operation
+schedule:
+  kind: ...
+  ...
+cache:
+  disable: true
+...
+```
+
+Alternatively, to keep using the cache while triggering a schedule tick, you can use the `schedule_at` variable and pass it as a param, if your component is expecting it as an input or as context only param if it's not expected:
+
+
+```yaml
+version: 1.1
+kind: operation
+schedule:
+  kind: ...
+params:
+  schedule_at:
+    value: '{{ globals.schedule_at }}'
+    contextOnly: true
+...
+```
+
+By providing the `schedule_at` variable, you can leverage the cache mechanism and trigger a unique operation based on the manifest configuration.
