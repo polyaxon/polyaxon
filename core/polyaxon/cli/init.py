@@ -99,8 +99,16 @@ def create_polyaxonfile():
     show_default=False,
     help="Init a polyaxonignore file in this project.",
 )
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
 @clean_outputs
-def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
+def init(project, git_connection, git_url, polyaxonfile, polyaxonignore, yes):
     """Initialize a new local project and cache directory.
 
     Note: Make sure to add the local cache `.polyaxon`
@@ -136,7 +144,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
             with indentation.indent(4):
                 indentation.puts("Owner: {}".format(local_project.owner))
                 indentation.puts("Project: {}".format(local_project.name))
-            if click.confirm(
+            if yes or click.confirm(
                 "Would you like to override this current config?", default=False
             ):
                 init_project = True
@@ -167,7 +175,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
                     GitConfigManager.CONFIG_FILE_NAME
                 )
             )
-            if click.confirm("Would you like to override it?", default=False):
+            if yes or click.confirm("Would you like to override it?", default=False):
                 init_git = True
         else:
             init_git = True
@@ -198,7 +206,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
                     IgnoreConfigManager.CONFIG_FILE_NAME
                 )
             )
-            if click.confirm("Would you like to override it?", default=False):
+            if yes or click.confirm("Would you like to override it?", default=False):
                 init_ignore = True
         else:
             init_ignore = True
