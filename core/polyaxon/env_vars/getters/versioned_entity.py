@@ -23,17 +23,6 @@ from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.utils.formatting import Printer
 
 
-def get_versioned_entity_full_name(
-    component: str, owner: str = None, tag: str = None
-) -> str:
-    if tag:
-        component = "{}:{}".format(component, tag)
-    if owner:
-        component = "{}/{}".format(owner, component)
-
-    return component
-
-
 def get_versioned_entity_info(
     entity: str, entity_name: str, default_owner: str
 ) -> Tuple[str, str, str]:

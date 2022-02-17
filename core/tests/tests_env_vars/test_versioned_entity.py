@@ -14,19 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.env_vars.getters import get_component_info, get_versioned_entity_full_name
+from polyaxon.env_vars.getters import get_component_info
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.utils.test_utils import BaseTestCase
 
 
 class TestComponentEnvVars(BaseTestCase):
-    def test_get_versioned_entity_full_name(self):
-        assert get_versioned_entity_full_name(None) is None
-        assert get_versioned_entity_full_name("hub") == "hub"
-        assert get_versioned_entity_full_name("hub", tag="ver") == "hub:ver"
-        assert get_versioned_entity_full_name("hub", "owner") == "owner/hub"
-        assert get_versioned_entity_full_name("hub", "owner", "ver") == "owner/hub:ver"
-
     def test_get_component_info(self):
         with self.assertRaises(PolyaxonSchemaError):
             get_component_info(None)

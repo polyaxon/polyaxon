@@ -30,6 +30,5 @@ from polyaxon.env_vars.getters.run import (
 from polyaxon.env_vars.getters.versioned_entity import (
     get_component_info,
     get_model_info,
-    get_versioned_entity_full_name,
     get_versioned_entity_info,
 )

@@ -19,7 +19,11 @@ import pytest
 from unittest import TestCase
 
 from polyaxon.exceptions import PolyaxonSchemaError
-from polyaxon.utils.fqn_utils import get_entity_full_name, get_entity_info
+from polyaxon.utils.fqn_utils import (
+    get_entity_full_name,
+    get_entity_info,
+    get_versioned_entity_full_name,
+)
 
 
 @pytest.mark.utils_mark
@@ -45,3 +49,10 @@ class TestEnvVars(TestCase):
         assert get_entity_info("entity") == (None, "entity")
         assert get_entity_info("owner.entity") == ("owner", "entity")
         assert get_entity_info("owner/entity") == ("owner", "entity")
+
+    def test_get_versioned_entity_full_name(self):
+        assert get_versioned_entity_full_name(None, None) is None
+        assert get_versioned_entity_full_name(None, "hub") == "hub"
+        assert get_versioned_entity_full_name(None, "hub", tag="ver") == "hub:ver"
+        assert get_versioned_entity_full_name("owner", "hub") == "owner/hub"
+        assert get_versioned_entity_full_name("owner", "hub", "ver") == "owner/hub:ver"

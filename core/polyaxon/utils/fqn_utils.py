@@ -17,6 +17,8 @@
 import re
 import unicodedata
 
+from typing import Optional
+
 from polyaxon.exceptions import PolyaxonSchemaError
 
 
@@ -85,3 +87,14 @@ def get_entity_info(entity):
         entity_name = entity
 
     return owner, entity_name
+
+
+def get_versioned_entity_full_name(
+    owner: Optional[str], component: str, tag: str = None
+) -> str:
+    if tag:
+        component = "{}:{}".format(component, tag)
+    if owner:
+        component = "{}/{}".format(owner, component)
+
+    return component

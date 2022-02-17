@@ -25,7 +25,6 @@ from urllib3.exceptions import HTTPError
 from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import PolyaxonClient, ProjectClient
-from polyaxon.env_vars.getters import get_versioned_entity_full_name
 from polyaxon.lifecycle import V1ProjectVersionKind, V1StageCondition, V1Stages
 from polyaxon.utils.formatting import (
     Printer,
@@ -34,6 +33,7 @@ from polyaxon.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate,
 )
+from polyaxon.utils.fqn_utils import get_versioned_entity_full_name
 from polyaxon.utils.query_params import get_query_params
 from polyaxon.utils.validation import validate_tags
 from polyaxon_sdk.rest import ApiException
