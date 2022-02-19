@@ -100,17 +100,26 @@ async def start_sidecar(
                 run_uuid=run_uuid,
                 exclude=IGNORE_FOLDERS,
             )
-            client.sync_events_summaries(
-                last_check=last_check,
-                events_path=CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(run_uuid),
-            )
-            client.sync_system_events_summaries(
-                last_check=last_check,
-                events_path=CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(
-                    run_uuid
-                ),
-            )
-            state["last_artifacts_check"] = now()
+            try:
+                client.sync_events_summaries(
+                    last_check=last_check,
+                    events_path=CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(run_uuid),
+                )
+                client.sync_system_events_summaries(
+                    last_check=last_check,
+                    events_path=CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(
+                        run_uuid
+                    ),
+                )
+                update_last_check = True
+            except Exception as e:
+                logger.info(
+                    "An error occurred while syncing events summaries, "
+                    "Exception %s" % repr(e)
+                )
+                update_last_check = False
+            if update_last_check:
+                state["last_artifacts_check"] = now()
 
     while is_running and retry <= 3:
         await asyncio.sleep(sleep_interval)
