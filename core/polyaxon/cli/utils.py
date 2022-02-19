@@ -16,7 +16,7 @@
 import click
 import ujson
 
-from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
+from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate, pprint
 
 
 def get_entity_details(entity: str, entity_name: str):
@@ -39,12 +39,11 @@ def get_entity_details(entity: str, entity_name: str):
 
 
 def handle_output(response, output: str):
-    content = ujson.dumps(response, indent=4)
     if output == "json":
 
-        print(content)
+        pprint(response)
         return
     if "path=" in output:
         json_path = output.strip("path=")
         with open(json_path, "w", encoding="utf8", newline="") as output_file:
-            output_file.write(content)
+            output_file.write(ujson.dumps(response))

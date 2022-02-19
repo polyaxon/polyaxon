@@ -42,7 +42,12 @@ from polyaxon.lifecycle import V1ProjectVersionKind, V1Stages
 from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile import get_specification
 from polyaxon.schemas.cli.client_config import ClientConfig
-from polyaxon.utils.formatting import Printer, dict_tabulate, list_dicts_to_tabulate
+from polyaxon.utils.formatting import (
+    Printer,
+    dict_tabulate,
+    list_dicts_to_tabulate,
+    pprint,
+)
 
 
 def get_current_or_public_client():
@@ -70,7 +75,7 @@ def get_specification_details(content):
         dict_tabulate(objects, is_list_dict=True)
 
     Printer.print_header("Content:")
-    click.echo(specification.to_dict())
+    pprint(specification.to_dict())
 
 
 @click.group()

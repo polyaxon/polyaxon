@@ -32,6 +32,7 @@ from polyaxon.utils.formatting import (
     dict_to_tabulate,
     get_meta_response,
     list_dicts_to_tabulate,
+    pprint,
 )
 from polyaxon.utils.fqn_utils import get_versioned_entity_full_name
 from polyaxon.utils.query_params import get_query_params
@@ -41,17 +42,28 @@ from polyaxon_sdk.rest import ApiException
 
 def get_version_details(response, content_callback: Callable = None):
     content = response.content
+    meta_info = response.meta_info
     response = dict_to_tabulate(
-        response.to_dict(), humanize_values=True, exclude_attrs=["content"]
+        response.to_dict(), humanize_values=True, exclude_attrs=["content", "meta_info"]
     )
 
     Printer.print_header("Version info:")
     dict_tabulate(response)
 
+    if meta_info:
+        artifacts = meta_info.pop("artifacts", None)
+        if meta_info:
+            Printer.print_header("Version meta info:")
+            dict_tabulate(meta_info)
+
+        if artifacts:
+            Printer.print_header("Version artifacts:")
+            pprint(artifacts)
+
     def get_content(content):
         if content:
             Printer.print_header("Content:")
-            click.echo(content)
+            pprint(content)
 
     content_callback = content_callback or get_content
     content_callback(content)
