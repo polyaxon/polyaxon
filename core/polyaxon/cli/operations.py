@@ -545,7 +545,7 @@ def update(ctx, project, uid, name, description, tags):
         handle_cli_error(e, message="Could not update run `{}`.".format(run_uuid))
         sys.exit(1)
 
-    Printer.print_success("Run updated.")
+    Printer.print_success("Run `{}` was updated.".format(run_uuid))
     get_run_details(response)
 
 
@@ -582,7 +582,7 @@ def approve(ctx, project, uid):
         handle_cli_error(e, message="Could not approve run `{}`.".format(run_uuid))
         sys.exit(1)
 
-    Printer.print_success("Run is approved")
+    Printer.print_success("Run `{}` was approved".format(run_uuid))
 
 
 @ops.command()
@@ -631,7 +631,7 @@ def stop(ctx, project, uid, yes):
         handle_cli_error(e, message="Could not stop run `{}`.".format(run_uuid))
         sys.exit(1)
 
-    Printer.print_success("Run is being stopped.")
+    Printer.print_success("Run `{}` is being stopped ...".format(run_uuid))
 
 
 @ops.command()
@@ -801,7 +801,7 @@ def invalidate(ctx, project, uid):
             owner=owner, project=project_name, run_uuid=run_uuid
         )
         response = polyaxon_client.invalidate()
-        Printer.print_success("Run was invalidated with uid {}".format(response.uuid))
+        Printer.print_success("Run `{}` was invalidated".format(response.uuid))
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not invalidate run `{}`.".format(run_uuid))
         sys.exit(1)
@@ -1106,6 +1106,47 @@ def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
             "Status: {}. Error: {}.".format(response.status_code, response.content),
             sys_exit=True,
         )
+
+
+@ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
+@click.option(
+    "--to-project",
+    "-to",
+    help="The project to transfer the operation/run to.",
+)
+@click.pass_context
+@clean_outputs
+def transfer(ctx, project, uid, to_project):
+    """Transfer the run to a destination project under the same owner/organization.
+
+    Uses /docs/core/cli/#caching
+
+    Example:
+
+    \b
+    $ polyaxon ops transfer --to-project dest-project
+
+    \b
+    $ polyaxon ops transfer -p amce/foobar -uid 8aac02e3a62a4f0aaa257c59da5eab80 -to=dest-project
+    """
+    owner, project_name, run_uuid = get_project_run_or_local(
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
+    )
+
+    try:
+        polyaxon_client = RunClient(
+            owner=owner, project=project_name, run_uuid=run_uuid
+        )
+        polyaxon_client.transfer(to_project=to_project)
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(e, message="Could not transfer run `{}`.".format(run_uuid))
+        sys.exit(1)
+
+    Printer.print_success("Run `{}` was transferred.".format(run_uuid))
 
 
 @ops.command()

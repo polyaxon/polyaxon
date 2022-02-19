@@ -440,7 +440,7 @@ class ProjectClient:
     def transfer_version(
         self, kind: V1ProjectVersionKind, version: str, to_project: str
     ):
-        """Transfers the run to a project under the same owner/organization.
+        """Transfers the version to a project under the same owner/organization.
 
         [Run API](/docs/api/#operation/TransferRun)
 

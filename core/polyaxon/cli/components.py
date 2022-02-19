@@ -372,17 +372,17 @@ def stage(ctx, project, version, to, message):
 @click.pass_context
 @clean_outputs
 def transfer(ctx, project, version, to_project):
-    """Update stage for a component version.
+    """Transfer the version to a destination project under the same owner/organization.
 
     Uses /docs/core/cli/#caching
 
     Example:
 
     \b
-    $ polyaxon components transfer -ver rc12 -to destination-project
+    $ polyaxon components transfer -ver rc12 -to dest-project
 
     \b
-    $ polyaxon components transfer -p amce/foobar -ver rc12 --to-project=destination-project
+    $ polyaxon components transfer -p amce/foobar -ver rc12 --to-project=dest-project
     """
     version = version or ctx.obj.get("version") or "latest"
     owner, project_name = get_project_or_local(
