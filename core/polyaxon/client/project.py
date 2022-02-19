@@ -112,7 +112,9 @@ class ProjectClient:
             self._project_data.owner = self.owner
 
     @client_handler(check_no_op=True, check_offline=True)
-    def create(self, data: Union[Dict, polyaxon_sdk.V1Project]):
+    def create(
+        self, data: Union[Dict, polyaxon_sdk.V1Project]
+    ) -> polyaxon_sdk.V1Project:
         """Creates a new project based on the data passed.
 
         [Project API](/docs/api/#operation/CreateProject)
@@ -135,7 +137,7 @@ class ProjectClient:
     @client_handler(check_no_op=True, check_offline=True)
     def list(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
-    ):
+    ) -> List[polyaxon_sdk.V1Project]:
         """Lists projects under the current owner.
 
         [Project API](/docs/api/#operation/ListProjects)
@@ -160,7 +162,9 @@ class ProjectClient:
         return self.client.projects_v1.delete_project(self.owner, self.project)
 
     @client_handler(check_no_op=True, check_offline=True)
-    def update(self, data: Union[Dict, polyaxon_sdk.V1Project]):
+    def update(
+        self, data: Union[Dict, polyaxon_sdk.V1Project]
+    ) -> polyaxon_sdk.V1Project:
         """Updates a project based on the data passed.
 
         [Project API](/docs/api/#operation/PatchProject)
@@ -212,7 +216,7 @@ class ProjectClient:
         sort: str = None,
         limit: int = None,
         offset: int = None,
-    ):
+    ) -> List[polyaxon_sdk.V1ProjectVersion]:
         """Lists project versions under the current owner/project.
 
         [Project API](/docs/api/#operation/ListProjectVersions)
@@ -237,14 +241,16 @@ class ProjectClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
-    def get_version(self, kind: V1ProjectVersionKind, version: str):
+    def get_version(
+        self, kind: V1ProjectVersionKind, version: str
+    ) -> polyaxon_sdk.V1ProjectVersion:
         """Get a project version under the current owner/project.
 
         [Project API](/docs/api/#operation/GetVersion)
 
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
-            version: str, optional, the version name/tag.
+            version: str, required, the version name/tag.
 
         Returns:
             V1ProjectVersion.
@@ -261,7 +267,7 @@ class ProjectClient:
         self,
         kind: V1ProjectVersionKind,
         data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
-    ):
+    ) -> polyaxon_sdk.V1ProjectVersion:
         """Create a project version based on the data passed.
 
         [Project API](/docs/api/#operation/CreateVersion)
@@ -291,14 +297,14 @@ class ProjectClient:
         kind: V1ProjectVersionKind,
         version: str,
         data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
-    ):
+    ) -> polyaxon_sdk.V1ProjectVersion:
         """Update a project version based on the data passed.
 
         [Project API](/docs/api/#operation/PatchVersion)
 
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
-            version: str, optional, the version name/tag.
+            version: str, required, the version name/tag.
             data: Dict or V1ProjectVersion, required.
 
         Returns:
@@ -318,14 +324,14 @@ class ProjectClient:
         self,
         kind: V1ProjectVersionKind,
         version: str,
-        description: str,
+        description: str = None,
         tags: Union[str, List[str]] = None,
         content: str = None,
         run: str = None,
         connection: str = None,
         artifacts: List[str] = None,
         force: bool = False,
-    ):
+    ) -> polyaxon_sdk.V1ProjectVersion:
         """Create or Update a project version based on the data passed.
 
         [Project API](/docs/api/#operation/PatchVersion)
@@ -335,7 +341,7 @@ class ProjectClient:
             version: str, optional, the version name/tag.
             description: str, optional, the version description.
             tags: str or List[str], optional.
-            content: str, optional, content of the version.
+            content: str, optional, content/metadata (JSON object) of the version.
             run: str, optional, a uuid reference to the run.
             connection: str, optional, a uuid reference to a connection.
             artifacts: List[str], optional, list of artifacts to highlight(requires passing a run)
@@ -400,7 +406,7 @@ class ProjectClient:
 
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
-            version: str, optional, the version name/tag.
+            version: str, required, the version name/tag.
         """
         logging.info("Deleting {} version: `{}`".format(kind, version))
         return self.client.projects_v1.delete_version(
@@ -424,7 +430,7 @@ class ProjectClient:
 
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
-            version: str, optional, the version name/tag.
+            version: str, required, the version name/tag.
             condition: Dict or V1StageCondition.
         """
         return self.client.projects_v1.create_version_stage(
@@ -446,7 +452,7 @@ class ProjectClient:
 
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
-            version: str, optional, the version name/tag.
+            version: str, required, the version name/tag.
             to_project: str, required, the destination project to transfer the version to.
         """
 
@@ -457,4 +463,59 @@ class ProjectClient:
             version,
             body={"project": to_project},
             async_req=False,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def copy_version(
+        self,
+        kind: V1ProjectVersionKind,
+        version: str,
+        to_project: str = None,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: str = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Copies the version to the same project or to a destination project.
+
+        If `to_project` is provided,
+        the version will be copied to the destination project under the same owner/organization.
+
+        If `name` is provided the version will be copied with the new name,
+        otherwise the copied version will be have a suffix `-copy`.
+
+
+        [Run API](/docs/api/#operation/TransferRun)
+
+        Args:
+            kind: V1ProjectVersionKind, kind of the project version.
+            version: str, required, the version name/tag.
+            to_project: str, optional, the destination project to copy the version to.
+            name: str, optional, the name to use for registering the copied version,
+                 default value is the original version's name with `-copy` prefix.
+            description: str, optional, the version description,
+                 default value is the original version's description.
+            tags: str or List[str], optional, the version description,
+                 default value is the original version's description.
+            content: str, optional, content/metadata (JSON object) of the version,
+                 default value is the original version's content.
+            force: bool, optional, to force push, i.e. update if exists.
+        """
+        original_version = self.get_version(kind, version)
+        if not name:
+            version = "{}-copy".format(version)
+        return ProjectClient(
+            owner=self.owner,
+            project=to_project or self.project,
+            client=self.client,
+        ).register_version(
+            kind=kind,
+            version=version,
+            description=description or original_version.description,
+            tags=tags or original_version.tags,
+            content=content or original_version.content,
+            connection=original_version.connection,
+            artifacts=original_version.artifacts,
+            force=force,
         )

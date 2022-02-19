@@ -146,17 +146,67 @@ def register_project_version(
         )
     except (ApiException, HTTPError) as e:
         handle_cli_error(
-            e, message="Could not create model version `{}`.".format(fqn_version)
+            e, message="Could not create version `{}`.".format(fqn_version)
         )
         sys.exit(1)
 
-    Printer.print_success(
-        "Model version `{}` was created successfully.".format(fqn_version)
-    )
+    Printer.print_success("Version `{}` was created successfully.".format(fqn_version))
     click.echo(
-        "You can view this model version on Polyaxon UI: {}".format(
+        "You can view this version on Polyaxon UI: {}".format(
             get_dashboard_url(
                 subpath="{}/{}/{}s/{}".format(owner, project_name, kind, version)
+            )
+        )
+    )
+
+
+def copy_project_version(
+    owner: str,
+    project_name: str,
+    version: str,
+    kind: V1ProjectVersionKind,
+    to_project: str = None,
+    name: str = None,
+    description: str = None,
+    tags: Optional[Union[str, List[str]]] = None,
+    content: str = None,
+    force: bool = False,
+):
+    version = version or "latest"
+    fqn_version = get_versioned_entity_full_name(owner, project_name, version)
+    polyaxon_client = ProjectClient(owner=owner, project=project_name)
+
+    try:
+        _version = polyaxon_client.copy_version(
+            kind=kind,
+            version=version,
+            to_project=to_project,
+            name=name,
+            description=description,
+            tags=tags,
+            content=content,
+            force=force,
+        )
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(e, message="Could not copy version `{}`.".format(fqn_version))
+        sys.exit(1)
+
+    fqn_copied_version = get_versioned_entity_full_name(
+        owner,
+        to_project or project_name,
+        _version.name,
+    )
+    Printer.print_success(
+        "Version `{}` was copied successfully to `{}`.".format(
+            fqn_version, fqn_copied_version
+        )
+    )
+    click.echo(
+        "You can view this version on Polyaxon UI: {}".format(
+            get_dashboard_url(
+                subpath="{}/{}/{}s/{}".format(
+                    owner, to_project or project_name, kind, _version.name
+                )
             )
         )
     )

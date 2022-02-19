@@ -26,6 +26,7 @@ from polyaxon.cli.options import (
     OPTIONS_PROJECT,
 )
 from polyaxon.cli.project_versions import (
+    copy_project_version,
     delete_project_version,
     get_project_version,
     list_project_versions,
@@ -117,7 +118,7 @@ def components(ctx, project, version):
 def ls(ctx, project, query, sort, limit, offset):
     """List component versions by project or owner/project.
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon components ls -p=kaniko
@@ -147,37 +148,38 @@ def ls(ctx, project, query, sort, limit, offset):
     "--file",
     "polyaxonfile",
     type=click.Path(exists=True),
-    help="The component spec version to push.",
+    help="The component spec version to register.",
 )
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_COMPONENT_VERSION["args"], **OPTIONS_COMPONENT_VERSION["kwargs"])
 @click.option("--description", type=str, help="Description of the version.")
-@click.option("--tags", type=str, help="Tags of the version, comma separated values.")
+@click.option("--tags", type=str, help="Tags of the version (comma separated values).")
 @click.option(
     "--force",
     is_flag=True,
     default=False,
-    help="Flag to force push if the version already exists.",
+    help="Flag to force register if the version already exists.",
 )
 @click.pass_context
 @clean_outputs
-def push(ctx, polyaxonfile, project, version, description, tags, force):
-    """Push a new component version.
-    If the name corresponds to an existing component version, it will be updated.
+def register(ctx, polyaxonfile, project, version, description, tags, force):
+    """Register a new component version.
+    If the name corresponds to an existing component version,
+    it will raise an error or it will update the version if `--force` is provided.
 
-    Example:
-
-    \b
-    $ polyaxon components push -f polyaxonfile.yaml
+    Examples:
 
     \b
-    $ polyaxon components push -f polyaxonfile.yaml --project=kaniko --description="..."
+    $ polyaxon components register -f polyaxonfile.yaml
 
     \b
-    $ polyaxon components push -f polyaxonfile.yaml -p kaniko -ver latest
+    $ polyaxon components register -f polyaxonfile.yaml --project=kaniko --description="..."
 
     \b
-    $ polyaxon components push -f polyaxonfile.yaml -p owner/name -ver v1 --tags="tag1,tag2"
+    $ polyaxon components register -f polyaxonfile.yaml -p kaniko -ver latest
+
+    \b
+    $ polyaxon components register -f polyaxonfile.yaml -p owner/name -ver v1 --tags="tag1,tag2"
     """
     version = version or ctx.obj.get("version")
     owner, project_name = get_project_or_local(
@@ -187,7 +189,7 @@ def push(ctx, polyaxonfile, project, version, description, tags, force):
     if not polyaxonfile or not os.path.isfile(polyaxonfile):
         Printer.print_error(
             "Please provide a path to a polyaxonfile to create a component version.",
-            command_help="components push",
+            command_help="components register",
             sys_exit=True,
         )
     try:
@@ -204,6 +206,66 @@ def push(ctx, polyaxonfile, project, version, description, tags, force):
         description=description,
         tags=tags,
         content=plx_file.to_dict(dump=True),
+        force=force,
+    )
+
+
+@components.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_COMPONENT_VERSION["args"], **OPTIONS_COMPONENT_VERSION["kwargs"])
+@click.option(
+    "--description", type=str, help="Optional new description of the version."
+)
+@click.option(
+    "--tags",
+    type=str,
+    help="Optional new tags of the version (comma separated values).",
+)
+@click.option(
+    "--force",
+    is_flag=True,
+    default=False,
+    help="Flag to force copy if the version already exists.",
+)
+@click.pass_context
+@clean_outputs
+def copy(
+    ctx,
+    project,
+    version,
+    description,
+    tags,
+    force,
+):
+    """Copy a component version.
+    If the name corresponds to an existing component version,
+    it will raise an error or it will update the version if `--force` is provided.
+
+    Examples:
+
+    \b
+    $ polyaxon components copy --version=version-name --to-project dest-project
+
+    \b
+    $ polyaxon components copy --project=kaniko -to dest-project --force
+
+    \b
+    $ polyaxon components copy -p kaniko -ver latest
+
+    \b
+    $ polyaxon components copy -p owner/name -ver v1 --tags="tag1,tag2" --name new-v1
+    """
+    version = version or ctx.obj.get("version")
+    owner, project_name = get_project_or_local(
+        project or ctx.obj.get("project"), is_cli=True
+    )
+    copy_project_version(
+        owner=owner,
+        project_name=project_name,
+        version=version,
+        kind=V1ProjectVersionKind.COMPONENT,
+        description=description,
+        tags=tags,
         force=force,
     )
 
@@ -284,7 +346,7 @@ def delete(ctx, project, version):
 )
 @click.option("--description", type=str, help="Description of the component version.")
 @click.option(
-    "--tags", type=str, help="Tags of the run, comma separated values (optional)."
+    "--tags", type=str, help="Tags of the component version (comma separated values)."
 )
 @click.pass_context
 @clean_outputs
@@ -293,7 +355,7 @@ def update(ctx, project, version, name, description, tags):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon components update --version=foobar --description="..."
@@ -339,7 +401,7 @@ def stage(ctx, project, version, to, message):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon components stage -ver rc12 --to=production
@@ -376,7 +438,7 @@ def transfer(ctx, project, version, to_project):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon components transfer -ver rc12 -to dest-project

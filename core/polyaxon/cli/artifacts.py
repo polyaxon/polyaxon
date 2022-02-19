@@ -18,6 +18,7 @@ import click
 
 from polyaxon.cli.options import OPTIONS_ARTIFACT_VERSION, OPTIONS_NAME, OPTIONS_PROJECT
 from polyaxon.cli.project_versions import (
+    copy_project_version,
     delete_project_version,
     get_project_version,
     list_project_versions,
@@ -72,7 +73,7 @@ def artifacts(ctx, project, version):
 def ls(ctx, project, query, sort, limit, offset):
     """List artifact versions by owner or owner/artifact.
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon artifacts ls -p project
@@ -98,13 +99,13 @@ def ls(ctx, project, query, sort, limit, offset):
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_ARTIFACT_VERSION["args"], **OPTIONS_ARTIFACT_VERSION["kwargs"])
 @click.option("--description", type=str, help="Description of the version.")
-@click.option("--tags", type=str, help="Tags of the version, comma separated values.")
+@click.option("--tags", type=str, help="Tags of the version (comma separated values).")
 @click.option(
     "--content",
     type=str,
-    help="Additional content/metadata (Json object) to save with the model version.",
+    help="Additional content/metadata (Json object) to save with the artifact version.",
 )
-@click.option("--run-uid", type=str, help="The run to promote as a model version.")
+@click.option("--run-uid", type=str, help="The run to promote as a artifact version.")
 @click.option(
     "--artifacts",
     "artifacts_",
@@ -135,9 +136,10 @@ def register(
     force,
 ):
     """Register a new artifact version.
-    If the name corresponds to an existing artifact version, it will be updated.
+    If the name corresponds to an existing artifact version,
+    it will raise an error or it will update the version if `--force` is provided.
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon artifacts register --version=version-name --connection=dataset-gcs --run-uid=uuid
@@ -166,6 +168,73 @@ def register(
         run=run_uid,
         connection=connection,
         artifacts=artifacts_,
+        force=force,
+    )
+
+
+@artifacts.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_ARTIFACT_VERSION["args"], **OPTIONS_ARTIFACT_VERSION["kwargs"])
+@click.option(
+    "--description", type=str, help="Optional new description of the version."
+)
+@click.option(
+    "--tags",
+    type=str,
+    help="Optional new tags of the version (comma separated values).",
+)
+@click.option(
+    "--content",
+    type=str,
+    help="Optional new content/metadata (Json object) to save with the artifact version.",
+)
+@click.option(
+    "--force",
+    is_flag=True,
+    default=False,
+    help="Flag to force copy if the version already exists.",
+)
+@click.pass_context
+@clean_outputs
+def copy(
+    ctx,
+    project,
+    version,
+    description,
+    tags,
+    content,
+    force,
+):
+    """Copy an artifact version.
+    If the name corresponds to an existing artifact version,
+    it will raise an error or it will update the version if `--force` is provided.
+
+    Examples:
+
+    \b
+    $ polyaxon artifacts copy --version=version-name --to-project dest-project
+
+    \b
+    $ polyaxon artifacts copy --project=images-dataset -to dest-project --force
+
+    \b
+    $ polyaxon artifacts copy -p images-dataset --content='{"foo": "bar"}' -ver latest
+
+    \b
+    $ polyaxon artifacts copy -p owner/name -ver v1 --tags="tag1,tag2" --name new-v1
+    """
+    version = version or ctx.obj.get("version")
+    owner, project_name = get_project_or_local(
+        project or ctx.obj.get("project"), is_cli=True
+    )
+    copy_project_version(
+        owner=owner,
+        project_name=project_name,
+        version=version,
+        kind=V1ProjectVersionKind.ARTIFACT,
+        description=description,
+        tags=tags,
+        content=content,
         force=force,
     )
 
@@ -240,7 +309,7 @@ def delete(ctx, project, version):
 )
 @click.option("--description", type=str, help="Description of the artifact version.")
 @click.option(
-    "--tags", type=str, help="Tags of the run, comma separated values (optional)."
+    "--tags", type=str, help="Tags of the artifact version (comma separated values)."
 )
 @click.pass_context
 @clean_outputs
@@ -249,7 +318,7 @@ def update(ctx, project, version, name, description, tags):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon artifacts update --version=foobar --description="..."
@@ -294,7 +363,7 @@ def stage(ctx, project, version, to, message):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon artifacts stage -ver rc12 --to=production
@@ -331,7 +400,7 @@ def transfer(ctx, project, version, to_project):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon artifacts transfer -ver rc12 -to dest-project

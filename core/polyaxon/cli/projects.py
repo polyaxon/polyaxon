@@ -68,7 +68,7 @@ def project(ctx, _project):  # pylint:disable=redefined-outer-name
     help="The project name, e.g. 'mnist' or 'acme/mnist'."
 )
 @click.option("--description", type=str, help="Description of the project.")
-@click.option("--tags", type=str, help="Tags of the project, comma separated values.")
+@click.option("--tags", type=str, help="Tags of the project (comma separated values).")
 @click.option(
     "--public", is_flag=True, help="Set the visibility of the project to public."
 )
@@ -80,7 +80,7 @@ def create(ctx, name, description, tags, public, init):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
@@ -288,9 +288,7 @@ def delete(ctx, _project):
     help="Name of the project, must be unique for the same user."
 )
 @click.option("--description", type=str, help="Description of the project.")
-@click.option(
-    "--tags", type=str, help="Tags of the run, comma separated values (optional)."
-)
+@click.option("--tags", type=str, help="Tags of the project (comma separated values).")
 @click.option(
     "--private", type=bool, help="Set the visibility of the project to private/public."
 )
@@ -301,7 +299,7 @@ def update(ctx, _project, name, description, tags, private):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon project update foobar --description="Image Classification with DL using TensorFlow"

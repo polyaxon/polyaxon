@@ -97,7 +97,7 @@ def show():
 def get(keys):
     """Get the specific keys from the global configuration.
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon config get host verify-ssl
@@ -146,7 +146,7 @@ def get(keys):
 def set(**kwargs):  # pylint:disable=redefined-builtin
     """Set the global config values.
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon config set --host=localhost

@@ -68,7 +68,7 @@ from polyaxon.utils.validation import validate_tags
     type=str,
     help="Name to give to this run, must be unique within the project, could be none.",
 )
-@click.option("--tags", type=str, help="Tags of this run, comma separated values.")
+@click.option("--tags", type=str, help="Tags of this run (comma separated values).")
 @click.option("--description", type=str, help="The description to give to this run.")
 @click.option(
     "--log",

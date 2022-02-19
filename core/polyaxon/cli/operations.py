@@ -456,7 +456,7 @@ def delete(ctx, project, uid):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon ops delete
@@ -495,9 +495,7 @@ def delete(ctx, project, uid):
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(*OPTIONS_NAME["args"], type=str, help="Name of the run (optional).")
 @click.option("--description", type=str, help="Description of the run (optional).")
-@click.option(
-    "--tags", type=str, help="Tags of the run, comma separated values (optional)."
-)
+@click.option("--tags", type=str, help="Tags of the run (comma separated values).")
 @click.pass_context
 @clean_outputs
 def update(ctx, project, uid, name, description, tags):
@@ -642,7 +640,7 @@ def stop(ctx, project, uid, yes):
     type=str,
     help="Name to give to this run, must be unique within the project, could be none.",
 )
-@click.option("--tags", type=str, help="Tags of this run, comma separated values.")
+@click.option("--tags", type=str, help="Tags of this run (comma separated values).")
 @click.option("--description", type=str, help="The description to give to this run.")
 @click.option(
     "--copy",
@@ -1123,7 +1121,7 @@ def transfer(ctx, project, uid, to_project):
 
     Uses /docs/core/cli/#caching
 
-    Example:
+    Examples:
 
     \b
     $ polyaxon ops transfer --to-project dest-project
