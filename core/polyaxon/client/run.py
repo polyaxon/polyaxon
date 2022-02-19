@@ -219,6 +219,8 @@ class RunClient:
         Returns:
             dict, all the run inputs/params.
         """
+        if not self._run_data.inputs:
+            self.refresh_data()
         return self._run_data.inputs
 
     @client_handler(check_no_op=True)
@@ -227,6 +229,8 @@ class RunClient:
         Returns:
              dict, all the run outputs/metrics.
         """
+        if not self._run_data.inputs:
+            self.refresh_data()
         return self._run_data.outputs
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1400,6 +1404,7 @@ class RunClient:
         if not self._has_meta_key("has_model"):
             self.log_meta(has_model=True)
 
+    @client_handler(check_no_op=True)
     def log_progress(self, value: float):
         """Logs the progress of the run.
 
