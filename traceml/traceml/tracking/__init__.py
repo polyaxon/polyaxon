@@ -758,6 +758,14 @@ def log_meta(reset: bool = False, async_req: bool = True, **meta):
 log_meta.__doc__ = Run.log_meta.__doc__
 
 
+def log_progress(value: float):
+    global TRACKING_RUN
+    TRACKING_RUN.log_meta(value=value)
+
+
+log_progress.__doc__ = Run.log_progress.__doc__
+
+
 def log_succeeded():
     global TRACKING_RUN
     TRACKING_RUN.log_succeeded()

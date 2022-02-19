@@ -21,7 +21,7 @@ import uuid
 
 from collections.abc import Mapping
 from datetime import datetime
-from typing import Dict, List, Optional, Sequence, Tuple, Union
+from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
 import click
 import ujson
@@ -1400,12 +1400,35 @@ class RunClient:
         if not self._has_meta_key("has_model"):
             self.log_meta(has_model=True)
 
+    def log_progress(self, value: float):
+        """Logs the progress of the run.
+
+        In offline
+
+        Args:
+            value: float, a value between 0 and 1 representing the percentage of run's progress.
+        """
+        if not isinstance(value, (int, float)):
+            raise TypeError(
+                "`log_progress` received the value `{}` of type `{}` "
+                "which is not supported. "
+                "Please pass a valid percentage between [0, 1].".format(
+                    value, type(value).__name__
+                )
+            )
+        if value < 0 or value > 1:
+            raise ValueError(
+                "`log_progress` received an invalid value `{}`. "
+                "Please pass a valid percentage between [0, 1].".format(value)
+            )
+        if self._get_meta_key("progress") == value:
+            return
+        self.log_meta(progress=value)
+
     @client_handler(check_no_op=True)
     def log_code_ref(self, code_ref: Dict = None, is_input: bool = True):
         """Logs code reference as a
         lineage information with the code_ref dictionary in the summary field.
-
-        In offline
 
         Args:
             code_ref: dict, optional, if not provided,
@@ -1640,12 +1663,13 @@ class RunClient:
             )
             self.log_artifact_lineage(body=artifact_run)
 
+    def _get_meta_key(self, key: str, default: Any = None):
+        if not self.run_data or not self.run_data.meta_info:
+            return default
+        return self.run_data.meta_info.get(key, default)
+
     def _has_meta_key(self, key: str):
-        return (
-            self.run_data
-            and self.run_data.meta_info
-            and self.run_data.meta_info.get(key, False)
-        )
+        return self._get_meta_key(key, False)
 
     @client_handler(check_no_op=True)
     def log_tensorboard_ref(
