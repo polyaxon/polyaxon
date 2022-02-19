@@ -276,6 +276,33 @@ class RunClient:
                 setattr(self._run_data, k, getattr(data, k, None))
         return self._update(data=data, async_req=async_req)
 
+    @client_handler(check_no_op=True)
+    def transfer(self, to_project: str, async_req: bool = False):
+        """Transfers the run to a project under the same owner/organization.
+
+        [Run API](/docs/api/#operation/TransferRun)
+
+        Args:
+            to_project: str, required, the destination project to transfer the run to.
+            async_req: bool, optional, default: False, execute request asynchronously.
+        """
+        def _update_run():
+            self._project = to_project
+            self._run_data._project = to_project
+
+        if not self._is_offline:
+            _update_run()
+            return
+
+        self.client.runs_v1.transfer_run(
+            owner=self.owner,
+            project=self.project,
+            run_uuid=self.run_uuid,
+            body={"project": to_project},
+            async_req=async_req,
+        )
+        _update_run()
+
     def _create(
         self, data: Union[Dict, polyaxon_sdk.V1OperationBody], async_req: bool = False
     ) -> V1Run:

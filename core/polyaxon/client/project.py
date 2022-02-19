@@ -392,7 +392,7 @@ class ProjectClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
-    def stage_project_version(
+    def stage_version(
         self,
         kind: V1ProjectVersionKind,
         version: str,
@@ -413,4 +413,24 @@ class ProjectClient:
             kind,
             version,
             body={"condition": condition},
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def transfer(self, kind: V1ProjectVersionKind, version: str, to_project: str):
+        """Transfers the run to a project under the same owner/organization.
+
+        [Run API](/docs/api/#operation/TransferRun)
+
+        Args:
+            kind: V1ProjectVersionKind, kind of the project version.
+            version: str, optional, the version name/tag.
+            to_project: str, required, the destination project to transfer the version to.
+        """
+
+        return self.client.projects_v1.transfer_version(
+            self.owner,
+            self.project,
+            kind,
+            version,
+            body={"project": to_project},
         )

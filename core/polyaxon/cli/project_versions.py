@@ -268,7 +268,7 @@ def stage_project_version(
         condition.message = message
 
     try:
-        polyaxon_client.stage_project_version(kind, version, condition=condition)
+        polyaxon_client.stage_version(kind, version, condition=condition)
         Printer.print_success("The {} version's stage was updated.".format(kind))
     except (ApiException, HTTPError) as e:
         handle_cli_error(
