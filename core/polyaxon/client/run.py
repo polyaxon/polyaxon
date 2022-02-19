@@ -286,6 +286,7 @@ class RunClient:
             to_project: str, required, the destination project to transfer the run to.
             async_req: bool, optional, default: False, execute request asynchronously.
         """
+
         def _update_run():
             self._project = to_project
             self._run_data._project = to_project

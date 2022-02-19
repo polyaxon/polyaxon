@@ -32,6 +32,7 @@ from polyaxon.cli.project_versions import (
     open_project_version_dashboard,
     register_project_version,
     stage_project_version,
+    transfer_project_version,
     update_project_version,
 )
 from polyaxon.client import PolyaxonClient
@@ -336,10 +337,10 @@ def stage(ctx, project, version, to, message):
     Example:
 
     \b
-    $ polyaxon components stage -ver rc-12 --to=production
+    $ polyaxon components stage -ver rc12 --to=production
 
     \b
-    $ polyaxon components stage -p amce/foobar -ver rc-12 --to=staging --message="Use carefully!"
+    $ polyaxon components stage -p amce/foobar -ver rc12 --to=staging --message="Use carefully!"
     """
     version = version or ctx.obj.get("version") or "latest"
     owner, project_name = get_project_or_local(
@@ -352,6 +353,42 @@ def stage(ctx, project, version, to, message):
         version=version,
         to=to,
         message=message,
+    )
+
+
+@components.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_COMPONENT_VERSION["args"], **OPTIONS_COMPONENT_VERSION["kwargs"])
+@click.option(
+    "--to-project",
+    "-to",
+    help="The project to transfer the version to.",
+)
+@click.pass_context
+@clean_outputs
+def transfer(ctx, project, version, to_project):
+    """Update stage for a component version.
+
+    Uses /docs/core/cli/#caching
+
+    Example:
+
+    \b
+    $ polyaxon components transfer -ver rc12 -to destination-project
+
+    \b
+    $ polyaxon components transfer -p amce/foobar -ver rc12 --to-project=destination-project
+    """
+    version = version or ctx.obj.get("version") or "latest"
+    owner, project_name = get_project_or_local(
+        project or ctx.obj.get("project"), is_cli=True
+    )
+    transfer_project_version(
+        owner=owner,
+        project_name=project_name,
+        kind=V1ProjectVersionKind.COMPONENT,
+        version=version,
+        to_project=to_project,
     )
 
 

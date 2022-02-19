@@ -234,12 +234,37 @@ def update_project_version(
 
     try:
         response = polyaxon_client.patch_version(kind, version, update_dict)
-        Printer.print_success("the {} version updated.".format(kind))
+        Printer.print_success("The {} version updated.".format(kind))
         get_version_details(response, content_callback)
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e,
             message="Could not update the {} version `{}`.".format(kind, fqn_version),
+        )
+        sys.exit(1)
+
+
+def transfer_project_version(
+    owner: str,
+    project_name: str,
+    kind: V1ProjectVersionKind,
+    version: str,
+    to_project: str,
+):
+    fqn_version = get_versioned_entity_full_name(owner, project_name, version)
+    polyaxon_client = ProjectClient(owner=owner, project=project_name)
+
+    try:
+        polyaxon_client.transfer_version(kind, version, to_project)
+        Printer.print_success(
+            "The `{}` version was transferred to `{}`.".format(kind, to_project)
+        )
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(
+            e,
+            message="Could not transfer the {} version `{}` to `{}`.".format(
+                kind, fqn_version, to_project
+            ),
         )
         sys.exit(1)
 

@@ -123,7 +123,11 @@ class ProjectClient:
         Returns:
             V1Project, project instance from the response.
         """
-        self._project_data = self.client.projects_v1.create_project(self.owner, data)
+        self._project_data = self.client.projects_v1.create_project(
+            self.owner,
+            data,
+            async_req=False,
+        )
         self._project_data.owner = self.owner
         self._project = self._project_data.name
         return self._project_data
@@ -168,7 +172,10 @@ class ProjectClient:
             V1Project, project instance from the response.
         """
         self._project_data = self.client.projects_v1.patch_project(
-            self.owner, self.project, body=data
+            self.owner,
+            self.project,
+            body=data,
+            async_req=False,
         )
         self._project = self._project_data.name
         return self._project_data
@@ -271,7 +278,11 @@ class ProjectClient:
         elif isinstance(data, dict):
             data["kind"] = kind
         return self.client.projects_v1.create_version(
-            self.owner, self.project, kind, body=data
+            self.owner,
+            self.project,
+            kind,
+            body=data,
+            async_req=False,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -294,7 +305,12 @@ class ProjectClient:
             V1ProjectVersion.
         """
         return self.client.projects_v1.patch_version(
-            self.owner, self.project, kind, version, body=data
+            self.owner,
+            self.project,
+            kind,
+            version,
+            body=data,
+            async_req=False,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -388,7 +404,11 @@ class ProjectClient:
         """
         logging.info("Deleting {} version: `{}`".format(kind, version))
         return self.client.projects_v1.delete_version(
-            self.owner, self.project, kind, version
+            self.owner,
+            self.project,
+            kind,
+            version,
+            async_req=False,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -413,10 +433,13 @@ class ProjectClient:
             kind,
             version,
             body={"condition": condition},
+            async_req=False,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
-    def transfer(self, kind: V1ProjectVersionKind, version: str, to_project: str):
+    def transfer_version(
+        self, kind: V1ProjectVersionKind, version: str, to_project: str
+    ):
         """Transfers the run to a project under the same owner/organization.
 
         [Run API](/docs/api/#operation/TransferRun)
@@ -433,4 +456,5 @@ class ProjectClient:
             kind,
             version,
             body={"project": to_project},
+            async_req=False,
         )
