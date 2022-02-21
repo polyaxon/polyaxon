@@ -17,11 +17,12 @@
 import time
 
 from kubernetes.client.rest import ApiException
-from kubernetes.stream.ws_client import ERROR_CHANNEL
+from kubernetes.stream.ws_client import ERROR_CHANNEL, RESIZE_CHANNEL
 from kubernetes.stream.ws_client import WSClient as BaseWSClient
 from kubernetes.stream.ws_client import WSResponse, get_websocket_url
 
 ERROR_CHANNEL = ERROR_CHANNEL
+RESIZE_CHANNEL = RESIZE_CHANNEL
 
 
 class WSClient(BaseWSClient):
