@@ -71,7 +71,15 @@ from polyaxon.utils.validation import validate_tags
 @click.option("--tags", type=str, help="Tags of this run (comma separated values).")
 @click.option("--description", type=str, help="The description to give to this run.")
 @click.option(
+    "--shell",
+    "-s",
+    is_flag=True,
+    default=False,
+    help="To start a shell session after scheduling the run.",
+)
+@click.option(
     "--log",
+    "--logs",
     "-l",
     is_flag=True,
     default=False,
@@ -227,6 +235,7 @@ def run(
     name,
     tags,
     description,
+    shell,
     log,
     upload,
     upload_from,
@@ -304,6 +313,11 @@ def run(
     \b
     $ polyaxon run ... -u-from ./code -u-to new-code
     """
+    if log and shell:
+        Printer.print_error(
+            "You can't use `--logs` and `--shell` at the same, please keep one option.",
+            sys_exit=True,
+        )
     if cache and nocache:
         Printer.print_error(
             "You can't use `--cache` and `--nocache` at the same.", sys_exit=True
@@ -398,6 +412,7 @@ def run(
             tags=tags,
             compiled_operation=compiled_operation,
             log=log,
+            shell=shell,
         )
     elif settings.CLIENT_CONFIG.no_api:
         k8s_run(
@@ -426,4 +441,5 @@ def run(
             watch=watch,
             eager=eager,
             output=output,
+            shell=shell,
         )

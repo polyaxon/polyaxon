@@ -239,6 +239,19 @@ class ClientConfig(BaseConfig):
         self.client_header["header_name"] = self.header
         self.client_header["header_value"] = self.header_service
 
+    def get_full_headers(self, headers=None, auth_key="Authorization"):
+        request_headers = {}
+        request_headers.update(headers or {})
+        request_headers.update(self.client_header or {})
+
+        if auth_key not in request_headers and self.token:
+            request_headers.update(
+                {auth_key: "{} {}".format(self.authentication_type, self.token)}
+            )
+        if self.header and self.header_service:
+            request_headers.update({self.header: self.header_service})
+        return request_headers
+
     @property
     def sdk_config(self):
         if not self.host and not self.in_cluster:

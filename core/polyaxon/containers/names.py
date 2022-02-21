@@ -15,12 +15,20 @@
 # limitations under the License.
 
 MAIN_JOB_CONTAINER = "polyaxon-main"
-INIT_AUTH_CONTAINER = "polyaxon-init-auth"
 SIDECAR_CONTAINER = "polyaxon-sidecar"
 TFJOBS_CONTAINER = "tensorflow"
 PYTORCHJOBS_CONTAINER = "pytorch"
 MXJOBS_CONTAINER = "mxnet"
 XGBJOBS_CONTAINER = "xgboost"
+MAIN_CONTAINER_NAMES = [
+    MAIN_JOB_CONTAINER,
+    SIDECAR_CONTAINER,
+    TFJOBS_CONTAINER,
+    PYTORCHJOBS_CONTAINER,
+    MXJOBS_CONTAINER,
+    XGBJOBS_CONTAINER,
+]
+INIT_AUTH_CONTAINER = "polyaxon-init-auth"
 INIT_DOCKERFILE_CONTAINER_PREFIX = "polyaxon-init-dockerfile"
 INIT_FILE_CONTAINER_PREFIX = "polyaxon-init-file"
 INIT_GIT_CONTAINER_PREFIX = "polyaxon-init-git"

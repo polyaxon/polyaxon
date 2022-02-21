@@ -31,11 +31,13 @@ from urllib3.exceptions import HTTPError
 import polyaxon_sdk
 
 from polyaxon import settings
+from polyaxon.api import K8S_V1_LOCATION, STREAMS_V1_LOCATION
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS, CONTEXT_OFFLINE_ROOT
+from polyaxon.containers.names import MAIN_CONTAINER_NAMES
 from polyaxon.env_vars.getters import (
     get_artifacts_store_name,
     get_project_error_message,
@@ -69,6 +71,7 @@ from polyaxon.utils.path_utils import (
 )
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.tz_utils import now
+from polyaxon.utils.urls_utils import get_proxy_run_url
 from polyaxon.utils.validation import validate_tags
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
@@ -821,6 +824,107 @@ class RunClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
+    def inspect(self):
+        return self.client.runs_v1.inspect_run(
+            self.namespace, self.owner, self.project, self.run_uuid
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def shell(
+        self,
+        command: str = None,
+        pod: str = None,
+        container: str = None,
+        stderr: bool = True,
+        stdin: bool = True,
+        stdout: bool = True,
+        tty: bool = True,
+    ):
+        """Executes a command in a container.
+
+        Streams allows to switch to raw terminal mode by sending stdin to 'bash'
+        and receives stdout/stderr from 'bash' back to the client.
+
+        Args:
+            command: str, optional, a command to execute.
+            pod: str, optional, the pod to use for executing the command.
+            container: str, optional, the container to use for executing the command.
+            stderr: bool, optional
+            stdin: bool, optional
+            stdout: bool, optional
+            tty: bool, optional
+        """
+        from polyaxon.client.transport import ws_client
+
+        if not pod or not container:
+            inspection = self.inspect()
+            if not inspection:
+                raise PolyaxonClientException(
+                    "The shell command is only usable for operations managed by Polyaxon "
+                    "and actively running."
+                )
+            if not pod:
+                pod = next(iter(inspection.keys()))
+            pod_content = inspection.get(pod, {})
+            if not pod_content:
+                raise PolyaxonClientException(
+                    "The shell command is only usable for operations managed by Polyaxon "
+                    "and actively running. Error: the pod `{}` was not found.".format(
+                        pod
+                    )
+                )
+            pod_content = pod_content.get("spec", {})
+            pod_containers = [c.get("name") for c in pod_content.get("containers", [])]
+            if not pod_containers:
+                raise PolyaxonClientException(
+                    "The shell command is only usable for operations managed by Polyaxon "
+                    "and actively running. Error: the operation does not have containers."
+                )
+            if container:
+                if container not in pod_containers:
+                    raise PolyaxonClientException(
+                        "The shell command is only usable for operations managed by Polyaxon "
+                        "and actively running. "
+                        "Error: the container `{}` was not found under the pod `{}`.".format(
+                            container, pod
+                        )
+                    )
+            else:
+                for c in MAIN_CONTAINER_NAMES:
+                    if c in pod_containers:
+                        container = c
+                        break
+                if not container:
+                    container = pod_containers[0]
+
+        url = get_proxy_run_url(
+            service=K8S_V1_LOCATION,
+            namespace=self.namespace,
+            owner=self.owner,
+            project=self.project,
+            run_uuid=self.run_uuid,
+            subpath="k8s_exec/{pod}/{container}".format(
+                pod=pod,
+                container=container,
+            ),
+        )
+        url = absolute_uri(url=url, host=self.client.config.host)
+
+        command = command or "/bin/bash"
+        return ws_client.websocket_call(
+            self.client.config.sdk_config,
+            url,
+            query_params=[
+                ("command", command.split()),
+                ("stderr", stderr),
+                ("stdin", stdin),
+                ("stdout", stdout),
+                ("tty", tty),
+            ],
+            headers=self.client.config.get_full_headers(auth_key="authorization"),
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def get_multi_run_events(
         self,
         kind: V1ArtifactKind,
@@ -898,11 +1002,12 @@ class RunClient:
         Returns:
             str
         """
-        url = PolyaxonStore.URL.format(
+        url = get_proxy_run_url(
+            service=STREAMS_V1_LOCATION,
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,
-            uuid=self.run_uuid,
+            run_uuid=self.run_uuid,
             subpath="artifact",
         )
         url = absolute_uri(url=url, host=self.client.config.host)
@@ -934,11 +1039,12 @@ class RunClient:
         Returns:
             str.
         """
-        url = PolyaxonStore.URL.format(
+        url = get_proxy_run_url(
+            service=STREAMS_V1_LOCATION,
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,
-            uuid=self.run_uuid,
+            run_uuid=self.run_uuid,
             subpath="artifacts",
         )
         url = absolute_uri(url=url, host=self.client.config.host)
@@ -974,11 +1080,12 @@ class RunClient:
         Returns:
             str
         """
-        url = PolyaxonStore.URL.format(
+        url = get_proxy_run_url(
+            service=STREAMS_V1_LOCATION,
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,
-            uuid=self.run_uuid,
+            run_uuid=self.run_uuid,
             subpath="artifact",
         )
         url = absolute_uri(url=url, host=self.client.config.host)
@@ -1042,11 +1149,12 @@ class RunClient:
         Returns:
             str.
         """
-        url = PolyaxonStore.URL.format(
+        url = get_proxy_run_url(
+            service=STREAMS_V1_LOCATION,
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,
-            uuid=self.run_uuid,
+            run_uuid=self.run_uuid,
             subpath="artifacts",
         )
         url = absolute_uri(url=url, host=self.client.config.host)

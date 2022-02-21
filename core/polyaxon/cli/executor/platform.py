@@ -27,6 +27,7 @@ from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.operations import approve
 from polyaxon.cli.operations import logs as run_logs
+from polyaxon.cli.operations import shell as run_shell
 from polyaxon.cli.operations import statuses
 from polyaxon.cli.operations import upload as run_upload
 from polyaxon.cli.utils import handle_output
@@ -59,6 +60,7 @@ def run(
     tags: List[str],
     op_spec: V1Operation,
     log: bool,
+    shell: bool,
     upload: bool,
     upload_to: str,
     upload_from: str,
@@ -144,6 +146,10 @@ def run(
         ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
         ctx.invoke(run_logs)
 
+    def start_run_shell(run_uuid: str):
+        ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
+        ctx.invoke(run_shell)
+
     def upload_run(run_uuid: str):
         ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
         ctx.invoke(
@@ -207,17 +213,25 @@ def run(
         return
 
     # Check if we need to invoke logs
-    if watch and not eager:
-        for instance in runs_to_watch:
-            Printer.print_success(
-                f"Starting watch for run: <Name: {instance.name}> - <uuid: {instance.uuid}>"
-            )
-            watch_run_statuses(instance.uuid)
-
-    # Check if we need to invoke logs
-    if log and not eager:
-        for instance in runs_to_watch:
-            Printer.print_success(
-                f"Starting logs for run: <Name: {instance.name}> - <uuid: {instance.uuid}>"
-            )
-            watch_run_logs(instance.uuid)
+    if not eager:
+        if watch:
+            for instance in runs_to_watch:
+                Printer.print_success(
+                    f"Starting watch for run: "
+                    f"<Name: {instance.name}> - <uuid: {instance.uuid}>"
+                )
+                watch_run_statuses(instance.uuid)
+        if log:
+            for instance in runs_to_watch:
+                Printer.print_success(
+                    f"Starting logs for run: "
+                    f"<Name: {instance.name}> - <uuid: {instance.uuid}>"
+                )
+                watch_run_logs(instance.uuid)
+        if shell:
+            for instance in runs_to_watch:
+                Printer.print_success(
+                    f"Starting shell session for run: "
+                    f"<Name: {instance.name}> - <uuid: {instance.uuid}>"
+                )
+                start_run_shell(instance.uuid)

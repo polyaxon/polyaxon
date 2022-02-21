@@ -24,7 +24,6 @@ sidebar: "releases"
 
 ### CLI
  
- * **New**: Add `polyaxon ops shell` command similar to the shell tab.
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
 
 ### Agent

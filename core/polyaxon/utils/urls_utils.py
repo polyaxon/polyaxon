@@ -14,10 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-try:
-    from urllib.parse import urlparse  # pylint:disable=import-error
-except ImportError:
-    raise ImportError("This module depends on django.")
+from urllib.parse import urljoin, urlparse
 
 
 def validate_url(url):
@@ -56,6 +53,25 @@ def get_run_url(owner: str, project_name: str, run_uuid: str) -> str:
 def get_run_health_url(unique_name: str) -> str:
     run_url = get_fqn_run_url(unique_name=unique_name)
     return f"{run_url}/_heartbeat"
+
+
+def get_proxy_run_url(
+    service: str,
+    namespace: str,
+    owner: str,
+    project: str,
+    run_uuid: str,
+    subpath: str = None,
+) -> str:
+    url_path = "{namespace}/{owner}/{project}/runs/{run_uuid}".format(
+        namespace=namespace,
+        owner=owner,
+        project=project,
+        run_uuid=run_uuid,
+    )
+    if subpath:
+        url_path = "{}/{}".format(url_path, subpath)
+    return urljoin(service.rstrip() + "/", url_path.lstrip("/"))
 
 
 def get_run_reconcile_url(unique_name: str) -> str:

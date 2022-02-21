@@ -22,6 +22,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_VERIFY_SSL,
 )
 from polyaxon.schemas.cli.client_config import ClientConfig
+from polyaxon.services.auth import AuthenticationTypes
 from polyaxon.utils.test_utils import BaseTestCase
 
 
@@ -52,3 +53,29 @@ class TestClientConfig(BaseTestCase):
         assert config.is_managed is True
         assert config.version == "v1"
         assert config.host == "https://cloud.polyaxon.com"
+
+    def test_get_headers(self):
+        config = ClientConfig(host=None, is_managed=True)
+        assert config.get_full_headers() == {}
+        assert config.get_full_headers({"foo": "bar"}) == {"foo": "bar"}
+
+        config = ClientConfig(token="token", host="host")
+
+        assert config.get_full_headers() == {
+            "Authorization": "{} {}".format(AuthenticationTypes.TOKEN, "token")
+        }
+        assert config.get_full_headers({"foo": "bar"}) == {
+            "foo": "bar",
+            "Authorization": "{} {}".format(AuthenticationTypes.TOKEN, "token"),
+        }
+
+        config.authentication_type = AuthenticationTypes.INTERNAL_TOKEN
+        assert config.get_full_headers() == {
+            "Authorization": "{} {}".format(AuthenticationTypes.INTERNAL_TOKEN, "token")
+        }
+        assert config.get_full_headers({"foo": "bar"}) == {
+            "foo": "bar",
+            "Authorization": "{} {}".format(
+                AuthenticationTypes.INTERNAL_TOKEN, "token"
+            ),
+        }

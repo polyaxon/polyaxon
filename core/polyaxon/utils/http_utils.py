@@ -38,7 +38,7 @@ def absolute_uri(url: str, host: str = None, protocol: str = None) -> Optional[s
     host = clean_host(host)
 
     if "http" in host:
-        return "{host}/{url}".format(host=host, url=url)
+        return urljoin(clean_host(host) + "/", url.lstrip("/"))
 
     protocol = protocol or "http"
 

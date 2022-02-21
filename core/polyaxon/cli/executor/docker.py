@@ -110,7 +110,7 @@ def _create_docker_build(*args):
     return ""
 
 
-def _run(ctx, name, owner, project_name, description, tags, specification, log):
+def _run(ctx, name, owner, project_name, description, tags, specification, log, shell):
     docker = DockerOperator()
     if not docker.check():
         raise PolyaxonException("Docker is required to run this command.")
@@ -163,9 +163,20 @@ def run(
     tags: List[str],
     compiled_operation: V1CompiledOperation,
     log: bool,
+    shell: bool,
 ):
     try:
-        _run(ctx, name, owner, project_name, description, tags, compiled_operation, log)
+        _run(
+            ctx,
+            name,
+            owner,
+            project_name,
+            description,
+            tags,
+            compiled_operation,
+            log,
+            shell,
+        )
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         handle_cli_error(e, message="Could start local run.")
         sys.exit(1)

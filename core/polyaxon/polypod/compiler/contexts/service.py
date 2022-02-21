@@ -17,14 +17,15 @@
 from typing import Dict
 
 from polyaxon.api import (
-    EXTERNAL_V1,
-    REWRITE_EXTERNAL_V1,
-    REWRITE_SERVICES_V1,
-    SERVICES_V1,
+    EXTERNAL_V1_LOCATION,
+    REWRITE_EXTERNAL_V1_LOCATION,
+    REWRITE_SERVICES_V1_LOCATION,
+    SERVICES_V1_LOCATION,
 )
 from polyaxon.polyflow import V1CompiledOperation
 from polyaxon.polypod.compiler.contexts.base import BaseContextsManager
 from polyaxon.schemas.types import V1ConnectionType
+from polyaxon.utils.urls_utils import get_proxy_run_url
 
 
 class ServiceContextsManager(BaseContextsManager):
@@ -49,21 +50,21 @@ class ServiceContextsManager(BaseContextsManager):
             contexts["globals"]["ports"] = compiled_operation.run.ports
             if compiled_operation.run.is_external:
                 service = (
-                    REWRITE_EXTERNAL_V1
+                    REWRITE_EXTERNAL_V1_LOCATION
                     if compiled_operation.run.rewrite_path
-                    else EXTERNAL_V1
+                    else EXTERNAL_V1_LOCATION
                 )
             else:
                 service = (
-                    REWRITE_SERVICES_V1
+                    REWRITE_SERVICES_V1_LOCATION
                     if compiled_operation.run.rewrite_path
-                    else SERVICES_V1
+                    else SERVICES_V1_LOCATION
                 )
-            base_url = "/{service}/{namespace}/{owner_name}/{project_name}/runs/{run_uuid}".format(
+            base_url = get_proxy_run_url(
                 service=service,
                 namespace=namespace,
-                owner_name=owner_name,
-                project_name=project_name,
+                owner=owner_name,
+                project=project_name,
                 run_uuid=run_uuid,
             )
             contexts["globals"]["base_url"] = base_url

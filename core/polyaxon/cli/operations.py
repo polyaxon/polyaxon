@@ -962,6 +962,85 @@ def logs(ctx, project, uid, follow, hide_time, all_containers, all_info):
 @ops.command()
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
+@click.pass_context
+@clean_outputs
+def inspect(ctx, project, uid):
+    """Inspect a run.
+
+    Uses /docs/core/cli/#caching
+
+    Examples:
+
+    \b
+    $ polyaxon ops inspect -uid=8aac02e3a62a4f0aaa257c59da5eab80
+
+    \b
+    $ polyaxon ops inspect -p acme/project -uid=8aac02e3a62a4f0aaa257c59da5eab80
+    """
+    owner, project_name, run_uuid = get_project_run_or_local(
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
+    )
+    try:
+        client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
+        handle_output(client.inspect(), output="json")
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(e, message="Could not inspect the run `{}`.".format(run_uuid))
+        sys.exit(1)
+
+
+@ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
+@click.option(
+    "--command",
+    "-cmd",
+    type=str,
+    help="Path to download, if not provided the full run's  artifacts will downloaded.",
+)
+@click.pass_context
+@clean_outputs
+def shell(ctx, project, uid, command):
+    """Start a shell session for run.
+
+    Uses /docs/core/cli/#caching
+
+    Examples:
+
+    \b
+    $ polyaxon ops shell -uid=8aac02e3a62a4f0aaa257c59da5eab80
+
+    \b
+    $ polyaxon ops shell -p acme/project -uid=8aac02e3a62a4f0aaa257c59da5eab80 --command=python
+
+    \b
+    $ polyaxon ops shell -p acme/project -uid=8aac02e3a62a4f0aaa257c59da5eab80 -cmd="/bin/bash"
+    """
+    from polyaxon.vendor.shell_pty import PseudoTerminal
+
+    owner, project_name, run_uuid = get_project_run_or_local(
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
+    )
+    client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
+
+    wait_for_running_condition(client)
+
+    Printer.print_success("Starting a new shell session...")
+    try:
+        pty = PseudoTerminal(client_shell=client.shell(command=command))
+        pty.start(sys.argv[1:])
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(e, message="Could not inspect the run `{}`.".format(run_uuid))
+        sys.exit(1)
+    Printer.print_header("Disconnecting...")
+
+
+@ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "--path",
     type=str,
@@ -1226,18 +1305,7 @@ def service(ctx, project, uid, yes, external, url):
         )
         sys.exit(1)
 
-    Printer.print_header("Waiting for running condition ...")
-    client.wait_for_condition(
-        statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES, print_status=True
-    )
-
-    client.refresh_data()
-    if LifeCycle.is_done(client.run_data.status):
-        Printer.print_header("The operations reached a done statuses.")
-        latest_status = Printer.add_status_color(
-            {"status": client.run_data.status}, status_key="status"
-        )
-        click.echo("{}\n".format(latest_status["status"]))
+    wait_for_running_condition(client)
 
     run_url = get_dashboard_url(
         subpath="{}/{}/runs/{}/service".format(owner, project_name, run_uuid)
@@ -1364,3 +1432,19 @@ def sync(uid, all_runs, no_artifacts, clean, offline_path):
             "Please provide a run uuid or pass the flag `-a/--all` to sync runs."
         )
         sys.exit(1)
+
+
+def wait_for_running_condition(client):
+    Printer.print_header("Waiting for running condition ...")
+    client.wait_for_condition(
+        statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES, print_status=True
+    )
+
+    client.refresh_data()
+    if LifeCycle.is_done(client.run_data.status):
+        Printer.print_header("The operations reached a final status.")
+        latest_status = Printer.add_status_color(
+            {"status": client.run_data.status}, status_key="status"
+        )
+        click.echo("{}\n".format(latest_status["status"]))
+        sys.exit()

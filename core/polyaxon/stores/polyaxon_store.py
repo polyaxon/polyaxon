@@ -50,8 +50,6 @@ class PolyaxonStore:
     By default, this store requires a valid run.
     """
 
-    URL = "streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/{subpath}"
-
     def __init__(self, client: "RunClient"):  # noqa
         self._client = client
 
@@ -60,24 +58,6 @@ class PolyaxonStore:
 
     def list(self, path):
         return self._client.get_artifacts_tree(path=path)
-
-    def _get_headers(self, headers=None):
-        request_headers = headers or {}
-        # Auth headers if access_token is present
-        if self._client.client.config:
-            config = self._client.client.config
-            if "Authorization" not in request_headers and config.token:
-                request_headers.update(
-                    {
-                        "Authorization": "{} {}".format(
-                            config.authentication_type, config.token
-                        )
-                    }
-                )
-            if config.header and config.header_service:
-                request_headers.update({config.header: config.header_service})
-
-        return request_headers
 
     @staticmethod
     def check_response_status(response, endpoint):
@@ -149,7 +129,7 @@ class PolyaxonStore:
             files.append(("json", json.dumps(json_data)))
 
         multipart_encoder = MultipartEncoder(fields=files)
-        request_headers = self._get_headers(headers=headers)
+        request_headers = self._client.client.config.get_full_headers(headers=headers)
         request_headers.update({"Content-Type": multipart_encoder.content_type})
 
         # Attach progress bar
@@ -200,7 +180,7 @@ class PolyaxonStore:
         # pylint:disable=too-many-branches
         logger.debug("Downloading files from url: %s", url)
 
-        request_headers = self._get_headers(headers=headers)
+        request_headers = self._client.client.config.get_full_headers(headers=headers)
         timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
         session = session or requests.Session()
 
