@@ -1434,7 +1434,11 @@ def sync(uid, all_runs, no_artifacts, clean, offline_path):
         sys.exit(1)
 
 
-def wait_for_running_condition(client):
+def _wait_for_running_condition(client):
+    client.refresh_data()
+    if LifeCycle.is_running(client.run_data.status):
+        return
+
     Printer.print_header("Waiting for running condition ...")
     client.wait_for_condition(
         statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES, print_status=True
@@ -1448,3 +1452,17 @@ def wait_for_running_condition(client):
         )
         click.echo("{}\n".format(latest_status["status"]))
         sys.exit()
+
+
+def wait_for_running_condition(client):
+    try:
+        _wait_for_running_condition(client)
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(
+            e,
+            message="Could not wait for running condition "
+            "for run `{}` under project `{}/{}`.".format(
+                client.run_uuid, client.owner, client.project
+            ),
+        )
+        sys.exit(1)
