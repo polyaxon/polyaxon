@@ -294,7 +294,7 @@ class RunClient:
             self._project = to_project
             self._run_data._project = to_project
 
-        if not self._is_offline:
+        if self._is_offline:
             _update_run()
             return
 

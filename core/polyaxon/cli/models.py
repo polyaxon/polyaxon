@@ -177,6 +177,11 @@ def register(
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_MODEL_VERSION["args"], **OPTIONS_MODEL_VERSION["kwargs"])
 @click.option(
+    "--to-project",
+    "-to",
+    help="The project to transfer the version to.",
+)
+@click.option(
     "--description", type=str, help="Optional new description of the version."
 )
 @click.option(
@@ -201,6 +206,7 @@ def copy(
     ctx,
     project,
     version,
+    to_project,
     description,
     tags,
     content,
@@ -233,6 +239,7 @@ def copy(
         project_name=project_name,
         version=version,
         kind=V1ProjectVersionKind.MODEL,
+        to_project=to_project,
         description=description,
         tags=tags,
         content=content,

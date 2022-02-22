@@ -515,6 +515,7 @@ class ProjectClient:
             description=description or original_version.description,
             tags=tags or original_version.tags,
             content=content or original_version.content,
+            run=original_version.run,
             connection=original_version.connection,
             artifacts=original_version.artifacts,
             force=force,
