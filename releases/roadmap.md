@@ -84,7 +84,6 @@ sidebar: "releases"
    * Allow running downstream-ops for a report, e.g. multi-run Tensorboard.
  * **New**: Add project contributors on the overview page to show all members who contributed to a specific project.
  * **Enhancement**: Allow owner/billing users to reset the billing anchor date, several users asked to change when they get billed during month.
- * **Enhancement**: Improve UI to support redirection to the original page after authentication.
  * **Enhancement**: Add possibility to save searches on the global runs table.
  * **Enhancement**: Add possibility to save custom analytics searches.
  * **Enhancement**: Add more informative messages and handling when scaling down usage/agents/seats or when downgrading to a plan missing a specific feature.
