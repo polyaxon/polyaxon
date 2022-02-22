@@ -503,8 +503,7 @@ class ProjectClient:
             force: bool, optional, to force push, i.e. update if exists.
         """
         original_version = self.get_version(kind, version)
-        if not name:
-            version = "{}-copy".format(version)
+        version = name if name else "{}-copy".format(version)
         return ProjectClient(
             owner=self.owner,
             project=to_project or self.project,
