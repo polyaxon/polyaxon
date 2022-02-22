@@ -182,6 +182,11 @@ def register(
     help="The project to transfer the version to.",
 )
 @click.option(
+    *OPTIONS_NAME["args"],
+    type=str,
+    help="Name of the model version, must be unique within the same project.",
+)
+@click.option(
     "--description", type=str, help="Optional new description of the version."
 )
 @click.option(
@@ -207,6 +212,7 @@ def copy(
     project,
     version,
     to_project,
+    name,
     description,
     tags,
     content,
@@ -240,6 +246,7 @@ def copy(
         version=version,
         kind=V1ProjectVersionKind.MODEL,
         to_project=to_project,
+        name=name,
         description=description,
         tags=tags,
         content=content,

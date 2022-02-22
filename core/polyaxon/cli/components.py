@@ -219,6 +219,11 @@ def register(ctx, polyaxonfile, project, version, description, tags, force):
     help="The project to transfer the version to.",
 )
 @click.option(
+    *OPTIONS_NAME["args"],
+    type=str,
+    help="Name of the component version, must be unique within a project.",
+)
+@click.option(
     "--description", type=str, help="Optional new description of the version."
 )
 @click.option(
@@ -239,6 +244,7 @@ def copy(
     project,
     version,
     to_project,
+    name,
     description,
     tags,
     force,
@@ -269,8 +275,9 @@ def copy(
         owner=owner,
         project_name=project_name,
         version=version,
-        to_project=to_project,
         kind=V1ProjectVersionKind.COMPONENT,
+        to_project=to_project,
+        name=name,
         description=description,
         tags=tags,
         force=force,
