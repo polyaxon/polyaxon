@@ -1071,9 +1071,15 @@ def shell(ctx, project, uid, command, pod, container):
     default=False,
     help="Disable the automatic untar of the downloaded the artifacts.",
 )
+@click.option(
+    "--is-file",
+    is_flag=True,
+    default=False,
+    help="If the content is a single file.",
+)
 @click.pass_context
 @clean_outputs
-def artifacts(ctx, project, uid, path, path_to, no_untar):
+def artifacts(ctx, project, uid, path, path_to, no_untar, is_file):
     """Download outputs/artifacts for run.
 
     Uses /docs/core/cli/#caching
@@ -1096,9 +1102,14 @@ def artifacts(ctx, project, uid, path, path_to, no_untar):
     )
     try:
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
-        download_path = client.download_artifacts(
-            path=path or "", path_to=path_to, untar=not no_untar
-        )
+        if is_file:
+            download_path = client.download_artifact(
+                path=path or "", path_to=path_to,
+            )
+        else:
+            download_path = client.download_artifacts(
+                path=path or "", path_to=path_to, untar=not no_untar
+            )
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e, message="Could not download outputs for run `{}`.".format(run_uuid)
