@@ -999,9 +999,21 @@ def inspect(ctx, project, uid):
     type=str,
     help="Path to download, if not provided the full run's  artifacts will downloaded.",
 )
+@click.option(
+    "--pod",
+    type=str,
+    help="Optional. In a multi-replica or distributed job, "
+    "the pod to use for selecting the container.",
+)
+@click.option(
+    "--container",
+    type=str,
+    help="Optional. The container to use for starting the shell session, "
+    "by default the main container is used..",
+)
 @click.pass_context
 @clean_outputs
-def shell(ctx, project, uid, command):
+def shell(ctx, project, uid, command, pod, container):
     """Start a shell session for run.
 
     Uses /docs/core/cli/#caching
@@ -1030,7 +1042,9 @@ def shell(ctx, project, uid, command):
 
     Printer.print_success("Starting a new shell session...")
     try:
-        pty = PseudoTerminal(client_shell=client.shell(command=command))
+        pty = PseudoTerminal(
+            client_shell=client.shell(command=command, pod=pod, container=container)
+        )
         pty.start(sys.argv[1:])
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not inspect the run `{}`.".format(run_uuid))
