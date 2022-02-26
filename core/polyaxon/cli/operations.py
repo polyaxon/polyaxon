@@ -1104,7 +1104,8 @@ def artifacts(ctx, project, uid, path, path_to, no_untar, is_file):
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
         if is_file:
             download_path = client.download_artifact(
-                path=path or "", path_to=path_to,
+                path=path or "",
+                path_to=path_to,
             )
         else:
             download_path = client.download_artifacts(

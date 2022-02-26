@@ -36,7 +36,14 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS, CONTEXT_OFFLINE_ROOT
+from polyaxon.containers.contexts import (
+    CONTEXT_MOUNT_ARTIFACTS,
+    CONTEXT_MOUNT_RUN_ASSETS_FORMAT,
+    CONTEXT_MOUNT_RUN_EVENTS_FORMAT,
+    CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
+    CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT,
+    CONTEXT_OFFLINE_ROOT,
+)
 from polyaxon.containers.names import MAIN_CONTAINER_NAMES
 from polyaxon.env_vars.getters import (
     get_artifacts_store_name,
@@ -174,6 +181,7 @@ class RunClient:
         self._namespace = None
         self._results = {}
         self._lineages = {}
+        self._default_filename_sanitize_paths = []
 
     @property
     def client(self):
@@ -1523,6 +1531,28 @@ class RunClient:
             message=message,
         )
 
+    def _sanitize_file_name(self, filename: str, for_patterns: List[str] = None) -> str:
+        """Ensures that the filename never includes common context paths"""
+        if not self.run_uuid:
+            return to_fqn_name(filename)
+
+        for_patterns = for_patterns or []
+        if not self._default_filename_sanitize_paths:
+            run_path = self.run_uuid + os.sep
+            self._default_filename_sanitize_paths = [
+                CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path),
+                CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(run_path),
+                CONTEXT_MOUNT_RUN_ASSETS_FORMAT.format(run_path),
+                CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(run_path),
+                CONTEXT_MOUNT_ARTIFACTS + run_path,
+                CONTEXT_OFFLINE_ROOT + run_path,
+            ]
+        for p in self._default_filename_sanitize_paths + for_patterns:
+            if filename.startswith(p):
+                filename = filename[len(p) :]
+
+        return to_fqn_name(filename)
+
     def _log_has_events(self):
         if not self._has_meta_key("has_events"):
             self.log_meta(has_events=True)
@@ -1677,7 +1707,7 @@ class RunClient:
         )
         if name:
             artifact_run = V1RunArtifact(
-                name=to_fqn_name(name),
+                name=self._sanitize_file_name(name),
                 kind=kind,
                 path=rel_path,
                 summary=summary,
@@ -1796,7 +1826,7 @@ class RunClient:
         summary["path"] = path
         if name:
             artifact_run = V1RunArtifact(
-                name=to_fqn_name(name),
+                name=self._sanitize_file_name(name),
                 kind=V1ArtifactKind.DIR,
                 path=rel_path,
                 summary=summary,
@@ -1833,7 +1863,7 @@ class RunClient:
                 path=path, rel_path=rel_path, is_offline=self._is_offline
             )
             artifact_run = V1RunArtifact(
-                name=to_fqn_name(name),
+                name=self._sanitize_file_name(name),
                 kind=V1ArtifactKind.TENSORBOARD,
                 path=rel_path,
                 summary={"path": path},
