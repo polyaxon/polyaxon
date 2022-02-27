@@ -1538,14 +1538,13 @@ class RunClient:
 
         for_patterns = for_patterns or []
         if not self._default_filename_sanitize_paths:
-            run_path = self.run_uuid + os.sep
             self._default_filename_sanitize_paths = [
-                CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path),
-                CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(run_path),
-                CONTEXT_MOUNT_RUN_ASSETS_FORMAT.format(run_path),
-                CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(run_path),
-                CONTEXT_MOUNT_ARTIFACTS + run_path,
-                CONTEXT_OFFLINE_ROOT + run_path,
+                CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(self.run_uuid) + os.sep,
+                CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(self.run_uuid) + os.sep,
+                CONTEXT_MOUNT_RUN_ASSETS_FORMAT.format(self.run_uuid) + os.sep,
+                CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(self.run_uuid) + os.sep,
+                CONTEXT_MOUNT_ARTIFACTS + self.run_uuid + os.sep,
+                CONTEXT_OFFLINE_ROOT + self.run_uuid + os.sep,
             ]
         for p in self._default_filename_sanitize_paths + for_patterns:
             if filename.startswith(p):
