@@ -854,7 +854,6 @@ class Run(RunClient):
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "image"
-            ext = get_path_extension(filepath=name) or ext
         name = self._sanitize_file_name(name)
 
         asset_path = get_asset_path(
@@ -1039,7 +1038,6 @@ class Run(RunClient):
             content_type = get_path_extension(filepath=data) or content_type
         else:
             name = name or "video"
-            content_type = get_path_extension(filepath=name) or content_type
         name = self._sanitize_file_name(name)
 
         asset_path = get_asset_path(
@@ -1110,7 +1108,6 @@ class Run(RunClient):
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "audio"
-            ext = get_path_extension(filepath=name) or ext
         name = self._sanitize_file_name(name)
 
         asset_path = get_asset_path(
