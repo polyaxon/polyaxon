@@ -380,6 +380,7 @@ def log_image(
     timestamp: datetime = None,
     rescale=1,
     dataformats: str = "CHW",
+    ext: str = None,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_image(
@@ -389,6 +390,7 @@ def log_image(
         timestamp=timestamp,
         rescale=rescale,
         dataformats=dataformats,
+        ext=ext,
     )
 
 

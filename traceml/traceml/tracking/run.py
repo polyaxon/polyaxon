@@ -558,7 +558,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         event_value = events_processors.roc_auc_curve(
@@ -600,7 +600,7 @@ class Run(RunClient):
             timestamp: datetime, optional
             is_multi_class: bool, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         def create_event(chart_name, y_p, y_t, pos_label=None):
@@ -650,7 +650,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         event_value = events_processors.pr_curve(
@@ -692,7 +692,7 @@ class Run(RunClient):
             timestamp: datetime, optional
             is_multi_class: bool, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         def create_event(chart_name, y_p, y_t, pos_label=None):
@@ -743,7 +743,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         event_value = events_processors.curve(
@@ -789,7 +789,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         try:
@@ -824,6 +824,7 @@ class Run(RunClient):
         timestamp: datetime = None,
         rescale: int = 1,
         dataformats: str = "CHW",
+        ext: str = None,
     ):
         """Logs an image.
 
@@ -835,22 +836,26 @@ class Run(RunClient):
         Args:
             data: str or numpy.array, a file path or numpy array
             name: str,
-                 name of the image, if a path is passed this can be optional and the name of the file will be used
+                 name of the image, if a path is passed this can be optional
+                 and the name of the file will be used
             step: int, optional
             timestamp: datetime, optional
             rescale: int, optional
             dataformats: str, optional
+            ext: str, optional, default extension to use, note that if you pass a
+                 file polyaxon will automatically guess the extension
         """
         self._log_has_events()
 
         is_file = isinstance(data, str) and os.path.exists(data)
-        ext = "png"
+        ext = ext or "png"
         if is_file:
             name = name or get_base_filename(data)
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "image"
-        name = to_fqn_name(name)
+            ext = get_path_extension(filepath=name) or ext
+        name = self._sanitize_file_name(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -925,7 +930,7 @@ class Run(RunClient):
         self._log_has_events()
 
         name = name or "figure"
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
             kind=V1ArtifactKind.IMAGE,
@@ -973,7 +978,7 @@ class Run(RunClient):
             timestamp: datetime, optional
         """
         name = name or "figure"
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         if isinstance(data, list):
             event_value = events_processors.figures_to_images(figures=data, close=close)
 
@@ -1005,7 +1010,7 @@ class Run(RunClient):
         fps: int = 4,
         step: int = None,
         timestamp: datetime = None,
-        content_type: int = None,
+        content_type: str = None,
     ):
         """Logs a video.
 
@@ -1034,7 +1039,8 @@ class Run(RunClient):
             content_type = get_path_extension(filepath=data) or content_type
         else:
             name = name or "video"
-        name = to_fqn_name(name)
+            content_type = get_path_extension(filepath=name) or content_type
+        name = self._sanitize_file_name(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -1104,7 +1110,8 @@ class Run(RunClient):
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "audio"
-        name = to_fqn_name(name)
+            ext = get_path_extension(filepath=name) or ext
+        name = self._sanitize_file_name(name)
 
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
@@ -1156,7 +1163,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         logged_event = LoggedEventSpec(
@@ -1182,7 +1189,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         logged_event = LoggedEventSpec(
@@ -1210,7 +1217,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         event_value = events_processors.np_histogram(values=values, counts=counts)
@@ -1254,7 +1261,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         event_value = events_processors.histogram(
@@ -1308,7 +1315,7 @@ class Run(RunClient):
             versioned: bool, to enable the versioned behavior for storing the model
         """
         name = name or get_base_filename(path)
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         ext = None
         if os.path.isfile(path):
             ext = get_path_extension(filepath=path)
@@ -1388,7 +1395,7 @@ class Run(RunClient):
             versioned: bool, to enable the versioned behavior for storing the artifact
         """
         name = name or get_base_filename(path)
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         ext = get_path_extension(filepath=path)
         kind = kind or kwargs.get("artifact_kind")  # Backwards compatibility
         kind = kind or V1ArtifactKind.FILE
@@ -1448,7 +1455,7 @@ class Run(RunClient):
         """
         self._log_has_events()
 
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         asset_path = get_asset_path(
             run_path=self._artifacts_path,
             kind=V1ArtifactKind.DATAFRAME,
@@ -1495,7 +1502,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         chart = events_processors.plotly_chart(figure=figure)
@@ -1518,7 +1525,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         chart = events_processors.bokeh_chart(figure=figure)
@@ -1541,7 +1548,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         chart = events_processors.altair_chart(figure=figure)
@@ -1564,7 +1571,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        name = to_fqn_name(name)
+        name = self._sanitize_file_name(name)
         self._log_has_events()
 
         chart = events_processors.mpl_plotly_chart(figure=figure)
