@@ -38,11 +38,14 @@ from polyaxon.client.decorators import client_handler
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS,
+    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_RUN_ASSETS_FORMAT,
     CONTEXT_MOUNT_RUN_EVENTS_FORMAT,
     CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
     CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT,
+    CONTEXT_OFFLINE_FORMAT,
     CONTEXT_OFFLINE_ROOT,
+    CONTEXT_ROOT,
 )
 from polyaxon.containers.names import MAIN_CONTAINER_NAMES
 from polyaxon.env_vars.getters import (
@@ -1533,7 +1536,7 @@ class RunClient:
 
     def _sanitize_file_name(self, filename: str, for_patterns: List[str] = None) -> str:
         """Ensures that the filename never includes common context paths"""
-        if not self.run_uuid:
+        if not self.run_uuid or CONTEXT_ROOT not in filename:
             return to_fqn_name(filename)
 
         for_patterns = for_patterns or []
@@ -1542,13 +1545,15 @@ class RunClient:
                 CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(self.run_uuid) + os.sep,
                 CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(self.run_uuid) + os.sep,
                 CONTEXT_MOUNT_RUN_ASSETS_FORMAT.format(self.run_uuid) + os.sep,
-                CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(self.run_uuid) + os.sep,
-                CONTEXT_MOUNT_ARTIFACTS + self.run_uuid + os.sep,
-                CONTEXT_OFFLINE_ROOT + self.run_uuid + os.sep,
+                CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(self.run_uuid)
+                + os.sep,
+                CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid) + os.sep,
+                CONTEXT_OFFLINE_FORMAT.format(self.run_uuid) + os.sep,
             ]
         for p in self._default_filename_sanitize_paths + for_patterns:
             if filename.startswith(p):
                 filename = filename[len(p) :]
+                break
 
         return to_fqn_name(filename)
 
