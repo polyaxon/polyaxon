@@ -357,7 +357,7 @@ class TestInitStore(BaseTestCase):
 
         assert container.name == "init"
         assert container.image == "polyaxon/polyaxon-init"
-        assert container.image_pull_policy is None
+        assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["/bin/sh", "-c"]
         assert container.args is None
         assert container.env == get_connection_env_var(
@@ -391,7 +391,7 @@ class TestInitStore(BaseTestCase):
         )
         assert container.name == "init"
         assert container.image == "polyaxon/polyaxon-init"
-        assert container.image_pull_policy is None
+        assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["/bin/sh", "-c"]
         assert container.args is None
         env = get_items_from_secret(
@@ -424,7 +424,7 @@ class TestInitStore(BaseTestCase):
         )
         assert container.name == "init"
         assert container.image == "polyaxon/polyaxon-init"
-        assert container.image_pull_policy is None
+        assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["/bin/sh", "-c"]
         assert container.args is None
         assert container.env == get_connection_env_var(
@@ -457,7 +457,7 @@ class TestInitStore(BaseTestCase):
         )
         assert container.name == "init"
         assert container.image == "polyaxon/polyaxon-init"
-        assert container.image_pull_policy is None
+        assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["/bin/sh", "-c"]
         assert container.args is None
         assert container.env == get_connection_env_var(

@@ -123,4 +123,5 @@ def sanitize_container(
 ) -> k8s_schemas.V1Container:
     container = sanitize_container_command_args(container)
     container.resources = sanitize_resources(container.resources)
+    container.image_pull_policy = container.image_pull_policy or "IfNotPresent"
     return sanitize_container_env(container)

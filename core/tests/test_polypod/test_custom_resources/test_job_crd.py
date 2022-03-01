@@ -35,7 +35,7 @@ class TestJobCRD(BaseTestCase):
             annotations={"foo": "long-foo-bar" * 300},
             node_selector={"foo": "bar"},
             node_name="foo",
-            restart_policy="never",
+            restart_policy="Never",
         )
         notifications = [V1Notification(connections=["test"], trigger=V1Statuses.DONE)]
         metadata, pod_spec = get_pod_spec(

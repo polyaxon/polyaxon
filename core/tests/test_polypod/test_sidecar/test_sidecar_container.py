@@ -866,7 +866,7 @@ class TestSidecarContainer(BaseTestCase):
             container_id=MAIN_JOB_CONTAINER,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="foo",
-                image_pull_policy="sdf",
+                image_pull_policy="Always",
                 sleep_interval=2,
                 sync_interval=212,
             ),
@@ -909,7 +909,7 @@ class TestSidecarContainer(BaseTestCase):
             container_id=MAIN_JOB_CONTAINER,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="foo",
-                image_pull_policy="sdf",
+                image_pull_policy="Always",
                 sleep_interval=2,
                 sync_interval=212,
             ),
@@ -946,7 +946,7 @@ class TestSidecarContainer(BaseTestCase):
             container_id=MAIN_JOB_CONTAINER,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="foo",
-                image_pull_policy="sdf",
+                image_pull_policy="Always",
                 sleep_interval=2,
                 sync_interval=212,
             ),

@@ -32,7 +32,7 @@ class TestTFJobCRD(BaseKubeflowCRDTestCase):
             annotations={"foo": "bar"},
             node_selector={"foo": "bar"},
             node_name="foo",
-            restart_policy="never",
+            restart_policy="Never",
         )
         custom_object = {
             "tfJobSpec": {"cleanPodPolicy": "All", "replicaSpecs": {}},
@@ -81,7 +81,7 @@ class TestTFJobCRD(BaseKubeflowCRDTestCase):
             annotations={"foo": "bar"},
             node_selector={"foo": "bar"},
             node_name="foo",
-            restart_policy="never",
+            restart_policy="Never",
         )
         notifications = [V1Notification(connections=["test"], trigger=V1Statuses.DONE)]
         chief, chief_replica_template = self.get_replica(environment)

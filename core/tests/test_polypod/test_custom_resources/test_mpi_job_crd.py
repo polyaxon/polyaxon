@@ -32,7 +32,7 @@ class TestMPIJobCRD(BaseKubeflowCRDTestCase):
             annotations={"foo": "bar"},
             node_selector={"foo": "bar"},
             node_name="foo",
-            restart_policy="never",
+            restart_policy="Never",
         )
         custom_object = {
             "mpiJobSpec": {"cleanPodPolicy": "All", "replicaSpecs": {}},
@@ -82,7 +82,7 @@ class TestMPIJobCRD(BaseKubeflowCRDTestCase):
             annotations={"foo": "bar"},
             node_selector={"foo": "bar"},
             node_name="foo",
-            restart_policy="never",
+            restart_policy="Never",
         )
         notifications = [V1Notification(connections=["test"], trigger=V1Statuses.DONE)]
         launcher, launcher_replica_template = self.get_replica(environment)

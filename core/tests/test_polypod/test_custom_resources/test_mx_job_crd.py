@@ -32,7 +32,7 @@ class TestMXJobCRD(BaseKubeflowCRDTestCase):
             annotations={"foo": "bar"},
             node_selector={"foo": "bar"},
             node_name="foo",
-            restart_policy="never",
+            restart_policy="Never",
         )
         custom_object = {
             "mxJobSpec": {"cleanPodPolicy": "All", "replicaSpecs": {}},
@@ -84,7 +84,7 @@ class TestMXJobCRD(BaseKubeflowCRDTestCase):
             annotations={"foo": "bar"},
             node_selector={"foo": "bar"},
             node_name="foo",
-            restart_policy="never",
+            restart_policy="Never",
         )
         notifications = [V1Notification(connections=["test"], trigger=V1Statuses.DONE)]
         tuner, tuner_replica_template = self.get_replica(environment)

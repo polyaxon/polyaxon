@@ -50,7 +50,7 @@ class TestInitDockerfile(BaseTestCase):
         )
         assert INIT_DOCKERFILE_CONTAINER_PREFIX in container.name
         assert container.image == "foo"
-        assert container.image_pull_policy is None
+        assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["polyaxon", "docker", "generate"]
         assert container.args == [
             "--build-context={}".format(dockerfile_args.to_dict(dump=True)),

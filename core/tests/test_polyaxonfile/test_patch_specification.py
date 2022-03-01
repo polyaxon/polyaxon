@@ -866,7 +866,7 @@ class TestApplyPresetEnvironment(BaseTestApplyPreset):
 
     def test_compile_injects_tolerations(self):
         environment1 = {"tolerations": [{"key": "key1", "operator": "Exists"}]}
-        environment2 = {"tolerations": [{"key": "key2", "operator": "NotExists"}]}
+        environment2 = {"tolerations": [{"key": "key2", "operator": "Equal"}]}
         self.assert_environment(environment1, environment2)
 
     def test_compile_injects_service_account_name(self):
@@ -1047,7 +1047,7 @@ class TestApplyPreset(BaseTestApplyPreset):
             "annotations": {"anno1": "value12"},
             "nodeSelector": {"plx": "selector12"},
             "affinity": {"podAffinity": {"k": "v"}},
-            "tolerations": [{"key": "key11", "operator": "NotExists"}],
+            "tolerations": [{"key": "key11", "operator": "Equal"}],
             "serviceAccountName": "sa2",
             "imagePullSecrets": ["ps2", "ps22"],
             "securityContext": {"runAsUser": 100, "runAsGroup": 300},

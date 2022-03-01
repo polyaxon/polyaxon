@@ -47,7 +47,7 @@ class TestInitFile(BaseTestCase):
         )
         assert INIT_FILE_CONTAINER_PREFIX in container.name
         assert container.image == "foo"
-        assert container.image_pull_policy is None
+        assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["polyaxon", "initializer", "file"]
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [

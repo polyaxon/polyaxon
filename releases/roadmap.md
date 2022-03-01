@@ -18,10 +18,6 @@ sidebar: "releases"
  * **New**: Add support for annotations in the connections specification.
  * **Enhancement**: Add mid-runtime update with `apply` logic.  
 
-### Sidecar
-
- * **Enhancement**: Improve the artifacts syncing logic to be more resilient to failed requests or intermittent errors.
-
 ### CLI
  
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.

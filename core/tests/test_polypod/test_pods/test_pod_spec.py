@@ -36,7 +36,7 @@ class TestPodSpec(BaseTestCase):
         affinity = [{"key": "affinity"}]
         tolerations = {"key": "tolerations"}
         security_context = {"uid": 222, "gid": 222}
-        restart_policy = "never"
+        restart_policy = "Never"
 
         with self.assertRaises(PolypodException):
             get_pod_spec(
@@ -81,7 +81,7 @@ class TestPodSpec(BaseTestCase):
 
         assert isinstance(pod_spec, k8s_schemas.V1PodSpec)
         assert pod_spec.security_context == security_context
-        assert pod_spec.restart_policy == "never"
+        assert pod_spec.restart_policy == "Never"
         assert pod_spec.service_account_name == "sa"
         assert pod_spec.init_containers == []
         assert pod_spec.containers == [main_container]
