@@ -19,6 +19,7 @@ from typing import List, Optional
 from polyaxon.auxiliaries import V1PolyaxonSidecarContainer
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
+from polyaxon.polypod.common.containers import patch_container
 from polyaxon.polypod.common.env_vars import (
     get_connection_env_var,
     get_env_from_config_map,
@@ -138,7 +139,7 @@ def get_sidecar_container(
         check_none=True,
     )
 
-    return k8s_schemas.V1Container(
+    container = k8s_schemas.V1Container(
         name=SIDECAR_CONTAINER,
         image=polyaxon_sidecar.get_image(),
         image_pull_policy=polyaxon_sidecar.image_pull_policy,
@@ -149,3 +150,5 @@ def get_sidecar_container(
         resources=polyaxon_sidecar.get_resources(),
         volume_mounts=volume_mounts,
     )
+
+    return patch_container(container)

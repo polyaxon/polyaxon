@@ -51,7 +51,9 @@ def patch_container(
         ports, check_none=True
     )
     container.resources = container.resources or resources
-    container.image_pull_policy = container.image_pull_policy or image_pull_policy
+    container.image_pull_policy = (
+        container.image_pull_policy or image_pull_policy or "IfNotPresent"
+    )
     container.image = container.image or image
 
     if not any([container.command, container.args]):

@@ -27,6 +27,7 @@ from polyaxon.containers.names import (
 )
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
+from polyaxon.polypod.common.containers import patch_container
 from polyaxon.polypod.common.env_vars import get_run_instance_env_var
 from polyaxon.polypod.common.mounts import (
     get_auth_context_mount,
@@ -63,7 +64,7 @@ def get_file_init_container(
         volume_mounts.append(get_auth_context_mount(read_only=True))
 
     file_args.filename = file_args.filename or "file"
-    return k8s_schemas.V1Container(
+    container = k8s_schemas.V1Container(
         name=generate_container_name(INIT_FILE_CONTAINER_PREFIX),
         image=polyaxon_init.get_image(),
         image_pull_policy=polyaxon_init.image_pull_policy,
@@ -78,3 +79,4 @@ def get_file_init_container(
         resources=polyaxon_init.get_resources(),
         volume_mounts=volume_mounts,
     )
+    return patch_container(container)

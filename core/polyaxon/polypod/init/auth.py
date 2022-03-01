@@ -19,6 +19,7 @@ from typing import List
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.containers.names import INIT_AUTH_CONTAINER
 from polyaxon.k8s import k8s_schemas
+from polyaxon.polypod.common.containers import patch_container
 from polyaxon.polypod.common.mounts import get_auth_context_mount
 from polyaxon.utils.list_utils import to_list
 
@@ -27,7 +28,7 @@ def get_auth_context_container(
     polyaxon_init: V1PolyaxonInitContainer, env: List[k8s_schemas.V1EnvVar] = None
 ) -> k8s_schemas.V1Container:
     env = to_list(env, check_none=True)
-    return k8s_schemas.V1Container(
+    container = k8s_schemas.V1Container(
         name=INIT_AUTH_CONTAINER,
         image=polyaxon_init.get_image(),
         image_pull_policy=polyaxon_init.image_pull_policy,
@@ -36,3 +37,4 @@ def get_auth_context_container(
         resources=polyaxon_init.get_resources(),
         volume_mounts=[get_auth_context_mount(read_only=False)],
     )
+    return patch_container(container)
