@@ -24,8 +24,7 @@ from starlette import status
 from starlette.concurrency import run_in_threadpool
 from starlette.exceptions import HTTPException
 
-from polyaxon.fs.async_manager import download_file, list_files
-from polyaxon.fs.tar import tar_files
+from polyaxon.fs.async_manager import download_file, list_files, tar_files
 from polyaxon.fs.types import FSSystem
 from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind
@@ -209,11 +208,10 @@ async def get_archived_operation_events_and_assets(
             check_cache=check_cache,
         )
         pkg_files += event_pkg_files
-
-    return await run_in_threadpool(
-        tar_files,
-        "{}.{}.{}".format(run_uuid, event_kind, "-and-".join(event_names)),
-        pkg_files,
+    return await tar_files(
+        filename="{}.{}.{}".format(run_uuid, event_kind, "-and-".join(event_names)),
+        pkg_files=pkg_files,
+        subpath=run_uuid,
     )
 
 

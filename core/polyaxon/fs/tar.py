@@ -31,8 +31,10 @@ def tar_dir(download_path: str) -> str:
     return target_path
 
 
-def tar_files(download_name: str, outputs_files: List[str]) -> str:
+def tar_files(
+    download_name: str, outputs_files: List[str], relative_to: str = None
+) -> str:
     tar_name = "{}.tar.gz".format(download_name)
     target_path = os.path.join(settings.CLIENT_CONFIG.archive_root, tar_name)
-    create_tarfile(files=outputs_files, tar_path=target_path)
+    create_tarfile(files=outputs_files, tar_path=target_path, relative_to=relative_to)
     return target_path

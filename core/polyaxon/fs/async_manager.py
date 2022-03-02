@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import asyncio
 import os
 
 from typing import Dict, List, Optional, Union
@@ -24,8 +23,8 @@ from starlette.concurrency import run_in_threadpool
 
 from polyaxon import settings
 from polyaxon.fs.tar import tar_dir
+from polyaxon.fs.tar import tar_files as sync_tar_files
 from polyaxon.fs.types import FSSystem
-from polyaxon.fs.watcher import FSWatcher
 from polyaxon.logger import logger
 from polyaxon.utils.path_utils import check_or_create_path
 
@@ -244,3 +243,15 @@ async def delete_file_or_dir(
     except Exception as e:
         logger.warning("Could not delete %s. Error %s" % (subpath, e))
         return False
+
+
+async def tar_files(filename: str, pkg_files: List[str], subpath: str = None) -> str:
+    relative_to = (
+        os.path.join(settings.CLIENT_CONFIG.archive_root, subpath) if subpath else None
+    )
+    return await run_in_threadpool(
+        sync_tar_files,
+        filename,
+        pkg_files,
+        relative_to,
+    )
