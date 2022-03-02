@@ -71,6 +71,23 @@ async def upload_file(fs: FSSystem, subpath: str):
         return None
 
 
+async def check_is_file(fs: FSSystem, subpath: str) -> bool:
+    filepath = os.path.join(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
+    try:
+        return await ensure_async_execution(
+            fs=fs,
+            fct="isfile",
+            is_async=fs.async_impl,
+            path=filepath,
+        )
+    except Exception as e:
+        logger.warning(
+            "Could not upload check the details of the path %s. Error %s"
+            % (filepath, e)
+        )
+        return False
+
+
 async def upload_dir(fs: FSSystem, subpath: str) -> Optional[str]:
     path_from = os.path.join(settings.AGENT_CONFIG.artifacts_root, subpath)
     path_to = os.path.join(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)

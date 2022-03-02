@@ -16,6 +16,8 @@
 
 import os
 
+from typing import List
+
 from polyaxon import settings
 from polyaxon.utils.path_utils import create_tarfile, get_files_in_path
 
@@ -26,4 +28,11 @@ def tar_dir(download_path: str) -> str:
     tar_name = "{}.tar.gz".format(tar_base_name)
     target_path = os.path.join(settings.CLIENT_CONFIG.archive_root, tar_name)
     create_tarfile(files=outputs_files, tar_path=target_path, relative_to=download_path)
+    return target_path
+
+
+def tar_files(download_name: str, outputs_files: List[str]) -> str:
+    tar_name = "{}.tar.gz".format(download_name)
+    target_path = os.path.join(settings.CLIENT_CONFIG.archive_root, tar_name)
+    create_tarfile(files=outputs_files, tar_path=target_path)
     return target_path

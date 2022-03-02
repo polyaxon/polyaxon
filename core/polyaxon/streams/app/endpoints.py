@@ -15,7 +15,7 @@
 # limitations under the License.
 import os
 
-from typing import Any, Dict
+from typing import Any, Dict, Set
 
 import ujson
 
@@ -28,6 +28,7 @@ from starlette.responses import FileResponse, JSONResponse, Response
 
 from polyaxon import settings
 from polyaxon.fs.async_manager import (
+    check_is_file,
     delete_file_or_dir,
     download_dir,
     download_file,
@@ -42,6 +43,7 @@ from polyaxon.polyboard.events import V1Events
 from polyaxon.streams.app.fs import AppFS
 from polyaxon.streams.controllers.events import (
     get_archived_operation_events,
+    get_archived_operation_events_and_assets,
     get_archived_operation_resources,
     get_archived_operations_events,
 )
@@ -236,10 +238,29 @@ async def get_multi_run_events(request: Request) -> UJSONResponse:
     return UJSONResponse({"data": events})
 
 
+async def get_package_event_assets(
+    run_uuid: str, event_kind: str, event_names: Set[str], force: bool
+) -> Response:
+    archived_path = await get_archived_operation_events_and_assets(
+        fs=await AppFS.get_fs(),
+        run_uuid=run_uuid,
+        event_kind=event_kind,
+        event_names=event_names,
+        check_cache=not force,
+    )
+    if not archived_path:
+        return Response(
+            content="Artifact not found: filepath={}".format(archived_path),
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
+    return redirect_file(archived_path)
+
+
 async def get_run_events(request: Request) -> UJSONResponse:
     run_uuid = request.path_params["run_uuid"]
     event_kind = request.path_params["event_kind"]
     force = to_bool(request.query_params.get("force"), handle_none=True)
+    pkg_assets = to_bool(request.query_params.get("pkg_assets"), handle_none=True)
     if event_kind not in V1ArtifactKind.allowable_values:
         raise HTTPException(
             detail="received an unrecognisable event {}.".format(event_kind),
@@ -250,6 +271,13 @@ async def get_run_events(request: Request) -> UJSONResponse:
     sample = request.query_params.get("sample")
     orient = orient or V1Events.ORIENT_DICT
     event_names = {e for e in event_names.split(",") if e} if event_names else set([])
+    if pkg_assets:
+        return await get_package_event_assets(
+            run_uuid=run_uuid,
+            event_kind=event_kind,
+            event_names=event_names,
+            force=force,
+        )
     events = await get_archived_operation_events(
         fs=await AppFS.get_fs(),
         run_uuid=run_uuid,
@@ -465,11 +493,15 @@ async def handle_artifacts(request: Request) -> Response:
 
 async def download_artifacts(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
+    check_file = to_bool(request.query_params.get("check_file"), handle_none=True)
     path = request.query_params.get("path", "")
     subpath = "{}/{}".format(run_uuid, clean_path(path)).rstrip("/")
-    archived_path = await download_dir(
-        fs=await AppFS.get_fs(), subpath=subpath, to_tar=True
-    )
+    fs = await AppFS.get_fs()
+    if check_file:
+        is_file = await check_is_file(fs=fs, subpath=subpath)
+        if is_file:
+            return await download_artifact(request)
+    archived_path = await download_dir(fs=fs, subpath=subpath, to_tar=True)
     if not archived_path:
         return Response(
             content="Artifact not found: filepath={}".format(archived_path),

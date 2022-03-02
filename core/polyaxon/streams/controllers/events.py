@@ -18,12 +18,14 @@ import os
 from typing import Dict, List, Optional, Set
 
 import aiofiles
+import ujson
 
 from starlette import status
 from starlette.concurrency import run_in_threadpool
 from starlette.exceptions import HTTPException
 
 from polyaxon.fs.async_manager import download_file, list_files
+from polyaxon.fs.tar import tar_files
 from polyaxon.fs.types import FSSystem
 from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind
@@ -47,16 +49,17 @@ async def get_resources_files(fs: FSSystem, run_uuid: str) -> List[str]:
 
 
 async def process_operation_event(
-    events_path: str,
+    event_path: str,
     event_kind: str,
     event_name: str,
     orient: str = V1Events.ORIENT_CSV,
     sample: int = None,
+    to_dict: bool = True,
 ) -> Optional[Dict]:
-    if not events_path or not os.path.exists(events_path):
+    if not event_path or not os.path.exists(event_path):
         return None
 
-    async with aiofiles.open(events_path, mode="r") as f:
+    async with aiofiles.open(event_path, mode="r") as f:
         contents = await f.read()
         if contents:
             if orient == V1Events.ORIENT_CSV:
@@ -81,7 +84,7 @@ async def process_operation_event(
                 return {
                     "name": event_name,
                     "kind": event_kind,
-                    "data": event_df.to_dict(),
+                    "data": event_df.to_dict() if to_dict else event_df,
                 }
             else:
                 raise HTTPException(
@@ -102,10 +105,10 @@ async def get_archived_operation_resource(
 ) -> Optional[Dict]:
 
     subpath = get_resource_path(run_path=run_uuid, kind=event_kind, name=event_name)
-    events_path = await download_file(fs=fs, subpath=subpath, check_cache=check_cache)
+    event_path = await download_file(fs=fs, subpath=subpath, check_cache=check_cache)
 
     return await process_operation_event(
-        events_path=events_path,
+        event_path=event_path,
         event_kind=event_kind,
         event_name=event_name,
         orient=orient,
@@ -124,14 +127,93 @@ async def get_archived_operation_event(
 ) -> Optional[Dict]:
 
     subpath = get_event_path(run_path=run_uuid, kind=event_kind, name=event_name)
-    events_path = await download_file(fs=fs, subpath=subpath, check_cache=check_cache)
+    event_path = await download_file(fs=fs, subpath=subpath, check_cache=check_cache)
 
     return await process_operation_event(
-        events_path=events_path,
+        event_path=event_path,
         event_kind=event_kind,
         event_name=event_name,
         orient=orient,
         sample=sample,
+    )
+
+
+async def get_archived_operation_event_and_assets(
+    fs: FSSystem,
+    run_uuid: str,
+    event_kind: str,
+    event_name: str,
+    check_cache: bool = True,
+) -> List[str]:
+
+    pkg_files = []
+    subpath = get_event_path(run_path=run_uuid, kind=event_kind, name=event_name)
+    event_path = await download_file(fs=fs, subpath=subpath, check_cache=check_cache)
+    pkg_files.append(event_path)
+
+    try:
+        event = await process_operation_event(
+            event_path=event_path,
+            event_kind=event_kind,
+            event_name=event_name,
+            orient=V1Events.ORIENT_DICT,
+            sample=None,
+            to_dict=False,
+        )
+    except Exception as e:
+        logger.warning(
+            "During the packaging of %s, the event download failed. Error %s"
+            % (event_path, e)
+        )
+        return []
+    df = event["data"].df
+    try:
+        files = df[event_kind].map(lambda f: ujson.loads(f).get("path")).tolist()
+    except Exception as e:
+        logger.warning(
+            "During the packaging of %s, the event format found was not correct. "
+            "Error %s" % (event_path, e)
+        )
+        return pkg_files
+    for file_from_path in files:
+        subpath = "{}/{}".format(run_uuid, file_from_path)
+        try:
+            file_to_path = await download_file(
+                fs=fs, subpath=subpath, check_cache=check_cache
+            )
+            pkg_files.append(file_to_path)
+        except Exception as e:
+            logger.warning(
+                "During the packaging of %s, the asset file download %s failed. "
+                "Error %s" % (event_path, file_from_path, e)
+            )
+
+    return pkg_files
+
+
+async def get_archived_operation_events_and_assets(
+    fs: FSSystem,
+    run_uuid: str,
+    event_kind: str,
+    event_names: Set[str],
+    check_cache: bool = True,
+) -> Optional[str]:
+
+    pkg_files = []
+    for event_name in event_names:
+        event_pkg_files = await get_archived_operation_event_and_assets(
+            fs=fs,
+            run_uuid=run_uuid,
+            event_kind=event_kind,
+            event_name=event_name,
+            check_cache=check_cache,
+        )
+        pkg_files += event_pkg_files
+
+    return await run_in_threadpool(
+        tar_files,
+        "{}.{}.{}".format(run_uuid, event_kind, "-and-".join(event_names)),
+        pkg_files,
     )
 
 
