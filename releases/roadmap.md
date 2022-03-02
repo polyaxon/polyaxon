@@ -20,6 +20,9 @@ sidebar: "releases"
 
 ### CLI
  
+ * **New**: Add `--lineage=lineage-name` to the artifacts command `polyaxon ops artifacts [-p] [-uid] --lineage` to allow pulling assets or artifacts based on a lineage information. e.g.:
+   * `polyaxon ops artifacts [-p] [-uid] --lineage model-foo`
+   * `polyaxon ops artifacts [-p] [-uid] --lineage env`
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
 
 ### Agent
@@ -64,7 +67,7 @@ sidebar: "releases"
 
  * **New**: Add progress logger, e.g. `log_progress(0.3)` which will show a progress UI widget on the run's overview page.
  * **New**: Add support for logging data versions, summaries, reports, and quality.
- * **Enhancement**: Re-enable histogram logging.
+ * **Enhancement**: Allow tracking dataframes as parquet files.
 
 ### Hub
 

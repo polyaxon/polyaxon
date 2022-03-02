@@ -1075,7 +1075,7 @@ def shell(ctx, project, uid, command, pod, container):
     "--is-file",
     is_flag=True,
     default=False,
-    help="If the content is a single file.",
+    help="To specify if the content is a single file.",
 )
 @click.pass_context
 @clean_outputs
@@ -1138,12 +1138,6 @@ def artifacts(ctx, project, uid, path, path_to, no_untar, is_file):
     "e.g. `uploads`, `code`, `dataset/images/values`, ...",
 )
 @click.option(
-    "--is-file",
-    is_flag=True,
-    default=False,
-    help="If the content is a single file.",
-)
-@click.option(
     "--sync-failure",
     is_flag=True,
     default=False,
@@ -1151,7 +1145,7 @@ def artifacts(ctx, project, uid, path, path_to, no_untar, is_file):
 )
 @click.pass_context
 @clean_outputs
-def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
+def upload(ctx, project, uid, path_from, path_to, sync_failure):
     """Upload runs' artifacts.
 
     Uses /docs/core/cli/#caching
@@ -1172,6 +1166,7 @@ def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
         uid or ctx.obj.get("run_uuid"),
         is_cli=True,
     )
+    is_file = os.path.isfile(path_from)
     try:
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
         if is_file:

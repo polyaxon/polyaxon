@@ -1120,7 +1120,8 @@ class RunClient:
     ):
         """Uploads a full directory to the run's artifacts store path.
 
-        > This function crawls all files to upload and uses `upload_artifacts`.
+        > This function crawls all files to upload and uses `upload_artifacts`,
+        > it also respects `.polyaxonignore` file if it exists or the default ignore pattern.
 
         Args:
             dirpath: str, the dirpath to upload.
@@ -1148,7 +1149,7 @@ class RunClient:
         overwrite: bool = True,
         relative_to: str = None,
     ):
-        """Uploads a multiple artifacts to the run's artifacts store path.
+        """Uploads multiple artifacts to the run's artifacts store path.
 
         Args:
             files: List[str], list of files to upload.
