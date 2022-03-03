@@ -50,6 +50,7 @@ def metric(value):
 
 
 def histogram(values, bins, max_bins=None):
+    max_bins = max_bins or 512
     if not np:
         logger.warning(NUMPY_ERROR_MESSAGE)
         return UNKNOWN
@@ -59,23 +60,22 @@ def histogram(values, bins, max_bins=None):
     if values.size == 0:
         raise ValueError("The input has no element.")
     values = values.reshape(-1)
-    counts, limits = np.histogram(values, bins=bins)
-    num_bins = len(counts)
-    if max_bins is not None and num_bins > max_bins:
-        subsampling = num_bins // max_bins
-        subsampling_remainder = num_bins % subsampling
-        if subsampling_remainder != 0:
-            counts = np.pad(
-                counts,
-                pad_width=[[0, subsampling - subsampling_remainder]],
-                mode="constant",
-                constant_values=0,
-            )
-        counts = counts.reshape(-1, subsampling).sum(axis=-1)
+    values, counts = np.histogram(values, bins=bins)
 
     if counts.size == 0:
         logger.warning("Tracking an empty histogram")
         return UNKNOWN
+
+    values = values.tolist()
+    values_len = len(values)
+    counts = counts.tolist()
+    counts_len = len(counts)
+    if values_len > max_bins:
+        raise ValueError(
+            "The maximum bins for a histogram is {}, received {}".format(max_bins, values_len)
+        )
+    if values_len + 1 != counts_len:
+        raise ValueError("len(hist.values) must be len(hist.counts) + 1")
 
     return V1EventHistogram(values=values, counts=counts)
 

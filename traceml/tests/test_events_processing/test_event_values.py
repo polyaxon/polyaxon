@@ -162,17 +162,23 @@ class TestEventValues(BaseTestCase):
         assert os.path.exists(self.asset_path) is True
 
     def test_histogram_auto(self):
-        event = histogram(values=tensor_np(shape=(1024,)), bins="auto", max_bins=5)
+        with self.assertRaises(ValueError):
+            histogram(values=tensor_np(shape=(1024,)), bins="auto", max_bins=5)
+        event = histogram(values=tensor_np(shape=(1024,)), bins="auto")
         assert event.values is not None
         assert event.counts is not None
 
     def test_histogram(self):
-        event = histogram(values=tensor_np(shape=(1024,)), bins="fd", max_bins=5)
+        with self.assertRaises(ValueError):
+            histogram(values=tensor_np(shape=(1024,)), bins="fd", max_bins=5)
+        event = histogram(values=tensor_np(shape=(1024,)), bins="fd")
         assert event.values is not None
         assert event.counts is not None
 
     def test_histogram_doane(self):
-        event = histogram(tensor_np(shape=(1024,)), bins="doane", max_bins=5)
+        with self.assertRaises(ValueError):
+            histogram(tensor_np(shape=(1024,)), bins="doane", max_bins=5)
+        event = histogram(tensor_np(shape=(1024,)), bins="doane")
         assert event.values is not None
         assert event.counts is not None
 
