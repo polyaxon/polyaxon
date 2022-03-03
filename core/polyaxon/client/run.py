@@ -1238,7 +1238,7 @@ class RunClient:
 
     @client_handler(check_no_op=True, check_offline=True)
     def approve(self):
-        """Stops the current run."""
+        """Approves the current run if it's pending upload or human approval."""
         self.client.runs_v1.approve_run(
             self.owner,
             self.project,
