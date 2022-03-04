@@ -288,9 +288,17 @@ def get(ctx, project, version):
 @models.command()
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_MODEL_VERSION["args"], **OPTIONS_MODEL_VERSION["kwargs"])
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
 @click.pass_context
 @clean_outputs
-def delete(ctx, project, version):
+def delete(ctx, project, version, yes):
     """Delete a model version.
 
     Examples:
@@ -313,6 +321,7 @@ def delete(ctx, project, version):
         project_name=project_name,
         kind=V1ProjectVersionKind.MODEL,
         version=version,
+        yes=yes,
     )
 
 

@@ -197,8 +197,16 @@ def upgrade(config_file, deployment_type, manager_path, check, dry_run):
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
 )
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
 @clean_outputs
-def teardown(config_file, manager_path):
+def teardown(config_file, manager_path, yes):
     """Teardown a polyaxon deployment given a config file."""
     config = read_deployment_config(config_file, command="teardown")
     manager = DeployConfigManager(
@@ -206,7 +214,9 @@ def teardown(config_file, manager_path):
     )
     exception = None
     try:
-        if click.confirm("Would you like to execute pre-delete hooks?", default=True):
+        if yes or click.confirm(
+            "Would you like to execute pre-delete hooks?", default=False
+        ):
             manager.teardown(hooks=True)
         else:
             manager.teardown(hooks=False)

@@ -449,9 +449,17 @@ def get(ctx, project, uid, offline, offline_path, output):
 @ops.command()
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
 @click.pass_context
 @clean_outputs
-def delete(ctx, project, uid):
+def delete(ctx, project, uid, yes):
     """Delete a run.
 
     Uses /docs/core/cli/#caching
@@ -472,7 +480,9 @@ def delete(ctx, project, uid):
         uid or ctx.obj.get("run_uuid"),
         is_cli=True,
     )
-    if not click.confirm("Are sure you want to delete run `{}`".format(run_uuid)):
+    if not yes and not click.confirm(
+        "Are sure you want to delete run `{}`".format(run_uuid)
+    ):
         click.echo("Existing without deleting the run.")
         sys.exit(1)
 

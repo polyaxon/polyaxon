@@ -288,9 +288,17 @@ def get(ctx, project, version):
 @artifacts.command()
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_ARTIFACT_VERSION["args"], **OPTIONS_ARTIFACT_VERSION["kwargs"])
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
 @click.pass_context
 @clean_outputs
-def delete(ctx, project, version):
+def delete(ctx, project, version, yes):
     """Delete a artifact version.
     \b
     $ polyaxon artifacts delete  // delete `latest` in current project
@@ -310,6 +318,7 @@ def delete(ctx, project, version):
         project_name=project_name,
         kind=V1ProjectVersionKind.ARTIFACT,
         version=version,
+        yes=yes,
     )
 
 

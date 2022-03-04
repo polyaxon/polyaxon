@@ -242,9 +242,17 @@ def get(ctx, _project):
 
 @project.command()
 @click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
 @click.pass_context
 @clean_outputs
-def delete(ctx, _project):
+def delete(ctx, _project, yes):
     """Delete project.
 
     Uses /docs/core/cli/#caching
@@ -253,7 +261,7 @@ def delete(ctx, _project):
         _project or ctx.obj.get("project"), is_cli=True
     )
 
-    if not click.confirm(
+    if not yes and not click.confirm(
         "Are sure you want to delete project `{}/{}`".format(owner, project_name)
     ):
         click.echo("Existing without deleting project.")

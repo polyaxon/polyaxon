@@ -238,12 +238,16 @@ def get_project_version(
 
 
 def delete_project_version(
-    owner: str, project_name: str, kind: V1ProjectVersionKind, version: str
+    owner: str,
+    project_name: str,
+    kind: V1ProjectVersionKind,
+    version: str,
+    yes: bool = False,
 ):
     fqn_version = get_versioned_entity_full_name(owner, project_name, version)
     polyaxon_client = ProjectClient(owner=owner, project=project_name)
 
-    if not click.confirm(
+    if not yes and not click.confirm(
         "Are sure you want to delete {} version `{}`".format(kind, fqn_version)
     ):
         click.echo("Existing without deleting {} version.".format(kind))
