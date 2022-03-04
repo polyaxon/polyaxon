@@ -17,3 +17,56 @@
 # To keep backwards compatibility
 
 from traceml.tracking import *
+from traceml.tracking import (
+    init as base_init,
+    get_or_create_run as base_get_or_create_run,
+)
+
+TRACKING_RUN = None
+
+
+def init(
+    owner: str = None,
+    project: str = None,
+    run_uuid: str = None,
+    client: RunClient = None,
+    track_code: bool = True,
+    track_env: bool = True,
+    refresh_data: bool = False,
+    artifacts_path: str = None,
+    collect_artifacts: str = None,
+    collect_resources: str = None,
+    is_offline: bool = None,
+    is_new: bool = None,
+    name: str = None,
+    description: str = None,
+    tags: List[str] = None,
+):
+    global TRACKING_RUN
+
+    TRACKING_RUN = base_init(
+        owner=owner,
+        project=project,
+        run_uuid=run_uuid,
+        client=client,
+        track_code=track_code,
+        track_env=track_env,
+        refresh_data=refresh_data,
+        artifacts_path=artifacts_path,
+        collect_artifacts=collect_artifacts,
+        collect_resources=collect_resources,
+        is_offline=is_offline,
+        is_new=is_new,
+        name=name,
+        description=description,
+        tags=tags,
+    )
+    return TRACKING_RUN
+
+
+@client_handler(check_no_op=True)
+def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
+    global TRACKING_RUN
+
+    TRACKING_RUN = base_get_or_create_run(tracking_run)
+    return TRACKING_RUN

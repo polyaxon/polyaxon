@@ -1166,7 +1166,7 @@ def upload(ctx, project, uid, path_from, path_to, sync_failure):
         uid or ctx.obj.get("run_uuid"),
         is_cli=True,
     )
-    is_file = os.path.isfile(path_from)
+    is_file = os.path.isfile(path_from) if path_from else False
     try:
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
         if is_file:

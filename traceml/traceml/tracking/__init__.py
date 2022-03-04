@@ -122,6 +122,7 @@ def init(
         description=description,
         tags=tags,
     )
+    return TRACKING_RUN
 
 
 @client_handler(check_no_op=True)
