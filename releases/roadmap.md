@@ -57,7 +57,14 @@ sidebar: "releases"
    * custom visualizations.
  * **New**: Allow comparing resources with metrics and cross runs resources.
  * **New**: Add predefined hyperparameter tuning widgets/visualizations.
- * **New**: Allow inspecting charts and showing the data used.
+ * **New**: When possible, the `?` will show a direct link to the docs relevant to the UI current page. e.g. if the user is on the service accounts setting tab the `?` will have a link to the guides related to the service accounts.
+ * **New**: Data table widget for rendering multi-step events in addition to the per-step slider widget for:
+   * audio events.
+   * video events.
+   * image events.
+   * histogram events.
+ * **New**: Add progress UI when using `log_progress(0.3)` which will show a progress UI widget on the run's overview page.
+ * **New**: Show total cost for operations with cost specification and improve analytics to show total cost as well. 
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
  * **Enhancement**: Do not render large artifacts and provide preview button.
@@ -65,7 +72,6 @@ sidebar: "releases"
 
 ### Tracking
 
- * **New**: Add progress logger, e.g. `log_progress(0.3)` which will show a progress UI widget on the run's overview page.
  * **New**: Add support for logging data versions, summaries, reports, and quality.
  * **Enhancement**: Allow tracking dataframes as parquet files.
 
