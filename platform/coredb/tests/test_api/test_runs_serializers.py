@@ -104,7 +104,7 @@ class TestRunStatusSerializer(TestRunDetailSerializer):
     serializer_class = RunStatusSerializer
     model_class = Run
     factory_class = RunFactory
-    expected_keys = {"uuid", "status", "status_conditions"}
+    expected_keys = {"uuid", "status", "meta_info", "status_conditions"}
 
     def create_one(self):
         run = super().create_one()

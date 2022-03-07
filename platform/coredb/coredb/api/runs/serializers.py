@@ -32,7 +32,14 @@ class RunStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_run_model()
-        fields = ("uuid", "status", "condition", "status_conditions", "force")
+        fields = (
+            "uuid",
+            "status",
+            "condition",
+            "status_conditions",
+            "meta_info",
+            "force",
+        )
         extra_kwargs = {
             "status": {"read_only": True},
             "status_conditions": {"read_only": True},
