@@ -7,10 +7,10 @@ pandas
 scikit-learn
 hyperopt<=0.2.5
 nbconvert>=5.4,<6.0.0 # pin to fix #958
-adlfs==2022.02.0
-fsspec==2022.01.0
-gcsfs==2022.01.0
-s3fs==2022.01.0
+adlfs==2022.2.0
+fsspec==2022.2.0
+gcsfs==2022.2.0
+s3fs==2022.2.0
 
 # Remove this
 google-cloud-storage
