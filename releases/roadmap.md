@@ -63,7 +63,6 @@ sidebar: "releases"
    * video events.
    * image events.
    * histogram events.
- * **New**: Add progress UI when using `log_progress(0.3)` which will show a progress UI widget on the run's overview page.
  * **New**: Show total cost for operations with cost specification and improve analytics to show total cost as well. 
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
