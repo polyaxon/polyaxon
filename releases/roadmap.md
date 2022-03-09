@@ -63,7 +63,6 @@ sidebar: "releases"
    * video events.
    * image events.
    * histogram events.
- * **New**: Show total cost for operations with cost specification and improve analytics to show total cost as well. 
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
  * **Enhancement**: Do not render large artifacts and provide preview button.

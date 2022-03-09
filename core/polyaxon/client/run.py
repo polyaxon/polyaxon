@@ -185,6 +185,7 @@ class RunClient:
         self._results = {}
         self._lineages = {}
         self._default_filename_sanitize_paths = []
+        self._last_update = None
 
     @property
     def client(self):
@@ -253,6 +254,14 @@ class RunClient:
         self._run_data = self.client.runs_v1.get_run(
             self.owner, self.project, self.run_uuid
         )
+
+    def _throttle_updates(self) -> bool:
+        current_time = now().replace(microsecond=0)
+        last_time, updates = self._last_update or (current_time, 0)
+        if current_time == last_time and updates > 2:
+            return True
+        self._last_update = (current_time, updates + 1)
+        return False
 
     def _update(
         self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = True
@@ -1597,7 +1606,10 @@ class RunClient:
                 "`log_progress` received an invalid value `{}`. "
                 "Please pass a valid percentage between [0, 1].".format(value)
             )
-        if self._get_meta_key("progress") == value:
+        current_value = self._get_meta_key("progress", 0) or 0
+        if current_value == value:
+            return
+        if (value - current_value < 0.025 and value < 1) and self._throttle_updates():
             return
         self.log_meta(progress=value)
 
