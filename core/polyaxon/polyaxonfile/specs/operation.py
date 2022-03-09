@@ -99,6 +99,7 @@ class OperationSpecification(BaseSpecification):
 
         patch_compiled = V1CompiledOperation(
             name=config.name,
+            cost=config.cost,
             description=config.description,
             contexts=contexts,
             tags=config.tags,

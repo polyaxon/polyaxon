@@ -21,6 +21,7 @@ class Sections:
     VERSION = "version"
     KIND = "kind"
     NAME = "name"
+    COST = "cost"
     DESCRIPTION = "description"
     TAGS = "tags"
     IS_APPROVED = "isApproved"
@@ -61,6 +62,7 @@ class Sections:
         VERSION,
         KIND,
         NAME,
+        COST,
         DESCRIPTION,
         TAGS,
         IS_APPROVED,
@@ -101,6 +103,7 @@ class Sections:
         IS_APPROVED,
         MATRIX,
         PRESETS,
+        COST,
         QUEUE,
         CACHE,
         CONNECTIONS,
