@@ -40,7 +40,7 @@ You can also consume any events or charts tracked in your experiments using the 
 All charts and events are stored on your artifacts store, and follow any networking or security policy you set for your cluster.
 You can download any chart tracked to either render it manually or to archive it to a different location using the [Python Library](/docs/core/python-library/run-client/#get_events)
 
-## Example logging as an image
+## Example logging Matplotlib figure as an image
 
 ### Python Script
 
@@ -103,7 +103,7 @@ In the `dashboards` tab, create a new image widget
 
 ![run-dashboards-matplotlib-static](../../content/images/dashboard/runs/dashboards-matplotlib-static.png)
 
-## Example logging as a Plotly chart
+## Example logging Matplotlib figure as a Plotly chart
 
 ### Python script
 
