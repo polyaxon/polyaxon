@@ -67,6 +67,7 @@ def get_fxt_job_with_inputs_outputs():
         "kind": "operation",
         "name": "foo",
         "description": "a description",
+        "cost": 2.2,
         "params": {"image": {"value": "foo/bar"}},
         "component": {
             "name": "build-template",
@@ -92,6 +93,7 @@ def get_fxt_job_with_inputs_and_conditions():
         "kind": "operation",
         "name": "foo",
         "description": "a description",
+        "cost": 0.3,
         "params": {
             "image": {"value": "foo/bar"},
             "context_param": {"value": "some-value", "contextOnly": True},
