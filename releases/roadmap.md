@@ -72,6 +72,7 @@ sidebar: "releases"
 
  * **New**: Add support for logging data versions, summaries, reports, and quality.
  * **Enhancement**: Allow tracking dataframes as parquet files.
+ * **Enhancement**: Improve hash calculation and tracking.
 
 ### Hub
 

@@ -69,7 +69,7 @@ from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.date_utils import file_modified_since
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.fqn_utils import get_entity_full_name, to_fqn_name
-from polyaxon.utils.hashing import hash_value
+from polyaxon.utils.hashing import hash_dir, hash_file, hash_value
 from polyaxon.utils.http_utils import absolute_uri
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import (
@@ -1633,6 +1633,37 @@ class RunClient:
             )
             self.log_artifact_lineage(body=artifact_run)
 
+    def _calculate_summary_for_path_or_content(
+        self,
+        hash: str = None,
+        path: str = None,
+        content=None,
+        summary: Dict = None,
+        skip_hash_calculation: bool = False,
+    ):
+        summary = summary or {}
+        if hash:
+            summary["hash"] = hash
+        elif content is not None and not skip_hash_calculation:
+            summary["hash"] = hash_value(content)
+
+        if path is not None:
+            summary["path"] = path
+            if not summary.get("hash") and not skip_hash_calculation:
+                try:
+                    if os.path.exists(path):
+                        summary["hash"] = (
+                            hash_file(path) if os.path.isfile(path) else hash_dir(path)
+                        )
+                except Exception as e:
+                    logger.warning(
+                        "Could not calculate hash for path `%s` in log_data_ref. "
+                        "Error: %s",
+                        path,
+                        e,
+                    )
+        return summary
+
     @client_handler(check_no_op=True)
     def log_data_ref(
         self,
@@ -1642,6 +1673,7 @@ class RunClient:
         content=None,
         summary: Dict = None,
         is_input: bool = True,
+        skip_hash_calculation: bool = False,
     ):
         """Logs data reference.
 
@@ -1654,23 +1686,18 @@ class RunClient:
                  in the lineage table.
             is_input: bool, optional, if the data reference is an input or outputs.
             content: optional, if the data content is passed, polyaxon will calculate the hash.
+            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
         """
-        summary = summary or {}
-        if hash:
-            summary["hash"] = hash
-        elif content is not None:
-            summary["hash"] = hash_value(content)
-        if path is not None:
-            summary["path"] = path
-        if name:
-            artifact_run = V1RunArtifact(
-                name=name,
-                kind=V1ArtifactKind.DATA,
-                path=path,
-                summary=summary,
-                is_input=is_input,
-            )
-            self.log_artifact_lineage(body=artifact_run)
+        return self.log_artifact_ref(
+            path=path,
+            hash=hash,
+            content=content,
+            kind=V1ArtifactKind.DATA,
+            name=name,
+            summary=summary,
+            is_input=is_input,
+            skip_hash_calculation=skip_hash_calculation,
+        )
 
     @client_handler(check_no_op=True)
     def log_artifact_ref(
@@ -1683,6 +1710,7 @@ class RunClient:
         summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
+        skip_hash_calculation: bool = False,
     ):
         """Logs an artifact reference with custom kind.
 
@@ -1711,17 +1739,20 @@ class RunClient:
                  in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
+            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
         """
-        summary = summary or {}
-        summary["path"] = path
-        if hash:
-            summary["hash"] = hash
-        elif content is not None:
-            summary["hash"] = hash_value(content)
-        name = name or get_base_filename(path)
-        rel_path = get_rel_asset_path(
-            path=path, rel_path=rel_path, is_offline=self._is_offline
+        summary = self._calculate_summary_for_path_or_content(
+            hash=hash,
+            path=path,
+            content=content,
+            summary=summary,
+            skip_hash_calculation=skip_hash_calculation,
         )
+        if path:
+            name = name or get_base_filename(path)
+            rel_path = get_rel_asset_path(
+                path=path, rel_path=rel_path, is_offline=self._is_offline
+            )
         if name:
             artifact_run = V1RunArtifact(
                 name=self._sanitize_file_name(name),
@@ -1741,6 +1772,7 @@ class RunClient:
         summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
+        skip_hash_calculation: bool = True,
     ):
         """Logs model reference.
 
@@ -1768,6 +1800,7 @@ class RunClient:
                  in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
+            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
         """
         summary = summary or {}
         summary["framework"] = framework
@@ -1779,6 +1812,7 @@ class RunClient:
             summary=summary,
             is_input=is_input,
             rel_path=rel_path,
+            skip_hash_calculation=skip_hash_calculation,
         )
 
     @client_handler(check_no_op=True)
@@ -1791,6 +1825,7 @@ class RunClient:
         summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
+        skip_hash_calculation: bool = False,
     ):
         """Logs file reference.
 
@@ -1804,6 +1839,7 @@ class RunClient:
                  in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
+            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
         """
         return self.log_artifact_ref(
             path=path,
@@ -1814,6 +1850,7 @@ class RunClient:
             summary=summary,
             is_input=is_input,
             rel_path=rel_path,
+            skip_hash_calculation=skip_hash_calculation,
         )
 
     @client_handler(check_no_op=True)
@@ -1821,35 +1858,35 @@ class RunClient:
         self,
         path: str,
         name: str = None,
+        hash: str = None,
         summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
+        skip_hash_calculation: bool = False,
     ):
         """Logs dir reference.
 
         Args:
             path: str, dir path, the name is extracted from the path.
             name: str, if the name is passed it will be used instead of the dirname from the path.
+            hash: str, optional, default = None, the hash version of the file,
+                 if not provided it will be calculated based on the file content.
             summary: Dict, optional, additional summary information to log about data
                  in the lineage table.
             is_input: bool, if the dir reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
+            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
         """
-        name = name or os.path.basename(path)
-        rel_path = get_rel_asset_path(
-            path=path, rel_path=rel_path, is_offline=self._is_offline
+        return self.log_artifact_ref(
+            path=path,
+            kind=V1ArtifactKind.DIR,
+            name=name or os.path.basename(path),
+            hash=hash,
+            summary=summary,
+            is_input=is_input,
+            rel_path=rel_path,
+            skip_hash_calculation=skip_hash_calculation,
         )
-        summary = summary or {}
-        summary["path"] = path
-        if name:
-            artifact_run = V1RunArtifact(
-                name=self._sanitize_file_name(name),
-                kind=V1ArtifactKind.DIR,
-                path=rel_path,
-                summary=summary,
-                is_input=is_input,
-            )
-            self.log_artifact_lineage(body=artifact_run)
 
     def _get_meta_key(self, key: str, default: Any = None):
         if not self.run_data or not self.run_data.meta_info:
