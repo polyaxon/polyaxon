@@ -83,7 +83,7 @@ from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.tz_utils import now
 from polyaxon.utils.urls_utils import get_proxy_run_url
 from polyaxon.utils.validation import validate_tags
-from polyaxon_sdk import V1Run
+from polyaxon_sdk import V1Run, V1RunArtifacts
 from polyaxon_sdk.rest import ApiException
 from traceml.logging.streamer import get_logs_streamer
 
@@ -1612,6 +1612,32 @@ class RunClient:
         if (value - current_value < 0.025 and value < 1) and self._throttle_updates():
             return
         self.log_meta(progress=value)
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_artifacts_lineage(
+        self, query: str = None, sort: str = None, limit: int = None, offset: int = None
+    ) -> V1RunArtifacts:
+        """Gets the run's artifacts lineage.
+
+        [Run API](/docs/api/#operation/GetRunArtifactsLineage)
+
+        Args:
+            query: str, optional, query filters, please refer to
+                 [Run PQL](/docs/core/query-language/runs/#query)
+            sort: str, optional, fields to order by, please refer to
+                 [Run PQL](/docs/core/query-language/runs/#sort)
+            limit: int, optional, limit of runs to return.
+            offset: int, optional, offset pages to paginate runs.
+
+        Returns:
+            V1RunArtifacts.
+        """
+        params = get_query_params(
+            limit=limit or 20, offset=offset, query=query, sort=sort
+        )
+        return self.client.runs_v1.get_run_artifacts_lineage(
+            self.owner, self.project, self.run_uuid, **params
+        )
 
     @client_handler(check_no_op=True)
     def log_code_ref(self, code_ref: Dict = None, is_input: bool = True):
