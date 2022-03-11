@@ -14,12 +14,12 @@ sidebar: "releases"
 ## Roadmap
 
 ### Core
- 
+
  * **New**: Add support for annotations in the connections specification.
- * **Enhancement**: Add mid-runtime update with `apply` logic.  
+ * **Enhancement**: Add mid-runtime update with `apply` logic.
 
 ### CLI
- 
+
  * **New**: Add `--lineage=lineage-name` to the artifacts command `polyaxon ops artifacts [-p] [-uid] --lineage` to allow pulling assets or artifacts based on a lineage information. e.g.:
    * `polyaxon ops artifacts [-p] [-uid] --lineage model-foo`
    * `polyaxon ops artifacts [-p] [-uid] --lineage env`
@@ -66,13 +66,12 @@ sidebar: "releases"
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
  * **Enhancement**: Do not render large artifacts and provide preview button.
- * **Fix**: Issue with heat fields not persisted with saved queries. 
+ * **Fix**: Issue with heat fields not persisted with saved queries.
 
 ### Tracking
 
  * **New**: Add support for logging data versions, summaries, reports, and quality.
  * **Enhancement**: Allow tracking dataframes as parquet files.
- * **Enhancement**: Improve hash calculation and tracking.
 
 ### Hub
 
