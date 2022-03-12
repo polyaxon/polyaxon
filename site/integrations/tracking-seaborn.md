@@ -104,7 +104,7 @@ run:
           tracking.log_mpl_image(f, 'sns_image')
         filename: script.py
   container:
-    image: polyaxon/polyaxon-examples:ml
+    image: polyaxon/polyaxon-examples:artifacts
     name: polyaxon-main
     workingDir: '{{ globals.artifacts_path }}'
     command: [python3, -u, script.py]
