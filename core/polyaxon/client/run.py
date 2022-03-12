@@ -1712,7 +1712,7 @@ class RunClient:
                  in the lineage table.
             is_input: bool, optional, if the data reference is an input or outputs.
             content: optional, if the data content is passed, polyaxon will calculate the hash.
-            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
+            skip_hash_calculation: optional, flag to instruct the client to skip hash calculation.
         """
         return self.log_artifact_ref(
             path=path,
@@ -1755,17 +1755,17 @@ class RunClient:
         **Note**: This is a generic method that is used by `log_file_ref` and `log_model_ref`.
 
         Args:
-            path: str, filepath, the name is extracted from the filepath.
-            kind: V1ArtifactKind, the artifact kind.
+            path: str, filepath, the name is extracted from the filepath
+            kind: V1ArtifactKind, the artifact kind
             name: str, if the name is passed it will be used instead of the filename from the path.
             hash: str, optional, default = None, the hash version of the file,
-                 if not provided it will be calculated based on the file content.
-            content: the file content.
+                 if not provided it will be calculated based on the file content
+            content: the file content
             summary: Dict, optional, additional summary information to log about data
-                 in the lineage table.
-            is_input: bool, if the file reference is an input or outputs.
-            rel_path: str, optional relative path to the run artifacts path.
-            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
+                 in the lineage table
+            is_input: bool, if the file reference is an input or outputs
+            rel_path: str, optional relative path to the run artifacts path
+            skip_hash_calculation: optional, flag to instruct the client to skip hash calculation
         """
         summary = self._calculate_summary_for_path_or_content(
             hash=hash,
@@ -1798,7 +1798,7 @@ class RunClient:
         summary: Dict = None,
         is_input: bool = False,
         rel_path: str = None,
-        skip_hash_calculation: bool = True,
+        skip_hash_calculation: bool = False,
     ):
         """Logs model reference.
 
@@ -1821,12 +1821,12 @@ class RunClient:
         Args:
             path: str, filepath, the name is extracted from the filepath.
             name: str, if the name is passed it will be used instead of the filename from the path.
-            framework: str, optional ,name of the framework
+            framework: str, optional, name of the framework.
             summary: Dict, optional, additional summary information to log about data
                  in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
-            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
+            skip_hash_calculation: optional, flag to instruct the client to skip hash calculation.
         """
         summary = summary or {}
         summary["framework"] = framework
@@ -1849,7 +1849,7 @@ class RunClient:
         hash: str = None,
         content=None,
         summary: Dict = None,
-        is_input: bool = False,
+        is_input: bool = True,
         rel_path: str = None,
         skip_hash_calculation: bool = False,
     ):
@@ -1865,7 +1865,7 @@ class RunClient:
                  in the lineage table.
             is_input: bool, if the file reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
-            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
+            skip_hash_calculation: optional, flag to instruct the client to skip hash calculation.
         """
         return self.log_artifact_ref(
             path=path,
@@ -1901,7 +1901,7 @@ class RunClient:
                  in the lineage table.
             is_input: bool, if the dir reference is an input or outputs.
             rel_path: str, optional relative path to the run artifacts path.
-            skip_hash_calculation: optional, flag to instruct the tracking to skip hash calculation.
+            skip_hash_calculation: optional, flag to instruct the client to skip hash calculation.
         """
         return self.log_artifact_ref(
             path=path,

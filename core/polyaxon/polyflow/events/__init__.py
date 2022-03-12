@@ -114,7 +114,7 @@ class V1EventTrigger(BaseConfig, contexts_refs.RefMixin, polyaxon_sdk.V1EventTri
       * "project_custom_event"
       * "org_custom_event"
 
-     Args:
+    Args:
          kinds: List[str]
          ref: str
 

@@ -232,6 +232,8 @@ In our training script we used Polyaxon to log a model every time we run an expe
 tracking.log_model(model_path, name="iris-model", framework="scikit-learn", versioned=False)
 ```
 
+> **Note**: the `versioned` was removed in version `>v1.17` and is the default behavior.
+
 In the following guides, we will deploy:
  * A simple streamlit app that loads the model and displays an app that makes a prediction based on the features and displays an image corresponding to the flower class.
  * A REST API using Flask that loads the model, expects data, and returns predictions.

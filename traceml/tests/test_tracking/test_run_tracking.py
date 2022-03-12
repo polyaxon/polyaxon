@@ -1112,7 +1112,9 @@ class TestRunLogging(TestEnvVarsCase):
         self.touch(model_file)
         with patch("traceml.tracking.run.Run.log_model_ref") as log_model:
             self.run.log_model(
-                name="my_model", path=model_file, framework="scikit", versioned=False
+                name="my_model",
+                path=model_file,
+                framework="scikit",
             )
         assert log_model.call_count == 1
         self.event_logger.flush()
@@ -1148,7 +1150,9 @@ class TestRunLogging(TestEnvVarsCase):
         self.touch(configs_file)
         with patch("traceml.tracking.run.Run.log_model_ref") as log_model:
             self.run.log_model(
-                name="my_model", path=model_dir, framework="tensorflow", versioned=False
+                name="my_model",
+                path=model_dir,
+                framework="tensorflow",
             )
         assert log_model.call_count == 1
         self.event_logger.flush()
@@ -1262,7 +1266,6 @@ class TestRunLogging(TestEnvVarsCase):
                 name="dataframe",
                 path=model_file,
                 kind=V1ArtifactKind.DATAFRAME,
-                versioned=False,
             )
         assert log_artifact_ref.call_count == 1
         self.event_logger.flush()
@@ -1327,7 +1330,6 @@ class TestRunLogging(TestEnvVarsCase):
                 name="file",
                 path=tsv_file,
                 kind=V1ArtifactKind.TSV,
-                versioned=False,
             )
         assert log_artifact.call_count == 1
         self.event_logger.flush()

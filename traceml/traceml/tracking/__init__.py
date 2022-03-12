@@ -552,8 +552,9 @@ def log_model(
     summary: Dict = None,
     step: int = None,
     timestamp: datetime = None,
-    rel_path: str = "model",
-    versioned: bool = True,
+    rel_path: str = None,
+    skip_hash_calculation: bool = False,
+    **kwargs,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_model(
@@ -564,7 +565,8 @@ def log_model(
         step=step,
         timestamp=timestamp,
         rel_path=rel_path,
-        versioned=versioned,
+        skip_hash_calculation=skip_hash_calculation,
+        **kwargs,
     )
 
 
@@ -579,8 +581,8 @@ def log_artifact(
     step: int = None,
     timestamp: datetime = None,
     rel_path: str = None,
-    versioned: bool = True,
-    **kwargs
+    skip_hash_calculation: bool = False,
+    **kwargs,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_artifact(
@@ -591,7 +593,7 @@ def log_artifact(
         step=step,
         timestamp=timestamp,
         rel_path=rel_path,
-        versioned=versioned,
+        skip_hash_calculation=skip_hash_calculation,
         **kwargs,
     )
 
@@ -802,6 +804,7 @@ def log_artifact_ref(
     summary: Dict = None,
     is_input: bool = False,
     rel_path: str = None,
+    skip_hash_calculation: bool = False,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_artifact_ref(
@@ -813,10 +816,29 @@ def log_artifact_ref(
         summary=summary,
         is_input=is_input,
         rel_path=rel_path,
+        skip_hash_calculation=skip_hash_calculation,
     )
 
 
 log_artifact_ref.__doc__ = Run.log_artifact_ref.__doc__
+
+
+def log_tensorboard_ref(
+    path: str,
+    name: str = "tensorboard",
+    is_input: bool = False,
+    rel_path: str = None,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_tensorboard_ref(
+        path=path,
+        name=name,
+        is_input=is_input,
+        rel_path=rel_path,
+    )
+
+
+log_tensorboard_ref.__doc__ = Run.log_tensorboard_ref.__doc__
 
 
 def log_model_ref(
@@ -826,6 +848,7 @@ def log_model_ref(
     summary: Dict = None,
     is_input: bool = False,
     rel_path: str = None,
+    skip_hash_calculation: bool = False,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_model_ref(
@@ -835,6 +858,7 @@ def log_model_ref(
         summary=summary,
         is_input=is_input,
         rel_path=rel_path,
+        skip_hash_calculation=skip_hash_calculation,
     )
 
 
@@ -856,6 +880,7 @@ def log_data_ref(
     content=None,
     summary: Dict = None,
     is_input: bool = True,
+    skip_hash_calculation: bool = False,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_data_ref(
@@ -865,6 +890,7 @@ def log_data_ref(
         path=path,
         summary=summary,
         is_input=is_input,
+        skip_hash_calculation=skip_hash_calculation,
     )
 
 
@@ -879,6 +905,7 @@ def log_file_ref(
     summary: Dict = None,
     is_input: bool = True,
     rel_path: str = None,
+    skip_hash_calculation: bool = False,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_file_ref(
@@ -889,6 +916,7 @@ def log_file_ref(
         summary=summary,
         is_input=is_input,
         rel_path=rel_path,
+        skip_hash_calculation=skip_hash_calculation,
     )
 
 
@@ -898,13 +926,21 @@ log_file_ref.__doc__ = Run.log_file_ref.__doc__
 def log_dir_ref(
     path: str,
     name: str = None,
+    hash: str = None,
     summary: Dict = None,
     is_input: bool = False,
     rel_path: str = None,
+    skip_hash_calculation: bool = False,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_dir_ref(
-        path=path, name=name, summary=summary, is_input=is_input, rel_path=rel_path
+        path=path,
+        name=name,
+        hash=hash,
+        summary=summary,
+        is_input=is_input,
+        rel_path=rel_path,
+        skip_hash_calculation=skip_hash_calculation,
     )
 
 

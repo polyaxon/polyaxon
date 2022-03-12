@@ -34,6 +34,8 @@ In our training script we used Polyaxon to log a model every time we run an expe
 tracking.log_model(model_path, name="iris-model", framework="scikit-learn", versioned=False)
 ```
 
+> **Note**: the `versioned` was removed in version `>v1.17` and is the default behavior.
+
 ## Deploying a serving REST API
 
 We will deploy a simple FastAPI service that will load the best model based on accuracy as an Iris classification RESt API.

@@ -47,6 +47,7 @@ from polyaxon.lifecycle import LifeCycle
 from polyaxon.sidecar.processor import SidecarThread
 from polyaxon.utils.env import get_run_env
 from polyaxon.utils.fqn_utils import to_fqn_name
+from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.path_utils import (
     check_or_create_path,
     get_base_filename,
@@ -470,9 +471,11 @@ class Run(RunClient):
         >>> log_metric(name="loss", value=0.01, step=10)
         ```
 
-        > It's very important to log `step` as one of your metrics
+        > **Note**: It's very important to log `step` as one of your metrics
         > if you want to compare experiments on the dashboard
         > and use the steps in x-axis instead of timestamps.
+
+        > **Note**: To log multiple metrics at once you can use `log_metrics`.
 
         Args:
             name: str, metric name
@@ -506,7 +509,7 @@ class Run(RunClient):
         >>> log_metrics(step=123, loss=0.023, accuracy=0.91)
         ```
 
-        > It's very important to log `step` as one of your metrics
+        > **Note**: It's very important to log `step` as one of your metrics
         > if you want to compare experiments on the dashboard
         > and use the steps in x-axis instead of timestamps.
 
@@ -1285,9 +1288,10 @@ class Run(RunClient):
         step: int = None,
         timestamp: datetime = None,
         rel_path: str = None,
-        versioned: bool = True,
+        skip_hash_calculation: bool = False,
+        **kwargs,
     ):
-        """Logs a model or a versioned model if versioned is true or a step value is provided.
+        """Logs a model or a versioned model if a step value is provided.
 
         This method will:
          * save the model
@@ -1302,22 +1306,26 @@ class Run(RunClient):
         > only record a lineage information of that path you can use `log_model_ref`.
 
         Args:
-            path: str, path to the model to log
-            name: str, name
-            framework: str, optional ,name of the framework
-            summary: Dict, optional, key, value information about the model
+            path: str, path to the model to log.
+            name: str, name to give to the model.
+            framework: str, optional ,name of the framework.
+            summary: Dict, optional, key, value information about the model.
             step: int, optional
             timestamp: datetime, optional
-            rel_path: str, relative path where to store the model
-            versioned: bool, to enable the versioned behavior for storing the model
+            rel_path: str, relative path where to store the model.
+            skip_hash_calculation: optional, flag to instruct the client to skip hash calculation.
         """
+        if kwargs:
+            logger.warning(
+                "`log_model` received a deprecated or an unexpected parameters"
+            )
         name = name or get_base_filename(path)
         name = self._sanitize_file_name(name)
         ext = None
         if os.path.isfile(path):
             ext = get_path_extension(filepath=path)
 
-        if versioned or step is not None:
+        if step is not None:
             self._log_has_model()
             asset_path = get_asset_path(
                 run_path=self._artifacts_path,
@@ -1350,6 +1358,7 @@ class Run(RunClient):
                 framework=framework,
                 summary=summary,
                 rel_path=asset_rel_path,
+                skip_hash_calculation=skip_hash_calculation,
             )
 
     @client_handler(check_no_op=True, can_log_events=True)
@@ -1362,11 +1371,10 @@ class Run(RunClient):
         step: int = None,
         timestamp: datetime = None,
         rel_path: str = None,
-        versioned: bool = True,
+        skip_hash_calculation: bool = False,
         **kwargs,
     ):
-        """Logs a generic artifact or a versioned generic artifact
-        if versioned is true or a step value is provided.
+        """Logs a generic artifact or a versioned generic artifact if a step value is provided.
 
         This method will:
          * save the artifact
@@ -1381,23 +1389,27 @@ class Run(RunClient):
         > only record a lineage information of that path you can use `log_artifact_ref`.
 
         Args:
-            path: str, path to the artifact
-            name: str, optional, if not provided the name of the file will be used
+            path: str, path to the artifact.
+            name: str, optional, if not provided the name of the file will be used.
             kind: optional, str
             summary: Dict, optional,
                  additional summary information to log about data in the lineage table.
             step: int, optional
             timestamp: datetime, optional
-            rel_path: str, relative path where to store the artifacts
-            versioned: bool, to enable the versioned behavior for storing the artifact
+            rel_path: str, relative path where to store the artifacts.
+            skip_hash_calculation: optional, flag to instruct the client to skip hash calculation
         """
+        if kwargs:
+            logger.warning(
+                "`log_artifact` received a deprecated or an unexpected parameters"
+            )
         name = name or get_base_filename(path)
         name = self._sanitize_file_name(name)
         ext = get_path_extension(filepath=path)
         kind = kind or kwargs.get("artifact_kind")  # Backwards compatibility
         kind = kind or V1ArtifactKind.FILE
 
-        if versioned or step is not None:
+        if step is not None:
             self._log_has_events()
             asset_path = get_asset_path(
                 run_path=self._artifacts_path,
@@ -1430,6 +1442,7 @@ class Run(RunClient):
                 kind=kind,
                 summary=summary,
                 rel_path=asset_rel_path,
+                skip_hash_calculation=skip_hash_calculation,
             )
 
     @client_handler(check_no_op=True, can_log_events=True)
@@ -1445,7 +1458,7 @@ class Run(RunClient):
 
         Args:
             df: the dataframe to save
-            name: str, optional, if not provided the name of the file will be used
+            name: str, optional, if not provided the name of the file will be used.
             content_type: str, optional, csv or html.
             step: int, optional
             timestamp: datetime, optional
@@ -1678,7 +1691,7 @@ class Run(RunClient):
             name="env",
             kind=V1ArtifactKind.ENV,
             path=get_rel_asset_path(path=path, is_offline=self._is_offline),
-            summary={"path": path},
+            summary={"path": path, "hash": hash_value(content)},
             is_input=False,
         )
         self.log_artifact_lineage(body=artifact_run)

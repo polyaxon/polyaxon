@@ -132,6 +132,8 @@ with tempfile.TemporaryDirectory() as d:
 tracking.end()
 ```
 
+> **Note**: the `versioned` was removed in version `>v1.17` and is the default behavior.
+
 ### Example regressor
 
 In this example we will go through the process of logging a regressor information and logging a joblib model.
@@ -181,3 +183,5 @@ with tempfile.TemporaryDirectory() as d:
     joblib.dump(rfr, model_path)
     tracking.log_model(model_path, name="model", framework="scikit-learn", versioned=False)
 ```
+
+> **Note**: the `versioned` was removed in version `>v1.17` and is the default behavior.
