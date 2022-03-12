@@ -356,7 +356,7 @@ def log_confusion_matrix(
     name: str,
     x,
     y,
-    z: str = None,
+    z=None,
     step: int = None,
     timestamp: datetime = None,
 ):
