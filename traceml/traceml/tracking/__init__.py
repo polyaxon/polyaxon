@@ -903,7 +903,7 @@ def log_file_ref(
     hash: str = None,
     content=None,
     summary: Dict = None,
-    is_input: bool = True,
+    is_input: bool = False,
     rel_path: str = None,
     skip_hash_calculation: bool = False,
 ):

@@ -41,7 +41,7 @@ class Callback(TrainerCallback):
         rel_path = self.run.get_outputs_path("model_summary.{}".format(filetype))
         with open(rel_path, "w") as f:
             f.write(summary)
-        self.run.log_file_ref(path=rel_path)
+        self.run.log_file_ref(path=rel_path, name="model_summary", is_input=False)
 
     @client_handler(check_no_op=True)
     def setup(self, args, state, model, **kwargs):

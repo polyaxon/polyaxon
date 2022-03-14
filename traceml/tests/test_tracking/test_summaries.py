@@ -47,10 +47,11 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="metric",
             last_check=None,
         )
+        abspath = os.path.abspath("tests/fixtures/events/metric/metric_events.plx")
         events = V1Events.read(
             name="metric_events",
             kind="metric",
-            data=os.path.abspath("tests/fixtures/events/metric/metric_events.plx"),
+            data=abspath,
         )
         assert events.name == "metric_events"
         assert summaries == [
@@ -59,7 +60,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="metric",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/metric/metric_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -71,10 +72,11 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="image",
             last_check=None,
         )
+        abspath = os.path.abspath("tests/fixtures/events/image/image_events.plx")
         events = V1Events.read(
             name="image_events",
             kind="image",
-            data=os.path.abspath("tests/fixtures/events/image/image_events.plx"),
+            data=abspath,
         )
         assert events.name == "image_events"
         assert summaries == [
@@ -83,7 +85,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="image",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/image/image_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -95,12 +97,13 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="histogram",
             last_check=None,
         )
+        abspath = os.path.abspath(
+            "tests/fixtures/events/histogram/histogram_events.plx"
+        )
         events = V1Events.read(
             name="histogram_events",
             kind="histogram",
-            data=os.path.abspath(
-                "tests/fixtures/events/histogram/histogram_events.plx"
-            ),
+            data=abspath,
         )
         assert events.name == "histogram_events"
         assert summaries == [
@@ -109,7 +112,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="histogram",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/histogram/histogram_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -121,10 +124,11 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="video",
             last_check=None,
         )
+        abspath = os.path.abspath("tests/fixtures/events/video/video_events.plx")
         events = V1Events.read(
             name="video_events",
             kind="video",
-            data=os.path.abspath("tests/fixtures/events/video/video_events.plx"),
+            data=abspath,
         )
         assert events.name == "video_events"
         assert summaries == [
@@ -133,7 +137,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="video",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/video/video_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -145,10 +149,11 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="audio",
             last_check=None,
         )
+        abspath = os.path.abspath("tests/fixtures/events/audio/audio_events.plx")
         events = V1Events.read(
             name="audio_events",
             kind="audio",
-            data=os.path.abspath("tests/fixtures/events/audio/audio_events.plx"),
+            data=abspath,
         )
         assert events.name == "audio_events"
         assert summaries == [
@@ -157,7 +162,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="audio",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/audio/audio_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -169,10 +174,11 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="html",
             last_check=None,
         )
+        abspath = os.path.abspath("tests/fixtures/events/html/html_events.plx")
         events = V1Events.read(
             name="html_events",
             kind="html",
-            data=os.path.abspath("tests/fixtures/events/html/html_events.plx"),
+            data=abspath,
         )
         assert events.name == "html_events"
         assert summaries == [
@@ -181,7 +187,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="html",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/html/html_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -193,10 +199,11 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="chart",
             last_check=None,
         )
+        abspath = os.path.abspath("tests/fixtures/events/chart/chart_events.plx")
         events = V1Events.read(
             name="chart_events",
             kind="chart",
-            data=os.path.abspath("tests/fixtures/events/chart/chart_events.plx"),
+            data=abspath,
         )
         assert events.name == "chart_events"
         assert summaries == [
@@ -205,7 +212,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="chart",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/chart/chart_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -217,10 +224,11 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="curve",
             last_check=None,
         )
+        abspath = os.path.abspath("tests/fixtures/events/curve/curve_events.plx")
         events = V1Events.read(
             name="curve_events",
             kind="curve",
-            data=os.path.abspath("tests/fixtures/events/curve/curve_events.plx"),
+            data=abspath,
         )
         assert events.name == "curve_events"
         assert summaries == [
@@ -229,7 +237,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="curve",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/curve/curve_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -241,10 +249,13 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="artifact",
             last_check=None,
         )
+        abspath = os.path.abspath(
+            "tests/fixtures/events/artifact/artifact_events.plx"
+        )
         events = V1Events.read(
             name="artifact_events",
             kind="artifact",
-            data=os.path.abspath("tests/fixtures/events/artifact/artifact_events.plx"),
+            data=abspath,
         )
         assert events.name == "artifact_events"
         assert summaries == [
@@ -253,7 +264,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="artifact",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/artifact/artifact_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]
@@ -266,10 +277,11 @@ class TestEventsSummaries(BaseTestCase):
             last_check=None,
         )
         summaries = {s.name: s for s in summaries}
+        abspath = os.path.abspath("tests/fixtures/events/model/model_events.plx")
         events = V1Events.read(
             name="model_events",
             kind="model",
-            data=os.path.abspath("tests/fixtures/events/model/model_events.plx"),
+            data=abspath,
         )
         assert events.name == "model_events"
         assert summaries["model_events"] == V1RunArtifact(
@@ -277,16 +289,17 @@ class TestEventsSummaries(BaseTestCase):
             kind="model",
             connection=None,
             summary=events.get_summary(),
-            path="tests/fixtures/events/model/model_events.plx",
+            path=abspath,
             is_input=False,
         )
 
+        abspath = os.path.abspath(
+            "tests/fixtures/events/model/model_events_without_step.plx"
+        )
         events_without_step = V1Events.read(
             name="model_events_without_step",
             kind="model",
-            data=os.path.abspath(
-                "tests/fixtures/events/model/model_events_without_step.plx"
-            ),
+            data=abspath,
         )
         assert events_without_step.name == "model_events_without_step"
         assert summaries["model_events_without_step"] == V1RunArtifact(
@@ -294,7 +307,7 @@ class TestEventsSummaries(BaseTestCase):
             kind="model",
             connection=None,
             summary=events_without_step.get_summary(),
-            path="tests/fixtures/events/model/model_events_without_step.plx",
+            path=abspath,
             is_input=False,
         )
         assert last_values == {}
@@ -305,12 +318,13 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="dataframe",
             last_check=None,
         )
+        abspath = os.path.abspath(
+            "tests/fixtures/events/dataframe/dataframe_events.plx"
+        )
         events = V1Events.read(
             name="dataframe_events",
             kind="dataframe",
-            data=os.path.abspath(
-                "tests/fixtures/events/dataframe/dataframe_events.plx"
-            ),
+            data=abspath,
         )
         assert events.name == "dataframe_events"
         assert summaries == [
@@ -319,7 +333,7 @@ class TestEventsSummaries(BaseTestCase):
                 kind="dataframe",
                 connection=None,
                 summary=events.get_summary(),
-                path="tests/fixtures/events/dataframe/dataframe_events.plx",
+                path=abspath,
                 is_input=False,
             )
         ]

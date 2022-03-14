@@ -22,6 +22,7 @@ import uuid
 from collections.abc import Mapping
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
+from urllib.parse import urlparse
 
 import click
 import ujson
@@ -1544,7 +1545,7 @@ class RunClient:
             message=message,
         )
 
-    def _sanitize_file_name(self, filename: str, for_patterns: List[str] = None) -> str:
+    def _sanitize_filename(self, filename: str, for_patterns: List[str] = None) -> str:
         """Ensures that the filename never includes common context paths"""
         if not self.run_uuid or CONTEXT_ROOT not in filename:
             return to_fqn_name(filename)
@@ -1566,6 +1567,48 @@ class RunClient:
                 break
 
         return to_fqn_name(filename)
+
+    def _sanitize_filepath(self, filepath: str, rel_path: str = None) -> str:
+        """Ensures that the filepath never includes common context paths"""
+        if not filepath or rel_path:
+            return rel_path
+
+        if not self.run_uuid:
+            return rel_path or filepath
+
+        if self.run_uuid in filepath:
+            return filepath.split(self.run_uuid + "/")[1]
+
+        def is_abs():
+            if os.path.isabs(filepath):
+                return True
+            try:
+                if urlparse(filepath).scheme:
+                    return True
+                return False
+            except Exception:  # noqa
+                return False
+
+        abspath = filepath if is_abs() else os.path.abspath(filepath)
+
+        for_patterns = []
+        if getattr(self, "_artifacts_path"):
+            for_patterns.append(getattr(self, "_artifacts_path"))
+        if getattr(self, "_store_path"):
+            for_patterns.append(getattr(self, "_store_path"))
+        context_root = (
+            CONTEXT_OFFLINE_ROOT if self._is_offline else CONTEXT_MOUNT_ARTIFACTS
+        )
+        for_patterns += [os.path.join(context_root, self.run_uuid), context_root]
+
+        for _path in for_patterns:
+            if _path in abspath:
+                try:
+                    return os.path.relpath(abspath, _path)
+                except Exception as e:
+                    logger.debug("could not calculate relative path %s", e)
+
+        return rel_path or abspath
 
     def _log_has_events(self):
         if not self._has_meta_key("has_events"):
@@ -1674,16 +1717,43 @@ class RunClient:
             summary["hash"] = hash_value(content)
 
         if path is not None:
-            summary["path"] = path
+            try:
+                if os.path.exists(path):
+                    context_root = (
+                        CONTEXT_OFFLINE_ROOT
+                        if self._is_offline
+                        else CONTEXT_MOUNT_ARTIFACTS
+                    )
+                    summary["path"] = os.path.relpath(path, context_root)
+                else:
+                    summary["path"] = path
+            except Exception as e:  # noqa
+                logger.debug(
+                    "Could not resolve path `%s` "
+                    "in _calculate_summary_for_path_or_content. "
+                    "Error: %s",
+                    path,
+                    e,
+                )
+                summary["path"] = path
+
             if not summary.get("hash") and not skip_hash_calculation:
                 try:
                     if os.path.exists(path):
+                        summary["path"] = os.path.abspath(path)
                         summary["hash"] = (
                             hash_file(path) if os.path.isfile(path) else hash_dir(path)
                         )
+                    else:
+                        summary["path"] = path
+                        logger.info(
+                            "The path `%s` is not accessible to the tracking module.",
+                            path,
+                        )
                 except Exception as e:
                     logger.warning(
-                        "Could not calculate hash for path `%s` in log_data_ref. "
+                        "Could not calculate hash for path `%s` "
+                        "in _calculate_summary_for_path_or_content. "
                         "Error: %s",
                         path,
                         e,
@@ -1776,12 +1846,10 @@ class RunClient:
         )
         if path:
             name = name or get_base_filename(path)
-            rel_path = get_rel_asset_path(
-                path=path, rel_path=rel_path, is_offline=self._is_offline
-            )
+            rel_path = self._sanitize_filepath(filepath=path, rel_path=rel_path)
         if name:
             artifact_run = V1RunArtifact(
-                name=self._sanitize_file_name(name),
+                name=self._sanitize_filename(name),
                 kind=kind,
                 path=rel_path,
                 summary=summary,
@@ -1849,7 +1917,7 @@ class RunClient:
         hash: str = None,
         content=None,
         summary: Dict = None,
-        is_input: bool = True,
+        is_input: bool = False,
         rel_path: str = None,
         skip_hash_calculation: bool = False,
     ):
@@ -1939,17 +2007,14 @@ class RunClient:
             rel_path: str, optional relative path to run the artifacts path.
         """
         if not self._has_meta_key("has_tensorboard"):
-            rel_path = get_rel_asset_path(
-                path=path, rel_path=rel_path, is_offline=self._is_offline
-            )
-            artifact_run = V1RunArtifact(
-                name=self._sanitize_file_name(name),
+            self.log_artifact_ref(
+                path=path,
                 kind=V1ArtifactKind.TENSORBOARD,
-                path=rel_path,
-                summary={"path": path},
+                name=name,
                 is_input=is_input,
+                rel_path=rel_path,
+                skip_hash_calculation=True,
             )
-            self.log_artifact_lineage(body=artifact_run)
             self.log_meta(has_tensorboard=True)
 
     @client_handler(check_no_op=True)
@@ -2071,7 +2136,7 @@ class RunClient:
                     continue
 
                 # Get only the relpath from run uuid
-                event_rel_path = get_rel_asset_path(path=f, is_offline=self._is_offline)
+                event_rel_path = self._sanitize_filepath(filepath=f)
                 summary = event.get_summary()
                 run_artifact = V1RunArtifact(
                     name=event_name,
@@ -2378,18 +2443,3 @@ def get_run_logs(
             checks += 1
 
     handle_logs()
-
-
-def get_rel_asset_path(
-    path: str = None, rel_path: str = None, is_offline: bool = False
-):
-    if not path or rel_path:
-        return rel_path
-    artifacts_root = CONTEXT_OFFLINE_ROOT if is_offline else CONTEXT_MOUNT_ARTIFACTS
-    if artifacts_root in path:
-        try:
-            return os.path.relpath(path, artifacts_root)
-        except Exception as e:
-            logger.debug("could not calculate relative path %s", e)
-
-    return rel_path or path

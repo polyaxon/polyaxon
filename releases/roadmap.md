@@ -38,7 +38,8 @@ sidebar: "releases"
    * The decorator automatically detects `NO_OP` and becomes a pass-through.
  * **New**: Add `@op/@operation` decorator to allow invoking components programmatically.
    * The decorator automatically detects `NO_OP` and defaults to a local python function call.
- * **New**: Add support for Python type hints in the both the class and the decorator component declarations.
+ * **New**: Add support for Python type hints in the both the class and the decorator component declarations. 
+ * **New**: Automatically detect if the filesystem should use the stream or the artifacts store directly.
 
 ### Specification
 

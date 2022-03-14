@@ -131,7 +131,7 @@ class Callback(keras.callbacks.Callback):
             rel_path = self.run.get_outputs_path("model_summary.txt")
             with open(rel_path, "w") as f:
                 f.write(summary)
-            self.run.log_file_ref(path=rel_path)
+            self.run.log_file_ref(path=rel_path, name="model_summary", is_input=False)
         except Exception:  # noqa
             pass
 

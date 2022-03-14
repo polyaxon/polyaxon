@@ -49,7 +49,9 @@ class Callback(baseCallback):
             model_summary_path = self.plx_run.get_outputs_path("model_summary.txt")
             with open(model_summary_path, "w") as g:
                 g.write(repr(self.learn.model))
-            self.plx_run.log_file_ref(path=model_summary_path, name="model_summary")
+            self.plx_run.log_file_ref(
+                path=model_summary_path, name="model_summary", is_input=False
+            )
         except Exception:  # noqa
             print(
                 "Did not log model summary. "

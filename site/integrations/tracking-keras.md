@@ -212,10 +212,10 @@ if __name__ == '__main__':
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
     # Polyaxon
-    tracking.log_data_ref(content=x_train, name='x_train')
-    tracking.log_data_ref(content=y_train, name='y_train')
-    tracking.log_data_ref(content=x_test, name='x_test')
-    tracking.log_data_ref(content=y_test, name='y_test')
+    tracking.log_data_ref(content=x_train, name='x_train', is_input=True)
+    tracking.log_data_ref(content=y_train, name='y_train', is_input=True)
+    tracking.log_data_ref(content=x_test, name='x_test', is_input=True)
+    tracking.log_data_ref(content=y_test, name='y_test', is_input=True)
 
     x_train, y_train, x_test, y_test = transform_data(x_train, y_train, x_test, y_test)
     model = tf.keras.models.Sequential([

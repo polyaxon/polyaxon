@@ -186,10 +186,10 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1012)
 
     # Polyaxon
-    tracking.log_data_ref(content=X_train, name='x_train')
-    tracking.log_data_ref(content=y_train, name='y_train')
-    tracking.log_data_ref(content=X_test, name='X_test')
-    tracking.log_data_ref(content=y_test, name='y_train')
+    tracking.log_data_ref(content=X_train, name='x_train', is_input=True)
+    tracking.log_data_ref(content=y_train, name='y_train', is_input=True)
+    tracking.log_data_ref(content=X_test, name='X_test', is_input=True)
+    tracking.log_data_ref(content=y_test, name='y_train', is_input=True)
 
     dtrain = xgb.DMatrix(X_train, label=y_train)
     dtest = xgb.DMatrix(X_test, label=y_test)

@@ -180,7 +180,7 @@ run:
           tracking.log_mpl_plotly_chart(name='sns-scatter', figure=plt)
         filename: script.py
   container:
-    image: polyaxon/polyaxon-examples:ml
+    image: polyaxon/polyaxon-examples:artifacts
     name: polyaxon-main
     workingDir: '{{ globals.artifacts_path }}'
     command: [python3, -u, script.py]

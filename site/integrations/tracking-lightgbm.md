@@ -178,10 +178,10 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(data.data, data.target, test_size=0.1)
 
     # Polyaxon
-    tracking.log_data_ref(content=X_train, name='x_train')
-    tracking.log_data_ref(content=y_train, name='y_train')
-    tracking.log_data_ref(content=X_test, name='X_test')
-    tracking.log_data_ref(content=y_test, name='y_train')
+    tracking.log_data_ref(content=X_train, name='x_train', is_input=True)
+    tracking.log_data_ref(content=y_train, name='y_train', is_input=True)
+    tracking.log_data_ref(content=X_test, name='X_test', is_input=True)
+    tracking.log_data_ref(content=y_test, name='y_train', is_input=True)
 
     lgb_train = lgb.Dataset(X_train, y_train)
     lgb_eval = lgb.Dataset(X_test, y_test, reference=lgb_train)
