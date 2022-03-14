@@ -24,7 +24,12 @@ from starlette import status
 from starlette.concurrency import run_in_threadpool
 from starlette.exceptions import HTTPException
 
-from polyaxon.fs.async_manager import download_file, list_files, tar_files
+from polyaxon.fs.async_manager import (
+    download_file,
+    download_files,
+    list_files,
+    tar_files,
+)
 from polyaxon.fs.types import FSSystem
 from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind
@@ -174,20 +179,13 @@ async def get_archived_operation_event_and_assets(
             "Error %s" % (event_path, e)
         )
         return pkg_files
+    subpaths = []
     for file_from_path in files:
-        subpath = "{}/{}".format(run_uuid, file_from_path)
-        try:
-            file_to_path = await download_file(
-                fs=fs, subpath=subpath, check_cache=check_cache
-            )
-            pkg_files.append(file_to_path)
-        except Exception as e:
-            logger.warning(
-                "During the packaging of %s, the asset file download %s failed. "
-                "Error %s" % (event_path, file_from_path, e)
-            )
+        subpaths.append("{}/{}".format(run_uuid, file_from_path))
 
-    return pkg_files
+    return await download_files(
+        fs=fs, subpaths=subpaths, check_cache=check_cache, pkg_files=pkg_files
+    )
 
 
 async def get_archived_operation_events_and_assets(

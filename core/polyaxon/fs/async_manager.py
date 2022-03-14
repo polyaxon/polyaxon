@@ -26,6 +26,8 @@ from polyaxon.fs.tar import tar_dir
 from polyaxon.fs.tar import tar_files as sync_tar_files
 from polyaxon.fs.types import FSSystem
 from polyaxon.logger import logger
+from polyaxon.utils.hashing import hash_value
+from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import check_or_create_path
 
 
@@ -104,7 +106,9 @@ async def upload_dir(fs: FSSystem, subpath: str) -> Optional[str]:
         return None
 
 
-async def download_file(fs: FSSystem, subpath: str, check_cache=True) -> Optional[str]:
+async def download_file(
+    fs: FSSystem, subpath: str, check_cache: bool = True
+) -> Optional[str]:
     path_from = os.path.join(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
 
@@ -135,7 +139,30 @@ async def download_file(fs: FSSystem, subpath: str, check_cache=True) -> Optiona
         return None
 
 
-async def open_file(fs: FSSystem, subpath: str, check_cache=True) -> Optional[str]:
+async def download_files(
+    fs: FSSystem,
+    subpaths: List[str],
+    check_cache: bool = True,
+    pkg_files: List[str] = None,
+) -> List[str]:
+    pkg_files = to_list(pkg_files, check_none=True)
+    for subpath in subpaths:
+        try:
+            file_to_path = await download_file(
+                fs=fs, subpath=subpath, check_cache=check_cache
+            )
+            pkg_files.append(file_to_path)
+        except Exception as e:
+            logger.warning(
+                "The file download for path %s failed. " "Error %s" % (subpath, e)
+            )
+
+    return pkg_files
+
+
+async def open_file(
+    fs: FSSystem, subpath: str, check_cache: bool = True
+) -> Optional[str]:
     path_from = os.path.join(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
 
@@ -195,6 +222,33 @@ async def download_dir(
     except Exception as e:
         logger.warning("Could not download %s. Error %s" % (path_from, e))
         return None
+
+
+async def download_dirs(
+    fs: FSSystem,
+    subpaths: List[str],
+    pkg_files: List[str] = None,
+    to_tar: bool = False,
+    tar_filename: str = None,
+) -> Union[str, List[str]]:
+    pkg_files = to_list(pkg_files, check_none=True)
+    for subpath in subpaths:
+        try:
+            file_to_path = await download_dir(fs=fs, subpath=subpath, to_tar=False)
+            pkg_files.append(file_to_path)
+        except Exception as e:
+            logger.warning(
+                "The file download for path %s failed. " "Error %s" % (subpath, e)
+            )
+
+    if to_tar:
+        tar_filename = tar_filename or "download"
+        return await tar_files(
+            filename="{}.pkg.{}".format(tar_filename, hash_value(subpaths)),
+            pkg_files=pkg_files,
+            subpath=tar_filename,
+        )
+    return pkg_files
 
 
 async def list_files(
