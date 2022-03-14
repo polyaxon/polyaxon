@@ -224,11 +224,11 @@ class ProjectClient:
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
             query: str, optional, query filters, please refer to
-                 [Run PQL](/docs/core/query-language/runs/#query)
+                 [Run PQL](/docs/core/query-language/project-versions/#query)
             sort: str, optional, fields to order by, please refer to
-                 [Run PQL](/docs/core/query-language/runs/#sort)
-            limit: int, optional, limit of runs to return.
-            offset: int, optional, offset pages to paginate runs.
+                 [Run PQL](/docs/core/query-language/project-versions/#sort)
+            limit: int, optional, limit of project versions to return.
+            offset: int, optional, offset pages to paginate project versions.
 
         Returns:
             List[V1ProjectVersion], list of versions.

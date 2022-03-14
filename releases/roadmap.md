@@ -20,9 +20,6 @@ sidebar: "releases"
 
 ### CLI
 
- * **New**: Add `--lineage=lineage-name` to the artifacts command `polyaxon ops artifacts [-p] [-uid] --lineage` to allow pulling assets or artifacts based on a lineage information. e.g.:
-   * `polyaxon ops artifacts [-p] [-uid] --lineage model-foo`
-   * `polyaxon ops artifacts [-p] [-uid] --lineage env`
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
 
 ### Agent

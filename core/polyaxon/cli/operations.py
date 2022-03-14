@@ -55,6 +55,7 @@ from polyaxon.utils.formatting import (
     list_dicts_to_csv,
     list_dicts_to_tabulate,
 )
+from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.validation import validate_tags
 from polyaxon_sdk.rest import ApiException
 
@@ -1066,9 +1067,36 @@ def shell(ctx, project, uid, command, pod, container):
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
-    "--path",
+    "-f",
+    "--file",
+    "files",
     type=str,
-    help="Path to download, if not provided the full run's  artifacts will downloaded.",
+    multiple=True,
+    help="Optional list of files to download.",
+)
+@click.option(
+    "-d",
+    "--dir",
+    "dirs",
+    type=str,
+    multiple=True,
+    help="Optional list of dirs to download.",
+)
+@click.option(
+    "-l-name",
+    "--lineage-name",
+    "lineage_names",
+    type=str,
+    multiple=True,
+    help="Optional list of artifact lineage name references.",
+)
+@click.option(
+    "-l-kind",
+    "--lineage-kind",
+    "lineage_kinds",
+    type=str,
+    multiple=True,
+    help="Optional list of artifact lineage kind references.",
 )
 @click.option(
     "--path-to",
@@ -1079,18 +1107,16 @@ def shell(ctx, project, uid, command, pod, container):
     "--no-untar",
     is_flag=True,
     default=False,
-    help="Disable the automatic untar of the downloaded the artifacts.",
-)
-@click.option(
-    "--is-file",
-    is_flag=True,
-    default=False,
-    help="To specify if the content is a single file.",
+    help="Disable the automatic untar of the downloaded artifacts.",
 )
 @click.pass_context
 @clean_outputs
-def artifacts(ctx, project, uid, path, path_to, no_untar, is_file):
+def artifacts(
+    ctx, project, uid, files, dirs, lineage_names, lineage_kinds, path_to, no_untar
+):
     """Download outputs/artifacts for run.
+
+    If no files, dirs, or refs are provided, the full run's artifacts will be downloaded.
 
     Uses /docs/core/cli/#caching
 
@@ -1100,33 +1126,139 @@ def artifacts(ctx, project, uid, path, path_to, no_untar, is_file):
     $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 path="events/only"
+    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 --dir "uploads/path/dir"
 
     \b
-    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 path-to="this/path"
+    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 -f "outputs/path/file1" --file="outputs/path/file2" -d "outputs/path/dir1"
+
+    \b
+    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 --path-to="this/path"
+
+    \b
+    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 -l-name image-example -l-name debug-csv-file --path-to="this/path"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
         uid or ctx.obj.get("run_uuid"),
         is_cli=True,
     )
-    try:
-        client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
-        if is_file:
+    client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
+
+    files = to_list(files, check_none=True)
+    dirs = to_list(dirs, check_none=True)
+    lineage_names = to_list(lineage_names, check_none=True)
+    lineage_kinds = to_list(lineage_kinds, check_none=True)
+
+    if not any([files, dirs, lineage_names, lineage_kinds]):
+        Printer.print_header("Downloading all run's artifacts...")
+        try:
+            download_path = client.download_artifacts(
+                path="", path_to=path_to, untar=not no_untar
+            )
+            Printer.print_success(
+                "All run's artifacts downloaded. Path: {}".format(download_path)
+            )
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e, message="Could not download artifacts for run `{}`.".format(run_uuid)
+            )
+            sys.exit(1)
+        return
+
+    for f in files:
+        Printer.print_header("Downloading file path {} ...".format(f))
+        try:
             download_path = client.download_artifact(
-                path=path or "",
+                path=f,
                 path_to=path_to,
             )
-        else:
-            download_path = client.download_artifacts(
-                path=path or "", path_to=path_to, untar=not no_untar
+            Printer.print_success(
+                "File path {} downloaded to {}".format(f, download_path)
             )
-    except (ApiException, HTTPError) as e:
-        handle_cli_error(
-            e, message="Could not download outputs for run `{}`.".format(run_uuid)
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e,
+                message="Could not download file path {} for run `{}`.".format(
+                    f, run_uuid
+                ),
+            )
+
+    for f in dirs:
+        Printer.print_header("Downloading dir path {} ...".format(f))
+        try:
+            download_path = client.download_artifacts(
+                path=f, path_to=path_to, untar=not no_untar
+            )
+            Printer.print_success(
+                "Dir path {} downloaded to {}".format(f, download_path)
+            )
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e,
+                message="Could not download dir path {} for run `{}`.".format(
+                    f, run_uuid
+                ),
+            )
+
+    # collecting all artifact lineage reference
+    lineages = []
+    if lineage_names:
+        query = "name: {}".format("|".join(lineage_names))
+        try:
+            lineages += client.get_artifacts_lineage(query=query, limit=1000).results
+            Printer.print_success(
+                "Loaded artifact lineage information for run {}".format(run_uuid)
+            )
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e,
+                message="Could not get artifacts lineage for run `{}` and artifacts name `{}`.".format(
+                    run_uuid,
+                    lineage_names,
+                ),
+            )
+    if lineage_kinds:
+        query = "kind: {}".format("|".join(lineage_kinds))
+        try:
+            lineages += client.get_artifacts_lineage(query=query, limit=1000).results
+            Printer.print_success(
+                "Loaded artifact lineage information for run {}".format(run_uuid)
+            )
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e,
+                message="Could not get artifacts lineage for run `{}` and artifacts name `{}`.".format(
+                    run_uuid,
+                    lineages,
+                ),
+            )
+    # To avoid duplicates
+    lineage_keys = set([])
+
+    for lineage in lineages:
+        if lineage.name in lineage_keys:
+            continue
+        else:
+            lineage_keys.add(lineage.name)
+
+        lineage_def = "artifact lineage {} (kind: {})".format(
+            lineage.name, lineage.kind
         )
-        sys.exit(1)
-    Printer.print_success("Files downloaded: path: {}".format(download_path))
+        Printer.print_header("Downloading assets for {} ...".format(lineage_def))
+        try:
+            download_path = client.download_artifact_for_lineage(
+                lineage=lineage, path_to=path_to
+            )
+            Printer.print_success(
+                "Assets for {} downloaded to {}".format(lineage_def, download_path)
+            )
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e,
+                message="Could not download assets for {} under run `{}`.".format(
+                    lineage_def, run_uuid
+                ),
+            )
 
 
 @ops.command()

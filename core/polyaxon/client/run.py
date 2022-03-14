@@ -84,7 +84,6 @@ from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.tz_utils import now
 from polyaxon.utils.urls_utils import get_proxy_run_url
 from polyaxon.utils.validation import validate_tags
-from polyaxon_sdk import V1Run, V1RunArtifacts
 from polyaxon_sdk.rest import ApiException
 from traceml.logging.streamer import get_logs_streamer
 
@@ -187,6 +186,7 @@ class RunClient:
         self._lineages = {}
         self._default_filename_sanitize_paths = []
         self._last_update = None
+        self._store = None
 
     @property
     def client(self):
@@ -194,6 +194,13 @@ class RunClient:
             return self._client
         self._client = PolyaxonClient()
         return self._client
+
+    @property
+    def store(self):
+        if self._store:
+            return self._store
+        self._store = PolyaxonStore(client=self)
+        return self._store
 
     @property
     def status(self) -> str:
@@ -266,7 +273,7 @@ class RunClient:
 
     def _update(
         self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = True
-    ) -> V1Run:
+    ) -> polyaxon_sdk.V1Run:
         if self._is_offline:
             return self.run_data
         response = self.client.runs_v1.patch_run(
@@ -283,7 +290,7 @@ class RunClient:
     @client_handler(check_no_op=True)
     def update(
         self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = False
-    ) -> V1Run:
+    ) -> polyaxon_sdk.V1Run:
         """Updates a run based on the data passed.
 
         [Run API](/docs/api/#operation/PatchRun)
@@ -330,7 +337,7 @@ class RunClient:
 
     def _create(
         self, data: Union[Dict, polyaxon_sdk.V1OperationBody], async_req: bool = False
-    ) -> V1Run:
+    ) -> polyaxon_sdk.V1Run:
         response = self.client.runs_v1.create_run(
             owner=self.owner,
             project=self.project,
@@ -356,7 +363,7 @@ class RunClient:
         is_managed: bool = True,
         pending: Optional[str] = None,
         meta_info: Optional[Dict] = None,
-    ) -> V1Run:
+    ) -> polyaxon_sdk.V1Run:
         """Creates a new run based on the data passed.
 
         N.B. Create methods are only useful if you want to create a run programmatically,
@@ -434,7 +441,7 @@ class RunClient:
         nocache: bool = None,
         cache: Union[int, str, bool] = None,
         approved: Union[int, str, bool] = None,
-    ) -> V1Run:
+    ) -> polyaxon_sdk.V1Run:
         """Creates a new run based on a polyaxonfile.
 
         N.B. Create methods are only useful if you want to create a run programmatically,
@@ -509,7 +516,7 @@ class RunClient:
         nocache: bool = None,
         cache: Union[int, str, bool] = None,
         approved: Union[int, str, bool] = None,
-    ) -> V1Run:
+    ) -> polyaxon_sdk.V1Run:
         """Creates a new run from a url containing a Polyaxonfile specification.
 
         N.B. Create methods are only useful if you want to create a run programmatically,
@@ -583,7 +590,7 @@ class RunClient:
         nocache: bool = None,
         cache: Union[int, str, bool] = None,
         approved: Union[int, str, bool] = None,
-    ) -> V1Run:
+    ) -> polyaxon_sdk.V1Run:
         """Creates a new run from the hub based on the component name.
 
         N.B. Create methods are only useful if you want to create a run programmatically,
@@ -1012,6 +1019,79 @@ class RunClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
+    def download_artifact_for_lineage(
+        self,
+        lineage: polyaxon_sdk.V1RunArtifact,
+        force: bool = False,
+        path_to: str = None,
+    ):
+        """Downloads an run artifact given a lineage reference.
+
+        Args:
+            lineage: V1RunArtifact, the artifact lineage.
+            path_to: str, optional, path to download to.
+            force: bool, force reload the artifact.
+
+        Returns:
+            str
+        """
+        if not self.run_uuid:
+            return
+
+        lineage_path = lineage.path
+        summary = lineage.summary or {}
+        is_event = summary.get("is_event")
+        has_step = summary.get("step")
+
+        if self.run_uuid in lineage_path:
+            lineage_path = os.path.relpath(lineage_path, self.run_uuid)
+
+        if V1ArtifactKind.is_single_file_event(lineage.kind):
+            return self.download_artifact(
+                path=lineage_path, force=force, path_to=path_to
+            )
+
+        if V1ArtifactKind.is_single_or_multi_file_event(lineage.kind):
+            if is_event or has_step:
+                url = get_proxy_run_url(
+                    service=STREAMS_V1_LOCATION,
+                    namespace=self.namespace,
+                    owner=self.owner,
+                    project=self.project,
+                    run_uuid=self.run_uuid,
+                    subpath="events",
+                )
+                url = absolute_uri(url=url, host=self.client.config.host)
+                url = "{}?names={}&pkg_assets=true".format(url, lineage.name)
+                if force:
+                    url = "{}&force=true".format(url)
+
+                return self.store.download_file(
+                    url=url, path=self.run_uuid, path_to=path_to
+                )
+            elif V1ArtifactKind.is_file_or_dir(lineage.kind):
+                return self.download_artifacts(
+                    path=lineage_path, path_to=path_to, check_file=True
+                )
+            else:
+                return self.download_artifact(
+                    path=lineage_path, force=force, path_to=path_to
+                )
+
+        if V1ArtifactKind.is_file(lineage.kind):
+            return self.download_artifact(
+                path=lineage_path, force=force, path_to=path_to
+            )
+
+        if V1ArtifactKind.is_dir(lineage.kind):
+            return self.download_artifacts(path=lineage_path, path_to=path_to)
+
+        if V1ArtifactKind.is_file_or_dir(lineage.kind):
+            return self.download_artifacts(
+                path=lineage_path, path_to=path_to, check_file=True
+            )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def download_artifact(self, path: str, force: bool = False, path_to: str = None):
         """Downloads a single run artifact.
 
@@ -1035,9 +1115,7 @@ class RunClient:
         if force:
             url = "{}?force=true".format(url)
 
-        return PolyaxonStore(client=self).download_file(
-            url=url, path=path, path_to=path_to
-        )
+        return self.store.download_file(url=url, path=path, path_to=path_to)
 
     @client_handler(check_no_op=True, check_offline=True)
     def download_artifacts(
@@ -1047,6 +1125,7 @@ class RunClient:
         untar: bool = True,
         delete_tar: bool = True,
         extract_path: str = None,
+        check_file: bool = False,
     ):
         """Downloads a subpath containing multiple run artifacts.
 
@@ -1056,7 +1135,8 @@ class RunClient:
             untar: bool, optional, default: true.
             delete_tar: bool, optional, default: true.
             extract_path: str, optional.
-
+            check_file: bool, optional, default: false.
+                 To force the API to check if the path is file or dir.
         Returns:
             str.
         """
@@ -1069,14 +1149,17 @@ class RunClient:
             subpath="artifacts",
         )
         url = absolute_uri(url=url, host=self.client.config.host)
+        if check_file:
+            url = "{}?check_file=true".format(url)
 
-        return PolyaxonStore(client=self).download_file(
+        return self.store.download_file(
             url=url,
             path=path,
             untar=untar,
             path_to=path_to,
             delete_tar=delete_tar and untar,
             extract_path=extract_path,
+            check_content_disposition=check_file,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1111,7 +1194,7 @@ class RunClient:
         )
         url = absolute_uri(url=url, host=self.client.config.host)
 
-        return PolyaxonStore(client=self).upload_file(
+        return self.store.upload_file(
             url=url,
             filepath=filepath,
             path=path or "",
@@ -1181,7 +1264,7 @@ class RunClient:
         )
         url = absolute_uri(url=url, host=self.client.config.host)
 
-        return PolyaxonStore(client=self).upload_dir(
+        return self.store.upload_dir(
             url=url,
             path=path,
             files=files,
@@ -1659,16 +1742,16 @@ class RunClient:
     @client_handler(check_no_op=True, check_offline=True)
     def get_artifacts_lineage(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
-    ) -> V1RunArtifacts:
+    ):
         """Gets the run's artifacts lineage.
 
         [Run API](/docs/api/#operation/GetRunArtifactsLineage)
 
         Args:
             query: str, optional, query filters, please refer to
-                 [Run PQL](/docs/core/query-language/runs/#query)
+                 [Run PQL](/docs/core/query-language/artifacts-lineage/#query)
             sort: str, optional, fields to order by, please refer to
-                 [Run PQL](/docs/core/query-language/runs/#sort)
+                 [Run PQL](/docs/core/query-language/artifacts-lineage/#sort)
             limit: int, optional, limit of runs to return.
             offset: int, optional, offset pages to paginate runs.
 

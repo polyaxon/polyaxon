@@ -173,6 +173,7 @@ class PolyaxonStore:
         untar=False,
         delete_tar=True,
         extract_path=None,
+        check_content_disposition=False,
     ):
         """
         Download the file from the given url at the current path
@@ -192,6 +193,8 @@ class PolyaxonStore:
                 timeout=timeout,
                 stream=True,
             )
+            if untar and check_content_disposition:
+                untar = "tar" in response.headers.get("content-disposition", "")
 
             self.check_response_status(response, url)
             with open(filename, "wb") as f:

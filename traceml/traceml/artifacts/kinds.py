@@ -18,4 +18,51 @@ import polyaxon_sdk
 
 
 class V1ArtifactKind(polyaxon_sdk.V1ArtifactKind):
-    pass
+    @classmethod
+    def is_single_file_event(cls, kind: str) -> bool:
+        return kind in {
+            V1ArtifactKind.HTML,
+            V1ArtifactKind.TEXT,
+            V1ArtifactKind.HISTOGRAM,
+            V1ArtifactKind.CHART,
+            V1ArtifactKind.CONFUSION,
+            V1ArtifactKind.CURVE,
+            V1ArtifactKind.METRIC,
+            V1ArtifactKind.SYSTEM,
+        }
+
+    @classmethod
+    def is_single_or_multi_file_event(cls, kind: str) -> bool:
+        return kind in {
+            V1ArtifactKind.MODEL,
+            V1ArtifactKind.DATAFRAME,
+            V1ArtifactKind.AUDIO,
+            V1ArtifactKind.VIDEO,
+            V1ArtifactKind.IMAGE,
+            V1ArtifactKind.CSV,
+            V1ArtifactKind.TSV,
+            V1ArtifactKind.PSV,
+            V1ArtifactKind.SSV,
+        }
+
+    @classmethod
+    def is_dir(cls, kind: str) -> bool:
+        return kind in {
+            V1ArtifactKind.TENSORBOARD,
+            V1ArtifactKind.DIR,
+        }
+
+    @classmethod
+    def is_file(cls, kind: str) -> bool:
+        return kind in {
+            V1ArtifactKind.DOCKERFILE,
+            V1ArtifactKind.FILE,
+            V1ArtifactKind.ENV,
+        }
+
+    @classmethod
+    def is_file_or_dir(cls, kind: str) -> bool:
+        return kind in {
+            V1ArtifactKind.DATA,
+            V1ArtifactKind.MODEL,
+        }
