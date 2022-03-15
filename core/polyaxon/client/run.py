@@ -211,7 +211,9 @@ class RunClient:
         if not self.run_data:
             return None
         if self.run_data.settings and isinstance(self.run_data.settings, Mapping):
-            self._run_data.settings = polyaxon_sdk.V1RunSettings(**self.run_data.settings)
+            self._run_data.settings = polyaxon_sdk.V1RunSettings(
+                **self.run_data.settings
+            )
         return self.run_data.settings
 
     @property

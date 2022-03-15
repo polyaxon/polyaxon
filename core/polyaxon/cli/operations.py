@@ -1571,9 +1571,7 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
             PolyaxonShouldExitError,
             PolyaxonClientException,
         ) as e:
-            handle_cli_error(
-                e, message="Could not pull run `{}`.".format(run_uuid)
-            )
+            handle_cli_error(e, message="Could not pull run `{}`.".format(run_uuid))
             sys.exit(1)
 
     if all_runs or any([query, limit, offset]):
