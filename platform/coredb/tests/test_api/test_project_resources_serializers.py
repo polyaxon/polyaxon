@@ -158,6 +158,8 @@ class TestOfflineRunSerializer(BaseTestRunSerializer):
         "is_managed",
         "inputs",
         "outputs",
+        "content",
+        "raw_content",
     }
     query = Run.objects
 

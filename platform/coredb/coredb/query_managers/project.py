@@ -33,9 +33,12 @@ class ProjectQueryManager(BaseQueryManager):
     FIELDS_PROXY = {
         "id": "uuid",
         "uid": "uuid",
-        "user": "user__username",
     }
-    FIELDS_ORDERING = ("created_at", "updated_at", "name", "user")
+    FIELDS_ORDERING = (
+        "created_at",
+        "updated_at",
+        "name",
+    )
     CHECK_ALIVE = True
     PARSERS_BY_FIELD = {
         # Uuid
@@ -51,8 +54,6 @@ class ProjectQueryManager(BaseQueryManager):
         "description": parse_search_operation,
         # Tags
         "tags": parse_value_operation,
-        # User
-        "user": parse_value_operation,
         # Live state
         "live_state": parse_value_operation,
     }
@@ -68,8 +69,6 @@ class ProjectQueryManager(BaseQueryManager):
         "name": SearchCondition,
         # Description
         "description": SearchCondition,
-        # User
-        "user": ValueCondition,
         # Tags
         "tags": ArrayCondition,
         # Live state

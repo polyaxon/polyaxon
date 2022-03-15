@@ -97,6 +97,8 @@ class OfflineRunSerializer(
             "is_managed",
             "inputs",
             "outputs",
+            "content",
+            "raw_content",
         )
 
     def create(self, validated_data):
