@@ -1504,17 +1504,112 @@ def service(ctx, project, uid, yes, external, url):
 
 
 @ops.command()
-@click.option(
-    "--uid",
-    "-uid",
-    help="To single a single offline run using a its uuid.",
-)
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "--all-runs",
     "-a",
     is_flag=True,
     default=False,
-    help="To sync all runs.",
+    help="To pull all runs.",
+)
+@click.option(
+    "--query", "-q", type=str, help="To filter the runs based on this query spec."
+)
+@click.option("--limit", "-l", type=int, help="To limit the list of runs.")
+@click.option("--offset", "-off", type=int, help="To offset the list of runs.")
+@click.option(
+    "--no-artifacts",
+    is_flag=True,
+    default=False,
+    help="To disable uploading artifacts.",
+)
+@click.option(
+    "--offline-path",
+    type=click.Path(exists=False),
+    help="Optional path to use where the runs are persisted, "
+    "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
+)
+@click.pass_context
+@clean_outputs
+def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offline_path):
+    """Pull a remote run or multiple remote runs to a local path.
+
+    Uses /docs/core/cli/#caching
+
+    Examples:
+
+    \b
+    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80
+
+    \b
+    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --no-artifacts
+
+    \b
+    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --offline-path /tmp/base
+    """
+    owner, project_name = get_project_or_local(
+        project or ctx.obj.get("project"), is_cli=True
+    )
+
+    offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
+    offline_path_format = "{}/{{}}".format(offline_path)
+
+    def _pull(run_uuid: str):
+        Printer.print_header(f"Pulling remote run {uid} ...")
+        client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
+        artifacts_path = offline_path_format.format(run_uuid)
+        try:
+            client.pull_remote_run(
+                artifacts_path=artifacts_path, download_artifacts=not no_artifacts
+            )
+            Printer.print_success(f"Finished pulling offline run {uid}")
+        except (
+            ApiException,
+            HTTPError,
+            PolyaxonHTTPError,
+            PolyaxonShouldExitError,
+            PolyaxonClientException,
+        ) as e:
+            handle_cli_error(
+                e, message="Could not pull offline run `{}`.".format(run_uuid)
+            )
+            sys.exit(1)
+
+    if all_runs or any([query, limit, offset]):
+        limit = 1000 if all_runs else limit
+        try:
+            polyaxon_client = RunClient(owner=owner, project=project_name)
+            runs = polyaxon_client.list(
+                limit=limit,
+                offset=offset,
+                query=query,
+            ).results
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e, message="Could not get runs for project `{}`.".format(project_name)
+            )
+            sys.exit(1)
+        for run in runs:
+            _pull(run.uid)
+    elif uid:
+        _pull(uid)
+    else:
+        Printer.print_error(
+            "Please provide a run uuid or pass the flag `-a/--all` to sync runs."
+        )
+        sys.exit(1)
+
+
+@ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
+@click.option(
+    "--all-runs",
+    "-a",
+    is_flag=True,
+    default=False,
+    help="To push all runs.",
 )
 @click.option(
     "--no-artifacts",
@@ -1532,37 +1627,72 @@ def service(ctx, project, uid, yes, external, url):
 @click.option(
     "--offline-path",
     type=click.Path(exists=False),
-    help="Optional path to use to where offline runs are persisted, "
+    help="Optional path to use where the runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
+@click.option(
+    "--reset-project",
+    is_flag=True,
+    default=False,
+    help="Optional, to ignore the owner/project of the local "
+    "run and use the owner/project provided or resolved from the current project.",
+)
+@click.pass_context
 @clean_outputs
-def sync(uid, all_runs, no_artifacts, clean, offline_path):
-    """Syncs multiple offline runs or a single offline run if a uuid is passed.
+def push(ctx, project, uid, all_runs, no_artifacts, clean, offline_path, reset_project):
+    """Push an local run to a remove server.
 
     Uses /docs/core/cli/#caching
 
     Examples:
 
     \b
-    $ polyaxon ops sync -a --clean
+    $ polyaxon ops push -a --clean
 
     \b
-    $ polyaxon ops sync -uid=8aac02e3a62a4f0aaa257c59da5eab80 --clean
+    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --no-artifacts
 
+    \b
+    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --clean
+
+    \b
+    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --reset-project
+
+    \b
+    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --reset-project -p send-to-project
     """
+    owner, project_name = get_project_or_local(
+        project or ctx.obj.get("project"), is_cli=True
+    )
+
     offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
     offline_path_format = "{}/{{}}".format(offline_path)
 
-    def _sync(run_uuid: str):
-        Printer.print_header(f"Syncing offline run {uid} ...")
-        client = RunClient(run_uuid=run_uuid, is_offline=True)
+    def _push(run_uuid: str):
+        Printer.print_header(f"Pushing offline run {uid} ...")
+        client = RunClient(
+            owner=owner, project=project_name, run_uuid=run_uuid, is_offline=True
+        )
+        artifacts_path = offline_path_format.format(run_uuid)
         try:
-            client.sync_offline_run(
-                load_offline_run=True,
-                artifacts_path=offline_path_format.format(run_uuid),
+            client.load_offline_run(
+                artifacts_path=artifacts_path,
+                run_client=client,
+                reset_project=reset_project,
+            )
+        except Exception as e:
+            handle_cli_error(
+                e, message="Could not load offline run `{}`.".format(run_uuid)
+            )
+            sys.exit(1)
+
+        try:
+            client.push_offline_run(
+                artifacts_path=artifacts_path,
                 upload_artifacts=not no_artifacts,
                 clean=clean,
             )
+            Printer.print_success(f"Finished pushing offline run {uid}")
         except (
             ApiException,
             HTTPError,
@@ -1571,7 +1701,7 @@ def sync(uid, all_runs, no_artifacts, clean, offline_path):
             PolyaxonClientException,
         ) as e:
             handle_cli_error(
-                e, message="Could not sync offline run `{}`.".format(run_uuid)
+                e, message="Could not push offline run `{}`.".format(run_uuid)
             )
             sys.exit(1)
 
@@ -1582,17 +1712,17 @@ def sync(uid, all_runs, no_artifacts, clean, offline_path):
             or not os.listdir(offline_path)
         ):
             Printer.print_error(
-                f"Could not sync offline runs, the path `{offline_path}` "
+                f"Could not push offline runs, the path `{offline_path}` "
                 f"does not exist, is not a directory, or is empty."
             )
             sys.exit(1)
         for uid in os.listdir(offline_path):
-            _sync(uid)
+            _push(uid)
     elif uid:
-        _sync(uid)
+        _push(uid)
     else:
         Printer.print_error(
-            "Please provide a run uuid or pass the flag `-a/--all` to sync runs."
+            "Please provide a run uuid or pass the flag `-a/--all` to push all available runs."
         )
         sys.exit(1)
 
@@ -1629,3 +1759,13 @@ def wait_for_running_condition(client):
             ),
         )
         sys.exit(1)
+
+
+@ops.command()
+@clean_outputs
+def sync(**kwargs):
+    Printer.print_warning(
+        "polyaxon ops sync is deprecated. Please use: "
+        "'polyaxon ops push' to push a local run to a remote server and "
+        "'polyaxon ops pull' to pull a remote run to a local path."
+    )

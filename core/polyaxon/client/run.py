@@ -183,7 +183,7 @@ class RunClient:
         )
         self._namespace = None
         self._results = {}
-        self._lineages = {}
+        self._artifacts_lineage = {}
         self._default_filename_sanitize_paths = []
         self._last_update = None
         self._store = None
@@ -224,17 +224,30 @@ class RunClient:
     def owner(self) -> str:
         return self._owner
 
+    def set_owner(self, owner: str):
+        self._owner = owner
+
     @property
     def project(self) -> str:
         return self._project
+
+    def set_project(self, project: str):
+        self._project = project
 
     @property
     def run_uuid(self) -> str:
         return self._run_uuid
 
+    def set_run_uuid(self, run_uuid):
+        self._run_uuid = run_uuid
+
     @property
     def run_data(self):
         return self._run_data
+
+    @property
+    def artifacts_lineage(self):
+        return self._artifacts_lineage
 
     @client_handler(check_no_op=True)
     def get_inputs(self) -> Dict:
@@ -257,11 +270,14 @@ class RunClient:
         return self._run_data.outputs
 
     @client_handler(check_no_op=True, check_offline=True)
-    def refresh_data(self):
+    def refresh_data(self, load_lineages: bool = False):
         """Fetches the run data from the api."""
         self._run_data = self.client.runs_v1.get_run(
             self.owner, self.project, self.run_uuid
         )
+        if load_lineages:
+            lineages = self.get_artifacts_lineage(limit=1000).results
+            self._artifacts_lineage = {l.name: l for l in lineages}
 
     def _throttle_updates(self) -> bool:
         current_time = now().replace(microsecond=0)
@@ -350,7 +366,7 @@ class RunClient:
             self._run_data.status = V1Statuses.CREATED
             self._namespace = None
             self._results = {}
-            self._lineages = {}
+            self._artifacts_lineage = {}
         return response
 
     @client_handler(check_no_op=True)
@@ -2119,7 +2135,7 @@ class RunClient:
             for b in to_list(body, check_none=True):
                 if not isinstance(b, V1RunArtifact):
                     b = V1RunArtifact.read(b)
-                self._lineages[b.name] = b
+                self._artifacts_lineage[b.name] = b
             return
         self.client.runs_v1.create_run_artifacts_lineage(
             self.owner,
@@ -2295,13 +2311,13 @@ class RunClient:
         )
 
     @client_handler(check_no_op=True)
-    def persist_offline_run(self, artifacts_path: str):
-        """Persists an offline run to a local path.
+    def persist_run(self, artifacts_path: str):
+        """Persists a run to a local path.
 
         > **Note**: You generally do not need to call this method manually,
         > When the `offline` mode is enabled, this method is triggered automatically at the end.
         """
-        if not self._is_offline or not self.run_data:
+        if not self.run_data:
             logger.debug(
                 "Persist offline run call failed. "
                 "Make sure that the offline mode is enabled and that run_data is provided."
@@ -2315,7 +2331,7 @@ class RunClient:
                 ujson.dumps(self.client.sanitize_for_serialization(self.run_data))
             )
 
-        if not self._lineages:
+        if not self._artifacts_lineage:
             logger.debug("Persist offline run call did not find any lineage data. ")
             return
 
@@ -2325,7 +2341,7 @@ class RunClient:
                 ujson.dumps(
                     [
                         self.client.sanitize_for_serialization(l)
-                        for l in self._lineages.values()
+                        for l in self._artifacts_lineage.values()
                     ]
                 )
             )
@@ -2333,7 +2349,11 @@ class RunClient:
     @classmethod
     @client_handler(check_no_op=True)
     def load_offline_run(
-        cls, artifacts_path: str, run_client: Union["RunClient", "Run"] = None
+        cls,
+        artifacts_path: str,
+        run_client: Union["RunClient", "Run"] = None,
+        reset_project: bool = False,
+        raise_if_not_found: bool = False,
     ) -> Union["RunClient", "Run"]:
         """Loads an offline run from a local path.
 
@@ -2342,19 +2362,29 @@ class RunClient:
         """
         run_path = "{}/run_data.json".format(artifacts_path)
         if not os.path.isfile(run_path):
-            logger.info(f"Offline data was not found: {run_path}")
-            return
+            if raise_if_not_found:
+                raise PolyaxonClientException(f"Offline data was not found: {run_path}")
+            else:
+                logger.info(f"Offline data was not found: {run_path}")
+                return
+
         with open(run_path, "r") as config_file:
             config_str = config_file.read()
             run_config = polyaxon_sdk.V1Run(**ujson.loads(config_str))
+            owner = run_config.owner
+            project = run_config.project
+            if reset_project or not owner:
+                owner = run_client.owner
+            if reset_project or not project:
+                project = run_client.project
             if run_client:
-                run_client._owner = run_config.owner
-                run_client._project = run_config.project
+                run_client._owner = owner
+                run_client._project = project
                 run_client._run_uuid = run_config.uuid
             else:
                 run_client = cls(
-                    owner=run_config.owner,
-                    project=run_config.project,
+                    owner=owner,
+                    project=project,
                     run_uuid=run_config.uuid,
                 )
             run_client._run_data = run_config
@@ -2367,32 +2397,38 @@ class RunClient:
         with open(lineages_path, "r") as config_file:
             config_str = config_file.read()
             lineages = [V1RunArtifact(**l) for l in ujson.loads(config_str)]
-            run_client._lineages = {l.name: l for l in lineages}
-            logger.info(f"Offline lineage data loaded from: {run_path}")
+            run_client._artifacts_lineage = {l.name: l for l in lineages}
+            logger.info(f"Offline lineage data loaded from: {lineages_path}")
 
         return run_client
 
     @client_handler(check_no_op=True)
-    def sync_offline_run(
+    def pull_remote_run(
         self,
         artifacts_path: str = None,
-        load_offline_run: bool = False,
+        download_artifacts: bool = True,
+    ):
+        delete_path(artifacts_path)
+        self.refresh_data(load_lineages=True)
+        self.persist_run(artifacts_path)
+        if download_artifacts:
+            self.download_artifacts(path_to=artifacts_path)
+
+    @client_handler(check_no_op=True)
+    def push_offline_run(
+        self,
+        artifacts_path: str = None,
         upload_artifacts: bool = True,
         clean: bool = False,
     ):
         """Syncs an offline run to Polyaxon's API and artifacts store."""
-        if artifacts_path and load_offline_run:
-            self._run_uuid = None
-            self._run_data = None
-            self.load_offline_run(artifacts_path=artifacts_path, run_client=self)
-
         # We ensure that the is_offline is False
         is_offline = self._is_offline
         self._is_offline = False
 
         if not self.run_data:
             logger.warning(
-                "Sync offline run failed. Make sure that run_data is provided."
+                "Push offline run failed. Make sure that run_data is provided."
             )
             return
         self.client.runs_v1.sync_run(
@@ -2402,13 +2438,13 @@ class RunClient:
             async_req=False,
         )
         logger.info(f"Offline data for run {self.run_data.uuid} synced")
-        if self._lineages:
+        if self._artifacts_lineage:
             self.log_artifact_lineage(
-                [l for l in self._lineages.values()], async_req=False
+                [l for l in self._artifacts_lineage.values()], async_req=False
             )
             logger.info(f"Offline lineage data for run {self.run_data.uuid} synced")
         else:
-            logger.info("Sync offline run failed. No lineage data found.")
+            logger.warning("Push offline run failed. No lineage data found.")
             return
 
         if artifacts_path and upload_artifacts:

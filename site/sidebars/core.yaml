@@ -55,6 +55,10 @@
       link: /docs/core/query-language/runs/
     - title: Projects
       link: /docs/core/query-language/projects/
+    - title: Project Versions
+      link: /docs/core/query-language/project-versions/
+    - title: Artifacts Lineage
+      link: /docs/core/query-language/artifacts-lineage/
   - group: CLI
     items:
     - title: Overview

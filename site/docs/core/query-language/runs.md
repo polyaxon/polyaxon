@@ -1,8 +1,8 @@
 ---
 title: "Runs Query Syntax"
 sub_link: "query-language/runs"
-meta_title: "Polyaxon Experiments Query Syntax Specification - Polyaxon References"
-meta_description: "Polyaxon Experiments Query Syntax Specification."
+meta_title: "Polyaxon Query Syntax Specification for Runs - Polyaxon References"
+meta_description: "Polyaxon Runs/Experiments Query Syntax Specification for Runs."
 visibility: public
 status: published
 tags:
@@ -49,22 +49,34 @@ field                                                                      | con
 `outputs.*`                                                                | [value condition](/docs/core/query-language/#query-with-value-condition)
 `metrics.*`                                                                | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
 `duration`                                                                 | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`wait_time`                                                                | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
 `commit`                                                                   | [value condition](/docs/core/query-language/#query-with-value-condition)
 `agent`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
 `queue`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
 `artifacts_store`                                                          | [value condition](/docs/core/query-language/#query-with-value-condition)
 `kind`                                                                     | [value condition](/docs/core/query-language/#query-with-value-condition)
 `runtime`                                                                  | [value condition](/docs/core/query-language/#query-with-value-condition)
+`namespace`                                                                | [value condition](/docs/core/query-language/#query-with-value-condition)
 `meta_info.*`                                                              | [value condition](/docs/core/query-language/#query-with-value-condition)
 `meta_values.*` (e.g. meta_values.iteration)                               | [value condition](/docs/core/query-language/#query-with-value-condition)
 `meta_flags.*` (e.g. meta_flags.has_events or meta_flags.has_tensorboard)  | [bool condition](/docs/core/query-language/#query-with-bool-condition)
 `live_state`                                                               | [value condition](/docs/core/query-language/#query-with-value-condition)
 `pipeline` (equivalent to pipeline.uuid)                                   | [value condition](/docs/core/query-language/#query-with-value-condition)
 `pipeline.*` (e.g. pipeline.kind or pipeline.runtime)                      | [value condition](/docs/core/query-language/#query-with-value-condition)
-`original` (equivalent to original.uuid)                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
+`controller` (equivalent to controller.uuid)                               | [value condition](/docs/core/query-language/#query-with-value-condition)
+`controller.*` (e.g. controller.kind or controller.runtime)                | [value condition](/docs/core/query-language/#query-with-value-condition)
+`original` (equivalent to original.uuid)                                   | [value condition](/docs/core/query-language/#query-with-value-condition)
 `original.*` (e.g. original.name)                                          | [value condition](/docs/core/query-language/#query-with-value-condition)
 `cloning_kind` (cloud be one of the valid cloning kind, e.g. restart)      | [value condition](/docs/core/query-language/#query-with-value-condition)
-
+`upstream`                                                                 | [value condition](/docs/core/query-language/#query-with-value-condition)
+`downstream`                                                               | [value condition](/docs/core/query-language/#query-with-value-condition)
+`component_state`                                                          | [value condition](/docs/core/query-language/#query-with-value-condition)
+`pending`                                                                  | [value condition](/docs/core/query-language/#query-with-value-condition)
+`cost`                                                                     | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`cpu`                                                                      | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`memory`                                                                   | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`gpu`                                                                      | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`custom`                                                                   | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
 
 ## Sort
 
@@ -76,7 +88,10 @@ field:
  * `finished_at`
  * `user`
  * `duration`
+ * `wait_time`
  * `kind`
+ * `status`
+ * `component_state`
  * `runtime`
  * `inputs.*`
  * `outputs.*`
@@ -84,3 +99,8 @@ field:
  * `agent`
  * `queue`
  * `artifacts_store`
+ * `cost`    
+ * `cpu`      
+ * `memory`   
+ * `gpu`   
+ * `custom`

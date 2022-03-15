@@ -1,8 +1,8 @@
 ---
-title: "Runs Query Syntax"
-sub_link: "query-language/runs"
-meta_title: "Polyaxon Query Syntax Specification for Projects - Polyaxon References"
-meta_description: "Polyaxon Projects Query Syntax Specification for Projects."
+title: "Project Versions (component/model/artifact) Query Syntax"
+sub_link: "query-language/project-versions"
+meta_title: "Polyaxon Query Syntax Specification for Project Versions - Polyaxon References"
+meta_description: "Polyaxon Query Syntax Specification for Project Versions."
 visibility: public
 status: published
 tags:
@@ -18,18 +18,21 @@ tags:
 sidebar: "core"
 ---
 
-# Searching Projects
+# Searching Project Versions (component/model/artifact)
 
 ## Query
 
 field                           | condition
 --------------------------------|------------------
+`id` or `uuid`                  | [string condition](/docs/core/query-language/#query-with-value-condition)
 `name`                          | [string condition](/docs/core/query-language/#query-with-string-condition)
 `description`                   | [string condition](/docs/core/query-language/#query-with-string-condition)
 `created_at`                    | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
 `updated_at`                    | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
-`owner`                         | [string condition](/docs/core/query-language/#query-with-string-condition)
 `tags`                          | [value condition](/docs/core/query-language/#query-with-value-condition)
+`kind`                          | [value condition](/docs/core/query-language/#query-with-value-condition)
+`stage`                         | [value condition](/docs/core/query-language/#query-with-value-condition)
+`state`                         | [value condition](/docs/core/query-language/#query-with-value-condition)
 
 
 ## Sort
@@ -38,6 +41,7 @@ field:
 
  * `created_at`
  * `updated_at`
- * `name`
- * `owner`
+ * `kind`
+ * `stage`
+ * `state`
 

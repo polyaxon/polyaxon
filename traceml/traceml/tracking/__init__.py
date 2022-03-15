@@ -979,15 +979,31 @@ def sync_system_events_summaries():
 sync_system_events_summaries.__doc__ = Run.sync_system_events_summaries.__doc__
 
 
-def sync_offline_run(
+def pull_remote_run(
     artifacts_path: str = None,
-    load_offline_run: bool = False,
+    download_artifacts: bool = True,
 ):
     global TRACKING_RUN
-    TRACKING_RUN.sync_offline_run(
+    TRACKING_RUN.pull_remote_run(
         artifacts_path=artifacts_path,
-        load_offline_run=load_offline_run,
+        download_artifacts=download_artifacts,
     )
 
 
-sync_offline_run.__doc__ = Run.sync_offline_run.__doc__
+pull_remote_run.__doc__ = Run.pull_remote_run.__doc__
+
+
+def push_offline_run(
+    artifacts_path: str = None,
+    upload_artifacts: bool = True,
+    clean: bool = False,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.push_offline_run(
+        artifacts_path=artifacts_path,
+        upload_artifacts=upload_artifacts,
+        clean=clean,
+    )
+
+
+push_offline_run.__doc__ = Run.push_offline_run.__doc__
