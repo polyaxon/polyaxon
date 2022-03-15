@@ -61,7 +61,7 @@ class TestArtifactSerializer(PolyaxonBaseTestSerializer):
         assert data.pop("name") == obj1.artifact.name
         assert data.pop("path") == obj1.artifact.path
         assert data.pop("summary") == obj1.artifact.summary
-        assert data.pop("state") == obj1.artifact.state
+        assert data.pop("state") == obj1.artifact.state.hex
         assert data.pop("kind") == obj1.artifact.kind
         for k, v in data.items():
             assert getattr(obj1, k) == v

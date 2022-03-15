@@ -101,9 +101,9 @@ class OfflineRunSerializer(
             "raw_content",
         )
 
-    def create(self, validated_data):
+    def create(self, validated_data, commit: bool = True):
         try:
-            obj = self.Meta.model.objects.create(**validated_data)
+            obj = super().create(validated_data)
         except IntegrityError:
             raise ValidationError(
                 f"A run with uuid {validated_data.get('uuid')} already exists."
@@ -112,7 +112,8 @@ class OfflineRunSerializer(
         created_at = validated_data.get("created_at")
         if created_at:
             obj.created_at = created_at
-        obj.save()
+        if commit:
+            obj.save()
         return obj
 
 

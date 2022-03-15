@@ -34,7 +34,10 @@ class RunArtifactSerializer(serializers.ModelSerializer):
         return obj.artifact.name
 
     def get_state(self, obj):
-        return obj.artifact.state
+        value = obj.artifact.state
+        if value:
+            return value.hex
+        return value
 
     def get_kind(self, obj):
         return obj.artifact.kind
