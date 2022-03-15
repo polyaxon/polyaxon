@@ -18,8 +18,6 @@ tags:
 sidebar: "core"
 ---
 
-# Searching Runs
-
 ## Aliases
 
 Several fields accept aliases:

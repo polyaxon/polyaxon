@@ -1556,14 +1556,14 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
     offline_path_format = "{}/{{}}".format(offline_path)
 
     def _pull(run_uuid: str):
-        Printer.print_header(f"Pulling remote run {uid} ...")
+        Printer.print_header(f"Pulling remote run {run_uuid} ...")
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
         artifacts_path = offline_path_format.format(run_uuid)
         try:
             client.pull_remote_run(
                 artifacts_path=artifacts_path, download_artifacts=not no_artifacts
             )
-            Printer.print_success(f"Finished pulling offline run {uid}")
+            Printer.print_success(f"Finished pulling run {run_uuid}")
         except (
             ApiException,
             HTTPError,
@@ -1572,7 +1572,7 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
             PolyaxonClientException,
         ) as e:
             handle_cli_error(
-                e, message="Could not pull offline run `{}`.".format(run_uuid)
+                e, message="Could not pull run `{}`.".format(run_uuid)
             )
             sys.exit(1)
 
@@ -1590,8 +1590,9 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
                 e, message="Could not get runs for project `{}`.".format(project_name)
             )
             sys.exit(1)
+        Printer.print_header(f"Pulling {len(runs)} remote runs ...")
         for run in runs:
-            _pull(run.uid)
+            _pull(run.uuid)
     elif uid:
         _pull(uid)
     else:
@@ -1679,6 +1680,7 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, offline_path, reset_p
                 artifacts_path=artifacts_path,
                 run_client=client,
                 reset_project=reset_project,
+                raise_if_not_found=True,
             )
         except Exception as e:
             handle_cli_error(

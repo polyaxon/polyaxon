@@ -18,8 +18,6 @@ tags:
 sidebar: "core"
 ---
 
-# Searching Artifacts Lineage
-
 ## Query
 
 field                           | condition

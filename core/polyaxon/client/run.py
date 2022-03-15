@@ -207,15 +207,19 @@ class RunClient:
         return self._run_data.status
 
     @property
+    def settings(self) -> Optional[polyaxon_sdk.V1RunSettings]:
+        if not self.run_data:
+            return None
+        if self.run_data.settings and isinstance(self.run_data.settings, Mapping):
+            self._run_data.settings = polyaxon_sdk.V1RunSettings(**self.run_data.settings)
+        return self.run_data.settings
+
+    @property
     def namespace(self) -> str:
         if self._namespace:
             return self._namespace
-        if (
-            self.run_data
-            and self.run_data.settings
-            and self.run_data.settings.namespace
-        ):
-            self._namespace = self.run_data.settings.namespace
+        if self.settings and self.settings.namespace:
+            self._namespace = self.settings.namespace
         else:
             self._namespace = self.get_namespace()
         return self._namespace

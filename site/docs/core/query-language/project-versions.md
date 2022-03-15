@@ -18,8 +18,6 @@ tags:
 sidebar: "core"
 ---
 
-# Searching Project Versions (component/model/artifact)
-
 ## Query
 
 field                           | condition

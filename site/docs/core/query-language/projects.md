@@ -18,8 +18,6 @@ tags:
 sidebar: "core"
 ---
 
-# Searching Projects
-
 ## Query
 
 field                           | condition
