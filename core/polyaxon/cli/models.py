@@ -460,14 +460,14 @@ def transfer(ctx, project, version, to_project):
     help="To pull all versions.",
 )
 @click.option(
-    "--query", "-q", type=str, help="To filter the versions based on q query spec."
+    "--query", "-q", type=str, help="To filter the versions based on a query spec."
 )
 @click.option("--limit", "-l", type=int, help="To limit the list of runs.")
 @click.option("--offset", "-off", type=int, help="To offset the list of runs.")
 @click.option(
     "--path",
     type=click.Path(exists=False),
-    help="Optional path where the models are persisted, "
+    help="Optional path where the model versions are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
 @click.option(
@@ -479,7 +479,8 @@ def transfer(ctx, project, version, to_project):
 @click.pass_context
 @clean_outputs
 def pull(ctx, project, version, all_versions, query, limit, offset, path, no_artifacts):
-    """Package and download the version to a local path with or without artifacts.
+    """Package and download a model version or multiple model versions
+    to a local path with or without artifacts.
 
     Uses /docs/core/cli/#caching
 

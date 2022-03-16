@@ -500,21 +500,21 @@ def transfer(ctx, project, version, to_project):
     help="To pull all versions.",
 )
 @click.option(
-    "--query", "-q", type=str, help="To filter the versions based on q query spec."
+    "--query", "-q", type=str, help="To filter the versions based on a query spec."
 )
 @click.option("--limit", "-l", type=int, help="To limit the list of runs.")
 @click.option("--offset", "-off", type=int, help="To offset the list of runs.")
 @click.option(
     "--path",
     type=click.Path(exists=False),
-    help="Optional path where the models are persisted, "
+    help="Optional path where the component versions are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
 @click.pass_context
 @not_in_ce
 @clean_outputs
 def pull(ctx, project, version, all_versions, query, limit, offset, path):
-    """Package and download the version to a local path.
+    """Package and download a component version or multiple component versions to a local path.
 
     Uses /docs/core/cli/#caching
 
