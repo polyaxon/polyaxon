@@ -1620,7 +1620,7 @@ class Run(RunClient):
 
     def _start(self):
         if self._is_offline:
-            self.load_offline_run(artifacts_path=self._artifacts_path, run_client=self)
+            self.load_offline_run(path=self._artifacts_path, run_client=self)
             if self.run_data.status:
                 logger.info(f"An offline run was found: {self._artifacts_path}")
             else:
@@ -1650,7 +1650,7 @@ class Run(RunClient):
         self._persist_logs_history()
         self._wait(sync_artifacts=True)
         if self._is_offline:
-            self.persist_run(artifacts_path=self._artifacts_path)
+            self.persist_run(path=self._artifacts_path)
 
     def _wait(self, sync_artifacts: bool = False):
         if self._event_logger:

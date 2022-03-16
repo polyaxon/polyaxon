@@ -980,12 +980,12 @@ sync_system_events_summaries.__doc__ = Run.sync_system_events_summaries.__doc__
 
 
 def pull_remote_run(
-    artifacts_path: str = None,
+    path: str,
     download_artifacts: bool = True,
 ):
     global TRACKING_RUN
     TRACKING_RUN.pull_remote_run(
-        artifacts_path=artifacts_path,
+        path=path,
         download_artifacts=download_artifacts,
     )
 
@@ -994,13 +994,13 @@ pull_remote_run.__doc__ = Run.pull_remote_run.__doc__
 
 
 def push_offline_run(
-    artifacts_path: str = None,
+    path: str,
     upload_artifacts: bool = True,
     clean: bool = False,
 ):
     global TRACKING_RUN
     TRACKING_RUN.push_offline_run(
-        artifacts_path=artifacts_path,
+        path=path,
         upload_artifacts=upload_artifacts,
         clean=clean,
     )

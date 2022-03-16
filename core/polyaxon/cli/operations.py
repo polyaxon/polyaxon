@@ -1522,17 +1522,19 @@ def service(ctx, project, uid, yes, external, url):
     "--no-artifacts",
     is_flag=True,
     default=False,
-    help="To disable uploading artifacts.",
+    help="To disable uploading the run's artifacts and only sync metadata. "
+    "This is useful if you want to move a run from one Polyaxon deployment "
+    "to another while keeping the same artifacts store.",
 )
 @click.option(
-    "--offline-path",
+    "--path",
     type=click.Path(exists=False),
-    help="Optional path to use where the runs are persisted, "
+    help="Optional path where the runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
 @click.pass_context
 @clean_outputs
-def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offline_path):
+def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
     """Pull a remote run or multiple remote runs to a local path.
 
     Uses /docs/core/cli/#caching
@@ -1546,13 +1548,13 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
     $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --no-artifacts
 
     \b
-    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --offline-path /tmp/base
+    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --path /tmp/base
     """
     owner, project_name = get_project_or_local(
         project or ctx.obj.get("project"), is_cli=True
     )
 
-    offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
+    offline_path = path or container_contexts.CONTEXT_OFFLINE_ROOT
     offline_path_format = "{}/{{}}".format(offline_path)
 
     def _pull(run_uuid: str):
@@ -1561,9 +1563,11 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
         artifacts_path = offline_path_format.format(run_uuid)
         try:
             client.pull_remote_run(
-                artifacts_path=artifacts_path, download_artifacts=not no_artifacts
+                path=artifacts_path, download_artifacts=not no_artifacts
             )
-            Printer.print_success(f"Finished pulling run {run_uuid}")
+            Printer.print_success(
+                f"Finished pulling run {run_uuid} to {artifacts_path}"
+            )
         except (
             ApiException,
             HTTPError,
@@ -1614,7 +1618,9 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
     "--no-artifacts",
     is_flag=True,
     default=False,
-    help="To disable uploading artifacts.",
+    help="To disable uploading artifacts and only sync metadata. "
+    "This is useful if you want to move a run from one Polyaxon deployment "
+    "to another while keeping the same artifacts store (no artifacts transfer).",
 )
 @click.option(
     "--clean",
@@ -1624,9 +1630,9 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
     help="To clean the run(s) local data after syncing.",
 )
 @click.option(
-    "--offline-path",
+    "--path",
     type=click.Path(exists=False),
-    help="Optional path to use where the runs are persisted, "
+    help="Optional path where the runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
 @click.option(
@@ -1638,7 +1644,7 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, offlin
 )
 @click.pass_context
 @clean_outputs
-def push(ctx, project, uid, all_runs, no_artifacts, clean, offline_path, reset_project):
+def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
     """Push an local run to a remove server.
 
     Uses /docs/core/cli/#caching
@@ -1647,6 +1653,9 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, offline_path, reset_p
 
     \b
     $ polyaxon ops push -a --clean
+
+    \b
+    $ polyaxon ops push --path /tmp/experiments --clean
 
     \b
     $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --no-artifacts
@@ -1664,18 +1673,18 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, offline_path, reset_p
         project or ctx.obj.get("project"), is_cli=True
     )
 
-    offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
+    offline_path = path or container_contexts.CONTEXT_OFFLINE_ROOT
     offline_path_format = "{}/{{}}".format(offline_path)
 
     def _push(run_uuid: str):
-        Printer.print_header(f"Pushing offline run {uid} ...")
+        Printer.print_header(f"Loading offline run {uid} ...")
         client = RunClient(
             owner=owner, project=project_name, run_uuid=run_uuid, is_offline=True
         )
         artifacts_path = offline_path_format.format(run_uuid)
         try:
             client.load_offline_run(
-                artifacts_path=artifacts_path,
+                path=artifacts_path,
                 run_client=client,
                 reset_project=reset_project,
                 raise_if_not_found=True,
@@ -1686,13 +1695,18 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, offline_path, reset_p
             )
             sys.exit(1)
 
+        Printer.print_header(
+            f"Pushing offline run {uid} to {client.owner}/{client.project} ..."
+        )
         try:
             client.push_offline_run(
-                artifacts_path=artifacts_path,
+                path=artifacts_path,
                 upload_artifacts=not no_artifacts,
                 clean=clean,
             )
-            Printer.print_success(f"Finished pushing offline run {uid}")
+            Printer.print_success(
+                f"Finished pushing offline run {uid} to {client.owner}/{client.project}"
+            )
         except (
             ApiException,
             HTTPError,
