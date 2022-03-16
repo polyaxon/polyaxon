@@ -41,7 +41,7 @@ from polyaxon.client import PolyaxonClient
 from polyaxon.constants.globals import NO_AUTH
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.lifecycle import V1ProjectVersionKind, V1Stages
-from polyaxon.logger import clean_outputs
+from polyaxon.logger import clean_outputs, not_in_ce
 from polyaxon.polyaxonfile import get_specification
 from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon.utils.formatting import (
@@ -162,6 +162,7 @@ def ls(ctx, project, query, sort, limit, offset):
     help="Flag to force register if the version already exists.",
 )
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def register(ctx, polyaxonfile, project, version, description, tags, force):
     """Register a new component version.
@@ -239,6 +240,7 @@ def register(ctx, polyaxonfile, project, version, description, tags, force):
     help="Flag to force copy if the version already exists.",
 )
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def copy(
     ctx,
@@ -332,6 +334,7 @@ def get(ctx, project, version):
     'Assume "yes" as answer to all prompts and run non-interactively.',
 )
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def delete(ctx, project, version, yes):
     """Delete component version.
@@ -373,6 +376,7 @@ def delete(ctx, project, version, yes):
     "--tags", type=str, help="Tags of the component version (comma separated values)."
 )
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def update(ctx, project, version, name, description, tags):
     """Update component version.
@@ -419,6 +423,7 @@ def update(ctx, project, version, name, description, tags):
     "--message", type=str, help="Additional information to set with this stage change."
 )
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def stage(ctx, project, version, to, message):
     """Update stage for a component version.
@@ -456,6 +461,7 @@ def stage(ctx, project, version, to, message):
     help="The project to transfer the version to.",
 )
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def transfer(ctx, project, version, to_project):
     """Transfer the version to a destination project under the same owner/organization.
@@ -505,6 +511,7 @@ def transfer(ctx, project, version, to_project):
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def pull(ctx, project, version, all_versions, query, limit, offset, path):
     """Package and download the version to a local path.

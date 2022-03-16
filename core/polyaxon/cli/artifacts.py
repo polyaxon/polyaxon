@@ -31,7 +31,7 @@ from polyaxon.cli.project_versions import (
 )
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.lifecycle import V1ProjectVersionKind, V1Stages
-from polyaxon.logger import clean_outputs
+from polyaxon.logger import clean_outputs, not_in_ce
 from polyaxon.utils.formatting import Printer
 
 
@@ -39,6 +39,7 @@ from polyaxon.utils.formatting import Printer
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_ARTIFACT_VERSION["args"], **OPTIONS_ARTIFACT_VERSION["kwargs"])
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def artifacts(ctx, project, version):
     """Commands for managing artifacts."""

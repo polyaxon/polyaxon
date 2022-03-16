@@ -79,3 +79,18 @@ def clean_outputs(fn):
             return fn(*args, **kwargs)
 
     return clean_outputs_wrapper
+
+
+def not_in_ce(fn):
+    """Decorator to show an error when a command not available in CE"""
+
+    @wraps(fn)
+    def not_in_ce_wrapper(*args, **kwargs):
+        from polyaxon import settings
+        from polyaxon.cli.errors import handle_command_not_in_ce
+
+        if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce:
+            handle_command_not_in_ce()
+        return fn(*args, **kwargs)
+
+    return not_in_ce_wrapper

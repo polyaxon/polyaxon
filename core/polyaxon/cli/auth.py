@@ -22,12 +22,11 @@ from urllib3.exceptions import HTTPError
 
 import polyaxon_sdk
 
-from polyaxon import settings
 from polyaxon.cli.dashboard import get_dashboard_url
-from polyaxon.cli.errors import handle_cli_error, handle_command_not_in_ce
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.session import session_expired, set_versions_config
 from polyaxon.client import PolyaxonClient
-from polyaxon.logger import clean_outputs, logger
+from polyaxon.logger import clean_outputs, logger, not_in_ce
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.user import UserConfigManager
@@ -40,12 +39,10 @@ from polyaxon_sdk.rest import ApiException
 @click.option("--token", "-t", help="Polyaxon token.")
 @click.option("--username", "-u", help="Polyaxon username or email.")
 @click.option("--password", "-p", help="Polyaxon password.")
+@not_in_ce
 @clean_outputs
 def login(token, username, password):
     """Login to Polyaxon Cloud or Polyaxon EE."""
-    if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce:
-        handle_command_not_in_ce()
-
     polyaxon_client = PolyaxonClient()
     if username and not token:
         # Use user or email / password login
@@ -132,12 +129,10 @@ def logout():
 
 
 @click.command()
+@not_in_ce
 @clean_outputs
 def whoami():
     """Show current logged Polyaxon Cloud or Polyaxon EE user."""
-    if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce:
-        handle_command_not_in_ce()
-
     try:
         polyaxon_client = PolyaxonClient()
         user = polyaxon_client.users_v1.get_user()

@@ -20,6 +20,7 @@ import click
 
 from urllib3.exceptions import HTTPError
 
+from polyaxon import settings
 from polyaxon.api import (
     EXTERNAL_V1,
     REWRITE_EXTERNAL_V1,
@@ -40,7 +41,7 @@ from polyaxon.exceptions import (
     PolyaxonShouldExitError,
 )
 from polyaxon.lifecycle import LifeCycle, V1Statuses
-from polyaxon.logger import clean_outputs
+from polyaxon.logger import clean_outputs, not_in_ce
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1RunKind
@@ -788,6 +789,7 @@ def resume(ctx, project, uid, polyaxonfile):
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def invalidate(ctx, project, uid):
     """Invalidate the run's cache state.
@@ -799,7 +801,6 @@ def invalidate(ctx, project, uid):
     \b
     $ polyaxon ops invalidate
     """
-
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
         uid or ctx.obj.get("run_uuid"),
@@ -1357,6 +1358,7 @@ def upload(ctx, project, uid, path_from, path_to, sync_failure):
     help="The project to transfer the operation/run to.",
 )
 @click.pass_context
+@not_in_ce
 @clean_outputs
 def transfer(ctx, project, uid, to_project):
     """Transfer the run to a destination project under the same owner/organization.
