@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import os
 import sys
 
 from typing import Callable, List, Optional, Union
@@ -25,6 +25,7 @@ from urllib3.exceptions import HTTPError
 from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import PolyaxonClient, ProjectClient
+from polyaxon.containers import contexts as container_contexts
 from polyaxon.lifecycle import V1ProjectVersionKind, V1StageCondition, V1Stages
 from polyaxon.utils.formatting import (
     Printer,
@@ -69,6 +70,28 @@ def get_version_details(response, content_callback: Callable = None):
     content_callback(content)
 
 
+def list_project_versions_response(
+    owner: str,
+    project_name: str,
+    kind: V1ProjectVersionKind,
+    limit: str = None,
+    offset: str = None,
+    query: str = None,
+    sort: str = None,
+    client: PolyaxonClient = None,
+):
+    polyaxon_client = ProjectClient(owner=owner, project=project_name, client=client)
+    params = get_query_params(limit=limit, offset=offset, query=query, sort=sort)
+    try:
+        return polyaxon_client.list_versions(kind=kind, **params)
+    except (ApiException, HTTPError) as e:
+        message = "Could not get list of {} versions for {}/{}.".format(
+            kind, owner, project_name
+        )
+        handle_cli_error(e, message=message)
+        sys.exit(1)
+
+
 def list_project_versions(
     owner: str,
     project_name: str,
@@ -80,15 +103,16 @@ def list_project_versions(
     client: PolyaxonClient = None,
 ):
     version_info = "<owner: {}> <project: {}>".format(owner, project_name)
-    polyaxon_client = ProjectClient(owner=owner, project=project_name, client=client)
-    params = get_query_params(limit=limit, offset=offset, query=query, sort=sort)
-    try:
-        response = polyaxon_client.list_versions(kind=kind, **params)
-    except (ApiException, HTTPError) as e:
-        message = "Could not get list of versions."
-        handle_cli_error(e, message=message)
-        sys.exit(1)
-
+    response = list_project_versions_response(
+        owner=owner,
+        project_name=project_name,
+        kind=kind,
+        limit=limit,
+        offset=offset,
+        query=query,
+        sort=sort,
+        client=client,
+    )
     meta = get_meta_response(response)
     if meta:
         Printer.print_header("Versions for {}".format(version_info))
@@ -392,3 +416,87 @@ def open_project_version_dashboard(
             default=True,
         )
     click.launch(artifact_url)
+
+
+def pull_project_version(
+    owner: str,
+    project_name: str,
+    kind: V1ProjectVersionKind,
+    version: str,
+    path: str,
+    download_artifacts: bool = True,
+):
+    fqn_version = get_versioned_entity_full_name(owner, project_name, version)
+    polyaxon_client = ProjectClient(owner=owner, project=project_name)
+
+    try:
+        Printer.print_header(
+            "Pulling the {} version `{}` to `{} ...".format(kind, fqn_version, path)
+        )
+        polyaxon_client.pull_version(
+            kind, version, path=path, download_artifacts=download_artifacts
+        )
+        Printer.print_success(
+            "Finished pulling the {} version `{}` to `{}`.".format(
+                kind, fqn_version, path
+            )
+        )
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(
+            e,
+            message="Could not pull the {} version `{}` to `{}`.".format(
+                kind, fqn_version, path
+            ),
+        )
+        sys.exit(1)
+
+
+def pull_one_or_many_project_versions(
+    owner: str,
+    project_name: str,
+    kind: V1ProjectVersionKind,
+    version: str,
+    all_versions: bool = None,
+    query: str = None,
+    limit: int = None,
+    offset: int = None,
+    path: str = None,
+    download_artifacts: bool = True,
+):
+    offline_path = path or os.path.join(
+        container_contexts.CONTEXT_OFFLINE_ROOT, "{}s".format(kind)
+    )
+    offline_path_format = "{}/{{}}".format(offline_path)
+
+    def _pull(version_name: str):
+        version_path = offline_path_format.format(version_name)
+        pull_project_version(
+            owner=owner,
+            project_name=project_name,
+            kind=kind,
+            version=version_name,
+            path=version_path,
+            download_artifacts=download_artifacts,
+        )
+
+    if all_versions or any([query, limit, offset]):
+        limit = 1000 if all_versions else limit
+        versions = list_project_versions_response(
+            owner=owner,
+            project_name=project_name,
+            kind=kind,
+            limit=limit,
+            offset=offset,
+            query=query,
+        ).results
+        Printer.print_header(f"Pulling {len(versions)} {kind} versions ...")
+        for version in version:
+            _pull(version.name)
+    elif version:
+        _pull(version)
+    else:
+        Printer.print_error(
+            "Please provide a version name, provide a query to filter versions to pull, "
+            "or pass the flag `-a/--all` to pull versions.",
+            sys_exit=True,
+        )

@@ -13,10 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import logging
+import os
 
 from requests import HTTPError
 from typing import Dict, List, Union
+
+import ujson
 
 import polyaxon_sdk
 
@@ -25,7 +27,9 @@ from polyaxon.client.decorators import client_handler
 from polyaxon.constants.globals import DEFAULT
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.lifecycle import V1ProjectVersionKind, V1StageCondition
+from polyaxon.logger import logger
 from polyaxon.utils.fqn_utils import get_entity_full_name, get_entity_info
+from polyaxon.utils.path_utils import check_or_create_path, delete_path
 from polyaxon.utils.query_params import get_query_params
 from polyaxon.utils.validation import validate_tags
 from polyaxon_sdk.rest import ApiException
@@ -216,7 +220,7 @@ class ProjectClient:
         sort: str = None,
         limit: int = None,
         offset: int = None,
-    ) -> List[polyaxon_sdk.V1ProjectVersion]:
+    ) -> polyaxon_sdk.V1ListProjectVersionsResponse:
         """Lists project versions under the current owner/project.
 
         [Project API](/docs/api/#operation/ListProjectVersions)
@@ -408,7 +412,7 @@ class ProjectClient:
             kind: V1ProjectVersionKind, kind of the project version.
             version: str, required, the version name/tag.
         """
-        logging.info("Deleting {} version: `{}`".format(kind, version))
+        logger.info("Deleting {} version: `{}`".format(kind, version))
         return self.client.projects_v1.delete_version(
             self.owner,
             self.project,
@@ -519,3 +523,99 @@ class ProjectClient:
             artifacts=original_version.artifacts,
             force=force,
         )
+
+    @client_handler(check_no_op=True)
+    def persist_version(self, config: polyaxon_sdk.V1ProjectVersion, path: str):
+        """Persists a version to a local path."""
+        if not config:
+            logger.debug(
+                "Persist offline run call failed. "
+                "Make sure that the offline mode is enabled and that run_data is provided."
+            )
+            return
+        if not path or not os.path.exists(path):
+            check_or_create_path(path, is_dir=True)
+        version_path = "{}/version_data.json".format(path)
+        with open(version_path, "w") as config_file:
+            config_file.write(
+                ujson.dumps(self.client.sanitize_for_serialization(config))
+            )
+        if not config.content:
+            return
+        if config.kind == V1ProjectVersionKind.COMPONENT:
+            version_path = "{}/polyaxonfile.json".format(path)
+        else:
+            # Persist content metadata as content.json file
+            version_path = "{}/content.json".format(path)
+        with open(version_path, "w") as config_file:
+            config_file.write(config.content)
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def download_artifacts_for_version(
+        self, config: polyaxon_sdk.V1ProjectVersion, path: str
+    ):
+        if config.kind not in {
+            V1ProjectVersionKind.MODEL,
+            V1ProjectVersionKind.ARTIFACT,
+        }:
+            logger.info(
+                "Skip artifacts download for version {} with kind {}.".format(
+                    config.name, config.kind
+                )
+            )
+            return
+
+        meta_info = config.meta_info or {}
+        run_info = meta_info.get("run", {})
+        if not run_info:
+            logger.info(
+                "Skip artifacts download for version {} with kind {}. "
+                "The version is not linked to any run.".format(config.name, config.kind)
+            )
+            return
+
+        run_artifacts = [
+            polyaxon_sdk.V1RunArtifact(**a) for a in meta_info.get("artifacts", [])
+        ]
+        if not run_artifacts:
+            logger.info(
+                "Skip artifacts download for version {} with kind {}. "
+                "The version is not linked to any artifacts.".format(
+                    config.name, config.kind
+                )
+            )
+            return
+
+        run_project = run_info.get("project", self.project)
+        run_uuid = run_info.get("uuid", config.run)
+
+        from polyaxon.client.run import RunClient
+
+        # Creating run client to download artifacts
+        run_client = RunClient(owner=self.owner, project=run_project, run_uuid=run_uuid)
+        for artifact_lineage in run_artifacts:
+            logger.info(
+                "Downloading artifact {} with kind {} and remote path {} to {}.".format(
+                    artifact_lineage.name,
+                    artifact_lineage.kind,
+                    artifact_lineage.path,
+                    path,
+                )
+            )
+            run_client.download_artifact_for_lineage(
+                lineage=artifact_lineage, path_to=path
+            )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def pull_version(
+        self,
+        kind: V1ProjectVersionKind,
+        version: str,
+        path: str,
+        download_artifacts: bool = True,
+    ):
+        delete_path(path)
+        config = self.get_version(kind=kind, version=version)
+        self.persist_version(config=config, path=path)
+        if download_artifacts:
+            self.download_artifacts_for_version(config=config, path=path)

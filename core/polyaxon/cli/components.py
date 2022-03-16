@@ -31,6 +31,7 @@ from polyaxon.cli.project_versions import (
     get_project_version,
     list_project_versions,
     open_project_version_dashboard,
+    pull_one_or_many_project_versions,
     register_project_version,
     stage_project_version,
     transfer_project_version,
@@ -430,7 +431,7 @@ def stage(ctx, project, version, to, message):
     $ polyaxon components stage -ver rc12 --to=production
 
     \b
-    $ polyaxon components stage -p amce/foobar -ver rc12 --to=staging --message="Use carefully!"
+    $ polyaxon components stage -p acme/foobar -ver rc12 --to=staging --message="Use carefully!"
     """
     version = version or ctx.obj.get("version") or "latest"
     owner, project_name = get_project_or_local(
@@ -467,7 +468,7 @@ def transfer(ctx, project, version, to_project):
     $ polyaxon components transfer -ver rc12 -to dest-project
 
     \b
-    $ polyaxon components transfer -p amce/foobar -ver rc12 --to-project=dest-project
+    $ polyaxon components transfer -p acme/foobar -ver rc12 --to-project=dest-project
     """
     version = version or ctx.obj.get("version") or "latest"
     owner, project_name = get_project_or_local(
@@ -479,6 +480,62 @@ def transfer(ctx, project, version, to_project):
         kind=V1ProjectVersionKind.COMPONENT,
         version=version,
         to_project=to_project,
+    )
+
+
+@components.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_COMPONENT_VERSION["args"], **OPTIONS_COMPONENT_VERSION["kwargs"])
+@click.option(
+    "--all-versions",
+    "-a",
+    is_flag=True,
+    default=False,
+    help="To pull all versions.",
+)
+@click.option(
+    "--query", "-q", type=str, help="To filter the versions based on q query spec."
+)
+@click.option("--limit", "-l", type=int, help="To limit the list of runs.")
+@click.option("--offset", "-off", type=int, help="To offset the list of runs.")
+@click.option(
+    "--path",
+    type=click.Path(exists=False),
+    help="Optional path where the models are persisted, "
+    "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
+)
+@click.pass_context
+@clean_outputs
+def pull(ctx, project, version, all_versions, query, limit, offset, path):
+    """Package and download the version to a local path.
+
+    Uses /docs/core/cli/#caching
+
+    Examples:
+
+    \b
+    $ polyaxon components pull -ver rc12
+
+    \b
+    $ polyaxon components pull -p acme/foobar -q "stage: production, name: %-v1%"
+
+    \b
+    $ polyaxon components pull -p acme/foobar -a --path /tmp/versions
+    """
+    owner, project_name = get_project_or_local(
+        project or ctx.obj.get("project"), is_cli=True
+    )
+    pull_one_or_many_project_versions(
+        owner=owner,
+        project_name=project_name,
+        kind=V1ProjectVersionKind.COMPONENT,
+        version=version,
+        all_versions=all_versions,
+        query=query,
+        limit=limit,
+        offset=offset,
+        path=path,
+        download_artifacts=False,
     )
 
 

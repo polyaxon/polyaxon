@@ -172,7 +172,7 @@ def ops(ctx, project, uid):
     help="Saves the results to a csv file. Note that this flag requires pandas",
 )
 @click.option(
-    "--query", "-q", type=str, help="To filter the runs based on this query spec."
+    "--query", "-q", type=str, help="To filter the runs based on a query spec."
 )
 @click.option(
     "--sort", "-s", type=str, help="To order the runs based on this sort spec."
@@ -1369,7 +1369,7 @@ def transfer(ctx, project, uid, to_project):
     $ polyaxon ops transfer --to-project dest-project
 
     \b
-    $ polyaxon ops transfer -p amce/foobar -uid 8aac02e3a62a4f0aaa257c59da5eab80 -to=dest-project
+    $ polyaxon ops transfer -p acme/foobar -uid 8aac02e3a62a4f0aaa257c59da5eab80 -to=dest-project
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -1514,7 +1514,7 @@ def service(ctx, project, uid, yes, external, url):
     help="To pull all runs.",
 )
 @click.option(
-    "--query", "-q", type=str, help="To filter the runs based on this query spec."
+    "--query", "-q", type=str, help="To filter the runs based on a query spec."
 )
 @click.option("--limit", "-l", type=int, help="To limit the list of runs.")
 @click.option("--offset", "-off", type=int, help="To offset the list of runs.")
@@ -1522,7 +1522,7 @@ def service(ctx, project, uid, yes, external, url):
     "--no-artifacts",
     is_flag=True,
     default=False,
-    help="To disable uploading the run's artifacts and only sync metadata. "
+    help="To disable downloading the run's artifacts and only persist the metadata. "
     "This is useful if you want to move a run from one Polyaxon deployment "
     "to another while keeping the same artifacts store.",
 )
@@ -1599,7 +1599,8 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
         _pull(uid)
     else:
         Printer.print_error(
-            "Please provide a run uuid or pass the flag `-a/--all` to sync runs."
+            "Please provide a run uuid, provide a query to filter runs, "
+            "or pass the flag `-a/--all` to pull runs."
         )
         sys.exit(1)
 
