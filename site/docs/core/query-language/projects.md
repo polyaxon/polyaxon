@@ -1,6 +1,6 @@
 ---
-title: "Runs Query Syntax"
-sub_link: "query-language/runs"
+title: "Projects Query Syntax"
+sub_link: "query-language/projects"
 meta_title: "Polyaxon Query Syntax Specification for Projects - Polyaxon References"
 meta_description: "Polyaxon Projects Query Syntax Specification for Projects."
 visibility: public

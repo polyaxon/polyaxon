@@ -301,7 +301,9 @@ def ls(
 
         results = response.results
 
-    objects = [Printer.add_status_color(o.to_dict()) for o in results]
+    objects = [o.to_dict() for o in results]
+    if not to_csv:
+        objects = [Printer.add_status_color(o) for o in objects]
     columns = validate_tags(columns, validate_yaml=True)
     if io:
         objects, prefixed_columns = flatten_keys(
