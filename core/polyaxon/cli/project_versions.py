@@ -488,8 +488,9 @@ def pull_one_or_many_project_versions(
             offset=offset,
             query=query,
         ).results
-        Printer.print_header(f"Pulling {len(versions)} {kind} versions ...")
-        for version in version:
+        Printer.print_header(f"Pulling {kind} versions (total: {len(versions)}) ...")
+        for idx, version in enumerate(versions):
+            Printer.print_header(f"Pulling version {idx + 1}/{len(versions)} ...")
             _pull(version.name)
     elif version:
         _pull(version)

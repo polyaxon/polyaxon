@@ -1595,8 +1595,9 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
                 e, message="Could not get runs for project `{}`.".format(project_name)
             )
             sys.exit(1)
-        Printer.print_header(f"Pulling {len(runs)} remote runs ...")
-        for run in runs:
+        Printer.print_header(f"Pulling remote runs (total: {len(runs)})...")
+        for idx, run in enumerate(runs):
+            Printer.print_header(f"Pulling run {idx + 1}/{len(runs)} ...")
             _pull(run.uuid)
     elif uid:
         _pull(uid)
@@ -1734,7 +1735,10 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
                 f"does not exist, is not a directory, or is empty."
             )
             sys.exit(1)
-        for uid in os.listdir(offline_path):
+        run_paths = os.listdir(offline_path)
+        Printer.print_header(f"Pushing local runs (total: {len(run_paths)}) ...")
+        for idx, uid in enumerate(run_paths):
+            Printer.print_header(f"Pushing run {idx + 1}/{len(run_paths)} ...")
             _push(uid)
     elif uid:
         _push(uid)
