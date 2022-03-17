@@ -1253,7 +1253,17 @@ class RunClient:
         Returns:
             str.
         """
-        files = IgnoreConfigManager.get_unignored_filepaths(dirpath)
+        files = IgnoreConfigManager.get_unignored_filepaths(
+            path=dirpath, addtional_patterns=IgnoreConfigManager.get_push_patterns()
+        )
+        if not files:
+            logger.warning(
+                "No files detected under the path %s.\n"
+                "This could happen if the path is empty or "
+                "ignored by one of the patterns in the ignore manager.",
+                dirpath,
+            )
+            return
         return self.upload_artifacts(
             files=files,
             path=path or "",
@@ -1281,6 +1291,9 @@ class RunClient:
         Returns:
             str.
         """
+        if not files:
+            logger.warning("No files to upload to %s.", path)
+            return
         url = get_proxy_run_url(
             service=STREAMS_V1_LOCATION,
             namespace=self.namespace,

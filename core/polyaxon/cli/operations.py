@@ -1546,13 +1546,19 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
     Examples:
 
     \b
-    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops pull -uid 8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --no-artifacts
+    $ polyaxon ops pull -uid 8aac02e3a62a4f0aaa257c59da5eab80 --no-artifacts
 
     \b
-    $ polyaxon ops push -uid 8aac02e3a62a4f0aaa257c59da5eab80 --path /tmp/base
+    $ polyaxon ops pull -uid 8aac02e3a62a4f0aaa257c59da5eab80 --path /tmp/base
+
+    \b
+    $ polyaxon ops pull -q "status: succeeded, kind: job, metrics.loss: <0.2" --l 10 --path /tmp/base
+
+    \b
+    $ polyaxon ops pull -a
     """
     owner, project_name = get_project_or_local(
         project or ctx.obj.get("project"), is_cli=True

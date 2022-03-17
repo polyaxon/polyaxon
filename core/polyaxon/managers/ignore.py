@@ -19,10 +19,12 @@ import re
 
 from collections import namedtuple
 from pathlib import PurePath
+from typing import List
 
 from polyaxon.logger import logger
 from polyaxon.managers.base import BaseConfigManager
 from polyaxon.utils import cli_constants
+from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import unix_style_path
 
 
@@ -157,6 +159,14 @@ class IgnoreConfigManager(BaseConfigManager):
     def get_patterns(cls, ignore_file):
         return [Pattern.create(line) for line in cls.read_file(ignore_file)]
 
+    @staticmethod
+    def get_push_patterns():
+        return [
+            Pattern.create("lineages.json"),
+            Pattern.create("run_data.json"),
+            Pattern.create("version_data.json"),
+        ]
+
     @classmethod
     def get_config(cls):
         config_filepath = cls.get_config_filepath()
@@ -169,8 +179,11 @@ class IgnoreConfigManager(BaseConfigManager):
             return cls.get_patterns(ignore_file)
 
     @classmethod
-    def get_unignored_filepaths(cls, path: str = None):
-        config = cls.get_config()
+    def get_unignored_filepaths(
+        cls, path: str = None, addtional_patterns: List[Pattern] = None
+    ):
+        config = to_list(cls.get_config(), check_none=True)
+        config += to_list(addtional_patterns, check_none=True)
         unignored_files = []
         path = path or "."
 
