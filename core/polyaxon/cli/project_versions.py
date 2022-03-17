@@ -448,7 +448,6 @@ def pull_project_version(
                 kind, fqn_version, path
             ),
         )
-        sys.exit(1)
 
 
 def pull_one_or_many_project_versions(

@@ -1580,7 +1580,6 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
             PolyaxonClientException,
         ) as e:
             handle_cli_error(e, message="Could not pull run `{}`.".format(run_uuid))
-            sys.exit(1)
 
     if all_runs or any([query, limit, offset]):
         limit = 1000 if all_runs else limit
