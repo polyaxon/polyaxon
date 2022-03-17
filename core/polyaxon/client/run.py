@@ -276,11 +276,16 @@ class RunClient:
         return self._run_data.outputs
 
     @client_handler(check_no_op=True, check_offline=True)
-    def refresh_data(self, load_artifacts_lineage: bool = False):
+    def refresh_data(
+        self, load_artifacts_lineage: bool = False, load_conditions: bool = False
+    ):
         """Fetches the run data from the api."""
         self._run_data = self.client.runs_v1.get_run(
             self.owner, self.project, self.run_uuid
         )
+        if load_conditions:
+            _, conditions = self.get_statuses()
+            self._run_data.status_conditions = conditions
         if load_artifacts_lineage:
             lineages = self.get_artifacts_lineage(limit=1000).results
             self._artifacts_lineage = {l.name: l for l in lineages}
@@ -2421,7 +2426,7 @@ class RunClient:
             download_artifacts: bool, optional, flag to trigger artifacts download.
         """
         delete_path(path)
-        self.refresh_data(load_artifacts_lineage=True)
+        self.refresh_data(load_artifacts_lineage=True, load_conditions=True)
         self.persist_run(path)
         if download_artifacts:
             self.download_artifacts(path_to=path)
