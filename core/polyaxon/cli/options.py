@@ -36,7 +36,7 @@ OPTIONS_MODEL_VERSION = {
     "args": ["--version", "-ver"],
     "kwargs": dict(
         type=str,
-        help="The component version, e.g. 'model-a:1.3.4' or 'acme/model-a:v1'.",
+        help="The component version, e.g. 'v1.3.4' or 'rc1' or 'latest'.",
     ),
 }
 
@@ -44,7 +44,7 @@ OPTIONS_COMPONENT_VERSION = {
     "args": ["--version", "-ver"],
     "kwargs": dict(
         type=str,
-        help="The component version, e.g. 'kaniko:test' or 'acme/kaniko:test'.",
+        help="The component version, e.g. 'v1.3.4' or 'rc1' or 'latest'.",
     ),
 }
 
@@ -53,7 +53,7 @@ OPTIONS_ARTIFACT_VERSION = {
     "args": ["--version", "-ver"],
     "kwargs": dict(
         type=str,
-        help="The artifact version, e.g. 'dataset:test' or 'acme/dataset:test'.",
+        help="The artifact version, e.g. 'v1.3.4' or 'rc1' or 'latest'.",
     ),
 }
 
