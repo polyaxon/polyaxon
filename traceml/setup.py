@@ -40,7 +40,7 @@ extra = {
     "all": [
         "scikit-learn",
         "Pillow",
-        "matplotlib<3.3.3",
+        "matplotlib",
         "moviepy",
         "plotly",
         "bokeh",

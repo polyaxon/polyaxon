@@ -53,7 +53,7 @@ extra = {
     "polytune": ["scikit-learn", "hyperopt"],
     "polyboard": [
         "Pillow",
-        "matplotlib<3.3.3",
+        "matplotlib",
         "moviepy",
         "plotly",
         "bokeh",

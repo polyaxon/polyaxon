@@ -4,9 +4,9 @@ scikit-learn
 ipython-genutils  # required for nbconvert and was dropped in v5.1 (see: https://github.com/mu-editor/mu/pull/1844).
 nbconvert>=5.4,<6.0.0 # pin to fix #9
 altair==4.1.0
-matplotlib==3.2.1
+matplotlib
 moviepy==1.0.2
 plotly==4.6.0
-Pillow==9.0.0
+Pillow
 bokeh==2.0.2
 aiofiles==0.8.0
