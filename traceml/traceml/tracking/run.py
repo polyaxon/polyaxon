@@ -1583,7 +1583,13 @@ class Run(RunClient):
 
     @client_handler(check_no_op=True, can_log_events=True)
     def log_mpl_plotly_chart(
-        self, name: str, figure, step: int = None, timestamp: datetime = None
+        self,
+        name: str,
+        figure,
+        step: int = None,
+        timestamp: datetime = None,
+        close: bool = True,
+        fallback_to_image: bool = True,
     ):
         """Logs a matplotlib figure to plotly figure.
 
@@ -1592,17 +1598,31 @@ class Run(RunClient):
             figure: figure
             step: int, optional
             timestamp: datetime, optional
+            close: bool, optional, default True
+            fallback_to_image: bool, optional, default True
         """
-        name = self._sanitize_filename(name)
-        self._log_has_events()
 
-        chart = events_processors.mpl_plotly_chart(figure=figure)
-        logged_event = LoggedEventSpec(
-            name=name,
-            kind=V1ArtifactKind.CHART,
-            event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
-        )
-        self._add_event(logged_event)
+        def log_figure():
+            self._log_has_events()
+
+            chart = events_processors.mpl_plotly_chart(figure=figure, close=close)
+            logged_event = LoggedEventSpec(
+                name=self._sanitize_filename(name),
+                kind=V1ArtifactKind.CHART,
+                event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
+            )
+            self._add_event(logged_event)
+
+        try:
+            log_figure()
+        except Exception as e:
+            if fallback_to_image:
+                logger.warning("Could not convert figure to plotly. Error %s", e)
+                self.log_mpl_image(
+                    data=figure, name=name, step=step, timestamp=timestamp, close=close
+                )
+            else:
+                raise e
 
     @client_handler(check_no_op=True)
     def get_log_level(self):

@@ -661,7 +661,12 @@ log_altair_chart.__doc__ = Run.log_altair_chart.__doc__
 
 
 def log_mpl_plotly_chart(
-    name: str, figure, step: int = None, timestamp: datetime = None
+    name: str,
+    figure,
+    step: int = None,
+    timestamp: datetime = None,
+    close: bool = True,
+    fallback_to_image: bool = True,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_mpl_plotly_chart(
@@ -669,6 +674,8 @@ def log_mpl_plotly_chart(
         figure=figure,
         step=step,
         timestamp=timestamp,
+        close=close,
+        fallback_to_image=fallback_to_image,
     )
 
 

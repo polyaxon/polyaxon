@@ -46,13 +46,14 @@ def altair_chart(figure) -> V1EventChart:
 def plotly_chart(figure) -> V1EventChart:
     try:
         import plotly.tools
+
+        from traceml.vendor.matplotlylib import mpl_to_plotly
     except ImportError:
         logger.warning(PLOTLY_ERROR_MESSAGE)
         return UNKNOWN
 
     if module_type(figure, "matplotlib.figure.Figure"):
-        figure = plotly.tools.mpl_to_plotly(figure)
-
+        figure = mpl_to_plotly(figure)
     else:
         figure = plotly.tools.return_figure_from_figure_or_data(
             figure, validate_figure=True
@@ -60,15 +61,18 @@ def plotly_chart(figure) -> V1EventChart:
     return V1EventChart(kind=V1EventChartKind.PLOTLY, figure=figure)
 
 
-def mpl_plotly_chart(figure) -> V1EventChart:
+def mpl_plotly_chart(figure, close: bool = True) -> V1EventChart:
     try:
         import plotly.tools
+
+        from plotly import optional_imports
     except ImportError:
         logger.warning(PLOTLY_ERROR_MESSAGE)
         return UNKNOWN
 
     try:
         import matplotlib
+        import matplotlib.pyplot as plt
 
         from matplotlib.figure import Figure
     except ImportError:
@@ -88,31 +92,14 @@ def mpl_plotly_chart(figure) -> V1EventChart:
                         "Only matplotlib.pyplot or matplotlib.pyplot.Figure objects are accepted."
                     )
 
-    # This code was taken from:
-    # https://github.com/matplotlib/matplotlib/pull/16772/files#diff-506cc6d736a0593e8bb820981b2c12ae # noqa
-    # Removed in https://github.com/matplotlib/matplotlib/pull/16772
-    from matplotlib.spines import Spine
+    from traceml.vendor.matplotlylib import mpl_to_plotly
 
-    def is_frame_like(self):
-        """return True if directly on axes frame
-        This is useful for determining if a spine is the edge of an
-        old style MPL plot. If so, this function will return True.
-        """
-        self._ensure_position_is_set()
-        position = self._position
-        if isinstance(position, str):
-            if position == "center":
-                position = ("axes", 0.5)
-            elif position == "zero":
-                position = ("data", 0)
-        if len(position) != 2:
-            raise ValueError("position should be 2-tuple")
-        position_type, amount = position
-        if position_type == "outward" and amount == 0:
-            return True
-        else:
-            return False
+    plotly_figure = mpl_to_plotly(figure)
+    result = plotly_chart(figure=plotly_figure)
+    if close:
+        try:
+            plt.close(figure.number)
+        except Exception:  # noqa
+            plt.close(figure)
 
-    Spine.is_frame_like = is_frame_like
-    figure = plotly.tools.mpl_to_plotly(figure)
-    return plotly_chart(figure=figure)
+    return result

@@ -262,9 +262,9 @@ def get_base_filename(filepath: str):
 
 
 def module_type(obj, type_pattern):
-    the_type = type(obj)
-    module = the_type.__module__
-    name = the_type.__name__
+    obj_type = type(obj)
+    module = obj_type.__module__
+    name = obj_type.__name__
     actual_fqn = "%s.%s" % (module, name)
     if isinstance(type_pattern, str):
         return type_pattern == actual_fqn

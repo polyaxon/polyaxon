@@ -201,7 +201,7 @@ def save_image(
     )
 
 
-def figure_to_image(figure, close=True):
+def figure_to_image(figure, close: bool = True):
     """Render matplotlib figure to numpy format.
 
     Returns:

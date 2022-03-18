@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pkgutil
-
 
 class ImportStringCache(dict):
     def __missing__(self, key):
@@ -52,6 +50,8 @@ def import_submodules(context, root_module, path):
 
     >>> import_submodules(locals(), __name__, __path__)
     """
+    import pkgutil
+
     for _, module_name, _ in pkgutil.walk_packages(path, root_module + "."):
         # this causes a Runtime error with model conflicts
         # module = loader.find_module(module_name).load_module(module_name)
