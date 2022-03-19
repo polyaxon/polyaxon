@@ -57,8 +57,9 @@ tracking.init(...)
 
 ## XGBoost callback
 
-Polyaxon provides an XGBoost callback, you can use this callback with your experiment to report metrics automatically and other charts automatically:
+Polyaxon provides two XGBoost callback flavors an old `polyaxon_callback` function and a new `PolyaxonCallback` class, you can use one of these callbacks with your experiment to report metrics automatically and other charts automatically:
 
+ * Function callback
 
 ```python
 from polyaxon import tracking
@@ -67,12 +68,28 @@ from polyaxon.tracking.contrib.xgboost import polyaxon_callback
 # ...
 tracking.init()
 #...
-model.train(params, data, callbacks=[polyaxon_callback(log_importance=True)])
+model.train(params, data, callbacks=[polyaxon_callback(...)])
+```
+
+ * Class callback
+
+> **Note**: this callback is available from `>1.17.0`
+
+```python
+from polyaxon import tracking
+from polyaxon.tracking.contrib.xgboost import PolyaxonCallback
+
+# ...
+tracking.init()
+#...
+model.train(params, data, callbacks=[PolyaxonCallback(...)])
 ```
 
 ## Customizing the callback
 
 Creating the callback will use the current initialized run, but you can use a different run if you need to have more control:
+
+ * Function callback
 
 ```python
 from polyaxon.tracking import Run
@@ -80,7 +97,19 @@ from polyaxon.tracking.contrib.xgboost import polyaxon_callback
 
 run = Run(...)
 
-model.train(params, data, callbacks=[polyaxon_callback(run=run, log_importance=True)])
+model.train(params, data, callbacks=[polyaxon_callback(run=run, log_importance=True, log_model=True, max_num_features=44)])
+```
+
+
+ * Class callback
+
+```python
+from polyaxon.tracking import Run
+from polyaxon.tracking.contrib.xgboost import polyaxon_callback
+
+run = Run(...)
+
+model.train(params, data, callbacks=[polyaxon_callback(run=run, log_importance=True, log_model=True, max_num_features=44)])
 ```
 
 ## Manual logging
@@ -111,7 +140,7 @@ import xgboost as xgb
 
 # Polyaxon
 from polyaxon import tracking
-from polyaxon.tracking.contrib.xgboost import polyaxon_callback
+from polyaxon.tracking.contrib.xgboost import polyaxon_callback, PolyaxonCallback
 
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
@@ -193,11 +222,15 @@ if __name__ == '__main__':
 
     dtrain = xgb.DMatrix(X_train, label=y_train)
     dtest = xgb.DMatrix(X_test, label=y_test)
+    
+    callback = polyaxon_callback()
+    # Or 
+    # callback = PolyaxonCallback()
 
     if args.cross_validate:
         xgb.cv(params, dtrain, num_boost_round=20, nfold=7,
-               callbacks=[polyaxon_callback(log_importance=True)])
+               callbacks=[callback])
     else:
         xgb.train(params, dtrain, 20, [(dtest, 'eval'), (dtrain, 'train')],
-                  callbacks=[polyaxon_callback(log_importance=True)])
+                  callbacks=[callback])
 ```

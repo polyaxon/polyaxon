@@ -16,7 +16,8 @@
 
 # To keep backwards compatibility
 
-from traceml.integrations.xgboost import callback
+from traceml.integrations.xgboost import callback, Callback
 
 # alias
 polyaxon_callback = callback
+PolyaxonCallback = Callback
