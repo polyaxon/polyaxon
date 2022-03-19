@@ -69,6 +69,8 @@ sidebar: "releases"
 ### Tracking
 
  * **New**: Add support for logging data versions, summaries, reports, and quality.
+ * **New**: Add log table.
+ * **New**: Add custom bar plots.
  * **Enhancement**: Allow tracking dataframes as parquet files.
 
 ### Hub
