@@ -41,6 +41,7 @@ from polyaxon.polyflow import (
 )
 from polyaxon.schemas import V1RunPending
 from polyaxon.schemas.types import V1ArtifactsType
+from polyaxon.utils.list_utils import to_list
 from polycommon.service_interface import Service
 
 
@@ -262,6 +263,8 @@ class OperationsService(Service):
             name = name or compiled_operation.name
             description = description or compiled_operation.description
             tags = tags or compiled_operation.tags
+            if tags:
+                tags = to_list(tags, check_none=True, to_unique=True)
             kind, runtime = self.get_kind(compiled_operation)
             kind, runtime, meta_info = self.get_meta_info(
                 compiled_operation, kind, runtime, meta_info, **kwargs
