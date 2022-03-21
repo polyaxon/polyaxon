@@ -16,7 +16,7 @@
 
 import os
 
-from typing import List, Optional
+from typing import List, Optional, Tuple, Union
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.containers.contexts import (
@@ -52,7 +52,7 @@ def get_or_create_args(path):
     return 'if [ ! -d "{path}" ]; then mkdir -m 0777 -p {path}; fi;'.format(path=path)
 
 
-def cp_copy_args(path_from, path_to, is_file: bool, sync_fw: bool) -> str:
+def cp_mount_args(path_from, path_to, is_file: bool, sync_fw: bool) -> str:
     sync_fw_flag = (
         "polyaxon initializer fswatch --path={};".format(path_to) if sync_fw else ""
     )
@@ -72,27 +72,23 @@ def cp_copy_args(path_from, path_to, is_file: bool, sync_fw: bool) -> str:
     )
 
 
-def cp_gcs_args(path_from: str, path_to: str, is_file: bool, sync_fw: bool) -> str:
-    file_flag = "--is-file" if is_file else ""
-    sync_fw_flag = "--sync-fw" if sync_fw else ""
-    return "polyaxon initializer gcs --path-from={} --path-to={} {} {};".format(
-        path_from, path_to, file_flag, sync_fw_flag
-    )
-
-
-def cp_s3_args(path_from: str, path_to: str, is_file: bool, sync_fw: bool) -> str:
-    file_flag = "--is-file" if is_file else ""
-    sync_fw_flag = "--sync-fw" if sync_fw else ""
-    return "polyaxon initializer s3 --path-from={} --path-to={} {} {};".format(
-        path_from, path_to, file_flag, sync_fw_flag
-    )
-
-
-def cp_wasb_args(path_from: str, path_to: str, is_file: bool, sync_fw: bool) -> str:
-    file_flag = "--is-file" if is_file else ""
-    sync_fw_flag = "--sync-fw" if sync_fw else ""
-    return "polyaxon initializer wasb --path-from={} --path-to={} {} {};".format(
-        path_from, path_to, file_flag, sync_fw_flag
+def cp_store_args(
+    backend: str,
+    path_from: str,
+    path_to: str,
+    is_file: bool,
+    check_path: bool,
+    sync_fw: bool,
+) -> str:
+    args = []
+    if is_file:
+        args.append("--is-file")
+    if sync_fw:
+        args.append("--sync-fw")
+    if check_path:
+        args.append("--check-path")
+    return "polyaxon initializer path --connection-kind={} --path-from={} --path-to={} {};".format(
+        backend, path_from, path_to, " ".join(args)
     )
 
 
@@ -100,15 +96,17 @@ def get_volume_args(
     store: V1ConnectionType,
     mount_path: str,
     artifacts: V1ArtifactsType,
+    paths: Union[List[str], List[Tuple[str, str]]],
     sync_fw: bool = False,
 ) -> str:
     files = []
     dirs = []
+    paths = to_list(paths, check_none=True)
     if artifacts:
         files = artifacts.files or files
         dirs = artifacts.dirs or dirs
     # Default behavior is to pull all bucket
-    if not files and not dirs:
+    if not files and not dirs and not paths:
         dirs = [""]
     args = []
     base_path_from = store.store_path
@@ -124,7 +122,7 @@ def get_volume_args(
             _p = p
 
         # Create folders
-        if is_file:
+        if is_file or check_path:
             # If we are initializing a file we need to create the base folder
             _p = os.path.split(_p)[0]
         base_path_to = os.path.join(mount_path, _p)
@@ -134,41 +132,60 @@ def get_volume_args(
         # copy to context
         if store.is_wasb:
             args.append(
-                cp_wasb_args(
+                cp_store_args(
+                    backend="wasb",
                     path_from=path_from,
                     path_to=path_to,
                     is_file=is_file,
                     sync_fw=sync_fw,
+                    check_path=check_path,
                 )
             )
         elif store.is_s3:
             args.append(
-                cp_s3_args(
+                cp_store_args(
+                    backend="s3",
                     path_from=path_from,
                     path_to=path_to,
                     is_file=is_file,
                     sync_fw=sync_fw,
+                    check_path=check_path,
                 )
             )
         elif store.is_gcs:
             args.append(
-                cp_gcs_args(
+                cp_store_args(
+                    backend="gcs",
                     path_from=path_from,
                     path_to=path_to,
                     is_file=is_file,
                     sync_fw=sync_fw,
+                    check_path=check_path,
                 )
             )
         else:
-            args.append(
-                cp_copy_args(
-                    path_from=path_from,
-                    path_to=path_to,
-                    is_file=is_file,
-                    sync_fw=sync_fw,
+            if check_path:
+                args.append(
+                    cp_store_args(
+                        backend=store.kind,
+                        path_from=path_from,
+                        path_to=path_to,
+                        is_file=is_file,
+                        sync_fw=sync_fw,
+                        check_path=check_path,
+                    )
                 )
-            )
+            else:
+                args.append(
+                    cp_mount_args(
+                        path_from=path_from,
+                        path_to=path_to,
+                        is_file=is_file,
+                        sync_fw=sync_fw,
+                    )
+                )
 
+    check_path = False
     is_file = True
     for p in files:
         _copy()
@@ -176,6 +193,10 @@ def get_volume_args(
     is_file = False
     for p in dirs:
         # We need to check that the path exists first
+        _copy()
+
+    check_path = True
+    for p in paths:
         _copy()
 
     return " ".join(args)
@@ -248,6 +269,7 @@ def get_store_container(
     polyaxon_init: V1PolyaxonInitContainer,
     connection: V1ConnectionType,
     artifacts: V1ArtifactsType,
+    paths: Union[List[str], List[Tuple[str, str]]],
     container: Optional[k8s_schemas.V1Container] = None,
     env: List[k8s_schemas.V1EnvVar] = None,
     mount_path: str = None,
@@ -284,7 +306,10 @@ def get_store_container(
         volume_mounts=volume_mounts,
         args=[
             get_volume_args(
-                store=connection, mount_path=mount_path, artifacts=artifacts
+                store=connection,
+                mount_path=mount_path,
+                artifacts=artifacts,
+                paths=paths,
             )
         ],
     )

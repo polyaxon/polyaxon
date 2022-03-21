@@ -1098,7 +1098,7 @@ class RunClient:
                 )
             elif V1ArtifactKind.is_file_or_dir(lineage.kind):
                 return self.download_artifacts(
-                    path=lineage_path, path_to=path_to, check_file=True
+                    path=lineage_path, path_to=path_to, check_path=True
                 )
             else:
                 return self.download_artifact(
@@ -1115,7 +1115,7 @@ class RunClient:
 
         if V1ArtifactKind.is_file_or_dir(lineage.kind):
             return self.download_artifacts(
-                path=lineage_path, path_to=path_to, check_file=True
+                path=lineage_path, path_to=path_to, check_path=True
             )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1152,7 +1152,7 @@ class RunClient:
         untar: bool = True,
         delete_tar: bool = True,
         extract_path: str = None,
-        check_file: bool = False,
+        check_path: bool = False,
     ):
         """Downloads a subpath containing multiple run artifacts.
 
@@ -1162,7 +1162,7 @@ class RunClient:
             untar: bool, optional, default: true.
             delete_tar: bool, optional, default: true.
             extract_path: str, optional.
-            check_file: bool, optional, default: false.
+            check_path: bool, optional, default: false.
                  To force the API to check if the path is file or dir.
         Returns:
             str.
@@ -1176,8 +1176,8 @@ class RunClient:
             subpath="artifacts",
         )
         url = absolute_uri(url=url, host=self.client.config.host)
-        if check_file:
-            url = "{}?check_file=true".format(url)
+        if check_path:
+            url = "{}?check_path=true".format(url)
 
         return self.store.download_file(
             url=url,
@@ -1186,7 +1186,7 @@ class RunClient:
             path_to=path_to,
             delete_tar=delete_tar and untar,
             extract_path=extract_path,
-            check_content_disposition=check_file,
+            check_content_disposition=check_path,
         )
 
     @client_handler(check_no_op=True, check_offline=True)

@@ -20,6 +20,7 @@ from fsspec import AbstractFileSystem
 
 from polyaxon.logger import logger
 from polyaxon.utils.list_utils import to_list
+from polyaxon.utils.path_utils import check_or_create_path
 
 
 def download_file_or_dir(
@@ -27,7 +28,11 @@ def download_file_or_dir(
     path_from: str,
     path_to: str,
     is_file: bool,
+    check_path: bool,
 ):
+    if check_path:
+        is_file = fs.isfile(path_from)
+    check_or_create_path(path_to, is_dir=not is_file)
     fs.download(rpath=path_from, lpath=path_to, recursive=not is_file)
 
 

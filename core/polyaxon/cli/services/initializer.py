@@ -135,6 +135,7 @@ def _download(
     is_file: bool,
     raise_errors: bool,
     sync_fw: bool,
+    check_path: bool,
 ):
     from polyaxon.fs.fs import get_sync_fs_from_type
     from polyaxon.fs.manager import download_file_or_dir
@@ -148,6 +149,7 @@ def _download(
             path_from=path_from,
             path_to=path_to,
             is_file=is_file,
+            check_path=check_path,
         )
         if sync_fw:
             _sync_fw(path_to)
@@ -174,6 +176,12 @@ def _download(
     help="whether or not to use the basename of the key.",
 )
 @click.option(
+    "--check-path",
+    is_flag=True,
+    default=False,
+    help="whether check the path if file or dir.",
+)
+@click.option(
     "--raise-errors",
     is_flag=True,
     default=False,
@@ -185,7 +193,7 @@ def _download(
     default=False,
     help="whether or not to sync file watcher after initialization.",
 )
-def s3(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
+def s3(connection_name, path_from, path_to, is_file, check_path, raise_errors, sync_fw):
     """Create s3 path context."""
     _download(
         connection_name=connection_name,
@@ -195,6 +203,7 @@ def s3(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
         is_file=is_file,
         raise_errors=raise_errors,
         sync_fw=sync_fw,
+        check_path=check_path,
     )
 
 
@@ -209,6 +218,12 @@ def s3(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
     help="whether or not to use the basename of the key.",
 )
 @click.option(
+    "--check-path",
+    is_flag=True,
+    default=False,
+    help="whether check the path if file or dir.",
+)
+@click.option(
     "--raise-errors",
     is_flag=True,
     default=False,
@@ -220,7 +235,9 @@ def s3(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
     default=False,
     help="whether or not to sync file watcher after initialization.",
 )
-def gcs(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
+def gcs(
+    connection_name, path_from, path_to, is_file, check_path, raise_errors, sync_fw
+):
     """Create gcs path context."""
     _download(
         connection_name=connection_name,
@@ -230,6 +247,7 @@ def gcs(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
         is_file=is_file,
         raise_errors=raise_errors,
         sync_fw=sync_fw,
+        check_path=check_path,
     )
 
 
@@ -244,6 +262,12 @@ def gcs(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
     help="whether or not to use the basename of the key.",
 )
 @click.option(
+    "--check-path",
+    is_flag=True,
+    default=False,
+    help="whether check the path if file or dir.",
+)
+@click.option(
     "--raise-errors",
     is_flag=True,
     default=False,
@@ -255,7 +279,9 @@ def gcs(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
     default=False,
     help="whether or not to sync file watcher after initialization.",
 )
-def wasb(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
+def wasb(
+    connection_name, path_from, path_to, is_file, check_path, raise_errors, sync_fw
+):
     """Create wasb path context."""
     _download(
         connection_name=connection_name,
@@ -265,6 +291,59 @@ def wasb(connection_name, path_from, path_to, is_file, raise_errors, sync_fw):
         is_file=is_file,
         raise_errors=raise_errors,
         sync_fw=sync_fw,
+        check_path=check_path,
+    )
+
+
+@initializer.command()
+@click.option("--connection-kind", help="The connection kind.")
+@click.option("--connection-name", help="The connection name.")
+@click.option("--path-from", help="The wasb path to download data from.")
+@click.option("--path-to", help="The local path to store the data.")
+@click.option(
+    "--is-file",
+    is_flag=True,
+    default=False,
+    help="whether or not to use the basename of the key.",
+)
+@click.option(
+    "--check-path",
+    is_flag=True,
+    default=False,
+    help="whether check the path if file or dir.",
+)
+@click.option(
+    "--raise-errors",
+    is_flag=True,
+    default=False,
+    help="whether or not to raise initialization errors.",
+)
+@click.option(
+    "--sync-fw",
+    is_flag=True,
+    default=False,
+    help="whether or not to sync file watcher after initialization.",
+)
+def path(
+    connection_kind,
+    connection_name,
+    path_from,
+    path_to,
+    is_file,
+    check_path,
+    raise_errors,
+    sync_fw,
+):
+    """Create wasb path context."""
+    _download(
+        connection_name=connection_name,
+        connection_kind=connection_kind,
+        path_from=path_from,
+        path_to=path_to,
+        is_file=is_file,
+        raise_errors=raise_errors,
+        sync_fw=sync_fw,
+        check_path=check_path,
     )
 
 

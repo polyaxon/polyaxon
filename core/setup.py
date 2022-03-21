@@ -61,7 +61,7 @@ extra = {
         "altair",
     ],
     "streams": [
-        "kubernetes_asyncio>=12.1.1",
+        "kubernetes_asyncio>=12.1.1,<22.6.0",
         "starlette==0.18.0",
         "aiofiles==0.8.0",
         "uvicorn[standard]==0.17.4",

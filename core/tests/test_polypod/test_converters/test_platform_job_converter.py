@@ -170,6 +170,7 @@ class TestJobConverter(BaseTestCase):
                     polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
                     connection=store,
                     artifacts=None,
+                    paths=None,
                     env=self.converter.get_init_service_env_vars(),
                 )
             ],
@@ -199,6 +200,7 @@ class TestJobConverter(BaseTestCase):
                     polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
                     connection=store,
                     artifacts=None,
+                    paths=None,
                     env=self.converter.get_init_service_env_vars(),
                     is_default_artifacts_store=True,
                 ),
@@ -231,6 +233,10 @@ class TestJobConverter(BaseTestCase):
                         files=["/foo", "/bar", ["from-foo", "to-foo"]]
                     ),
                 ),
+                V1Init(
+                    connection=store1.name,
+                    paths=["/foo", "/bar", ["from-foo", "to-foo"]],
+                ),
             ],
             connection_by_names={store.name: store, store1.name: store1},
             init_containers=[],
@@ -255,6 +261,7 @@ class TestJobConverter(BaseTestCase):
                     artifacts=V1ArtifactsType(
                         files=["/foo", "/bar", ["from-foo", "to-foo"]]
                     ),
+                    paths=None,
                     env=self.converter.get_init_service_env_vars(),
                     is_default_artifacts_store=True,
                 ),
@@ -264,6 +271,14 @@ class TestJobConverter(BaseTestCase):
                     artifacts=V1ArtifactsType(
                         files=["/foo", "/bar", ["from-foo", "to-foo"]]
                     ),
+                    paths=None,
+                    env=self.converter.get_init_service_env_vars(),
+                ),
+                get_store_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    connection=store1,
+                    artifacts=None,
+                    paths=["/foo", "/bar", ["from-foo", "to-foo"]],
                     env=self.converter.get_init_service_env_vars(),
                 ),
             ],

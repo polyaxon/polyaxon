@@ -296,3 +296,14 @@ def copy_file_or_dir_path(from_path: str, asset_path: str, use_basename: bool = 
             pass
     else:
         shutil.copytree(from_path, asset_path)
+
+
+def get_relative_path_to(base_path, path: List[str]) -> List[str]:
+    results = []
+    for d in path:
+        if not os.path.isabs(d):
+            results.append(os.path.join(base_path, d))
+        else:
+            results.append(d)
+
+    return results

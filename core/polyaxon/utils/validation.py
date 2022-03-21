@@ -28,6 +28,6 @@ def validate_tags(tags, validate_yaml: bool = False):
 
     if isinstance(tags, str):
         tags = [tag.strip() for tag in tags.split(",")]
-    tags = to_list(tags)
+    tags = to_list(tags, to_unique=True)
     tags = [tag.strip() for tag in tags if (tag and isinstance(tag, str))]
     return [t for t in tags if t]

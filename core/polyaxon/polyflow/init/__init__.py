@@ -21,6 +21,8 @@ import polyaxon_sdk
 from polyaxon.containers.names import POLYAXON_INIT_PREFIX, generate_container_name
 from polyaxon.k8s import k8s_schemas
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.fields.str_or_list import StrOrList
 from polyaxon.schemas.fields.swagger import SwaggerField
 from polyaxon.schemas.types import (
     ArtifactsTypeSchema,
@@ -33,11 +35,13 @@ from polyaxon.utils.signal_decorators import check_partial
 
 class InitSchema(BaseCamelSchema):
     artifacts = fields.Nested(ArtifactsTypeSchema, allow_none=True)
+    paths = RefOrObject(fields.List(StrOrList(), allow_none=True))
     git = fields.Nested(GitTypeSchema, allow_none=True)
     dockerfile = fields.Nested(DockerfileTypeSchema, allow_none=True)
     file = fields.Nested(FileTypeSchema, allow_none=True)
-    artifact_ref = fields.Str(allow_none=True)
+    lineage_ref = fields.Str(allow_none=True)
     model_ref = fields.Str(allow_none=True)
+    artifact_ref = fields.Str(allow_none=True)
     connection = fields.Str(allow_none=True)
     path = fields.Str(allow_none=True)
     container = SwaggerField(
@@ -54,14 +58,18 @@ class InitSchema(BaseCamelSchema):
     @check_partial
     def validate_init(self, data, **kwargs):
         artifacts = data.get("artifacts")
+        paths = data.get("paths")
         git = data.get("git")
         dockerfile = data.get("dockerfile")
         file = data.get("file")
+        lineage_ref = data.get("lineageRef")
         model_ref = data.get("modelRef")
         artifact_ref = data.get("artifactRef")
         connection = data.get("connection")
         schemas = 0
         if artifacts:
+            schemas += 1
+        if paths:
             schemas += 1
         if git:
             schemas += 1
@@ -69,18 +77,20 @@ class InitSchema(BaseCamelSchema):
             schemas += 1
         if file:
             schemas += 1
+        if lineage_ref:
+            schemas += 1
         if model_ref:
             schemas += 1
         if artifact_ref:
             schemas += 1
         if schemas > 1:
             raise ValidationError(
-                "One of artifacts, git, file, or dockerfile can be set"
+                "Only one of artifacts, paths, git, file, or dockerfile can be set"
             )
 
         if not connection and git and not git.url:
             raise ValidationError(
-                "git field without a valid url requires a connection is required to be passed."
+                "git field without a valid url requires a connection to be passed."
             )
 
 
@@ -100,10 +110,13 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     `/plx-context/artifacts/{{connection-name}}` unless the user passes a custom `path`.
 
     Args:
+        paths: Union[List[str], List[[str, str]], optional,
+             list of subpaths or a list of [path from, path to].
         artifacts: [V1ArtifactsType](/docs/core/specification/types/#v1artifactstype), optional
         git: [V1GitType](/docs/core/specification/types/#v1gittype), optional
         dockerfile: [V1DockerfileType](/docs/core/specification/types/#v1dockerfiletype), optional
         file: [V1FileType](/docs/core/specification/types/#v1Filetype), optional
+        lineage_ref: str, optional
         model_ref: str, optional
         artifact_ref: str, optional
         connection: str, optional
@@ -125,6 +138,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     >>>   init:
     >>>   - artifacts:
     >>>       dirs: ["path/on/the/default/artifacts/store"]
+    >>>   - lineageRef: "281081ab11794df0867e80d6ff20f960:artifactLineageRef"
     >>>   - artifactRef: "artifactVersion"
     >>>   - artifactRef: "otherProjectName:version"
     >>>   - modelRef: "modelVersion"
@@ -177,6 +191,9 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     >>>        init=[
     >>>             V1Init(
     >>>                 artifacts=V1ArtifactsType(dirs=["path/on/the/default/artifacts/store"])
+    >>>             ),
+    >>>             V1Init(
+    >>>                 lineage_ref="281081ab11794df0867e80d6ff20f960:artifactLineageRef"
     >>>             ),
     >>>             V1Init(
     >>>                 artifact_ref="artifactVersion"
@@ -241,6 +258,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     In both the YAML and Python example we are telling Polyaxon to initialize:
      * A directory `path/on/the/default/artifacts/store` from the default `artfactsStore`,
        because we did not specify a connection and we invoked an artifacts handler.
+     * An artifact lineage reference based on the run generating the artifact and its lineage name.
      * Two model versions, one version from the same project
        and a second a version from a different project.
        (it's possible to provide the FQN `org_name/model_name:version`)
@@ -262,10 +280,12 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     IDENTIFIER = "init"
     SCHEMA = InitSchema
     REDUCED_ATTRIBUTES = [
+        "paths",
         "artifacts",
         "git",
         "dockerfile",
         "file",
+        "lineageRef",
         "artifactRef",
         "modelRef",
         "connection",
@@ -275,5 +295,5 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
 
     def has_connection(self):
         return any(
-            [self.connection, self.git, self.dockerfile, self.file, self.artifacts]
+            [self.connection, self.git, self.dockerfile, self.file, self.artifacts, self.paths]
         )

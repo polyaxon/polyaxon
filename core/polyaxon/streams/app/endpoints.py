@@ -493,11 +493,14 @@ async def handle_artifacts(request: Request) -> Response:
 
 async def download_artifacts(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
-    check_file = to_bool(request.query_params.get("check_file"), handle_none=True)
+    check_path = to_bool(request.query_params.get("check_path"), handle_none=True)
+    if not check_path:
+        # Backwards compatibility
+        check_path = to_bool(request.query_params.get("check_file"), handle_none=True)
     path = request.query_params.get("path", "")
     subpath = "{}/{}".format(run_uuid, clean_path(path)).rstrip("/")
     fs = await AppFS.get_fs()
-    if check_file:
+    if check_path:
         is_file = await check_is_file(fs=fs, subpath=subpath)
         if is_file:
             return await download_artifact(request)

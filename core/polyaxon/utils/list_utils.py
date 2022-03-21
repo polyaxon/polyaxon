@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import logging
+
 from collections.abc import Mapping
 
 try:
@@ -21,13 +23,21 @@ except ImportError:
     np = None
 
 
-def to_list(value, check_none=False, check_dict=False):
+def to_list(value, check_none=False, check_dict=False, to_unique: bool = False):
+    def _to_unique(v):
+        try:
+            return list(set(v))
+        except Exception as e:
+            logging.debug("Could not return unique value for list. Error %s", e)
+            return list(v)
+
     if check_none and value is None:
         return []
     if isinstance(value, (list, tuple, set)):
-        return list(value)
+        return _to_unique(value) if to_unique else list(value)
     if np and isinstance(value, np.ndarray):
-        return value.tolist()
+        value = value.tolist()
+        return _to_unique(value) if to_unique else value
     if check_dict and isinstance(value, Mapping):
         return list(value.items())
     return [value]

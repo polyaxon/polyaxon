@@ -31,7 +31,7 @@ class AsyncK8SManager:
         self.api_client = None
         self.k8s_api = None
         self.k8s_batch_api = None
-        self.k8s_beta_api = None
+        self.k8s_apps_api = None
         self.k8s_custom_object_api = None
         self.k8s_version_api = None
 
@@ -67,7 +67,7 @@ class AsyncK8SManager:
 
         self.k8s_api = client.CoreV1Api(self.api_client)
         self.k8s_batch_api = client.BatchV1Api(self.api_client)
-        self.k8s_beta_api = client.ExtensionsV1beta1Api(self.api_client)
+        self.k8s_apps_api = client.AppsV1Api(self.api_client)
         self.k8s_custom_object_api = client.CustomObjectsApi(self.api_client)
         self.k8s_version_api = client.VersionApi(self.api_client)
 
@@ -137,7 +137,7 @@ class AsyncK8SManager:
 
     async def list_deployments(self, reraise=False, **kwargs):
         return await self._list_namespace_resource(
-            resource_api=self.k8s_beta_api.list_namespaced_deployment,
+            resource_api=self.k8s_apps_api.list_namespaced_deployment,
             reraise=reraise,
             **kwargs,
         )

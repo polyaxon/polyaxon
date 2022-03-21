@@ -353,6 +353,7 @@ class BaseConverter(ConverterAbstract):
                             polyaxon_init=polyaxon_init,
                             connection=connection_spec,
                             artifacts=init_connection.artifacts,
+                            paths=init_connection.paths,
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(
                                 external_host=external_host
@@ -376,12 +377,13 @@ class BaseConverter(ConverterAbstract):
                     )
             else:
                 # artifacts init without connection should default to the artifactsStore
-                if init_connection.artifacts:
+                if init_connection.artifacts or init_connection.paths:
                     containers.append(
                         get_store_container(
                             polyaxon_init=polyaxon_init,
                             connection=artifacts_store,
                             artifacts=init_connection.artifacts,
+                            paths=init_connection.paths,
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(
                                 external_host=external_host

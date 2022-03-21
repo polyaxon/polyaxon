@@ -133,7 +133,7 @@ class CompiledOperationSpecification(BaseSpecification):
         _init = []
         if init:
             for i in init:
-                if i.artifacts and not i.connection:
+                if (i.artifacts or i.paths) and not i.connection:
                     i.connection = artifact_store
                 if i.connection:
                     i.connection = Parser.parse_section(
@@ -522,6 +522,101 @@ class CompiledOperationSpecification(BaseSpecification):
             )
 
     @classmethod
+    def _get_distributed_init_lineage_refs(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        init_model_version_names = set()
+
+        def _get_resolve_models(replica):
+            if replica and replica.init:
+                return init_model_version_names | set(
+                    [i.lineage_ref for i in replica.init if i.lineage_ref]
+                )
+            return init_model_version_names
+
+        if compiled_operation.is_mpi_job_run:
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.launcher
+            )
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.worker
+            )
+        elif compiled_operation.is_tf_job_run:
+            init_model_version_names = _get_resolve_models(compiled_operation.run.chief)
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.worker
+            )
+            init_model_version_names = _get_resolve_models(compiled_operation.run.ps)
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.evaluator
+            )
+        elif compiled_operation.is_pytorch_job_run:
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.master
+            )
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.worker
+            )
+        elif compiled_operation.is_mx_job_run:
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.scheduler
+            )
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.worker
+            )
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.server
+            )
+            init_model_version_names = _get_resolve_models(compiled_operation.run.tuner)
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.tuner_tracker
+            )
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.tuner_server
+            )
+        elif compiled_operation.is_xgb_job_run:
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.master
+            )
+            init_model_version_names = _get_resolve_models(
+                compiled_operation.run.worker
+            )
+
+        return init_model_version_names
+
+    @classmethod
+    def _get_init_lineage_refs(
+        cls,
+        compiled_operation: V1CompiledOperation,
+    ) -> Set[str]:
+        init_model_version_names = set()
+        if compiled_operation and not compiled_operation.has_pipeline:
+            if compiled_operation.run.init:
+                init_model_version_names |= set(
+                    [
+                        i.lineage_ref
+                        for i in compiled_operation.run.init
+                        if i.lineage_ref
+                    ]
+                )
+        return init_model_version_names
+
+    @classmethod
+    def get_init_lineage_refs(
+        cls,
+        config: V1CompiledOperation,
+    ) -> Set[str]:
+        if config.is_distributed_run:
+            return cls._get_distributed_init_lineage_refs(
+                compiled_operation=config,
+            )
+        else:
+            return cls._get_init_lineage_refs(
+                compiled_operation=config,
+            )
+
+    @classmethod
     def _get_distributed_init_model_refs(
         cls,
         compiled_operation: V1CompiledOperation,
@@ -622,7 +717,7 @@ class CompiledOperationSpecification(BaseSpecification):
         def _get_resolve_artifacts(replica):
             if replica and replica.init:
                 return init_artifact_version_names | set(
-                    [i.artifact_ref for i in replica.init if i.model_ref]
+                    [i.artifact_ref for i in replica.init if i.artifact_ref]
                 )
             return init_artifact_version_names
 
@@ -718,65 +813,69 @@ class CompiledOperationSpecification(BaseSpecification):
         cls,
         compiled_operation: V1CompiledOperation,
     ) -> V1CompiledOperation:
-        def _clean_resolve_models(replica):
+        def _clean_resolve_refs(replica):
             if replica and replica.init:
                 replica.init = [
                     i
                     for i in replica.init
-                    if (i.model_ref is None and i.artifact_ref is None)
+                    if (
+                        i.model_ref is None
+                        and i.artifact_ref is None
+                        and i.lineage_ref is None
+                    )
                 ]
                 return replica
             return replica
 
         if compiled_operation.is_mpi_job_run:
-            compiled_operation.run.launcher = _clean_resolve_models(
+            compiled_operation.run.launcher = _clean_resolve_refs(
                 compiled_operation.run.launcher
             )
-            compiled_operation.run.worker = _clean_resolve_models(
+            compiled_operation.run.worker = _clean_resolve_refs(
                 compiled_operation.run.worker
             )
         elif compiled_operation.is_tf_job_run:
-            compiled_operation.run.chief = _clean_resolve_models(
+            compiled_operation.run.chief = _clean_resolve_refs(
                 compiled_operation.run.chief
             )
-            compiled_operation.run.worker = _clean_resolve_models(
+            compiled_operation.run.worker = _clean_resolve_refs(
                 compiled_operation.run.worker
             )
-            compiled_operation.run.ps = _clean_resolve_models(compiled_operation.run.ps)
-            compiled_operation.run.evaluator = _clean_resolve_models(
+            compiled_operation.run.ps = _clean_resolve_refs(compiled_operation.run.ps)
+            compiled_operation.run.evaluator = _clean_resolve_refs(
                 compiled_operation.run.evaluator
             )
         elif compiled_operation.is_pytorch_job_run:
-            compiled_operation.run.master = _clean_resolve_models(
+            compiled_operation.run.master = _clean_resolve_refs(
                 compiled_operation.run.master
             )
-            compiled_operation.run.worker = _clean_resolve_models(
+            compiled_operation.run.worker = _clean_resolve_refs(
                 compiled_operation.run.worker
             )
         elif compiled_operation.is_mx_job_run:
-            compiled_operation.run.scheduler = _clean_resolve_models(
+            compiled_operation.run.scheduler = _clean_resolve_refs(
                 compiled_operation.run.scheduler
             )
-            compiled_operation.run.worker = _clean_resolve_models(
+            compiled_operation.run.worker = _clean_resolve_refs(
                 compiled_operation.run.worker
             )
-            compiled_operation.run.server = _clean_resolve_models(
+            compiled_operation.run.server = _clean_resolve_refs(
                 compiled_operation.run.server
             )
-            compiled_operation.run.tuner = _clean_resolve_models(
+            compiled_operation.run.tuner = _clean_resolve_refs(
                 compiled_operation.run.tuner
             )
-            compiled_operation.run.tuner_tracker = _clean_resolve_models(
+            compiled_operation.run.tuner_tracker = _clean_resolve_refs(
                 compiled_operation.run.tuner_tracker
             )
-            compiled_operation.run.tuner_server = _clean_resolve_models(
+            compiled_operation.run.tuner_server = _clean_resolve_refs(
                 compiled_operation.run.tuner_server
             )
         elif compiled_operation.is_xgb_job_run:
-            compiled_operation.run.master = _clean_resolve_models(
+            compiled_operation.run.master = _clean_resolve_refs(
                 compiled_operation.run.master
             )
-            compiled_operation.run.worker = _clean_resolve_models(
+            compiled_operation.run.worker = _clean_resolve_refs(
                 compiled_operation.run.worker
             )
 
@@ -792,7 +891,11 @@ class CompiledOperationSpecification(BaseSpecification):
                 compiled_operation.run.init = [
                     i
                     for i in compiled_operation.run.init
-                    if (i.model_ref is None and i.artifact_ref is None)
+                    if (
+                        i.model_ref is None
+                        and i.artifact_ref is None
+                        and i.lineage_ref is None
+                    )
                 ]
         return compiled_operation
 

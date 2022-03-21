@@ -83,6 +83,14 @@ class TestInit(BaseTestCase):
         assert config.to_light_dict() == config_dict
 
         config_dict = {
+            "connection": "foo",
+            "paths": ["path1", "path2"],
+            "container": {"name": "init1", "args": ["/subpath1", "subpath2"]},
+        }
+        config = V1Init.from_dict(config_dict)
+        assert config.to_light_dict() == config_dict
+
+        config_dict = {
             "dockerfile": {
                 "image": "tensorflow:1.3.0",
                 "path": ["./module"],

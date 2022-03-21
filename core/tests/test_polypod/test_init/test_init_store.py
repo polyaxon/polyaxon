@@ -48,10 +48,8 @@ from polyaxon.polypod.common.mounts import (
 )
 from polyaxon.polypod.common.volumes import get_volume_name
 from polyaxon.polypod.init.store import (
-    cp_copy_args,
-    cp_gcs_args,
-    cp_s3_args,
-    cp_wasb_args,
+    cp_mount_args,
+    cp_store_args,
     get_base_store_container,
     get_or_create_args,
     get_store_container,
@@ -69,39 +67,84 @@ class TestInitStore(BaseTestCase):
             == 'if [ ! -d "/foo" ]; then mkdir -m 0777 -p /foo; fi;'
         )
 
-    def test_cp_copy_args(self):
-        assert cp_copy_args(
-            path_from="/foo", path_to="/bar", is_file=True, sync_fw=False
-        ) == ("if [ -f /foo ]; then cp /foo /bar;  fi;")
-        assert cp_copy_args(
-            path_from="/foo", path_to="/bar", is_file=False, sync_fw=False
-        ) == ('if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -R /foo/* /bar;  fi;')
+    def test_cp_store_args(self):
+        assert cp_mount_args(
+            path_from="/foo",
+            path_to="/bar",
+            is_file=True,
+            sync_fw=False,
+        ) == "if [ -f /foo ]; then cp /foo /bar;  fi;"
+        assert (
+            cp_mount_args(
+                path_from="/foo",
+                path_to="/bar",
+                is_file=False,
+                sync_fw=False,
+            )
+            == 'if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -R /foo/* /bar;  fi;'
+        )
+        assert cp_store_args(
+            backend="host_path",
+            path_from="/foo",
+            path_to="/bar",
+            is_file=False,
+            sync_fw=False,
+            check_path=True,
+        ) == (
+            "polyaxon initializer path --connection-kind=host_path "
+            "--path-from=/foo --path-to=/bar --check-path;"
+        )
 
     def test_files_cp_gcs_args(self):
-        assert cp_gcs_args(
-            path_from="gcs://foo", path_to="/local", is_file=True, sync_fw=False
+        assert cp_store_args(
+            backend="gcs",
+            path_from="gcs://foo",
+            path_to="/local",
+            is_file=True,
+            sync_fw=False,
+            check_path=False,
         ) == (
-            "polyaxon initializer gcs --path-from=gcs://foo --path-to=/local --is-file ;"
+            "polyaxon initializer path --connection-kind=gcs "
+            "--path-from=gcs://foo --path-to=/local --is-file;"
         )
 
     def test_dirs_cp_gcs_args(self):
-        assert cp_gcs_args(
-            path_from="gcs://foo", path_to="/local", is_file=False, sync_fw=False
-        ) == ("polyaxon initializer gcs --path-from=gcs://foo --path-to=/local  ;")
+        assert cp_store_args(
+            backend="gcs",
+            path_from="gcs://foo",
+            path_to="/local",
+            is_file=False,
+            sync_fw=False,
+            check_path=True,
+        ) == (
+            "polyaxon initializer path --connection-kind=gcs "
+            "--path-from=gcs://foo --path-to=/local --check-path;"
+        )
 
     def test_files_cp_wasb_args(self):
-        assert cp_wasb_args(
-            path_from="wasb://foo", path_to="/local", is_file=True, sync_fw=False
+        assert cp_store_args(
+            backend="wasb",
+            path_from="wasb://foo",
+            path_to="/local",
+            is_file=True,
+            sync_fw=False,
+            check_path=False,
         ) == (
-            "polyaxon initializer wasb --path-from=wasb://foo --path-to=/local --is-file ;"
+            "polyaxon initializer path --connection-kind=wasb "
+            "--path-from=wasb://foo --path-to=/local --is-file;"
         )
 
     def test_cp_wasb_args(self):
-        assert (
-            cp_wasb_args(
-                path_from="wasb://foo", path_to="/local", is_file=False, sync_fw=False
-            )
-            == "polyaxon initializer wasb --path-from=wasb://foo --path-to=/local  ;"
+        assert cp_store_args(
+            backend="wasb",
+            path_from="wasb://foo",
+            path_to="/local",
+            is_file=False,
+            sync_fw=False,
+            check_path=True,
+        ) == (
+            "polyaxon initializer path --connection-kind=wasb "
+            "--path-from=wasb://foo --path-to=/local --check-path;"
         )
 
     def test_get_volume_args_s3(self):
@@ -112,11 +155,16 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path-to/"
         path_from = os.path.join(s3_store.store_path, "")
-        assert get_volume_args(s3_store, path_to, None) == " ".join(
+        assert get_volume_args(s3_store, path_to, None, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_s3_args(
-                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                cp_store_args(
+                    backend="s3",
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=False,
                 ),
             ]
         )
@@ -132,16 +180,62 @@ class TestInitStore(BaseTestCase):
         path_from1 = os.path.join(s3_store.store_path, "path1")
         path_from2 = os.path.join(s3_store.store_path, "path2")
         assert get_volume_args(
-            s3_store, "/path/to", artifacts=V1ArtifactsType(files=["path1", "path2"])
+            s3_store,
+            "/path/to",
+            artifacts=V1ArtifactsType(files=["path1", "path2"]),
+            paths=None,
         ) == " ".join(
             [
                 get_or_create_args(path=base_path),
-                cp_s3_args(
-                    path_from=path_from1, path_to=path_to1, is_file=True, sync_fw=False
+                cp_store_args(
+                    backend="s3",
+                    path_from=path_from1,
+                    path_to=path_to1,
+                    is_file=True,
+                    sync_fw=False,
+                    check_path=False,
                 ),
                 get_or_create_args(path=base_path),
-                cp_s3_args(
-                    path_from=path_from2, path_to=path_to2, is_file=True, sync_fw=False
+                cp_store_args(
+                    backend="s3",
+                    path_from=path_from2,
+                    path_to=path_to2,
+                    is_file=True,
+                    sync_fw=False,
+                    check_path=False,
+                ),
+            ]
+        )
+
+        base_path = "/path/to/"
+        path_to1 = "/path/to/path1"
+        path_to2 = "/path/to/path2"
+        path_from1 = os.path.join(s3_store.store_path, "path1")
+        path_from2 = os.path.join(s3_store.store_path, "path2")
+        assert get_volume_args(
+            s3_store,
+            "/path/to",
+            artifacts=None,
+            paths=["path1", "path2"],
+        ) == " ".join(
+            [
+                get_or_create_args(path=base_path),
+                cp_store_args(
+                    backend="s3",
+                    path_from=path_from1,
+                    path_to=path_to1,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=True,
+                ),
+                get_or_create_args(path=base_path),
+                cp_store_args(
+                    backend="s3",
+                    path_from=path_from2,
+                    path_to=path_to2,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=True,
                 ),
             ]
         )
@@ -154,11 +248,16 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path/to/"
         path_from = os.path.join(gcs_store.store_path, "")
-        assert get_volume_args(gcs_store, path_to, None) == " ".join(
+        assert get_volume_args(gcs_store, path_to, None, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_gcs_args(
-                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                cp_store_args(
+                    backend="gcs",
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=False,
                 ),
             ]
         )
@@ -174,16 +273,29 @@ class TestInitStore(BaseTestCase):
         path_from1 = os.path.join(gcs_store.store_path, "path1")
         path_from2 = os.path.join(gcs_store.store_path, "path2")
         assert get_volume_args(
-            gcs_store, "/path/to", artifacts=V1ArtifactsType(dirs=["path1", "path2"])
+            gcs_store,
+            "/path/to",
+            artifacts=V1ArtifactsType(dirs=["path1", "path2"]),
+            paths=None,
         ) == " ".join(
             [
                 get_or_create_args(path=path_to1),
-                cp_gcs_args(
-                    path_from=path_from1, path_to=path_to1, is_file=False, sync_fw=False
+                cp_store_args(
+                    backend="gcs",
+                    path_from=path_from1,
+                    path_to=path_to1,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=False,
                 ),
                 get_or_create_args(path=path_to2),
-                cp_gcs_args(
-                    path_from=path_from2, path_to=path_to2, is_file=False, sync_fw=False
+                cp_store_args(
+                    backend="gcs",
+                    path_from=path_from2,
+                    path_to=path_to2,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=False,
                 ),
             ]
         )
@@ -196,11 +308,16 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path/to/"
         path_from = os.path.join(az_store.store_path, "")
-        assert get_volume_args(az_store, path_to, None) == " ".join(
+        assert get_volume_args(az_store, path_to, None, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_wasb_args(
-                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                cp_store_args(
+                    backend="wasb",
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=False,
                 ),
             ]
         )
@@ -219,15 +336,26 @@ class TestInitStore(BaseTestCase):
             az_store,
             "/path/to",
             artifacts=V1ArtifactsType(files=["path1"], dirs=["path2"]),
+            paths=None,
         ) == " ".join(
             [
                 get_or_create_args(path=base_path),
-                cp_wasb_args(
-                    path_from=path_from1, path_to=path_to1, is_file=True, sync_fw=False
+                cp_store_args(
+                    backend="wasb",
+                    path_from=path_from1,
+                    path_to=path_to1,
+                    is_file=True,
+                    sync_fw=False,
+                    check_path=False,
                 ),
                 get_or_create_args(path=path_to2),
-                cp_wasb_args(
-                    path_from=path_from2, path_to=path_to2, is_file=False, sync_fw=False
+                cp_store_args(
+                    backend="wasb",
+                    path_from=path_from2,
+                    path_to=path_to2,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=False,
                 ),
             ]
         )
@@ -242,11 +370,14 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path/to/"
         path_from = os.path.join(claim_store.store_path, "")
-        assert get_volume_args(claim_store, path_to, None) == " ".join(
+        assert get_volume_args(claim_store, path_to, None, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_copy_args(
-                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                cp_mount_args(
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=False,
+                    sync_fw=False,
                 ),
             ]
         )
@@ -264,16 +395,76 @@ class TestInitStore(BaseTestCase):
         path_from1 = os.path.join(claim_store.store_path, "path1")
         path_from2 = os.path.join(claim_store.store_path, "path2")
         assert get_volume_args(
-            claim_store, "/path/to", artifacts=V1ArtifactsType(files=["path1", "path2"])
+            claim_store,
+            "/path/to",
+            artifacts=V1ArtifactsType(files=["path1", "path2"]),
+            paths=None,
         ) == " ".join(
             [
                 get_or_create_args(path=base_path),
-                cp_copy_args(
-                    path_from=path_from1, path_to=path_to1, is_file=True, sync_fw=False
+                cp_mount_args(
+                    path_from=path_from1,
+                    path_to=path_to1,
+                    is_file=True,
+                    sync_fw=False,
                 ),
                 get_or_create_args(path=base_path),
-                cp_copy_args(
-                    path_from=path_from2, path_to=path_to2, is_file=True, sync_fw=False
+                cp_mount_args(
+                    path_from=path_from2,
+                    path_to=path_to2,
+                    is_file=True,
+                    sync_fw=False,
+                ),
+            ]
+        )
+
+        base_path = "/path/to/"
+        path_to1 = "/path/to/path1"
+        path_to2 = "/path/to/path2"
+        path_to3 = "/path/to/path3"
+        path_to4 = "/path/to/path4"
+        path_from1 = os.path.join(claim_store.store_path, "path1")
+        path_from2 = os.path.join(claim_store.store_path, "path2")
+        path_from3 = os.path.join(claim_store.store_path, "path3")
+        path_from4 = os.path.join(claim_store.store_path, "path4")
+        assert get_volume_args(
+            claim_store,
+            "/path/to",
+            artifacts=V1ArtifactsType(dirs=["path1", "path2"]),
+            paths=["path3", "path4"],
+        ) == " ".join(
+            [
+                get_or_create_args(path=path_to1),
+                cp_mount_args(
+                    path_from=path_from1,
+                    path_to=path_to1,
+                    is_file=False,
+                    sync_fw=False,
+                ),
+                get_or_create_args(path=path_to2),
+                cp_mount_args(
+                    path_from=path_from2,
+                    path_to=path_to2,
+                    is_file=False,
+                    sync_fw=False,
+                ),
+                get_or_create_args(path=base_path),
+                cp_store_args(
+                    backend=V1ConnectionKind.VOLUME_CLAIM,
+                    path_from=path_from3,
+                    path_to=path_to3,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=True,
+                ),
+                get_or_create_args(path=base_path),
+                cp_store_args(
+                    backend=V1ConnectionKind.VOLUME_CLAIM,
+                    path_from=path_from4,
+                    path_to=path_to4,
+                    is_file=False,
+                    sync_fw=False,
+                    check_path=True,
                 ),
             ]
         )
@@ -288,11 +479,14 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path/to/"
         path_from = os.path.join(host_path_store.store_path, "")
-        assert get_volume_args(host_path_store, path_to, None) == " ".join(
+        assert get_volume_args(host_path_store, path_to, None, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
-                cp_copy_args(
-                    path_from=path_from, path_to=path_to, is_file=False, sync_fw=False
+                cp_mount_args(
+                    path_from=path_from,
+                    path_to=path_to,
+                    is_file=False,
+                    sync_fw=False,
                 ),
             ]
         )
@@ -312,15 +506,22 @@ class TestInitStore(BaseTestCase):
             host_path_store,
             "/path/to",
             artifacts=V1ArtifactsType(dirs=["path1", "path2"]),
+            paths=None,
         ) == " ".join(
             [
                 get_or_create_args(path=path_to1),
-                cp_copy_args(
-                    path_from=path_from1, path_to=path_to1, is_file=False, sync_fw=False
+                cp_mount_args(
+                    path_from=path_from1,
+                    path_to=path_to1,
+                    is_file=False,
+                    sync_fw=False,
                 ),
                 get_or_create_args(path=path_to2),
-                cp_copy_args(
-                    path_from=path_from2, path_to=path_to2, is_file=False, sync_fw=False
+                cp_mount_args(
+                    path_from=path_from2,
+                    path_to=path_to2,
+                    is_file=False,
+                    sync_fw=False,
                 ),
             ]
         )
@@ -515,6 +716,7 @@ class TestInitStore(BaseTestCase):
             ),
             connection=store,
             artifacts=None,
+            paths=None,
         )
         mount_path = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(store.name)
         assert (
@@ -525,7 +727,9 @@ class TestInitStore(BaseTestCase):
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["/bin/sh", "-c"]
         assert container.args == [
-            get_volume_args(store=store, mount_path=mount_path, artifacts=None)
+            get_volume_args(
+                store=store, mount_path=mount_path, artifacts=None, paths=None
+            )
         ]
         assert container.env == get_connection_env_var(connection=store, secret=None)
         assert container.env_from == []
@@ -557,6 +761,7 @@ class TestInitStore(BaseTestCase):
             ),
             connection=store,
             artifacts=None,
+            paths=None,
             mount_path=mount_path,
         )
         assert (
@@ -567,7 +772,12 @@ class TestInitStore(BaseTestCase):
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["/bin/sh", "-c"]
         assert container.args == [
-            get_volume_args(store=store, mount_path=mount_path, artifacts=None)
+            get_volume_args(
+                store=store,
+                mount_path=mount_path,
+                artifacts=None,
+                paths=None,
+            )
         ]
         assert container.env is not None
         assert container.env_from == []

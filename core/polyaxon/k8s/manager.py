@@ -37,7 +37,6 @@ class K8SManager:
         self._k8s_api = None
         self._k8s_batch_api = None
         self._k8s_apps_api = None
-        self._k8s_beta_api = None
         self._networking_v1_beta1_api = None
         self._k8s_custom_object_api = None
         self._k8s_version_api = None
@@ -61,12 +60,6 @@ class K8SManager:
         if not self._k8s_apps_api:
             self._k8s_apps_api = client.AppsV1Api(self.api_client)
         return self._k8s_apps_api
-
-    @property
-    def k8s_beta_api(self):
-        if not self._k8s_beta_api:
-            self._k8s_beta_api = client.ExtensionsV1beta1Api(self.api_client)
-        return self._k8s_beta_api
 
     @property
     def networking_v1_beta1_api(self):

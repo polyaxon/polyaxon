@@ -29,6 +29,7 @@ from polyaxon.contexts.params import PARAM_REGEX
 from polyaxon.parser import parser
 from polyaxon.polyflow.init import V1Init
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.signal_decorators import check_partial
 
 
@@ -532,6 +533,9 @@ class ParamSpec(
             return V1Init.from_dict(
                 dict(artifacts=self.param.value, connection=self.param.connection)
             )
+        elif self.type == types.PATH:
+            paths = to_list(self.param.value, check_none=True)
+            return V1Init.from_dict(dict(paths=paths, connection=self.param.connection))
         elif self.param.connection:
             return V1Init(connection=self.param.connection)
         return None

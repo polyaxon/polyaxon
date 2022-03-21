@@ -76,6 +76,7 @@ def get_artifacts_path_container(
                 store=artifacts_store,
                 mount_path=CONTEXT_MOUNT_ARTIFACTS,
                 artifacts=V1ArtifactsType(dirs=[run_path]),
+                paths=None,
                 sync_fw=True,
             )
         )
