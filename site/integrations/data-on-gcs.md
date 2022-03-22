@@ -129,11 +129,13 @@ run:
      connection: "gcs-dataset1"
 ```
 
-## Use Polyaxon to access the dataset
+## Access the dataset programmatically
 
-This is optional, you can use any language or logic to interacts with Azure Storage.
+This is optional, you can use any language or logic to interact with Google Cloud Storage buckets.
 
-Polyaxon has some built-in logic that you can leverage if you want.
+For instance you can install `gcloud` CLI and it will be configured automatically when you request the GCS connection.
+
+You can also use Polyaxon's fs library to get a fully resolved [gcsfs](https://gcsfs.readthedocs.io/en/latest/) instance:
 
 To use that logic:
 
@@ -141,17 +143,20 @@ To use that logic:
 pip install polyaxon[gcs]
 ```
 
-All possible functions to use:
+Creating a sync instance of the gcsfs client:
 
 ```python
-from polyaxon.connections.gcp.gcs import GCSService
+from polyaxon.fs.fs import get_fs_from_name
+...
+fs = get_fs_from_name("gcs-dataset1")  # You can pass additional kwargs to the function
+...  
+```
 
-store = GCSService(...)
+Creating an async instance of the gcsfs client:
 
-store.delete()
-store.ls()
-store.upload_file()
-store.upload_dir()
-store.download_file()
-store.download_dir()
+```python
+from polyaxon.fs.fs import get_fs_from_name
+...
+fs = get_fs_from_name("gcs-dataset1", asynchronous=True)  # You can pass additional kwargs to the function
+...  
 ```

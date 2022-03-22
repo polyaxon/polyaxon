@@ -104,29 +104,32 @@ run:
      connection: "azure-dataset1"
 ```
 
-## Use Polyaxon to access the dataset
+## Access the dataset programmatically
 
-This is optional, you can use any language or logic to interacts with Azure Storage.
+This is optional, you can use any language or logic to interact with Azure Blob Storage buckets.
 
-Polyaxon has some built-in logic that you can leverage if you want.
+For instance you can install `Azure Blob Storage Python SDK` and it will be configured automatically when you request the Azure Blob Storage connection.
 
-To use that logic:
+You can also use Polyaxon's fs library to get a fully resolved [adlfs](https://github.com/fsspec/adlfs) instance:
 
 ```bash
 pip install polyaxon[azure]
 ```
 
-All possible functions to use:
+Creating a sync instance of the adlfs client:
 
 ```python
-from polyaxon.connections.azure.azure_blobstore import AzureBlobStoreService
+from polyaxon.fs.fs import get_fs_from_name
+...
+fs = get_fs_from_name("azure-dataset1")  # You can pass additional kwargs to the function
+...  
+```
 
-store = AzureBlobStoreService(...)
+Creating an async instance of the adlfs client:
 
-store.delete()
-store.ls()
-store.upload_file()
-store.upload_dir()
-store.download_file()
-store.download_dir()
+```python
+from polyaxon.fs.fs import get_fs_from_name
+...
+fs = get_fs_from_name("azure-dataset1", asynchronous=True)  # You can pass additional kwargs to the function
+...  
 ```

@@ -110,29 +110,32 @@ run:
      connection: "s3-dataset1"
 ```
 
-## Use Polyaxon to access the dataset
+## Access the dataset programmatically
 
-This is optional, you can use any language or logic to interacts with S3 buckets.
+This is optional, you can use any language or logic to interact with S3 buckets.
 
-Polyaxon has some built-in logic that you can leverage if you want.
+For instance you can install `boto3` and it will be configured automatically when you request the S3 connection.
 
-To use that logic:
+You can also use Polyaxon's fs library to get a fully resolved [s3fs](https://s3fs.readthedocs.io/en/latest/) instance:
 
 ```bash
 pip install polyaxon[s3]
 ```
 
-All possible functions to use:
+Creating a sync instance of the s3fs client:
 
 ```python
-from polyaxon.connections.aws.s3 import S3Service
+from polyaxon.fs.fs import get_fs_from_name
+...
+fs = get_fs_from_name("s3-dataset1")  # You can pass additional kwargs to the function
+...  
+```
 
-store = S3Service(...)
+Creating an async instance of the s3fs client:
 
-store.delete()
-store.ls()
-store.upload_file()
-store.upload_dir()
-store.download_file()
-store.download_dir()
+```python
+from polyaxon.fs.fs import get_fs_from_name
+...
+fs = get_fs_from_name("s3-dataset1", asynchronous=True)  # You can pass additional kwargs to the function
+...  
 ```
