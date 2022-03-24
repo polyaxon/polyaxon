@@ -41,6 +41,18 @@
       link: /docs/core/context/references/
   - group: Python Library
     items:
+    - title: Overview
+      link: /docs/core/python-library/
+    - title: Instantiation & Authentication
+      link: /docs/core/python-library/instantiation/
+    - title: Exception Handling
+      link: /docs/core/python-library/exception-handling/
+    - title: Reading Polyaxonfiles
+      link: /docs/core/python-library/reading-polyaxonfiles/
+    - title: NO-OP Mode
+      link: /docs/core/python-library/no-op/
+    - title: Offline Mode
+      link: /docs/core/python-library/offline/
     - title: Polyaxon Client
       link: /docs/core/python-library/polyaxon-client/
     - title: Run Client

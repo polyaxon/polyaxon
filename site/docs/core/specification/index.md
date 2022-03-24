@@ -13,14 +13,18 @@ tags:
 sidebar: "core"
 ---
 
-![polyaxonfile architecture](../../../../content/images/references/specification/polyaxonfile.png)
+## Overview
 
 In order to schedule runs on Polyaxon, users need to create Polyaxonfiles.
+
+![polyaxonfile architecture](../../../../content/images/references/specification/polyaxonfile.png)
+
 These files use a specification to describe how jobs, distributed jobs, services, parallel executions, and pipelines should run on Polyaxon.
 
-The Polyaxon specification can be authored in YAML, json, python, and partially in Go, Typescript, and Java.
+The Polyaxonfile specification can be authored in YAML, json, python, and partially in Go, Typescript, and Java. 
+This specification is based on a list of sections, in this guide, we describe the required and optional sections.
 
-The Polyaxon specification is based on a list of sections, in this guide, we describe the required and optional sections.
+## Primitives
 
 The main primitives that the user will be interacting with are:
 

@@ -2340,6 +2340,9 @@ class RunClient:
 
         > **Note**: You generally do not need to call this method manually,
         > When the `offline` mode is enabled, this method is triggered automatically at the end.
+
+        Args:
+            path: str, The path where to persist the run's metadata.
         """
         if not self.run_data:
             logger.debug(
@@ -2383,6 +2386,16 @@ class RunClient:
 
         > **Note**: When the `offline` mode is enabled, and the run uuid is provided,
         > this method is triggered automatically to load last checkpoint.
+
+        Args:
+            path: str, The path where the run's metadata is persisted.
+            run_client: RunClient, optional, instance of the client to update with
+                 the loaded run's information.
+            reset_project: bool, optional, a flag to reset the run's owner and/or project based on
+                 the data from the passed `run_client` instead of the persisted data
+                 from the local run.
+            raise_if_not_found: bool, optional, a flag to raise an error if the local path does not
+                 contain a persisted run.
         """
         run_path = "{}/run_data.json".format(path)
         if not os.path.isfile(run_path):
@@ -2417,7 +2430,7 @@ class RunClient:
         lineages_path = "{}/lineages.json".format(path)
         if not os.path.isfile(lineages_path):
             logger.info(f"Offline lineage data was not found: {lineages_path}")
-            return
+            return run_client
         with open(lineages_path, "r") as config_file:
             config_str = config_file.read()
             lineages = [V1RunArtifact(**l) for l in ujson.loads(config_str)]
