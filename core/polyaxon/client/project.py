@@ -614,6 +614,14 @@ class ProjectClient:
         path: str,
         download_artifacts: bool = True,
     ):
+        """Packages and downloads the version to a local path.
+
+        Args:
+            kind: V1ProjectVersionKind, kind of the project version.
+            version: str, required, the version name/tag.
+            path: str, local path where to persist the metadata and artifacts.
+            download_artifacts: bool, optional, to download the artifacts based on linked lineage.
+        """
         delete_path(path)
         config = self.get_version(kind=kind, version=version)
         self.persist_version(config=config, path=path)

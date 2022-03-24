@@ -57,7 +57,13 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/e
 Running an operation with a mapping is also similar to any other operation:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/mapping.yaml --eager
+polyaxon run --eager --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/mapping.yaml
+```
+
+If you have cloned the quick-start repo, you can run:
+
+```bash
+polyaxon run --eager -f optimization/mapping.yaml
 ```
 
 > For more details check the [mapping reference](/docs/automation/mapping/)

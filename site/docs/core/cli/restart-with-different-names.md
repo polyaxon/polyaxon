@@ -6,9 +6,12 @@ meta_description: "A guide on how to use Polyaxon CLI to restart runs with diffe
 visibility: public
 status: published
 tags:
+  - cli
+  - reference
+  - polyaxon
   - concepts
   - tutorials
-sidebar: "intro"
+sidebar: "core"
 ---
 
 ## Overview

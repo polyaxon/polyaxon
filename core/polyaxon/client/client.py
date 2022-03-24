@@ -88,7 +88,7 @@ class PolyaxonClient:
                Using the client inside a job/service scheduled with Polyaxon will have access to the
                token of the user who started the run if the `auth` context is enabled.
 
-    You can access specific clients:
+    You can access specific low level clients:
 
     ```python
     >>> client = PolyaxonClient()
@@ -99,6 +99,10 @@ class PolyaxonClient:
     >>> client.users_v1
     >>> client.agents_v1
     ```
+
+    If you are interacting with a run or with a project, we suggest that you check:
+     * [RunClient](/docs/core/python-library/run-client/)
+     * [ProjectClient](/docs/core/python-library/project-client/)
     """
 
     def __init__(self, config=None, token=None):

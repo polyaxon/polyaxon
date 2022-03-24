@@ -6,9 +6,12 @@ meta_description: "Polyaxon CLI creates a cache context to improve the user expe
 visibility: public
 status: published
 tags:
+  - cli
+  - reference
+  - polyaxon
   - concepts
   - tutorials
-sidebar: "intro"
+sidebar: "core"
 ---
 
 Polyaxon CLI creates a cache context to improve the user experience and avoid passing arguments for static information like owner, project, and last run.

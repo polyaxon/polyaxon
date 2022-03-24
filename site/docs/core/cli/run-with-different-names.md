@@ -6,9 +6,12 @@ meta_description: "A guide on ow to use Polyaxon CLI to schedule runs with diffe
 visibility: public
 status: published
 tags:
+  - cli
+  - reference
+  - polyaxon
   - concepts
   - tutorials
-sidebar: "intro"
+sidebar: "core"
 ---
 
 ## Overview

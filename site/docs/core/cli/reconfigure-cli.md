@@ -6,9 +6,12 @@ meta_description: "Polyaxon CLI can connect to many deployments."
 visibility: public
 status: published
 tags:
+  - cli
+  - reference
+  - polyaxon
   - concepts
   - tutorials
-sidebar: "intro"
+sidebar: "core"
 ---
 
 ## Overview
@@ -28,26 +31,26 @@ polyaxon config --help
 In order to connect Polyaxon CLI to a different host: 
 
 ```bash
-polyaxon config set --host=IP
+polyaxon config set --host=IP [--no-purge]
 ```
 
 or 
 
 ```bash
-polyaxon config set --host=https://IP:PORT
+polyaxon config set --host=https://IP:PORT [--no-purge]
 ```
 
 or 
 
 ```bash
-polyaxon config set --host=http://localhost:PORT
+polyaxon config set --host=http://localhost:PORT [--no-purge]
 ```
 
 
 or 
 
 ```bash
-polyaxon config set --host=https://polyaxon.acme.com
+polyaxon config set --host=https://polyaxon.acme.com [--no-purge]
 ```
 
 When a user reconfigures their CLI, it will automatically purge all previous configurations and will reset the auth information, in order to avoid resetting the previous configuration and only change the host:

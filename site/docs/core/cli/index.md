@@ -13,7 +13,18 @@ tags:
 sidebar: "core"
 ---
 
-Polyaxon CLI is a tool and a client to interact with Polyaxon, it allows you to manage your cluster, projects, and experiments.
+## Overview
+
+Polyaxon CLI is a tool and a client to interact with Polyaxon API, it allows you to manage your cluster, projects, and experiments.
+This section has several common guides on how to configure and use the CLI followed by several reference pages for each command.
+
+## Install
+
+To install it simply run:
+
+```bash
+pip install -U polyaxon
+```
 
 ## Help
 
@@ -33,4 +44,19 @@ Some commands have sub-commands, you can also get help for these sub-commands by
 
 ```bash
 polyaxon command sub-command --help
+```
+
+## Deprecated behavior
+
+Polyaxon used to pass a context between commands and subcommands, e.g.
+
+```bash
+polyaxon ops -p PROJECT -uid UID get --more-args
+```
+
+This behavior was confusing and the help command did not show the complete information about running a specific command.
+We deprecated this behavior in favor of putting all arguments in front of the last sub-command, e.g.
+
+```bash
+polyaxon ops get -p PROJECT -uid UID --more-args
 ```

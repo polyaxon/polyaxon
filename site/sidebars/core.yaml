@@ -63,33 +63,51 @@
     items:
     - title: Overview
       link: /docs/core/cli/
-    - title: Auth
+    - title: CLI Reconfiguration
+      link: /docs/core/cli/reconfigure-cli/
+    - title: CLI Authentication
+      link: /docs/core/cli/authenticate/
+    - title: CLI Cache Behavior
+      link: /docs/core/cli/cache/
+    - title: CLI Ignore Logic
+      link: /docs/core/cli/ignore/
+    - title: CLI Artifacts Upload
+      link: /docs/core/cli/artifacts-upload/
+    - title: CLI Artifacts Download
+      link: /docs/core/cli/artifacts-download/
+    - title: Customizing the git Preset
+      link: /docs/core/cli/customize-git-preset/
+    - title: Starting Runs with Different Names
+      link: /docs/core/cli/run-with-different-names/
+    - title: Restarting Runs with Different Names
+      link: /docs/core/cli/restart-with-different-names/
+    - title: Auth Command
       link: /docs/core/cli/auth/
-    - title: Admin
+    - title: Admin Command
       link: /docs/core/cli/admin/
-    - title: Check
+    - title: Check Command
       link: /docs/core/cli/check/
-    - title: Config
+    - title: Config Command
       link: /docs/core/cli/config/
-    - title: Project
+    - title: Project Command
       link: /docs/core/cli/project/
-    - title: Run
+    - title: Run Command
       link: /docs/core/cli/run/
-    - title: Ops
+    - title: Ops Command
       link: /docs/core/cli/ops/
-    - title: Components
+    - title: Components Command
       link: /docs/core/cli/components/
-    - title: Models
+    - title: Models Command
       link: /docs/core/cli/models/
-    - title: Artifacts
+    - title: Artifacts Command
       link: /docs/core/cli/artifacts/
-    - title: Dashboard
+    - title: Dashboard Command
       link: /docs/core/cli/dashboard/
-    - title: Init
+    - title: Init Command
       link: /docs/core/cli/init/
-    - title: Completion
+    - title: Completion Command
       link: /docs/core/cli/completion/
-    - title: Version
+    - title: Version Command
       link: /docs/core/cli/version/
   - group: Scheduling Strategies
     items:

@@ -65,10 +65,16 @@ It then generates multiple operations based on the search space anw it will mana
 Running an operation with a hyperparameter tuning matrix is similar to any other operation:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_grid.yaml --eager
+polyaxon run --eager --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_grid.yaml
 ```
 
-If you don't provide the `--eager` flag Polyaxon will:
+If you have cloned the quick-start repo, you can run:
+
+```bash
+polyaxon run --eager -f optimization/hyperparams_grid.yaml
+```
+
+Note that in both commands we are passing `--eager`. If you don't provide the `--eager` flag Polyaxon will:
  * Run the hyperparameter tuning pipeline in a managed mode if you have access to Polyaxon EE or Polyaxon Cloud.
  * Raise an exception if you are using Polyaxon CE.
 
@@ -111,7 +117,7 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/e
 To run this polyaxonfile:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_random.yaml --eager
+polyaxon run --eager --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_random.yaml
 ```
 
 Random search also provides access to the continuous distributions in addition to the discrete distributions.

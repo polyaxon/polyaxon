@@ -20,7 +20,6 @@ import click
 
 from urllib3.exceptions import HTTPError
 
-from polyaxon import settings
 from polyaxon.api import (
     EXTERNAL_V1,
     REWRITE_EXTERNAL_V1,

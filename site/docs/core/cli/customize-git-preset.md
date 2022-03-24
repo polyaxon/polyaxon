@@ -1,14 +1,17 @@
 ---
-title: "How to customize git preset"
+title: "Customize git preset"
 sub_link: "cli/customize-git-preset"
 meta_title: "A guide on how to customize the remote git preset integration - Core Concepts"
 meta_description: "Polyaxon allows to iterate with Polyaxon CLI and a remote git repo, this guide shows how users can extend or create their own polyaxongit.yaml file."
 visibility: public
 status: published
 tags:
+  - cli
+  - reference
+  - polyaxon
   - concepts
   - tutorials
-sidebar: "intro"
+sidebar: "core"
 ---
 
 ## Overview
