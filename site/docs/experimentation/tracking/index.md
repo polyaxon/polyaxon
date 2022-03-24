@@ -2,15 +2,17 @@
 title: "Polyaxon Tracking API"
 sub_link: "tracking"
 is_index: true
-meta_title: "Polyaxon Tracking API Specification - Experimentation"
+meta_title: "Polyaxon Tracking API Specification - Tracking - Experimentation"
 meta_description: "Polyaxon Tracking API is a high-level API for logging parameters, code versions, metrics, and outputs when running your machine learning code, both on a Polyaxon deployment or on a different platform/environment."
 visibility: public
 status: published
 tags:
+  - client
+  - api
+  - polyaxon
+  - python
   - tracking
   - reference
-  - polyaxon
-  - client
   - sdk
 sidebar: "experimentation"
 ---

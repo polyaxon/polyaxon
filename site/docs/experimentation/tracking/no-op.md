@@ -1,15 +1,19 @@
 ---
 title: "No-op Mode"
-sub_link: "client/no-op"
-meta_title: "Introduction to no-op mode - Python Client References"
+sub_link: "tracking/no-op"
+meta_title: "Introduction to no-op mode - Tracking - Experimentation"
 meta_description: "Polyaxon's Python library allows to turn off all API calls and silently pass through all function calls."
 visibility: public
 status: published
 tags:
-  - specifications
+  - client
+  - api
   - polyaxon
   - python
-sidebar: "intro"
+  - tracking
+  - reference
+  - sdk
+sidebar: "experimentation"
 ---
 
 ## Overview
@@ -17,11 +21,29 @@ sidebar: "intro"
 The no-op mode allows users to turn off all API calls and silently pass through all function calls. this behavior is generally useful if a user needs to debug or test
 a script without the need to connect to a Polyaxon Cluster.
 
-## Disabling Polyaxon clients without changing code
+```bash
+export POLYAXON_NO_OP=true
+# Or
+export POLYAXON_NO_OP="1"
+```
 
-Since using the Polyaxon client and the tracking API requires code change, e.g.
+or in Python
 
 ```python
+import os
+
+os.environ["POLYAXON_NO_OP"] = "true"
+# Or
+os.environ["POLYAXON_NO_OP"] = "1"
+```
+
+## Disabling tracking without changing code
+
+Since using the tracking API requires code change, e.g.
+
+```python
+from polyaxon.tracking import Run
+
 # Polyaxon experiment
 experiment = Run()
 # training code ...

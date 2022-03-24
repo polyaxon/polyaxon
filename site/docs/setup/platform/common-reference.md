@@ -146,7 +146,7 @@ annotations:
 | `ssl`     | To set ssl and serve https with Polyaxon deployed with NodePort service | `{}`
 
 
-NGINX acts as a reverse proxy for the Polyaxon's front-end server, meaning NGINX proxies external HTTP (and HTTPS) requests to the Polyaxon API.
+NGINX acts as a reverse proxy for Polyaxon's front-end server, meaning NGINX proxies external HTTP (and HTTPS) requests to the Polyaxon API.
 
 ### GKE ingress
 

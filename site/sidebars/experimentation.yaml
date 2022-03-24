@@ -39,6 +39,22 @@
     items:
     - title: Overview
       link: /docs/experimentation/tracking/
+    - title: Instantiation & Authentication
+      link: /docs/experimentation/tracking/instantiation/
+    - title: Exception handling
+      link: /docs/experimentation/tracking/exception-handling/
+    - title: NO-OP Mode
+      link: /docs/experimentation/tracking/no-op/
+    - title: Offline Mode
+      link: /docs/experimentation/tracking/offline/
+    - title: In-Cluster Mode
+      link: /docs/experimentation/tracking/in-cluster/
+    - title: In-Notebooks Model
+      link: /docs/experimentation/tracking/in-notebooks/
+    - title: Tracking Metadata
+      link: /docs/experimentation/tracking/metadata/
+    - title: Tracking Artifacts
+      link: /docs/experimentation/tracking/artifacts/
     - title: Client Reference
       link: /docs/experimentation/tracking/client/
     - title: Module Reference

@@ -26,7 +26,7 @@ To use the queue priority feature, you need to define multiple queues with diffe
 
 ## Kubernetes scheduler priority
 
-Kubernetes allows to run workloads with relative priorities. This give users a second layer to control how Kubernetes should behave when several operations are moved from the Polyaxon's queues to Kubernetes.
+Kubernetes allows to run workloads with relative priorities. This give users a second layer to control how Kubernetes should behave when several operations are moved from Polyaxon's queues to Kubernetes.
 This is useful when some operations need to acquire resources faster than others.
 For example, you may want to schedule a notebook service to acquire a node before a long training job.
 

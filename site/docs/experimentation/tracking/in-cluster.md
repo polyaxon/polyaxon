@@ -1,16 +1,25 @@
 ---
 title: "Tracking in-cluster"
-sub_link: "client/tracking-in-cluster"
-meta_title: "Introduction to Polyaxon tracking - Python Client References"
-meta_description: "Polyaxon's Python library provides utilities and modules for logging and tracking of your machine learning code, artifacts, and results."
+sub_link: "tracking/in-cluster"
+meta_title: "Introduction to Polyaxon tracking - Tracking - Experimentation"
+meta_description: "Polyaxon's tracking provides utilities and modules for logging and tracking of your machine learning code, artifacts, and results."
 visibility: public
 status: published
 tags:
-  - specifications
+  - client
+  - api
   - polyaxon
   - python
-sidebar: "intro"
+  - tracking
+  - reference
+  - sdk
+sidebar: "experimentation"
 ---
+
+## Overview
+
+When calling tracking module in-cluster, Polyaxon performs a couple of checks to automatically load a context defined by the scheduler. 
+Additionally, this context contains a scoped token to communicate with the API to only authorize the job or service to perform requests to accessible entities only.
 
 ## In-cluster tracking
 
@@ -29,6 +38,9 @@ if __name__ == "__main__":
 
     # Log additional parameter
     tracking.log_inputs(param1=randint(0, 100))
+    
+    # Log additional tags
+    tracking.log_tags(["foo", "bar"])
 
     # Log a single metric
     tracking.log_metric(name="metric1", value=random(), step=OPTIONAL, timestamp=OPTIONAL)

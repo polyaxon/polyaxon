@@ -1,7 +1,7 @@
 ---
 title: "How to instantiation the Python client"
 sub_link: "python-library/instantiation"
-meta_title: "How to instantiate the Polyaxon's Python Client - Core Concepts"
+meta_title: "How to instantiate Polyaxon's Python Client - Core Concepts"
 meta_description: "Polyaxon's Python library tries to detect a context automatically, users can also change this behavior by providing auth, organization, project, and run references."
 visibility: public
 status: published
@@ -17,13 +17,15 @@ sidebar: "core"
 
 When instantiating any of the Python clients or modules, Polyaxon performs a couple of checks to load a context if it exists. 
 The context can be defined in the current user path if the CLI was initialized or authenticated, it can be defined using environment variables, 
-or it can be defined by Polyaxon Scheduling if the module is called in an in-cluster job or service.  
+or it can be defined by Polyaxon Scheduling if the module is called in an in-cluster job or service.
 
 ## In-cluster
 
 All Polyaxon clients and libraries will be configured automatically if used in-cluster, e.g.
 
 ```python
+from polyaxon.client import ProjectClient, RunClient
+
 project_client = ProjectClient()
 run_client = RunClient()
 ```
@@ -37,6 +39,8 @@ If your Polyaxon CLI is authenticated, the Polyaxon client will be configured
 automatically with the CLI authentication information, e.g.
 
 ```python
+from polyaxon.client import ProjectClient, RunClient
+
 project_client = ProjectClient()
 run_client = RunClient()
 ```
@@ -48,6 +52,8 @@ Please note the client will automatically detect the [local cache](/docs/core/cl
 If you have local cache and you need to use a different project ro run, similar to switching CLI context, users need to pass the full porject or run context, i.e.:
 
 ```python
+from polyaxon.client import ProjectClient, RunClient
+
 # For projects
 project_client = ProjectClient(project="OWNER/PROJECT")
 # Or
@@ -72,6 +78,9 @@ You can set environment variables containing:
 Once these environment variables are set, you can instantiate your client, e.g.
 
 ```python
+from polyaxon.client import ProjectClient, RunClient
+
+project_client = ProjectClient()
 run_client = RunClient()
 ```
 
@@ -80,7 +89,11 @@ Configuring and authenticating a client using environment variables could be use
 ### Provide a configured client:
 
 ```python
+from polyaxon.client import PolyaxonClient, ProjectClient, RunClient
+
 client = PolyaxonClient(token=API_TOKEN, config=ClientConfig(host=HOST, use_https=None, verify_ssl=None))
+
+project_client = ProjectClient(owner="org1", project="project-name", client=client)
 run_client = RunClient(owner="org1", project="project-name", run_uuid="uuid", client=client)
 ```
 
@@ -95,22 +108,31 @@ In such cases instead of just instantiating a client or module with the default 
 Example changing project while defaulting to the same organization:
 
 ```python
+from polyaxon.client import ProjectClient, RunClient
+
+project_client = ProjectClient(project="project-name")
 run_client = RunClient(project="project-name")
 ```
 
 Example providing the project and the organization, if the user has access to multiple organizations:
 
 ```python
+from polyaxon.client import ProjectClient, RunClient
+
+project_client = ProjectClient(project="org-name/project-name")
 run_client = RunClient(project="org-name/project-name")
 
 # Or
-
+project_client = ProjectClient(owner="org-name", project="project-name")
 run_client = RunClient(owner="org-name", project="project-name")
 ```
 
-Example changing run while defaulting to the same project:
+Example changing the run while defaulting to the same project:
 
 ```python
+from polyaxon.client import ProjectClient, RunClient
+
+project_client = ProjectClient()
 run_client = RunClient(run_uuid="uuid")
 ```
 

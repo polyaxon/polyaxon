@@ -21,7 +21,7 @@ Polyaxon's Python library raises some of its own exceptions as well as standard 
 
 Polyaxon raises several exceptions, all classes are derived from:
 
-```bash
+```python
 from polyaxon.exceptions import PolyaxonException
 ```
 
@@ -29,7 +29,7 @@ from polyaxon.exceptions import PolyaxonException
 
 During the parsing and validation of a Polyaxonfile or configurations, Polyaxon will raise:
 
-```bash
+```python
 from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonfileError, PolyaxonCompilerError
 ```
 
@@ -37,6 +37,6 @@ from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonfileError, Polyaxon
 
 When performing API calls using the Python client, Polyaxon will raise:
 
-```bash
+```python
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonHTTPError
 ```

@@ -1,15 +1,19 @@
 ---
 title: "Tracking offline"
-sub_link: "client/tracking-offline"
-meta_title: "Introduction to Polyaxon tracking offline - Python Client References"
+sub_link: "tracking/tracking-offline"
+meta_title: "Introduction to Polyaxon tracking offline - Tracking - Experimentation"
 meta_description: "Polyaxon's Python library enables users to perform all API calls and artifacts tracking logic offline."
 visibility: public
 status: published
 tags:
-  - specifications
+  - client
+  - api
   - polyaxon
   - python
-sidebar: "intro"
+  - tracking
+  - reference
+  - sdk
+sidebar: "experimentation"
 ---
 
 ## Overview
@@ -20,7 +24,52 @@ When the offline mode is enabled , Polyaxon will perform all API and tracking re
 ## Setting the offline mode
 
 To configure the offline mode using the environment variable, users just need to set an environment variable `POLYAXON_IS_OFFLINE` to true/1.
-It's also possible to set the offline mode using the tracking `Run(..., is_offline=True, ...)` class or the tracking `tracking.init(..., is_offline=True, ...)` module. 
+
+```bash
+export POLYAXON_IS_OFFLINE=true
+# Or
+export POLYAXON_IS_OFFLINE="1"
+```
+
+or in Python
+
+```python
+import os
+
+os.environ["POLYAXON_IS_OFFLINE"] = "true"
+# Or
+os.environ["POLYAXON_IS_OFFLINE"] = "1"
+```
+
+It's also possible to set the offline mode using the tracking `Run(..., is_offline=True, ...)` class:
+
+```python
+from polyaxon.tracking import Run
+...
+run = Run(..., is_offline=True, ...)
+...
+run.log_metrics(m1=2.3, m2=0.1, step=2)
+run.log_outputs(result1=11, result2="foo")
+...
+print(run.run_uuid)
+print(run.run_data)
+...
+``` 
+
+Or the tracking `tracking.init(..., is_offline=True, ...)` module:
+
+```python
+from polyaxon import tracking
+...
+tracking.init(..., is_offline=True, ...)
+...
+tracking.log_metrics(m1=2.3, m2=0.1, step=2)
+tracking.log_outputs(result1=11, result2="foo")
+...
+print(tracking.TRACKING_RUN.run_uuid)
+print(tracking.TRACKING_RUN.run_data)
+...
+``` 
 
 ## Offline tracking
 

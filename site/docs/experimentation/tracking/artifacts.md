@@ -1,17 +1,19 @@
 ---
 title: "Tracking Artifacts"
-sub_link: "client/tracking-artifacts"
+sub_link: "tracking/tracking-artifacts"
 meta_title: "Add artifact tracking and log metadata to the lineage table - Tracking - Experimentation"
-meta_description: "Add artifact tracking and log metadata to the lineage table."
+meta_description: "Tracking artifacts and log metadata lineage related to files and assets."
 visibility: public
 status: published
 tags:
+  - client
+  - api
+  - polyaxon
+  - python
   - tracking
   - reference
-  - polyaxon
-  - client
   - sdk
-sidebar: "intro"
+sidebar: "experimentation"
 ---
 
 Polyaxon provides two methods for tracking assets and artifacts that you generate in your jobs:

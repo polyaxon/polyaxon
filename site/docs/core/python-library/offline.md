@@ -38,6 +38,7 @@ os.environ["POLYAXON_IS_OFFLINE"] = "1"
 ```
 
 It's also possible to set the offline mode using the client directly:
+
 ```python
 from polyaxon.client import RunClient
 ...
