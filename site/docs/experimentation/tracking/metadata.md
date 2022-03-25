@@ -45,7 +45,7 @@ tracking.log_outputs(foo="bar", scalar=0.1, key="val")
 
 To log texts, HTML, scalars, metrics that change overtime or need to be recorded in a step-wise manner, or if you need to visualize the event in the dashboard you should use:
 
- * Tracking 3 changing metrics
+### Tracking changing metrics
 
 ```python
 from polyaxon import tracking
@@ -64,7 +64,7 @@ for i in range(1, 5):
     tracking.log_metrics(loss=loss, accuracy=accuracy, step=i)
 ```
  
- * Tracking a changing text value over time or step-wise
+### Tracking a changing text value over time or step-wise
 
 ```python
 from polyaxon import tracking
@@ -73,7 +73,7 @@ for i in range(1, 5):
     tracking.log_text(name="text-event", value="value at step {}".format(i), step=i)
 ```
  
- * Tracking a changing HTML value over time or step-wise
+### Tracking a changing HTML value over time or step-wise
 
 ```python
 from polyaxon import tracking
@@ -88,7 +88,7 @@ for i in range(1, 5):
     tracking.log_html(name="text-event", html=get_html(i), step=i)
 ```
 
- * Tracking a changing audio over time or step-wise
+### Tracking a changing audio over time or step-wise
  
 ```python
 import numpy as np
@@ -105,7 +105,7 @@ for i in range(1, 5):
     tracking.log_audio(data=get_audio(i), name='audio-ex', step=i)
 ```
  
- * Tracking a changing distribution over time or step-wise
+### Tracking a changing distribution over time or step-wise
 
 
 ```python

@@ -1,9 +1,9 @@
 ---
-title: "Organizations"
+title: "Projects"
 sub_link: "projects"
 is_index: true
-meta_title: "Polyaxon organizations management UI"
-meta_description: "Polyaxon management UI is a tool for managing organizations, teams, projects, agents."
+meta_title: "Polyaxon projects management UI"
+meta_description: "Polyaxon management UI is a tool for managing projects, runs, access, models, artifacts."
 tags:
   - concepts
   - polyaxon
