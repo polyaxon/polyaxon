@@ -1,14 +1,19 @@
 ---
 title: "How to use a custom service account"
-sub_link: "k8s-guides/service-accounts"
+sub_link: "using-k8s-entities/service-accounts"
 meta_title: "A guide on using a custom service for running operations - Core Concepts"
 meta_description: "All pods managed by Polyaxon use the default service account created during the deployment of Polyaxon CE or Polyaxon Agent, however you can use specific service accounts on per operation level."
 visibility: public
 status: published
 tags:
+  - specification
+  - api
+  - polyaxon
+  - yaml
+  - json
+  - python
   - concepts
-  - tutorials
-sidebar: "intro"
+sidebar: "core"
 ---
 
 ## Overview

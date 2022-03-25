@@ -1,14 +1,19 @@
 ---
 title: "How to configure a security context"
-sub_link: "k8s-guides/security-context"
+sub_link: "using-k8s-entities/security-context"
 meta_title: "A guide on configuring a security context for operations - Core Concepts"
 meta_description: "By default, Polyaxon operations run without a security context, and pods run as root."
 visibility: public
 status: published
 tags:
+  - specification
+  - api
+  - polyaxon
+  - yaml
+  - json
+  - python
   - concepts
-  - tutorials
-sidebar: "intro"
+sidebar: "core"
 ---
 
 ## Overview

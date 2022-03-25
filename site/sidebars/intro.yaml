@@ -83,18 +83,6 @@
       link: /docs/intro/builds/building-containers-custom-context/
     - title: Automatic Build Process
       link: /docs/intro/builds/automatic-build-process/
-  - group: Using Kubernetes Entities
-    items:
-    - title: Using service accounts
-      link: /docs/intro/k8s-guides/service-accounts/
-    - title: Configuring pod security context
-      link: /docs/intro/k8s-guides/security-context/
-    - title: Mounting volumes manually
-      link: /docs/intro/k8s-guides/mounting-volumes/
-    - title: Mounting secrets manually
-      link: /docs/intro/k8s-guides/mounting-secrets/
-    - title: Mounting configmaps manually
-      link: /docs/intro/k8s-guides/mounting-configmaps/
   - group: Features & Architecture
     items:
     - title: Features

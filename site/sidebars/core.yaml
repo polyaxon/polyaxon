@@ -163,3 +163,15 @@
       link: /docs/core/scheduling-presets/services-timeout/
     - title: Workload Security Context
       link: /docs/core/scheduling-presets/workload-security-context/
+  - group: Using Kubernetes Entities
+    items:
+    - title: Using service accounts
+      link: /docs/core/using-k8s-entities/service-accounts/
+    - title: Configuring pod security context
+      link: /docs/core/using-k8s-entities/security-context/
+    - title: Mounting volumes manually
+      link: /docs/core/using-k8s-entities/mounting-volumes/
+    - title: Mounting secrets manually
+      link: /docs/core/using-k8s-entities/mounting-secrets/
+    - title: Mounting configmaps manually
+      link: /docs/core/using-k8s-entities/mounting-configmaps/

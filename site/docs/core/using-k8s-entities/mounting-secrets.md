@@ -1,14 +1,19 @@
 ---
 title: "How to mount secrets manually"
-sub_link: "k8s-guides/mounting-secrets"
+sub_link: "using-k8s-entities/mounting-secrets"
 meta_title: "A guide on mounting secrets manually - Core Concepts"
 meta_description: "While we generally recommend that users should leverage the connection interface to configure and abstract requesting and mounting secrets, it's possible to mount secrets manually."
 visibility: public
 status: published
 tags:
+  - specification
+  - api
+  - polyaxon
+  - yaml
+  - json
+  - python
   - concepts
-  - tutorials
-sidebar: "intro"
+sidebar: "core"
 ---
 
 ## Overview
