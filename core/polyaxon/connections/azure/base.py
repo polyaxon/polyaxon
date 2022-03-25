@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import logging
+import os
 
 from typing import List, Optional, Union
 
@@ -113,3 +114,14 @@ def get_client_secret(
         return value
     keys = keys or ["AZURE_CLIENT_SECRET"]
     return read_keys(context_path=context_path, keys=keys)
+
+
+def set_env_vars(
+    account_name: str = None, account_key: str = None, connection_string: str = None
+):
+    if account_name:
+        os.environ["AZURE_ACCOUNT_NAME"] = account_name
+    if account_key:
+        os.environ["AZURE_ACCOUNT_KEY"] = account_key
+    if connection_string:
+        os.environ["AZURE_CONNECTION_STRING"] = connection_string

@@ -16,7 +16,7 @@
 
 import mock
 
-from polyaxon.connections.gcp.base import get_gc_client, get_gc_credentials
+from polyaxon.connections.gcp.base import get_gc_credentials
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.utils.test_utils import BaseTestCase
 
