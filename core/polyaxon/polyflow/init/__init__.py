@@ -295,5 +295,12 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
 
     def has_connection(self):
         return any(
-            [self.connection, self.git, self.dockerfile, self.file, self.artifacts, self.paths]
+            [
+                self.connection,
+                self.git,
+                self.dockerfile,
+                self.file,
+                self.artifacts,
+                self.paths,
+            ]
         )

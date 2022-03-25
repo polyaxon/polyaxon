@@ -722,7 +722,7 @@ class RunClient:
         if self._is_offline:
             self._run_data.status_conditions = self._run_data.status_conditions or []
             self._run_data.status_conditions.append(status_condition)
-            if status == polyaxon_sdk.V1Statuses.CREATED:
+            if status == V1Statuses.CREATED:
                 self._run_data.created_at = current_date
             LifeCycle.set_started_at(self._run_data)
             LifeCycle.set_finished_at(self._run_data)
@@ -1600,7 +1600,7 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self.log_status(polyaxon_sdk.V1Statuses.RUNNING, message="Operation is running")
+        self.log_status(V1Statuses.RUNNING, message="Operation is running")
 
     def _log_end_status(
         self,
@@ -1636,7 +1636,7 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self._log_end_status(status=polyaxon_sdk.V1Statuses.SUCCEEDED, message=message)
+        self._log_end_status(status=V1Statuses.SUCCEEDED, message=message)
 
     @client_handler(check_no_op=True)
     def log_stopped(self, message="Operation is stopped"):
@@ -1647,7 +1647,7 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self._log_end_status(status=polyaxon_sdk.V1Statuses.STOPPED, message=message)
+        self._log_end_status(status=V1Statuses.STOPPED, message=message)
 
     @client_handler(check_no_op=True)
     def log_failed(self, reason: str = None, message: str = None):
@@ -1663,7 +1663,7 @@ class RunClient:
             message: str, optional, message to log with this status.
         """
         self._log_end_status(
-            status=polyaxon_sdk.V1Statuses.FAILED,
+            status=V1Statuses.FAILED,
             reason=reason,
             message=message,
         )

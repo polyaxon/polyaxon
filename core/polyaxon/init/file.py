@@ -17,9 +17,7 @@ import os
 
 from typing import Dict
 
-from polyaxon import settings
-from polyaxon.client import RunClient
-from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
+from polyaxon.client.init import get_client_or_raise
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 
 
@@ -33,13 +31,9 @@ def create_file_lineage(filepath: str, summary: Dict, kind: str):
         else:
             kind = V1ArtifactKind.FILE
 
-    if settings.CLIENT_CONFIG.no_api:
+    run_client = get_client_or_raise()
+    if not run_client:
         return
-
-    try:
-        run_client = RunClient()
-    except PolyaxonClientException as e:
-        raise PolyaxonContainerException(e)
 
     run_client.log_artifact_ref(
         path=filepath,

@@ -21,14 +21,14 @@ from typing import List
 
 from git import Repo as GitRepo
 
-from polyaxon import settings
-from polyaxon.client import RunClient
+from polyaxon.client.init import get_client_or_raise
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_GIT_CREDENTIALS,
     POLYAXON_KEYS_SSH_PATH,
     POLYAXON_KEYS_SSH_PRIVATE_KEY,
 )
-from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
+from polyaxon.exceptions import PolyaxonContainerException
+from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.utils.code_reference import (
     add_remote,
@@ -139,30 +139,45 @@ def create_code_repo(
     connection: str = None,
     flags: List[str] = None,
 ):
+    run_client = get_client_or_raise()
+
     try:
         clone_url = get_clone_url(url)
     except Exception as e:
+        if run_client:
+            run_client.log_status(
+                status=V1Statuses.WARNING,
+                reason="GitInitializer",
+                message="Error parsing git url. "
+                "Please check the git init container's logs for more details.",
+            )
         raise PolyaxonContainerException("Error parsing url: {}.".format(url)) from e
 
-    if flags and "--experimental-fetch" in flags:
-        flags.remove("--experimental-fetch")
-        fetch_git_repo(
-            repo_path=repo_path, clone_url=clone_url, revision=revision, flags=flags
-        )
-    else:
-        clone_and_checkout_git_repo(
-            repo_path=repo_path, clone_url=clone_url, revision=revision, flags=flags
-        )
+    try:
+        if flags and "--experimental-fetch" in flags:
+            flags.remove("--experimental-fetch")
+            fetch_git_repo(
+                repo_path=repo_path, clone_url=clone_url, revision=revision, flags=flags
+            )
+        else:
+            clone_and_checkout_git_repo(
+                repo_path=repo_path, clone_url=clone_url, revision=revision, flags=flags
+            )
+    except Exception as e:
+        if run_client:
+            run_client.log_status(
+                status=V1Statuses.WARNING,
+                reason="GitInitializer",
+                message="Error cloning git repo. "
+                "Please check the git init container's logs for more details.",
+            )
+        raise e
+
     # Update remote
     set_remote(repo_path=repo_path, url=url)
 
-    if settings.CLIENT_CONFIG.no_api:
+    if not run_client:
         return
-
-    try:
-        run_client = RunClient()
-    except PolyaxonClientException as e:
-        raise PolyaxonContainerException(e)
 
     code_ref = get_code_reference(path=repo_path, url=url)
     artifact_run = V1RunArtifact(

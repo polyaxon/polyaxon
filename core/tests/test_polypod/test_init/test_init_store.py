@@ -68,12 +68,15 @@ class TestInitStore(BaseTestCase):
         )
 
     def test_cp_store_args(self):
-        assert cp_mount_args(
-            path_from="/foo",
-            path_to="/bar",
-            is_file=True,
-            sync_fw=False,
-        ) == "if [ -f /foo ]; then cp /foo /bar;  fi;"
+        assert (
+            cp_mount_args(
+                path_from="/foo",
+                path_to="/bar",
+                is_file=True,
+                sync_fw=False,
+            )
+            == "if [ -f /foo ]; then cp /foo /bar;  fi;"
+        )
         assert (
             cp_mount_args(
                 path_from="/foo",
