@@ -18,8 +18,8 @@ sidebar: "experimentation"
 
 ## Overview
 
-the tracking module is based on the [Python library](/docs/core/python-library/exception-handling/) and so it raises similar exceptions in addition to standard Python exceptions and exception coming from other modules, 
-for example when logging an image or Dataframe, an exception can be raised from `matplotlib` or `pandas`.  
+The tracking module is based on the [Python library](/docs/core/python-library/exception-handling/) and so it raises similar exceptions in addition to standard Python exceptions and exception coming from other modules, 
+for example when logging an image or a dataframe, an exception can be raised from `matplotlib` or `pandas`.  
 
 ## Core Exceptions
 

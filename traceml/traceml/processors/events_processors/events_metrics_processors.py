@@ -165,6 +165,12 @@ def curve(x, y, annotation=None):
 
 
 def confusion_matrix(x, y, z):
+    if hasattr(x, "tolist"):
+        x = x.tolist()
+    if hasattr(x, "tolist"):
+        y = y.tolist()
+    if hasattr(x, "tolist"):
+        z = z.tolist()
     try:
         x_len = len(x)
         y_len = len(y)

@@ -1,6 +1,6 @@
 ---
 title: "Tracking offline"
-sub_link: "tracking/tracking-offline"
+sub_link: "tracking/offline"
 meta_title: "Introduction to Polyaxon tracking offline - Tracking - Experimentation"
 meta_description: "Polyaxon's Python library enables users to perform all API calls and artifacts tracking logic offline."
 visibility: public

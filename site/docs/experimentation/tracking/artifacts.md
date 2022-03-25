@@ -1,6 +1,6 @@
 ---
 title: "Tracking Artifacts"
-sub_link: "tracking/tracking-artifacts"
+sub_link: "tracking/artifacts"
 meta_title: "Add artifact tracking and log metadata to the lineage table - Tracking - Experimentation"
 meta_description: "Tracking artifacts and log metadata lineage related to files and assets."
 visibility: public

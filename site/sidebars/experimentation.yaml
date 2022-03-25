@@ -49,7 +49,7 @@
       link: /docs/experimentation/tracking/offline/
     - title: In-Cluster Mode
       link: /docs/experimentation/tracking/in-cluster/
-    - title: In-Notebooks Model
+    - title: In-Notebooks Mode
       link: /docs/experimentation/tracking/in-notebooks/
     - title: Tracking Metadata
       link: /docs/experimentation/tracking/metadata/

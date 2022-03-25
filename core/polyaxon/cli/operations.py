@@ -1786,13 +1786,3 @@ def wait_for_running_condition(client):
             ),
         )
         sys.exit(1)
-
-
-@ops.command()
-@clean_outputs
-def sync(**kwargs):
-    Printer.print_warning(
-        "polyaxon ops sync is deprecated. Please use: "
-        "'polyaxon ops push' to push a local run to a remote server and "
-        "'polyaxon ops pull' to pull a remote run to a local path."
-    )
