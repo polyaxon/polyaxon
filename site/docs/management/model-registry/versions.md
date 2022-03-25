@@ -21,14 +21,14 @@ A model can have one or more versions, each version:
  * Can be deployed as an internal app.
  * Can be deployed in production.
 
-## Model version create
+## Model version creation
 
 You can create your model versions using the CLI, API, or the UI.
 
 ### CLI
 
 ```bash
-polyaxon models push --name OWNER_NAME/MODEL_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml 
+polyaxon models register -p OWNER_NAME/MODEL_NAME --version VERSION_NAME --description ... --tags tag1,tag2,... --artifacts model-name,env,asset-version 
 ```
 
 ### UI
@@ -41,7 +41,7 @@ When a user create a run that tracks a model, users can promote a model version 
 
 ![version-promote](../../../../content/images/dashboard/registry/version-promote.png)
 
-Once a component is registered, any future run will be linked to it. Users can filter all runs using a specific component version:
+Once a model version is registered, the run will be marked as promoted:
 
 ![version-promoted](../../../../content/images/dashboard/registry/version-promoted.png)
 
@@ -50,7 +50,7 @@ Once a component is registered, any future run will be linked to it. Users can f
 ### CLI
 
 ```bash
-polyaxon models get -ver OWNER_NAME/MODEL_NAME[:tag]
+polyaxon models get -ver VERSION_NAME
 ```
 
 ### UI
@@ -64,7 +64,7 @@ polyaxon models get -ver OWNER_NAME/MODEL_NAME[:tag]
 You can override a model version with push:
 
 ```bash
-polyaxon models push --name ...
+polyaxon models register -ver ... --force
 ```
 
 Or update specific info:

@@ -27,7 +27,7 @@ You can create your component versions using the CLI, API, or the UI.
 ### CLI
 
 ```bash
-polyaxon components push --name OWNER_NAME/COMPONENT_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml 
+polyaxon components register --version OWNER_NAME/COMPONENT_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml 
 ```
 
 ### UI
@@ -67,7 +67,7 @@ polyaxon components get -ver VERSION_NAME -p OWNER/PROJECT_NAME
 You can override a component version with push:
 
 ```bash
-polyaxon components push -f ./path/to/polyaxonfile.yaml -ver VERSION_NAME ...
+polyaxon components register -f ./path/to/polyaxonfile.yaml -ver VERSION_NAME ... --push
 ```
 
 Or update specific info:

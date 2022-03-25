@@ -3,7 +3,7 @@ title: "Model Registry"
 sub_link: "model-registry"
 is_index: true
 meta_title: "Polyaxon management - Model Registry"
-meta_description: "Polyaxon Model Registry is a powerful models store and a system to manage versioning, logging, staging, and production."
+meta_description: "Polyaxon Model Registry is a powerful model store and a system to manage versioning, logging, staging, and production."
 tags:
   - concepts
   - polyaxon
@@ -14,9 +14,9 @@ sidebar: "management"
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 <blockquote class="info">This feature is still in Beta!</blockquote>
 
-## Model Registry
+## Overview
 
-Polyaxon users can use turn a project to provides a model registry, such project provides:
+Polyaxon users can use their projects to promote and lock their runs to model versions, such projects provide:
  * APIs and a UI.
  * It can be used with your teams' configuration and access control settings to enable collaborative model management.
  * Logging and lineage using the experimentation feature.
@@ -29,20 +29,20 @@ Polyaxon users can use turn a project to provides a model registry, such project
 
 ## Understanding the model registry
 
-Each model can have multiple versions.
+Each project (model) can have multiple model versions.
 
-Each model can list all versions, their stage, their model artifacts used, their specification, and their metrics and current usage.
+Each project (model) can list all model versions, their stage, their model artifacts used, their specification, and their metrics and current usage.
 
-Polyaxon provides a special tag to signal the stage of your models' versions.
+Polyaxon provides a special tag to signal the stage of the models' versions.
 
-## Managing and using models
+## Managing and using model versions
 
 You can create and manage models and versions using the API, CLI or the dashboard.
 
 > Please check the model management guide. 
 
-Each model version uses can lock an experiment run based on its id, it can have metadata, and framework.
-By using `:tag`, you can add new versions to a model registry, Polyaxon uses the `owner/model-name` as a namespace for each model.
+Each model version can lock a run based on its id, and it can attach additional metadata.
+By using `:tag`, you can add new versions to a project, Polyaxon uses the `owner/project-name` as a namespace.
 
 > Please check the model version management guide.
 

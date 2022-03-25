@@ -1,8 +1,8 @@
 ---
-title: "Models"
-sub_link: "model-registry/models"
+title: "Projects (Models)"
+sub_link: "model-registry/projects"
 meta_title: "Polyaxon management UI - Models"
-meta_description: "Models is the entity that defines the a version of a model created in Polyaxon or other system,
+meta_description: "Each project(Model) is the entity that manages runs promoted as model versions created in Polyaxon or other system,
 each model: Can have multiple versions, Can be published publicly or privately within your organization, Can define team and project level permissions."
 tags:
   - concepts
@@ -15,7 +15,7 @@ sidebar: "management"
 
 ## Overview
 
-A `Model` is an abstraction that defines a model created in Polyaxon or other system, it can:
+A `Model` is a project that manages several versions of a model asset created in Polyaxon or other system, it can:
  * have multiple versions.
  * be published publicly or privately within your organization.
  * define team and project level permissions.
@@ -43,7 +43,7 @@ You can view a model overview using the project CLI or UI.
 ### CLI
 
 ```bash
-polyaxon project get -m OWNER_NAME/MODEL_NAME
+polyaxon project get -p OWNER_NAME/MODEL_NAME
 ```
 
 ### UI
@@ -55,7 +55,7 @@ polyaxon project get -m OWNER_NAME/MODEL_NAME
 ### CLI
 
 ```bash
-polyaxon models ls -m OWNER_NAME/MODEL_NAME --query ... --sort ...
+polyaxon models ls -p OWNER_NAME/MODEL_NAME --query ... --sort ...
 ```
 
 ### UI
@@ -69,19 +69,19 @@ polyaxon models ls -m OWNER_NAME/MODEL_NAME --query ... --sort ...
 Updating
 
 ```bash
-polyaxon project update -m ...
+polyaxon project update [-p] [-ver]...
 ```
 
 Deleting
 
 ```bash
-polyaxon project delete -m ...
+polyaxon project delete [-p] [-ver]...
 ```
 
 ### UI
 
-You can manage a model using the UI, you can also manage who can contribute and have access to the component and its versions, 
-as well as from which projects users are allowed to promote experiments
+You can manage a project(model) using the UI, you can also manage who can contribute and have access to the project and the model versions, 
+as well as from which projects users are allowed to promote runs
  
 ![model-admin](../../../../content/images/dashboard/registry/model-admin.png)
 

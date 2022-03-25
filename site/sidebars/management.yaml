@@ -73,15 +73,15 @@
     items:
     - title: Overview
       link: /docs/management/model-registry/
-    - title: Models
-      link: /docs/management/model-registry/models/
+    - title: Projects (Models)
+      link: /docs/management/model-registry/projects/
     - title: Versions
       link: /docs/management/model-registry/versions/
-#  - group: Artifacts
-#    items:
-#    - title: Overview
-#      link: /docs/management/artifacts/
-#    - title: Models
-#      link: /docs/management/artifacts/models/
-#    - title: Versions
-#      link: /docs/management/artifacts/versions/
+  - group: Artifacts Versioning
+    items:
+    - title: Overview
+      link: /docs/management/artifacts-versioning/
+    - title: Projects
+      link: /docs/management/artifacts-versioning/projects/
+    - title: Versions
+      link: /docs/management/artifacts-versioning/versions/
