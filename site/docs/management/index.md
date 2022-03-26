@@ -54,3 +54,11 @@ Polyaxon Model Registry is a models store and a system that provides:
  * Deploying as an internal tool or as a test API using the service abstraction.
  * Agnostic to the model packaging format.
  * Integrations with your favorite serving technologies.
+
+## Artifacts Versioning
+
+Polyaxon Artifacts Versioning is a system to promote runs and version assets, it provides:
+ * APIs and a UI.
+ * Possibility to attach additional summary and information about the assets.
+ * Lineage and locking of the runs generating the data and artifacts versions.
+ * Can define team level permissions.
