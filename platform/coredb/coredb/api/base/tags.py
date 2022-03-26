@@ -16,6 +16,8 @@
 
 from typing import Dict, List, Optional
 
+from polyaxon.utils.list_utils import to_list
+
 
 class TagsMixin:
     @staticmethod
@@ -23,7 +25,7 @@ class TagsMixin:
         new_tags = validated_data.get("tags")
 
         if new_tags:
-            new_tags = list(set(new_tags))
+            new_tags = to_list(new_tags, check_none=True, to_unique=True)
             validated_data["tags"] = new_tags
 
         if not validated_data.get("merge") or not tags or not new_tags:
