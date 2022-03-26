@@ -161,7 +161,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "test"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -239,7 +239,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "test"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -275,7 +275,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "test"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -303,7 +303,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "main"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -335,7 +335,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "main-job"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -372,7 +372,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "main-job"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -407,7 +407,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "main"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -444,7 +444,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "main"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -480,7 +480,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "main1"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -514,7 +514,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "main1"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -548,7 +548,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "tensorflow"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -581,7 +581,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "pytorch"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []
@@ -620,7 +620,7 @@ class TestMainContainer(BaseTestCase):
 
         assert container.name == "test"
         assert container.image is None
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command is None
         assert container.args is None
         assert container.ports == []

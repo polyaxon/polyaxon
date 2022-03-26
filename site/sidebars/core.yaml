@@ -75,17 +75,17 @@
     items:
     - title: Overview
       link: /docs/core/cli/
-    - title: CLI Reconfiguration
+    - title: Reconfiguration
       link: /docs/core/cli/reconfigure-cli/
-    - title: CLI Authentication
+    - title: Authentication
       link: /docs/core/cli/authenticate/
-    - title: CLI Cache Behavior
+    - title: Cache Behavior
       link: /docs/core/cli/cache/
-    - title: CLI Ignore Logic
+    - title: Ignore Logic
       link: /docs/core/cli/ignore/
-    - title: CLI Artifacts Upload
+    - title: Artifacts Upload
       link: /docs/core/cli/artifacts-upload/
-    - title: CLI Artifacts Download
+    - title: Artifacts Download
       link: /docs/core/cli/artifacts-download/
     - title: Customizing the git Preset
       link: /docs/core/cli/customize-git-preset/

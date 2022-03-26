@@ -118,7 +118,7 @@ class TestInitGit(BaseTestCase):
             in container.name
         )
         assert container.image == "foo"
-        assert container.image_pull_policy == "IfNotPresent"
+        assert container.image_pull_policy is None
         assert container.command == ["polyaxon", "initializer", "git"]
         assert container.env == get_connection_env_var(
             connection=connection, secret=None
