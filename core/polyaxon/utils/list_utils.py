@@ -26,7 +26,7 @@ except ImportError:
 def to_list(value, check_none=False, check_dict=False, to_unique: bool = False):
     def _to_unique(v):
         try:
-            return list(set(v))
+            return list(dict.fromkeys(v))
         except Exception as e:
             logging.debug("Could not return unique value for list. Error %s", e)
             return list(v)

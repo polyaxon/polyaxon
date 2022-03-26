@@ -32,5 +32,5 @@ class TestRunClient(BaseTestCase):
         client = RunClient(owner="owner", project="project", run_uuid=uuid.uuid4().hex)
         assert client.run_data.tags is None
         client.log_tags(["foo", "bar"])
-        assert set(client.run_data.tags) == {"foo", "bar"}
+        assert client.run_data.tags == ["foo", "bar"]
         assert sdk_patch_run.call_count == 1
