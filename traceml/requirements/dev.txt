@@ -2,11 +2,11 @@ pandas
 ipython
 scikit-learn
 ipython-genutils  # required for nbconvert and was dropped in v5.1 (see: https://github.com/mu-editor/mu/pull/1844).
-nbconvert>=5.4,<6.0.0 # pin to fix #9
+nbconvert>=5.4,<6.0.0 # pin to fix #958 (replace with nbconvert==6.4.4 and "base" instead "basic")
 altair==4.1.0
 matplotlib
 moviepy==1.0.2
 plotly==4.6.0
 Pillow
-bokeh==2.0.2
+bokeh
 aiofiles==0.8.0
