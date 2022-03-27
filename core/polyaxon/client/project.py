@@ -212,6 +212,14 @@ class ProjectClient:
         )
         return self.client.runs_v1.list_runs(self.owner, self.project, **params)
 
+    def _validate_kind(self, kind: V1ProjectVersionKind):
+        if kind not in V1ProjectVersionKind.allowable_values:
+            raise ValueError(
+                "The kind `{}` is not supported, it must be one of the values `{}`".format(
+                    kind, V1ProjectVersionKind.allowable_values
+                )
+            )
+
     @client_handler(check_no_op=True, check_offline=True)
     def list_versions(
         self,
@@ -221,7 +229,12 @@ class ProjectClient:
         limit: int = None,
         offset: int = None,
     ) -> polyaxon_sdk.V1ListProjectVersionsResponse:
-        """Lists project versions under the current owner/project.
+        """Lists project versions under the current owner/project based on version kind.
+
+        This is a generic function that maps to list:
+            * component versions
+            * model versions
+            * artifact versions
 
         [Project API](/docs/api/#operation/ListProjectVersions)
 
@@ -237,6 +250,7 @@ class ProjectClient:
         Returns:
             List[V1ProjectVersion], list of versions.
         """
+        self._validate_kind(kind)
         params = get_query_params(
             limit=limit or 20, offset=offset, query=query, sort=sort
         )
@@ -245,10 +259,108 @@ class ProjectClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
+    def list_component_versions(
+        self,
+        query: str = None,
+        sort: str = None,
+        limit: int = None,
+        offset: int = None,
+    ) -> polyaxon_sdk.V1ListProjectVersionsResponse:
+        """Lists component versions under the current owner/project.
+
+        [Project API](/docs/api/#operation/ListProjectVersions)
+
+        Args:
+            query: str, optional, query filters, please refer to
+                 [Run PQL](/docs/core/query-language/project-versions/#query)
+            sort: str, optional, fields to order by, please refer to
+                 [Run PQL](/docs/core/query-language/project-versions/#sort)
+            limit: int, optional, limit of project versions to return.
+            offset: int, optional, offset pages to paginate project versions.
+
+        Returns:
+            List[V1ProjectVersion], list of component versions.
+        """
+        return self.list_versions(
+            kind=V1ProjectVersionKind.COMPONENT,
+            query=query,
+            sort=sort,
+            limit=limit,
+            offset=offset,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def list_model_versions(
+        self,
+        query: str = None,
+        sort: str = None,
+        limit: int = None,
+        offset: int = None,
+    ) -> polyaxon_sdk.V1ListProjectVersionsResponse:
+        """Lists model versions under the current owner/project.
+
+        [Project API](/docs/api/#operation/ListProjectVersions)
+
+        Args:
+            query: str, optional, query filters, please refer to
+                 [Run PQL](/docs/core/query-language/project-versions/#query)
+            sort: str, optional, fields to order by, please refer to
+                 [Run PQL](/docs/core/query-language/project-versions/#sort)
+            limit: int, optional, limit of project versions to return.
+            offset: int, optional, offset pages to paginate project versions.
+
+        Returns:
+            List[V1ProjectVersion], list of model versions.
+        """
+        return self.list_versions(
+            kind=V1ProjectVersionKind.MODEL,
+            query=query,
+            sort=sort,
+            limit=limit,
+            offset=offset,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def list_artifact_versions(
+        self,
+        query: str = None,
+        sort: str = None,
+        limit: int = None,
+        offset: int = None,
+    ) -> polyaxon_sdk.V1ListProjectVersionsResponse:
+        """Lists artifact versions under the current owner/project.
+
+        [Project API](/docs/api/#operation/ListProjectVersions)
+
+        Args:
+            query: str, optional, query filters, please refer to
+                 [Run PQL](/docs/core/query-language/project-versions/#query)
+            sort: str, optional, fields to order by, please refer to
+                 [Run PQL](/docs/core/query-language/project-versions/#sort)
+            limit: int, optional, limit of project versions to return.
+            offset: int, optional, offset pages to paginate project versions.
+
+        Returns:
+            List[V1ProjectVersion], list of artifact versions.
+        """
+        return self.list_versions(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            query=query,
+            sort=sort,
+            limit=limit,
+            offset=offset,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def get_version(
         self, kind: V1ProjectVersionKind, version: str
     ) -> polyaxon_sdk.V1ProjectVersion:
-        """Get a project version under the current owner/project.
+        """Gets a project version under the current owner/project based on version kind.
+
+        This is a generic function that maps to get:
+            * component version
+            * model version
+            * artifact version
 
         [Project API](/docs/api/#operation/GetVersion)
 
@@ -259,6 +371,7 @@ class ProjectClient:
         Returns:
             V1ProjectVersion.
         """
+        self._validate_kind(kind)
         response = self.client.projects_v1.get_version(
             self.owner, self.project, kind, version
         )
@@ -267,12 +380,59 @@ class ProjectClient:
         return response
 
     @client_handler(check_no_op=True, check_offline=True)
+    def get_component_version(self, version: str) -> polyaxon_sdk.V1ProjectVersion:
+        """Gets a component version under the current owner/project.
+
+        [Project API](/docs/api/#operation/GetVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+
+        Returns:
+            V1ProjectVersion, component version.
+        """
+        return self.get_version(kind=V1ProjectVersionKind.COMPONENT, version=version)
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_model_version(self, version: str) -> polyaxon_sdk.V1ProjectVersion:
+        """Gets a model version under the current owner/project.
+
+        [Project API](/docs/api/#operation/GetVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+
+        Returns:
+            V1ProjectVersion, model version.
+        """
+        return self.get_version(kind=V1ProjectVersionKind.MODEL, version=version)
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_artifact_version(self, version: str) -> polyaxon_sdk.V1ProjectVersion:
+        """Gets an artifact version under the current owner/project.
+
+        [Project API](/docs/api/#operation/GetVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+
+        Returns:
+            V1ProjectVersion, artifact version.
+        """
+        return self.get_version(kind=V1ProjectVersionKind.ARTIFACT, version=version)
+
+    @client_handler(check_no_op=True, check_offline=True)
     def create_version(
         self,
         kind: V1ProjectVersionKind,
         data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
     ) -> polyaxon_sdk.V1ProjectVersion:
-        """Create a project version based on the data passed.
+        """Creates a project version based on the data passed based on version kind.
+
+        This is a generic function based on the kind passed and creates a:
+            * component version
+            * model version
+            * artifact version
 
         [Project API](/docs/api/#operation/CreateVersion)
 
@@ -283,6 +443,7 @@ class ProjectClient:
         Returns:
             V1ProjectVersion.
         """
+        self._validate_kind(kind)
         if isinstance(data, polyaxon_sdk.V1ProjectVersion):
             data.kind = kind
         elif isinstance(data, dict):
@@ -296,13 +457,78 @@ class ProjectClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
+    def create_component_version(
+        self,
+        data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Creates a component version based on the data passed.
+
+        [Project API](/docs/api/#operation/CreateVersion)
+
+        Args:
+            data: Dict or V1ProjectVersion, required.
+
+        Returns:
+            V1ProjectVersion, component version.
+        """
+        return self.create_version(
+            kind=V1ProjectVersionKind.COMPONENT,
+            data=data,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def create_model_version(
+        self,
+        data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Creates a model version based on the data passed.
+
+        [Project API](/docs/api/#operation/CreateVersion)
+
+        Args:
+            data: Dict or V1ProjectVersion, required.
+
+        Returns:
+            V1ProjectVersion, model version.
+        """
+        return self.create_version(
+            kind=V1ProjectVersionKind.MODEL,
+            data=data,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def create_artifact_version(
+        self,
+        data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Creates an artifact version based on the data passed.
+
+        [Project API](/docs/api/#operation/CreateVersion)
+
+        Args:
+            data: Dict or V1ProjectVersion, required.
+
+        Returns:
+            V1ProjectVersion, artifact version.
+        """
+        return self.create_version(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            data=data,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def patch_version(
         self,
         kind: V1ProjectVersionKind,
         version: str,
         data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
     ) -> polyaxon_sdk.V1ProjectVersion:
-        """Update a project version based on the data passed.
+        """Updates a project version based on the data passed and version kind.
+
+        This is a generic function based on the kind passed and patches a:
+            * component version
+            * model version
+            * artifact version
 
         [Project API](/docs/api/#operation/PatchVersion)
 
@@ -314,6 +540,7 @@ class ProjectClient:
         Returns:
             V1ProjectVersion.
         """
+        self._validate_kind(kind)
         return self.client.projects_v1.patch_version(
             self.owner,
             self.project,
@@ -321,6 +548,75 @@ class ProjectClient:
             version,
             body=data,
             async_req=False,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def patch_component_version(
+        self,
+        version: str,
+        data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Updates a component version based on the data passed.
+
+        [Project API](/docs/api/#operation/PatchVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+            data: Dict or V1ProjectVersion, required.
+
+        Returns:
+            V1ProjectVersion, component version.
+        """
+        return self.patch_version(
+            kind=V1ProjectVersionKind.COMPONENT,
+            version=version,
+            data=data,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def patch_model_version(
+        self,
+        version: str,
+        data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Updates a model version based on the data passed.
+
+        [Project API](/docs/api/#operation/PatchVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+            data: Dict or V1ProjectVersion, required.
+
+        Returns:
+            V1ProjectVersion, model version.
+        """
+        return self.patch_version(
+            kind=V1ProjectVersionKind.MODEL,
+            version=version,
+            data=data,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def patch_artifact_version(
+        self,
+        version: str,
+        data: Union[Dict, polyaxon_sdk.V1ProjectVersion],
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Updates an artifact version based on the data passed.
+
+        [Project API](/docs/api/#operation/PatchVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+            data: Dict or V1ProjectVersion, required.
+
+        Returns:
+            V1ProjectVersion, artifact version.
+        """
+        return self.patch_version(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            version=version,
+            data=data,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -336,9 +632,12 @@ class ProjectClient:
         artifacts: List[str] = None,
         force: bool = False,
     ) -> polyaxon_sdk.V1ProjectVersion:
-        """Create or Update a project version based on the data passed.
+        """Creates or Updates a project version based on the data passed.
 
-        [Project API](/docs/api/#operation/PatchVersion)
+        This is a generic function based on the kind passed and registers a:
+            * component version
+            * model version
+            * artifact version
 
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
@@ -403,8 +702,124 @@ class ProjectClient:
             return self.create_version(kind=kind, data=version_config)
 
     @client_handler(check_no_op=True, check_offline=True)
+    def register_component_version(
+        self,
+        version: str,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: str = None,
+        run: str = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Creates or Updates a component version based on the data passed.
+
+        Args:
+            version: str, optional, the version name/tag.
+            description: str, optional, the version description.
+            tags: str or List[str], optional.
+            content: str, optional, content/metadata (JSON object) of the version.
+            run: str, optional, a uuid reference to the run.
+            force: bool, optional, to force push, i.e. update if exists.
+
+        Returns:
+            V1ProjectVersion, component verison.
+        """
+        return self.register_version(
+            kind=V1ProjectVersionKind.COMPONENT,
+            version=version,
+            description=description,
+            tags=tags,
+            content=content,
+            run=run,
+            force=force,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def register_model_version(
+        self,
+        version: str,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: str = None,
+        run: str = None,
+        connection: str = None,
+        artifacts: List[str] = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Create or Update a model version based on the data passed.
+
+        Args:
+            version: str, optional, the version name/tag.
+            description: str, optional, the version description.
+            tags: str or List[str], optional.
+            content: str, optional, content/metadata (JSON object) of the version.
+            run: str, optional, a uuid reference to the run.
+            connection: str, optional, a uuid reference to a connection.
+            artifacts: List[str], optional, list of artifacts to highlight(requires passing a run)
+            force: bool, optional, to force push, i.e. update if exists.
+
+        Returns:
+            V1ProjectVersion, model version.
+        """
+        return self.register_version(
+            kind=V1ProjectVersionKind.MODEL,
+            version=version,
+            description=description,
+            tags=tags,
+            content=content,
+            run=run,
+            connection=connection,
+            artifacts=artifacts,
+            force=force,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def register_artifact_version(
+        self,
+        version: str,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: str = None,
+        run: str = None,
+        connection: str = None,
+        artifacts: List[str] = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Create or Update an artifact version based on the data passed.
+
+        Args:
+            version: str, optional, the version name/tag.
+            description: str, optional, the version description.
+            tags: str or List[str], optional.
+            content: str, optional, content/metadata (JSON object) of the version.
+            run: str, optional, a uuid reference to the run.
+            connection: str, optional, a uuid reference to a connection.
+            artifacts: List[str], optional, list of artifacts to highlight(requires passing a run)
+            force: bool, optional, to force push, i.e. update if exists.
+
+        Returns:
+            V1ProjectVersion, artifact version.
+        """
+        return self.register_version(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            version=version,
+            description=description,
+            tags=tags,
+            content=content,
+            run=run,
+            connection=connection,
+            artifacts=artifacts,
+            force=force,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def delete_version(self, kind: V1ProjectVersionKind, version: str):
-        """Delete a project version under the current owner/project.
+        """Deletes a project version under the current owner/project.
+
+        This is a generic function based on the kind passed and deletes a:
+            * component version
+            * model version
+            * artifact version
 
         [Project API](/docs/api/#operation/DeleteVersion)
 
@@ -412,6 +827,7 @@ class ProjectClient:
             kind: V1ProjectVersionKind, kind of the project version.
             version: str, required, the version name/tag.
         """
+        self._validate_kind(kind)
         logger.info("Deleting {} version: `{}`".format(kind, version))
         return self.client.projects_v1.delete_version(
             self.owner,
@@ -422,13 +838,61 @@ class ProjectClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
+    def delete_component_version(self, version: str):
+        """Deletes a component version under the current owner/project.
+
+        [Project API](/docs/api/#operation/DeleteVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+        """
+        return self.delete_version(
+            kind=V1ProjectVersionKind.COMPONENT,
+            version=version,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def delete_model_version(self, version: str):
+        """Deletes a model version under the current owner/project.
+
+        [Project API](/docs/api/#operation/DeleteVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+        """
+        return self.delete_version(
+            kind=V1ProjectVersionKind.MODEL,
+            version=version,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def delete_artifact_version(self, version: str):
+        """Deletes an artifact version under the current owner/project.
+
+        [Project API](/docs/api/#operation/DeleteVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+        """
+        return self.delete_version(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            version=version,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def stage_version(
         self,
         kind: V1ProjectVersionKind,
         version: str,
         condition: Union[Dict, V1StageCondition],
     ):
-        """Create a new a project version stage.
+        """Creates a new a project version stage.
+
+
+        This is a generic function based on the kind passed and stages a:
+            * component version
+            * model version
+            * artifact version
 
         [Project API](/docs/api/#operation/CreateVersionStage)
 
@@ -437,6 +901,7 @@ class ProjectClient:
             version: str, required, the version name/tag.
             condition: Dict or V1StageCondition.
         """
+        self._validate_kind(kind)
         return self.client.projects_v1.create_version_stage(
             self.owner,
             self.project,
@@ -447,12 +912,77 @@ class ProjectClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
+    def stage_component_version(
+        self,
+        version: str,
+        condition: Union[Dict, V1StageCondition],
+    ):
+        """Creates a new a component version stage.
+
+        [Project API](/docs/api/#operation/CreateVersionStage)
+
+        Args:
+            version: str, required, the version name/tag.
+            condition: Dict or V1StageCondition.
+        """
+        return self.stage_version(
+            kind=V1ProjectVersionKind.COMPONENT,
+            version=version,
+            condition=condition,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def stage_model_version(
+        self,
+        version: str,
+        condition: Union[Dict, V1StageCondition],
+    ):
+        """Creates a new a model version stage.
+
+        [Project API](/docs/api/#operation/CreateVersionStage)
+
+        Args:
+            version: str, required, the version name/tag.
+            condition: Dict or V1StageCondition.
+        """
+        return self.stage_version(
+            kind=V1ProjectVersionKind.MODEL,
+            version=version,
+            condition=condition,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def stage_artifact_version(
+        self,
+        version: str,
+        condition: Union[Dict, V1StageCondition],
+    ):
+        """Creates a new an artifact version stage.
+
+        [Project API](/docs/api/#operation/CreateVersionStage)
+
+        Args:
+            version: str, required, the version name/tag.
+            condition: Dict or V1StageCondition.
+        """
+        return self.stage_version(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            version=version,
+            condition=condition,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
     def transfer_version(
         self, kind: V1ProjectVersionKind, version: str, to_project: str
     ):
         """Transfers the version to a project under the same owner/organization.
 
-        [Run API](/docs/api/#operation/TransferRun)
+        This is a generic function based on the kind passed and transfers a:
+            * component version
+            * model version
+            * artifact version
+
+        [Run API](/docs/api/#operation/TransferVersion)
 
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
@@ -460,6 +990,7 @@ class ProjectClient:
             to_project: str, required, the destination project to transfer the version to.
         """
 
+        self._validate_kind(kind)
         return self.client.projects_v1.transfer_version(
             self.owner,
             self.project,
@@ -467,6 +998,54 @@ class ProjectClient:
             version,
             body={"project": to_project},
             async_req=False,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def transfer_component_version(self, version: str, to_project: str):
+        """Transfers the component version to a project under the same owner/organization.
+
+        [Run API](/docs/api/#operation/TransferVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+            to_project: str, required, the destination project to transfer the version to.
+        """
+        return self.transfer_version(
+            kind=V1ProjectVersionKind.COMPONENT,
+            version=version,
+            to_project=to_project,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def transfer_model_version(self, version: str, to_project: str):
+        """Transfers the model version to a project under the same owner/organization.
+
+        [Run API](/docs/api/#operation/TransferVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+            to_project: str, required, the destination project to transfer the version to.
+        """
+        return self.transfer_version(
+            kind=V1ProjectVersionKind.MODEL,
+            version=version,
+            to_project=to_project,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def transfer_artifact_version(self, version: str, to_project: str):
+        """Transfers the artifact version to a project under the same owner/organization.
+
+        [Run API](/docs/api/#operation/TransferVersion)
+
+        Args:
+            version: str, required, the version name/tag.
+            to_project: str, required, the destination project to transfer the version to.
+        """
+        return self.transfer_version(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            version=version,
+            to_project=to_project,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -489,8 +1068,10 @@ class ProjectClient:
         If `name` is provided the version will be copied with the new name,
         otherwise the copied version will be have a suffix `-copy`.
 
-
-        [Run API](/docs/api/#operation/TransferRun)
+        This is a generic function based on the kind passed and copies a:
+            * component version
+            * model version
+            * artifact version
 
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
@@ -524,9 +1105,143 @@ class ProjectClient:
             force=force,
         )
 
+    @client_handler(check_no_op=True, check_offline=True)
+    def copy_component_version(
+        self,
+        version: str,
+        to_project: str = None,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: str = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Copies the component version to the same project or to a destination project.
+
+        If `to_project` is provided,
+        the version will be copied to the destination project under the same owner/organization.
+
+        If `name` is provided the version will be copied with the new name,
+        otherwise the copied version will be have a suffix `-copy`.
+
+        Args:
+            version: str, required, the version name/tag.
+            to_project: str, optional, the destination project to copy the version to.
+            name: str, optional, the name to use for registering the copied version,
+                 default value is the original version's name with `-copy` prefix.
+            description: str, optional, the version description,
+                 default value is the original version's description.
+            tags: str or List[str], optional, the version description,
+                 default value is the original version's description.
+            content: str, optional, content/metadata (JSON object) of the version,
+                 default value is the original version's content.
+            force: bool, optional, to force push, i.e. update if exists.
+        """
+        return self.copy_version(
+            kind=V1ProjectVersionKind.COMPONENT,
+            version=version,
+            to_project=to_project,
+            name=name,
+            description=description,
+            tags=tags,
+            content=content,
+            force=force,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def copy_model_version(
+        self,
+        version: str,
+        to_project: str = None,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: str = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Copies the model version to the same project or to a destination project.
+
+        If `to_project` is provided,
+        the version will be copied to the destination project under the same owner/organization.
+
+        If `name` is provided the version will be copied with the new name,
+        otherwise the copied version will be have a suffix `-copy`.
+
+        Args:
+            version: str, required, the version name/tag.
+            to_project: str, optional, the destination project to copy the version to.
+            name: str, optional, the name to use for registering the copied version,
+                 default value is the original version's name with `-copy` prefix.
+            description: str, optional, the version description,
+                 default value is the original version's description.
+            tags: str or List[str], optional, the version description,
+                 default value is the original version's description.
+            content: str, optional, content/metadata (JSON object) of the version,
+                 default value is the original version's content.
+            force: bool, optional, to force push, i.e. update if exists.
+        """
+        return self.copy_version(
+            kind=V1ProjectVersionKind.MODEL,
+            version=version,
+            to_project=to_project,
+            name=name,
+            description=description,
+            tags=tags,
+            content=content,
+            force=force,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def copy_artifact_version(
+        self,
+        version: str,
+        to_project: str = None,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: str = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Copies the artifact version to the same project or to a destination project.
+
+        If `to_project` is provided,
+        the version will be copied to the destination project under the same owner/organization.
+
+        If `name` is provided the version will be copied with the new name,
+        otherwise the copied version will be have a suffix `-copy`.
+
+        Args:
+            version: str, required, the version name/tag.
+            to_project: str, optional, the destination project to copy the version to.
+            name: str, optional, the name to use for registering the copied version,
+                 default value is the original version's name with `-copy` prefix.
+            description: str, optional, the version description,
+                 default value is the original version's description.
+            tags: str or List[str], optional, the version description,
+                 default value is the original version's description.
+            content: str, optional, content/metadata (JSON object) of the version,
+                 default value is the original version's content.
+            force: bool, optional, to force push, i.e. update if exists.
+        """
+        return self.copy_version(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            version=version,
+            to_project=to_project,
+            name=name,
+            description=description,
+            tags=tags,
+            content=content,
+            force=force,
+        )
+
     @client_handler(check_no_op=True)
     def persist_version(self, config: polyaxon_sdk.V1ProjectVersion, path: str):
-        """Persists a version to a local path."""
+        """Persists a version to a local path.
+
+        Args:
+            config: V1ProjectVersion, the version config to persist.
+            path: str, the path where to persist the version config.
+        """
         if not config:
             logger.debug(
                 "Persist offline run call failed. "
@@ -554,6 +1269,12 @@ class ProjectClient:
     def download_artifacts_for_version(
         self, config: polyaxon_sdk.V1ProjectVersion, path: str
     ):
+        """Collects and downloads all artifacts and assets linked to a version.
+
+        Args:
+            config: V1ProjectVersion, the version config to download the artifacts for.
+            path: str, the path where to persist the artifacts and assets.
+        """
         if config.kind not in {
             V1ProjectVersionKind.MODEL,
             V1ProjectVersionKind.ARTIFACT,
@@ -616,6 +1337,11 @@ class ProjectClient:
     ):
         """Packages and downloads the version to a local path.
 
+        This is a generic function based on the kind passed and pulls a:
+            * component version
+            * model version
+            * artifact version
+
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
             version: str, required, the version name/tag.
@@ -627,3 +1353,64 @@ class ProjectClient:
         self.persist_version(config=config, path=path)
         if download_artifacts:
             self.download_artifacts_for_version(config=config, path=path)
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def pull_component_version(
+        self,
+        version: str,
+        path: str,
+    ):
+        """Packages and downloads the component version to a local path.
+
+        Args:
+            version: str, required, the version name/tag.
+            path: str, local path where to persist the metadata and artifacts.
+        """
+        return self.pull_version(
+            kind=V1ProjectVersionKind.COMPONENT,
+            version=version,
+            path=path,
+            download_artifacts=False,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def pull_model_version(
+        self,
+        version: str,
+        path: str,
+        download_artifacts: bool = True,
+    ):
+        """Packages and downloads the model version to a local path.
+
+        Args:
+            version: str, required, the version name/tag.
+            path: str, local path where to persist the metadata and artifacts.
+            download_artifacts: bool, optional, to download the artifacts based on linked lineage.
+        """
+        return self.pull_version(
+            kind=V1ProjectVersionKind.MODEL,
+            version=version,
+            path=path,
+            download_artifacts=download_artifacts,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def pull_artifact_version(
+        self,
+        version: str,
+        path: str,
+        download_artifacts: bool = True,
+    ):
+        """Packages and downloads the artifact version to a local path.
+
+        Args:
+            version: str, required, the version name/tag.
+            path: str, local path where to persist the metadata and artifacts.
+            download_artifacts: bool, optional, to download the artifacts based on linked lineage.
+        """
+        return self.pull_version(
+            kind=V1ProjectVersionKind.ARTIFACT,
+            version=version,
+            path=path,
+            download_artifacts=download_artifacts,
+        )
