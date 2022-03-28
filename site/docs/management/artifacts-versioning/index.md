@@ -21,6 +21,7 @@ Polyaxon users can use their projects to promote and lock their runs to artifact
  * It can be used with your teams' configuration and access control settings to enable collaborative asset management.
  * Logging and lineage using the experimentation feature.
  * Versioning.
+ * Requesting asset versions using fully qualified names.
  * Deploying as an internal tool or as a test API using the service abstraction.
  * Agnostic to the stored artifacts.
 
