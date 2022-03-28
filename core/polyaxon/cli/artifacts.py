@@ -463,6 +463,7 @@ def transfer(ctx, project, version, to_project):
 @click.option("--offset", "-off", type=int, help="To offset the list of runs.")
 @click.option(
     "--path",
+    "--path-to",
     type=click.Path(exists=False),
     help="Optional path where the artifact versions are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",

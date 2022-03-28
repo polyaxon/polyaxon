@@ -387,13 +387,13 @@ def get(ctx, project, uid, offline, offline_path, output):
     $ polyaxon ops get  # if run is cached
 
     \b
-    $ polyaxon ops get --uid=8aac02e3a62a4f0aaa257c59da5eab80 # project is cached
+    $ polyaxon ops get --uid 8aac02e3a62a4f0aaa257c59da5eab80 # project is cached
 
     \b
     $ polyaxon ops get --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops get -p alain/cats-vs-dogs --uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops get -p alain/cats-vs-dogs --uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
 
     uid = uid or ctx.obj.get("run_uuid")
@@ -473,7 +473,7 @@ def delete(ctx, project, uid, yes):
     $ polyaxon ops delete
 
     \b
-    $ polyaxon ops delete --uid=8aac02e3a62a4f0aaa257c59da5eab80  # project is cached
+    $ polyaxon ops delete --uid 8aac02e3a62a4f0aaa257c59da5eab80  # project is cached
 
     \b
     $ polyaxon ops delete --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80
@@ -519,12 +519,11 @@ def update(ctx, project, uid, name, description, tags):
     Examples:
 
     \b
-    $ polyaxon ops  update --uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops update --uid 8aac02e3a62a4f0aaa257c59da5eab80
     --description="new description for my runs"
 
     \b
-    $ polyaxon ops  update --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80
-    --tags="foo, bar" --name="unique-name"
+    $ polyaxon ops update --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80 --tags="foo, bar" --name="unique-name"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -576,7 +575,7 @@ def approve(ctx, project, uid):
     $ polyaxon ops approve
 
     \b
-    $ polyaxon ops approve --uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops approve --uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -620,7 +619,7 @@ def stop(ctx, project, uid, yes):
     $ polyaxon ops stop
 
     \b
-    $ polyaxon ops stop --uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops stop --uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -705,7 +704,10 @@ def restart(
     Examples:
 
     \b
-    $ polyaxon run --uid=8aac02e3a62a4f0aaa257c59da5eab80 restart
+    $ polyaxon ops restart
+
+    \b
+    $ polyaxon ops restart --uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
     content = None
     if polyaxonfile:
@@ -762,7 +764,10 @@ def resume(ctx, project, uid, polyaxonfile):
     Examples:
 
     \b
-    $ polyaxon ops resume --uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops resume
+
+    \b
+    $ polyaxon ops resume --uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
     content = None
     if polyaxonfile:
@@ -801,6 +806,9 @@ def invalidate(ctx, project, uid):
 
     \b
     $ polyaxon ops invalidate
+
+    \b
+    $ polyaxon ops invalidate --uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -835,7 +843,7 @@ def statuses(ctx, project, uid, watch):
     $ polyaxon ops statuses
 
     \b
-    $ polyaxon ops statuses -uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops statuses -uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -876,12 +884,12 @@ def statuses(ctx, project, uid, watch):
 #     Examples for getting run resources:
 #
 #     \b
-#     $ polyaxon ops resources -uid=8aac02e3a62a4f0aaa257c59da5eab80
+#     $ polyaxon ops resources -uid 8aac02e3a62a4f0aaa257c59da5eab80
 #
 #     For GPU resources
 #
 #     \b
-#     $ polyaxon ops resources -uid=8aac02e3a62a4f0aaa257c59da5eab80 --gpu
+#     $ polyaxon ops resources -uid 8aac02e3a62a4f0aaa257c59da5eab80 --gpu
 #     """
 #
 #     def get_run_resources():
@@ -946,7 +954,7 @@ def logs(ctx, project, uid, follow, hide_time, all_containers, all_info):
     $ polyaxon run logs
 
     \b
-    $ polyaxon ops logs -uid=8aac02e3a62a4f0aaa257c59da5eab80 -p mnist
+    $ polyaxon ops logs -uid 8aac02e3a62a4f0aaa257c59da5eab80 -p mnist
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -985,10 +993,10 @@ def inspect(ctx, project, uid):
     Examples:
 
     \b
-    $ polyaxon ops inspect -uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops inspect -uid 8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops inspect -p acme/project -uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops inspect -p acme/project -uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -1034,13 +1042,13 @@ def shell(ctx, project, uid, command, pod, container):
     Examples:
 
     \b
-    $ polyaxon ops shell -uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops shell -uid 8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops shell -p acme/project -uid=8aac02e3a62a4f0aaa257c59da5eab80 --command=python
+    $ polyaxon ops shell -p acme/project -uid 8aac02e3a62a4f0aaa257c59da5eab80 --command=python
 
     \b
-    $ polyaxon ops shell -p acme/project -uid=8aac02e3a62a4f0aaa257c59da5eab80 -cmd="/bin/bash"
+    $ polyaxon ops shell -p acme/project -uid 8aac02e3a62a4f0aaa257c59da5eab80 -cmd="/bin/bash"
     """
     from polyaxon.vendor.shell_pty import PseudoTerminal
 
@@ -1101,6 +1109,7 @@ def shell(ctx, project, uid, command, pod, container):
     help="Optional list of artifact lineage kind references.",
 )
 @click.option(
+    "--path",
     "--path-to",
     type=click.Path(exists=False),
     help="The destination where to download the artifacts.",
@@ -1125,19 +1134,22 @@ def artifacts(
     Examples:
 
     \b
-    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 --dir "uploads/path/dir"
+    $ polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80 --dir "uploads/path/dir"
 
     \b
-    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 -f "outputs/path/file1" --file="outputs/path/file2" -d "outputs/path/dir1"
+    $ polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80 -f "outputs/path/file1" --file="outputs/path/file2" -d "outputs/path/dir1"
 
     \b
-    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 --path-to="this/path"
+    $ polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80 --path="this/path"
 
     \b
-    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 -l-name image-example -l-name debug-csv-file --path-to="this/path"
+    $ polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80 -l-name image-example -l-name debug-csv-file --path="this/path"
+
+    \b
+    $ polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80 -l-kind model -l-kind env --path="this/path"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -1297,13 +1309,13 @@ def upload(ctx, project, uid, path_from, path_to, sync_failure):
     Examples:
 
     \b
-    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80
+    $ polyaxon ops upload -uid 8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80 path-from="path/to/upload"
+    $ polyaxon ops upload -uid 8aac02e3a62a4f0aaa257c59da5eab80 path-from="path/to/upload"
 
     \b
-    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80 path-to="path/to/upload/to"
+    $ polyaxon ops upload -uid 8aac02e3a62a4f0aaa257c59da5eab80 path-to="path/to/upload/to"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         project or ctx.obj.get("project"),
@@ -1531,6 +1543,7 @@ def service(ctx, project, uid, yes, external, url):
 )
 @click.option(
     "--path",
+    "--path-to",
     type=click.Path(exists=False),
     help="Optional path where the runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
@@ -1641,6 +1654,7 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
 )
 @click.option(
     "--path",
+    "--path-from",
     type=click.Path(exists=False),
     help="Optional path where the runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
