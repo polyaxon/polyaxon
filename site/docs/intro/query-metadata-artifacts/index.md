@@ -32,7 +32,8 @@ By leveraging the query specification and download interfaces, you can:
 In the previous sections of this tutorial we started several runs, with different hyperparameters or different logic.
 In this section we will:
 
- * Search the runs history based on a metrics
+ * Search the runs history based on a metric
  * Limit the search to the top 3 runs
- * Persist the metadata and artifact of a single run
- * Persist the metadata and artifact of the 3 top runs
+ * Explore runs metadata
+ * Download artifacts
+ * Persist the metadata and artifact of a single run the 3 top runs

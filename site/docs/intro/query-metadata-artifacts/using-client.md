@@ -28,10 +28,10 @@ runs = response.results
 ```
 
 The list method shows the current runs inside our project. 
-Note that by default the Client will show a table of `20` runs and have `previous` and `next` for to paginate the full history.
+Note that by default the Client will show a table of `20` runs and have `previous` and `next` to paginate the full history.
 
 We can filter the results based on a specific metric. 
-The params `query`, `sort`, `offset`, and `limit` allows to restrict the list based on the query specification, order by fields, and a limit.
+The params `query`, `sort`, `offset`, and `limit` allows to restrict the list based on the query specification, order by fields, and to limit or offset the results.
 
 ```python
 from polyaxon.client import RunClient
@@ -55,7 +55,7 @@ for r in runs:
 
 ## Getting more information about the runs 
 
-In order to view and explore the top runs, we can query information about a specific run using the `-uid`, 
+In order to view and explore the top runs, we can query information about a specific run using the `run_uuid`, 
 for example if the first run has uuid value `8aac02e3a62a4f0aaa257c59da5eab80` we can query the run's information with CLI:
 
 ```python
@@ -131,8 +131,8 @@ run_client = RunClient(project="PROJECT_NAME", run_uuid="8aac02e3a62a4f0aaa257c5
 run_client.download_artifacts(path="outputs")
 lineages = run_client.get_artifacts_lineage(query="name: image-example | debug-csv-file").results
 
-if lineages:
-    run_client.download_artifact_for_lineage(lineage=lineages[0])
+for lineage in lineages:
+    run_client.download_artifact_for_lineage(lineage=lineage)
 ```
 
 * Specific artifacts based on the lineage reference kind
