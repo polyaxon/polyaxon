@@ -32,47 +32,47 @@ You can also update their roles.
 
 ## Organization permissions
 
-| Action                                                       | Viewer | Member | Admin | Manager | Owner  | Billing |
-| ------------------------------------------------------------ | ------ | ------ | ----- | ------- | ------ | ------- |
-| Can see/edit billing information and subscription details    |        |        |       |         | ✅     | ✅      |
-| Can remove an organization                                   |        |        |       |         | ✅     |         |
-| Can change an organization's visibility                      |        |        |       |         | ✅     |         |
-| Can change an organization's settings                        |        |        |       | ✅      | ✅     |         |
-| Can add/remove/change a team                                 |        |        |       | ✅      | ✅     |         |
-| Can add/remove/change a member                               |        |        |       | ✅      | ✅     |         |
-| Can add/remove/change an agent                               |        |        |       | ✅      | ✅     |         |
-| Can add/remove/change a preset                               |        |        |       | ✅      | ✅     |         |
-| Can edit global integrations                                 |        |        |       | ✅      | ✅     |         |
-| Can manage an organization's cross-project runs              |        |        | ✅    | ✅      | ✅     |         |
-| Can view an organization's level analytics                   |        |        | ✅    | ✅      | ✅     |         |
-| Can view an organization's level activity logs               |        |        | ✅    | ✅      | ✅     |         |
-| Can add/remove/change a project                              |        |        | ✅    | ✅      | ✅     |         |
-| Can change a project's settings                              |        |        | ✅    | ✅      | ✅     |         |
-| Can change a project's permissions                           |        |        | ✅    | ✅      | ✅     |         |
-| Can add/remove/change a component hub                        |        |        | ✅    | ✅      | ✅     |         |
-| Can change a component hub's settings                        |        |        | ✅    | ✅      | ✅     |         |
-| Can change a component hub's permissions                     |        |        | ✅    | ✅      | ✅     |         |
-| Can add/remove/change a model registry                       |        |        | ✅    | ✅      | ✅     |         |
-| Can change a model registry's settings                       |        |        | ✅    | ✅      | ✅     |         |
-| Can change a model registry's permissions                    |        |        | ✅    | ✅      | ✅     |         |
-| Can create/update runs                                       |        | ✅     | ✅    | ✅      | ✅     |         |
-| Can delete runs                                              |        |        | ✅    | ✅      | ✅     |         |
-| Can create/update searches                                   |        | ✅     | ✅    | ✅      | ✅     |         |
-| Can delete searches                                          |        |        | ✅    | ✅      | ✅     |         |
-| Can promote searches to the organization level               |        |        | ✅    | ✅      | ✅     |         |
-| Can create/update dashboards                                 |        | ✅     | ✅    | ✅      | ✅     |         |
-| Can delete dashboards                                        |        |        | ✅    | ✅      | ✅     |         |
-| Can promote dashboards to the organization level             |        |        | ✅    | ✅      | ✅     |         |
-| Can create/update component versions                         |        | ✅     | ✅    | ✅      | ✅     |         |
-| Can delete component versions                                |        |        | ✅    | ✅      | ✅     |         |
-| Can create/update model versions                             |        | ✅     | ✅    | ✅      | ✅     |         |
-| Can delete model versions                                    |        |        | ✅    | ✅      | ✅     |         |
-| Can view projects                                            | ✅     | ✅     | ✅    | ✅      | ✅     |         |
-| Can view a project's level analytics                         | ✅     | ✅     | ✅    | ✅      | ✅     |         |
-| Can view a project's level activity logs                     | ✅     | ✅     | ✅    | ✅      | ✅     |         |
-| Can view runs and related metadata and artifacts             | ✅     | ✅     | ✅    | ✅      | ✅     |         |
-| Can view component hub and versions                          | ✅     | ✅     | ✅    | ✅      | ✅     |         |
-| Can view model registry and versions                         | ✅     | ✅     | ✅    | ✅      | ✅     |         |
+| Action                                                       | Viewer | Member | Admin (Project admin) | Manager (Organization admin) | Owner  | Billing |
+| ------------------------------------------------------------ | ------ | ------ | --------------------- | ---------------------------- | ------ | ------- |
+| Can see/edit billing information and subscription details    |        |        |                       |                              | ✅     | ✅      |
+| Can remove an organization                                   |        |        |                       |                              | ✅     |         |
+| Can change an organization's visibility                      |        |        |                       |                              | ✅     |         |
+| Can change an organization's settings                        |        |        |                       | ✅                           | ✅     |         |
+| Can add/remove/change a team                                 |        |        |                       | ✅                           | ✅     |         |
+| Can add/remove/change a member                               |        |        |                       | ✅                           | ✅     |         |
+| Can add/remove/change an agent                               |        |        |                       | ✅                           | ✅     |         |
+| Can add/remove/change a preset                               |        |        |                       | ✅                           | ✅     |         |
+| Can edit global integrations                                 |        |        |                       | ✅                           | ✅     |         |
+| Can manage an organization's cross-project runs              |        |        | ✅                    | ✅                           | ✅     |         |
+| Can view an organization's level analytics                   |        |        | ✅                    | ✅                           | ✅     |         |
+| Can view an organization's level activity logs               |        |        | ✅                    | ✅                           | ✅     |         |
+| Can add/remove/change a project                              |        |        | ✅                    | ✅                           | ✅     |         |
+| Can change a project's settings                              |        |        | ✅                    | ✅                           | ✅     |         |
+| Can change a project's permissions                           |        |        | ✅                    | ✅                           | ✅     |         |
+| Can add/remove/change a component hub                        |        |        | ✅                    | ✅                           | ✅     |         |
+| Can change a component hub's settings                        |        |        | ✅                    | ✅                           | ✅     |         |
+| Can change a component hub's permissions                     |        |        | ✅                    | ✅                           | ✅     |         |
+| Can add/remove/change a model registry                       |        |        | ✅                    | ✅                           | ✅     |         |
+| Can change a model registry's settings                       |        |        | ✅                    | ✅                           | ✅     |         |
+| Can change a model registry's permissions                    |        |        | ✅                    | ✅                           | ✅     |         |
+| Can create/update runs                                       |        | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can delete runs                                              |        |        | ✅                    | ✅                           | ✅     |         |
+| Can create/update searches                                   |        | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can delete searches                                          |        |        | ✅                    | ✅                           | ✅     |         |
+| Can promote searches to the organization level               |        |        | ✅                    | ✅                           | ✅     |         |
+| Can create/update dashboards                                 |        | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can delete dashboards                                        |        |        | ✅                    | ✅                           | ✅     |         |
+| Can promote dashboards to the organization level             |        |        | ✅                    | ✅                           | ✅     |         |
+| Can create/update component versions                         |        | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can delete component versions                                |        |        | ✅                    | ✅                           | ✅     |         |
+| Can create/update model versions                             |        | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can delete model versions                                    |        |        | ✅                    | ✅                           | ✅     |         |
+| Can view projects                                            | ✅     | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can view a project's level analytics                         | ✅     | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can view a project's level activity logs                     | ✅     | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can view runs and related metadata and artifacts             | ✅     | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can view component hub and versions                          | ✅     | ✅     | ✅                    | ✅                           | ✅     |         |
+| Can view model registry and versions                         | ✅     | ✅     | ✅                    | ✅                           | ✅     |         |
 
 
 ## Organization roles

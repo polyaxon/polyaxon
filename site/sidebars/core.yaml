@@ -76,9 +76,9 @@
     - title: Overview
       link: /docs/core/cli/
     - title: Reconfiguration
-      link: /docs/core/cli/reconfigure-cli/
+      link: /docs/core/cli/reconfiguration/
     - title: Authentication
-      link: /docs/core/cli/authenticate/
+      link: /docs/core/cli/authentication/
     - title: Cache Behavior
       link: /docs/core/cli/cache/
     - title: Ignore Logic

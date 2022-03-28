@@ -1,6 +1,6 @@
 ---
 title: "Authenticate Polyaxon CLI"
-sub_link: "cli/authenticate"
+sub_link: "cli/authentication"
 meta_title: "A guide on how to authenticate Polyaxon CLI - Core Concepts"
 meta_description: "Polyaxon login command allows to authenticate your CLI and creates a context for future interactions with the API."
 visibility: public
@@ -35,7 +35,7 @@ plugins:
 Users can can login by:
  * passing a token directly: `polyaxon login -t TOKEN`
  * passing the username/password: `polyaxon login -u USER -p PASS`
- * passing the username and getting a hidden prompt to pass the password: `polyaxon login -u`
+ * passing the username and getting a hidden prompt to pass the password: `polyaxon login -u USER`
  * getting a prompt to pass a token: `polyaxon login`
 
 > **Note 1**: the `--user/-u` can be the username or the email.
