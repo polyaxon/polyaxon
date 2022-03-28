@@ -1,10 +1,11 @@
 ---
-title: "Introduction"
-sub_link: "builds/introduction"
-meta_title: "Introduction - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Introduction - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+title: "Introduction to Building Containers with Polyaxon"
+sub_link: "builds"
+meta_title: "Building Containers with Polyaxon - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Building Containers with Polyaxon - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
+is_index: true
 tags:
   - tutorials
   - concepts

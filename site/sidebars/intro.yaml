@@ -41,6 +41,16 @@
       link: /docs/intro/scaling/hyperparameter-tuning/
     - title: Mapping
       link: /docs/intro/scaling/mapping/
+  - group: Querying Metadata and Artifacts
+    items:
+    - title: Introduction
+      link: /docs/intro/query-metadata-artifacts/
+    - title: Using the CLI
+      link: /docs/intro/query-metadata-artifacts/using-cli/
+    - title: Using the Client
+      link: /docs/intro/query-metadata-artifacts/using-client/
+    - title: Using the UI
+      link: /docs/intro/query-metadata-artifacts/using-ui/
   - group: Tensorboard
     items:
     - title: Single Run Tensorboard
@@ -74,7 +84,7 @@
   - group: Building Containers
     items:
     - title: Introduction
-      link: /docs/intro/builds/introduction/
+      link: /docs/intro/builds/
     - title: Building Containers with Init Dockerfile
       link: /docs/intro/builds/building-containers-init/
     - title: Building Containers with Custom Dockerfiles
