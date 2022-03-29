@@ -128,7 +128,6 @@ run_client.download_artifacts(path="outputs")
 from polyaxon.client import RunClient
 
 run_client = RunClient(project="PROJECT_NAME", run_uuid="8aac02e3a62a4f0aaa257c59da5eab80")
-run_client.download_artifacts(path="outputs")
 lineages = run_client.get_artifacts_lineage(query="name: image-example | debug-csv-file").results
 
 for lineage in lineages:
@@ -141,7 +140,6 @@ for lineage in lineages:
 from polyaxon.client import RunClient
 
 run_client = RunClient(project="PROJECT_NAME", run_uuid="8aac02e3a62a4f0aaa257c59da5eab80")
-run_client.download_artifacts(path="outputs")
 lineages = run_client.get_artifacts_lineage(query="kind: model | env").results
 
 for lineage in lineages:

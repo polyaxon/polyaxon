@@ -42,7 +42,7 @@ Now we have way too many columns, we can do better by providing what columns to 
 polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3 -io -c "uuid,in.learning_rate,out.loss,out.accuracy" 
 ```
 
-## Persisting the search result to a CSV file
+## Persisting the search results to a CSV file
 
 We can save the search above to a CSV file by adding the flag `--to-csv`.
 

@@ -36,4 +36,4 @@ In this section we will:
  * Limit the search to the top 3 runs
  * Explore runs metadata
  * Download artifacts
- * Persist the metadata and artifact of a single run the 3 top runs
+ * Persist the metadata and artifact of a single run and the 3 top runs

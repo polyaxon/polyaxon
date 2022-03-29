@@ -12,6 +12,12 @@ tags:
 sidebar: "intro"
 ---
 
+## Overview
+
+The UI's runs table provides the interface to interact with the runs started by the scheduling logic or logged using the tracking module. 
+It has several features for filtering, sorting, comparing, and visualizing the runs history:
+
+![table-search-runs](../../../../content/images/dashboard/query-metadata-artifacts/table-search-runs.png)
 
 ## Search runs
 
