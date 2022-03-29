@@ -1111,6 +1111,7 @@ def shell(ctx, project, uid, command, pod, container):
 @click.option(
     "--path",
     "--path-to",
+    "path_to",
     type=click.Path(exists=False),
     help="The destination where to download the artifacts.",
 )
