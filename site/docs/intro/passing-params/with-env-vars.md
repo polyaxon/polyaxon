@@ -72,7 +72,7 @@ polyaxon run -f echo.yaml -P message="test 1" -l
 polyaxon run -f echo.yaml -P message="test 2" -l
 ```
 
-### Exposing inputs/outputs to env var
+## Exposing inputs/outputs to env var
 
 > **N.B**: Requires CLI `>= v1.12`.
 

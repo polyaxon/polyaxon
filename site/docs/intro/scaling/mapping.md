@@ -14,6 +14,8 @@ sidebar: "intro"
 
 Polyaxon provides a feature for running parallel executions based on a list of configurations called [mapping](/docs/automation/mapping/)
 
+## Overview
+
 One major difference between mapping and other hyperparameter search options, is that the user is responsible for providing the list of configurations.
 The mapping can be used to receive a list of configurations based on an external service that generates suggestions. 
 
