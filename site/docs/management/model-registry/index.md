@@ -39,12 +39,8 @@ Polyaxon provides a special tag to signal the stage of the models' versions.
 
 You can create and manage models and versions using the API, CLI or the dashboard.
 
-> Please check the model management guide. 
-
 Each model version can lock a run based on its id, and it can attach additional metadata.
 By using `:tag`, you can add new versions to a project, Polyaxon uses the `owner/project-name` as a namespace.
-
-> Please check the model version management guide.
 
 ## Usage
 

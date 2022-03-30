@@ -21,6 +21,25 @@ A project can have one or more artifact versions, each version:
  * Can be deployed as an internal app.
  * Can be deployed in production.
 
+
+### CLI Reference
+
+You can check the complete [artifacts CLI reference here](/docs/core/cli/artifacts/) or by using `polyaxon artifacts --help`.
+
+### Client Reference
+
+Polyaxon's [ProjectClient](/docs/core/python-library/project-client/) library exposes all methods to:
+ * [list_artifact_versions](/docs/core/python-library/project-client/#list_artifact_versions)
+ * [get_artifact_version](/docs/core/python-library/project-client/#get_artifact_version)
+ * [create_artifact_version](/docs/core/python-library/project-client/#create_artifact_version)
+ * [patch_artifact_version](/docs/core/python-library/project-client/#patch_artifact_version)
+ * [register_artifact_version](/docs/core/python-library/project-client/#register_artifact_version)
+ * [copy_artifact_version](/docs/core/python-library/project-client/#copy_artifact_version)
+ * [transfer_artifact_version](/docs/core/python-library/project-client/#transfer_artifact_version)
+ * [delete_artifact_version](/docs/core/python-library/project-client/#delete_artifact_version)
+ * [stage_artifact_version](/docs/core/python-library/project-client/#stage_artifact_version)
+ * [pull_artifact_version](/docs/core/python-library/project-client/#pull_artifact_version)
+
 ## Artifact version creation
 
 You can create your artifact versions using the CLI, API, or the UI.
@@ -28,8 +47,28 @@ You can create your artifact versions using the CLI, API, or the UI.
 ### CLI
 
 ```bash
-polyaxon artifacts register -p OWNER_NAME/MODEL_NAME --version VERSION_NAME --description ... --tags tag1,tag2,... --artifacts artifact-name,env,summary 
+polyaxon artifacts register -p OWNER_NAME/PROJECT_NAME --version VERSION_NAME --description ... --tags tag1,tag2,... --artifacts artifact-name,env,summary 
 ```
+
+### Client
+
+```python
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(project="ORGANIZATION/data-generation")
+
+version = project_client.register_artifact_version(
+    version="v1",
+    description="description for this version...",
+    tags=["prod", "images"],
+    content={"key": "val", "env": ["package1", "package2"]},
+    run="f27c0580dcdf4ed7b2f36726c5257ade",
+    artifacts=["dataset", "summary"],
+)
+```
+
+> **Note**: You can use `force=True` to override a previous version registered with the same name.  
+
 
 ### UI
 
@@ -53,9 +92,51 @@ Once an artifact version is registered, the run will be marked as promoted:
 polyaxon artifacts get [-p] -ver VERSION_NAME
 ```
 
+### Client
+
+```python
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(project="ORGANIZATION/bot-detection")
+
+version = project_client.get_artifact_version(version="v1")
+print(version)
+```
+
 ### UI
 
 ![version-overview](../../../../content/images/dashboard/artifacts-versioning/version-overview.png)
+
+## Artifact version stage changes
+
+You can update the stage of the artifact version to reflect the production-readiness
+
+### CLI
+
+```bash
+polyaxon artifacts stage -ver VERSION_NAME -to staging --reason CISystem --message "Drift tests passed, move to staging" ...
+```
+
+### Client
+
+```python
+from polyaxon.lifecycle import V1Stages
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(project="ORGANIZATION/bot-detection")
+
+project_client.stage_artifact_version(
+    version="v1", 
+    stage=V1Stages.STAGING, 
+    reason="AirflowPipelineStageUpdate", 
+    message="Tests passed and the artifact was automatically moved to staging",
+)
+```
+
+## UI
+
+![version-stage](../../../../content/images/dashboard/artifacts-versioning/version-stage.png)
+
 
 ## Artifact version admin
 
@@ -79,12 +160,33 @@ and delete
 polyaxon artifacts delete -ver ...
 ```
 
+
+### Client
+
+```python
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(project="ORGANIZATION/bot-detection")
+
+# Update
+project_client.patch_artifact_version(
+    version="v1",
+    data={"description": "new description", "tags": ["new-tag1", "new-tag2"]} 
+)
+
+# Delete
+project_client.delete_artifact_version(version="v1")
+```
+
+
 ### UI
 
 You can manage an artifact version using the UI
 
 ![version-admin](../../../../content/images/dashboard/artifacts-versioning/version-admin.png)
 
-And you can reflect the production-readiness using the stage setting
+## Artifact version packaging and pull
 
-![version-stage](../../../../content/images/dashboard/artifacts-versioning/version-stage.png)
+```bash
+polyaxon artifacts pull -ver VERSION_NAME --help
+```

@@ -20,6 +20,24 @@ A component can have one or more versions, each version:
  * Reflects changes in the logic of your component where previous versions are still used or referenced by runs.
  * Can have multiple versions, similar to docker images, to avoid breaking old experiments and workflows.
 
+### CLI Reference
+
+You can check the complete [components CLI reference here](/docs/core/cli/components/) or by using `polyaxon components --help`.
+
+### Client Reference
+
+Polyaxon's [ProjectClient](/docs/core/python-library/project-client/) library exposes all methods to:
+ * [list_component_versions](/docs/core/python-library/project-client/#list_component_versions)
+ * [get_component_version](/docs/core/python-library/project-client/#get_component_version)
+ * [create_component_version](/docs/core/python-library/project-client/#create_component_version)
+ * [patch_component_version](/docs/core/python-library/project-client/#patch_component_version)
+ * [register_component_version](/docs/core/python-library/project-client/#register_component_version)
+ * [copy_component_version](/docs/core/python-library/project-client/#copy_component_version)
+ * [transfer_component_version](/docs/core/python-library/project-client/#transfer_component_version)
+ * [delete_component_version](/docs/core/python-library/project-client/#delete_component_version)
+ * [stage_component_version](/docs/core/python-library/project-client/#stage_component_version)
+ * [pull_component_version](/docs/core/python-library/project-client/#pull_component_version)
+
 ## Component version creation
 
 You can create your component versions using the CLI, API, or the UI.
@@ -60,14 +78,28 @@ polyaxon components get -ver VERSION_NAME -p OWNER/PROJECT_NAME
 
 ![version-definition](../../../../content/images/dashboard/hub/version-definition.png)
 
+## Component version stage changes
+
+You can update the stage of the component version to reflect the production-readiness
+
+### CLI
+
+```bash
+polyaxon components stage -ver VERSION_NAME -to production ...
+```
+
+## UI
+
+![version-stage](../../../../content/images/dashboard/hub/version-stage.png)
+
 ## Component version admin
 
 ### CLI
 
-You can override a component version with push:
+You can override a component version with the `--force` flag:
 
 ```bash
-polyaxon components register -f ./path/to/polyaxonfile.yaml -ver VERSION_NAME ... --push
+polyaxon components register -f ./path/to/polyaxonfile.yaml -ver VERSION_NAME ... --force
 ```
 
 Or update specific info:
@@ -76,7 +108,7 @@ Or update specific info:
 polyaxon components update -ver ...
 ```
 
-and delete  
+Or delete the version:  
 
 ```bash
 polyaxon components delete -ver ...
@@ -87,7 +119,3 @@ polyaxon components delete -ver ...
 You can manage a component version using the UI
 
 ![version-admin](../../../../content/images/dashboard/hub/version-admin.png)
-
-And you can reflect the production-readiness using the stage setting
-
-![version-stage](../../../../content/images/dashboard/hub/version-stage.png)

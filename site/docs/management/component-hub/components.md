@@ -1,6 +1,6 @@
 ---
-title: "Components"
-sub_link: "component-hub/components"
+title: "Projects (Components)"
+sub_link: "component-hub/projects"
 meta_title: "Polyaxon management UI - Components"
 meta_description: "Components is the entity that defines the runtime in Polyaxon,
 each component: Can have multiple versions, Can be published publicly or privately within your organization, Can define team level permissions."
@@ -44,40 +44,40 @@ You can view a component overview using the project CLI or UI.
 ### CLI
 
 ```bash
-polyaxon project get -c OWNER_NAME/COMPONENT_NAME
+polyaxon project get -p OWNER_NAME/COMPONENT_NAME
 ```
 
 ### UI
 
 ![component-overview](../../../../content/images/dashboard/hub/component-overview.png)
 
-## Component versions
+## Component project versions
 
 ### CLI
 
 ```bash
-polyaxon components ls -c OWNER_NAME/PROJECT_NAME --query ... --sort ...
+polyaxon components ls -p OWNER_NAME/PROJECT_NAME --query ... --sort ...
 ```
 
 ### UI
 
 ![component-versions](../../../../content/images/dashboard/hub/component-versions.png)
 
-## Component admin
+## Component project admin
 
 ### CLI
 
 Updating
 
 ```bash
-polyaxon project update -n ...
+polyaxon project update -p ...
 ```
 
 Deleting
 
 
 ```bash
-polyaxon project delete -n ...
+polyaxon project delete -p ...
 ```
 
 You can manage a component using the UI, you can also manage who can contribute and have access to the component and its versions

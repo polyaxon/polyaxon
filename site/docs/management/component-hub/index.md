@@ -43,15 +43,11 @@ By default, if a user runs a component without specifying the version, the Compo
 
 You can create and manage components and versions using the API, CLI or the dashboard.
 
-> Please check the component management guide. 
-
 Each component version uses a definition which is the same [specification](/docs/core/specification/component/) that is used for running inline components.
 By using `:tag`, you can add new versions to a component, Polyaxon uses the `owner/project-name` as a namespace for the component,
 and will default to `latest` tag if no `:version` is provided. 
 
 Please note that When an owner is not specified, the public components managed by Polyaxon will be used, for example `notebook:tensorflow`.
-
-> Please check the component version management guide.
 
 ## Usage
 
