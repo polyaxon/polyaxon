@@ -364,7 +364,8 @@ def stage_project_version(
     project_name: str,
     kind: V1ProjectVersionKind,
     version: str,
-    to: V1Stages,
+    to: str,
+    reason: str = None,
     message: str = None,
 ):
     fqn_version = get_versioned_entity_full_name(owner, project_name, version)
@@ -377,13 +378,10 @@ def stage_project_version(
         )
         sys.exit(1)
 
-    condition = V1StageCondition(type=to, status=True, reason="UserStageUpdate")
-
-    if message:
-        condition.message = message
-
     try:
-        polyaxon_client.stage_version(kind, version, condition=condition)
+        polyaxon_client.stage_version(
+            kind, version, stage=to, reason=reason or "CliStageUpdate", message=message
+        )
         Printer.print_success("The {} version's stage was updated.".format(kind))
     except (ApiException, HTTPError) as e:
         handle_cli_error(

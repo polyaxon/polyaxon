@@ -15,6 +15,7 @@
 # limitations under the License.
 import os
 
+from datetime import datetime
 from requests import HTTPError
 from typing import Dict, List, Union
 
@@ -31,6 +32,7 @@ from polyaxon.logger import logger
 from polyaxon.utils.fqn_utils import get_entity_full_name, get_entity_info
 from polyaxon.utils.path_utils import check_or_create_path, delete_path
 from polyaxon.utils.query_params import get_query_params
+from polyaxon.utils.tz_utils import now
 from polyaxon.utils.validation import validate_tags
 from polyaxon_sdk.rest import ApiException
 
@@ -626,7 +628,7 @@ class ProjectClient:
         version: str,
         description: str = None,
         tags: Union[str, List[str]] = None,
-        content: str = None,
+        content: Union[str, Dict] = None,
         run: str = None,
         connection: str = None,
         artifacts: List[str] = None,
@@ -644,7 +646,7 @@ class ProjectClient:
             version: str, optional, the version name/tag.
             description: str, optional, the version description.
             tags: str or List[str], optional.
-            content: str, optional, content/metadata (JSON object) of the version.
+            content: str or dict, optional, content/metadata (JSON object) of the version.
             run: str, optional, a uuid reference to the run.
             connection: str, optional, a uuid reference to a connection.
             artifacts: List[str], optional, list of artifacts to highlight(requires passing a run)
@@ -658,12 +660,15 @@ class ProjectClient:
             if not force:
                 raise PolyaxonClientException(
                     "A {} version {} already exists. "
-                    "Please pass the force (--force for CLI) flag "
+                    "Please pass the `force` argument or `--force` flag for CLI) "
                     "if you want to push force this version.".format(kind, version)
                 )
             to_update = True
         except (ApiException, HTTPError, AttributeError):
             to_update = False
+
+        if content:
+            content = content if isinstance(content, str) else ujson.dumps(content)
 
         if tags is not None:
             tags = validate_tags(tags, validate_yaml=True)
@@ -707,7 +712,7 @@ class ProjectClient:
         version: str,
         description: str = None,
         tags: Union[str, List[str]] = None,
-        content: str = None,
+        content: Union[str, Dict] = None,
         run: str = None,
         force: bool = False,
     ) -> polyaxon_sdk.V1ProjectVersion:
@@ -717,7 +722,7 @@ class ProjectClient:
             version: str, optional, the version name/tag.
             description: str, optional, the version description.
             tags: str or List[str], optional.
-            content: str, optional, content/metadata (JSON object) of the version.
+            content: str or dict, optional, content/metadata (JSON object) of the version.
             run: str, optional, a uuid reference to the run.
             force: bool, optional, to force push, i.e. update if exists.
 
@@ -740,7 +745,7 @@ class ProjectClient:
         version: str,
         description: str = None,
         tags: Union[str, List[str]] = None,
-        content: str = None,
+        content: Union[str, Dict] = None,
         run: str = None,
         connection: str = None,
         artifacts: List[str] = None,
@@ -752,7 +757,7 @@ class ProjectClient:
             version: str, optional, the version name/tag.
             description: str, optional, the version description.
             tags: str or List[str], optional.
-            content: str, optional, content/metadata (JSON object) of the version.
+            content: str or dict, optional, content/metadata (JSON object) of the version.
             run: str, optional, a uuid reference to the run.
             connection: str, optional, a uuid reference to a connection.
             artifacts: List[str], optional, list of artifacts to highlight(requires passing a run)
@@ -779,7 +784,7 @@ class ProjectClient:
         version: str,
         description: str = None,
         tags: Union[str, List[str]] = None,
-        content: str = None,
+        content: Union[str, Dict] = None,
         run: str = None,
         connection: str = None,
         artifacts: List[str] = None,
@@ -791,7 +796,7 @@ class ProjectClient:
             version: str, optional, the version name/tag.
             description: str, optional, the version description.
             tags: str or List[str], optional.
-            content: str, optional, content/metadata (JSON object) of the version.
+            content: str or dict, optional, content/metadata (JSON object) of the version.
             run: str, optional, a uuid reference to the run.
             connection: str, optional, a uuid reference to a connection.
             artifacts: List[str], optional, list of artifacts to highlight(requires passing a run)
@@ -884,7 +889,11 @@ class ProjectClient:
         self,
         kind: V1ProjectVersionKind,
         version: str,
-        condition: Union[Dict, V1StageCondition],
+        stage: str,
+        reason: str = None,
+        message: str = None,
+        last_transition_time: datetime = None,
+        last_update_time: datetime = None,
     ):
         """Creates a new a project version stage.
 
@@ -899,15 +908,28 @@ class ProjectClient:
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
             version: str, required, the version name/tag.
-            condition: Dict or V1StageCondition.
+            stage: str, a valid [Stages](/docs/core/specification/lifecycle/) value.
+            reason: str, optional, reason or service issuing the stage change.
+            message: str, optional, message to log with this status.
+            last_transition_time: datetime, default `now`.
+            last_update_time: datetime, default `now`.
         """
         self._validate_kind(kind)
+        current_date = now()
+        stage_condition = V1StageCondition(
+            type=stage,
+            status=True,
+            reason=reason or "ClientStageUpdate",
+            message=message,
+            last_transition_time=last_transition_time or current_date,
+            last_update_time=last_update_time or current_date,
+        )
         return self.client.projects_v1.create_version_stage(
             self.owner,
             self.project,
             kind,
             version,
-            body={"condition": condition},
+            body={"condition": stage_condition},
             async_req=False,
         )
 
@@ -915,7 +937,11 @@ class ProjectClient:
     def stage_component_version(
         self,
         version: str,
-        condition: Union[Dict, V1StageCondition],
+        stage: str,
+        reason: str = None,
+        message: str = None,
+        last_transition_time: datetime = None,
+        last_update_time: datetime = None,
     ):
         """Creates a new a component version stage.
 
@@ -923,19 +949,31 @@ class ProjectClient:
 
         Args:
             version: str, required, the version name/tag.
-            condition: Dict or V1StageCondition.
+            stage: str, a valid [Stages](/docs/core/specification/lifecycle/) value.
+            reason: str, optional, reason or service issuing the status change.
+            message: str, optional, message to log with this status.
+            last_transition_time: datetime, default `now`.
+            last_update_time: datetime, default `now`.
         """
         return self.stage_version(
             kind=V1ProjectVersionKind.COMPONENT,
             version=version,
-            condition=condition,
+            stage=stage,
+            reason=reason,
+            message=message,
+            last_transition_time=last_transition_time,
+            last_update_time=last_update_time,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
     def stage_model_version(
         self,
         version: str,
-        condition: Union[Dict, V1StageCondition],
+        stage: str,
+        reason: str = None,
+        message: str = None,
+        last_transition_time: datetime = None,
+        last_update_time: datetime = None,
     ):
         """Creates a new a model version stage.
 
@@ -943,19 +981,31 @@ class ProjectClient:
 
         Args:
             version: str, required, the version name/tag.
-            condition: Dict or V1StageCondition.
+            stage: str, a valid [Stages](/docs/core/specification/lifecycle/) value.
+            reason: str, optional, reason or service issuing the status change.
+            message: str, optional, message to log with this status.
+            last_transition_time: datetime, default `now`.
+            last_update_time: datetime, default `now`.
         """
         return self.stage_version(
             kind=V1ProjectVersionKind.MODEL,
             version=version,
-            condition=condition,
+            stage=stage,
+            reason=reason,
+            message=message,
+            last_transition_time=last_transition_time,
+            last_update_time=last_update_time,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
     def stage_artifact_version(
         self,
         version: str,
-        condition: Union[Dict, V1StageCondition],
+        stage: str,
+        reason: str = None,
+        message: str = None,
+        last_transition_time: datetime = None,
+        last_update_time: datetime = None,
     ):
         """Creates a new an artifact version stage.
 
@@ -963,12 +1013,20 @@ class ProjectClient:
 
         Args:
             version: str, required, the version name/tag.
-            condition: Dict or V1StageCondition.
+            stage: str, a valid [Stages](/docs/core/specification/lifecycle/) value.
+            reason: str, optional, reason or service issuing the status change.
+            message: str, optional, message to log with this status.
+            last_transition_time: datetime, default `now`.
+            last_update_time: datetime, default `now`.
         """
         return self.stage_version(
             kind=V1ProjectVersionKind.ARTIFACT,
             version=version,
-            condition=condition,
+            stage=stage,
+            reason=reason,
+            message=message,
+            last_transition_time=last_transition_time,
+            last_update_time=last_update_time,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1057,7 +1115,7 @@ class ProjectClient:
         name: str = None,
         description: str = None,
         tags: Union[str, List[str]] = None,
-        content: str = None,
+        content: Union[str, Dict] = None,
         force: bool = False,
     ) -> polyaxon_sdk.V1ProjectVersion:
         """Copies the version to the same project or to a destination project.
@@ -1083,7 +1141,7 @@ class ProjectClient:
                  default value is the original version's description.
             tags: str or List[str], optional, the version description,
                  default value is the original version's description.
-            content: str, optional, content/metadata (JSON object) of the version,
+            content: str or dict, optional, content/metadata (JSON object) of the version,
                  default value is the original version's content.
             force: bool, optional, to force push, i.e. update if exists.
         """
@@ -1113,7 +1171,7 @@ class ProjectClient:
         name: str = None,
         description: str = None,
         tags: Union[str, List[str]] = None,
-        content: str = None,
+        content: Union[str, Dict] = None,
         force: bool = False,
     ) -> polyaxon_sdk.V1ProjectVersion:
         """Copies the component version to the same project or to a destination project.
@@ -1133,7 +1191,7 @@ class ProjectClient:
                  default value is the original version's description.
             tags: str or List[str], optional, the version description,
                  default value is the original version's description.
-            content: str, optional, content/metadata (JSON object) of the version,
+            content: str or dict, optional, content/metadata (JSON object) of the version,
                  default value is the original version's content.
             force: bool, optional, to force push, i.e. update if exists.
         """
@@ -1156,7 +1214,7 @@ class ProjectClient:
         name: str = None,
         description: str = None,
         tags: Union[str, List[str]] = None,
-        content: str = None,
+        content: Union[str, Dict] = None,
         force: bool = False,
     ) -> polyaxon_sdk.V1ProjectVersion:
         """Copies the model version to the same project or to a destination project.
@@ -1176,7 +1234,7 @@ class ProjectClient:
                  default value is the original version's description.
             tags: str or List[str], optional, the version description,
                  default value is the original version's description.
-            content: str, optional, content/metadata (JSON object) of the version,
+            content: str or dict, optional, content/metadata (JSON object) of the version,
                  default value is the original version's content.
             force: bool, optional, to force push, i.e. update if exists.
         """
@@ -1199,7 +1257,7 @@ class ProjectClient:
         name: str = None,
         description: str = None,
         tags: Union[str, List[str]] = None,
-        content: str = None,
+        content: Union[str, Dict] = None,
         force: bool = False,
     ) -> polyaxon_sdk.V1ProjectVersion:
         """Copies the artifact version to the same project or to a destination project.
@@ -1219,7 +1277,7 @@ class ProjectClient:
                  default value is the original version's description.
             tags: str or List[str], optional, the version description,
                  default value is the original version's description.
-            content: str, optional, content/metadata (JSON object) of the version,
+            content: str or dict, optional, content/metadata (JSON object) of the version,
                  default value is the original version's content.
             force: bool, optional, to force push, i.e. update if exists.
         """

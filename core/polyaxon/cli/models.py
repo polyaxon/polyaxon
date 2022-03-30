@@ -382,11 +382,17 @@ def update(ctx, project, version, name, description, tags):
     help="Stage to transition to.",
 )
 @click.option(
+    "--reason",
+    type=str,
+    help="Reason or service to set with this stage change. "
+    "Default: UserStageUpdate, e.g. CustomAlertTrigger.",
+)
+@click.option(
     "--message", type=str, help="Additional information to set with this stage change."
 )
 @click.pass_context
 @clean_outputs
-def stage(ctx, project, version, to, message):
+def stage(ctx, project, version, to, reason, message):
     """Update stage for a model version.
 
     Uses /docs/core/cli/#caching
@@ -397,7 +403,7 @@ def stage(ctx, project, version, to, message):
     $ polyaxon models stage -ver rc12 -to production
 
     \b
-    $ polyaxon models stage -p acme/foobar -ver rc12 --to=staging --message="Use carefully!"
+    $ polyaxon models stage -p acme/foobar -ver rc12 --to=staging --reason GithubAction --message="Use carefully!"
     """
     version = version or ctx.obj.get("version") or "latest"
     owner, project_name = get_project_or_local(
@@ -409,6 +415,7 @@ def stage(ctx, project, version, to, message):
         kind=V1ProjectVersionKind.MODEL,
         version=version,
         to=to,
+        reason=reason,
         message=message,
     )
 
