@@ -187,6 +187,22 @@ You can manage an artifact version using the UI
 
 ## Artifact version packaging and pull
 
+### CLI
+
 ```bash
 polyaxon artifacts pull -ver VERSION_NAME --help
+```
+
+### Client
+
+```python
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(project="ORGANIZATION/bot-detection")
+
+# Update
+project_client.pull_artifact_version(
+    version="v1",
+    path="/tmp/path"
+)
 ```

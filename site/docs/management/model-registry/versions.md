@@ -182,6 +182,22 @@ You can manage a model version using the UI
 
 ## Model version packaging and pull
 
+### CLI
+
 ```bash
 polyaxon models pull -ver VERSION_NAME --help
+```
+
+### Client
+
+```python
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(project="ORGANIZATION/bot-detection")
+
+# Update
+project_client.pull_model_version(
+    version="v1",
+    path="/tmp/path"
+)
 ```

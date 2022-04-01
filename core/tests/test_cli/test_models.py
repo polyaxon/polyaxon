@@ -66,3 +66,10 @@ class TestCliModels(BaseCommandTestCase):
     def test_update_model(self, update_model):
         self.runner.invoke(models, ["update", "-p", "admin/foo", "--description=foo"])
         assert update_model.call_count == 1
+
+    @patch("polyaxon_sdk.ProjectsV1Api.create_version_stage")
+    def test_update_model(self, stage_model):
+        self.runner.invoke(
+            models, ["stage", "-p", "admin/foo", "-to", "production", "--reason=foo"]
+        )
+        assert stage_model.call_count == 1

@@ -50,3 +50,11 @@ class TestCliComponent(BaseCommandTestCase):
             components, ["update", "-p", "admin/foo", "--description=foo"]
         )
         assert update_components.call_count == 1
+
+    @patch("polyaxon_sdk.ProjectsV1Api.create_version_stage")
+    def test_update_artifact(self, stage_component):
+        self.runner.invoke(
+            components,
+            ["stage", "-p", "admin/foo", "-to", "production", "--reason=foo"],
+        )
+        assert stage_component.call_count == 1
