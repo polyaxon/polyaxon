@@ -160,7 +160,6 @@ and delete
 polyaxon artifacts delete -ver ...
 ```
 
-
 ### Client
 
 ```python

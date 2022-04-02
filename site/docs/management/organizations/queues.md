@@ -49,13 +49,13 @@ You can update or delete a queue.
 
 Users without admin or owner rights can view the table of available queues in your organization.
 
-![queue-viewer.png](../../../../content/images/dashboard/queues/viewer.png)
+![queue-viewer](../../../../content/images/dashboard/queues/viewer.png)
 
 ## Queues usage
 
 They can also view details on how to use them in their workload.
 
-![queue-definition.png](../../../../content/images/dashboard/queues/definition.png)
+![queue-definition](../../../../content/images/dashboard/queues/definition.png)
 
 
 ## Global or per project queues
