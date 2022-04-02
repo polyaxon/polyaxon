@@ -14,18 +14,10 @@
 [![Platform](https://github.com/polyaxon/polyaxon/actions/workflows/platform.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/platform.yml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/90c05b6b112548c1a88b950beceacb69)](https://www.codacy.com/app/polyaxon/polyaxon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon&amp;utm_campaign=Badge_Grade)
 
-<br>
-<p align="center">
-  <p align="center">
-    <a href="https://polyaxon.com/?utm_source=github&utm_medium=logo" target="_blank">
-      <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/logo/vector/primary-white-default-monochrome.svg" alt="polyaxon" height="100">
-    </a>
-  </p>
-  <p align="center">
-    Reproduce, Automate, Scale your data science.
-  </p>
-</p>
-<br>
+
+<a href="https://polyaxon.com"><img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/logo/vector/primary-white-default-monochrome.svg" width="125" height="125" align="right" /></a>
+
+# Reproduce, Automate, Scale your data science
 
 
 Welcome to Polyaxon, a platform for building, training, and monitoring large scale deep learning applications.
@@ -136,7 +128,7 @@ Polyaxon supports and simplifies distributed jobs.
 Depending on the framework you are using, you need to deploy the corresponding operator, adapt your code to enable the distributed training,
 and update your polyaxonfile.
 
-Here are some examples of using distributed training: 
+Here are some examples of using distributed training:
 
  * [Distributed Tensorflow](https://polyaxon.com/docs/experimentation/distributed/tf-jobs/)
  * [Distributed Pytorch](https://polyaxon.com/docs/experimentation/distributed/pytorch-jobs/)
@@ -163,10 +155,10 @@ You can run your processing or model training jobs in parallel, Polyaxon provide
 
 # DAGs and workflows
 
-[Polyaxon DAGs](https://polyaxon.com/docs/automation/flow-engine/) is a tool that provides container-native engine for running machine learning pipelines. 
-A DAG manages multiple operations with dependencies. Each operation is defined by a component runtime. 
+[Polyaxon DAGs](https://polyaxon.com/docs/automation/flow-engine/) is a tool that provides container-native engine for running machine learning pipelines.
+A DAG manages multiple operations with dependencies. Each operation is defined by a component runtime.
 This means that operations in a DAG can be jobs, services, distributed jobs, parallel executions, or nested DAGs.
- 
+
 
 # Architecture
 
@@ -188,7 +180,7 @@ $ polyaxon dashboard -y
 
 # Project status
 
-Polyaxon is stable and it's running in production mode at many startups and Fortune 500 companies. 
+Polyaxon is stable and it's running in production mode at many startups and Fortune 500 companies.
 
 # Contributions
 
