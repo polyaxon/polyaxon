@@ -17,10 +17,8 @@
 # To keep backwards compatibility
 
 from traceml.tracking import *
-from traceml.tracking import (
-    init as base_init,
-    get_or_create_run as base_get_or_create_run,
-)
+from traceml.tracking import get_or_create_run as base_get_or_create_run
+from traceml.tracking import init as base_init
 
 TRACKING_RUN = None
 

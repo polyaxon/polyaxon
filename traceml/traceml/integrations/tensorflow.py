@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from polyaxon import tracking
-from traceml.contrib.tensorboard import TensorboardLogger
+from traceml.integrations.tensorboard import TensorboardLogger
 from traceml.exceptions import TracemlException
 
 try:

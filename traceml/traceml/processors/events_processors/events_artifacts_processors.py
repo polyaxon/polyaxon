@@ -14,10 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# To keep backwards compatibility
 
-from traceml.integrations.xgboost import Callback, callback
+from polyaxon.utils.path_utils import copy_file_or_dir_path
+from traceml.events import V1EventArtifact
 
-# alias
-polyaxon_callback = callback
-PolyaxonCallback = Callback
+try:
+    import numpy as np
+except ImportError:
+    np = None
+
+
+def artifact_path(
+    from_path: str, asset_path: str, kind: str, asset_rel_path: str = None
+) -> V1EventArtifact:
+    copy_file_or_dir_path(from_path, asset_path)
+    return V1EventArtifact(kind=kind, path=asset_rel_path or asset_path)

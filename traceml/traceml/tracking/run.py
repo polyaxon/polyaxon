@@ -50,6 +50,7 @@ from polyaxon.utils.fqn_utils import to_fqn_name
 from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.path_utils import (
     check_or_create_path,
+    copy_file_or_dir_path,
     get_base_filename,
     get_path_extension,
 )
@@ -58,7 +59,6 @@ from traceml.events import LoggedEventSpec, V1Event, get_asset_path
 from traceml.logger import logger
 from traceml.logging import V1Log, V1Logs
 from traceml.processors import events_processors
-from traceml.processors.events_processors import copy_file_or_dir_path
 from traceml.processors.logs_processor import setup_logging
 from traceml.serialization.writer import EventFileWriter, ResourceFileWriter
 

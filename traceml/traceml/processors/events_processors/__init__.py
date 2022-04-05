@@ -14,18 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict
-
-from polyaxon.utils.path_utils import copy_file_or_dir_path, copy_file_path
-from traceml.events import (
-    V1EventArtifact,
-    V1EventAudio,
-    V1EventDataframe,
-    V1EventImage,
-    V1EventModel,
-    V1EventVideo,
-)
-from traceml.processors.events_processors.events_audio_processors import audio
+from traceml.processors.events_processors.events_artifacts_processors import artifact_path
+from traceml.processors.events_processors.events_audio_processors import audio, audio_path
 from traceml.processors.events_processors.events_charts_processors import (
     altair_chart,
     bokeh_chart,
@@ -41,6 +31,7 @@ from traceml.processors.events_processors.events_image_processors import (
     figures_to_images,
     image,
     image_boxes,
+    image_path,
     make_grid,
     make_image,
     save_image,
@@ -57,67 +48,11 @@ from traceml.processors.events_processors.events_metrics_processors import (
     sklearn_pr_curve,
     sklearn_roc_auc_curve,
 )
-from traceml.processors.events_processors.events_models_processors import model_to_str
+from traceml.processors.events_processors.events_models_processors import model_path, model_to_str
+from traceml.processors.events_processors.events_tables_processors import dataframe_path
 from traceml.processors.events_processors.events_video_processors import (
     make_video,
     prepare_video,
     video,
+    video_path,
 )
-
-try:
-    import numpy as np
-except ImportError:
-    np = None
-
-
-def dataframe_path(
-    from_path: str,
-    asset_path: str,
-    content_type: str = None,
-    asset_rel_path: str = None,
-) -> V1EventDataframe:
-    copy_file_path(from_path, asset_path)
-    return V1EventDataframe(
-        path=asset_rel_path or asset_path, content_type=content_type
-    )
-
-
-def model_path(
-    from_path: str,
-    asset_path: str,
-    framework: str = None,
-    spec: Dict = None,
-    asset_rel_path: str = None,
-) -> V1EventModel:
-    copy_file_or_dir_path(from_path, asset_path)
-    return V1EventModel(
-        path=asset_rel_path or asset_path, framework=framework, spec=spec
-    )
-
-
-def artifact_path(
-    from_path: str, asset_path: str, kind: str, asset_rel_path: str = None
-) -> V1EventArtifact:
-    copy_file_or_dir_path(from_path, asset_path)
-    return V1EventArtifact(kind=kind, path=asset_rel_path or asset_path)
-
-
-def image_path(
-    from_path: str, asset_path: str, asset_rel_path: str = None
-) -> V1EventImage:
-    copy_file_path(from_path, asset_path)
-    return V1EventImage(path=asset_rel_path or asset_path)
-
-
-def video_path(
-    from_path: str, asset_path: str, content_type=None, asset_rel_path: str = None
-) -> V1EventVideo:
-    copy_file_path(from_path, asset_path)
-    return V1EventVideo(path=asset_rel_path or asset_path, content_type=content_type)
-
-
-def audio_path(
-    from_path: str, asset_path: str, content_type=None, asset_rel_path: str = None
-) -> V1EventAudio:
-    copy_file_path(from_path, asset_path)
-    return V1EventAudio(path=asset_rel_path or asset_path, content_type=content_type)

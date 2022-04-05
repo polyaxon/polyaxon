@@ -17,7 +17,7 @@ import io
 
 from polyaxon.constants.globals import UNKNOWN
 from polyaxon.utils.np_utils import calculate_scale_factor, to_np
-from polyaxon.utils.path_utils import check_or_create_path
+from polyaxon.utils.path_utils import check_or_create_path, copy_file_path
 from traceml.events import V1EventImage
 from traceml.logger import logger
 from traceml.processors.errors import (
@@ -30,6 +30,13 @@ try:
     import numpy as np
 except ImportError:
     np = None
+
+
+def image_path(
+    from_path: str, asset_path: str, asset_rel_path: str = None
+) -> V1EventImage:
+    copy_file_path(from_path, asset_path)
+    return V1EventImage(path=asset_rel_path or asset_path)
 
 
 def _draw_single_box(

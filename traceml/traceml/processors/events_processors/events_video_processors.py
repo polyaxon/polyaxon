@@ -16,7 +16,7 @@
 
 from polyaxon.constants.globals import UNKNOWN
 from polyaxon.utils.np_utils import calculate_scale_factor, to_np
-from polyaxon.utils.path_utils import check_or_create_path
+from polyaxon.utils.path_utils import check_or_create_path, copy_file_path
 from traceml.events import V1EventVideo
 from traceml.logger import logger
 from traceml.processors.errors import MOVIEPY_ERROR_MESSAGE, NUMPY_ERROR_MESSAGE
@@ -25,6 +25,13 @@ try:
     import numpy as np
 except ImportError:
     np = None
+
+
+def video_path(
+    from_path: str, asset_path: str, content_type=None, asset_rel_path: str = None
+) -> V1EventVideo:
+    copy_file_path(from_path, asset_path)
+    return V1EventVideo(path=asset_rel_path or asset_path, content_type=content_type)
 
 
 def video(
