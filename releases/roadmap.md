@@ -15,12 +15,10 @@ sidebar: "releases"
 
 ### Core
 
- * **New**: Add support for annotations in the connections specification.
  * **Enhancement**: Add mid-runtime update with `apply` logic.
 
 ### CLI
-
- * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
+ ...
 
 ### Agent
 
@@ -45,9 +43,6 @@ sidebar: "releases"
 
 ### UI
 
- * **New**: Add operation status color indicator to the page's favicon.
- * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
- * **New**: Add Metrics/Params correlation and importance.
  * **New**: Add new advanced filters, allow filtering the runs in the comparison table based on:
    * parallel coordinate.
    * histogram.
@@ -72,10 +67,6 @@ sidebar: "releases"
  * **New**: Add log table.
  * **New**: Add custom bar plots.
  * **Enhancement**: Allow tracking dataframes as parquet files.
-
-### Hub
-
- * **New**: Add DVC(data version control) integration.
 
 ### Commercial
 
