@@ -77,13 +77,11 @@ sidebar: "releases"
    * Add project sidebar button `Reports`.
    * Allow running downstream-ops for a report, e.g. multi-run Tensorboard.
  * **New**: Add project contributors on the overview page to show all members who contributed to a specific project.
- * **New**: Add support for readme to component/model/artifact versions.
  * **Enhancement**: Allow owner/billing users to reset the billing anchor date, several users asked to change when they get billed during month.
  * **Enhancement**: Add possibility to save searches on the global runs table.
  * **Enhancement**: Add possibility to save custom analytics searches.
  * **Enhancement**: Add more informative messages and handling when scaling down usage/agents/seats or when downgrading to a plan missing a specific feature.
  * **Enhancement**: Add support for resuming pipelines and matrix operations.
  * **Enhancement**: Improve resuming or restarting an operation that is part of a pipeline.
- * **Enhancement**: Improve operations in DAGs with pending approval and upstream failures.
  * **Enhancement**: Investigate the new `suspend` feature to provide immediate concurrency change instead of the current [draining logic](/faq/How-does-changing-concurrency-work/).
  * **Fix**: Regression in metric early stopping policies.
