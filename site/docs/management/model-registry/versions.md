@@ -180,7 +180,7 @@ You can manage a model version using the UI
 
 ![version-admin](../../../../content/images/dashboard/registry/version-admin.png)
 
-## Model version packaging and pull
+## Model version packaging and pulling
 
 ### CLI
 
@@ -195,7 +195,6 @@ from polyaxon.client import ProjectClient
 
 project_client = ProjectClient(project="ORGANIZATION/bot-detection")
 
-# Update
 project_client.pull_model_version(
     version="v1",
     path="/tmp/path"

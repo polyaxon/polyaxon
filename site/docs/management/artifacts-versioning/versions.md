@@ -184,7 +184,7 @@ You can manage an artifact version using the UI
 
 ![version-admin](../../../../content/images/dashboard/artifacts-versioning/version-admin.png)
 
-## Artifact version packaging and pull
+## Artifact version packaging and pulling
 
 ### CLI
 
@@ -199,7 +199,6 @@ from polyaxon.client import ProjectClient
 
 project_client = ProjectClient(project="ORGANIZATION/bot-detection")
 
-# Update
 project_client.pull_artifact_version(
     version="v1",
     path="/tmp/path"
