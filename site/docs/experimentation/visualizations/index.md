@@ -79,4 +79,4 @@ Tensorboard is a tool that is used by data scientists to visualize and debug dee
 
 ## Example
 
-You can run [the artifacts example](https://github.com/polyaxon/polyaxon-examples/tree/master/in_cluster/artifacts) which calls several tracking methods and logs several metadata and artifact types.
+You can run [the artifacts example](https://github.com/polyaxon/community/tree/master/examples/in_cluster/artifacts) which calls several tracking methods and logs several metadata and artifact types.
