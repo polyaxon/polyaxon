@@ -23,8 +23,8 @@ from rest_framework import status
 
 from coredb.api.artifacts.queries import project_runs_artifacts
 from coredb.api.artifacts.serializers import (
+    RunArtifactDetailSerializer,
     RunArtifactLightSerializer,
-    RunArtifactSerializer,
 )
 from coredb.api.project_resources.serializers import (
     OfflineRunSerializer,
@@ -287,7 +287,7 @@ class TestProjectRunsDeleteViewV1(BaseTest):
 
 @pytest.mark.projects_resources_mark
 class TestProjectRunsArtifactsViewV1(BaseTest):
-    serializer_class = RunArtifactSerializer
+    serializer_class = RunArtifactDetailSerializer
     light_serializer_class = RunArtifactLightSerializer
     model_class = Artifact
     factory_class = ArtifactFactory
@@ -346,15 +346,15 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
         assert len(data) == self.query.count()
         assert data == self.serializer_class(self.query, many=True).data
 
-    def test_light_get(self):
-        resp = self.client.get(self.url + "?light=true")
+    def test_distinct_get(self):
+        resp = self.client.get(self.url + "?mode=distinct")
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data["next"] is None
         assert resp.data["count"] == 3
 
         resp = self.client.get(
-            self.url + "?light=true&query=run:{}".format(self.objects[1].uuid)
+            self.url + "?mode=distinct&query=run:{}".format(self.objects[1].uuid)
         )
         assert resp.status_code == status.HTTP_200_OK
 
@@ -363,7 +363,7 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
 
         resp = self.client.get(
             self.url
-            + "?light=true&query=run:{}".format(
+            + "?mode=distinct&query=run:{}".format(
                 "|".join([self.objects[0].uuid.hex, self.objects[1].uuid.hex])
             )
         )
@@ -373,7 +373,7 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
         assert resp.data["count"] == 3
 
         data = resp.data["results"]
-        assert len(data) == self.query.count()
+        assert len(data) == self.query.count() - 1
         assert data == self.light_serializer_class(self.query, many=True).data
 
     @pytest.mark.filterwarnings("ignore::RuntimeWarning")

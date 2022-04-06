@@ -18,6 +18,7 @@ import pytest
 import random
 
 from coredb.api.artifacts.serializers import (
+    RunArtifactDetailSerializer,
     RunArtifactLightSerializer,
     RunArtifactSerializer,
 )
@@ -62,6 +63,46 @@ class TestArtifactSerializer(PolyaxonBaseTestSerializer):
         assert data.pop("path") == obj1.artifact.path
         assert data.pop("summary") == obj1.artifact.summary
         assert data.pop("state") == obj1.artifact.state.hex
+        assert data.pop("kind") == obj1.artifact.kind
+        for k, v in data.items():
+            assert getattr(obj1, k) == v
+
+
+@pytest.mark.serializers_mark
+class TestArtifactDetailSerializer(PolyaxonBaseTestSerializer):
+    query = ArtifactLineage.objects
+    factory_class = ArtifactFactory
+    model_class = Artifact
+    serializer_class = RunArtifactDetailSerializer
+    expected_keys = {"name", "kind", "path", "summary", "state", "is_input", "run"}
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory()
+        self.run = RunFactory(
+            project=self.project,
+            content="test",
+            raw_content="test",
+            is_managed=True,
+        )
+        self.state = self.project.owner.uuid
+
+    def create_one(self):
+        i = random.randint(1, 100)
+        artifact = self.factory_class(name=f"name{i}", state=self.state)
+        return ArtifactLineage.objects.create(artifact=artifact, run=self.run)
+
+    def test_serialize_one(self):
+        obj1 = self.create_one()
+        data = self.serializer_class(self.query.get(id=obj1.id)).data
+
+        assert set(data.keys()) == self.expected_keys
+
+        assert data.pop("name") == obj1.artifact.name
+        assert data.pop("path") == obj1.artifact.path
+        assert data.pop("summary") == obj1.artifact.summary
+        assert data.pop("state") == obj1.artifact.state.hex
+        assert data.pop("run") == obj1.run.uuid.hex
         assert data.pop("kind") == obj1.artifact.kind
         for k, v in data.items():
             assert getattr(obj1, k) == v

@@ -19,36 +19,6 @@ from rest_framework import fields, serializers
 from coredb.abstracts.getter import get_lineage_model
 
 
-class RunArtifactSerializer(serializers.ModelSerializer):
-    state = fields.SerializerMethodField()
-    name = fields.SerializerMethodField()
-    kind = fields.SerializerMethodField()
-    path = fields.SerializerMethodField()
-    summary = fields.SerializerMethodField()
-
-    class Meta:
-        model = get_lineage_model()
-        fields = ("name", "kind", "path", "summary", "state", "is_input")
-
-    def get_name(self, obj):
-        return obj.artifact.name
-
-    def get_state(self, obj):
-        value = obj.artifact.state
-        if value:
-            return value.hex
-        return value
-
-    def get_kind(self, obj):
-        return obj.artifact.kind
-
-    def get_path(self, obj):
-        return obj.artifact.path
-
-    def get_summary(self, obj):
-        return obj.artifact.summary
-
-
 class RunArtifactLightSerializer(serializers.ModelSerializer):
     name = fields.SerializerMethodField()
     kind = fields.SerializerMethodField()
@@ -62,6 +32,37 @@ class RunArtifactLightSerializer(serializers.ModelSerializer):
 
     def get_kind(self, obj):
         return obj.artifact.kind
+
+
+class RunArtifactSerializer(RunArtifactLightSerializer):
+    state = fields.SerializerMethodField()
+    path = fields.SerializerMethodField()
+    summary = fields.SerializerMethodField()
+
+    class Meta(RunArtifactLightSerializer.Meta):
+        fields = RunArtifactLightSerializer.Meta.fields + ("path", "summary", "state")
+
+    def get_state(self, obj):
+        value = obj.artifact.state
+        if value:
+            return value.hex
+        return value
+
+    def get_path(self, obj):
+        return obj.artifact.path
+
+    def get_summary(self, obj):
+        return obj.artifact.summary
+
+
+class RunArtifactDetailSerializer(RunArtifactSerializer):
+    run = fields.SerializerMethodField()
+
+    class Meta(RunArtifactSerializer.Meta):
+        fields = RunArtifactSerializer.Meta.fields + ("run",)
+
+    def get_run(self, obj):
+        return obj.run.uuid.hex
 
 
 class RunArtifactNameSerializer(serializers.ModelSerializer):
