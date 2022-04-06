@@ -15,7 +15,10 @@
 # limitations under the License.
 
 from coredb.api.artifacts import queries as runs_artifacts_queries
-from coredb.api.artifacts.serializers import RunArtifactLightSerializer
+from coredb.api.artifacts.serializers import (
+    RunArtifactLightSerializer,
+    RunArtifactSerializer,
+)
 from coredb.api.project_resources import methods
 from coredb.api.project_resources.serializers import (
     OfflineRunSerializer,
@@ -27,6 +30,7 @@ from coredb.queries.runs import DEFAULT_COLUMNS_DEFER
 from coredb.query_managers.artifact import ArtifactQueryManager
 from coredb.query_managers.run import RunQueryManager
 from endpoints.project import ProjectResourceListEndpoint
+from polyaxon.utils.bool_utils import to_bool
 from polycommon.apis.filters import OrderingFilter, QueryFilter
 from polycommon.apis.paginator import LargeLimitOffsetPagination
 from polycommon.endpoints.base import (
@@ -90,7 +94,6 @@ class ProjectRunsSyncView(ProjectResourceListEndpoint, CreateEndpoint):
 
 class ProjectRunsArtifactsView(ProjectResourceListEndpoint, ListEndpoint):
     queryset = runs_artifacts_queries.project_runs_artifacts
-    serializer_class = RunArtifactLightSerializer
     filter_backends = (QueryFilter, OrderingFilter)
     query_manager = ArtifactQueryManager
     check_alive = ArtifactQueryManager.CHECK_ALIVE
@@ -101,3 +104,8 @@ class ProjectRunsArtifactsView(ProjectResourceListEndpoint, ListEndpoint):
 
     def enrich_queryset(self, queryset):
         return queryset.filter(run__project=self.project)
+
+    def get_serializer_class(self):
+        if to_bool(self.request.query_params.get("light"), handle_none=True):
+            return RunArtifactLightSerializer
+        return RunArtifactSerializer

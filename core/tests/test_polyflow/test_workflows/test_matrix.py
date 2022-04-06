@@ -17,10 +17,10 @@
 import numpy as np
 import pytest
 
-from hypertune.matrix.utils import get_length, get_max, get_min, sample, to_numpy
 from marshmallow import fields
 from marshmallow.exceptions import ValidationError
 
+from hypertune.matrix.utils import get_length, get_max, get_min, sample, to_numpy
 from polyaxon.polyflow.matrix.params import (
     V1HpChoice,
     V1HpDateRange,

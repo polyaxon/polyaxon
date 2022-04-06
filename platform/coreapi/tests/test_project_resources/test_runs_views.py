@@ -22,7 +22,10 @@ from unittest.mock import patch
 from rest_framework import status
 
 from coredb.api.artifacts.queries import project_runs_artifacts
-from coredb.api.artifacts.serializers import RunArtifactLightSerializer
+from coredb.api.artifacts.serializers import (
+    RunArtifactLightSerializer,
+    RunArtifactSerializer,
+)
 from coredb.api.project_resources.serializers import (
     OfflineRunSerializer,
     OperationCreateSerializer,
@@ -31,16 +34,14 @@ from coredb.api.project_resources.serializers import (
 from coredb.factories.artifacts import ArtifactFactory
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
-from coredb.managers.statuses import new_run_status
 from coredb.models.artifacts import Artifact, ArtifactLineage
 from coredb.models.runs import Run
 from polyaxon.api import API_V1
-from polyaxon.lifecycle import V1StatusCondition, V1Statuses
+from polyaxon.lifecycle import V1Statuses
 from polyaxon.parser import parser
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1CloningKind, V1RunKind
 from polyaxon.schemas import V1RunPending
-from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
 
 
@@ -286,7 +287,8 @@ class TestProjectRunsDeleteViewV1(BaseTest):
 
 @pytest.mark.projects_resources_mark
 class TestProjectRunsArtifactsViewV1(BaseTest):
-    serializer_class = RunArtifactLightSerializer
+    serializer_class = RunArtifactSerializer
+    light_serializer_class = RunArtifactLightSerializer
     model_class = Artifact
     factory_class = ArtifactFactory
     queryset = project_runs_artifacts
@@ -343,6 +345,36 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
         data = resp.data["results"]
         assert len(data) == self.query.count()
         assert data == self.serializer_class(self.query, many=True).data
+
+    def test_light_get(self):
+        resp = self.client.get(self.url + "?light=true")
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 3
+
+        resp = self.client.get(
+            self.url + "?light=true&query=run:{}".format(self.objects[1].uuid)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url
+            + "?light=true&query=run:{}".format(
+                "|".join([self.objects[0].uuid.hex, self.objects[1].uuid.hex])
+            )
+        )
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 3
+
+        data = resp.data["results"]
+        assert len(data) == self.query.count()
+        assert data == self.light_serializer_class(self.query, many=True).data
 
     @pytest.mark.filterwarnings("ignore::RuntimeWarning")
     def test_get_filter(self):  # pylint:disable=too-many-statements
