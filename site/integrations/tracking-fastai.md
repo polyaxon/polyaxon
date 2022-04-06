@@ -84,7 +84,7 @@ In this example we will go through the process of logging a FastAI model using P
 
 This example can be used with the offline mode `POLYAXON_OFFLINE=true` and it does not require a Polyaxon API to run locally. 
 
-To see how this can be turned to a declarative approach to be submitted to a Polyaxon cluster, please check this [example](https://github.com/polyaxon/community/tree/master/examples/in_cluster/fastai)
+To see how this can be turned to a declarative approach to be submitted to a Polyaxon cluster, please check this [example](https://github.com/polyaxon/polyaxon-examples/tree/master/in_cluster/fastai)
 
 ```python
 import argparse
