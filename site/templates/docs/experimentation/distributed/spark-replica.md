@@ -1,7 +1,7 @@
 ---
 title: "Spark-Replica Specification"
 sub_link: "distributed/spark-replica"
-code_link: "src/polyaxon/polyflow/run/spark/replica.py"
+code_link: " core/polyaxon/polyflow/run/spark/replica.py"
 meta_title: "Spark-Replica Specification - Experimentation"
 meta_description: "Spark-Replica provides an interface to define a replica for Spark executor or driver."
 visibility: public

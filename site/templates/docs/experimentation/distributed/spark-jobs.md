@@ -1,7 +1,7 @@
 ---
 title: "Spark-Job Specification"
 sub_link: "distributed/spark-jobs"
-code_link: "src/polyaxon/polyflow/run/spark/spark.py"
+code_link: " core/polyaxon/polyflow/run/spark/spark.py"
 meta_title: "Spark-Job Specification - Experimentation"
 meta_description: "Spark-Job provides an interface to run serverless Spark applications on Kubernetes."
 visibility: public

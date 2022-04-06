@@ -1,7 +1,7 @@
 ---
 title: "{{title}} CLI Reference"
 sub_link: "cli/{{file}}"
-code_link: "src/polyaxon/cli/{{file}}.py"
+code_link: " core/polyaxon/cli/{{file}}.py"
 meta_title: "Operation - Polyaxon Specification"
 meta_description: "Polyaxonfile Command Line Interface Specification - {{title}} CLI Reference."
 visibility: public

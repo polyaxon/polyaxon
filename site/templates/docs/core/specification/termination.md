@@ -1,7 +1,7 @@
 ---
 title: "Termination Specification"
 sub_link: "specification/termination"
-code_link: "src/polyaxon/polyflow/termination/__init__.py"
+code_link: " core/polyaxon/polyflow/termination/__init__.py"
 meta_title: "Termination Section - Polyaxonfile Specification Sections - Polyaxon References"
 meta_description: "Termination Section - Polyaxonfile Specification Sections - The termination section allows users to define and control when to stop an operation and how long to keep it's resources on the cluster."
 visibility: public

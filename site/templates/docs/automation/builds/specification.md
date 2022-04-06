@@ -1,7 +1,7 @@
 ---
 title: "Build specification"
 sub_link: "builds/specification"
-code_link: "src/polyaxon/polyflow/builds/__init__.py"
+code_link: " core/polyaxon/polyflow/builds/__init__.py"
 meta_title: "Polyaxon events specification - Polyaxon automation"
 meta_description: "Events specification for subscribing operations to specific external triggers or internal conditions."
 visibility: public

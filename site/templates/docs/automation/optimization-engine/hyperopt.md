@@ -1,7 +1,7 @@
 ---
 title: "Hyperopt"
 sub_link: "optimization-engine/hyperopt"
-code_link: "src/polyaxon/polyflow/matrix/hyperopt.py"
+code_link: " core/polyaxon/polyflow/matrix/hyperopt.py"
 meta_title: "Polyaxon Optimization Engine - Hyperopt Optimization Specification - Polyaxon References"
 meta_description: "Hyperopt is a search algorithm that is backed by the Hyperopt library to perform sequential model-based hyperparameter optimization."
 visibility: public

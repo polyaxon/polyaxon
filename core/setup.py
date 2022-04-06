@@ -34,10 +34,9 @@ with open("requirements/requirements.txt") as requirements_file:
     requirements = requirements_file.read().splitlines()
 
 if os.environ.get("USE_PROD_PACKAGES"):
-    requirements += [
-        "polyaxon-sdk=={}".format(pkg["VERSION"]),
-        "traceml=={}".format(pkg["VERSION"]),
-    ]
+    requirements.append("polyaxon-sdk=={}".format(pkg["VERSION"]))
+    with open("requirements/prod.txt") as requirements_file:
+        requirements += requirements_file.read().splitlines()
 
 with open("requirements/dev.txt") as requirements_file:
     dev_requirements = requirements_file.read().splitlines()
@@ -59,15 +58,6 @@ extra = {
         "bokeh",
         "pandas",
         "altair",
-    ],
-    "streams": [
-        "kubernetes_asyncio>=12.1.1,<22.6.0",
-        "starlette==0.18.0",
-        "aiofiles==0.8.0",
-        "uvicorn[standard]==0.17.4",
-        "uvloop==0.16.0",
-        "python-multipart==0.0.5",
-        "pandas",
     ],
 }
 

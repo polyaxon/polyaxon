@@ -1,7 +1,7 @@
 ---
 title: "MPI-Job Specification"
 sub_link: "distributed/mpi-jobs"
-code_link: "src/polyaxon/polyflow/run/kubeflow/mpi_job.py"
+code_link: " core/polyaxon/polyflow/run/kubeflow/mpi_job.py"
 meta_title: "Kubeflow MPI-Job Specification - Experimentation"
 meta_description: "Kubeflow MPI-Job provides an interface to train distributed experiments with MPI."
 visibility: public

@@ -1,7 +1,7 @@
 ---
 title: "Hooks specification"
 sub_link: "hooks/specification"
-code_link: "src/polyaxon/polyflow/hooks/__init__.py"
+code_link: " core/polyaxon/polyflow/hooks/__init__.py"
 meta_title: "Polyaxon hooks specification - Polyaxon automation"
 meta_description: "Hooks for notifying external systems and running post done logic."
 visibility: public

@@ -1,7 +1,7 @@
 ---
 title: "Kubeflow Scheduling Scheduling Policy Specification"
 sub_link: "distributed/kubeflow-scheduling-policy"
-code_link: "src/polyaxon/polyflow/run/kubeflow/scheduling_policy.py"
+code_link: " core/polyaxon/polyflow/run/kubeflow/scheduling_policy.py"
 meta_title: "Kubeflow Scheduling Policy Specification - Experimentation"
 meta_description: "Kubeflow scheduling policy provides an interface to define a scheduling logic for TFJob/MPIJob/PytorchJob/MXNetJob/XGBoost."
 visibility: public

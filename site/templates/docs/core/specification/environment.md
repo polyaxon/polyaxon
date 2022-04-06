@@ -1,7 +1,7 @@
 ---
 title: "Environment Specification"
 sub_link: "specification/environment"
-code_link: "src/polyaxon/polyflow/environment/__init__.py"
+code_link: " core/polyaxon/polyflow/environment/__init__.py"
 meta_title: "Environment Section - Polyaxonfile Specification Sections - Polyaxon References"
 meta_description: "Environment Section - Polyaxonfile Specification Sections - The environment section allows to alter the resources and configuration of the runtime of your jobs, experiments, and services."
 visibility: public

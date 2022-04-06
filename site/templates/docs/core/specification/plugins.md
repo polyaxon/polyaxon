@@ -1,7 +1,7 @@
 ---
 title: "Plugins Specification"
 sub_link: "specification/plugins"
-code_link: "src/polyaxon/polyflow/plugins/__init__.py"
+code_link: " core/polyaxon/polyflow/plugins/__init__.py"
 meta_title: "Plugins - Polyaxon Specification"
 meta_description: "Plugins section provides a way to customize extra Polyaxon utilities."
 visibility: public

@@ -1,7 +1,7 @@
 ---
 title: "Init container setup"
 sub_link: "auxiliaries/init"
-code_link: "src/polyaxon/auxiliaries/init.py"
+code_link: " core/polyaxon/auxiliaries/init.py"
 meta_title: "Polyaxon's Auxiliary Containers - Polyaxon Init"
 meta_description: "Polyaxon init is a helper container that initialize the environment required for the main container to function correctly."
 visibility: public
