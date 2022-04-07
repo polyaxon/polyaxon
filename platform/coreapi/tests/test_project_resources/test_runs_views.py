@@ -317,13 +317,18 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
         )
 
         self.query = self.queryset.filter(run__project=self.project)
+        self.query_distinct = self.query.distinct(
+            "is_input",
+            "artifact__name",
+            "artifact__kind",
+        )
 
-    def test_get(self):
+    def test_all_get(self):
         resp = self.client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data["next"] is None
-        assert resp.data["count"] == 3
+        assert resp.data["count"] == 4
 
         resp = self.client.get(self.url + "?query=run:{}".format(self.objects[1].uuid))
         assert resp.status_code == status.HTTP_200_OK
@@ -340,13 +345,13 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data["next"] is None
-        assert resp.data["count"] == 3
+        assert resp.data["count"] == 4
 
         data = resp.data["results"]
         assert len(data) == self.query.count()
         assert data == self.serializer_class(self.query, many=True).data
 
-    def test_distinct_get(self):
+    def test_get(self):
         resp = self.client.get(self.url + "?mode=distinct")
         assert resp.status_code == status.HTTP_200_OK
 
@@ -374,33 +379,38 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
 
         data = resp.data["results"]
         assert len(data) == self.query.count() - 1
-        assert data == self.light_serializer_class(self.query, many=True).data
+        assert len(data) == self.query_distinct.count()
+        assert data == self.light_serializer_class(self.query_distinct, many=True).data
 
     @pytest.mark.filterwarnings("ignore::RuntimeWarning")
     def test_get_filter(self):  # pylint:disable=too-many-statements
         # Name
-        resp = self.client.get(self.url + "?query=name:in1")
+        resp = self.client.get(self.url + "?mode=distinct&query=name:in1")
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["next"] is None
         assert resp.data["count"] == 1
 
-        resp = self.client.get(self.url + "?query=name:out1")
+        resp = self.client.get(self.url + "?mode=distinct&query=name:out1")
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["next"] is None
         assert resp.data["count"] == 1
 
-        resp = self.client.get(self.url + "?query=name:out3")
+        resp = self.client.get(self.url + "?mode=distinct&query=name:out3")
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["next"] is None
         assert resp.data["count"] == 0
 
         # Kind
-        resp = self.client.get(self.url + f"?query=kind:{V1ArtifactKind.METRIC}")
+        resp = self.client.get(
+            self.url + f"?mode=distinct&query=kind:{V1ArtifactKind.METRIC}"
+        )
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["next"] is None
         assert resp.data["count"] == 3
 
-        resp = self.client.get(self.url + f"?query=kind:{V1ArtifactKind.HISTOGRAM}")
+        resp = self.client.get(
+            self.url + f"?mode=distinct&query=kind:{V1ArtifactKind.HISTOGRAM}"
+        )
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["next"] is None
         assert resp.data["count"] == 0
