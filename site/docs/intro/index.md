@@ -90,8 +90,8 @@ Before diving into Polyaxon's features in the next section, it's useful to give 
 
 ### The blog
 
-For long-form news and announcements, the best place to keep up to date with everything happening is [our blog](https://medium.com/polyaxon).
-There's an [RSS feed](https://medium.com/feed/polyaxon) and
+For long-form news and announcements, the best place to keep up to date with everything happening is [our blog](https://blog.polyaxon.com).
+There's an [RSS feed](https://blog.polyaxon.com/rss.xml) and
 also [a newsletter](https://polyaxon.us17.list-manage.com/subscribe/post?u=1b6eccb8409861418bcc5dbfc&id=012464842e).
 
 ### Community channel
