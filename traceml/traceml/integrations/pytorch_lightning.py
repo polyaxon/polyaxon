@@ -24,6 +24,11 @@ from traceml.exceptions import TracemlException
 try:
     from pytorch_lightning.loggers.base import LightningLoggerBase, rank_zero_experiment
     from pytorch_lightning.utilities import rank_zero_only
+    from pytorch_lightning.utilities.logger import (
+        _convert_params,
+        _flatten_dict,
+        _sanitize_callable_params,
+    )
 except ImportError:
     raise TracemlException("PytorchLightning is required to use the tracking Callback")
 
@@ -47,7 +52,7 @@ class Callback(LightningLoggerBase):
         description: str = None,
         tags: List[str] = None,
         end_on_finalize: bool = False,
-        prefix="",
+        prefix: str = "",
     ):
         super().__init__()
         self._owner = owner
@@ -96,8 +101,9 @@ class Callback(LightningLoggerBase):
 
     @rank_zero_only
     def log_hyperparams(self, params: Union[Dict[str, Any], Namespace]) -> None:
-        params = self._convert_params(params)
-        params = self._flatten_dict(params)
+        params = _convert_params(params)
+        params = _flatten_dict(params)
+        params = _sanitize_callable_params(params)
         self.experiment.log_inputs(**params)
 
     @rank_zero_only

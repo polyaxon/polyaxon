@@ -249,9 +249,7 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="artifact",
             last_check=None,
         )
-        abspath = os.path.abspath(
-            "tests/fixtures/events/artifact/artifact_events.plx"
-        )
+        abspath = os.path.abspath("tests/fixtures/events/artifact/artifact_events.plx")
         events = V1Events.read(
             name="artifact_events",
             kind="artifact",

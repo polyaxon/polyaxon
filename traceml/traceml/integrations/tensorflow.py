@@ -15,8 +15,8 @@
 # limitations under the License.
 
 from polyaxon import tracking
-from traceml.integrations.tensorboard import TensorboardLogger
 from traceml.exceptions import TracemlException
+from traceml.integrations.tensorboard import Logger
 
 try:
     import tensorflow as tf
@@ -62,7 +62,7 @@ class Callback(SessionRunHook):
 
     def after_run(self, run_context, run_values):
         if self._step % self._steps_per_log == 0:
-            TensorboardLogger.process_summary(
+            Logger.process_summary(
                 run_values.results["summary"],
                 run=self.run,
                 log_image=self._log_image,
