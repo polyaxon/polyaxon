@@ -81,6 +81,11 @@ sidebar: "releases"
    * Add project sidebar button `Reports`.
    * Allow running downstream-ops for a report, e.g. multi-run Tensorboard.
  * **New**: Add project contributors on the overview page to show all members who contributed to a specific project.
+ * **Beta**: Add new queuing logic:
+    * fair-share queuing
+    * auto-preemption based on priority
+    * auto-requeueing for suspended operations
+    * per-queue preset
  * **Enhancement**: Allow owner/billing users to reset the billing anchor date, several users asked to change when they get billed during month.
  * **Enhancement**: Add possibility to save searches on the global runs table.
  * **Enhancement**: Add possibility to save custom analytics searches.
