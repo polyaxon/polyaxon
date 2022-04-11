@@ -18,7 +18,6 @@ COPY /core /polyaxon/core
 COPY /traceml /polyaxon/traceml
 COPY /hypertune /polyaxon/hypertune
 COPY /datatile /polyaxon/datatile
-COPY /sdks/python/http_client/v1 /polyaxon/sdks/python/http_client/v1
 COPY /platform /polyaxon/platform
 WORKDIR /polyaxon
 

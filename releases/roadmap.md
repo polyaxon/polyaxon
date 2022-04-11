@@ -13,6 +13,10 @@ sidebar: "releases"
 
 ## Roadmap
 
+### Sandbox
+
+ * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
+
 ### Core
 
  * **Enhancement**: Add mid-runtime update with `apply` logic.
