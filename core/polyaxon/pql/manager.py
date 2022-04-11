@@ -36,6 +36,7 @@ class PQLManager:
     CONDITIONS_BY_FIELD = {}
     QUERY_BACKEND = None
     TIMEZONE = None
+    DISTINCT = True
 
     @classmethod
     def proxy_field(cls, field: str) -> str:
@@ -149,4 +150,7 @@ class PQLManager:
                     )
                 operators.append(operator)
 
-        return queryset.filter(*operators)
+        queryset = queryset.filter(*operators)
+        if cls.DISTINCT:
+            queryset = queryset.distinct()
+        return queryset

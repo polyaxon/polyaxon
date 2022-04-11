@@ -245,68 +245,57 @@ class TestQueryManager(BaseTestQuery):
         result_queryset = RunQueryManager.apply(
             query_spec=self.query1, queryset=Run.objects
         )
-        expected_query = str(
-            Run.objects.filter(
-                Q(updated_at__lte="2020-10-10"),
-                Q(started_at__gt="2010-10-10"),
-                ~Q(
-                    Q(started_at__date="2016-10-01"),
-                    Q(started_at__hour="10"),
-                    Q(started_at__minute="10"),
-                ),
-            ).query
-        )
-        assert str(result_queryset.query) == expected_query
+        expected_query = Run.objects.filter(
+            Q(updated_at__lte="2020-10-10"),
+            Q(started_at__gt="2010-10-10"),
+            ~Q(
+                Q(started_at__date="2016-10-01"),
+                Q(started_at__hour="10"),
+                Q(started_at__minute="10"),
+            ),
+        ).distinct()
+        assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
             query_spec=self.query12, queryset=Run.objects
         )
-        expected_query = str(
-            Run.objects.filter(
-                Q(created_at__date="2020-10-10"),
-            ).query
-        )
-        assert str(result_queryset.query) == expected_query
+        expected_query = Run.objects.filter(
+            Q(created_at__date="2020-10-10"),
+        ).distinct()
+        assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
             query_spec=self.query2, queryset=Run.objects
         )
-        expected_query = str(
-            Run.objects.filter(
-                Q(outputs__loss__lte=0.8), Q(status__in=["starting", "running"])
-            ).query
-        )
-        assert str(result_queryset.query) == expected_query
+        expected_query = Run.objects.filter(
+            Q(outputs__loss__lte=0.8), Q(status__in=["starting", "running"])
+        ).distinct()
+        assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
             query_spec=self.query4, queryset=Run.objects
         )
-        expected_query = str(
-            Run.objects.filter(
-                ~Q(tags__overlap=["tag1", "tag2"]), Q(tags__contains=["tag3"])
-            ).query
-        )
-        assert str(result_queryset.query) == expected_query
+        expected_query = Run.objects.filter(
+            ~Q(tags__overlap=["tag1", "tag2"]), Q(tags__contains=["tag3"])
+        ).distinct()
+        assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
             query_spec=self.query5, queryset=Run.objects
         )
-        expected_query = str(
-            Run.objects.filter(
-                Q(name__icontains="foo"), ~Q(description__istartswith="bal")
-            ).query
-        )
-        assert str(result_queryset.query) == expected_query
+        expected_query = Run.objects.filter(
+            Q(name__icontains="foo"), ~Q(description__istartswith="bal")
+        ).distinct()
+
+        assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
             query_spec=self.query7, queryset=Run.objects
         )
-        expected_query = str(
-            Run.objects.filter(
-                Q(outputs__loss__isnull=True), Q(status__isnull=False)
-            ).query
-        )
-        assert str(result_queryset.query) == expected_query
+        expected_query = Run.objects.filter(
+            Q(outputs__loss__isnull=True), Q(status__isnull=False)
+        ).distinct()
+        assert str(result_queryset.query) == str(expected_query.query)
 
 
 del BaseTestQuery

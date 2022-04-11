@@ -37,7 +37,7 @@ project_runs_artifacts = lineage_model.objects.prefetch_related("artifact", "run
     "artifact__kind",
     "run__id",
     "run__uuid",
-)
+).distinct()
 
 project_runs_artifacts_distinct = (
     lineage_model.objects.prefetch_related("artifact")
