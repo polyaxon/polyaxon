@@ -41,13 +41,17 @@ class RunQueryManager(BaseQueryManager):
         "agent",
         "queue",
         "artifacts_store",
+        "connections",
     }
+    FIELDS_USE_STATE = {"artifacts"}
     FIELDS_USE_UUID = {
         "original",
         "upstream",
         "downstream",
         "pipeline",
         "controller",
+        "upstream_runs",
+        "downstream_runs",
     }
     FIELDS_PROXY = {
         "params": "inputs",
@@ -58,8 +62,8 @@ class RunQueryManager(BaseQueryManager):
         "meta_flags": "meta_info",
         "id": "uuid",
         "uid": "uuid",
-        "upstream": "upstream_runs__uuid",
-        "downstream": "downstream_runs__uuid",
+        "upstream": "upstream_runs",
+        "downstream": "downstream_runs",
         "user": "user__username",
     }
     FIELDS_ORDERING = (
@@ -184,6 +188,10 @@ class RunQueryManager(BaseQueryManager):
         "memory": parse_memory_operation,
         "gpu": parse_scalar_operation,
         "custom": parse_scalar_operation,
+        # Artifacts
+        "artifacts": parse_value_operation,
+        # Connections
+        "connections": parse_value_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
@@ -275,4 +283,8 @@ class RunQueryManager(BaseQueryManager):
         "memory": ComparisonCondition,
         "gpu": ComparisonCondition,
         "custom": ComparisonCondition,
+        # Artifacts
+        "artifacts": ValueCondition,
+        # Connections
+        "connections": ValueCondition,
     }
