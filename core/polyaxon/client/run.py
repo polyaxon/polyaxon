@@ -2234,6 +2234,92 @@ class RunClient:
 
         return self.client.runs_v1.list_runs(self.owner, self.project, **params)
 
+    @client_handler(check_no_op=True, check_offline=True)
+    def promote_to_model_version(
+        self,
+        version: str,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: Union[str, Dict] = None,
+        connection: str = None,
+        artifacts: List[str] = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Similar to
+        [ProjectClient.register_model_version](/docs/core/python-library/project-client/#register_model_version),
+        directly from the run client instance,
+        allows to create or Update a model version based on the current run.
+
+        **Available in v1.18**
+
+        Args:
+            version: str, optional, the version name/tag.
+            description: str, optional, the version description.
+            tags: str or List[str], optional.
+            content: str or dict, optional, content/metadata (JSON object) of the version.
+            connection: str, optional, a uuid reference to a connection.
+            artifacts: List[str], optional, list of artifacts to highlight(requires passing a run)
+            force: bool, optional, to force push, i.e. update if exists.
+
+        Returns:
+            V1ProjectVersion, model version.
+        """
+        from polyaxon.client.project import ProjectClient
+
+        return ProjectClient(self.owner, self.project).register_model_version(
+            version=version,
+            description=description,
+            tags=tags,
+            content=content,
+            run=self.run_uuid,
+            connection=connection,
+            artifacts=artifacts,
+            force=force,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def promote_to_artifact_version(
+        self,
+        version: str,
+        description: str = None,
+        tags: Union[str, List[str]] = None,
+        content: Union[str, Dict] = None,
+        connection: str = None,
+        artifacts: List[str] = None,
+        force: bool = False,
+    ) -> polyaxon_sdk.V1ProjectVersion:
+        """Similar to
+        [ProjectClient.register_artifact_version](/docs/core/python-library/project-client/#register_artifact_version),
+        directly from the run client instance,
+        allows to create or Update an artifact version based on the current run.
+
+        **Available in v1.18**
+
+        Args:
+            version: str, optional, the version name/tag.
+            description: str, optional, the version description.
+            tags: str or List[str], optional.
+            content: str or dict, optional, content/metadata (JSON object) of the version.
+            connection: str, optional, a uuid reference to a connection.
+            artifacts: List[str], optional, list of artifacts to highlight(requires passing a run)
+            force: bool, optional, to force push, i.e. update if exists.
+
+        Returns:
+            V1ProjectVersion, artifact version.
+        """
+        from polyaxon.client.project import ProjectClient
+
+        return ProjectClient(self.owner, self.project).register_artifact_version(
+            version=version,
+            description=description,
+            tags=tags,
+            content=content,
+            run=self.run_uuid,
+            connection=connection,
+            artifacts=artifacts,
+            force=force,
+        )
+
     def _collect_events_summaries(
         self,
         events_path: str,
