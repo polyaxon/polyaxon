@@ -80,12 +80,12 @@ def commit_condition(
     if len(params) == 1:
         if negation:
             return ~query_backend(
-                artifacts_lineage__artifact__kind=V1ArtifactKind.CODEREF,
-                artifacts_lineage__artifact__name=params[0],
+                artifacts__kind=V1ArtifactKind.CODEREF,
+                artifacts__name=params[0],
             )
         return query_backend(
-            artifacts_lineage__artifact__kind=V1ArtifactKind.CODEREF,
-            artifacts_lineage__artifact__name=params[0],
+            artifacts__kind=V1ArtifactKind.CODEREF,
+            artifacts__name=params[0],
         )
     return None
 
@@ -101,11 +101,11 @@ def _artifact_kind_condition(
         if negation:
             return ~query_backend(
                 artifacts_lineage__is_input=is_input,
-                artifacts_lineage__artifact__kind=params[0],
+                artifacts__kind=params[0],
             )
         return query_backend(
             artifacts_lineage__is_input=is_input,
-            artifacts_lineage__artifact__kind=params[0],
+            artifacts__kind=params[0],
         )
     return None
 
