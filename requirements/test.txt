@@ -6,6 +6,6 @@ flaky<3.8.0
 isort<5.11.0
 mock<4.1.0
 pyflakes<2.5.0
-pytest<7.1.0
+pytest<7.2.0
 pytest-asyncio<0.19.0
-pylint<2.13.0
+pylint<2.14.0
