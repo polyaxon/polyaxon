@@ -11,7 +11,100 @@ tags:
 sidebar: "releases"
 ---
 
-## Roadmap
+
+## Next Release V1.18.0
+
+> **Note**: This minor version is WIP and not released yet.
+
+### CLI
+
+ * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
+
+### Core
+
+ * **New**: Add support for annotations in the connections specification.
+ * **Enhancement**: Migrate hyperparameter tuning and tracking modules to separate repos.
+ * **Enhancement**: Improve query manager to return distinct values.
+
+### Client
+
+ * **New**: Add promote method to a model version or artifact version directly from the `RunClient`:
+   * `RunClient.promote_to_model_version` this is similar to `ProjectClient.register_model_version` but directly from the run client instance.
+   * `RunClient.promote_to_artifact_version` this is similar to `ProjectClient.register_artifact_version` but directly from the run client instance.
+ * **New**: Add `get_artifacts_lineage` to `ProjetClient` to allow listing artifacts lineage information from multiple runs under the same project.
+ * **New**: Add new `OrganizationClient`, this client will only be accessible to users with enough permissions or it will raise 401/403 errors:
+    * Allows listing and interacting with agents.
+    * Allows listing and interacting with connections.
+    * Allows listing projects.
+    * Allows listing cross project runs.
+
+### Operator
+
+ * **Enhancement**: Update training operator to use the newest Kubeflow release.
+
+### Query Language
+ 
+ * **New**: Allow filtering by connections:
+    * By name `connections.name: CONNECTION1 | CONNECTION2`
+    * By tag `connections.tags: TAG1 | TAG2`
+    * By kind `connections.kind: git`
+ * **New**: Allow filtering by artifacts lineage:
+    * By name `artifacts.name: LINEAGE1 | LINEAGE2`
+    * By kind `artifacts.kind: model`
+    * By path `artifacts.path: foo/bar`
+    * By state `artifacts.state: STATE`
+
+### Tracking
+
+ * **New**: Allow to specify the connection name when logging assets and artifacts to associate the lineage to a specific connection.
+ * **Enhancement**: Improve logic around assets and artifacts logging to only trigger versioned behavior (step-wise) when a step parameter is provided.
+ * **Enhancement**: Improve outputs state calculation.
+ * **Enhancement**: Add support for new pytorch-lightning versions and fix issue with [log_hyperparams](https://github.com/PyTorchLightning/pytorch-lightning/commit/115a5d08e8b868109a424af213bd7f23537654f1).
+
+### Streams
+  
+ * **New**: Add support for multi-connections:
+   * Possibility to mount multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
+
+### UI
+
+ * **New**: Add operation status color indicator to the page's favicon.
+ * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
+ * **New**: Add Metrics/Params correlation and importance.
+ * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
+ * **New**: Add connection information to artifacts lineage.
+ * **Enhancement**: Update the queues table with a link next to each queue to filter all runs by a specific queue.
+ * **Enhancement**: Update the connections table with a link next to each connection to filter all runs by a specific connection.
+ * **Enhancement**: Show artifact' state on the lineage tables.
+ * **Enhancement**: Keep configuration of logs, artifacts, and dashboards tabs unchanged when changing tabs of the same run.  
+ * **Fix**: Typo in tip for registering component/model/artifact versions.
+
+### Hub
+
+ * **New**: Add DVC(data version control) integration.
+ * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
+
+### Docs
+
+ * **Enhancement**: Improve navigation and provide short-cuts.
+ * **Enhancement**: Improve `ProjectClient` and `RunClient` reference docs. 
+ * **Enhancement**: Add new intro tutorial about registering components, models, and artifacts.
+ * **Fix**: Edit links to point to the correct code files.
+
+### Deployment
+
+ * **Security**: Fix security CVE issues.
+
+### Commercial
+
+ * **New**: Add support for readme on component/model/artifact versions.
+ * **New**: Allow getting a connection's schema by name.
+ * **Enhancement**: Improve operations in DAGs with pending approval and upstream failures.
+ * **Enhancement**: Reduce member roles confusion:
+   * Add a note to `admin` to emphasize that is a `Project admin`.
+   * Add a note to `manager` to emphasize that is a `Organization admin`.
+
+## Short Term Roadmap
 
 ### Sandbox
 
