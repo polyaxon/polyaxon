@@ -21,10 +21,10 @@ from unittest.mock import patch
 
 from rest_framework import status
 
-from coredb.api.artifacts.queries import project_runs_artifacts
+from coredb.queries.artifacts import project_runs_artifacts
 from coredb.api.artifacts.serializers import (
-    RunArtifactDetailSerializer,
     RunArtifactLightSerializer,
+    RunArtifactSerializer,
 )
 from coredb.api.project_resources.serializers import (
     OfflineRunSerializer,
@@ -287,7 +287,7 @@ class TestProjectRunsDeleteViewV1(BaseTest):
 
 @pytest.mark.projects_resources_mark
 class TestProjectRunsArtifactsViewV1(BaseTest):
-    serializer_class = RunArtifactDetailSerializer
+    serializer_class = RunArtifactSerializer
     light_serializer_class = RunArtifactLightSerializer
     model_class = Artifact
     factory_class = ArtifactFactory

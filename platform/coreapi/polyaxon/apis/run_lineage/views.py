@@ -14,11 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from coredb.api.artifacts import methods, queries
+from coredb.api.artifacts import methods
 from coredb.api.artifacts.serializers import (
     RunArtifactNameSerializer,
     RunArtifactSerializer,
 )
+from coredb.queries import artifacts as artifacts_queries
 from coredb.query_managers.artifact import ArtifactQueryManager
 from endpoints.run import RunArtifactEndpoint, RunResourceListEndpoint
 from polycommon.apis.filters import OrderingFilter, QueryFilter
@@ -34,7 +35,7 @@ from polycommon.events.registry.run import RUN_NEW_ARTIFACTS
 
 
 class RunArtifactListView(RunResourceListEndpoint, ListEndpoint, CreateEndpoint):
-    queryset = queries.artifacts
+    queryset = artifacts_queries.artifacts
     serializer_class = RunArtifactSerializer
     pagination_class = LargeLimitOffsetPagination
     AUDITOR_EVENT_TYPES = {
@@ -55,13 +56,23 @@ class RunArtifactListView(RunResourceListEndpoint, ListEndpoint, CreateEndpoint)
     def create(self, request, *args, **kwargs):
         return methods.create(view=self, request=request, *args, **kwargs)
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["run"] = self.run_uuid
+        return context
+
 
 class RunArtifactNameListView(RunResourceListEndpoint, ListEndpoint):
-    queryset = queries.artifacts_names
+    queryset = artifacts_queries.artifacts_names
     serializer_class = RunArtifactNameSerializer
     pagination_class = LargeLimitOffsetPagination
 
 
 class RunArtifactDetailView(RunArtifactEndpoint, RetrieveEndpoint, DestroyEndpoint):
-    queryset = queries.artifacts
+    queryset = artifacts_queries.artifacts
     serializer_class = RunArtifactSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["run"] = self.run_uuid
+        return context

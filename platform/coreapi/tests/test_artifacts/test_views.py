@@ -24,7 +24,7 @@ from rest_framework import status
 
 from django.db import IntegrityError
 
-from coredb.api.artifacts import queries
+from coredb.queries import artifacts as artifacts_queries
 from coredb.api.artifacts.serializers import (
     RunArtifactNameSerializer,
     RunArtifactSerializer,
@@ -45,7 +45,7 @@ class TestRunArtifactNameListViewV1(BaseTest):
     model_class = Artifact
     factory_class = ArtifactFactory
     num_objects = 3
-    queryset = queries.artifacts
+    queryset = artifacts_queries.artifacts
 
     def setUp(self):
         super().setUp()
@@ -111,7 +111,7 @@ class TestRunArtifactListViewV1(BaseTest):
     serializer_class = RunArtifactSerializer
     model_class = Artifact
     factory_class = ArtifactFactory
-    queryset = queries.artifacts
+    queryset = artifacts_queries.artifacts
     num_objects = 3
 
     def setUp(self):

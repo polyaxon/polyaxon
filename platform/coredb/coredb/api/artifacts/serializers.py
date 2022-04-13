@@ -38,9 +38,15 @@ class RunArtifactSerializer(RunArtifactLightSerializer):
     state = fields.SerializerMethodField()
     path = fields.SerializerMethodField()
     summary = fields.SerializerMethodField()
+    run = fields.SerializerMethodField()
 
     class Meta(RunArtifactLightSerializer.Meta):
-        fields = RunArtifactLightSerializer.Meta.fields + ("path", "summary", "state")
+        fields = RunArtifactLightSerializer.Meta.fields + (
+            "path",
+            "summary",
+            "state",
+            "run",
+        )
 
     def get_state(self, obj):
         value = obj.artifact.state
@@ -54,15 +60,8 @@ class RunArtifactSerializer(RunArtifactLightSerializer):
     def get_summary(self, obj):
         return obj.artifact.summary
 
-
-class RunArtifactDetailSerializer(RunArtifactSerializer):
-    run = fields.SerializerMethodField()
-
-    class Meta(RunArtifactSerializer.Meta):
-        fields = RunArtifactSerializer.Meta.fields + ("run",)
-
     def get_run(self, obj):
-        return obj.run.uuid.hex
+        return self.context.get("run", obj.run.uuid.hex)
 
 
 class RunArtifactNameSerializer(serializers.ModelSerializer):

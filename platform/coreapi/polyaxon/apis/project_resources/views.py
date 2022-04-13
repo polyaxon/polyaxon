@@ -14,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from coredb.api.artifacts import queries as runs_artifacts_queries
+from coredb.queries import artifacts as artifacts_queries
 from coredb.api.artifacts.serializers import (
-    RunArtifactDetailSerializer,
     RunArtifactLightSerializer,
+    RunArtifactSerializer,
 )
 from coredb.api.project_resources import methods
 from coredb.api.project_resources.serializers import (
@@ -106,11 +106,11 @@ class ProjectRunsArtifactsView(ProjectResourceListEndpoint, ListEndpoint):
     def get_queryset(self):
         mode = self.request.query_params.get("mode")
         if not mode:
-            return runs_artifacts_queries.project_runs_artifacts
-        return runs_artifacts_queries.project_runs_artifacts_distinct
+            return artifacts_queries.project_runs_artifacts
+        return artifacts_queries.project_runs_artifacts_distinct
 
     def get_serializer_class(self):
         mode = self.request.query_params.get("mode")
         if not mode:
-            return RunArtifactDetailSerializer
+            return RunArtifactSerializer
         return RunArtifactLightSerializer
