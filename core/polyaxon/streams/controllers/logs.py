@@ -24,13 +24,13 @@ from polyaxon.fs.async_manager import list_files
 from polyaxon.fs.types import FSSystem
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
-from polyaxon.polyboard.logging import V1Log
 from polyaxon.streams.tasks.logs import (
     content_to_logs,
     download_logs_file,
     download_tmp_logs,
 )
 from polyaxon.types import AwareDT
+from traceml.logging import V1Log
 
 
 async def get_logs_files(fs: FSSystem, run_uuid: str) -> List[str]:

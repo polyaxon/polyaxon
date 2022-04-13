@@ -1,5 +1,5 @@
 ---
-title: "Querying Metadata and Artifacts"
+title: "Querying Metadata & Artifacts"
 sub_link: "query-metadata-artifacts"
 meta_title: "Introduction to Querying Metadata and Artifacts - Polyaxon quick start tutorial - Core Concepts"
 meta_description: "Introduction to Querying Metadata and Artifacts - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
@@ -13,7 +13,7 @@ tags:
 sidebar: "intro"
 ---
 
-## Querying Metadata and Artifacts
+## Overview
 
 Polyaxon provides a [query language](/docs/core/query-language/) to search and filter the runs history. 
 Using the API, Client, CLI or UI user can perform searches and find the runs with important information or to compare results. 

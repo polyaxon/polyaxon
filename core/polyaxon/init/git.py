@@ -29,7 +29,6 @@ from polyaxon.env_vars.keys import (
 )
 from polyaxon.exceptions import PolyaxonContainerException
 from polyaxon.lifecycle import V1Statuses
-from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.utils.code_reference import (
     add_remote,
     checkout_revision,
@@ -40,6 +39,7 @@ from polyaxon.utils.code_reference import (
     update_submodules,
 )
 from polyaxon.utils.path_utils import check_or_create_path
+from traceml.artifacts import V1ArtifactKind, V1RunArtifact
 
 _logger = logging.getLogger("polyaxon.repos.git")
 

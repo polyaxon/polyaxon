@@ -23,7 +23,6 @@ from polyaxon.connections.schemas import (
     V1K8sResourceSchema,
 )
 from polyaxon.k8s import k8s_schemas
-from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1Init, V1Plugins
 from polyaxon.polypod.common.mounts import get_mounts
 from polyaxon.polypod.compiler.converters import PlatformJobConverter
@@ -44,6 +43,7 @@ from polyaxon.schemas.types import (
 )
 from polyaxon.services.headers import PolyaxonServices
 from polyaxon.utils.test_utils import BaseTestCase
+from traceml.artifacts import V1ArtifactKind
 
 
 class DummyConverter(PlatformJobConverter):

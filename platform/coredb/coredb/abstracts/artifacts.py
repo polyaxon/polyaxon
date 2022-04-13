@@ -19,8 +19,8 @@ from django.db import models
 from coredb.abstracts.diff import DiffModel
 from coredb.abstracts.getter import get_db_model_name
 from coredb.abstracts.state import StateModel
-from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.utils.enums_utils import values_to_choices
+from traceml.artifacts import V1ArtifactKind
 
 
 class BaseArtifact(DiffModel, StateModel):

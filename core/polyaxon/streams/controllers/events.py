@@ -32,8 +32,8 @@ from polyaxon.fs.async_manager import (
 )
 from polyaxon.fs.types import FSSystem
 from polyaxon.logger import logger
-from polyaxon.polyboard.artifacts import V1ArtifactKind
-from polyaxon.polyboard.events import V1Events, get_event_path, get_resource_path
+from traceml.artifacts import V1ArtifactKind
+from traceml.events import V1Events, get_event_path, get_resource_path
 
 
 async def get_events_files(fs: FSSystem, run_uuid: str, event_kind: str) -> List[str]:

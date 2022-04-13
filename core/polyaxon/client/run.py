@@ -61,8 +61,6 @@ from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
 from polyaxon.logger import logger
 from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.polyaxonfile import check_polyaxonfile
-from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
-from polyaxon.polyboard.events import V1Events
 from polyaxon.polyflow import V1Matrix, V1Operation, V1RunKind
 from polyaxon.schemas.types import V1ArtifactsType
 from polyaxon.stores.polyaxon_store import PolyaxonStore
@@ -85,6 +83,8 @@ from polyaxon.utils.tz_utils import now
 from polyaxon.utils.urls_utils import get_proxy_run_url
 from polyaxon.utils.validation import validate_tags
 from polyaxon_sdk.rest import ApiException
+from traceml.artifacts import V1ArtifactKind, V1RunArtifact
+from traceml.events import V1Events
 from traceml.logging.streamer import get_logs_streamer
 
 
@@ -852,33 +852,6 @@ class RunClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
-    def get_events(
-        self,
-        kind: V1ArtifactKind,
-        names: List[str],
-        orient: str = None,
-        force: bool = False,
-    ):
-        """Gets the run's events
-
-        Args:
-            kind: str, a valid `V1ArtifactKind`.
-            names: List[str], list of events to return.
-            orient: str, csv or dict.
-            force: bool, force reload the events.
-        """
-        return self.client.runs_v1.get_run_events(
-            self.namespace,
-            self.owner,
-            self.project,
-            self.run_uuid,
-            kind=kind,
-            names=names,
-            orient=orient,
-            force=force,
-        )
-
-    @client_handler(check_no_op=True, check_offline=True)
     def inspect(self):
         return self.client.runs_v1.inspect_run(
             self.namespace, self.owner, self.project, self.run_uuid
@@ -980,17 +953,30 @@ class RunClient:
         )
 
     @client_handler(check_no_op=True, check_offline=True)
-    def get_multi_run_events(
+    def get_events(
         self,
         kind: V1ArtifactKind,
-        runs: List[str],
         names: List[str],
         orient: str = None,
         force: bool = False,
     ):
-        logger.warning("This method is deprecated in favor of `get_multi_run_events`")
-        return self.get_multi_run_events(
-            kind=kind, runs=runs, names=names, orient=orient, force=force
+        """Gets the run's events
+
+        Args:
+            kind: str, a valid `V1ArtifactKind`.
+            names: List[str], list of events to return.
+            orient: str, csv or dict.
+            force: bool, force reload the events.
+        """
+        return self.client.runs_v1.get_run_events(
+            self.namespace,
+            self.owner,
+            self.project,
+            self.run_uuid,
+            kind=kind,
+            names=names,
+            orient=orient,
+            force=force,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1002,7 +988,7 @@ class RunClient:
         orient: str = None,
         force: bool = False,
     ):
-        """Gets multi-run events.
+        """Gets events for multiple runs.
 
         Args:
             kind: str, a valid `V1ArtifactKind`.
@@ -1010,6 +996,8 @@ class RunClient:
             names: List[str], list of events to return.
             orient: str, csv or dict.
             force: bool, force reload the events.
+        Returns:
+            V1EventsResponse
         """
         return self.client.runs_v1.get_multi_run_events(
             self.namespace,
@@ -1020,6 +1008,60 @@ class RunClient:
             runs=runs,
             orient=orient,
             force=force,
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_artifacts_lineage(
+        self, query: str = None, sort: str = None, limit: int = None, offset: int = None
+    ):
+        """Gets the run's artifacts lineage.
+
+        [Run API](/docs/api/#operation/GetRunArtifactsLineage)
+
+        Args:
+            query: str, optional, query filters, please refer to
+                 [Run PQL](/docs/core/query-language/artifacts-lineage/#query)
+            sort: str, optional, fields to order by, please refer to
+                 [Run PQL](/docs/core/query-language/artifacts-lineage/#sort)
+            limit: int, optional, limit of runs to return.
+            offset: int, optional, offset pages to paginate runs.
+
+        Returns:
+            V1ListRunArtifactsResponse.
+        """
+        params = get_query_params(
+            limit=limit or 20, offset=offset, query=query, sort=sort
+        )
+        return self.client.runs_v1.get_run_artifacts_lineage(
+            self.owner, self.project, self.run_uuid, **params
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_runs_artifacts_lineage(
+        self, query: str = None, sort: str = None, limit: int = None, offset: int = None
+    ):
+        """Gets the artifacts lineage for runs under project based on query.
+
+        [Run API](/docs/api/#operation/GetRunsArtifactsLineage)
+
+        **Available in v1.18**
+
+        Args:
+            query: str, optional, query filters, please refer to
+                 [Run PQL](/docs/core/query-language/artifacts-lineage/#query)
+            sort: str, optional, fields to order by, please refer to
+                 [Run PQL](/docs/core/query-language/artifacts-lineage/#sort)
+            limit: int, optional, limit of runs to return.
+            offset: int, optional, offset pages to paginate runs.
+
+        Returns:
+            V1ListRunArtifactsResponse.
+        """
+        params = get_query_params(
+            limit=limit or 20, offset=offset, query=query, sort=sort
+        )
+        return self.client.runs_v1.get_runs_artifacts_lineage(
+            self.owner, self.project, **params
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1778,32 +1820,6 @@ class RunClient:
         if (value - current_value < 0.025 and value < 1) and self._throttle_updates():
             return
         self.log_meta(progress=value)
-
-    @client_handler(check_no_op=True, check_offline=True)
-    def get_artifacts_lineage(
-        self, query: str = None, sort: str = None, limit: int = None, offset: int = None
-    ):
-        """Gets the run's artifacts lineage.
-
-        [Run API](/docs/api/#operation/GetRunArtifactsLineage)
-
-        Args:
-            query: str, optional, query filters, please refer to
-                 [Run PQL](/docs/core/query-language/artifacts-lineage/#query)
-            sort: str, optional, fields to order by, please refer to
-                 [Run PQL](/docs/core/query-language/artifacts-lineage/#sort)
-            limit: int, optional, limit of runs to return.
-            offset: int, optional, offset pages to paginate runs.
-
-        Returns:
-            V1RunArtifacts.
-        """
-        params = get_query_params(
-            limit=limit or 20, offset=offset, query=query, sort=sort
-        )
-        return self.client.runs_v1.get_run_artifacts_lineage(
-            self.owner, self.project, self.run_uuid, **params
-        )
 
     @client_handler(check_no_op=True)
     def log_code_ref(self, code_ref: Dict = None, is_input: bool = True):

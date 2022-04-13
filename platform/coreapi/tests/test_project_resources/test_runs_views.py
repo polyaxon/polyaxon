@@ -39,10 +39,10 @@ from coredb.models.runs import Run
 from polyaxon.api import API_V1
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.parser import parser
-from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1CloningKind, V1RunKind
 from polyaxon.schemas import V1RunPending
 from tests.base.case import BaseTest
+from traceml.artifacts import V1ArtifactKind
 
 
 @pytest.mark.projects_resources_mark

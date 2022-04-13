@@ -21,7 +21,7 @@ from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
 from coredb.managers.artifacts import set_artifacts
 from coredb.models.artifacts import Artifact
-from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
+from traceml.artifacts import V1ArtifactKind, V1RunArtifact
 
 
 class TestArtifacts(TestCase):

@@ -30,8 +30,8 @@ from polyaxon.fs.async_manager import (
     upload_data,
 )
 from polyaxon.fs.types import FSSystem
-from polyaxon.polyboard.logging import V1Log, V1Logs
 from polyaxon.utils.path_utils import delete_path
+from traceml.logging import V1Log, V1Logs
 
 
 async def clean_tmp_logs(fs: FSSystem, run_uuid: str):

@@ -41,7 +41,7 @@
       link: /docs/intro/scaling/hyperparameter-tuning/
     - title: Mapping
       link: /docs/intro/scaling/mapping/
-  - group: Querying Metadata and Artifacts
+  - group: Querying Metadata & Artifacts
     items:
     - title: Introduction
       link: /docs/intro/query-metadata-artifacts/

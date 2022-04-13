@@ -17,9 +17,9 @@
 from typing import Any, Iterable, Union
 
 from polyaxon import live_state
-from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.list_utils import to_list
+from traceml.artifacts import V1ArtifactKind
 
 
 def archived_condition(

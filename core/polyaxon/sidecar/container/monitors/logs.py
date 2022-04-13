@@ -23,9 +23,9 @@ from kubernetes_asyncio.client.models import V1Pod
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.logging.async_monitor import query_k8s_pod_logs
-from polyaxon.polyboard.logging import V1Logs
 from polyaxon.types import AwareDT
 from polyaxon.utils.path_utils import check_or_create_path, delete_path
+from traceml.logging import V1Logs
 
 
 async def sync_logs(

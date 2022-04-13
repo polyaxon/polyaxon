@@ -20,9 +20,9 @@ from kubernetes_asyncio.client.models import V1Pod
 from kubernetes_asyncio.client.rest import ApiException
 
 from polyaxon.k8s.async_manager import AsyncK8SManager
-from polyaxon.polyboard.logging import V1Log, V1Logs
 from polyaxon.types import AwareDT
 from polyaxon.utils.tz_utils import now
+from traceml.logging import V1Log, V1Logs
 
 
 async def handle_container_logs(

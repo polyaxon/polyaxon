@@ -38,8 +38,6 @@ from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
 from polyaxon.lifecycle import V1StatusCondition
 from polyaxon.logger import logger
-from polyaxon.polyboard.artifacts import V1ArtifactKind
-from polyaxon.polyboard.events import V1Events
 from polyaxon.streams.app.fs import AppFS
 from polyaxon.streams.controllers.events import (
     get_archived_operation_events,
@@ -63,6 +61,8 @@ from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.fqn_utils import get_resource_name, get_resource_name_for_kind
 from polyaxon.utils.serialization import datetime_serialize
+from traceml.artifacts import V1ArtifactKind
+from traceml.events import V1Events
 
 
 class UJSONResponse(JSONResponse):

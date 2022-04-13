@@ -34,9 +34,9 @@ from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.models.artifacts import Artifact, ArtifactLineage
 from polyaxon.api import API_V1
-from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
+from traceml.artifacts import V1ArtifactKind, V1RunArtifact
 
 
 @pytest.mark.lineages_mark

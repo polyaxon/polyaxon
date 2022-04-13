@@ -36,9 +36,9 @@ from polyaxon.exceptions import (
     PolypodException,
 )
 from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
-from polyaxon.polyboard.artifacts import V1RunArtifact
 from polycommon import conf
 from polycommon.options.registry.k8s import K8S_IN_CLUSTER, K8S_NAMESPACE
+from traceml.artifacts import V1RunArtifact
 
 _logger = logging.getLogger("polyaxon.scheduler")
 

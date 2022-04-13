@@ -16,10 +16,10 @@
 
 from typing import Dict, List
 
-from polyaxon.polyboard.artifacts import V1RunArtifact
 from polyaxon.polyflow import ParamSpec, V1CompiledOperation
 from polyaxon.polypod.compiler.lineage.io_collector import collect_io_artifacts
 from polyaxon.schemas.types import V1ConnectionType
+from traceml.artifacts import V1RunArtifact
 
 
 def resolve_artifacts_lineage(

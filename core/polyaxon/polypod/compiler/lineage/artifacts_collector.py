@@ -17,8 +17,8 @@ import os
 
 from typing import Optional
 
-from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.utils.fqn_utils import to_fqn_name
+from traceml.artifacts import V1ArtifactKind, V1RunArtifact
 
 
 def collect_lineage_artifacts_path(artifact_path: str) -> Optional[V1RunArtifact]:

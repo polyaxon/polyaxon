@@ -18,10 +18,10 @@ from marshmallow import fields, validate
 
 import polyaxon_sdk
 
-from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.types.base import BaseTypeConfig
+from traceml.artifacts import V1ArtifactKind
 
 
 class FileTypeSchema(BaseCamelSchema):

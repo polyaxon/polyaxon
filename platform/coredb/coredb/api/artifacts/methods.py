@@ -19,8 +19,8 @@ from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from polyaxon.polyboard.artifacts import V1RunArtifact
 from polyaxon.utils.list_utils import to_list
+from traceml.artifacts import V1RunArtifact
 
 
 def create(view, request, *args, **kwargs):

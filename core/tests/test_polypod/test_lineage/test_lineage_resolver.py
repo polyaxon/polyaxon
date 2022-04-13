@@ -30,13 +30,13 @@ from polyaxon.connections.schemas import (
 )
 from polyaxon.managers.agent import AgentConfigManager
 from polyaxon.polyaxonfile.specs import kinds
-from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.lineage.io_collector import collect_io_artifacts
 from polyaxon.polypod.compiler.resolver import BaseResolver
 from polyaxon.schemas.cli.agent_config import AgentConfig
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 from polyaxon.utils.test_utils import BaseTestCase
+from traceml.artifacts import V1ArtifactKind
 
 
 @pytest.mark.polypod_mark

@@ -31,7 +31,7 @@ sidebar: "releases"
  * **New**: Add promote method to a model version or artifact version directly from the `RunClient`:
    * `RunClient.promote_to_model_version` this is similar to `ProjectClient.register_model_version` but directly from the run client instance.
    * `RunClient.promote_to_artifact_version` this is similar to `ProjectClient.register_artifact_version` but directly from the run client instance.
- * **New**: Add `get_artifacts_lineage` to `ProjetClient` to allow listing artifacts lineage information from multiple runs under the same project.
+ * **New**: Add `get_runs_artifacts_lineage` to `RunClient` to allow listing artifacts lineage information from multiple runs under the same project based on a query specification.
  * **New**: Add new `OrganizationClient`, this client will only be accessible to users with enough permissions or it will raise 401/403 errors:
     * Allows listing and interacting with agents.
     * Allows listing and interacting with connections.

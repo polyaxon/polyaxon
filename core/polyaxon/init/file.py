@@ -18,7 +18,7 @@ import os
 from typing import Dict
 
 from polyaxon.client.init import get_client_or_raise
-from polyaxon.polyboard.artifacts import V1ArtifactKind
+from traceml.artifacts import V1ArtifactKind
 
 
 def create_file_lineage(filepath: str, summary: Dict, kind: str):

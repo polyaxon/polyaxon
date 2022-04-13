@@ -13,27 +13,5 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 
-from typing import Dict
-
-from polyaxon.client.init import get_client_or_raise
-from traceml.artifacts import V1ArtifactKind
-
-
-def create_dockerfile_lineage(dockerfile_path: str, summary: Dict):
-    if not dockerfile_path:
-        return
-    filename = os.path.basename(dockerfile_path)
-
-    run_client = get_client_or_raise()
-    if not run_client:
-        return
-
-    run_client.log_artifact_ref(
-        path=dockerfile_path,
-        kind=V1ArtifactKind.DOCKERFILE,
-        name=filename,
-        summary=summary,
-        is_input=True,
-    )
+# To keep backwards compatibility

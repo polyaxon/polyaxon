@@ -26,7 +26,7 @@ from django.db.models import Q
 from coredb.abstracts.getter import get_artifact_model, get_lineage_model
 from coredb.abstracts.runs import BaseRun
 from coredb.models.projects import Owner
-from polyaxon.polyboard.artifacts import V1RunArtifact
+from traceml.artifacts import V1RunArtifact
 
 
 def get_artifacts_by_keys(
