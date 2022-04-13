@@ -25,7 +25,7 @@ from coredb.factories.artifacts import ArtifactFactory
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.models.artifacts import Artifact, ArtifactLineage
-from tests.test_api.base import PolyaxonBaseTestSerializer
+from polycommon.test_cases.base import PolyaxonBaseTestSerializer
 
 
 @pytest.mark.serializers_mark
