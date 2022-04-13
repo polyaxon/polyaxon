@@ -28,7 +28,7 @@ artifacts = lineage_model.objects.prefetch_related("artifact").only(
     "artifact__kind",
     "artifact__path",
     "artifact__summary",
-)
+).distinct()
 
 project_runs_artifacts = (
     lineage_model.objects.prefetch_related("artifact", "run")
@@ -37,6 +37,8 @@ project_runs_artifacts = (
         "artifact__id",
         "artifact__name",
         "artifact__kind",
+        "artifact__path",
+        "artifact__summary",
         "run__id",
         "run__uuid",
     )
@@ -50,6 +52,8 @@ project_runs_artifacts_distinct = (
         "artifact__id",
         "artifact__name",
         "artifact__kind",
+        "artifact__path",
+        "artifact__summary",
     )
     .distinct(
         "is_input",
