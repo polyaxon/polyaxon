@@ -528,7 +528,7 @@ class Run(RunClient):
         Args:
             step: int, optional
             timestamp: datetime, optional
-            **metrics: **kwargs, key=value
+            metrics: kwargs, key=value
         """
         self._log_has_metrics()
 

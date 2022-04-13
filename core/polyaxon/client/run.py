@@ -688,7 +688,7 @@ class RunClient:
         """Logs a new run status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call this method manually.
+        <strong>Note</strong>: If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
 
@@ -1044,7 +1044,7 @@ class RunClient:
 
         [Run API](/docs/api/#operation/GetRunsArtifactsLineage)
 
-        **Available in v1.18**
+        **Available from v1.18**
 
         Args:
             query: str, optional, query filters, please refer to
@@ -1638,7 +1638,7 @@ class RunClient:
         """Sets the current run to `running` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call this method manually.
+        <strong>Note</strong>: If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
@@ -1653,7 +1653,7 @@ class RunClient:
         """Sets the current run to `status` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call this method manually.
+        <strong>Note</strong>: If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
 
@@ -1674,7 +1674,8 @@ class RunClient:
         """Sets the current run to `succeeded` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call this method manually.
+        <strong>Note</strong>: If you are executing a managed run,
+        you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
@@ -1685,7 +1686,8 @@ class RunClient:
         """Sets the current run to `stopped` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call this method manually.
+        <strong>Note</strong>: If you are executing a managed run,
+        you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
@@ -1696,7 +1698,7 @@ class RunClient:
         """Sets the current run to `failed` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call this method manually.
+        <strong>Note</strong>: If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
 
@@ -2266,7 +2268,7 @@ class RunClient:
         directly from the run client instance,
         allows to create or Update a model version based on the current run.
 
-        **Available in v1.18**
+        **Available from v1.18**
 
         Args:
             version: str, optional, the version name/tag.
@@ -2309,7 +2311,7 @@ class RunClient:
         directly from the run client instance,
         allows to create or Update an artifact version based on the current run.
 
-        **Available in v1.18**
+        **Available from v1.18**
 
         Args:
             version: str, optional, the version name/tag.
