@@ -58,7 +58,7 @@ class RunArtifactListView(RunResourceListEndpoint, ListEndpoint, CreateEndpoint)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["run"] = self.run_uuid
+        context["run"] = self.run
         return context
 
 
@@ -74,5 +74,5 @@ class RunArtifactDetailView(RunArtifactEndpoint, RetrieveEndpoint, DestroyEndpoi
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["run"] = self.run_uuid
+        context["run"] = self.run_artifact.run
         return context

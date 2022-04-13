@@ -39,6 +39,7 @@ class RunArtifactSerializer(RunArtifactLightSerializer):
     path = fields.SerializerMethodField()
     summary = fields.SerializerMethodField()
     run = fields.SerializerMethodField()
+    meta_info = fields.SerializerMethodField()
 
     class Meta(RunArtifactLightSerializer.Meta):
         fields = RunArtifactLightSerializer.Meta.fields + (
@@ -46,6 +47,7 @@ class RunArtifactSerializer(RunArtifactLightSerializer):
             "summary",
             "state",
             "run",
+            "meta_info",
         )
 
     def get_state(self, obj):
@@ -61,7 +63,18 @@ class RunArtifactSerializer(RunArtifactLightSerializer):
         return obj.artifact.summary
 
     def get_run(self, obj):
-        return self.context.get("run", obj.run.uuid.hex)
+        run = self.context.get("run")
+        if not run:
+            run = obj.run
+        if run:
+            return run.uuid.hex
+
+    def get_meta_info(self, obj):
+        run = self.context.get("run")
+        if not run:
+            run = obj.run
+        if run:
+            return {"run": {"name": run.name, "uuid": run.uuid.hex}}
 
 
 class RunArtifactNameSerializer(serializers.ModelSerializer):

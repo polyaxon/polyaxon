@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from coredb.queries import artifacts as artifacts_queries
 from coredb.api.artifacts.serializers import (
     RunArtifactLightSerializer,
     RunArtifactSerializer,
@@ -26,6 +25,7 @@ from coredb.api.project_resources.serializers import (
     RunSerializer,
 )
 from coredb.models.runs import Run
+from coredb.queries import artifacts as artifacts_queries
 from coredb.queries.runs import DEFAULT_COLUMNS_DEFER
 from coredb.query_managers.artifact import ArtifactQueryManager
 from coredb.query_managers.run import RunQueryManager

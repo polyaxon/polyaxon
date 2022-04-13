@@ -34,7 +34,16 @@ class TestArtifactSerializer(PolyaxonBaseTestSerializer):
     factory_class = ArtifactFactory
     model_class = Artifact
     serializer_class = RunArtifactSerializer
-    expected_keys = {"name", "kind", "path", "summary", "state", "is_input", "run"}
+    expected_keys = {
+        "name",
+        "kind",
+        "path",
+        "summary",
+        "state",
+        "is_input",
+        "run",
+        "meta_info",
+    }
 
     def setUp(self):
         super().setUp()
@@ -64,6 +73,9 @@ class TestArtifactSerializer(PolyaxonBaseTestSerializer):
         assert data.pop("state") == obj1.artifact.state.hex
         assert data.pop("run") == obj1.run.uuid.hex
         assert data.pop("kind") == obj1.artifact.kind
+        assert data.pop("meta_info") == {
+            "run": {"uuid": obj1.run.uuid.hex, "name": obj1.run.name}
+        }
         for k, v in data.items():
             assert getattr(obj1, k) == v
 

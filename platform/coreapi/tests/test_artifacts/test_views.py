@@ -24,7 +24,6 @@ from rest_framework import status
 
 from django.db import IntegrityError
 
-from coredb.queries import artifacts as artifacts_queries
 from coredb.api.artifacts.serializers import (
     RunArtifactNameSerializer,
     RunArtifactSerializer,
@@ -33,6 +32,7 @@ from coredb.factories.artifacts import ArtifactFactory
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.models.artifacts import Artifact, ArtifactLineage
+from coredb.queries import artifacts as artifacts_queries
 from polyaxon.api import API_V1
 from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest

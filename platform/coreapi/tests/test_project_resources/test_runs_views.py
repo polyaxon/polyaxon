@@ -21,7 +21,6 @@ from unittest.mock import patch
 
 from rest_framework import status
 
-from coredb.queries.artifacts import project_runs_artifacts
 from coredb.api.artifacts.serializers import (
     RunArtifactLightSerializer,
     RunArtifactSerializer,
@@ -36,6 +35,7 @@ from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.models.artifacts import Artifact, ArtifactLineage
 from coredb.models.runs import Run
+from coredb.queries.artifacts import project_runs_artifacts
 from polyaxon.api import API_V1
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.parser import parser

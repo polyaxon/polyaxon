@@ -21,14 +21,18 @@ lineage_model = get_lineage_model()
 artifacts_names = lineage_model.objects.prefetch_related("artifact").only(
     "artifact__id", "artifact__name"
 )
-artifacts = lineage_model.objects.prefetch_related("artifact").only(
-    "is_input",
-    "artifact__id",
-    "artifact__name",
-    "artifact__kind",
-    "artifact__path",
-    "artifact__summary",
-).distinct()
+artifacts = (
+    lineage_model.objects.prefetch_related("artifact")
+    .only(
+        "is_input",
+        "artifact__id",
+        "artifact__name",
+        "artifact__kind",
+        "artifact__path",
+        "artifact__summary",
+    )
+    .distinct()
+)
 
 project_runs_artifacts = (
     lineage_model.objects.prefetch_related("artifact", "run")
