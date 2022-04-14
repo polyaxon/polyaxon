@@ -30,6 +30,7 @@ artifacts = (
         "artifact__name",
         "artifact__kind",
         "artifact__path",
+        "artifact__state",
         "artifact__summary",
     )
     .distinct()
@@ -43,9 +44,11 @@ project_runs_artifacts = (
         "artifact__name",
         "artifact__kind",
         "artifact__path",
+        "artifact__state",
         "artifact__summary",
         "run__id",
         "run__uuid",
+        "run__name",
     )
     .distinct()
 )

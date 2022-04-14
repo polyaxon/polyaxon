@@ -106,6 +106,10 @@ sidebar: "releases"
 
 ## Short Term Roadmap
 
+### CE
+
+ * **New**: Add support for agent based deployment.
+
 ### Sandbox
 
  * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
