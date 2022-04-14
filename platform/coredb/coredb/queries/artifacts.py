@@ -21,6 +21,7 @@ lineage_model = get_lineage_model()
 artifacts_names = lineage_model.objects.prefetch_related("artifact").only(
     "artifact__id", "artifact__name"
 )
+
 artifacts = (
     lineage_model.objects.prefetch_related("artifact")
     .only(
