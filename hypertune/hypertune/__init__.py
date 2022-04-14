@@ -1,4 +1,4 @@
- #!/usr/bin/python
+#!/usr/bin/python
 #
 # Copyright 2018-2022 Polyaxon, Inc.
 #

@@ -9,7 +9,7 @@
             <stop offset="0%"
                   style="stop-color: #29441F; stop-opacity: 1;"></stop>
             <stop offset="100%"
-                  style="stop-color: #1f2b44; stop-opacity: 1;"></stop>
+                  style="stop-color: #1f2f50; stop-opacity: 1;"></stop>
         </linearGradient>
     </defs>
     <g stroke="none" fill="url(#30190931-855e-4ddd-b807-9cb2a01de649)"
