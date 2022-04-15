@@ -1,8 +1,8 @@
 ---
-title: "Using CLI"
+title: "Using the CLI"
 sub_link: "query-metadata-artifacts/using-cli"
-meta_title: "Introduction to Querying Metadata and Artifacts Using CLI - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Introduction to Querying Metadata and Artifacts Using CLI - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+meta_title: "Introduction to Querying Metadata and Artifacts Using the CLI - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Introduction to Querying Metadata and Artifacts Using the CLI - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:

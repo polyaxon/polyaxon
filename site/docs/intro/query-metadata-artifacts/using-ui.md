@@ -1,8 +1,8 @@
 ---
-title: "Using UI"
+title: "Using the UI"
 sub_link: "query-metadata-artifacts/using-ui"
-meta_title: "Introduction to Querying Metadata and Artifacts Using Polyaxon UI - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Introduction to Querying Metadata and Artifacts Using Polyaxon UI - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+meta_title: "Introduction to Querying Metadata and Artifacts Using Polyaxon the UI - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Introduction to Querying Metadata and Artifacts Using Polyaxon the UI - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:

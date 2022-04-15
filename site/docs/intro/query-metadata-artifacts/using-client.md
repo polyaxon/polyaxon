@@ -1,8 +1,8 @@
 ---
-title: "Using Client"
+title: "Using the Client"
 sub_link: "query-metadata-artifacts/using-client"
-meta_title: "Introduction to Querying Metadata and Artifacts Using Polyaxon Client - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Introduction to Querying Metadata and Artifacts Using Polyaxon Client - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+meta_title: "Introduction to Querying Metadata and Artifacts Using Polyaxon the Client - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Introduction to Querying Metadata and Artifacts Using Polyaxon the Client - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:
