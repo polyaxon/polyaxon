@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.=
+import re
 
 from kubernetes_asyncio import client, config
 from kubernetes_asyncio.client import Configuration
@@ -52,8 +53,17 @@ class AsyncK8SManager:
 
     @classmethod
     def get_config_auth(cls, k8s_config=None):
-        additional_headers = k8s_config.api_key or {}
-        return additional_headers.get("authorization", "").strip("bearer").strip()
+        api_key = k8s_config.api_key or {}
+        if api_key.get("authorization", ""):
+            api_key = api_key.get("authorization", "")
+        elif api_key.get("BearerToken", ""):
+            api_key = api_key.get("BearerToken", "")
+        elif api_key.get("Authorization", ""):
+            api_key = api_key.get("Authorization", "")
+        elif api_key.get("Token", ""):
+            api_key = api_key.get("Token", "")
+        api_pattern = re.compile("bearer", re.IGNORECASE)
+        return api_pattern.sub("", api_key).strip()
 
     async def setup(self, k8s_config=None):
         if not k8s_config:

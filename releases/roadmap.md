@@ -65,6 +65,7 @@ sidebar: "releases"
   
  * **New**: Add support for multi-connections:
    * Possibility to mount multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
+ * **Enhancement**: Improve k8s connections and handling.
 
 ### UI
 
@@ -103,6 +104,7 @@ sidebar: "releases"
  * **Enhancement**: Reduce member roles confusion:
    * Add a note to `admin` to emphasize that is a `Project admin`.
    * Add a note to `manager` to emphasize that is a `Organization admin`.
+ * **Enhancement**: Improve compilation process to better handle converting artifact lineage, model, and artifact versions references.
 
 ## Short Term Roadmap
 
