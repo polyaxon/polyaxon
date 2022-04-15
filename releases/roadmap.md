@@ -66,6 +66,7 @@ sidebar: "releases"
  * **New**: Add support for multi-connections:
    * Possibility to mount multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
  * **Enhancement**: Improve k8s connections and handling.
+ * **Enhancement**: Update fs backends.
 
 ### UI
 
