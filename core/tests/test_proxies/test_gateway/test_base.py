@@ -25,7 +25,7 @@ class TestGatewayBase(BaseTestCase):
     SET_PROXIES_SETTINGS = True
 
     def test_gateway_base_config(self):
-        expected = """
+        expected = r"""
 listen 8000;
 
 
@@ -222,7 +222,7 @@ location /static/ {
         assert get_base_config() == expected
 
     def test_gateway_base_config_with_auth_and_dns(self):
-        expected = """
+        expected = r"""
 listen 8000;
 
 
