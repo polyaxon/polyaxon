@@ -28,6 +28,6 @@ _timedelta_field = fields.TimeDelta()
 timedelta_deserialize = _timedelta_field.deserialize
 timedelta_serialize = _timedelta_field.serialize
 
-_uuid_field = fields.UUID(format="hex")
+_uuid_field = fields.UUID()
 uuid_deserialize = _uuid_field.deserialize
 uuid_serialize = _uuid_field.serialize

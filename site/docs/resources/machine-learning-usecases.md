@@ -1,6 +1,6 @@
 ---
 title: "Machine Learning Use cases"
-sub_link: "machine-learning-use-cases"
+sub_link: "machine-learning-usecases"
 meta_title: "Machine Learning Personas - Polyaxon enables everyone to leverage Machine Learning"
 meta_description: "Polyaxon enables everyone to leverage Machine Learning."
 visibility: public
