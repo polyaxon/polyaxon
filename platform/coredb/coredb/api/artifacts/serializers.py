@@ -34,20 +34,16 @@ class RunArtifactLightSerializer(serializers.ModelSerializer):
         return obj.artifact.kind
 
 
-class RunArtifactSerializer(RunArtifactLightSerializer):
+class RunArtifactBackwardCompatibleSerializer(RunArtifactLightSerializer):
     state = fields.SerializerMethodField()
     path = fields.SerializerMethodField()
     summary = fields.SerializerMethodField()
-    run = fields.SerializerMethodField()
-    meta_info = fields.SerializerMethodField()
 
     class Meta(RunArtifactLightSerializer.Meta):
         fields = RunArtifactLightSerializer.Meta.fields + (
             "path",
             "summary",
             "state",
-            "run",
-            "meta_info",
         )
 
     def get_state(self, obj):
@@ -61,6 +57,17 @@ class RunArtifactSerializer(RunArtifactLightSerializer):
 
     def get_summary(self, obj):
         return obj.artifact.summary
+
+
+class RunArtifactSerializer(RunArtifactBackwardCompatibleSerializer):
+    run = fields.SerializerMethodField()
+    meta_info = fields.SerializerMethodField()
+
+    class Meta(RunArtifactBackwardCompatibleSerializer.Meta):
+        fields = RunArtifactBackwardCompatibleSerializer.Meta.fields + (
+            "run",
+            "meta_info",
+        )
 
     def get_run(self, obj):
         run = self.context.get("run")
