@@ -53,13 +53,14 @@ def get_version_details(response, content_callback: Callable = None):
 
     if meta_info:
         artifacts = meta_info.pop("artifacts", None)
+        lineage = meta_info.pop("lineage", artifacts)
         if meta_info:
             Printer.print_header("Version meta info:")
             dict_tabulate(meta_info)
 
-        if artifacts:
-            Printer.print_header("Version artifacts:")
-            pprint(artifacts)
+        if lineage:
+            Printer.print_header("Version artifacts lineage:")
+            pprint(lineage)
 
     def get_content(content):
         if content:

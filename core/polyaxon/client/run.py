@@ -27,6 +27,7 @@ from urllib.parse import urlparse
 import click
 import ujson
 
+from marshmallow import EXCLUDE
 from urllib3.exceptions import HTTPError
 
 import polyaxon_sdk
@@ -1040,7 +1041,7 @@ class RunClient:
     def get_runs_artifacts_lineage(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ):
-        """Gets the artifacts lineage for runs under project based on query.
+        """Gets the artifacts lineage for multiple runs under project based on query.
 
         [Run API](/docs/api/#operation/GetRunsArtifactsLineage)
 
@@ -2537,7 +2538,10 @@ class RunClient:
             return run_client
         with open(lineages_path, "r") as config_file:
             config_str = config_file.read()
-            lineages = [V1RunArtifact(**l) for l in ujson.loads(config_str)]
+            lineages = [
+                V1RunArtifact.from_dict(l, unknown=EXCLUDE)
+                for l in ujson.loads(config_str)
+            ]
             run_client._artifacts_lineage = {l.name: l for l in lineages}
             logger.info(f"Offline lineage data loaded from: {lineages_path}")
 

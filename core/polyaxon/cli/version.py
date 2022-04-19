@@ -24,7 +24,7 @@ from polyaxon.deploy.operators.pip import PipOperator
 from polyaxon.logger import clean_outputs, logger
 from polyaxon.utils import indentation
 from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
-from polyaxon.utils.versions import clean_version_for_check
+from polyaxon.utils.versions import clean_version_for_check, compare_versions
 
 PROJECT_CLI_NAME = "polyaxon"
 
@@ -61,7 +61,6 @@ def get_current_version():
 
 def check_cli_version(config, is_cli: bool = True):
     """Check if the current cli version satisfies the server requirements"""
-    from distutils.version import LooseVersion  # pylint:disable=import-error
 
     min_version = clean_version_for_check(config.min_version)
     latest_version = clean_version_for_check(config.latest_version)
@@ -74,7 +73,7 @@ def check_cli_version(config, is_cli: bool = True):
             )
         else:
             return
-    if LooseVersion(current_version) < LooseVersion(min_version):
+    if compare_versions(current=current_version, reference=min_version, comparator="<"):
         click.echo(
             "Your version of Polyaxon CLI ({}) is no longer supported.".format(
                 config.current_version
@@ -94,7 +93,9 @@ def check_cli_version(config, is_cli: bool = True):
                 indentation.puts("pip install -U polyaxon")
 
             sys.exit(0)
-    elif LooseVersion(current_version) < LooseVersion(latest_version):
+    elif compare_versions(
+        current=current_version, reference=latest_version, comparator="<"
+    ):
         indentation.puts(
             "New version of Polyaxon CLI ({}) is now available. To upgrade run:".format(
                 config.latest_version
@@ -102,7 +103,9 @@ def check_cli_version(config, is_cli: bool = True):
         )
         with indentation.indent(4):
             indentation.puts("pip install -U polyaxon")
-    elif LooseVersion(current_version) > LooseVersion(latest_version):
+    elif compare_versions(
+        current=current_version, reference=latest_version, comparator=">"
+    ):
         indentation.puts(
             "Your version of CLI ({}) is ahead of the latest version "
             "supported by Polyaxon server ({}) on your cluster, "

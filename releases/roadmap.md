@@ -43,7 +43,7 @@ sidebar: "releases"
  * **Enhancement**: Update training operator to use the newest Kubeflow release.
 
 ### Query Language
- 
+
  * **New**: Allow filtering by connections:
     * By name `connections.name: CONNECTION1 | CONNECTION2`
     * By tag `connections.tags: TAG1 | TAG2`
@@ -62,7 +62,7 @@ sidebar: "releases"
  * **Enhancement**: Add support for new pytorch-lightning versions and fix issue with [log_hyperparams](https://github.com/PyTorchLightning/pytorch-lightning/commit/115a5d08e8b868109a424af213bd7f23537654f1).
 
 ### Streams
-  
+
  * **New**: Add support for multi-connections:
    * Possibility to mount multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
  * **Enhancement**: Improve k8s connections and handling.
@@ -78,8 +78,10 @@ sidebar: "releases"
  * **Enhancement**: Update the queues table with a link next to each queue to filter all runs by a specific queue.
  * **Enhancement**: Update the connections table with a link next to each connection to filter all runs by a specific connection.
  * **Enhancement**: Show artifact' state on the lineage tables.
- * **Enhancement**: Keep configuration of logs, artifacts, and dashboards tabs unchanged when changing tabs of the same run.  
+ * **Enhancement**: Keep configuration of logs, artifacts, and dashboards tabs unchanged when changing tabs of the same run.
+ * **Enhancement**: Improve queues usage to remove `.0` in the denominator.
  * **Fix**: Typo in tip for registering component/model/artifact versions.
+ * **Fix**: Regression in multi-run scatter plot.
 
 ### Hub
 
@@ -89,7 +91,7 @@ sidebar: "releases"
 ### Docs
 
  * **Enhancement**: Improve navigation and provide short-cuts.
- * **Enhancement**: Improve `ProjectClient` and `RunClient` reference docs. 
+ * **Enhancement**: Improve `ProjectClient` and `RunClient` reference docs.
  * **Enhancement**: Add new intro tutorial about registering components, models, and artifacts.
  * **Fix**: Edit links to point to the correct code files.
 
@@ -137,7 +139,7 @@ sidebar: "releases"
    * The decorator automatically detects `NO_OP` and becomes a pass-through.
  * **New**: Add `@op/@operation` decorator to allow invoking components programmatically.
    * The decorator automatically detects `NO_OP` and defaults to a local python function call.
- * **New**: Add support for Python type hints in the both the class and the decorator component declarations. 
+ * **New**: Add support for Python type hints in the both the class and the decorator component declarations.
  * **New**: Automatically detect if the filesystem should use the stream or the artifacts store directly.
 
 ### Specification

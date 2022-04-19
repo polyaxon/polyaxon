@@ -21,6 +21,8 @@ from typing import Dict, List, Union
 
 import ujson
 
+from marshmallow import EXCLUDE
+
 import polyaxon_sdk
 
 from polyaxon.client.client import PolyaxonClient
@@ -35,6 +37,7 @@ from polyaxon.utils.query_params import get_query_params
 from polyaxon.utils.tz_utils import now
 from polyaxon.utils.validation import validate_tags
 from polyaxon_sdk.rest import ApiException
+from traceml.artifacts import V1RunArtifact
 
 
 class ProjectClient:
@@ -1354,7 +1357,8 @@ class ProjectClient:
             return
 
         run_artifacts = [
-            polyaxon_sdk.V1RunArtifact(**a) for a in meta_info.get("artifacts", [])
+            V1RunArtifact.from_dict(a, unknown=EXCLUDE)
+            for a in meta_info.get("lineage", [])
         ]
         if not run_artifacts:
             logger.info(

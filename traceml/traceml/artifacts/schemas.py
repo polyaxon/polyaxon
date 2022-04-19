@@ -31,6 +31,8 @@ class RunArtifactSchema(BaseSchema):
     path = fields.Str(allow_none=True)
     state = fields.Str(allow_none=True)
     summary = fields.Dict(allow_none=True)
+    meta_info = fields.Dict(allow_none=True)
+    run = fields.Str(allow_none=True)
     connection = fields.Str(allow_none=True)
     is_input = fields.Bool(allow_none=True)
 
@@ -48,6 +50,8 @@ class V1RunArtifact(BaseConfig, polyaxon_sdk.V1RunArtifact):
         "path",
         "state",
         "summary",
+        "meta_info",
+        "run",
         "connection",
         "is_input",
     ]

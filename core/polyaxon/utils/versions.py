@@ -23,3 +23,31 @@ def clean_version_for_check(version: str):
     if not version:
         return version
     return ".".join(version.lstrip("v").replace("-", ".").split(".")[:3])
+
+
+def compare_versions(current: str, reference: str, comparator: str) -> bool:
+
+    from distutils.version import LooseVersion
+
+    current = LooseVersion(current)
+    reference = LooseVersion(reference)
+
+    if comparator == "=":
+        return current == reference
+
+    if comparator == "!=":
+        return current != reference
+
+    if comparator == "<":
+        return current < reference
+
+    if comparator == "<=":
+        return current <= reference
+
+    if comparator == ">":
+        return current > reference
+
+    if comparator == ">=":
+        return current >= reference
+
+    raise ValueError("Comparator `{}` is not supported.".format(comparator))
