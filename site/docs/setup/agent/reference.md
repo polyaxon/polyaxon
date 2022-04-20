@@ -291,6 +291,7 @@ proxy:
   kind: transparent or connect
 ```
 
+> **Note**: make sure that the in-cluster traffic, including access to the `streams` and `gateway` services is accessible by name `NAMESPACE-RELEASE-streams` and `NAMESPACE-RELEASE-gateway`, is specified in the `noProxy` field.
 
 ## Auth
 

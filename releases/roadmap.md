@@ -11,7 +11,6 @@ tags:
 sidebar: "releases"
 ---
 
-
 ## Next Release V1.18.0
 
 > **Note**: This minor version is WIP and not released yet.
@@ -97,11 +96,14 @@ sidebar: "releases"
 
 ### Deployment
 
- * **Security**: Fix security CVE issues.
+ * **Security**: Fix CVE issues.
 
 ### Commercial
 
+ * **New**: Project and organization info pages redesign.
  * **New**: Add support for readme on component/model/artifact versions.
+ * **New**: Add cross-projects artifact/component/model versions view similar to `All Runs`.
+ * **New**: Add a new tab to explore unregistered artifact/component/model versions under each project. 
  * **New**: Allow getting a connection's schema by name.
  * **Enhancement**: Improve operations in DAGs with pending approval and upstream failures.
  * **Enhancement**: Reduce member roles confusion:
