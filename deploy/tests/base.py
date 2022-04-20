@@ -24,7 +24,7 @@ from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1HostPathConnection
 from polyaxon.schemas.cli.agent_config import AgentConfig
 from polyaxon.schemas.types import V1ConnectionType
-from polyaxon.streams.app.main import app
+from polyaxon_deploy.app.main import app
 
 
 def set_store():

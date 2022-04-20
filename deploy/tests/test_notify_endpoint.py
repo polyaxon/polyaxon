@@ -23,13 +23,13 @@ from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1K8sResourceSchema
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.schemas.types import V1ConnectionType
-from polyaxon.streams.app.main import STREAMS_URL
+from polyaxon_deploy.app.main import STREAMS_URL
 from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon_sdk import V1StatusCondition
-from tests.test_streams.base import get_streams_client, set_store
+from tests.base import get_streams_client, set_store
 
 
-@pytest.mark.streams_mark
+@pytest.mark.notifies_mark
 class TestNotifyEndpoints(BaseTestCase):
     def setUp(self):
         super().setUp()

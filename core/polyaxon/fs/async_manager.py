@@ -19,8 +19,6 @@ from typing import Dict, List, Optional, Union
 
 import aiofiles
 
-from starlette.concurrency import run_in_threadpool
-
 from polyaxon import settings
 from polyaxon.fs.tar import tar_dir
 from polyaxon.fs.tar import tar_files as sync_tar_files
@@ -29,6 +27,7 @@ from polyaxon.logger import logger
 from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import check_or_create_path
+from polyaxon.utils.coroutine import run_sync
 
 
 async def ensure_async_execution(
@@ -37,7 +36,7 @@ async def ensure_async_execution(
     async_fct = "_{}".format(fct)
     if is_async and hasattr(fs, async_fct):
         return await getattr(fs, async_fct)(*args, **kwargs)
-    return await run_in_threadpool(getattr(fs, fct), *args, **kwargs)
+    return await run_sync(getattr(fs, fct), *args, **kwargs)
 
 
 async def upload_data(fs: FSSystem, subpath: str, data):
@@ -217,7 +216,7 @@ async def download_dir(
         if not os.path.exists(path_to):
             return None
         if to_tar:
-            return await run_in_threadpool(tar_dir, path_to)
+            return await run_sync(tar_dir, path_to)
         return path_to
     except Exception as e:
         logger.warning("Could not download %s. Error %s" % (path_from, e))
@@ -303,7 +302,7 @@ async def tar_files(filename: str, pkg_files: List[str], subpath: str = None) ->
     relative_to = (
         os.path.join(settings.CLIENT_CONFIG.archive_root, subpath) if subpath else None
     )
-    return await run_in_threadpool(
+    return await run_sync(
         sync_tar_files,
         filename,
         pkg_files,

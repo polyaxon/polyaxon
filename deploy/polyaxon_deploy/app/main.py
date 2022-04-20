@@ -26,8 +26,8 @@ from polyaxon import settings
 from polyaxon.api import STREAMS_V1
 from polyaxon.env_vars.keys import POLYAXON_KEYS_CUSTOM_ERRORS_OPTIONS
 from polyaxon.plugins.sentry import set_raven_client
-from polyaxon.streams.app import endpoints
-from polyaxon.streams.app.fs import AppFS
+from polyaxon_deploy.app import endpoints
+from polyaxon_deploy.app.fs import AppFS
 
 errors_options = os.environ.get(POLYAXON_KEYS_CUSTOM_ERRORS_OPTIONS)
 if errors_options:

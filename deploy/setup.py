@@ -41,21 +41,23 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
-with open(os.path.join("./hypertune/pkg.py"), encoding="utf8") as f:
+with open(os.path.join("./polyaxon_deploy/pkg.py"), encoding="utf8") as f:
     pkg = {}
     exec(f.read(), pkg)
 
 
+with open("requirements/requirements.txt") as requirements_file:
+    requirements = requirements_file.read().splitlines()
+
 with open("requirements/dev.txt") as requirements_file:
     dev_requirements = requirements_file.read().splitlines()
 
+with open("requirements/fs.txt") as requirements_file:
+    fs_requirements = requirements_file.read().splitlines()
+
 extra = {
-    "polyaxon": ["polyaxon"],
+    "fs": fs_requirements,
     "dev": dev_requirements,
-    "all": [
-        "scikit-learn",
-        "hyperopt",
-    ],
 }
 
 setup(
@@ -103,7 +105,7 @@ setup(
         "optimization",
         "bayesian-optimization",
     ],
-    install_requires=[],
+    install_requires=[requirements],
     extras_require=extra,
     python_requires=">=3.5",
     classifiers=[

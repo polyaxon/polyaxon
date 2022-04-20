@@ -38,25 +38,25 @@ from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
 from polyaxon.lifecycle import V1StatusCondition
 from polyaxon.logger import logger
-from polyaxon.streams.app.fs import AppFS
-from polyaxon.streams.controllers.events import (
+from polyaxon_deploy.app.fs import AppFS
+from polyaxon_deploy.controllers.events import (
     get_archived_operation_events,
     get_archived_operation_events_and_assets,
     get_archived_operation_resources,
     get_archived_operations_events,
 )
-from polyaxon.streams.controllers.k8s_check import k8s_check, reverse_k8s
-from polyaxon.streams.controllers.k8s_crd import get_k8s_operation
-from polyaxon.streams.controllers.k8s_pods import get_pods
-from polyaxon.streams.controllers.logs import (
+from polyaxon_deploy.controllers.k8s_check import k8s_check, reverse_k8s
+from polyaxon_deploy.controllers.k8s_crd import get_k8s_operation
+from polyaxon_deploy.controllers.k8s_pods import get_pods
+from polyaxon_deploy.controllers.logs import (
     get_archived_operation_logs,
     get_operation_logs,
     get_tmp_operation_logs,
 )
-from polyaxon.streams.controllers.notebooks import render_notebook
-from polyaxon.streams.controllers.uploads import handle_upload
-from polyaxon.streams.tasks.logs import clean_tmp_logs, upload_logs
-from polyaxon.streams.tasks.notification import notify_run
+from polyaxon_deploy.controllers.notebooks import render_notebook
+from polyaxon_deploy.controllers.uploads import handle_upload
+from polyaxon_deploy.tasks.logs import clean_tmp_logs, upload_logs
+from polyaxon_deploy.tasks.notification import notify_run
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.fqn_utils import get_resource_name, get_resource_name_for_kind

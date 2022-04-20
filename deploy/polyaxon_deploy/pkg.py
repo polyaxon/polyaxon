@@ -14,12 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from starlette.templating import Jinja2Templates
-
-templates = Jinja2Templates(directory="templates")
-
-
-def url_for(*args, **kwargs):
-    from polyaxon.streams.app.main import app
-
-    return app.url_path_for(*args, **kwargs)
+NAME = "polyaxon-deploy"
+VERSION = "1.0.0-rc0"
+SCHEMA_VERSION = 1.1
+DESC = "Polyaxon deployment and serving tools: streams, sandbox, ML-API, and spaces."
+URL = "https://github.com/polyaxon/polyaxon"
+AUTHOR = "Polyaxon, Inc."
+EMAIL = "contact@polyaxon.com"
+LICENSE = "Apache 2.0"

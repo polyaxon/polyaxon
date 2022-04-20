@@ -16,13 +16,13 @@
 import os
 import pytest
 
-from polyaxon.streams.app.main import STREAMS_URL
+from polyaxon_deploy.app.main import STREAMS_URL
 from polyaxon.utils.path_utils import create_path
 from polyaxon.utils.test_utils import BaseTestCase
-from tests.test_streams.base import create_tmp_files, get_streams_client, set_store
+from tests.base import create_tmp_files, get_streams_client, set_store
 
 
-@pytest.mark.streams_mark
+@pytest.mark.artifacts_mark
 class TestArtifactsTreeEndpoints(BaseTestCase):
     def setUp(self):
         super().setUp()

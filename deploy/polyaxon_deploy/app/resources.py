@@ -14,27 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Callable
+from starlette.templating import Jinja2Templates
 
-import asyncio
-
-from functools import wraps, partial
+templates = Jinja2Templates(directory="templates")
 
 
-def coroutine(f):
-    """https://github.com/pallets/click/issues/85#issuecomment-503464628"""
+def url_for(*args, **kwargs):
+    from polyaxon_deploy.app.main import app
 
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        return asyncio.run(f(*args, **kwargs))
-
-    return wrapper
-
-
-async def run_sync(func: Callable, *args, **kwargs):
-    import anyio
-
-    if kwargs:  # pragma: no cover
-        # run_sync doesn't accept 'kwargs', so bind them in here
-        func = partial(func, **kwargs)
-    return await anyio.to_thread.run_sync(func, *args)
+    return app.url_path_for(*args, **kwargs)
