@@ -16,10 +16,10 @@
 import os
 import pytest
 
-from polyaxon_deploy.app.main import STREAMS_URL
 from polyaxon.utils.path_utils import create_path
-from polyaxon.utils.test_utils import BaseTestCase
-from tests.base import create_tmp_files, get_streams_client, set_store
+from polyaxon.utils.test_utils import BaseTestCase, create_tmp_files, set_store
+from polyaxon_deploy.app.main import STREAMS_URL
+from tests.base import get_streams_client
 
 
 @pytest.mark.artifacts_mark

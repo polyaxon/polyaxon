@@ -15,6 +15,7 @@
 # limitations under the License.
 import numpy as np
 import os
+import tempfile
 
 from collections.abc import Mapping
 from unittest import TestCase, mock
@@ -22,11 +23,14 @@ from unittest import TestCase, mock
 import ujson
 
 from polyaxon import settings
+from polyaxon.connections.kinds import V1ConnectionKind
+from polyaxon.connections.schemas import V1HostPathConnection
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 from polyaxon.schemas.cli.agent_config import AgentConfig
 from polyaxon.schemas.cli.cli_config import CliConfig
 from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon.schemas.cli.proxies_config import ProxiesConfig
+from polyaxon.schemas.types import V1ConnectionType
 
 
 def assert_equal_dict(dict1, dict2):
@@ -164,3 +168,23 @@ def tensor_np(shape, dtype=float):
 class AsyncMock(mock.MagicMock):
     async def __call__(self, *args, **kwargs):
         return super(AsyncMock, self).__call__(*args, **kwargs)
+
+
+def set_store():
+    store_root = tempfile.mkdtemp()
+    settings.AGENT_CONFIG = AgentConfig(
+        artifacts_store=V1ConnectionType(
+            name="test",
+            kind=V1ConnectionKind.HOST_PATH,
+            schema=V1HostPathConnection(host_path=store_root, mount_path=store_root),
+            secret=None,
+        ),
+        connections=[],
+    )
+    settings.CLIENT_CONFIG.archive_root = tempfile.mkdtemp()
+    return store_root
+
+
+def create_tmp_files(path):
+    for i in range(4):
+        open("{}/{}".format(path, i), "+w")

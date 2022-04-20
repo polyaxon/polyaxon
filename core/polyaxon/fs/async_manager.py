@@ -24,10 +24,10 @@ from polyaxon.fs.tar import tar_dir
 from polyaxon.fs.tar import tar_files as sync_tar_files
 from polyaxon.fs.types import FSSystem
 from polyaxon.logger import logger
+from polyaxon.utils.coroutine import run_sync
 from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import check_or_create_path
-from polyaxon.utils.coroutine import run_sync
 
 
 async def ensure_async_execution(

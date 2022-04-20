@@ -19,9 +19,9 @@ import pytest
 import shutil
 
 from polyaxon import settings
-from polyaxon_deploy.app.main import STREAMS_URL
 from polyaxon.utils.path_utils import create_path
 from polyaxon.utils.test_utils import BaseTestCase
+from polyaxon_deploy.app.main import STREAMS_URL
 from tests.base import get_streams_client, set_store
 from traceml.artifacts import V1ArtifactKind
 from traceml.events import LoggedEventListSpec, V1Event, V1Events
