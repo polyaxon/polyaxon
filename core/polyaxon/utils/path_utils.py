@@ -299,6 +299,7 @@ def copy_file_or_dir_path(from_path: str, asset_path: str, use_basename: bool = 
 
     return asset_path
 
+
 def get_relative_path_to(base_path, paths: List[str]) -> List[str]:
     results = []
     if not paths:

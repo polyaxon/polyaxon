@@ -1362,7 +1362,7 @@ class Run(RunClient):
             self._add_event(logged_event)
         else:
             asset_path = self.get_outputs_path(rel_path, is_dir=True)
-            copy_file_or_dir_path(path, asset_path, True)
+            asset_path = copy_file_or_dir_path(path, asset_path, True)
             asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
             self.log_model_ref(
                 path=asset_path,
@@ -1446,7 +1446,7 @@ class Run(RunClient):
             self._add_event(logged_event)
         else:
             asset_path = self.get_outputs_path(rel_path, is_dir=True)
-            copy_file_or_dir_path(path, asset_path, True)
+            asset_path = copy_file_or_dir_path(path, asset_path, True)
             asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
             self.log_artifact_ref(
                 path=asset_path,
