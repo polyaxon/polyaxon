@@ -13,13 +13,3 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-
-from starlette.testclient import TestClient
-
-from polyaxon_deploy.apps.streams import app
-
-
-def get_streams_client():
-    with TestClient(app) as client:
-        return client

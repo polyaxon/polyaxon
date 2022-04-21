@@ -13,13 +13,3 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from starlette.templating import Jinja2Templates
-
-templates = Jinja2Templates(directory="templates")
-
-
-def url_for(*args, **kwargs):
-    from polyaxon_deploy.app.main import app
-
-    return app.url_path_for(*args, **kwargs)

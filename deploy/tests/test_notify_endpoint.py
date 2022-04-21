@@ -24,7 +24,7 @@ from polyaxon.connections.schemas import V1K8sResourceSchema
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.test_utils import BaseTestCase, set_store
-from polyaxon_deploy.app.main import STREAMS_URL
+from polyaxon_deploy.endpoints.base import STREAMS_URL
 from polyaxon_sdk import V1StatusCondition
 from tests.base import get_streams_client
 
