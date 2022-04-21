@@ -278,6 +278,12 @@ class ClientConfig(BaseConfig):
             config.api_key_prefix["ApiKey"] = self.authentication_type
         return config
 
+    @property
+    def sdk_async_config(self):
+        config = self.sdk_config
+        config.connection_pool_maxsize = 100
+        return config
+
     @staticmethod
     def _get_bool(value, default_value):
         if isinstance(value, bool):

@@ -58,6 +58,7 @@ with open("requirements/dev.txt") as requirements_file:
 
 extra = {
     "dev": dev_requirements,
+    "async": ["aiohttp >= 3.0.0"],
     "gcs": ["gcsfs"],
     "s3": ["s3fs"],
     "azure": ["adlfs"],
