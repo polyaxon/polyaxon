@@ -10,3 +10,4 @@ moto==2.0.5
 
 kubernetes_asyncio==22.6.4
 aiofiles==0.8.0
+starlette==0.18.0
