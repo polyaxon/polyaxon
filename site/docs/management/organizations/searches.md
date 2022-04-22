@@ -15,7 +15,7 @@ sidebar: "management"
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
 
-If your projects have a large number of runs, and you only wanted to compare a subset of these runs, you can use filters.
+If your projects have a large number of runs, and you only need to compare a subset of these runs, you can use filters.
 
 A search allows to:
  * Compare parameters and metrics of the runs using the search filters.
@@ -24,7 +24,7 @@ A search allows to:
  * Have quick access to the runs using the search filters.
 
 Oftentimes, a search might be useful to save and reuse to quickly filter all runs.
-Saved searches let you save and describe a query and sort condition.
+Saved searches let you save and describe a query, sort condition, columns order and selection, fields heat configuration ...
 You can easily then monitor the results on an ongoing basis and find the desired results easily.
 
 > We are also working on Alerts for saved searches so that you can subscribe and get notified based on specific conditions, or trigger an operation or a workflow.
