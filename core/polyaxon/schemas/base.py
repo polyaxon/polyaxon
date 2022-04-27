@@ -346,6 +346,13 @@ class BaseConfig:
         with open(filepath, "w") as config_file:
             config_file.write(cls.to_jsonschema(dump=True))
 
+    @staticmethod
+    def _get_bool(value, default_value):
+        if isinstance(value, bool):
+            return value
+
+        return default_value
+
 
 class BaseOneOfSchema(Schema):
     """

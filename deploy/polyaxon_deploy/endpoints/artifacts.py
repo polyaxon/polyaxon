@@ -19,6 +19,7 @@ from starlette.requests import Request
 from starlette.responses import FileResponse, Response
 from starlette.routing import Route
 
+from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.fs.async_manager import (
     check_is_file,
     delete_file_or_dir,
@@ -30,7 +31,7 @@ from polyaxon.utils.bool_utils import to_bool
 from polyaxon_deploy.connections.fs import AppFS
 from polyaxon_deploy.controllers.notebooks import render_notebook
 from polyaxon_deploy.controllers.uploads import handle_upload
-from polyaxon_deploy.endpoints.base import STREAMS_URL, UJSONResponse
+from polyaxon_deploy.endpoints.base import UJSONResponse
 from polyaxon_deploy.endpoints.utils import redirect_file
 
 
@@ -181,24 +182,24 @@ async def tree_artifacts(request: Request) -> UJSONResponse:
 
 
 URLS_RUNS_ARTIFACT = (
-    STREAMS_URL
-    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/artifact"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/artifact"
 )
 URLS_RUNS_EMBEDDED_ARTIFACT = (
-    STREAMS_URL
-    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/embedded_artifact"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/embedded_artifact"
 )
 URLS_RUNS_RO_ARTIFACT = (
-    STREAMS_URL
-    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/ro_artifact/{path:path}"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/ro_artifact/{path:path}"
 )
 URLS_RUNS_ARTIFACTS = (
-    STREAMS_URL
-    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/artifacts"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/artifacts"
 )
 URLS_RUNS_ARTIFACTS_TREE = (
-    STREAMS_URL
-    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/artifacts/tree"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/artifacts/tree"
 )
 
 # fmt: off

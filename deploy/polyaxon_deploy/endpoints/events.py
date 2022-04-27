@@ -22,6 +22,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from starlette.routing import Route
 
+from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon_deploy.connections.fs import AppFS
 from polyaxon_deploy.controllers.events import (
@@ -30,7 +31,7 @@ from polyaxon_deploy.controllers.events import (
     get_archived_operation_resources,
     get_archived_operations_events,
 )
-from polyaxon_deploy.endpoints.base import STREAMS_URL, UJSONResponse
+from polyaxon_deploy.endpoints.base import UJSONResponse
 from polyaxon_deploy.endpoints.utils import redirect_file
 from traceml.artifacts import V1ArtifactKind
 from traceml.events import V1Events
@@ -136,15 +137,15 @@ async def get_run_resources(request: Request) -> UJSONResponse:
 
 
 URLS_RUNS_MULTI_EVENTS = (
-    STREAMS_URL
-    + "/{namespace:str}/{owner:str}/{project:str}/runs/multi/events/{event_kind:str}"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/multi/events/{event_kind:str}"
 )
 URLS_RUNS_EVENTS = (
-    STREAMS_URL + "/{namespace:str}/{owner:str}/{project:str}/runs/"
+    STREAMS_V1_LOCATION + "{namespace:str}/{owner:str}/{project:str}/runs/"
     "{run_uuid:str}/events/{event_kind:str}"
 )
 URLS_RUNS_RESOURCES = (
-    STREAMS_URL + "/{namespace:str}/{owner:str}/{project:str}/runs/"
+    STREAMS_V1_LOCATION + "{namespace:str}/{owner:str}/{project:str}/runs/"
     "{run_uuid:str}/resources"
 )
 

@@ -21,9 +21,10 @@ from starlette.responses import Response
 from starlette.routing import Route
 
 from polyaxon import settings
+from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.lifecycle import V1StatusCondition
-from polyaxon.logger import logger
-from polyaxon_deploy.endpoints.base import STREAMS_URL, UJSONResponse
+from polyaxon_deploy.endpoints.base import UJSONResponse
+from polyaxon_deploy.logger import logger
 from polyaxon_deploy.tasks.notification import notify_run
 
 
@@ -74,8 +75,8 @@ async def notify(request: Request) -> Response:
 
 
 URLS_RUNS_NOTIFY = (
-    STREAMS_URL
-    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/notify"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/notify"
 )
 
 # fmt: off

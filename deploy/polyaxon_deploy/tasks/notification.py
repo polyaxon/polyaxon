@@ -18,11 +18,11 @@ from typing import List
 from polyaxon import settings
 from polyaxon.agents.spawners.async_spawner import AsyncSpawner
 from polyaxon.lifecycle import V1StatusCondition
-from polyaxon.logger import logger
 from polyaxon.operations import get_notifier_operation
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polypod import compiler
 from polyaxon.polypod.compiler.converters import PLATFORM_CONVERTERS
+from polyaxon_deploy.logger import logger
 
 
 async def notify_run(

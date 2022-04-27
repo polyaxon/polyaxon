@@ -22,9 +22,9 @@ from starlette.responses import Response
 from starlette.routing import Route
 
 from polyaxon import settings
+from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
-from polyaxon.logger import logger
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.date_utils import parse_datetime
 from polyaxon.utils.fqn_utils import get_resource_name, get_resource_name_for_kind
@@ -36,7 +36,8 @@ from polyaxon_deploy.controllers.logs import (
     get_operation_logs,
     get_tmp_operation_logs,
 )
-from polyaxon_deploy.endpoints.base import STREAMS_URL, UJSONResponse
+from polyaxon_deploy.endpoints.base import UJSONResponse
+from polyaxon_deploy.logger import logger
 from polyaxon_deploy.tasks.logs import clean_tmp_logs, upload_logs
 
 
@@ -138,13 +139,14 @@ async def collect_logs(request: Request) -> Response:
 
 
 URLS_RUNS_INTERNAL_LOGS = (
-    STREAMS_URL
-    + "/{namespace:str}"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}"
     + "/_internal"
     + "/{owner:str}/{project:str}/runs/{run_uuid:str}/{run_kind:str}/logs"
 )
 URLS_RUNS_LOGS = (
-    STREAMS_URL + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/logs"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/logs"
 )
 
 

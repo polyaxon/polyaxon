@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
+
 import urllib3
 
 from marshmallow import EXCLUDE, fields
@@ -37,7 +39,6 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK,
     POLYAXON_KEYS_IS_MANAGED,
     POLYAXON_KEYS_IS_OFFLINE,
-    POLYAXON_KEYS_IS_OPS,
     POLYAXON_KEYS_K8S_IN_CLUSTER,
     POLYAXON_KEYS_K8S_NAMESPACE,
     POLYAXON_KEYS_KEY_FILE,
@@ -61,7 +62,6 @@ from polyaxon.utils.http_utils import clean_host, clean_verify_ssl
 
 
 class ClientSchema(BaseSchema):
-    service = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_SERVICE)
     host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HOST)
     version = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_API_VERSION)
     debug = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_DEBUG)
@@ -71,7 +71,6 @@ class ClientSchema(BaseSchema):
     )
     is_managed = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_MANAGED)
     is_offline = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_OFFLINE)
-    is_ops = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_OPS)
     in_cluster = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_K8S_IN_CLUSTER)
     no_op = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_NO_OP)
     timeout = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_TIMEOUT)
@@ -120,7 +119,6 @@ class ClientConfig(BaseConfig):
     UNKNOWN_BEHAVIOUR = EXCLUDE
 
     REDUCED_ATTRIBUTES = [
-        POLYAXON_KEYS_SERVICE,
         POLYAXON_KEYS_HOST,
         POLYAXON_KEYS_API_VERSION,
         POLYAXON_KEYS_ASSERT_HOSTNAME,
@@ -135,7 +133,6 @@ class ClientConfig(BaseConfig):
         POLYAXON_KEYS_INTERVAL,
         POLYAXON_KEYS_IS_MANAGED,
         POLYAXON_KEYS_IS_OFFLINE,
-        POLYAXON_KEYS_IS_OPS,
         POLYAXON_KEYS_K8S_NAMESPACE,
         POLYAXON_KEYS_KEY_FILE,
         POLYAXON_KEYS_LOG_LEVEL,
@@ -152,7 +149,6 @@ class ClientConfig(BaseConfig):
 
     def __init__(
         self,
-        service=None,
         host=None,
         token=None,
         debug=None,
@@ -161,7 +157,6 @@ class ClientConfig(BaseConfig):
         authentication_type=None,
         is_managed=None,
         is_offline=None,
-        is_ops=None,
         in_cluster=None,
         no_op=None,
         timeout=None,
@@ -184,15 +179,15 @@ class ClientConfig(BaseConfig):
         compatibility_check_interval=None,
         **kwargs
     ):
-        self.service = service
-        self.host = clean_host(get_default_host(host, service))
+        self.host = clean_host(
+            get_default_host(host, os.environ.get(POLYAXON_KEYS_SERVICE))
+        )
         self.token = token
         self.debug = self._get_bool(debug, False)
         self.log_level = log_level
         self.version = version or "v1"
         self.is_managed = self._get_bool(is_managed, False)
         self.is_offline = self._get_bool(is_offline, False)
-        self.is_ops = self._get_bool(is_ops, False)
         self.in_cluster = self._get_bool(in_cluster, False)
         self.no_op = self._get_bool(no_op, False)
         self.verify_ssl = clean_verify_ssl(
@@ -283,10 +278,3 @@ class ClientConfig(BaseConfig):
         config = self.sdk_config
         config.connection_pool_maxsize = 100
         return config
-
-    @staticmethod
-    def _get_bool(value, default_value):
-        if isinstance(value, bool):
-            return value
-
-        return default_value

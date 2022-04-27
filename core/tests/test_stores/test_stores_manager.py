@@ -34,7 +34,7 @@ async def test_download_dir_archive():
     fs = await get_default_fs()
     await download_dir(fs=fs, subpath="foo", to_tar=True)
 
-    path_to = os.path.join(settings.AGENT_CONFIG.artifacts_root, "foo")
+    path_to = os.path.join(settings.AGENT_CONFIG.local_root, "foo")
     assert os.path.exists(path_to)
     assert os.path.exists(path_to + "/0")
     assert os.path.exists(path_to + "/1")
@@ -52,7 +52,7 @@ async def test_download_file():
     fs = await get_default_fs()
     await download_file(fs=fs, subpath="foo/0", check_cache=False)
 
-    path_to = os.path.join(settings.AGENT_CONFIG.artifacts_root, "foo/0")
+    path_to = os.path.join(settings.AGENT_CONFIG.local_root, "foo/0")
     assert os.path.exists(path_to)
 
 

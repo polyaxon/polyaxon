@@ -17,9 +17,9 @@ import os
 import pytest
 
 from polyaxon import settings
+from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.utils.path_utils import create_path
 from polyaxon.utils.test_utils import BaseTestCase, create_tmp_files, set_store
-from polyaxon_deploy.endpoints.base import STREAMS_URL
 from tests.base import get_streams_client
 
 
@@ -34,7 +34,9 @@ class TestArtifactsEndpoints(BaseTestCase):
         create_tmp_files(self.run_path)
 
         self.client = get_streams_client()
-        self.base_url = STREAMS_URL + "/namespace/owner/project/runs/uuid/artifacts"
+        self.base_url = (
+            STREAMS_V1_LOCATION + "namespace/owner/project/runs/uuid/artifacts"
+        )
 
     def test_download_artifacts(self):
         filepath = os.path.join(settings.CLIENT_CONFIG.archive_root, "uuid.tar.gz")

@@ -155,7 +155,7 @@ def cli(context, verbose, offline):
             context.invoked_subcommand in non_check_cmds
             or offline
             or settings.CLIENT_CONFIG.no_api
-            or settings.CLIENT_CONFIG.is_ops
+            or settings.SERVICE
             or DOCS_GEN
         )
         and not settings.CLI_CONFIG.installation
@@ -184,29 +184,70 @@ cli.add_command(admin)
 cli.add_command(port_forward)
 cli.add_command(completion)
 
-if settings.CLIENT_CONFIG.is_ops:
+# Sandbox
+try:
+    from polyaxon_deploy.cli.sandbox import sandbox
 
-    from polyaxon.cli.services.agent import agent
+    cli.add_command(sandbox)
+except ImportError:
+    pass
+
+# INIT
+if settings.SERVICE_IS_INIT:
     from polyaxon.cli.services.clean_artifacts import clean_artifacts
     from polyaxon.cli.services.clean_ops import clean_ops
     from polyaxon.cli.services.docker import docker
     from polyaxon.cli.services.initializer import initializer
-    from polyaxon.cli.services.notifier import notify
-    from polyaxon.cli.services.proxies import proxy
-    from polyaxon.cli.services.sidecar import sidecar
-    from polyaxon.cli.services.tuner import tuner
     from polyaxon.cli.services.wait import wait
 
-    cli.add_command(agent)
     cli.add_command(clean_artifacts)
     cli.add_command(clean_ops)
     cli.add_command(docker)
     cli.add_command(initializer)
-    cli.add_command(notify)
-    cli.add_command(proxy)
-    cli.add_command(sidecar)
-    cli.add_command(tuner)
     cli.add_command(wait)
+
+# Events
+if settings.SERVICE_IS_EVENTS_HANDLER:
+    from polyaxon.cli.services.notifier import notify
+
+    cli.add_command(notify)
+
+# Sidecar
+if settings.SERVICE_IS_SIDECAR:
+    from polyaxon.cli.services.sidecar import sidecar
+
+    cli.add_command(sidecar)
+
+# Tuner
+if settings.SERVICE_IS_HP_SEARCH:
+    from polyaxon.cli.services.tuner import tuner
+
+    cli.add_command(tuner)
+
+# Agents
+if settings.SERVICE_IS_AGENT:
+    from polyaxon.cli.services.agent import agent
+
+    cli.add_command(agent)
+
+# Proxies
+if (
+    settings.SERVICE_IS_STREAMS
+    or settings.SERVICE_IS_API
+    or settings.SERVICE_IS_GATEWAY
+):
+    from polyaxon.cli.services.proxies import proxy
+
+    cli.add_command(proxy)
+
+# Streams
+if settings.SERVICE_IS_STREAMS:
+    try:
+        from polyaxon_deploy.cli.streams import streams
+
+        cli.add_command(streams)
+    except ImportError:
+        pass
 
 
 def main():

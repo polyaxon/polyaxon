@@ -31,7 +31,7 @@ from polyaxon.fs.async_manager import (
     tar_files,
 )
 from polyaxon.fs.types import FSSystem
-from polyaxon.logger import logger
+from polyaxon_deploy.logger import logger
 from traceml.artifacts import V1ArtifactKind
 from traceml.events import V1Events, get_event_path, get_resource_path
 

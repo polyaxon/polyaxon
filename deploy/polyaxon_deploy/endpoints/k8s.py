@@ -20,12 +20,13 @@ from starlette.responses import Response
 from starlette.routing import Route
 
 from polyaxon import settings
+from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.utils.fqn_utils import get_resource_name_for_kind
 from polyaxon_deploy.controllers.k8s_check import k8s_check, reverse_k8s
 from polyaxon_deploy.controllers.k8s_crd import get_k8s_operation
 from polyaxon_deploy.controllers.k8s_pods import get_pods
-from polyaxon_deploy.endpoints.base import STREAMS_URL, UJSONResponse
+from polyaxon_deploy.endpoints.base import UJSONResponse
 
 
 async def k8s_auth(request: Request) -> Response:
@@ -64,10 +65,10 @@ async def k8s_inspect(request: Request) -> Response:
     return UJSONResponse(data or {})
 
 
-URLS_RUNS_K8S_AUTH = STREAMS_URL + "/k8s/auth/"
+URLS_RUNS_K8S_AUTH = STREAMS_V1_LOCATION + "k8s/auth/"
 URLS_RUNS_K8S_INSPECT = (
-    STREAMS_URL
-    + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/k8s_inspect"
+    STREAMS_V1_LOCATION
+    + "{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/k8s_inspect"
 )
 
 # fmt: off

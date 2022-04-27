@@ -17,7 +17,7 @@
 from starlette.applications import Starlette
 
 from polyaxon import settings
-from polyaxon_deploy.apps.middlewares import middleware
+from polyaxon_deploy.apps.middlewares import get_middleware
 from polyaxon_deploy.connections.fs import AppFS
 from polyaxon_deploy.endpoints.artifacts import artifacts_routes
 from polyaxon_deploy.endpoints.base import base_routes, exception_handlers
@@ -35,11 +35,12 @@ routes = (
     + base_routes
 )
 
-
 app = Starlette(
     debug=settings.CLIENT_CONFIG.debug,
     routes=routes,
-    middleware=middleware,
+    middleware=get_middleware(
+        ssl_enabled=settings.CLIENT_CONFIG.verify_ssl, disable_cors=False
+    ),
     exception_handlers=exception_handlers,
     on_startup=[AppFS.set_fs],
     on_shutdown=[AppFS.close_fs],

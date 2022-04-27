@@ -58,8 +58,8 @@ async def handle_posted_data(
             root_path = tmp_path
     if not untar:
         tmp_path = root_path
-    full_tmppath = os.path.join(settings.AGENT_CONFIG.artifacts_root, tmp_path)
-    full_filepath = os.path.join(settings.AGENT_CONFIG.artifacts_root, root_path)
+    full_tmppath = os.path.join(settings.AGENT_CONFIG.local_root, tmp_path)
+    full_filepath = os.path.join(settings.AGENT_CONFIG.local_root, root_path)
 
     if overwrite and os.path.exists(full_filepath):
         delete_path(full_filepath)

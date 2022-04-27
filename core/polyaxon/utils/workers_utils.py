@@ -28,6 +28,13 @@ def get_pool_workers():
     return min(32, (os.cpu_count() or 1) + 4)
 
 
+def get_app_workers(workers_per_core: int):
+    import multiprocessing
+
+    cores = multiprocessing.cpu_count()
+    return workers_per_core * cores + 1
+
+
 @contextmanager
 def exit_context() -> Generator:
     exit_event = threading.Event()

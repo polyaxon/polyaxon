@@ -1,7 +1,6 @@
 fsspec==2022.3.0
 
 aiofiles==0.8.0
-gunicorn==20.1.0
 kubernetes_asyncio==22.6.4
 ipython-genutils  # required for nbconvert and was dropped in v5.1 (see: https://github.com/mu-editor/mu/pull/1844).
 nbconvert>=5.4,<6.0.0 # pin to fix #958 (replace with nbconvert==6.4.4 and "base" instead "basic")

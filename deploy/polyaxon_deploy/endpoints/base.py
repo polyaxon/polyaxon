@@ -24,9 +24,8 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 
-from polyaxon.api import STREAMS_V1
-
-STREAMS_URL = "/{}".format(STREAMS_V1)
+from polyaxon.api import API_V1_LOCATION
+from polyaxon_deploy import pkg
 
 
 async def health(request: Request) -> Response:
@@ -54,15 +53,34 @@ async def server_error(request: Request, exc):
     raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+async def installation(request: Request):
+    from polyaxon.cli.session import get_installation_key
+
+    key = get_installation_key(None)
+    data = {
+        "key": key,
+        "version": pkg.VERSION,
+        "dist": "sandbox",
+    }
+    return UJSONResponse(data)
+
+
 class UJSONResponse(JSONResponse):
     def render(self, content: Any) -> bytes:
         return ujson.dumps(content, ensure_ascii=False).encode("utf-8")
+
+
+class ConfigResponse(JSONResponse):
+    def render(self, content: Any, is_serialized: bool = True) -> bytes:
+        return content.encode("utf-8")
 
 
 base_routes = [
     Route("/500", error),
     Route("/healthz", health),
 ]
+
+base_sandbox_routes = [Route(API_V1_LOCATION + "installation", installation)]
 
 exception_handlers = {
     404: not_found,

@@ -19,12 +19,12 @@ from asyncio import Future
 from mock import patch
 
 from polyaxon import settings
+from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1K8sResourceSchema
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.test_utils import BaseTestCase, set_store
-from polyaxon_deploy.endpoints.base import STREAMS_URL
 from polyaxon_sdk import V1StatusCondition
 from tests.base import get_streams_client
 
@@ -43,7 +43,7 @@ class TestNotifyEndpoints(BaseTestCase):
         ]
 
         self.client = get_streams_client()
-        self.base_url = STREAMS_URL + "/namespace/owner/project/runs/uuid/notify"
+        self.base_url = STREAMS_V1_LOCATION + "namespace/owner/project/runs/uuid/notify"
 
     def test_notify_with_no_data(self):
         response = self.client.post(self.base_url, json={})

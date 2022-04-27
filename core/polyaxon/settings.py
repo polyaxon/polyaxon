@@ -19,7 +19,11 @@ import os
 from marshmallow import ValidationError
 
 from polyaxon.api import LOCALHOST
-from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_CONFIG, POLYAXON_KEYS_SET_AGENT
+from polyaxon.env_vars.keys import (
+    POLYAXON_KEYS_NO_CONFIG,
+    POLYAXON_KEYS_SERVICE,
+    POLYAXON_KEYS_SET_AGENT,
+)
 from polyaxon.managers.client import ClientConfigManager
 from polyaxon.managers.user import UserConfigManager
 from polyaxon.utils.bool_utils import to_bool
@@ -34,6 +38,18 @@ CLIENT_CONFIG = None
 CLI_CONFIG = None
 PROXIES_CONFIG = None
 AGENT_CONFIG = None
+SANDBOX_CONFIG = None
+
+SERVICE = os.environ.get(POLYAXON_KEYS_SERVICE)
+SERVICE_IS_AGENT = SERVICE == "agent"
+SERVICE_IS_SANDBOX = SERVICE == "sandbox"
+SERVICE_IS_HP_SEARCH = SERVICE == "hpsearch"
+SERVICE_IS_INIT = SERVICE == "init"
+SERVICE_IS_SIDECAR = SERVICE == "sidecar"
+SERVICE_IS_STREAMS = SERVICE == "streams"
+SERVICE_IS_API = SERVICE == "api"
+SERVICE_IS_GATEWAY = SERVICE == "gateway"
+SERVICE_IS_EVENTS_HANDLER = SERVICE == "events-handlers"
 
 
 def set_proxies_config():
@@ -52,6 +68,23 @@ def set_agent_config():
     AGENT_CONFIG = AgentConfigManager.get_config_from_env()
 
 
+def set_sandbox_config():
+    from polyaxon.containers.contexts import mount_sandbox
+    from polyaxon.managers.agent import SandboxConfigManager
+
+    mount_sandbox()
+
+    global SANDBOX_CONFIG
+    global AGENT_CONFIG
+
+    try:
+        SANDBOX_CONFIG = SandboxConfigManager.get_config_or_default()
+        AGENT_CONFIG = SANDBOX_CONFIG
+    except (TypeError, ValidationError):
+        SandboxConfigManager.purge()
+        Printer.print_warning("Your sandbox configuration was purged!")
+
+
 def set_cli_config():
     from polyaxon.managers.cli import CliConfigManager
 
@@ -61,7 +94,7 @@ def set_cli_config():
         CLI_CONFIG = CliConfigManager.get_config_or_default()
     except (TypeError, ValidationError):
         CliConfigManager.purge()
-        Printer.print_warning("Your CLI Configuration was purged!")
+        Printer.print_warning("Your CLI configuration was purged!")
 
 
 def set_client_config():
@@ -71,7 +104,7 @@ def set_client_config():
         CLIENT_CONFIG = ClientConfigManager.get_config_from_env()
     except (TypeError, ValidationError):
         ClientConfigManager.purge()
-        Printer.print_warning("Your client Configuration was purged!")
+        Printer.print_warning("Your client configuration was purged!")
         CLIENT_CONFIG = ClientConfigManager.get_config_from_env()
 
 
@@ -83,19 +116,21 @@ def set_auth_config():
         AUTH_CONFIG = AuthConfigManager.get_config_from_env()
     except (TypeError, ValidationError):
         AuthConfigManager.purge()
-        Printer.print_warning("Your auth Configuration was purged!")
+        Printer.print_warning("Your auth configuration was purged!")
 
     try:
         UserConfigManager.get_config_or_default()
     except (TypeError, ValidationError):
         UserConfigManager.purge()
-        Printer.print_warning("Your user Configuration was purged!")
+        Printer.print_warning("Your user configuration was purged!")
 
 
 if not to_bool(os.environ.get(POLYAXON_KEYS_NO_CONFIG, False)):
     set_auth_config()
     set_client_config()
-    if to_bool(os.environ.get(POLYAXON_KEYS_SET_AGENT, False)):
+    if SERVICE_IS_AGENT or to_bool(os.environ.get(POLYAXON_KEYS_SET_AGENT, False)):
         set_agent_config()
+    if SERVICE_IS_SANDBOX:
+        set_sandbox_config()
 else:
     CLIENT_CONFIG = ClientConfigManager.CONFIG(host=LOCALHOST)

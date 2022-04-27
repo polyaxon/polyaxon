@@ -23,7 +23,32 @@ from polyaxon.containers.contexts import (
 )
 from polyaxon.k8s.namespace import DEFAULT_NAMESPACE
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.schemas.cli.agent_config import AgentConfig
+from polyaxon.schemas.cli.agent_config import AgentConfig, SandboxConfig
+
+
+class SandboxConfigManager(BaseConfigManager):
+    """Manages sandbox configuration .sandbox file."""
+
+    VISIBILITY = BaseConfigManager.VISIBILITY_ALL
+    CONFIG_FILE_NAME = ".sandbox"
+    CONFIG = SandboxConfig
+
+    @classmethod
+    def get_config_from_env(cls):
+        config_paths = [
+            os.environ,
+            {"dummy": "dummy"},
+        ]
+
+        config = ConfigManager.read_configs(config_paths)
+        return cls.CONFIG.from_dict(config.data)
+
+    @classmethod
+    def get_config_or_default(cls) -> SandboxConfig:
+        if not cls.is_initialized():
+            return cls.get_config_from_env()
+
+        return cls.get_config()
 
 
 class AgentConfigManager(BaseConfigManager):
@@ -34,7 +59,7 @@ class AgentConfigManager(BaseConfigManager):
     CONFIG = AgentConfig
 
     @classmethod
-    def get_config_or_default(cls):
+    def get_config_or_default(cls) -> AgentConfig:
         if not cls.is_initialized():
             return cls.CONFIG(
                 namespace=DEFAULT_NAMESPACE, connections=[], secret_resources=[]
@@ -54,5 +79,5 @@ class AgentConfigManager(BaseConfigManager):
             {"dummy": "dummy"},
         ]
 
-        agent_config = ConfigManager.read_configs(config_paths)
-        return AgentConfig.from_dict(agent_config.data)
+        config = ConfigManager.read_configs(config_paths)
+        return cls.CONFIG.from_dict(config.data)

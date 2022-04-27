@@ -16,7 +16,7 @@
 from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.proxies.schemas.base import get_config
 
-GUNICORN_OPTIONS = """
+API_OPTIONS = """
 location / {{
     proxy_pass http://polyaxon;
     proxy_http_version 1.1;
@@ -31,8 +31,8 @@ location / {{
 """
 
 
-def get_gunicorn_config():
-    return get_config(options=GUNICORN_OPTIONS, indent=0, intercept_errors="off")
+def get_api_config():
+    return get_config(options=API_OPTIONS, indent=0, intercept_errors="off")
 
 
 K8S_AUTH_OPTIONS = """

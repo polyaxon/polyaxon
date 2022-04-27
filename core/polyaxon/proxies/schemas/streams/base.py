@@ -23,10 +23,7 @@ from polyaxon.proxies.schemas.gzip import get_gzip_config
 from polyaxon.proxies.schemas.listen import get_listen_config
 from polyaxon.proxies.schemas.locations import get_streams_locations_config
 from polyaxon.proxies.schemas.logging import get_logging_config
-from polyaxon.proxies.schemas.streams.gunicorn import (
-    get_gunicorn_config,
-    get_k8s_auth_config,
-)
+from polyaxon.proxies.schemas.streams.api import get_api_config, get_k8s_auth_config
 from polyaxon.proxies.schemas.streams.k8s import get_k8s_root_location_config
 from polyaxon.proxies.schemas.timeout import get_timeout_config
 
@@ -43,7 +40,7 @@ def get_base_config():
         get_charset_config(),
         get_buffering_config(),
         get_timeout_config(),
-        get_gunicorn_config(),
+        get_api_config(),
         get_k8s_auth_config(),
         get_error_page_config(),
         get_streams_locations_config(),

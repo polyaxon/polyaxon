@@ -18,21 +18,36 @@ import os
 
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 
-from polyaxon import settings
 from polyaxon.env_vars.keys import POLYAXON_KEYS_CUSTOM_ERRORS_OPTIONS
 from polyaxon.plugins.sentry import set_raven_client
 
-errors_options = os.environ.get(POLYAXON_KEYS_CUSTOM_ERRORS_OPTIONS)
-if errors_options:
-    errors_options = json.loads(errors_options)
-has_raven = set_raven_client(errors_options)
 
-middleware = []
+def get_middleware(ssl_enabled: bool, disable_cors: bool):
+    errors_options = os.environ.get(POLYAXON_KEYS_CUSTOM_ERRORS_OPTIONS)
+    if errors_options:
+        errors_options = json.loads(errors_options)
+    has_raven = set_raven_client(errors_options)
 
-if has_raven:  # pragma: nocover
-    middleware += [Middleware(SentryAsgiMiddleware)]
+    middleware = []
 
-if settings.CLIENT_CONFIG.verify_ssl:  # pragma: nocover
-    middleware += [Middleware(HTTPSRedirectMiddleware)]
+    if has_raven:  # pragma: nocover
+        middleware.append(Middleware(SentryAsgiMiddleware))
+
+    if ssl_enabled:  # pragma: nocover
+        middleware.append(Middleware(HTTPSRedirectMiddleware))
+
+    if disable_cors:
+        middleware.append(
+            Middleware(
+                CORSMiddleware,
+                allow_origins=["*"],
+                allow_credentials=True,
+                allow_methods=["*"],
+                allow_headers=["*"],
+            )
+        )
+
+    return middleware

@@ -24,7 +24,6 @@ logger = logging.getLogger("polyaxon.cli")
 
 def set_raven_client(options: Dict = None) -> bool:
     from polyaxon import pkg, settings
-    from polyaxon.env_vars.keys import POLYAXON_KEYS_SERVICE
 
     cli_config = settings.CLI_CONFIG
     options = options or {}
@@ -42,7 +41,7 @@ def set_raven_client(options: Dict = None) -> bool:
             dsn=dsn,
             release=pkg.VERSION,
             environment=environment,
-            server_name=os.environ.get(POLYAXON_KEYS_SERVICE, None),
+            server_name=settings.SERVICE,
             sample_rate=sample_rate,
         )
         return True

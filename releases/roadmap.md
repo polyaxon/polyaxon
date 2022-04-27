@@ -15,6 +15,10 @@ sidebar: "releases"
 
 > **Note**: This minor version is WIP and not released yet.
 
+### Sandbox
+
+ * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
+ 
 ### CLI
 
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
@@ -27,6 +31,7 @@ sidebar: "releases"
 
 ### Client
 
+ * **Beta**: Async client version.
  * **New**: Add promote method to a model version or artifact version directly from the `RunClient`:
    * `RunClient.promote_to_model_version` this is similar to `ProjectClient.register_model_version` but directly from the run client instance.
    * `RunClient.promote_to_artifact_version` this is similar to `ProjectClient.register_artifact_version` but directly from the run client instance.
@@ -115,10 +120,6 @@ sidebar: "releases"
 ### CE
 
  * **New**: Add support for agent based deployment.
-
-### Sandbox
-
- * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
 
 ### Core
 

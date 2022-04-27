@@ -19,9 +19,9 @@ import pytest
 import shutil
 
 from polyaxon import settings
+from polyaxon.api import STREAMS_V1_LOCATION
 from polyaxon.utils.path_utils import create_path
 from polyaxon.utils.test_utils import BaseTestCase, set_store
-from polyaxon_deploy.endpoints.base import STREAMS_URL
 from tests.base import get_streams_client
 from traceml.artifacts import V1ArtifactKind
 from traceml.events import LoggedEventListSpec, V1Event, V1Events
@@ -42,7 +42,7 @@ class TestEventsEndpoints(BaseTestCase):
         self.create_tmp_events()
 
         self.client = get_streams_client()
-        self.base_url = STREAMS_URL + "/namespace/owner/project/runs/uuid/events"
+        self.base_url = STREAMS_V1_LOCATION + "namespace/owner/project/runs/uuid/events"
 
     def create_tmp_events(self):
         text1 = LoggedEventListSpec(
@@ -380,7 +380,9 @@ class TestMultiRunsEventsEndpoints(BaseTestCase):
         self.create_tmp_events(run_events=self.run2_events)
 
         self.client = get_streams_client()
-        self.base_url = STREAMS_URL + "/namespace/owner/project/runs/multi/events"
+        self.base_url = (
+            STREAMS_V1_LOCATION + "namespace/owner/project/runs/multi/events"
+        )
 
     def create_tmp_events(self, run_events: str):
         metric1 = LoggedEventListSpec(
