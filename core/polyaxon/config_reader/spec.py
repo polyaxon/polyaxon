@@ -174,9 +174,8 @@ def _read_from_polyaxon_hub(hub: str):
 
     try:
         if owner == DEFAULT_HUB:
-            config = ClientConfig()
             client = PolyaxonClient(
-                config=config,
+                config=ClientConfig(use_cloud_host=True, verify_ssl=False),
                 token=NO_AUTH,
             )
         else:

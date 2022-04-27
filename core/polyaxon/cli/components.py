@@ -54,7 +54,10 @@ from polyaxon.utils.formatting import (
 
 def get_current_or_public_client():
     if settings.CLI_CONFIG.is_ce:
-        return PolyaxonClient(config=ClientConfig(), token=NO_AUTH)
+        return PolyaxonClient(
+            config=ClientConfig(use_cloud_host=True, verify_ssl=False),
+            token=NO_AUTH,
+        )
 
     return PolyaxonClient()
 

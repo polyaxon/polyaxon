@@ -13,15 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
-
 import urllib3
 
 from marshmallow import EXCLUDE, fields
 
 import polyaxon_sdk
 
-from polyaxon.api import get_default_host
+from polyaxon.api import LOCALHOST, POLYAXON_CLOUD_HOST
 from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_API_VERSION,
@@ -45,7 +43,6 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_LOG_LEVEL,
     POLYAXON_KEYS_NO_API,
     POLYAXON_KEYS_NO_OP,
-    POLYAXON_KEYS_SERVICE,
     POLYAXON_KEYS_SSL_CA_CERT,
     POLYAXON_KEYS_TIME_ZONE,
     POLYAXON_KEYS_TIMEOUT,
@@ -58,7 +55,7 @@ from polyaxon.pkg import VERSION
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.services.auth import AuthenticationTypes
 from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
-from polyaxon.utils.http_utils import clean_host, clean_verify_ssl
+from polyaxon.utils.http_utils import clean_host
 
 
 class ClientSchema(BaseSchema):
@@ -177,11 +174,14 @@ class ClientConfig(BaseConfig):
         no_api=None,
         disable_errors_reporting=None,
         compatibility_check_interval=None,
+        use_cloud_host: bool = False,
+        retries: int = None,
         **kwargs
     ):
-        self.host = clean_host(
-            get_default_host(host, os.environ.get(POLYAXON_KEYS_SERVICE))
+        self.host = (
+            clean_host(host or LOCALHOST) if not use_cloud_host else POLYAXON_CLOUD_HOST
         )
+        self.retries = retries if not use_cloud_host else 0
         self.token = token
         self.debug = self._get_bool(debug, False)
         self.log_level = log_level
@@ -190,9 +190,7 @@ class ClientConfig(BaseConfig):
         self.is_offline = self._get_bool(is_offline, False)
         self.in_cluster = self._get_bool(in_cluster, False)
         self.no_op = self._get_bool(no_op, False)
-        self.verify_ssl = clean_verify_ssl(
-            host=self.host, verify_ssl=self._get_bool(verify_ssl, None)
-        )
+        self.verify_ssl = verify_ssl
         self.ssl_ca_cert = ssl_ca_cert
         self.cert_file = cert_file
         self.key_file = key_file
@@ -255,11 +253,10 @@ class ClientConfig(BaseConfig):
             )
 
         config = polyaxon_sdk.Configuration()
+        config.retries = self.retries
         config.debug = self.debug
         config.host = clean_host(self.host)
-        config.verify_ssl = clean_verify_ssl(
-            host=config.host, verify_ssl=self.verify_ssl
-        )
+        config.verify_ssl = self.verify_ssl
         if config.verify_ssl is False:
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         config.ssl_ca_cert = self.ssl_ca_cert

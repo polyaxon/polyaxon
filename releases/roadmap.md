@@ -43,6 +43,8 @@ sidebar: "releases"
     * Allows listing and interacting with connections.
     * Allows listing projects.
     * Allows listing cross project runs.
+ * **Enhancement**: Add retries configuration option.
+ * **Enhancement**: Improve issues around `SSL` verification.
 
 ### Operator
 

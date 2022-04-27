@@ -48,11 +48,3 @@ HEALTHZ_LOCATION = "/healthz/"
 POLYAXON_CLOUD_HOST = "https://cloud.polyaxon.com"
 LOCALHOST = "http://localhost:8000"
 POLYAXON_VERSIONS_HOST = "https://versions.polyaxon.com/?v={}".format(pkg.VERSION)
-
-
-def get_default_host(host: str = None, service: str = None):
-    if host:
-        return host
-    if service is None:
-        return POLYAXON_CLOUD_HOST
-    return LOCALHOST

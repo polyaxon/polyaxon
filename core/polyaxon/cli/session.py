@@ -89,14 +89,14 @@ def get_compatibility(
                 message="Could parse the version {}.".format(version),
             )
     polyaxon_client = polyaxon_client or PolyaxonClient(
-        config=ClientConfig(verify_ssl=False), token=NO_AUTH
+        config=ClientConfig(use_cloud_host=True, verify_ssl=False), token=NO_AUTH
     )
     try:
         return polyaxon_client.versions_v1.get_compatibility(
             uuid=key,
             service=service,
             version=version,
-            _request_timeout=2,
+            _request_timeout=1,
         )
     except ApiException as e:
         if e.status == 403 and is_cli:

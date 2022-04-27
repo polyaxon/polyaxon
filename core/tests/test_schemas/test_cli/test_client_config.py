@@ -52,7 +52,7 @@ class TestClientConfig(BaseTestCase):
         config = ClientConfig(host=None, is_managed=True)
         assert config.is_managed is True
         assert config.version == "v1"
-        assert config.host == "https://cloud.polyaxon.com"
+        assert config.host == "http://localhost:8000"
 
     def test_get_headers(self):
         config = ClientConfig(host=None, is_managed=True)

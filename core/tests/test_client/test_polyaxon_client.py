@@ -49,7 +49,7 @@ class TestPolyaxonClient(BaseTestCase):
         settings.CLIENT_CONFIG.host = "localhost"
         client = PolyaxonClient(config=ClientConfig())
         assert client.config.is_managed is False
-        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.host == "http://localhost:8000"
         assert client.config.token is None
 
     def test_from_settings(self):
@@ -65,20 +65,20 @@ class TestPolyaxonClient(BaseTestCase):
         settings.CLIENT_CONFIG.host = "localhost"
         client = PolyaxonClient(config=ClientConfig(token="test"))
         assert client.config.is_managed is False
-        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.host == "http://localhost:8000"
         assert client.config.token == "test"
 
         client = PolyaxonClient(config=ClientConfig(token="test"), token="test2")
         assert client.config.is_managed is False
-        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.host == "http://localhost:8000"
         assert client.config.token == "test2"
 
         client = PolyaxonClient(config=ClientConfig(token="test"), token=NO_AUTH)
         assert client.config.is_managed is False
-        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.host == "http://localhost:8000"
         assert client.config.token is None
 
         client = PolyaxonClient(config=ClientConfig(token=NO_AUTH), token="test2")
         assert client.config.is_managed is False
-        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.host == "http://localhost:8000"
         assert client.config.token == "test2"
