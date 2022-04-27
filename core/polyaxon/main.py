@@ -195,13 +195,11 @@ except ImportError:
 # INIT
 if settings.SERVICE_IS_INIT:
     from polyaxon.cli.services.clean_artifacts import clean_artifacts
-    from polyaxon.cli.services.clean_ops import clean_ops
     from polyaxon.cli.services.docker import docker
     from polyaxon.cli.services.initializer import initializer
     from polyaxon.cli.services.wait import wait
 
     cli.add_command(clean_artifacts)
-    cli.add_command(clean_ops)
     cli.add_command(docker)
     cli.add_command(initializer)
     cli.add_command(wait)

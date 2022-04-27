@@ -22,6 +22,8 @@ sidebar: "releases"
 ### CLI
 
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
+ * **Enhancement**: Move `clean-ops` under `admin` namespace to allow users use it without exporting the env variables.
+ * **Enhancement**: Add `--uuid` repeat flag to allow filtering for specific operations.
 
 ### Core
 
@@ -101,6 +103,7 @@ sidebar: "releases"
 ### Deployment
 
  * **Security**: Fix CVE issues.
+ * **Enhancement**: Improve streams deployment to limit the number of workers per core.
 
 ### Commercial
 

@@ -43,7 +43,11 @@ import click
     "--path",
     help="The service host.",
 )
-def sandbox(host: str, port: int, workers: int, per_core: bool, path: str):
+@click.option(
+    "--uds",
+    help="UNIX domain socket binding.",
+)
+def sandbox(host: str, port: int, workers: int, per_core: bool, path: str, uds: str):
     """Start sandbox service."""
     from polyaxon.env_vars.keys import POLYAXON_KEYS_SANDBOX_ROOT, POLYAXON_KEYS_SERVICE
     from polyaxon_deploy.runners.sandbox import start
@@ -52,4 +56,4 @@ def sandbox(host: str, port: int, workers: int, per_core: bool, path: str):
     if path:
         os.environ[POLYAXON_KEYS_SANDBOX_ROOT] = path
 
-    start(host=host, port=port, workers=workers, per_core=per_core)
+    start(host=host, port=port, workers=workers, per_core=per_core, uds=uds)

@@ -17,7 +17,7 @@ import os
 
 import uvicorn
 
-from polyaxon.utils.workers_utils import get_app_workers
+from polyaxon.utils.workers_utils import get_core_workers
 from polyaxon_deploy.logger import logger
 
 
@@ -29,14 +29,15 @@ def start_app(
     log_level: str = None,
     workers: int = None,
     per_core: bool = False,
+    uds: str = None,
 ):
     host = host or "0.0.0.0"
-    port = port or 8000
+    port = int(port or 8000)
     log_level = log_level or "warning"
     if per_core:
-        workers = get_app_workers(workers or 2)
+        workers = get_core_workers(per_core=workers or 2)
     else:
-        workers = workers or get_app_workers(2)
+        workers = workers or get_core_workers(per_core=2)
 
     logger.info(
         "{app_name} is running on http://{host}:{port} in process {pid}".format(
@@ -50,4 +51,6 @@ def start_app(
         access_log=False,
         log_level=log_level.lower(),
         workers=workers,
+        uds=uds,
+        timeout_keep_alive=120,
     )

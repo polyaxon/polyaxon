@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import os
 
 import click
 
@@ -39,8 +39,14 @@ import click
     default=False,
     help="To enable workers per core.",
 )
-def streams(host: str, port: int, workers: int, per_core: bool):
+@click.option(
+    "--uds",
+    help="UNIX domain socket binding.",
+)
+def streams(host: str, port: int, workers: int, per_core: bool, uds: str):
     """Start streams service."""
+    from polyaxon.env_vars.keys import POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT
     from polyaxon_deploy.runners.streams import start
 
-    start(host=host, port=port, workers=workers, per_core=per_core)
+    port = port or os.environ.get(POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT)
+    start(host=host, port=port, workers=workers, per_core=per_core, uds=uds)

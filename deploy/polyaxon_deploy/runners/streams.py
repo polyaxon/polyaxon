@@ -21,6 +21,7 @@ def start(
     log_level: str = None,
     workers: int = None,
     per_core: bool = False,
+    uds: str = None,
 ):
     start_app(
         app="polyaxon_deploy.apps.streams:app",
@@ -30,4 +31,5 @@ def start(
         log_level=log_level,
         workers=workers,
         per_core=per_core,
+        uds=uds,
     )

@@ -23,6 +23,7 @@ def start(
     log_level: str = None,
     workers: int = None,
     per_core: bool = False,
+    uds: str = None,
 ):
     settings.set_sandbox_config()
 
@@ -34,4 +35,5 @@ def start(
         log_level=log_level or settings.CLIENT_CONFIG.log_level,
         workers=workers or settings.SANDBOX_CONFIG.workers,
         per_core=per_core or settings.SANDBOX_CONFIG.per_core,
+        uds=uds,
     )

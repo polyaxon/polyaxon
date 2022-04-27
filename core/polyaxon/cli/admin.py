@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import os
+import time
 
 import click
 
@@ -244,3 +245,64 @@ def teardown(config_file, manager_path, yes):
 def dashboard(yes, url):
     """Open dashboard in browser."""
     get_dashboard(dashboard_url=get_dashboard_url(base="_admin"), url_only=url, yes=yes)
+
+
+@admin.command()
+@click.option("--namespace", type=str)
+@click.option("--in-cluster", is_flag=True, default=False)
+@click.option("--delete", is_flag=True, default=False)
+def clean_ops(namespace, in_cluster, delete):
+    """clean-ops command."""
+    from polyaxon.k8s.custom_resources import operation
+    from polyaxon.k8s.manager import K8SManager
+
+    if not namespace:
+        raise ValueError("namespace is required!")
+
+    manager = K8SManager(namespace=namespace, in_cluster=in_cluster)
+
+    def _patch_op():
+        retry = 0
+        while retry < 2:
+            try:
+                manager.update_custom_object(
+                    name=op["metadata"]["name"],
+                    group=operation.GROUP,
+                    version=operation.API_VERSION,
+                    plural=operation.PLURAL,
+                    body={"metadata": {"finalizers": None}},
+                )
+                return
+            except Exception as e:
+                print("Exception %s", e)
+                print("retrying")
+                time.sleep(0.1)
+                retry += 1
+
+    def _delete_op():
+        retry = 0
+        while retry < 2:
+            try:
+                manager.delete_custom_object(
+                    name=op["metadata"]["name"],
+                    group=operation.GROUP,
+                    version=operation.API_VERSION,
+                    plural=operation.PLURAL,
+                )
+                return
+            except Exception as e:
+                print("Exception %s", e)
+                print("retrying")
+                time.sleep(0.1)
+                retry += 1
+
+    ops = manager.list_custom_objects(
+        group=operation.GROUP,
+        version=operation.API_VERSION,
+        plural=operation.PLURAL,
+    )
+
+    for op in ops:
+        _patch_op()
+        if delete:
+            _delete_op()
