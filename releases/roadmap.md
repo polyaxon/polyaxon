@@ -46,6 +46,7 @@ sidebar: "releases"
     * Allows listing cross project runs.
  * **Enhancement**: Add retries configuration option.
  * **Enhancement**: Improve issues around `SSL` verification.
+ * **Enhancement**: Improve download logic based on a lineage reference.
 
 ### Operator
 

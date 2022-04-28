@@ -1129,15 +1129,21 @@ class RunClient:
                     owner=self.owner,
                     project=self.project,
                     run_uuid=self.run_uuid,
-                    subpath="events",
+                    subpath="events/{}".format(lineage.kind),
                 )
                 url = absolute_uri(url=url, host=self.client.config.host)
-                url = "{}?names={}&pkg_assets=true".format(url, lineage.name)
+                params = {"names": lineage.name, "pkg_assets": True}
                 if force:
-                    url = "{}&force=true".format(url)
+                    params["force"] = True
 
                 return self.store.download_file(
-                    url=url, path=self.run_uuid, path_to=path_to
+                    url=url,
+                    path=self.run_uuid,
+                    use_filepath=False,
+                    extract_path=path_to,
+                    path_to=path_to,
+                    params=params,
+                    untar=True,
                 )
             elif V1ArtifactKind.is_file_or_dir(lineage.kind):
                 return self.download_artifacts(
@@ -1182,10 +1188,13 @@ class RunClient:
             subpath="artifact",
         )
         url = absolute_uri(url=url, host=self.client.config.host)
+        params = {}
         if force:
-            url = "{}?force=true".format(url)
+            params["force"] = True
 
-        return self.store.download_file(url=url, path=path, path_to=path_to)
+        return self.store.download_file(
+            url=url, path=path, path_to=path_to, params=params
+        )
 
     @client_handler(check_no_op=True, check_offline=True)
     def download_artifacts(
@@ -1219,8 +1228,9 @@ class RunClient:
             subpath="artifacts",
         )
         url = absolute_uri(url=url, host=self.client.config.host)
+        params = {}
         if check_path:
-            url = "{}?check_path=true".format(url)
+            params["check_path"] = True
 
         return self.store.download_file(
             url=url,
@@ -1229,7 +1239,7 @@ class RunClient:
             path_to=path_to,
             delete_tar=delete_tar and untar,
             extract_path=extract_path,
-            check_content_disposition=check_path,
+            params=params,
         )
 
     @client_handler(check_no_op=True, check_offline=True)

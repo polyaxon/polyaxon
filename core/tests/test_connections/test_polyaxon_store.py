@@ -45,9 +45,7 @@ class TestPolyaxonStore(BaseTestCase):
         ) as mock_call:
             result = store.download_file(url="url", path="test/path", untar=False)
 
-        assert result == "{}/uid/test/path.tar.gz".format(
-            settings.CLIENT_CONFIG.archive_root
-        )
+        assert result == "{}/uid/test/path".format(settings.CLIENT_CONFIG.archive_root)
         assert mock_call.call_count == 1
         assert mock_call.call_args_list[0][1] == {
             "filename": result,
@@ -64,7 +62,7 @@ class TestPolyaxonStore(BaseTestCase):
         assert result == "{}/uid/test/path".format(settings.CLIENT_CONFIG.archive_root)
         assert mock_call.call_count == 1
         assert mock_call.call_args_list[0][1] == {
-            "filename": "{}.tar.gz".format(result),
+            "filename": result,
             "untar": True,
             "params": {"path": "test/path"},
             "url": "url",

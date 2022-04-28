@@ -173,7 +173,7 @@ class PolyaxonStore:
         untar=False,
         delete_tar=True,
         extract_path=None,
-        check_content_disposition=False,
+        use_filepath=True,
     ):
         """
         Download the file from the given url at the current path
@@ -193,8 +193,11 @@ class PolyaxonStore:
                 timeout=timeout,
                 stream=True,
             )
-            if untar and check_content_disposition:
-                untar = "tar" in response.headers.get("content-disposition", "")
+            has_tar = "tar" in response.headers.get("content-disposition", "")
+            if has_tar:
+                filename = filename + ".tar.gz"
+            if untar:
+                untar = has_tar
 
             self.check_response_status(response, url)
             with open(filename, "wb") as f:
@@ -217,7 +220,10 @@ class PolyaxonStore:
 
             if untar:
                 filename = untar_file(
-                    filename=filename, delete_tar=delete_tar, extract_path=extract_path
+                    filename=filename,
+                    delete_tar=delete_tar,
+                    extract_path=extract_path,
+                    use_filepath=use_filepath,
                 )
             return filename
         except (
@@ -252,17 +258,12 @@ class PolyaxonStore:
         )
         if path:
             local_path = os.path.join(local_path, path)
-        _local_path = local_path
-        untar = kwargs.get("untar")
-        if untar is not None:
-            _local_path = _local_path + ".tar.gz"
-        if untar is False:
-            local_path = _local_path
-        check_or_create_path(_local_path, is_dir=False)
-        if not os.path.exists(_local_path):
-            self.download(
-                filename=_local_path, params={"path": path}, url=url, **kwargs
-            )
+
+        check_or_create_path(local_path, is_dir=False)
+        if not os.path.exists(local_path):
+            params = kwargs.pop("params", {})
+            params["path"] = path
+            self.download(filename=local_path, params=params, url=url, **kwargs)
         return local_path
 
     def upload_file(
