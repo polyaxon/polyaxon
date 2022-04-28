@@ -67,16 +67,3 @@ helm install trainingjobs polyaxon/trainingjobs --namespace=polyaxon
 ```bash
 helm del trainingjobs --purge
 ```
-
-## Deploying/Deleting PytorchJob
-
-In order to use Kubeflow as a backend for running [distributed Pytorch experiments](/integrations/pytorchjob/),
-you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
-
-```bash
-helm install plxpytorch polyaxon/pytorchjob --namespace=polyaxon
-```
-
-```bash
-helm install del plxpytorch --purge
-```

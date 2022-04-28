@@ -28,6 +28,7 @@ sidebar: "releases"
 ### Core
 
  * **New**: Add support for annotations in the connections specification.
+ * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
  * **Enhancement**: Migrate hyperparameter tuning and tracking modules to separate repos.
  * **Enhancement**: Improve query manager to return distinct values.
 
@@ -67,11 +68,13 @@ sidebar: "releases"
  * **New**: Allow to specify the connection name when logging assets and artifacts to associate the lineage to a specific connection.
  * **Enhancement**: Improve logic around assets and artifacts logging to only trigger versioned behavior (step-wise) when a step parameter is provided.
  * **Enhancement**: Improve outputs state calculation.
+ * **Enhancement**: Improve artifacts names auto-generator to respect the name size limit.
 
 ### Streams
 
  * **New**: Add support for multi-connections:
    * Possibility to mount multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
+ * **Enhancement**: Improve cache access and optimize artifacts downloads.
  * **Enhancement**: Improve k8s connections and handling.
  * **Enhancement**: Update fs backends.
 
