@@ -54,11 +54,15 @@ async def get_run_artifact_lineage(request: Request) -> Response:
 
     with open(offline_path, "r") as config_file:
         config_str = config_file.read()
+        config_str = f'{{"results": {config_str}}}'
 
     return ConfigResponse(config_str)
 
 
 URLS_RUNS_DETAILS = API_V1_LOCATION + "{owner:str}/{project:str}/runs/{run_uuid:str}/"
+URLS_RUNS_STATUSES = (
+    API_V1_LOCATION + "{owner:str}/{project:str}/runs/{run_uuid:str}/statuses"
+)
 URLS_RUNS_LINEAGE_ARTIFACTS = (
     API_V1_LOCATION + "{owner:str}/{project:str}/runs/{run_uuid:str}/lineage/artifacts"
 )
@@ -67,6 +71,12 @@ URLS_RUNS_LINEAGE_ARTIFACTS = (
 runs_routes = [
     Route(
         URLS_RUNS_DETAILS,
+        get_run_details,
+        name="get_run_details",
+        methods=["GET"],
+    ),
+    Route(
+        URLS_RUNS_STATUSES,
         get_run_details,
         name="get_run_details",
         methods=["GET"],

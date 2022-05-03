@@ -37,16 +37,7 @@ PROXIES_CONFIG = None
 AGENT_CONFIG = None
 SANDBOX_CONFIG = None
 
-SERVICE = PolyaxonServices.get_service_name()
-SERVICE_IS_AGENT = PolyaxonServices.is_agent(SERVICE)
-SERVICE_IS_SANDBOX = PolyaxonServices.is_sandbox(SERVICE)
-SERVICE_IS_HP_SEARCH = PolyaxonServices.is_hp_search(SERVICE)
-SERVICE_IS_INIT = PolyaxonServices.is_init(SERVICE)
-SERVICE_IS_SIDECAR = PolyaxonServices.is_sidecar(SERVICE)
-SERVICE_IS_STREAMS = PolyaxonServices.is_streams(SERVICE)
-SERVICE_IS_API = PolyaxonServices.is_api(SERVICE)
-SERVICE_IS_GATEWAY = PolyaxonServices.is_gateway(SERVICE)
-SERVICE_IS_EVENTS_HANDLER = PolyaxonServices.is_events_handlers(SERVICE)
+PolyaxonServices.set_service_name()
 
 
 def set_proxies_config():
@@ -70,6 +61,7 @@ def set_sandbox_config():
     from polyaxon.managers.agent import SandboxConfigManager
 
     mount_sandbox()
+    PolyaxonServices.set_service_name(PolyaxonServices.SANDBOX)
 
     global SANDBOX_CONFIG
     global AGENT_CONFIG
@@ -125,9 +117,11 @@ def set_auth_config():
 if not to_bool(os.environ.get(POLYAXON_KEYS_NO_CONFIG, False)):
     set_auth_config()
     set_client_config()
-    if SERVICE_IS_AGENT or to_bool(os.environ.get(POLYAXON_KEYS_SET_AGENT, False)):
+    if PolyaxonServices.is_agent() or to_bool(
+        os.environ.get(POLYAXON_KEYS_SET_AGENT, False)
+    ):
         set_agent_config()
-    if SERVICE_IS_SANDBOX:
+    if PolyaxonServices.is_sandbox():
         set_sandbox_config()
 else:
     CLIENT_CONFIG = ClientConfigManager.CONFIG(host=LOCALHOST)

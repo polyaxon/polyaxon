@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 
 from starlette import status
 from starlette.requests import Request
@@ -87,7 +88,7 @@ async def download_artifact(
             archived_path = await render_notebook(
                 archived_path=archived_path, check_cache=not force
             )
-        return FileResponse(archived_path)
+        return FileResponse(archived_path, filename=os.path.basename(archived_path))
     return redirect_file(archived_path)
 
 

@@ -60,12 +60,11 @@ def get_server_installation(polyaxon_client=None):
 
 def get_installation_key(key: str) -> str:
     if not key:
-        installation = CliConfigManager.get_value("installation") or {
-            "key": uuid.uuid4().hex
-        }
+        installation = CliConfigManager.get_value("installation") or {}
+        key = installation.get("key") or uuid.uuid4().hex
+        installation["key"] = key
         if not CliConfigManager.is_initialized():
             CliConfigManager.reset(installation=installation)
-        key = installation.get("key")
     return key
 
 
@@ -150,7 +149,11 @@ def set_versions_config(
     key: str = None,
     is_cli: bool = True,
 ):
-    polyaxon_client = polyaxon_client or PolyaxonClient(ClientConfig(retries=0))
+    from polyaxon import settings
+
+    polyaxon_client = polyaxon_client or PolyaxonClient(
+        ClientConfig.patch_from(settings.CLIENT_CONFIG, retries=0)
+    )
     server_installation = None
     if set_installation:
         server_installation = get_server_installation(polyaxon_client=polyaxon_client)

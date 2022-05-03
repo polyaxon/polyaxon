@@ -276,3 +276,8 @@ class ClientConfig(BaseConfig):
         config = self.sdk_config
         config.connection_pool_maxsize = 100
         return config
+
+    @classmethod
+    def patch_from(cls, config: "ClientConfig", **kwargs):
+        data = {**config.to_dict(), **kwargs}
+        return cls.from_dict(data)

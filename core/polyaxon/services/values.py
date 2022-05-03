@@ -56,43 +56,44 @@ class PolyaxonServices:  # noqa
         EVENTS_HANDLER,
     }
     AGENT_VALUES = [PLATFORM, CLI, UI, OPERATOR, AGENT, INITIALIZER, SIDECAR]
-
-    @staticmethod
-    def get_service_name():
-        return os.environ.get(POLYAXON_KEYS_SERVICE)
+    SERVICE = None
 
     @classmethod
-    def is_agent(cls, value: str):
-        return cls.AGENT == value
+    def set_service_name(cls, value: str = None):
+        cls.SERVICE = value or os.environ.get(POLYAXON_KEYS_SERVICE)
 
     @classmethod
-    def is_sandbox(cls, value: str):
-        return cls.SANDBOX == value
+    def is_agent(cls, value: str = None):
+        return cls.AGENT == (value or cls.SERVICE)
 
     @classmethod
-    def is_hp_search(cls, value: str):
-        return cls.HP_SEARCH == value
+    def is_sandbox(cls, value: str = None):
+        return cls.SANDBOX == (value or cls.SERVICE)
 
     @classmethod
-    def is_init(cls, value: str):
-        return value in {cls.INIT, cls.INITIALIZER}
+    def is_hp_search(cls, value: str = None):
+        return cls.HP_SEARCH == (value or cls.SERVICE)
 
     @classmethod
-    def is_sidecar(cls, value: str):
-        return cls.SIDECAR == value
+    def is_init(cls, value: str = None):
+        return (value or cls.SERVICE) in {cls.INIT, cls.INITIALIZER}
 
     @classmethod
-    def is_streams(cls, value: str):
-        return cls.STREAMS == value
+    def is_sidecar(cls, value: str = None):
+        return cls.SIDECAR == (value or cls.SERVICE)
 
     @classmethod
-    def is_api(cls, value: str):
-        return cls.API == value
+    def is_streams(cls, value: str = None):
+        return cls.STREAMS == (value or cls.SERVICE)
 
     @classmethod
-    def is_gateway(cls, value: str):
-        return cls.GATEWAY == value
+    def is_api(cls, value: str = None):
+        return cls.API == (value or cls.SERVICE)
 
     @classmethod
-    def is_events_handlers(cls, value: str):
-        return cls.EVENTS_HANDLER == value
+    def is_gateway(cls, value: str = None):
+        return cls.GATEWAY == (value or cls.SERVICE)
+
+    @classmethod
+    def is_events_handlers(cls, value: str = None):
+        return cls.EVENTS_HANDLER == (value or cls.SERVICE)

@@ -19,6 +19,7 @@ import sys
 import click
 
 from polyaxon.cli.errors import handle_cli_error
+from polyaxon.cli.session import set_versions_config
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
@@ -174,6 +175,7 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
     if should_purge and not kwargs.get("no_purge"):
         AuthConfigManager.purge()
         UserConfigManager.purge()
+        set_versions_config()
 
 
 @config.command()

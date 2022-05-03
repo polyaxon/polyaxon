@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import logging
-import os
 
 from typing import Dict
 
@@ -24,6 +23,7 @@ logger = logging.getLogger("polyaxon.cli")
 
 def set_raven_client(options: Dict = None) -> bool:
     from polyaxon import pkg, settings
+    from polyaxon.services.values import PolyaxonServices
 
     cli_config = settings.CLI_CONFIG
     options = options or {}
@@ -41,7 +41,7 @@ def set_raven_client(options: Dict = None) -> bool:
             dsn=dsn,
             release=pkg.VERSION,
             environment=environment,
-            server_name=settings.SERVICE,
+            server_name=PolyaxonServices.SERVICE,
             sample_rate=sample_rate,
         )
         return True

@@ -27,6 +27,7 @@ sidebar: "releases"
  * **Enhancement**: Improve statuses watch to refresh the table instead of drawing a new table.
  * **Enhancement**: Improve wait for condition to update the last status.
  * **Enhancement**: Add missing `stages` to commands `components`, `artifacts`, and `models` to list stage transitions and conditions.
+ * **Enhancement**: Improve pull logic to create a valid structure `/base/path/PROJECT_NAME/runs`, `/base/path/PROJECT_NAME/models`, ...
 
 ### Core
 

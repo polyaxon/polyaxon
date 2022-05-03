@@ -19,7 +19,9 @@ from typing import Dict
 
 from starlette import status
 from starlette.requests import Request
-from starlette.responses import Response
+from starlette.responses import FileResponse, Response
+
+from polyaxon.services.values import PolyaxonServices
 
 
 def _redirect(
@@ -44,6 +46,8 @@ def redirect_file(archived_path: str, additional_headers: Dict = None) -> Respon
             status_code=status.HTTP_404_NOT_FOUND,
         )
 
+    if PolyaxonServices.is_sandbox():
+        return FileResponse(archived_path, filename=os.path.basename(archived_path))
     return _redirect(
         redirect_path=archived_path, is_file=True, additional_headers=additional_headers
     )

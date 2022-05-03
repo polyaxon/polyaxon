@@ -36,6 +36,7 @@ from polyaxon.cli.run import run
 from polyaxon.cli.session import set_versions_config
 from polyaxon.cli.version import check_cli_version, upgrade, version
 from polyaxon.logger import clean_outputs, configure_logger
+from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.formatting import Printer
 
@@ -148,14 +149,12 @@ def cli(context, verbose, offline):
         "upgrade",
         "port-forward",
     ]
-    if not settings.CLI_CONFIG.installation:
-        pass
     if (
         not (
             context.invoked_subcommand in non_check_cmds
             or offline
             or settings.CLIENT_CONFIG.no_api
-            or settings.SERVICE
+            or PolyaxonServices.SERVICE
             or DOCS_GEN
         )
         and not settings.CLI_CONFIG.installation
@@ -193,7 +192,7 @@ except ImportError:
     pass
 
 # INIT
-if settings.SERVICE_IS_INIT:
+if PolyaxonServices.is_init():
     from polyaxon.cli.services.clean_artifacts import clean_artifacts
     from polyaxon.cli.services.docker import docker
     from polyaxon.cli.services.initializer import initializer
@@ -205,41 +204,41 @@ if settings.SERVICE_IS_INIT:
     cli.add_command(wait)
 
 # Events
-if settings.SERVICE_IS_EVENTS_HANDLER:
+if PolyaxonServices.is_events_handlers():
     from polyaxon.cli.services.notifier import notify
 
     cli.add_command(notify)
 
 # Sidecar
-if settings.SERVICE_IS_SIDECAR:
+if PolyaxonServices.is_sidecar():
     from polyaxon.cli.services.sidecar import sidecar
 
     cli.add_command(sidecar)
 
 # Tuner
-if settings.SERVICE_IS_HP_SEARCH:
+if PolyaxonServices.is_hp_search():
     from polyaxon.cli.services.tuner import tuner
 
     cli.add_command(tuner)
 
 # Agents
-if settings.SERVICE_IS_AGENT:
+if PolyaxonServices.is_agent():
     from polyaxon.cli.services.agent import agent
 
     cli.add_command(agent)
 
 # Proxies
 if (
-    settings.SERVICE_IS_STREAMS
-    or settings.SERVICE_IS_API
-    or settings.SERVICE_IS_GATEWAY
+    PolyaxonServices.is_streams()
+    or PolyaxonServices.is_api()
+    or PolyaxonServices.is_gateway()
 ):
     from polyaxon.cli.services.proxies import proxy
 
     cli.add_command(proxy)
 
 # Streams
-if settings.SERVICE_IS_STREAMS:
+if PolyaxonServices.is_streams():
     try:
         from polyaxon_deploy.cli.streams import streams
 
