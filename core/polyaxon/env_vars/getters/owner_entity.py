@@ -40,7 +40,7 @@ def resolve_entity_info(entity: str, entity_name: str, is_cli: bool = False):
     if not owner:
         owner = get_local_owner(is_cli=is_cli)
 
-    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
+    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_community):
         owner = DEFAULT
     owner = owner or settings.AUTH_CONFIG.username
 

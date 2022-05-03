@@ -70,7 +70,7 @@ class TestCliArtifacts(BaseCommandTestCase):
         assert update_artifact.call_count == 1
 
     @patch("polyaxon_sdk.ProjectsV1Api.create_version_stage")
-    def test_update_artifact(self, stage_artifact):
+    def test_update_artifact_stage(self, stage_artifact):
         self.runner.invoke(
             artifacts, ["stage", "-p", "admin/foo", "-to", "production", "--reason=foo"]
         )

@@ -24,7 +24,7 @@ from traceml.logging.schemas import V1Log, V1Logs
 
 
 def get_logs_streamer(
-    show_timestamp: bool = True, all_containers: bool =False, all_info: bool =False
+    show_timestamp: bool = True, all_containers: bool = False, all_info: bool = False
 ) -> Callable:
     colors = deque(Printer.COLORS)
     job_to_color = {}

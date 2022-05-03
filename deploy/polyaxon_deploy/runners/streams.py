@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from polyaxon.services.values import PolyaxonServices
 from polyaxon_deploy.runners.base import start_app
 
 
@@ -25,7 +26,7 @@ def start(
 ):
     start_app(
         app="polyaxon_deploy.apps.streams:app",
-        app_name="streams",
+        app_name=PolyaxonServices.STREAMS,
         host=host,
         port=port,
         log_level=log_level,

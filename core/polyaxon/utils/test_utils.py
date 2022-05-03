@@ -22,7 +22,7 @@ from unittest import TestCase, mock
 
 import ujson
 
-from polyaxon import settings
+from polyaxon import dist, settings
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1HostPathConnection
 from polyaxon.schemas.api.authentication import AccessTokenConfig
@@ -102,7 +102,7 @@ def patch_settings(
 
     settings.CLI_CONFIG = None
     if set_cli:
-        settings.CLI_CONFIG = CliConfig()
+        settings.CLI_CONFIG = CliConfig(installation={CliConfig.DIST: dist.EE})
 
     settings.AGENT_CONFIG = None
     if set_agent:

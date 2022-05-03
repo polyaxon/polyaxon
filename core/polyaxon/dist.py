@@ -14,8 +14,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-UNKNOWN = "unknown"
-DEFAULT = "default"
-DEFAULT_HUB = "polyaxon"
-NO_AUTH = "no-auth"
-DEFAULT_UPLOADS_PATH = "uploads"
+
+LOCAL = "local"
+SANDBOX = "sandbox"
+CE = "ce"
+EE = "ee"
+
+
+def is_local(value: str):
+    return LOCAL == value
+
+
+def is_sandbox(value: str):
+    return SANDBOX == value
+
+
+def is_ce(value: str):
+    return CE == value
+
+
+def is_community(value: str):
+    return value is None or value in {LOCAL, SANDBOX, CE}
+
+
+def is_ee(value: str):
+    return EE == value

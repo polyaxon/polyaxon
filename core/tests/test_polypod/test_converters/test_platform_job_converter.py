@@ -41,7 +41,7 @@ from polyaxon.schemas.types import (
     V1FileType,
     V1K8sResourceType,
 )
-from polyaxon.services.headers import PolyaxonServices
+from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.test_utils import BaseTestCase
 from traceml.artifacts import V1ArtifactKind
 

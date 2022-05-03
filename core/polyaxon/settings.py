@@ -19,13 +19,10 @@ import os
 from marshmallow import ValidationError
 
 from polyaxon.api import LOCALHOST
-from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_NO_CONFIG,
-    POLYAXON_KEYS_SERVICE,
-    POLYAXON_KEYS_SET_AGENT,
-)
+from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_CONFIG, POLYAXON_KEYS_SET_AGENT
 from polyaxon.managers.client import ClientConfigManager
 from polyaxon.managers.user import UserConfigManager
+from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.formatting import Printer
 
@@ -40,16 +37,16 @@ PROXIES_CONFIG = None
 AGENT_CONFIG = None
 SANDBOX_CONFIG = None
 
-SERVICE = os.environ.get(POLYAXON_KEYS_SERVICE)
-SERVICE_IS_AGENT = SERVICE == "agent"
-SERVICE_IS_SANDBOX = SERVICE == "sandbox"
-SERVICE_IS_HP_SEARCH = SERVICE == "hpsearch"
-SERVICE_IS_INIT = SERVICE == "init"
-SERVICE_IS_SIDECAR = SERVICE == "sidecar"
-SERVICE_IS_STREAMS = SERVICE == "streams"
-SERVICE_IS_API = SERVICE == "api"
-SERVICE_IS_GATEWAY = SERVICE == "gateway"
-SERVICE_IS_EVENTS_HANDLER = SERVICE == "events-handlers"
+SERVICE = PolyaxonServices.get_service_name()
+SERVICE_IS_AGENT = PolyaxonServices.is_agent(SERVICE)
+SERVICE_IS_SANDBOX = PolyaxonServices.is_sandbox(SERVICE)
+SERVICE_IS_HP_SEARCH = PolyaxonServices.is_hp_search(SERVICE)
+SERVICE_IS_INIT = PolyaxonServices.is_init(SERVICE)
+SERVICE_IS_SIDECAR = PolyaxonServices.is_sidecar(SERVICE)
+SERVICE_IS_STREAMS = PolyaxonServices.is_streams(SERVICE)
+SERVICE_IS_API = PolyaxonServices.is_api(SERVICE)
+SERVICE_IS_GATEWAY = PolyaxonServices.is_gateway(SERVICE)
+SERVICE_IS_EVENTS_HANDLER = PolyaxonServices.is_events_handlers(SERVICE)
 
 
 def set_proxies_config():

@@ -54,7 +54,8 @@ from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.pkg import VERSION
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.services.auth import AuthenticationTypes
-from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
+from polyaxon.services.headers import PolyaxonServiceHeaders
+from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.http_utils import clean_host
 
 

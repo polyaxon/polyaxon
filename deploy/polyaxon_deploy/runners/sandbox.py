@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from polyaxon import settings
+from polyaxon.services.values import PolyaxonServices
 from polyaxon_deploy.runners.base import start_app
 
 
@@ -29,7 +30,7 @@ def start(
 
     start_app(
         app="polyaxon_deploy.apps.sandbox:app",
-        app_name="sandbox",
+        app_name=PolyaxonServices.SANDBOX,
         host=host or settings.SANDBOX_CONFIG.host,
         port=port or settings.SANDBOX_CONFIG.port,
         log_level=log_level or settings.CLIENT_CONFIG.log_level,

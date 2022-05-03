@@ -60,7 +60,7 @@ def get_component_info(hub: str, use_local_owner: bool = False) -> Tuple[str, st
         except PolyaxonClientException:
             owner = None
 
-        if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
+        if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_community):
             owner = DEFAULT
     else:
         owner = DEFAULT_HUB
@@ -85,7 +85,7 @@ def get_model_info(entity: str, entity_name: str, is_cli: bool = False):
     except PolyaxonClientException:
         owner = None
 
-    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
+    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_community):
         owner = DEFAULT
 
     owner, entity_namespace, version = get_versioned_entity_info(

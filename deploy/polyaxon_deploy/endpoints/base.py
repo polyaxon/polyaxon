@@ -24,6 +24,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 
+from polyaxon import dist
 from polyaxon.api import API_V1_LOCATION
 from polyaxon_deploy import pkg
 
@@ -60,7 +61,7 @@ async def installation(request: Request):
     data = {
         "key": key,
         "version": pkg.VERSION,
-        "dist": "sandbox",
+        "dist": dist.SANDBOX,
     }
     return UJSONResponse(data)
 

@@ -89,7 +89,7 @@ def not_in_ce(fn):
         from polyaxon import settings
         from polyaxon.cli.errors import handle_command_not_in_ce
 
-        if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce:
+        if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_community:
             handle_command_not_in_ce()
         return fn(*args, **kwargs)
 

@@ -30,30 +30,3 @@ class PolyaxonServiceHeaders:
     @classmethod
     def get_headers(cls):
         return tuple(cls.VALUES | {cls.get_header(h) for h in cls.VALUES})
-
-
-class PolyaxonServices:  # noqa
-    PLATFORM = "platform"
-    AUTH = "auth"
-    UI = "ui"
-    CLI = "cli"
-    INITIALIZER = "initializer"
-    SIDECAR = "sidecar"
-    RUNNER = "runner"
-    AGENT = "agent"
-    OPERATOR = "operator"
-    BILLING = "billing"
-
-    VALUES = {
-        PLATFORM,
-        CLI,
-        UI,
-        AUTH,
-        INITIALIZER,
-        SIDECAR,
-        RUNNER,
-        AGENT,
-        OPERATOR,
-        BILLING,
-    }
-    AGENT_VALUES = [PLATFORM, CLI, UI, OPERATOR, AGENT, INITIALIZER, SIDECAR]

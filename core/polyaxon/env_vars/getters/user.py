@@ -38,7 +38,7 @@ def get_local_owner(is_cli: bool = False):
                 sys_exit=True,
             )
 
-    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
+    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_community):
         owner = DEFAULT
 
     if not owner:

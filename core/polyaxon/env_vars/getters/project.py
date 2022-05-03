@@ -64,7 +64,7 @@ def get_project_or_local(project=None, is_cli: bool = False):
     if not owner:
         owner = get_local_owner(is_cli=is_cli)
 
-    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
+    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_community):
         owner = DEFAULT
 
     if not all([owner, project_name]):

@@ -16,7 +16,7 @@
 
 from marshmallow import fields
 
-from polyaxon.constants.globals import PLATFORM_DIST_CE
+from polyaxon import dist
 from polyaxon.schemas.api.log_handler import LogHandlerSchema
 from polyaxon.schemas.cli.checks_config import ChecksConfig, ChecksSchema
 
@@ -35,6 +35,7 @@ class CliSchema(ChecksSchema):
 class CliConfig(ChecksConfig):
     SCHEMA = CliSchema
     IDENTIFIER = "cli"
+    DIST = "dist"
     INTERVAL = 30 * 60
 
     def __init__(
@@ -66,5 +67,7 @@ class CliConfig(ChecksConfig):
         return cli_version.get("latest")
 
     @property
-    def is_ce(self):
-        return self.installation and self.installation.get("dist") == PLATFORM_DIST_CE
+    def is_community(self):
+        return self.installation is None or dist.is_community(
+            self.installation.get(self.DIST)
+        )

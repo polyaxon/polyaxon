@@ -29,7 +29,7 @@ from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.user import UserConfigManager
 from polyaxon.schemas.cli.client_config import ClientConfig
-from polyaxon.services.headers import PolyaxonServices
+from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.tz_utils import now
 from polyaxon.utils.versions import clean_version_for_compatibility
@@ -45,9 +45,9 @@ def session_expired():
 
 
 def get_server_installation(polyaxon_client=None):
-    polyaxon_client = polyaxon_client or PolyaxonClient()
+    polyaxon_client = polyaxon_client or PolyaxonClient(ClientConfig(retries=0))
     try:
-        return polyaxon_client.versions_v1.get_installation(_request_timeout=15)
+        return polyaxon_client.versions_v1.get_installation(_request_timeout=5)
     except ApiException as e:
         if e.status == 403:
             session_expired()
@@ -86,7 +86,7 @@ def get_compatibility(
         if is_cli:
             handle_cli_error(
                 e,
-                message="Could parse the version {}.".format(version),
+                message="Could not parse the version {}.".format(version),
             )
     polyaxon_client = polyaxon_client or PolyaxonClient(
         config=ClientConfig(use_cloud_host=True, verify_ssl=False), token=NO_AUTH
@@ -150,7 +150,7 @@ def set_versions_config(
     key: str = None,
     is_cli: bool = True,
 ):
-    polyaxon_client = polyaxon_client or PolyaxonClient()
+    polyaxon_client = polyaxon_client or PolyaxonClient(ClientConfig(retries=0))
     server_installation = None
     if set_installation:
         server_installation = get_server_installation(polyaxon_client=polyaxon_client)

@@ -49,7 +49,8 @@ from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.polypod.specs.replica import ReplicaSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 from polyaxon.services.auth import AuthenticationTypes
-from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
+from polyaxon.services.headers import PolyaxonServiceHeaders
+from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.fqn_utils import get_resource_name, get_run_instance
 from polyaxon.utils.host_utils import get_api_host
 from polyaxon.utils.http_utils import clean_host

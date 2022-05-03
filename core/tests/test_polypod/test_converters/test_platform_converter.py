@@ -23,7 +23,8 @@ from polyaxon.polypod.common.env_vars import get_service_env_vars
 from polyaxon.polypod.compiler.converters import BaseConverter
 from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
 from polyaxon.services.auth import AuthenticationTypes
-from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
+from polyaxon.services.headers import PolyaxonServiceHeaders
+from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.test_utils import BaseTestCase
 
 

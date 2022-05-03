@@ -127,10 +127,14 @@ def version(check):
     if check:
         config = set_versions_config()
         Printer.print_header("Platform:")
-        config_installation = dict_to_tabulate(
-            config.installation,
-            humanize_values=True,
-            exclude_attrs=["hmac", "auth", "host"],
+        config_installation = (
+            dict_to_tabulate(
+                config.installation,
+                humanize_values=True,
+                exclude_attrs=["hmac", "auth", "host"],
+            )
+            if config.installation
+            else {"Server": "not found or not deployed"}
         )
         dict_tabulate(config_installation)
         Printer.print_header("Compatibility versions:")
