@@ -21,7 +21,7 @@ from rest_framework.views import APIView
 from coredb.managers.dummy_key import get_dummy_key
 from polyaxon.cli.session import get_compatibility
 from polyaxon.schemas.cli.cli_config import CliConfig
-from polyaxon.services.headers import PolyaxonServices
+from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.tz_utils import now
 from polycommon import conf, pkg
 from polycommon.options.registry.installation import ORGANIZATION_KEY
