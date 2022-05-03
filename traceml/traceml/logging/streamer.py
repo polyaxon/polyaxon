@@ -24,7 +24,7 @@ from traceml.logging.schemas import V1Log, V1Logs
 
 
 def get_logs_streamer(
-    show_timestamp=True, all_containers=False, all_info=False
+    show_timestamp: bool = True, all_containers: bool =False, all_info: bool =False
 ) -> Callable:
     colors = deque(Printer.COLORS)
     job_to_color = {}
@@ -36,7 +36,7 @@ def get_logs_streamer(
         log_line = ""
         if log.timestamp and show_timestamp:
             date_value = local_datetime(log_dict.get("timestamp"))
-            log_line = Printer.add_color(date_value, "white") + " | "
+            log_line = Printer.add_log_color(date_value, "white") + " | "
 
         def get_container_info():
             if container_info in job_to_color:
@@ -45,7 +45,7 @@ def get_logs_streamer(
                 color = colors[0]
                 colors.rotate(-1)
                 job_to_color[container_info] = color
-            return Printer.add_color(container_info, color) + " | "
+            return Printer.add_log_color(container_info, color) + " | "
 
         if not all_containers and log.container != MAIN_JOB_CONTAINER:
             return log_line
@@ -53,9 +53,9 @@ def get_logs_streamer(
         if all_info:
             container_info = ""
             if log.node:
-                log_line += Printer.add_color(log_dict.get("node"), "white") + " | "
+                log_line += Printer.add_log_color(log_dict.get("node"), "white") + " | "
             if log.pod:
-                log_line += Printer.add_color(log_dict.get("pod"), "white") + " | "
+                log_line += Printer.add_log_color(log_dict.get("pod"), "white") + " | "
             if log.container:
                 container_info = log_dict.get("container")
 

@@ -71,6 +71,12 @@ def run(
 
     polyaxon_client = RunClient(owner=owner, project=project_name)
 
+    def get_instance_info(r):
+        return (
+            f"[white]{r.name}[/white]@[white]{r.uuid}[/white] "
+            f"under [white]{owner}[/white]/[white]{project_name}[/white]"
+        )
+
     def cache_run(data):
         config = polyaxon_client.client.sanitize_for_serialization(data)
         cache.cache(
@@ -103,7 +109,9 @@ def run(
                 response_data["url"] = run_url
                 handle_output(response_data, output)
                 return
-            Printer.print_success("A new run `{}` was created".format(response.uuid))
+            Printer.print_success(
+                "A new run was created: {}".format(get_instance_info(response))
+            )
             if not eager:
                 cache_run(response)
                 click.echo("You can view this run on Polyaxon UI: {}".format(run_url))
@@ -216,22 +224,19 @@ def run(
     if not eager:
         if watch:
             for instance in runs_to_watch:
-                Printer.print_success(
-                    f"Starting watch for run: "
-                    f"<Name: {instance.name}> - <uuid: {instance.uuid}>"
+                Printer.print_header(
+                    f"Starting watch for run: {get_instance_info(instance)}"
                 )
                 watch_run_statuses(instance.uuid)
         if log:
             for instance in runs_to_watch:
-                Printer.print_success(
-                    f"Starting logs for run: "
-                    f"<Name: {instance.name}> - <uuid: {instance.uuid}>"
+                Printer.print_header(
+                    f"Starting logs for run: {get_instance_info(instance)}"
                 )
                 watch_run_logs(instance.uuid)
         if shell:
             for instance in runs_to_watch:
-                Printer.print_success(
-                    f"Starting shell session for run: "
-                    f"<Name: {instance.name}> - <uuid: {instance.uuid}>"
+                Printer.print_header(
+                    f"Starting shell session for run: {get_instance_info(instance)}"
                 )
                 start_run_shell(instance.uuid)

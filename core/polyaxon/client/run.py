@@ -787,7 +787,10 @@ class RunClient:
 
     @client_handler(check_no_op=True, check_offline=True)
     def wait_for_condition(
-        self, statuses: List[str] = None, print_status: bool = False
+        self,
+        statuses: List[str] = None,
+        print_status: bool = False,
+        live_update: any = None,
     ):
         """Waits for the run's last status to meet a condition.
 
@@ -804,6 +807,11 @@ class RunClient:
             self._run_data.status = status
             if print_status:
                 print("Last received status: {}\n".format(status))
+            if live_update:
+                latest_status = Printer.add_status_color(
+                    {"status": status}, status_key="status"
+                )
+                live_update.update(status="{}\n".format(latest_status["status"]))
 
     @client_handler(check_no_op=True, check_offline=True)
     def watch_statuses(self, statuses: List[str] = None):
@@ -2571,9 +2579,9 @@ class RunClient:
         """
         delete_path(path)
         self.refresh_data(load_artifacts_lineage=True, load_conditions=True)
-        self.persist_run(path)
         if download_artifacts:
             self.download_artifacts(path_to=path)
+        self.persist_run(path)
 
     @client_handler(check_no_op=True)
     def push_offline_run(
@@ -2655,17 +2663,26 @@ def get_run_logs(
                 )
                 sys.exit(1)
 
-    def handle_status(last_status: str = None):
+    def handle_status(last_status: str = None, live_update=None):
         if not last_status:
             return {"status": None}
 
-        click.echo(
-            "{}".format(
-                Printer.add_status_color({"status": last_status}, status_key="status")[
-                    "status"
-                ]
+        if live_update:
+            live_update.update(
+                status="{}".format(
+                    Printer.add_status_color(
+                        {"status": last_status}, status_key="status"
+                    )["status"]
+                )
             )
-        )
+        else:
+            click.echo(
+                "{}".format(
+                    Printer.add_status_color(
+                        {"status": last_status}, status_key="status"
+                    )["status"]
+                )
+            )
         return last_status
 
     def handle_logs():
@@ -2678,15 +2695,16 @@ def get_run_logs(
         if conditions:
             last_transition_time = conditions[0].last_transition_time
 
-        while not LifeCycle.is_done(last_status) and not LifeCycle.is_running(
-            last_status
-        ):
-            time.sleep(settings.CLIENT_CONFIG.watch_interval)
-            last_status, conditions = client.get_statuses()
-            if conditions:
-                last_transition_time = conditions[0].last_transition_time
-            if _status != last_status:
-                _status = handle_status(last_status)
+        with Printer.console.status("Waiting for running condition ...") as live_update:
+            while not LifeCycle.is_done(last_status) and not LifeCycle.is_running(
+                last_status
+            ):
+                time.sleep(settings.CLIENT_CONFIG.watch_interval)
+                last_status, conditions = client.get_statuses()
+                if conditions:
+                    last_transition_time = conditions[0].last_transition_time
+                if _status != last_status:
+                    _status = handle_status(last_status, live_update)
 
         if LifeCycle.is_done(last_status):
             last_time = None

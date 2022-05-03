@@ -21,6 +21,7 @@ from polyaxon.cli.project_versions import (
     copy_project_version,
     delete_project_version,
     get_project_version,
+    get_project_version_stages,
     list_project_versions,
     open_project_version_dashboard,
     pull_one_or_many_project_versions,
@@ -280,6 +281,37 @@ def get(ctx, project, version):
         project or ctx.obj.get("project"), is_cli=True
     )
     get_project_version(
+        owner=owner,
+        project_name=project_name,
+        kind=V1ProjectVersionKind.MODEL,
+        version=version,
+    )
+
+
+@models.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_MODEL_VERSION["args"], **OPTIONS_MODEL_VERSION["kwargs"])
+@click.pass_context
+@clean_outputs
+def stages(ctx, project, version):
+    """List stages information for a model version by name, name & version, owner/name & tag.
+
+    Examples:
+
+    \b
+    $ polyaxon models stages // returns `latest` in current project
+
+    \b
+    $ polyaxon models stages --project=my-project --version=test-version
+
+    \b
+    $ polyaxon models stages -p owner/my-project -ver rc12
+    """
+    version = version or ctx.obj.get("version") or "latest"
+    owner, project_name = get_project_or_local(
+        project or ctx.obj.get("project"), is_cli=True
+    )
+    get_project_version_stages(
         owner=owner,
         project_name=project_name,
         kind=V1ProjectVersionKind.MODEL,

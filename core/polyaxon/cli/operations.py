@@ -77,22 +77,35 @@ DEFAULT_EXCLUDE = [
     "role",
     "status_conditions",
     "graph",
+    "resources",
 ]
 
 
-def handle_run_statuses(status, conditions):
+def handle_run_statuses(status, conditions, table):
     if not conditions:
-        return
-    Printer.print_header("Latest status:")
-    latest_status = Printer.add_status_color({"status": status}, status_key="status")
-    click.echo("{}\n".format(latest_status["status"]))
+        return False
 
-    objects = list_dicts_to_tabulate(
-        [Printer.add_status_color(o.to_dict(), status_key="type") for o in conditions]
+    Printer.console.print(
+        "Latest status: {}".format(
+            Printer.add_status_color({"status": status}, status_key="status")["status"]
+        )
     )
+    objects = [
+        dict_to_tabulate(Printer.add_status_color(o.to_dict(), status_key="type"))
+        for o in conditions
+    ]
+
+    if not objects:
+        return False
+
+    if not table.columns:
+        for c in objects[0].keys():
+            table.add_column(c)
     if objects:
-        Printer.print_header("Conditions:")
-        dict_tabulate(objects, is_list_dict=True)
+        for o in objects:
+            table.add_row(*o.values())
+
+    return True
 
 
 def get_run_details(run):  # pylint:disable=redefined-outer-name
@@ -107,14 +120,6 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
     if run.outputs:
         Printer.print_header("Run outputs:")
         dict_tabulate(run.outputs)
-
-    if run.settings:
-        Printer.print_header("Run settings:")
-        dict_tabulate(run.settings.to_dict())
-
-    if run.meta_info:
-        Printer.print_header("Run meta info:")
-        dict_tabulate(run.meta_info)
 
     response = Printer.add_status_color(run.to_dict())
     response = dict_to_tabulate(
@@ -138,6 +143,14 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
 
     Printer.print_header("Run info:")
     dict_tabulate(response)
+
+    if run.settings:
+        Printer.print_header("Run settings:")
+        dict_tabulate(run.settings.to_dict())
+
+    if run.meta_info:
+        Printer.print_header("Run meta info:")
+        dict_tabulate(run.meta_info)
 
 
 @click.group()
@@ -347,8 +360,19 @@ def ls(
             write_csv(objects, filename=filename)
             Printer.print_success("CSV file generated: `{}`".format(filename))
         else:
+            for o in objects:
+                o.pop("project_name", None)
+            all_columns = objects[0].keys()
+            Printer.print_header("Displayed columns ({}):".format(len(all_columns)))
+            Printer.console.print(" | ".join(all_columns))
+            Printer.print_info("\nTips:")
+            Printer.print_tip(
+                "  1. You can enable the inputs/outputs columns using `-io`"
+            )
+            Printer.print_tip(
+                "  2. You can select the columns to show using `-c col1,cl2,col3,...`"
+            )
             Printer.print_header("Runs:")
-            objects.pop("project_name", None)
             dict_tabulate(objects, is_list_dict=True)
 
 
@@ -853,19 +877,24 @@ def statuses(ctx, project, uid, watch):
     )
 
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
+    table = Printer.get_table()
     if watch:
-        try:
-            for status, conditions in client.watch_statuses():
-                handle_run_statuses(status, conditions)
-        except (ApiException, HTTPError, PolyaxonClientException) as e:
-            handle_cli_error(
-                e, message="Could get status for run `{}`.".format(run_uuid)
-            )
-            sys.exit(1)
+        with Printer.get_live() as live:
+            try:
+                for status, conditions in client.watch_statuses():
+                    updated = handle_run_statuses(status, conditions, table)
+                    if updated:
+                        live.update(table)
+            except (ApiException, HTTPError, PolyaxonClientException) as e:
+                handle_cli_error(
+                    e, message="Could get status for run `{}`.".format(run_uuid)
+                )
+                sys.exit(1)
     else:
         try:
             status, conditions = client.get_statuses()
-            handle_run_statuses(status, conditions)
+            handle_run_statuses(status, conditions, table)
+            Printer.console.print(table)
         except (ApiException, HTTPError, PolyaxonClientException) as e:
             handle_cli_error(
                 e, message="Could get status for run `{}`.".format(run_uuid)
@@ -1580,8 +1609,7 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
     offline_path = path or container_contexts.CONTEXT_OFFLINE_ROOT
     offline_path_format = "{}/{{}}".format(offline_path)
 
-    def _pull(run_uuid: str):
-        Printer.print_header(f"Pulling remote run {run_uuid} ...")
+    def _pull_impl(run_uuid: str):
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
         artifacts_path = offline_path_format.format(run_uuid)
         try:
@@ -1600,6 +1628,10 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
         ) as e:
             handle_cli_error(e, message="Could not pull run `{}`.".format(run_uuid))
 
+    def _pull(run_uuid: str):
+        with Printer.console.status(f"[header]Pulling remote run {run_uuid}[/header] "):
+            _pull_impl(run_uuid)
+
     if all_runs or any([query, limit, offset]):
         limit = 1000 if all_runs else limit
         try:
@@ -1614,7 +1646,7 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
                 e, message="Could not get runs for project `{}`.".format(project_name)
             )
             sys.exit(1)
-        Printer.print_header(f"Pulling remote runs (total: {len(runs)})...")
+        Printer.print_header(f"Pulling remote runs (total: {len(runs)})...", pad=False)
         for idx, run in enumerate(runs):
             Printer.print_header(f"Pulling run {idx + 1}/{len(runs)} ...")
             _pull(run.uuid)
@@ -1701,8 +1733,7 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
     offline_path = path or container_contexts.CONTEXT_OFFLINE_ROOT
     offline_path_format = "{}/{{}}".format(offline_path)
 
-    def _push(run_uuid: str):
-        Printer.print_header(f"Loading offline run {uid} ...")
+    def _push_impl(run_uuid: str):
         client = RunClient(
             owner=owner, project=project_name, run_uuid=run_uuid, is_offline=True
         )
@@ -1718,10 +1749,10 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
             handle_cli_error(
                 e, message="Could not load offline run `{}`.".format(run_uuid)
             )
-            sys.exit(1)
+            return
 
-        Printer.print_header(
-            f"Pushing offline run {uid} to {client.owner}/{client.project} ..."
+        Printer.print_success(
+            f"Offline run {uid} loaded, start pushing to {client.owner}/{client.project} ..."
         )
         try:
             client.push_offline_run(
@@ -1742,7 +1773,13 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
             handle_cli_error(
                 e, message="Could not push offline run `{}`.".format(run_uuid)
             )
-            sys.exit(1)
+            return
+
+    def _push(run_uuid: str):
+        with Printer.console.status(
+            f"[header]Pushing offline run {run_uuid}[/header] "
+        ):
+            _push_impl(run_uuid)
 
     if all_runs:
         if (
@@ -1756,7 +1793,9 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
             )
             sys.exit(1)
         run_paths = os.listdir(offline_path)
-        Printer.print_header(f"Pushing local runs (total: {len(run_paths)}) ...")
+        Printer.print_header(
+            f"Pushing local runs (total: {len(run_paths)}) ...", pad=False
+        )
         for idx, uid in enumerate(run_paths):
             Printer.print_header(f"Pushing run {idx + 1}/{len(run_paths)} ...")
             _push(uid)
@@ -1769,35 +1808,39 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
         sys.exit(1)
 
 
-def _wait_for_running_condition(client):
+def _wait_for_running_condition(client, live_update):
     client.refresh_data()
     if LifeCycle.is_running(client.run_data.status):
         return
 
-    Printer.print_header("Waiting for running condition ...")
     client.wait_for_condition(
-        statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES, print_status=True
+        statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES,
+        live_update=live_update,
     )
 
     client.refresh_data()
     if LifeCycle.is_done(client.run_data.status):
-        Printer.print_header("The operations reached a final status.")
         latest_status = Printer.add_status_color(
             {"status": client.run_data.status}, status_key="status"
         )
-        click.echo("{}\n".format(latest_status["status"]))
+        live_update.update(
+            status="The operation has reached a final status: {}\n.".format(
+                latest_status["status"]
+            )
+        )
         sys.exit()
 
 
 def wait_for_running_condition(client):
-    try:
-        _wait_for_running_condition(client)
-    except (ApiException, HTTPError) as e:
-        handle_cli_error(
-            e,
-            message="Could not wait for running condition "
-            "for run `{}` under project `{}/{}`.".format(
-                client.run_uuid, client.owner, client.project
-            ),
-        )
-        sys.exit(1)
+    with Printer.console.status("Waiting for running condition ...") as live_update:
+        try:
+            _wait_for_running_condition(client, live_update)
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(
+                e,
+                message="Could not wait for running condition "
+                "for run `{}` under project `{}/{}`.".format(
+                    client.run_uuid, client.owner, client.project
+                ),
+            )
+            sys.exit(1)

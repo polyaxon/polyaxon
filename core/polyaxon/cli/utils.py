@@ -19,7 +19,7 @@ import ujson
 from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate, pprint
 
 
-def get_entity_details(entity: str, entity_name: str):
+def get_entity_details(entity: any, entity_name: str):
     if entity.description:
         Printer.print_header("{} description:".format(entity_name))
         click.echo("{}\n".format(entity.description))
@@ -38,7 +38,7 @@ def get_entity_details(entity: str, entity_name: str):
     dict_tabulate(response)
 
 
-def handle_output(response, output: str):
+def handle_output(response: any, output: str):
     if output == "json":
 
         pprint(response)

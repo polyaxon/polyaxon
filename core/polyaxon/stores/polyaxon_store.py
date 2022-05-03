@@ -30,6 +30,7 @@ from polyaxon.exceptions import (
     PolyaxonShouldExitError,
 )
 from polyaxon.logger import logger
+from polyaxon.utils.formatting import Printer
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import (
     check_or_create_path,
@@ -37,7 +38,6 @@ from polyaxon.utils.path_utils import (
     get_files_by_paths,
     untar_file,
 )
-from polyaxon.utils.requests_utils import create_progress_callback, progress_bar
 from traceml.processors.units_processors import format_sizeof
 
 
@@ -132,35 +132,34 @@ class PolyaxonStore:
         request_headers = self._client.client.config.get_full_headers(headers=headers)
         request_headers.update({"Content-Type": multipart_encoder.content_type})
 
-        # Attach progress bar
-        progress_callback = None
-        callback_bar = None
-        if show_progress:
-            progress_callback, callback_bar = create_progress_callback(
-                multipart_encoder
-            )
-
-        multipart_encoder_monitor = MultipartEncoderMonitor(
-            multipart_encoder, progress_callback
-        )
-
         timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
 
         session = session or requests.Session()
-        try:
-            response = session.post(
+
+        def _download_impl(callback=None):
+            multipart_encoder_monitor = MultipartEncoderMonitor(
+                multipart_encoder, callback
+            )
+            return session.post(
                 url=url,
                 params=params,
                 data=multipart_encoder_monitor,
                 headers=request_headers,
                 timeout=timeout,
             )
-        finally:
-            # always make sure we clear the console
-            if callback_bar:
-                callback_bar.done()
 
-        return response
+        if not show_progress:
+            return _download_impl()
+
+        with Printer.get_progress() as progress:
+            task = progress.add_task("[cyan]Uploading contents:", total=1)
+
+            def progress_callback(monitor):
+                progress.update(
+                    task, completed=monitor.bytes_read / multipart_encoder.len
+                )
+
+            return _download_impl(progress_callback)
 
     def download(
         self,
@@ -174,6 +173,7 @@ class PolyaxonStore:
         delete_tar=True,
         extract_path=None,
         use_filepath=True,
+        show_progress=True,
     ):
         """
         Download the file from the given url at the current path
@@ -206,17 +206,26 @@ class PolyaxonStore:
                 content_length = response.headers.get("x-polyaxon-content-length")
                 if not content_length:
                     content_length = response.headers.get("content-length")
-                if content_length:
-                    for chunk in progress_bar(
-                        response.iter_content(chunk_size=1024),
-                        expected_size=(int(content_length) / 1024) + 1,
-                    ):
+                expected_size = (
+                    (int(content_length) / 1024) + 1 if content_length else None
+                )
+
+                def _download_impl():
+                    for idx, chunk in enumerate(response.iter_content(chunk_size=1024)):
+                        if progress:
+                            progress.update(
+                                task,
+                                advance=idx / expected_size if expected_size else None,
+                            )
                         if chunk:
                             f.write(chunk)
+
+                if show_progress:
+                    with Printer.get_progress() as progress:
+                        task = progress.add_task("[cyan]Writing contents:", total=1)
+                        _download_impl()
                 else:
-                    for chunk in response.iter_content(chunk_size=1024):
-                        if chunk:
-                            f.write(chunk)
+                    _download_impl()
 
             if untar:
                 filename = untar_file(

@@ -23,7 +23,12 @@ from urllib.parse import parse_qs
 
 import click
 
-from tabulate import tabulate
+from rich import box
+from rich.console import Console
+from rich.live import Live
+from rich.progress import Progress
+from rich.table import Column, Table
+from rich.theme import Theme
 
 from polyaxon.schemas.api.resources import ContainerResourcesConfig
 from polyaxon.utils.humanize import humanize_timesince
@@ -75,7 +80,11 @@ def humanize_attrs(key, value, rounding=2):
         return to_percentage(value, rounding)
     if key in ["memory_free", "memory_used", "memory_total"]:
         return to_unit_memory(value)
-    return value
+    if isinstance(value, str):
+        return value
+    if value is None:
+        return ""
+    return json.dumps(value)
 
 
 def list_dicts_to_tabulate(
@@ -86,10 +95,11 @@ def list_dicts_to_tabulate(
     upper_keys: bool = True,
 ):
     exclude_attrs = exclude_attrs or {}
-    results = {}
+    results = []
     if include_attrs:  # If include_attrs disable exclude_attrs
         exclude_attrs = {}
     for d_value in list_dicts:
+        r_value = {}
         for k, v in d_value.items():
             if k in exclude_attrs:
                 continue
@@ -101,11 +111,8 @@ def list_dicts_to_tabulate(
 
             if upper_keys:
                 k = k.upper()
-            if k in results:
-                results[k].append(v)
-            else:
-                results[k] = [v]
-
+            r_value[k] = v
+        results.append(r_value)
     return results
 
 
@@ -148,10 +155,16 @@ def dict_to_tabulate(d_value, exclude_attrs=None, humanize_values=True):
 
 def dict_tabulate(dict_value, is_list_dict=False):
     if is_list_dict:
-        headers = dict_value.keys()
-        click.echo(tabulate(dict_value, headers=headers))
+        headers = dict_value[0].keys() if dict_value else []
+        table = Printer.get_table(*headers)
+        for d in dict_value:
+            table.add_row(*d.values())
+        Printer.console.print(table)
     else:
-        click.echo(tabulate(dict_value.items()))
+        table = Printer.get_table(show_header=False, padding=0, box=box.SIMPLE)
+        for k, v in dict_value.items():
+            table.add_row(k, humanize_attrs(k, v))
+        Printer.console.print(table)
 
 
 def pprint(value):
@@ -161,52 +174,92 @@ def pprint(value):
 
 class Printer:
     COLORS = ["yellow", "blue", "magenta", "green", "cyan", "red", "white"]
+    console = Console(
+        theme=Theme(
+            {
+                "header": "yellow",
+                "success": "green",
+                "info": "cyan",
+                "warning": "magenta",
+                "error": "red",
+                "white": "white",
+            }
+        ),
+        markup=True,
+    )
+
+    @staticmethod
+    def get_progress():
+        return Progress()
+
+    @classmethod
+    def get_live(cls):
+        return Live(console=cls.console)
+
+    @staticmethod
+    def get_table(*args, **kwargs):
+        return Table(*[Column(header=h, no_wrap=True) for h in args], **kwargs)
 
     @classmethod
     def print_help(cls, command_help: str = None):
         if command_help:
-            cls.print_header(
-                "Please run `polyaxon {} --help` for more details".format(command_help)
+            cls.console.print(
+                "Please run [white]`polyaxon {} --help`[/white] for more details".format(
+                    command_help
+                ),
+                style="info",
             )
 
-    @staticmethod
-    def print_header(text):
-        click.secho("\n{}\n".format(text), fg="yellow")
+    @classmethod
+    def print_header(cls, text, pad: bool = True):
+        cls.console.print("\n{}\n".format(text) if pad else text, style="header")
 
     @classmethod
     def print_warning(cls, text, command_help: str = None):
-        click.secho("\n{}\n".format(text), fg="magenta")
+        cls.console.print(text, style="warning")
         if command_help:
             cls.print_help(command_help)
 
-    @staticmethod
-    def print_success(text):
-        click.secho(text, fg="green")
+    @classmethod
+    def print_success(cls, text):
+        cls.console.print(text, style="success")
 
     @classmethod
     def print_error(cls, text, sys_exit: bool = False, command_help: str = None):
-        click.secho(text, fg="red")
+        cls.console.print(text, style="error")
         if command_help:
             cls.print_help(command_help)
         if sys_exit:
             sys.exit(1)
 
+    @classmethod
+    def print_tip(cls, text):
+        cls.console.print(text, style="white")
+
+    @classmethod
+    def print_info(cls, text):
+        cls.console.print(text, style="info")
+
     @staticmethod
-    def add_color(value, color):
+    def add_log_color(value, color):
         return click.style("{}".format(value), fg=color)
+
+    @classmethod
+    def add_color(cls, value, style):
+        return "[{style}]{value}[/{style}]".format(value=value, style=style)
 
     @classmethod
     def get_colored_status(cls, status):
         if status == "created":
-            return cls.add_color(status, "cyan")
+            return cls.add_color(status, "info")
         elif status == "succeeded":
-            return cls.add_color(status, color="green")
+            return cls.add_color(status, style="success")
         elif status in ["failed", "stopped", "upstream_failed"]:
-            return cls.add_color(status, color="red")
+            return cls.add_color(status, style="error")
         elif status == "done":
-            return cls.add_color(status, color="white")
+            return cls.add_color(status, style="white")
 
-        return cls.add_color(status, color="yellow")
+        return cls.add_color(status, style="header")
 
     @classmethod
     def add_status_color(cls, obj_dict, status_key="status"):
@@ -237,7 +290,7 @@ class Printer:
     def resources(cls, jobs_resources):
         jobs_resources = to_list(jobs_resources)
         click.clear()
-        data = [["Job", "Mem Usage / Total", "CPU% - CPUs"]]
+        table = Printer.get_table("Job", "Mem Usage / Total", "CPU% - CPUs")
         for job_resources in jobs_resources:
             job_resources = ContainerResourcesConfig.from_dict(job_resources)
             line = [
@@ -251,24 +304,22 @@ class Printer:
                     job_resources.n_cpus,
                 ),
             ]
-            data.append(line)
-        click.echo(tabulate(data, headers="firstrow"))
+            table.add_row(*line)
+        Printer.console.print(table)
         sys.stdout.flush()
 
     @classmethod
     def gpu_resources(cls, jobs_resources):
         jobs_resources = to_list(jobs_resources)
         click.clear()
-        data = [
-            [
-                "job_name",
-                "name",
-                "GPU Usage",
-                "GPU Mem Usage / Total",
-                "GPU Temperature",
-                "Power Draw / Limit",
-            ]
-        ]
+        table = Printer.get_table(
+            "job_name",
+            "name",
+            "GPU Usage",
+            "GPU Mem Usage / Total",
+            "GPU Temperature",
+            "Power Draw / Limit",
+        )
         non_gpu_jobs = 0
         for job_resources in jobs_resources:
             job_resources = ContainerResourcesConfig.from_dict(job_resources)
@@ -290,13 +341,13 @@ class Printer:
                         gpu_resources.power_draw, gpu_resources.power_limit
                     ),
                 ]
-            data.append(line)
+            table.add_row(*line)
         if non_gpu_jobs == len(jobs_resources):
             Printer.print_error(
                 "No GPU job was found, please run `resources` command without `-g | --gpu` option."
             )
             exit(1)
-        click.echo(tabulate(data, headers="firstrow"))
+        Printer.console.print(table)
         sys.stdout.flush()
 
 

@@ -26,7 +26,7 @@ from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import PolyaxonClient, ProjectClient
 from polyaxon.containers import contexts as container_contexts
-from polyaxon.lifecycle import V1ProjectVersionKind, V1StageCondition, V1Stages
+from polyaxon.lifecycle import V1ProjectVersionKind
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -45,7 +45,9 @@ def get_version_details(response, content_callback: Callable = None):
     content = response.content
     meta_info = response.meta_info
     response = dict_to_tabulate(
-        response.to_dict(), humanize_values=True, exclude_attrs=["content", "meta_info"]
+        response.to_dict(),
+        humanize_values=True,
+        exclude_attrs=["content", "meta_info", "stage_conditions"],
     )
 
     Printer.print_header("Version info:")
@@ -69,6 +71,37 @@ def get_version_details(response, content_callback: Callable = None):
 
     content_callback = content_callback or get_content
     content_callback(content)
+
+
+def get_version_stages_table(stage, conditions):
+    table = Printer.get_table()
+
+    if not conditions:
+        Printer.console.print(table)
+        return
+
+    Printer.console.print(
+        "Latest stage: {}".format(
+            Printer.add_status_color({"stage": stage}, status_key="stage")["stage"]
+        )
+    )
+    objects = [
+        dict_to_tabulate(Printer.add_status_color(o.to_dict(), status_key="type"))
+        for o in conditions
+    ]
+
+    if not objects:
+        Printer.console.print(table)
+        return
+
+    if not table.columns:
+        for c in objects[0].keys():
+            table.add_column(c)
+    if objects:
+        for o in objects:
+            table.add_row(*o.values())
+
+    Printer.console.print(table)
 
 
 def list_project_versions_response(
@@ -133,6 +166,11 @@ def list_project_versions(
             "project",
             "role",
             "content",
+            "connection",
+            "meta_info",
+            "run",
+            "artifacts",
+            "stage_conditions",
         ],
     )
     if objects:
@@ -251,6 +289,30 @@ def get_project_version(
     try:
         response = polyaxon_client.get_version(kind, version)
         get_version_details(response, content_callback)
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(
+            e,
+            message="Could not get {} version `{}`.".format(
+                kind,
+                fqn_version,
+            ),
+            sys_exit=True,
+        )
+
+
+def get_project_version_stages(
+    owner: str,
+    project_name: str,
+    kind: V1ProjectVersionKind,
+    version: str,
+    client: PolyaxonClient = None,
+):
+    fqn_version = get_versioned_entity_full_name(owner, project_name, version)
+    polyaxon_client = ProjectClient(owner=owner, project=project_name, client=client)
+
+    try:
+        stage, stage_conditions = polyaxon_client.get_version_stages(kind, version)
+        get_version_stages_table(stage, stage_conditions)
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e,
@@ -430,7 +492,9 @@ def pull_project_version(
 
     try:
         Printer.print_header(
-            "Pulling the {} version `{}` to `{} ...".format(kind, fqn_version, path)
+            "Pulling the {} version [white]`{}`[/white] to `{} ...".format(
+                kind, fqn_version, path
+            )
         )
         polyaxon_client.pull_version(
             kind, version, path=path, download_artifacts=download_artifacts
@@ -466,7 +530,7 @@ def pull_one_or_many_project_versions(
     )
     offline_path_format = "{}/{{}}".format(offline_path)
 
-    def _pull(version_name: str):
+    def _pull_impl(version_name: str):
         version_path = offline_path_format.format(version_name)
         pull_project_version(
             owner=owner,
@@ -476,6 +540,12 @@ def pull_one_or_many_project_versions(
             path=version_path,
             download_artifacts=download_artifacts,
         )
+
+    def _pull(version_name: str):
+        with Printer.console.status(
+            f"[header]Pulling remote versions {version_name}[/header] ",
+        ):
+            _pull_impl(version_name)
 
     if all_versions or any([query, limit, offset]):
         limit = 1000 if all_versions else limit
@@ -487,7 +557,9 @@ def pull_one_or_many_project_versions(
             offset=offset,
             query=query,
         ).results
-        Printer.print_header(f"Pulling {kind} versions (total: {len(versions)}) ...")
+        Printer.print_header(
+            f"Pulling {kind} versions (total: {len(versions)}) ...", pad=False
+        )
         for idx, version in enumerate(versions):
             Printer.print_header(f"Pulling version {idx + 1}/{len(versions)} ...")
             _pull(version.name)

@@ -17,7 +17,7 @@ import os
 
 from datetime import datetime
 from requests import HTTPError
-from typing import Dict, List, Union
+from typing import Dict, List, Tuple, Union
 
 import ujson
 
@@ -425,6 +425,84 @@ class ProjectClient:
             V1ProjectVersion, artifact version.
         """
         return self.get_version(kind=V1ProjectVersionKind.ARTIFACT, version=version)
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_version_stages(
+        self, kind: V1ProjectVersionKind, version: str
+    ) -> Tuple[str, List[V1StageCondition]]:
+        """Gets a project version stages under the current owner/project based on version kind.
+
+        This is a generic function that maps to get:
+            * component version
+            * model version
+            * artifact version
+
+        [Project API](/docs/api/#operation/GetVersionStages)
+
+        Args:
+            kind: V1ProjectVersionKind, kind of the project version.
+            version: str, required, the version name/tag.
+
+        Returns:
+            Tuple[str, List[V1StageCondition]]
+        """
+        self._validate_kind(kind)
+        response = self.client.projects_v1.get_version_stages(
+            self.owner, self.project, kind, version
+        )
+        return response.stage, response.stage_conditions
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_component_version_stages(
+        self, version: str
+    ) -> Tuple[str, List[V1StageCondition]]:
+        """Gets a component version stages under the current owner/project.
+
+        [Project API](/docs/api/#operation/GetVersionStages)
+
+        Args:
+            version: str, required, the version name/tag.
+
+        Returns:
+            Tuple[str, List[V1StageCondition]]
+        """
+        return self.get_version_stages(
+            kind=V1ProjectVersionKind.COMPONENT, version=version
+        )
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_model_version_stages(
+        self, version: str
+    ) -> Tuple[str, List[V1StageCondition]]:
+        """Gets a model version under the current owner/project.
+
+        [Project API](/docs/api/#operation/GetVersionStages)
+
+        Args:
+            version: str, required, the version name/tag.
+
+        Returns:
+            Tuple[str, List[V1StageCondition]]
+        """
+        return self.get_version_stages(kind=V1ProjectVersionKind.MODEL, version=version)
+
+    @client_handler(check_no_op=True, check_offline=True)
+    def get_artifact_version_stages(
+        self, version: str
+    ) -> Tuple[str, List[V1StageCondition]]:
+        """Gets an artifact version under the current owner/project.
+
+        [Project API](/docs/api/#operation/GetVersionStages)
+
+        Args:
+            version: str, required, the version name/tag.
+
+        Returns:
+            Tuple[str, List[V1StageCondition]]
+        """
+        return self.get_version_stages(
+            kind=V1ProjectVersionKind.ARTIFACT, version=version
+        )
 
     @client_handler(check_no_op=True, check_offline=True)
     def create_version(
@@ -1378,7 +1456,7 @@ class ProjectClient:
         run_client = RunClient(owner=self.owner, project=run_project, run_uuid=run_uuid)
         for artifact_lineage in run_artifacts:
             logger.info(
-                "Downloading artifact {} with kind {} and remote path {} to {}.".format(
+                "Downloading artifact {} with kind {} and remote path {} to {}".format(
                     artifact_lineage.name,
                     artifact_lineage.kind,
                     artifact_lineage.path,

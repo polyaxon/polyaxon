@@ -90,8 +90,8 @@ Before diving into Polyaxon's features in the next section, it's useful to give 
 
 ### The blog
 
-For long-form news and announcements, the best place to keep up to date with everything happening is [our blog](https://blog.polyaxon.com).
-There's an [RSS feed](https://blog.polyaxon.com/rss.xml) and
+For long-form news and announcements, the best place to keep up to date with everything happening is [our blog](https://polyaxon.com/blog/).
+There's an [RSS feed](https://polyaxon.com/blog/rss.xml) and
 also [a newsletter](https://polyaxon.us17.list-manage.com/subscribe/post?u=1b6eccb8409861418bcc5dbfc&id=012464842e).
 
 ### Community channel
@@ -108,7 +108,7 @@ Here are the easiest ways to keep track of Polyaxon:
 
 ### Guides &  Tutorials
 
-We publish some [guides and tutorials](https://blog.polyaxon.com) from time to time to explain or clarify how to use our tools in practical ways.
+We publish some [guides and tutorials](https://polyaxon.com/blog) from time to time to explain or clarify how to use our tools in practical ways.
 These guides have tags, you can for instance show all guides for a particular tag to gain deeper knowledge about that area.
 
 ### Frequently asked questions

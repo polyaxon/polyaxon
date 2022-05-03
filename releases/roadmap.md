@@ -24,11 +24,15 @@ sidebar: "releases"
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
  * **Enhancement**: Move `clean-ops` under `admin` namespace to allow users use it without exporting the env variables.
  * **Enhancement**: Add `--uuid` repeat flag to allow filtering for specific operations.
+ * **Enhancement**: Improve statuses watch to refresh the table instead of drawing a new table.
+ * **Enhancement**: Improve wait for condition to update the last status.
+ * **Enhancement**: Add missing `stages` to commands `components`, `artifacts`, and `models` to list stage transitions and conditions.
 
 ### Core
 
  * **New**: Add support for annotations in the connections specification.
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
+ * **New**: Allow configuring git credential as volume secret using a git credential.helper store.
  * **Enhancement**: Migrate hyperparameter tuning and tracking modules to separate repos.
  * **Enhancement**: Improve query manager to return distinct values.
 
@@ -47,6 +51,7 @@ sidebar: "releases"
  * **Enhancement**: Add retries configuration option.
  * **Enhancement**: Improve issues around `SSL` verification.
  * **Enhancement**: Improve download logic based on a lineage reference.
+ * **Enhancement**: Improve wait for condition to be resilient to backend errors.
 
 ### Operator
 
