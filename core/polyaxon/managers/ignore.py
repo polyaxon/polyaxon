@@ -165,6 +165,8 @@ class IgnoreConfigManager(BaseConfigManager):
             Pattern.create("lineages.json"),
             Pattern.create("run_data.json"),
             Pattern.create("version_data.json"),
+            Pattern.create(".plxindex"),
+            Pattern.create("./.polyaxon"),
         ]
 
     @classmethod
