@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import TYPE_CHECKING, Any
+
 from polyaxon import tracking
 from traceml.exceptions import TracemlException
 from traceml.integrations.tensorboard import Logger
@@ -34,12 +36,16 @@ if not SessionRunHook:
     raise TracemlException("tensorflow is required to use the tracking Callback")
 
 
+if TYPE_CHECKING:
+    from traceml.tracking import Run
+
+
 class Callback(SessionRunHook):
     def __init__(
         self,
-        summary_op=None,
-        steps_per_log=1000,
-        run=None,
+        summary_op: Any = None,
+        steps_per_log: int = 1000,
+        run: Run = None,
         log_image: bool = False,
         log_histo: bool = False,
         log_tensor: bool = False,

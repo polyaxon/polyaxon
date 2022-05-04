@@ -18,11 +18,10 @@ from typing import Any, Dict, List, Optional, Sequence, Union
 
 from polyaxon import settings
 from polyaxon.client import RunClient
-from polyaxon.client.decorators import client_handler
 from traceml.artifacts import V1ArtifactKind, V1RunArtifact
 from traceml.tracking.run import Run
 
-TRACKING_RUN = None
+TRACKING_RUN: Run = None
 
 
 def init(
@@ -41,7 +40,7 @@ def init(
     name: str = None,
     description: str = None,
     tags: List[str] = None,
-):
+) -> Optional[Run]:
     """Tracking module is similar to the tracking client without the need to create a run instance.
 
     The tracking module allows you to call all tracking methods directly from the top level module.
@@ -125,7 +124,6 @@ def init(
     return TRACKING_RUN
 
 
-@client_handler(check_no_op=True)
 def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
     """Get or create a new tracking run.
 
@@ -1014,3 +1012,69 @@ def push_offline_run(
 
 
 push_offline_run.__doc__ = Run.push_offline_run.__doc__
+
+
+__all__ = [
+    "V1ArtifactKind",
+    "V1RunArtifact",
+    "Run",
+    "init",
+    "get_or_create_run",
+    "get_artifacts_path",
+    "get_outputs_path",
+    "get_tensorboard_path",
+    "set_artifacts_path",
+    "set_run_event_logger",
+    "set_run_resource_logger",
+    "set_run_process_sidecar",
+    "log_metric",
+    "log_metrics",
+    "log_roc_auc_curve",
+    "log_sklearn_roc_auc_curve",
+    "log_pr_curve",
+    "log_sklearn_pr_curve",
+    "log_curve",
+    "log_confusion_matrix",
+    "log_image",
+    "log_image_with_boxes",
+    "log_mpl_image",
+    "log_video",
+    "log_audio",
+    "log_text",
+    "log_html",
+    "log_np_histogram",
+    "log_histogram",
+    "log_model",
+    "log_artifact",
+    "log_dataframe",
+    "log_plotly_chart",
+    "log_bokeh_chart",
+    "log_altair_chart",
+    "log_mpl_plotly_chart",
+    "get_log_level",
+    "set_description",
+    "set_name",
+    "end",
+    "log_status",
+    "log_inputs",
+    "log_outputs",
+    "log_tags",
+    "log_meta",
+    "log_progress",
+    "log_succeeded",
+    "log_stopped",
+    "log_failed",
+    "log_artifact_ref",
+    "log_tensorboard_ref",
+    "log_model_ref",
+    "log_code_ref",
+    "log_data_ref",
+    "log_file_ref",
+    "log_dir_ref",
+    "log_artifact_lineage",
+    "log_env",
+    "sync_events_summaries",
+    "sync_system_events_summaries",
+    "pull_remote_run",
+    "push_offline_run",
+]

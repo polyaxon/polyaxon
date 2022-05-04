@@ -16,6 +16,8 @@
 
 import os
 
+from typing import TYPE_CHECKING, Any
+
 from polyaxon import tracking
 from traceml.exceptions import TracemlException
 from traceml.logger import logger
@@ -42,13 +44,17 @@ if not summary_pb2:
     )
 
 
+if TYPE_CHECKING:
+    from traceml.tracking import Run
+
+
 class Logger:
     @classmethod
     def process_summary(
         cls,
-        summary,
-        global_step=None,
-        run=None,
+        summary: Any,
+        global_step: int = None,
+        run: Run = None,
         log_image: bool = False,
         log_histo: bool = False,
         log_tensor: bool = False,

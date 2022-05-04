@@ -9,3 +9,15 @@ pyflakes<2.5.0
 pytest<7.2.0
 pytest-asyncio<0.19.0
 pylint<2.14.0
+
+mypy==0.950
+types-aiofiles
+types-certifi
+types-protobuf
+types-python-dateutil
+types-pytz
+types-PyYAML
+types-requests
+types-setuptools
+types-six
+types-ujson

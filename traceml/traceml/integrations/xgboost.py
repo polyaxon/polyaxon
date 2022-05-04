@@ -13,6 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from typing import TYPE_CHECKING
+
 import ujson
 
 from traceml import tracking
@@ -25,6 +28,10 @@ try:
     from xgboost import Booster
 except ImportError:
     raise TracemlException("xgboost is required to use the tracking callback")
+
+
+if TYPE_CHECKING:
+    from traceml.tracking import Run
 
 
 def _get_cv(model):
@@ -70,7 +77,7 @@ def callback(
     log_model: bool = True,
     log_importance: bool = True,
     max_num_features: int = None,
-    run: "Run" = None,
+    run: Run = None,
 ):
     run = tracking.get_or_create_run(run)
 
@@ -113,7 +120,7 @@ def callback(
 class Callback(xgb.callback.TrainingCallback):
     def __init__(
         self,
-        run: "Run" = None,
+        run: Run = None,
         log_model: bool = True,
         log_importance: bool = True,
         importance_type: str = "gain",

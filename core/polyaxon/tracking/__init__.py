@@ -16,6 +16,9 @@
 
 # To keep backwards compatibility
 
+from typing import List, Optional
+
+from polyaxon.client import RunClient
 from traceml.tracking import *
 from traceml.tracking import get_or_create_run as base_get_or_create_run
 from traceml.tracking import init as base_init
@@ -39,7 +42,7 @@ def init(
     name: str = None,
     description: str = None,
     tags: List[str] = None,
-):
+) -> Optional[Run]:
     global TRACKING_RUN
 
     TRACKING_RUN = base_init(
@@ -62,7 +65,6 @@ def init(
     return TRACKING_RUN
 
 
-@client_handler(check_no_op=True)
 def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
     global TRACKING_RUN
 

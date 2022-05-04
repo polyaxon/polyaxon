@@ -34,6 +34,7 @@ sidebar: "releases"
  * **New**: Add support for annotations in the connections specification.
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
  * **New**: Allow configuring git credential as volume secret using a git credential.helper store.
+ * **Enhancement**: Add handling for more edge cases around git urls. 
  * **Enhancement**: Migrate hyperparameter tuning and tracking modules to separate repos.
  * **Enhancement**: Improve query manager to return distinct values.
 
