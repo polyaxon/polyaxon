@@ -38,7 +38,7 @@ runPatch:
   - dockerfile:
       image: "tensorflow/tensorflow:2.0.1-py3"
       run:
-      - 'pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]'
+      - 'pip3 install --no-cache-dir -U polyaxon'
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko
 ```

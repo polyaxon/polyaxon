@@ -52,7 +52,7 @@ run:
       - dockerfile:
           image: "tensorflow/tensorflow:2.2.0"
           run:
-          - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
+          - 'pip3 install --no-cache-dir -U polyaxon'
           langEnv: 'en_US.UTF-8'
   - name: experiment
     urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml"

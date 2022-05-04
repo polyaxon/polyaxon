@@ -33,7 +33,7 @@ build:
         image: "tensorflow/tensorflow:2.2.0"
         run:
         - pip install keras
-        - pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]
+        - pip3 install --no-cache-dir -U polyaxon
         langEnv: 'en_US.UTF-8'
   hubRef: kaniko
   connection: docker-connection
@@ -72,7 +72,7 @@ build:
         image: "tensorflow/tensorflow:2.2.0"
         run:
         - pip install keras
-        - pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]
+        - pip3 install --no-cache-dir -U polyaxon
         langEnv: 'en_US.UTF-8'
   hubRef: kaniko
   connection: docker-connection
@@ -98,7 +98,7 @@ build:
         image: "tensorflow/tensorflow:2.2.0"
         run:
         - pip install keras
-        - pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]
+        - pip3 install --no-cache-dir -U polyaxon
         langEnv: 'en_US.UTF-8'
   hubRef: kaniko
   connection: docker-connection

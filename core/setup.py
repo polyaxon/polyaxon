@@ -65,16 +65,7 @@ extra = {
     "docker": ["docker"],
     "git": ["gitpython"],
     "numpy": ["numpy"],
-    "polytune": ["scikit-learn", "hyperopt"],
-    "polyboard": [
-        "Pillow",
-        "matplotlib",
-        "moviepy",
-        "plotly",
-        "bokeh",
-        "pandas",
-        "altair",
-    ],
+    "sandbox": ["polyaxon-deploy"],
 }
 
 setup(

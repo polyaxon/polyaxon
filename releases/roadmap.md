@@ -117,6 +117,7 @@ sidebar: "releases"
 
  * **Security**: Fix CVE issues.
  * **Enhancement**: Improve streams deployment to limit the number of workers per core.
+ * **Enhancement**: Reduce sql-proxy's logs vebosity.
 
 ### Commercial
 

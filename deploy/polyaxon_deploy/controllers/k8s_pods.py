@@ -20,7 +20,6 @@ async def get_pods(
     k8s_manager: AsyncK8SManager,
     run_uuid: str,
 ):
-    await k8s_manager.setup()
     pods = await k8s_manager.list_pods(
         label_selector=k8s_manager.get_managed_by_polyaxon(run_uuid)
     )
