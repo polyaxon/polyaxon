@@ -18,23 +18,25 @@ sidebar: "releases"
 ### Sandbox
 
  * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
- 
+
 ### CLI
 
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
- * **Enhancement**: Move `clean-ops` under `admin` namespace to allow users use it without exporting the env variables.
- * **Enhancement**: Add `--uuid` repeat flag to allow filtering for specific operations.
+ * **Enhancement**: Move `clean-ops` under `admin` namespace to allow users to clean stranded operations without exporting any environment variables.
+ * **Enhancement**: Extend `clean-ops` with a `--uuid` repeat flag to allow filtering for specific operations to force clean/delete.
  * **Enhancement**: Improve statuses watch to refresh the table instead of drawing a new table.
- * **Enhancement**: Improve wait for condition to update the last status.
+ * **Enhancement**: Improve wait for condition to update the last status in place.
  * **Enhancement**: Add missing `stages` to commands `components`, `artifacts`, and `models` to list stage transitions and conditions.
  * **Enhancement**: Improve pull logic to create a valid structure `/base/path/PROJECT_NAME/runs`, `/base/path/PROJECT_NAME/models`, ...
+ * **Enhancement**: Improve CLI overall CLI behavior with better interactive spinner and upload/download progress bar.
+ * **Enhancement**: Add rendering for readme section to project, run, component, model, artifact `get` commands
 
 ### Core
 
  * **New**: Add support for annotations in the connections specification.
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
  * **New**: Allow configuring git credential as volume secret using a git credential.helper store.
- * **Enhancement**: Add handling for more edge cases around git urls. 
+ * **Enhancement**: Add handling for more edge cases around git urls.
  * **Enhancement**: Migrate hyperparameter tuning and tracking modules to separate repos.
  * **Enhancement**: Improve query manager to return distinct values.
 
@@ -93,18 +95,24 @@ sidebar: "releases"
  * **New**: Add Metrics/Params correlation and importance.
  * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
  * **New**: Add connection information to artifacts lineage.
+ * **Enhancement**: Improve runs table with the comparison features natively and allow transposing the table to vertical comparison table.
  * **Enhancement**: Update the queues table with a link next to each queue to filter all runs by a specific queue.
  * **Enhancement**: Update the connections table with a link next to each connection to filter all runs by a specific connection.
  * **Enhancement**: Show artifact' state on the lineage tables.
  * **Enhancement**: Keep configuration of logs, artifacts, and dashboards tabs unchanged when changing tabs of the same run.
  * **Enhancement**: Improve queues usage to remove `.0` in the denominator.
+ * **Enhancement**: Improve datetime fields expansion behavior.
+ * **Enhancement**: Add tensorboard action to the runs multi-action button on the table similar to the overview page.
  * **Fix**: Typo in tip for registering component/model/artifact versions.
  * **Fix**: Regression in multi-run scatter plot.
+ * **Fix**: Issue with table filter popovers and actions popovers scrolling with pages.
+ * **Fix**: Issues in Markdown editor.
 
 ### Hub
 
  * **New**: Add DVC(data version control) integration.
  * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
+ * **New**: Extend the component versions for tensorboard with a new `plugins` input of type `List[str]` to allow users to install custom plugins. 
 
 ### Docs
 
@@ -124,7 +132,7 @@ sidebar: "releases"
  * **New**: Project and organization info pages redesign.
  * **New**: Add support for readme on component/model/artifact versions.
  * **New**: Add cross-projects artifact/component/model versions view similar to `All Runs`.
- * **New**: Add a new tab to explore unregistered artifact/component/model versions under each project. 
+ * **New**: Add a new tab to explore unregistered artifact/component/model versions under each project.
  * **New**: Allow getting a connection's schema by name.
  * **Enhancement**: Improve operations in DAGs with pending approval and upstream failures.
  * **Enhancement**: Reduce member roles confusion:
