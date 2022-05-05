@@ -72,10 +72,12 @@ def run(
     polyaxon_client = RunClient(owner=owner, project=project_name)
 
     def get_instance_info(r):
-        return (
-            f"[white]{r.name}[/white]@[white]{r.uuid}[/white] "
-            f"under [white]{owner}[/white]/[white]{project_name}[/white]"
+        rn = (
+            f"[white]{r.name}[/white]@[white]{r.uuid}[/white]"
+            if r.name
+            else "[white]{r.uuid}[/white]"
         )
+        return f"[white]{owner}[/white]/[white]{project_name}[/white]:{rn}"
 
     def cache_run(data):
         config = polyaxon_client.client.sanitize_for_serialization(data)

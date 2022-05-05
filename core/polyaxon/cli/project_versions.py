@@ -33,7 +33,6 @@ from polyaxon.utils.formatting import (
     dict_to_tabulate,
     get_meta_response,
     list_dicts_to_tabulate,
-    pprint,
 )
 from polyaxon.utils.fqn_utils import get_versioned_entity_full_name
 from polyaxon.utils.query_params import get_query_params
@@ -44,10 +43,11 @@ from polyaxon_sdk.rest import ApiException
 def get_version_details(response, content_callback: Callable = None):
     content = response.content
     meta_info = response.meta_info
+    readme = response.readme
     response = dict_to_tabulate(
         response.to_dict(),
         humanize_values=True,
-        exclude_attrs=["content", "meta_info", "stage_conditions"],
+        exclude_attrs=["content", "meta_info", "stage_conditions", "readme"],
     )
 
     Printer.print_header("Version info:")
@@ -62,12 +62,16 @@ def get_version_details(response, content_callback: Callable = None):
 
         if lineage:
             Printer.print_header("Version artifacts lineage:")
-            pprint(lineage)
+            Printer.print_json(lineage)
 
-    def get_content(content):
-        if content:
+    if readme:
+        Printer.print_header("Version readme:")
+        Printer.print_md(readme)
+
+    def get_content(_content: str):
+        if _content:
             Printer.print_header("Content:")
-            pprint(content)
+            Printer.print_yaml(_content)
 
     content_callback = content_callback or get_content
     content_callback(content)
@@ -491,7 +495,7 @@ def pull_project_version(
     polyaxon_client = ProjectClient(owner=owner, project=project_name)
 
     try:
-        Printer.print_header(
+        Printer.console.print(
             "Pulling the {} version [white]`{}`[/white] to `{} ...".format(
                 kind, fqn_version, path
             )

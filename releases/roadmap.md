@@ -95,7 +95,7 @@ sidebar: "releases"
  * **New**: Add Metrics/Params correlation and importance.
  * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
  * **New**: Add connection information to artifacts lineage.
- * **Enhancement**: Improve runs table with the comparison features natively and allow transposing the table to vertical comparison table.
+ * **Enhancement**: Improve table with comparison features natively and allow transposing the table to vertical comparison table.
  * **Enhancement**: Update the queues table with a link next to each queue to filter all runs by a specific queue.
  * **Enhancement**: Update the connections table with a link next to each connection to filter all runs by a specific connection.
  * **Enhancement**: Show artifact' state on the lineage tables.

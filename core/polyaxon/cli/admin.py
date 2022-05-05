@@ -46,7 +46,7 @@ def read_deployment_config(filepaths, command: str):
         return deployment_config
     except Exception as e:
         handle_cli_error(
-            e, message="Polyaxon deployment file is not valid.", sys_exit=True
+            e, message="Polyaxon deployment file is not valid", sys_exit=True
         )
 
 
@@ -100,25 +100,25 @@ def deploy(config_file, deployment_type, manager_path, check, dry_run):
     exception = None
     if config:
         Printer.print_success(
-            "Polyaxon `{}` deployment file is valid.".format(config.deployment_chart)
+            "Polyaxon `{}` deployment file is valid".format(config.deployment_chart)
         )
     if check:
         try:
             manager.check()
         except Exception as e:
             handle_cli_error(
-                e, message="Polyaxon deployment manager error.", sys_exit=True
+                e, message="Polyaxon deployment manager error", sys_exit=True
             )
 
     else:
         try:
             manager.install()
         except Exception as e:
-            Printer.print_error("Polyaxon could not be installed.")
+            Printer.print_error("Polyaxon could not be installed")
             exception = e
 
     if exception:
-        Printer.print_error("Error message: {}.".format(exception), sys_exit=True)
+        Printer.print_error("Error message: {}".format(exception), sys_exit=True)
 
 
 @admin.command()
@@ -165,24 +165,24 @@ def upgrade(config_file, deployment_type, manager_path, check, dry_run):
     exception = None
     if config:
         Printer.print_success(
-            "Polyaxon `{}` deployment file is valid.".format(config.deployment_chart)
+            "Polyaxon `{}` deployment file is valid".format(config.deployment_chart)
         )
     if check:
         try:
             manager.check()
         except Exception as e:
             handle_cli_error(
-                e, message="Polyaxon deployment manager error.", sys_exit=True
+                e, message="Polyaxon deployment manager error", sys_exit=True
             )
     else:
         try:
             manager.upgrade()
         except Exception as e:
-            Printer.print_error("Polyaxon could not upgrade the deployment.")
+            Printer.print_error("Polyaxon could not upgrade the deployment")
             exception = e
 
     if exception:
-        Printer.print_error("Error message: {}.".format(exception))
+        Printer.print_error("Error message: {}".format(exception))
 
 
 @admin.command()
@@ -222,11 +222,11 @@ def teardown(config_file, manager_path, yes):
         else:
             manager.teardown(hooks=False)
     except Exception as e:
-        Printer.print_error("Polyaxon could not teardown the deployment.")
+        Printer.print_error("Polyaxon could not teardown the deployment")
         exception = e
 
     if exception:
-        Printer.print_error("Error message: {}.".format(exception))
+        Printer.print_error("Error message: {}".format(exception))
 
 
 @admin.command()
@@ -301,8 +301,13 @@ def clean_ops(namespace, in_cluster, delete):
         version=operation.API_VERSION,
         plural=operation.PLURAL,
     )
+    if not ops:
+        return
 
-    for op in ops:
-        _patch_op()
-        if delete:
-            _delete_op()
+    Printer.print_header(f"Cleaning {len(ops)} ops ...", pad=False)
+    for idx, op in enumerate(ops):
+        with Printer.console.status(f"Cleaning operation {idx + 1}/{len(ops)} ..."):
+            _patch_op()
+            if delete:
+                _delete_op()
+        Printer.print_success(f"Operation {op['metadata']['name']} was cleaned")

@@ -121,6 +121,18 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
         Printer.print_header("Run outputs:")
         dict_tabulate(run.outputs)
 
+    if run.settings:
+        Printer.print_header("Run settings:")
+        dict_tabulate(run.settings.to_dict())
+
+    if run.meta_info:
+        Printer.print_header("Run meta info:")
+        dict_tabulate(run.meta_info)
+
+    if run.readme:
+        Printer.print_header("Run readme:")
+        Printer.print_md(run.readme)
+
     response = Printer.add_status_color(run.to_dict())
     response = dict_to_tabulate(
         response,
@@ -143,14 +155,6 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
 
     Printer.print_header("Run info:")
     dict_tabulate(response)
-
-    if run.settings:
-        Printer.print_header("Run settings:")
-        dict_tabulate(run.settings.to_dict())
-
-    if run.meta_info:
-        Printer.print_header("Run meta info:")
-        dict_tabulate(run.meta_info)
 
 
 @click.group()
@@ -1193,8 +1197,7 @@ def artifacts(
     lineage_names = to_list(lineage_names, check_none=True)
     lineage_kinds = to_list(lineage_kinds, check_none=True)
 
-    if not any([files, dirs, lineage_names, lineage_kinds]):
-        Printer.print_header("Downloading all run's artifacts...")
+    def _download_all():
         try:
             download_path = client.download_artifacts(
                 path="", path_to=path_to, untar=not no_untar
@@ -1207,10 +1210,14 @@ def artifacts(
                 e, message="Could not download artifacts for run `{}`.".format(run_uuid)
             )
             sys.exit(1)
-        return
 
-    for f in files:
-        Printer.print_header("Downloading file path {} ...".format(f))
+    if not any([files, dirs, lineage_names, lineage_kinds]):
+        with Printer.console.status(
+            "[header]Downloading all run's artifacts[/header] "
+        ):
+            return _download_all()
+
+    def _download_file():
         try:
             download_path = client.download_artifact(
                 path=f,
@@ -1227,8 +1234,11 @@ def artifacts(
                 ),
             )
 
-    for f in dirs:
-        Printer.print_header("Downloading dir path {} ...".format(f))
+    for f in files:
+        with Printer.console.status(f"[header]Downloading file path {f} ...[/header]"):
+            _download_file()
+
+    def _download_dir():
         try:
             download_path = client.download_artifacts(
                 path=f, path_to=path_to, untar=not no_untar
@@ -1244,13 +1254,17 @@ def artifacts(
                 ),
             )
 
+    for f in dirs:
+        with Printer.console.status(f"[header]Downloading dir path {f} ...[/header]"):
+            _download_dir()
+
     # collecting all artifact lineage reference
     lineages = []
     if lineage_names:
         query = "name: {}".format("|".join(lineage_names))
         try:
             lineages += client.get_artifacts_lineage(query=query, limit=1000).results
-            Printer.print_success(
+            Printer.console.print(
                 "Loaded artifact lineage information for run {}".format(run_uuid)
             )
         except (ApiException, HTTPError) as e:
@@ -1265,7 +1279,7 @@ def artifacts(
         query = "kind: {}".format("|".join(lineage_kinds))
         try:
             lineages += client.get_artifacts_lineage(query=query, limit=1000).results
-            Printer.print_success(
+            Printer.console.print(
                 "Loaded artifact lineage information for run {}".format(run_uuid)
             )
         except (ApiException, HTTPError) as e:
@@ -1279,16 +1293,7 @@ def artifacts(
     # To avoid duplicates
     lineage_keys = set([])
 
-    for lineage in lineages:
-        if lineage.name in lineage_keys:
-            continue
-        else:
-            lineage_keys.add(lineage.name)
-
-        lineage_def = "artifact lineage {} (kind: {})".format(
-            lineage.name, lineage.kind
-        )
-        Printer.print_header("Downloading assets for {} ...".format(lineage_def))
+    def _download_lineage():
         try:
             download_path = client.download_artifact_for_lineage(
                 lineage=lineage, path_to=path_to
@@ -1303,6 +1308,20 @@ def artifacts(
                     lineage_def, run_uuid
                 ),
             )
+
+    for lineage in lineages:
+        if lineage.name in lineage_keys:
+            continue
+        else:
+            lineage_keys.add(lineage.name)
+
+        lineage_def = "artifact lineage {} (kind: {})".format(
+            lineage.name, lineage.kind
+        )
+        with Printer.console.status(
+            f"[header]Downloading assets for {lineage_def} ...[/header]"
+        ):
+            _download_lineage()
 
 
 @ops.command()

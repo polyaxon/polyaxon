@@ -179,43 +179,42 @@ class DeployConfigManager:
             )
 
     def _get_or_create_namespace(self):
-        click.echo("Checking `{}` namespace ...".format(self.deployment_namespace))
-        try:
-            stdout = self.kubectl.execute(
-                args=["get", "namespace", self.deployment_namespace],
-                is_json=True,
-                stream=settings.CLIENT_CONFIG.debug,
-            )
-        except PolyaxonOperatorException:
-            stdout = None
-
+        stdout = self._check_namespace()
         if stdout:
             return
         # Create a namespace
         try:
-            click.echo("Creating `{}` namespace ...".format(self.deployment_namespace))
-            stdout = self.kubectl.execute(
-                args=["create", "namespace", self.deployment_namespace],
-                is_json=False,
-                stream=settings.CLIENT_CONFIG.debug,
-            )
-            click.echo(stdout)
+            with Printer.console.status(
+                f"Creating `{self.deployment_namespace}` namespace ..."
+            ):
+                stdout = self.kubectl.execute(
+                    args=["create", "namespace", self.deployment_namespace],
+                    is_json=False,
+                    stream=settings.CLIENT_CONFIG.debug,
+                )
+                click.echo(stdout)
+                Printer.print_success(
+                    f"Namespace `{self.deployment_namespace}` is ready"
+                )
         except PolyaxonOperatorException:
             return
 
     def _check_namespace(self):
-        click.echo("Checking `{}` namespace ...".format(self.deployment_namespace))
-        try:
-            stdout = self.kubectl.execute(
-                args=["get", "namespace", self.deployment_namespace],
-                is_json=True,
-                stream=settings.CLIENT_CONFIG.debug,
-            )
-        except PolyaxonOperatorException:
-            stdout = None
-
-        if stdout:
-            return
+        with Printer.console.status(
+            f"Checking `{self.deployment_namespace}` namespace ..."
+        ):
+            try:
+                stdout = self.kubectl.execute(
+                    args=["get", "namespace", self.deployment_namespace],
+                    is_json=True,
+                    stream=settings.CLIENT_CONFIG.debug,
+                )
+                Printer.print_success(
+                    f"Namespace `{self.deployment_namespace}` is ready"
+                )
+                return stdout
+            except PolyaxonOperatorException:
+                return None
 
     def install_on_kubernetes(self):
         self._get_or_create_namespace()
@@ -239,8 +238,9 @@ class DeployConfigManager:
         if self.dry_run:
             args += ["--debug", "--dry-run"]
 
-        click.echo("Running install command ...")
-        stdout = self.helm.execute(args=args, stream=settings.CLIENT_CONFIG.debug)
+        with Printer.console.status("Running install command ..."):
+            stdout = self.helm.execute(args=args, stream=settings.CLIENT_CONFIG.debug)
+            Printer.print_success("Install command finished")
         click.echo(stdout)
         Printer.print_success("Deployment finished.")
 
@@ -305,11 +305,15 @@ class DeployConfigManager:
             self.install_on_heroku()
 
     def upgrade_on_kubernetes(self):
-        click.echo("Running checks for upgrade command ...")
+        Printer.console.print("Running checks for upgrade command ...")
         if self.release_name:
-            click.echo("Deployment release name: `{}`".format(self.release_name))
+            Printer.print_info(
+                "Deployment release name: `{}`".format(self.release_name)
+            )
         if self.deployment_namespace:
-            click.echo("Deployment namespace: `{}`".format(self.deployment_namespace))
+            Printer.print_info(
+                "Deployment namespace: `{}`".format(self.deployment_namespace)
+            )
         self._check_namespace()
         args = ["upgrade", self.release_name]
         if self.manager_path:
@@ -327,13 +331,16 @@ class DeployConfigManager:
                 "gateway.service.type=NodePort,deploymentType={}".format(self.type),
             ]
         if self.deployment_version:
-            click.echo("Deployment version: `{}`".format(self.deployment_version))
+            Printer.print_info(
+                "Deployment version: `{}`".format(self.deployment_version)
+            )
             args += ["--version", self.deployment_version]
         args += ["--namespace={}".format(self.deployment_namespace)]
         if self.dry_run:
             args += ["--debug", "--dry-run"]
-        click.echo("Running upgrade command ...")
-        stdout = self.helm.execute(args=args, stream=settings.CLIENT_CONFIG.debug)
+        with Printer.console.status("Running upgrade command ..."):
+            stdout = self.helm.execute(args=args, stream=settings.CLIENT_CONFIG.debug)
+            Printer.print_success("Upgrade command finished")
         click.echo(stdout)
         Printer.print_success("Deployment upgraded.")
 
@@ -367,8 +374,8 @@ class DeployConfigManager:
         if not hooks:
             args += ["--no-hooks"]
         args += ["--namespace={}".format(self.deployment_namespace)]
-        click.echo("Running teardown command ...")
-        self.helm.execute(args=args)
+        with Printer.console.status("Running teardown command ..."):
+            self.helm.execute(args=args)
         Printer.print_success("Deployment successfully deleted.")
 
     def teardown_on_docker_compose(self):

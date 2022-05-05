@@ -17,6 +17,7 @@
 import json
 import sys
 import urllib.parse as urlparse
+import yaml
 
 from typing import Dict, List, Tuple
 from urllib.parse import parse_qs
@@ -26,7 +27,9 @@ import click
 from rich import box
 from rich.console import Console
 from rich.live import Live
+from rich.markdown import Markdown
 from rich.progress import Progress
+from rich.syntax import Syntax
 from rich.table import Column, Table
 from rich.theme import Theme
 
@@ -167,11 +170,6 @@ def dict_tabulate(dict_value, is_list_dict=False):
         Printer.console.print(table)
 
 
-def pprint(value):
-    """Prints as formatted JSON"""
-    click.echo(json.dumps(value, sort_keys=True, indent=4, separators=(",", ": ")))
-
-
 class Printer:
     COLORS = ["yellow", "blue", "magenta", "green", "cyan", "red", "white"]
     console = Console(
@@ -199,6 +197,31 @@ class Printer:
     @staticmethod
     def get_table(*args, **kwargs):
         return Table(*[Column(header=h, no_wrap=True) for h in args], **kwargs)
+
+    @staticmethod
+    def pprint(value):
+        """Prints as formatted JSON"""
+        click.echo(json.dumps(value, sort_keys=True, indent=4, separators=(",", ": ")))
+
+    @classmethod
+    def print_md(cls, md: str):
+        cls.console.print(Markdown(md))
+
+    @classmethod
+    def print_yaml(cls, value: any):
+        if isinstance(value, str):
+            value = yaml.safe_load(value)
+        value = yaml.safe_dump(value, sort_keys=True, indent=2)
+        syntax = Syntax(value, "yaml", theme="dracula", line_numbers=False)
+        cls.console.print(syntax)
+
+    @classmethod
+    def print_json(cls, value: any):
+        if isinstance(value, str):
+            value = json.loads(value)
+        value = json.dumps(value, sort_keys=True, indent=4, separators=(",", ": "))
+        syntax = Syntax(value, "json", theme="dracula", line_numbers=False)
+        cls.console.print(syntax)
 
     @classmethod
     def print_help(cls, command_help: str = None):

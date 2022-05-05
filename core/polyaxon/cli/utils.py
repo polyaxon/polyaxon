@@ -13,20 +13,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import click
 import ujson
 
-from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate, pprint
+from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 
 
 def get_entity_details(entity: any, entity_name: str):
     if entity.description:
         Printer.print_header("{} description:".format(entity_name))
-        click.echo("{}\n".format(entity.description))
+        Printer.console.print("{}\n".format(entity.description))
 
     if entity.settings:
         Printer.print_header("{} settings:".format(entity_name))
-        click.echo("{}\n".format(entity.settings.to_dict()))
+        Printer.console.print("{}\n".format(entity.settings.to_dict()))
+
+    if entity.readme:
+        Printer.print_header("{} readme:".format(entity_name))
+        Printer.print_md(entity.readme)
 
     response = dict_to_tabulate(
         entity.to_dict(),
@@ -40,8 +43,7 @@ def get_entity_details(entity: any, entity_name: str):
 
 def handle_output(response: any, output: str):
     if output == "json":
-
-        pprint(response)
+        Printer.pprint(response)
         return
     if "path=" in output:
         json_path = output.strip("path=")
