@@ -16,19 +16,19 @@
 from typing import List
 
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_PLATFORM_HOST,
-    POLYAXON_KEYS_UI_ADMIN_ENABLED,
-    POLYAXON_KEYS_UI_ASSETS_VERSION,
-    POLYAXON_KEYS_UI_BASE_URL,
-    POLYAXON_KEYS_UI_ENABLED,
-    POLYAXON_KEYS_UI_OFFLINE,
+    EV_KEYS_PLATFORM_HOST,
+    EV_KEYS_UI_ADMIN_ENABLED,
+    EV_KEYS_UI_ASSETS_VERSION,
+    EV_KEYS_UI_BASE_URL,
+    EV_KEYS_UI_ENABLED,
+    EV_KEYS_UI_OFFLINE,
 )
 from polycommon.config_manager import ConfigManager
 
 
 def set_api(context, config: ConfigManager, processors: List[str] = None):
     context["ROOT_URLCONF"] = "polyconf.urls"
-    platform_host = config.get_string(POLYAXON_KEYS_PLATFORM_HOST, is_optional=True)
+    platform_host = config.get_string(EV_KEYS_PLATFORM_HOST, is_optional=True)
     context["PLATFORM_HOST"] = platform_host
 
     def get_allowed_hosts():
@@ -74,22 +74,22 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
         or config.is_debug_mode
     )
     context["UI_ADMIN_ENABLED"] = config.get_boolean(
-        POLYAXON_KEYS_UI_ADMIN_ENABLED, is_optional=True, default=False
+        EV_KEYS_UI_ADMIN_ENABLED, is_optional=True, default=False
     )
-    base_url = config.get_string(POLYAXON_KEYS_UI_BASE_URL, is_optional=True)
+    base_url = config.get_string(EV_KEYS_UI_BASE_URL, is_optional=True)
     if base_url:
         context["UI_BASE_URL"] = base_url
         context["FORCE_SCRIPT_NAME"] = base_url
     else:
         context["UI_BASE_URL"] = "/"
     context["UI_ASSETS_VERSION"] = config.get_string(
-        POLYAXON_KEYS_UI_ASSETS_VERSION, is_optional=True, default=""
+        EV_KEYS_UI_ASSETS_VERSION, is_optional=True, default=""
     )
     context["UI_OFFLINE"] = config.get_boolean(
-        POLYAXON_KEYS_UI_OFFLINE, is_optional=True, default=False
+        EV_KEYS_UI_OFFLINE, is_optional=True, default=False
     )
     context["UI_ENABLED"] = config.get_boolean(
-        POLYAXON_KEYS_UI_ENABLED, is_optional=True, default=True
+        EV_KEYS_UI_ENABLED, is_optional=True, default=True
     )
     context["TEMPLATES_DEBUG"] = template_debug
     context["LIST_TEMPLATE_CONTEXT_PROCESSORS"] = processors

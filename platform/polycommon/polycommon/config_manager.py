@@ -20,11 +20,7 @@ from pathlib import Path
 from typing import List
 
 from polyaxon.config_reader.manager import ConfigManager as BaseConfigManager
-from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_DEBUG,
-    POLYAXON_KEYS_LOG_LEVEL,
-    POLYAXON_KEYS_TIME_ZONE,
-)
+from polyaxon.env_vars.keys import EV_KEYS_DEBUG, EV_KEYS_LOG_LEVEL, EV_KEYS_TIME_ZONE
 from polyaxon.parser import parser
 from polycommon import pkg
 
@@ -39,14 +35,14 @@ class ConfigManager(BaseConfigManager):
         self._env = self.get_string("POLYAXON_ENVIRONMENT")
         self._service = self.get_string("POLYAXON_SERVICE", is_local=True)
         self._is_debug_mode = self.get_boolean(
-            POLYAXON_KEYS_DEBUG, is_optional=True, default=False
+            EV_KEYS_DEBUG, is_optional=True, default=False
         )
         self._namespace = self.get_string("POLYAXON_K8S_NAMESPACE")
         self._log_level = self.get_string(
-            POLYAXON_KEYS_LOG_LEVEL, is_local=True, is_optional=True, default="WARNING"
+            EV_KEYS_LOG_LEVEL, is_local=True, is_optional=True, default="WARNING"
         ).upper()
         self._timezone = self.get_string(
-            POLYAXON_KEYS_TIME_ZONE, is_optional=True, default="UTC"
+            EV_KEYS_TIME_ZONE, is_optional=True, default="UTC"
         )
         self._scheduler_enabled = self.get_boolean(
             "POLYAXON_SCHEDULER_ENABLED", is_optional=True, default=False

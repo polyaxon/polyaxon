@@ -18,14 +18,11 @@ from typing import List, Optional
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.constants.globals import DEFAULT
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
-)
 from polyaxon.containers.names import (
     INIT_ARTIFACTS_CONTAINER_PREFIX,
     generate_container_name,
 )
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.mounts import get_artifacts_context_mount
@@ -50,10 +47,10 @@ def get_artifacts_store_args(artifacts_path: str, clean: bool) -> str:
 def init_artifact_context_args(run_path: str) -> List[str]:
     return [
         'if [ ! -d "{dir}" ]; then mkdir -m 0777 -p {dir}; fi;'.format(
-            dir=CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path)
+            dir=ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path)
         ),
         'if [ ! -d "{dir}" ]; then mkdir -m 0777 -p {dir}; fi;'.format(
-            dir=CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path) + "/outputs"
+            dir=ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path) + "/outputs"
         ),
     ]
 
@@ -74,7 +71,7 @@ def get_artifacts_path_container(
         init_args.append(
             get_volume_args(
                 store=artifacts_store,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
                 artifacts=V1ArtifactsType(dirs=[run_path]),
                 paths=None,
                 sync_fw=True,

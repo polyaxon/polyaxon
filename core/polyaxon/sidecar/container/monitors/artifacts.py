@@ -18,11 +18,7 @@ import os
 
 from typing import List
 
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
-    CONTEXT_MOUNT_ARTIFACTS_RELATED,
-    CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.fs.async_manager import ensure_async_execution
 from polyaxon.fs.types import FSSystem
 from polyaxon.fs.watcher import FSWatcher
@@ -93,14 +89,16 @@ async def sync_artifacts(
     exclude: List[str] = None,
 ):
     fw.init()
-    path_from = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_uuid)
+    path_from = ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_uuid)
     fw.sync(path_from, exclude=exclude)
 
     # Check if this run has triggered some related run paths
-    if os.path.exists(CONTEXT_MOUNT_ARTIFACTS_RELATED):
-        for sub_path in os.listdir(CONTEXT_MOUNT_ARTIFACTS_RELATED):
+    if os.path.exists(ctx_paths.CONTEXT_MOUNT_ARTIFACTS_RELATED):
+        for sub_path in os.listdir(ctx_paths.CONTEXT_MOUNT_ARTIFACTS_RELATED):
             # check if there's a path to sync
-            path_from = CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT.format(sub_path)
+            path_from = ctx_paths.CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT.format(
+                sub_path
+            )
             fw.sync(path_from, exclude=exclude)
 
     await sync_fs(

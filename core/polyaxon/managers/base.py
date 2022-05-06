@@ -21,7 +21,7 @@ from typing import Callable, Optional
 
 import ujson
 
-from polyaxon.containers.contexts import polyaxon_user_path
+from polyaxon.contexts.paths import polyaxon_user_path
 from polyaxon.logger import logger
 from polyaxon.schemas.base import BaseConfig
 

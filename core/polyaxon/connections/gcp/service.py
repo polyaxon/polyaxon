@@ -20,7 +20,7 @@ import os
 from polyaxon.connections.base import BaseService
 from polyaxon.connections.gcp.base import get_gc_client
 from polyaxon.connections.reader import get_connection_context_path
-from polyaxon.containers.contexts import CONTEXT_MOUNT_GC
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.utils.path_utils import create_polyaxon_tmp
 
 DEFAULT_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
@@ -79,6 +79,6 @@ class GCPService(BaseService):
             os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self._key_path
         elif self._keyfile_dict:
             create_polyaxon_tmp()
-            with open(CONTEXT_MOUNT_GC, "w") as outfile:
+            with open(ctx_paths.CONTEXT_MOUNT_GC, "w") as outfile:
                 json.dump(self._keyfile_dict, outfile)
-            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = CONTEXT_MOUNT_GC
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ctx_paths.CONTEXT_MOUNT_GC

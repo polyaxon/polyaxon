@@ -16,15 +16,12 @@
 
 import os
 
-from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_AGENT_INSTANCE,
-    POLYAXON_KEYS_ARTIFACTS_STORE_NAME,
-)
+from polyaxon.env_vars.keys import EV_KEYS_AGENT_INSTANCE, EV_KEYS_ARTIFACTS_STORE_NAME
 from polyaxon.exceptions import PolyaxonAgentError
 
 
 def get_agent_info(agent_instance: str = None):
-    agent_instance = agent_instance or os.getenv(POLYAXON_KEYS_AGENT_INSTANCE, None)
+    agent_instance = agent_instance or os.getenv(EV_KEYS_AGENT_INSTANCE, None)
     if not agent_instance:
         raise PolyaxonAgentError(
             "Could get agent info, "
@@ -44,4 +41,4 @@ def get_agent_info(agent_instance: str = None):
 
 def get_artifacts_store_name():
     """Get the artifacts store name"""
-    return os.getenv(POLYAXON_KEYS_ARTIFACTS_STORE_NAME)
+    return os.getenv(EV_KEYS_ARTIFACTS_STORE_NAME)

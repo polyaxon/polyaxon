@@ -17,11 +17,8 @@
 import pytest
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, get_init_resources
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
-)
 from polyaxon.containers.names import INIT_DOCKERFILE_CONTAINER_PREFIX
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.polyflow import V1Plugins
 from polyaxon.polypod.common import constants
 from polyaxon.polypod.common.env_vars import get_run_instance_env_var
@@ -54,8 +51,10 @@ class TestInitDockerfile(BaseTestCase):
         assert container.command == ["polyaxon", "docker", "generate"]
         assert container.args == [
             "--build-context={}".format(dockerfile_args.to_dict(dump=True)),
-            "--destination={}".format(CONTEXT_MOUNT_ARTIFACTS),
-            "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")),
+            "--destination={}".format(ctx_paths.CONTEXT_MOUNT_ARTIFACTS),
+            "--copy-path={}".format(
+                ctx_paths.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")
+            ),
             "--track",
         ]
         assert container.env == [
@@ -64,8 +63,8 @@ class TestInitDockerfile(BaseTestCase):
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [
             get_connections_context_mount(
-                name=constants.CONTEXT_VOLUME_ARTIFACTS,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                name=constants.VOLUME_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
             ),
             get_auth_context_mount(read_only=True),
         ]
@@ -96,7 +95,9 @@ class TestInitDockerfile(BaseTestCase):
         assert container.args == [
             "--build-context={}".format(dockerfile_args.to_dict(dump=True)),
             "--destination=/somepath",
-            "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")),
+            "--copy-path={}".format(
+                ctx_paths.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")
+            ),
             "--track",
         ]
         assert container.env == [

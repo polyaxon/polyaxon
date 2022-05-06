@@ -22,7 +22,7 @@ from marshmallow import fields, validate
 import polyaxon_sdk
 
 from polyaxon import types
-from polyaxon.contexts import sections as contexts_sections
+from polyaxon.contexts import sections as ctx_sections
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.k8s import k8s_schemas
 from polyaxon.pkg import SCHEMA_VERSION
@@ -469,18 +469,18 @@ class V1Dag(BaseConfig, BaseRun, polyaxon_sdk.V1Dag):
         """
         inputs = inputs or []
 
-        for g_context in contexts_sections.GLOBALS_CONTEXTS:
-            self._context[
-                "dag.{}.{}".format(contexts_sections.GLOBALS, g_context)
-            ] = V1IO(name=g_context, type=types.STR, value="", is_optional=True)
+        for g_context in ctx_sections.GLOBALS_CONTEXTS:
+            self._context["dag.{}.{}".format(ctx_sections.GLOBALS, g_context)] = V1IO(
+                name=g_context, type=types.STR, value="", is_optional=True
+            )
 
-        self._context["dag.{}".format(contexts_sections.INPUTS)] = V1IO(
+        self._context["dag.{}".format(ctx_sections.INPUTS)] = V1IO(
             name="inputs", type=types.DICT, value={}, is_optional=True
         )
-        self._context["dag.{}".format(contexts_sections.GLOBALS)] = V1IO(
+        self._context["dag.{}".format(ctx_sections.GLOBALS)] = V1IO(
             name="globals", type=types.STR, value="", is_optional=True
         )
-        self._context["dag.{}".format(contexts_sections.ARTIFACTS)] = V1IO(
+        self._context["dag.{}".format(ctx_sections.ARTIFACTS)] = V1IO(
             name="artifacts", type=types.STR, value="", is_optional=True
         )
 
@@ -538,49 +538,47 @@ class V1Dag(BaseConfig, BaseRun, polyaxon_sdk.V1Dag):
                 for output in outputs:
                     self._context[
                         "ops.{}.{}.{}".format(
-                            op_name, contexts_sections.OUTPUTS, output.name
+                            op_name, ctx_sections.OUTPUTS, output.name
                         )
                     ] = output
                     if output.type == types.ARTIFACTS:
                         self._context[
                             "ops.{}.{}.{}".format(
-                                op_name, contexts_sections.ARTIFACTS, output.name
+                                op_name, ctx_sections.ARTIFACTS, output.name
                             )
                         ] = output
 
             if inputs:
                 for cinput in inputs:
                     self._context[
-                        "ops.{}.{}.{}".format(
-                            op_name, contexts_sections.INPUTS, cinput.name
-                        )
+                        "ops.{}.{}.{}".format(op_name, ctx_sections.INPUTS, cinput.name)
                     ] = cinput
                     if cinput.type == types.ARTIFACTS:
                         self._context[
                             "ops.{}.{}.{}".format(
-                                op_name, contexts_sections.ARTIFACTS, cinput.name
+                                op_name, ctx_sections.ARTIFACTS, cinput.name
                             )
                         ] = cinput
-            for g_context in contexts_sections.GLOBALS_CONTEXTS:
+            for g_context in ctx_sections.GLOBALS_CONTEXTS:
                 self._context[
-                    "ops.{}.{}.{}".format(op_name, contexts_sections.GLOBALS, g_context)
+                    "ops.{}.{}.{}".format(op_name, ctx_sections.GLOBALS, g_context)
                 ] = V1IO(name=g_context, type=types.STR, value="", is_optional=True)
 
             # We allow to resolve name, status, project, all outputs/inputs, iteration
-            self._context["ops.{}.{}".format(op_name, contexts_sections.INPUTS)] = V1IO(
+            self._context["ops.{}.{}".format(op_name, ctx_sections.INPUTS)] = V1IO(
                 name="inputs", type=types.DICT, value={}, is_optional=True
             )
+            self._context["ops.{}.{}".format(op_name, ctx_sections.OUTPUTS)] = V1IO(
+                name="outputs", type=types.DICT, value={}, is_optional=True
+            )
+            self._context["ops.{}.{}".format(op_name, ctx_sections.GLOBALS)] = V1IO(
+                name="globals", type=types.STR, value="", is_optional=True
+            )
+            self._context["ops.{}.{}".format(op_name, ctx_sections.ARTIFACTS)] = V1IO(
+                name="artifacts", type=types.STR, value="", is_optional=True
+            )
             self._context[
-                "ops.{}.{}".format(op_name, contexts_sections.OUTPUTS)
-            ] = V1IO(name="outputs", type=types.DICT, value={}, is_optional=True)
-            self._context[
-                "ops.{}.{}".format(op_name, contexts_sections.GLOBALS)
-            ] = V1IO(name="globals", type=types.STR, value="", is_optional=True)
-            self._context[
-                "ops.{}.{}".format(op_name, contexts_sections.ARTIFACTS)
-            ] = V1IO(name="artifacts", type=types.STR, value="", is_optional=True)
-            self._context[
-                "ops.{}.{}".format(op_name, contexts_sections.INPUTS_OUTPUTS)
+                "ops.{}.{}".format(op_name, ctx_sections.INPUTS_OUTPUTS)
             ] = V1IO(name="io", type=types.STR, value={}, is_optional=True)
 
         for op in self.operations:

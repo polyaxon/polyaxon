@@ -17,125 +17,105 @@
 from marshmallow import EXCLUDE, fields, validate
 
 from polyaxon.api import STATIC_V1
-from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_ARCHIVE_ROOT,
-    POLYAXON_KEYS_DNS_BACKEND,
-    POLYAXON_KEYS_DNS_CUSTOM_CLUSTER,
-    POLYAXON_KEYS_DNS_PREFIX,
-    POLYAXON_KEYS_DNS_USE_RESOLVER,
-    POLYAXON_KEYS_K8S_NAMESPACE,
-    POLYAXON_KEYS_LOG_LEVEL,
-    POLYAXON_KEYS_NGINX_INDENT_CHAR,
-    POLYAXON_KEYS_NGINX_INDENT_WIDTH,
-    POLYAXON_KEYS_NGINX_TIMEOUT,
-    POLYAXON_KEYS_PROXY_API_HOST,
-    POLYAXON_KEYS_PROXY_API_PORT,
-    POLYAXON_KEYS_PROXY_API_TARGET_PORT,
-    POLYAXON_KEYS_PROXY_API_USE_RESOLVER,
-    POLYAXON_KEYS_PROXY_AUTH_ENABLED,
-    POLYAXON_KEYS_PROXY_AUTH_EXTERNAL,
-    POLYAXON_KEYS_PROXY_AUTH_USE_RESOLVER,
-    POLYAXON_KEYS_PROXY_FORWARD_PROXY_HOST,
-    POLYAXON_KEYS_PROXY_FORWARD_PROXY_KIND,
-    POLYAXON_KEYS_PROXY_FORWARD_PROXY_PORT,
-    POLYAXON_KEYS_PROXY_GATEWAY_HOST,
-    POLYAXON_KEYS_PROXY_GATEWAY_PORT,
-    POLYAXON_KEYS_PROXY_GATEWAY_TARGET_PORT,
-    POLYAXON_KEYS_PROXY_HAS_FORWARD_PROXY,
-    POLYAXON_KEYS_PROXY_NAMESPACES,
-    POLYAXON_KEYS_PROXY_SERVICES_PORT,
-    POLYAXON_KEYS_PROXY_SSL_ENABLED,
-    POLYAXON_KEYS_PROXY_SSL_PATH,
-    POLYAXON_KEYS_PROXY_STREAMS_HOST,
-    POLYAXON_KEYS_PROXY_STREAMS_PORT,
-    POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT,
-    POLYAXON_KEYS_STATIC_ROOT,
-    POLYAXON_KEYS_STATIC_URL,
-    POLYAXON_KEYS_UI_ADMIN_ENABLED,
+    EV_KEYS_ARCHIVE_ROOT,
+    EV_KEYS_DNS_BACKEND,
+    EV_KEYS_DNS_CUSTOM_CLUSTER,
+    EV_KEYS_DNS_PREFIX,
+    EV_KEYS_DNS_USE_RESOLVER,
+    EV_KEYS_K8S_NAMESPACE,
+    EV_KEYS_LOG_LEVEL,
+    EV_KEYS_NGINX_INDENT_CHAR,
+    EV_KEYS_NGINX_INDENT_WIDTH,
+    EV_KEYS_NGINX_TIMEOUT,
+    EV_KEYS_PROXY_API_HOST,
+    EV_KEYS_PROXY_API_PORT,
+    EV_KEYS_PROXY_API_TARGET_PORT,
+    EV_KEYS_PROXY_API_USE_RESOLVER,
+    EV_KEYS_PROXY_AUTH_ENABLED,
+    EV_KEYS_PROXY_AUTH_EXTERNAL,
+    EV_KEYS_PROXY_AUTH_USE_RESOLVER,
+    EV_KEYS_PROXY_FORWARD_PROXY_HOST,
+    EV_KEYS_PROXY_FORWARD_PROXY_KIND,
+    EV_KEYS_PROXY_FORWARD_PROXY_PORT,
+    EV_KEYS_PROXY_GATEWAY_HOST,
+    EV_KEYS_PROXY_GATEWAY_PORT,
+    EV_KEYS_PROXY_GATEWAY_TARGET_PORT,
+    EV_KEYS_PROXY_HAS_FORWARD_PROXY,
+    EV_KEYS_PROXY_NAMESPACES,
+    EV_KEYS_PROXY_SERVICES_PORT,
+    EV_KEYS_PROXY_SSL_ENABLED,
+    EV_KEYS_PROXY_SSL_PATH,
+    EV_KEYS_PROXY_STREAMS_HOST,
+    EV_KEYS_PROXY_STREAMS_PORT,
+    EV_KEYS_PROXY_STREAMS_TARGET_PORT,
+    EV_KEYS_STATIC_ROOT,
+    EV_KEYS_STATIC_URL,
+    EV_KEYS_UI_ADMIN_ENABLED,
 )
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 
 class ProxiesSchema(BaseSchema):
-    namespace = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_NAMESPACE)
+    namespace = fields.Str(allow_none=True, data_key=EV_KEYS_K8S_NAMESPACE)
     namespaces = fields.List(
-        fields.Int(), allow_none=True, data_key=POLYAXON_KEYS_PROXY_NAMESPACES
+        fields.Int(), allow_none=True, data_key=EV_KEYS_PROXY_NAMESPACES
     )
-    gateway_port = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_GATEWAY_PORT
-    )
+    gateway_port = fields.Int(allow_none=True, data_key=EV_KEYS_PROXY_GATEWAY_PORT)
     gateway_target_port = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_GATEWAY_TARGET_PORT
+        allow_none=True, data_key=EV_KEYS_PROXY_GATEWAY_TARGET_PORT
     )
-    gateway_host = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_GATEWAY_HOST
-    )
-    streams_port = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_STREAMS_PORT
-    )
+    gateway_host = fields.Str(allow_none=True, data_key=EV_KEYS_PROXY_GATEWAY_HOST)
+    streams_port = fields.Int(allow_none=True, data_key=EV_KEYS_PROXY_STREAMS_PORT)
     streams_target_port = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT
+        allow_none=True, data_key=EV_KEYS_PROXY_STREAMS_TARGET_PORT
     )
-    streams_host = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_STREAMS_HOST
-    )
-    api_port = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_PORT)
+    streams_host = fields.Str(allow_none=True, data_key=EV_KEYS_PROXY_STREAMS_HOST)
+    api_port = fields.Int(allow_none=True, data_key=EV_KEYS_PROXY_API_PORT)
     api_target_port = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_TARGET_PORT
+        allow_none=True, data_key=EV_KEYS_PROXY_API_TARGET_PORT
     )
-    api_host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_HOST)
+    api_host = fields.Str(allow_none=True, data_key=EV_KEYS_PROXY_API_HOST)
     api_use_resolver = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_USE_RESOLVER
+        allow_none=True, data_key=EV_KEYS_PROXY_API_USE_RESOLVER
     )
-    services_port = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_SERVICES_PORT
-    )
-    auth_enabled = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_AUTH_ENABLED
-    )
-    auth_external = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_AUTH_EXTERNAL
-    )
+    services_port = fields.Str(allow_none=True, data_key=EV_KEYS_PROXY_SERVICES_PORT)
+    auth_enabled = fields.Bool(allow_none=True, data_key=EV_KEYS_PROXY_AUTH_ENABLED)
+    auth_external = fields.Str(allow_none=True, data_key=EV_KEYS_PROXY_AUTH_EXTERNAL)
     auth_use_resolver = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_AUTH_USE_RESOLVER
+        allow_none=True, data_key=EV_KEYS_PROXY_AUTH_USE_RESOLVER
     )
-    ssl_enabled = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_PROXY_SSL_ENABLED)
-    ssl_path = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_PROXY_SSL_PATH)
-    dns_use_resolver = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_DNS_USE_RESOLVER
-    )
+    ssl_enabled = fields.Bool(allow_none=True, data_key=EV_KEYS_PROXY_SSL_ENABLED)
+    ssl_path = fields.Str(allow_none=True, data_key=EV_KEYS_PROXY_SSL_PATH)
+    dns_use_resolver = fields.Bool(allow_none=True, data_key=EV_KEYS_DNS_USE_RESOLVER)
     dns_custom_cluster = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_DNS_CUSTOM_CLUSTER
+        allow_none=True, data_key=EV_KEYS_DNS_CUSTOM_CLUSTER
     )
-    dns_backend = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_DNS_BACKEND)
-    dns_prefix = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_DNS_PREFIX)
-    log_level = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_LOG_LEVEL)
-    nginx_timeout = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_NGINX_TIMEOUT)
-    nginx_indent_char = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_NGINX_INDENT_CHAR
-    )
+    dns_backend = fields.Str(allow_none=True, data_key=EV_KEYS_DNS_BACKEND)
+    dns_prefix = fields.Str(allow_none=True, data_key=EV_KEYS_DNS_PREFIX)
+    log_level = fields.Str(allow_none=True, data_key=EV_KEYS_LOG_LEVEL)
+    nginx_timeout = fields.Int(allow_none=True, data_key=EV_KEYS_NGINX_TIMEOUT)
+    nginx_indent_char = fields.Str(allow_none=True, data_key=EV_KEYS_NGINX_INDENT_CHAR)
     nginx_indent_width = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_NGINX_INDENT_WIDTH
+        allow_none=True, data_key=EV_KEYS_NGINX_INDENT_WIDTH
     )
-    archive_root = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_ARCHIVE_ROOT)
-    static_root = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_STATIC_ROOT)
-    static_url = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_STATIC_URL)
-    ui_admin_enabled = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_UI_ADMIN_ENABLED
-    )
+    archive_root = fields.Str(allow_none=True, data_key=EV_KEYS_ARCHIVE_ROOT)
+    static_root = fields.Str(allow_none=True, data_key=EV_KEYS_STATIC_ROOT)
+    static_url = fields.Str(allow_none=True, data_key=EV_KEYS_STATIC_URL)
+    ui_admin_enabled = fields.Bool(allow_none=True, data_key=EV_KEYS_UI_ADMIN_ENABLED)
     has_forward_proxy = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_HAS_FORWARD_PROXY
+        allow_none=True, data_key=EV_KEYS_PROXY_HAS_FORWARD_PROXY
     )
     forward_proxy_port = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_FORWARD_PROXY_PORT
+        allow_none=True, data_key=EV_KEYS_PROXY_FORWARD_PROXY_PORT
     )
     forward_proxy_host = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_PROXY_FORWARD_PROXY_HOST
+        allow_none=True, data_key=EV_KEYS_PROXY_FORWARD_PROXY_HOST
     )
     forward_proxy_kind = fields.Str(
         allow_none=True,
-        data_key=POLYAXON_KEYS_PROXY_FORWARD_PROXY_KIND,
+        data_key=EV_KEYS_PROXY_FORWARD_PROXY_KIND,
         validate=validate.OneOf(["transparent", "connect"]),
     )
 
@@ -149,40 +129,40 @@ class ProxiesConfig(BaseConfig):
     IDENTIFIER = "proxies"
     UNKNOWN_BEHAVIOUR = EXCLUDE
     REDUCED_ATTRIBUTES = [
-        POLYAXON_KEYS_PROXY_GATEWAY_PORT,
-        POLYAXON_KEYS_PROXY_GATEWAY_TARGET_PORT,
-        POLYAXON_KEYS_PROXY_GATEWAY_HOST,
-        POLYAXON_KEYS_PROXY_NAMESPACES,
-        POLYAXON_KEYS_PROXY_STREAMS_PORT,
-        POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT,
-        POLYAXON_KEYS_PROXY_STREAMS_HOST,
-        POLYAXON_KEYS_PROXY_API_PORT,
-        POLYAXON_KEYS_PROXY_API_TARGET_PORT,
-        POLYAXON_KEYS_PROXY_API_HOST,
-        POLYAXON_KEYS_PROXY_API_USE_RESOLVER,
-        POLYAXON_KEYS_PROXY_SERVICES_PORT,
-        POLYAXON_KEYS_PROXY_SSL_ENABLED,
-        POLYAXON_KEYS_PROXY_SSL_PATH,
-        POLYAXON_KEYS_PROXY_AUTH_ENABLED,
-        POLYAXON_KEYS_PROXY_AUTH_EXTERNAL,
-        POLYAXON_KEYS_PROXY_AUTH_USE_RESOLVER,
-        POLYAXON_KEYS_DNS_USE_RESOLVER,
-        POLYAXON_KEYS_DNS_CUSTOM_CLUSTER,
-        POLYAXON_KEYS_DNS_BACKEND,
-        POLYAXON_KEYS_DNS_PREFIX,
-        POLYAXON_KEYS_NGINX_TIMEOUT,
-        POLYAXON_KEYS_NGINX_INDENT_CHAR,
-        POLYAXON_KEYS_NGINX_INDENT_WIDTH,
-        POLYAXON_KEYS_K8S_NAMESPACE,
-        POLYAXON_KEYS_LOG_LEVEL,
-        POLYAXON_KEYS_ARCHIVE_ROOT,
-        POLYAXON_KEYS_STATIC_ROOT,
-        POLYAXON_KEYS_STATIC_URL,
-        POLYAXON_KEYS_UI_ADMIN_ENABLED,
-        POLYAXON_KEYS_PROXY_HAS_FORWARD_PROXY,
-        POLYAXON_KEYS_PROXY_FORWARD_PROXY_PORT,
-        POLYAXON_KEYS_PROXY_FORWARD_PROXY_HOST,
-        POLYAXON_KEYS_PROXY_FORWARD_PROXY_KIND,
+        EV_KEYS_PROXY_GATEWAY_PORT,
+        EV_KEYS_PROXY_GATEWAY_TARGET_PORT,
+        EV_KEYS_PROXY_GATEWAY_HOST,
+        EV_KEYS_PROXY_NAMESPACES,
+        EV_KEYS_PROXY_STREAMS_PORT,
+        EV_KEYS_PROXY_STREAMS_TARGET_PORT,
+        EV_KEYS_PROXY_STREAMS_HOST,
+        EV_KEYS_PROXY_API_PORT,
+        EV_KEYS_PROXY_API_TARGET_PORT,
+        EV_KEYS_PROXY_API_HOST,
+        EV_KEYS_PROXY_API_USE_RESOLVER,
+        EV_KEYS_PROXY_SERVICES_PORT,
+        EV_KEYS_PROXY_SSL_ENABLED,
+        EV_KEYS_PROXY_SSL_PATH,
+        EV_KEYS_PROXY_AUTH_ENABLED,
+        EV_KEYS_PROXY_AUTH_EXTERNAL,
+        EV_KEYS_PROXY_AUTH_USE_RESOLVER,
+        EV_KEYS_DNS_USE_RESOLVER,
+        EV_KEYS_DNS_CUSTOM_CLUSTER,
+        EV_KEYS_DNS_BACKEND,
+        EV_KEYS_DNS_PREFIX,
+        EV_KEYS_NGINX_TIMEOUT,
+        EV_KEYS_NGINX_INDENT_CHAR,
+        EV_KEYS_NGINX_INDENT_WIDTH,
+        EV_KEYS_K8S_NAMESPACE,
+        EV_KEYS_LOG_LEVEL,
+        EV_KEYS_ARCHIVE_ROOT,
+        EV_KEYS_STATIC_ROOT,
+        EV_KEYS_STATIC_URL,
+        EV_KEYS_UI_ADMIN_ENABLED,
+        EV_KEYS_PROXY_HAS_FORWARD_PROXY,
+        EV_KEYS_PROXY_FORWARD_PROXY_PORT,
+        EV_KEYS_PROXY_FORWARD_PROXY_HOST,
+        EV_KEYS_PROXY_FORWARD_PROXY_KIND,
     ]
 
     def __init__(
@@ -250,7 +230,7 @@ class ProxiesConfig(BaseConfig):
         self.log_level = log_level or "warn"
         self.log_level = self.log_level.lower()
         self.ssl_path = ssl_path or "/etc/ssl/polyaxon"
-        self.archive_root = archive_root or CONTEXT_ARCHIVE_ROOT
+        self.archive_root = archive_root or ctx_paths.CONTEXT_ARCHIVE_ROOT
         self.static_root = static_root or "/{}".format(STATIC_V1)
         self.static_url = static_url
         self.ui_admin_enabled = ui_admin_enabled

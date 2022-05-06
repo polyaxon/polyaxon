@@ -15,38 +15,43 @@
 # limitations under the License.
 import os
 
+from starlette import status
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.routing import Route
 
 from polyaxon import settings
 from polyaxon.api import API_V1_LOCATION
-from polyaxon.containers import contexts as container_contexts
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon_deploy.endpoints.base import ConfigResponse
 
 
 async def get_run_details(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
-    offline_path = os.path.join(
+    data_path = os.path.join(
         settings.SANDBOX_CONFIG.store_root,
         run_uuid,
-        container_contexts.CONTEXT_LOCAL_RUN,
+        ctx_paths.CONTEXT_LOCAL_RUN,
     )
+    if not os.path.exists(data_path) or not os.path.isdir(data_path):
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
 
-    with open(offline_path, "r") as config_file:
+    with open(data_path, "r") as config_file:
         config_str = config_file.read()
     return ConfigResponse(config_str)
 
 
 async def get_run_artifact_lineage(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
-    offline_path = os.path.join(
+    data_path = os.path.join(
         settings.SANDBOX_CONFIG.store_root,
         run_uuid,
-        container_contexts.CONTEXT_LOCAL_LINEAGES,
+        ctx_paths.CONTEXT_LOCAL_LINEAGES,
     )
+    if not os.path.exists(data_path) or not os.path.isdir(data_path):
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
 
-    with open(offline_path, "r") as config_file:
+    with open(data_path, "r") as config_file:
         config_str = config_file.read()
         config_str = f'{{"results": {config_str}}}'
 

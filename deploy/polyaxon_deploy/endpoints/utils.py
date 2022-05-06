@@ -15,6 +15,7 @@
 # limitations under the License.
 import os
 
+from aiofiles.os import stat as aio_stat
 from typing import Dict
 
 from starlette import status
@@ -24,7 +25,7 @@ from starlette.responses import FileResponse, Response
 from polyaxon.services.values import PolyaxonServices
 
 
-def _redirect(
+async def _redirect(
     redirect_path: str, is_file: bool = False, additional_headers: Dict = None
 ) -> Response:
 
@@ -32,6 +33,8 @@ def _redirect(
     if additional_headers:
         headers.update(additional_headers)
     if is_file:
+        stat_result = await aio_stat(redirect_path)
+        headers["Content-Length"] = str(stat_result.st_size)
         headers["Content-Disposition"] = 'attachment; filename="{}"'.format(
             os.path.basename(redirect_path)
         )
@@ -39,7 +42,7 @@ def _redirect(
     return Response(headers=headers)
 
 
-def redirect_file(archived_path: str, additional_headers: Dict = None) -> Response:
+async def redirect_file(archived_path: str, additional_headers: Dict = None) -> Response:
     if not archived_path:
         return Response(
             content="Artifact not found: filepath={}",
@@ -48,19 +51,19 @@ def redirect_file(archived_path: str, additional_headers: Dict = None) -> Respon
 
     if PolyaxonServices.is_sandbox():
         return FileResponse(archived_path, filename=os.path.basename(archived_path))
-    return _redirect(
+    return await _redirect(
         redirect_path=archived_path, is_file=True, additional_headers=additional_headers
     )
 
 
-def redirect_api(redirect_path: str, additional_headers: Dict = None) -> Response:
+async def redirect_api(redirect_path: str, additional_headers: Dict = None) -> Response:
     if not redirect_path:
         return Response(
             content="API not found",
             status_code=status.HTTP_404_NOT_FOUND,
         )
 
-    return _redirect(
+    return await _redirect(
         redirect_path=redirect_path,
         is_file=False,
         additional_headers=additional_headers,

@@ -17,11 +17,8 @@
 import pytest
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, get_init_resources
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
-)
 from polyaxon.containers.names import INIT_FILE_CONTAINER_PREFIX
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.polyflow import V1Plugins
 from polyaxon.polypod.common import constants
 from polyaxon.polypod.common.mounts import (
@@ -52,16 +49,18 @@ class TestInitFile(BaseTestCase):
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [
             get_connections_context_mount(
-                name=constants.CONTEXT_VOLUME_ARTIFACTS,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                name=constants.VOLUME_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
             ),
             get_auth_context_mount(read_only=True),
         ]
         assert file_args.to_dict(dump=True) == '{"content":"test"}'
         assert container.args == [
             "--file-context={}".format('{"content":"test","filename":"file"}'),
-            "--filepath={}".format(CONTEXT_MOUNT_ARTIFACTS),
-            "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")),
+            "--filepath={}".format(ctx_paths.CONTEXT_MOUNT_ARTIFACTS),
+            "--copy-path={}".format(
+                ctx_paths.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")
+            ),
             "--track",
         ]
 
@@ -81,15 +80,17 @@ class TestInitFile(BaseTestCase):
         assert container.command == ["polyaxon", "initializer", "file"]
         assert container.args == [
             "--file-context={}".format(file_args.to_dict(dump=True)),
-            "--filepath={}".format(CONTEXT_MOUNT_ARTIFACTS),
-            "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")),
+            "--filepath={}".format(ctx_paths.CONTEXT_MOUNT_ARTIFACTS),
+            "--copy-path={}".format(
+                ctx_paths.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")
+            ),
             "--track",
         ]
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [
             get_connections_context_mount(
-                name=constants.CONTEXT_VOLUME_ARTIFACTS,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                name=constants.VOLUME_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
             ),
             get_auth_context_mount(read_only=True),
         ]

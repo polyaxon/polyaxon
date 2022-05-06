@@ -19,13 +19,9 @@ import os
 from kubernetes.client.rest import ApiException
 
 from polyaxon.client import RunClient
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_FILE_WATCHER,
-    CONTEXT_MOUNT_RUN_EVENTS_FORMAT,
-    CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.env_vars.getters import get_run_info
-from polyaxon.env_vars.keys import POLYAXON_KEYS_K8S_POD_ID
+from polyaxon.env_vars.keys import EV_KEYS_K8S_POD_ID
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 from polyaxon.fs.fs import (
     close_fs,
@@ -53,7 +49,7 @@ async def start_sidecar(
         interval=sync_interval, sleep_interval=sleep_interval
     )
     try:
-        pod_id = os.environ[POLYAXON_KEYS_K8S_POD_ID]
+        pod_id = os.environ[EV_KEYS_K8S_POD_ID]
     except KeyError as e:
         raise PolyaxonContainerException(
             "Please make sure that this job has been "
@@ -71,7 +67,7 @@ async def start_sidecar(
     pod = await k8s_manager.get_pod(pod_id, reraise=True)
     connection_type = get_artifacts_connection_type()
     fs = await get_async_fs_from_type(connection_type=connection_type)
-    fw = FSWatcher.read(CONTEXT_MOUNT_FILE_WATCHER)
+    fw = FSWatcher.read(ctx_paths.CONTEXT_MOUNT_FILE_WATCHER)
 
     retry = 1
     is_running = True
@@ -103,11 +99,13 @@ async def start_sidecar(
             try:
                 client.sync_events_summaries(
                     last_check=last_check,
-                    events_path=CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(run_uuid),
+                    events_path=ctx_paths.CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(
+                        run_uuid
+                    ),
                 )
                 client.sync_system_events_summaries(
                     last_check=last_check,
-                    events_path=CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(
+                    events_path=ctx_paths.CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(
                         run_uuid
                     ),
                 )

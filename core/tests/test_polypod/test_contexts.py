@@ -18,7 +18,7 @@ import pytest
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1ClaimConnection
-from polyaxon.containers import contexts as container_contexts
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.contexts import resolve_contexts
@@ -34,7 +34,7 @@ class V1CloningKin(object):
 @pytest.mark.polypod_mark
 class TestResolveContexts(BaseTestCase):
     def test_resolver_default_contexts(self):
-        context_root = container_contexts.CONTEXT_ROOT
+        context_root = ctx_paths.CONTEXT_ROOT
         compiled_operation = V1CompiledOperation.read(
             {
                 "version": 1.1,
@@ -93,7 +93,7 @@ class TestResolveContexts(BaseTestCase):
         }
 
     def test_resolver_init_and_connections_contexts(self):
-        context_root = container_contexts.CONTEXT_ROOT
+        context_root = ctx_paths.CONTEXT_ROOT
         store = V1ConnectionType(
             name="test_claim",
             kind=V1ConnectionKind.VOLUME_CLAIM,
@@ -172,7 +172,7 @@ class TestResolveContexts(BaseTestCase):
         }
 
     def test_resolver_outputs_collections(self):
-        context_root = container_contexts.CONTEXT_ROOT
+        context_root = ctx_paths.CONTEXT_ROOT
         store = V1ConnectionType(
             name="test_claim",
             kind=V1ConnectionKind.VOLUME_CLAIM,
@@ -247,7 +247,7 @@ class TestResolveContexts(BaseTestCase):
         }
 
     def test_resolver_mount_artifacts_store(self):
-        context_root = container_contexts.CONTEXT_ROOT
+        context_root = ctx_paths.CONTEXT_ROOT
         store = V1ConnectionType(
             name="test_claim",
             kind=V1ConnectionKind.VOLUME_CLAIM,
@@ -321,7 +321,7 @@ class TestResolveContexts(BaseTestCase):
         }
 
     def test_resolver_default_service_ports(self):
-        context_root = container_contexts.CONTEXT_ROOT
+        context_root = ctx_paths.CONTEXT_ROOT
         compiled_operation = V1CompiledOperation.read(
             {
                 "version": 1.1,

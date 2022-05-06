@@ -17,11 +17,7 @@ import os
 
 from polyaxon.config_reader.manager import ConfigManager
 from polyaxon.config_reader.spec import ConfigSpec
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_AUTH,
-    CONTEXT_TMP_POLYAXON_PATH,
-    CONTEXT_USER_POLYAXON_PATH,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.managers.base import BaseConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 
@@ -35,15 +31,21 @@ class AuthConfigManager(BaseConfigManager):
 
     @classmethod
     def get_config_from_env(cls) -> AccessTokenConfig:
-        tmp_path = os.path.join(CONTEXT_TMP_POLYAXON_PATH, cls.CONFIG_FILE_NAME)
-        user_path = os.path.join(CONTEXT_USER_POLYAXON_PATH, cls.CONFIG_FILE_NAME)
+        tmp_path = os.path.join(
+            ctx_paths.CONTEXT_TMP_POLYAXON_PATH, cls.CONFIG_FILE_NAME
+        )
+        user_path = os.path.join(
+            ctx_paths.CONTEXT_USER_POLYAXON_PATH, cls.CONFIG_FILE_NAME
+        )
         auth_config = ConfigManager.read_configs(
             [
                 os.environ,
                 ConfigSpec(tmp_path, config_type=".json", check_if_exists=False),
                 ConfigSpec(user_path, config_type=".json", check_if_exists=False),
                 ConfigSpec(
-                    CONTEXT_MOUNT_AUTH, config_type=".json", check_if_exists=False
+                    ctx_paths.CONTEXT_MOUNT_AUTH,
+                    config_type=".json",
+                    check_if_exists=False,
                 ),
                 {"dummy": "dummy"},
             ]

@@ -79,7 +79,7 @@ async def get_package_event_assets(
             content="Artifact not found: filepath={}".format(archived_path),
             status_code=status.HTTP_404_NOT_FOUND,
         )
-    return redirect_file(archived_path)
+    return await redirect_file(archived_path)
 
 
 async def get_run_events(request: Request) -> UJSONResponse:

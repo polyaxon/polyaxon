@@ -18,18 +18,18 @@ import pytest
 
 from polyaxon.connections.schemas import V1K8sResourceSchema
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_API_VERSION,
-    POLYAXON_KEYS_AUTH_TOKEN,
-    POLYAXON_KEYS_AUTHENTICATION_TYPE,
-    POLYAXON_KEYS_HEADER,
-    POLYAXON_KEYS_HEADER_SERVICE,
-    POLYAXON_KEYS_HOST,
-    POLYAXON_KEYS_IS_MANAGED,
-    POLYAXON_KEYS_K8S_NAMESPACE,
-    POLYAXON_KEYS_K8S_POD_ID,
-    POLYAXON_KEYS_RUN_INSTANCE,
-    POLYAXON_KEYS_SECRET_INTERNAL_TOKEN,
-    POLYAXON_KEYS_SECRET_KEY,
+    EV_KEYS_API_VERSION,
+    EV_KEYS_AUTH_TOKEN,
+    EV_KEYS_AUTHENTICATION_TYPE,
+    EV_KEYS_HEADER,
+    EV_KEYS_HEADER_SERVICE,
+    EV_KEYS_HOST,
+    EV_KEYS_IS_MANAGED,
+    EV_KEYS_K8S_NAMESPACE,
+    EV_KEYS_K8S_POD_ID,
+    EV_KEYS_RUN_INSTANCE,
+    EV_KEYS_SECRET_INTERNAL_TOKEN,
+    EV_KEYS_SECRET_KEY,
 )
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
@@ -345,7 +345,7 @@ class TestEnvVars(BaseTestCase):
 
     def get_run_instance_env_var(self):
         assert get_run_instance_env_var() == get_from_field_ref(
-            name=POLYAXON_KEYS_RUN_INSTANCE,
+            name=EV_KEYS_RUN_INSTANCE,
             field_path="metadata.labels['run_instance']",
         )
 
@@ -383,13 +383,13 @@ class TestEnvVars(BaseTestCase):
         )
         assert len(env_vars) == 7
         env_var_names = [env_var.name for env_var in env_vars]
-        assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
-        assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names
-        assert POLYAXON_KEYS_HOST in env_var_names
-        assert POLYAXON_KEYS_IS_MANAGED in env_var_names
-        assert POLYAXON_KEYS_API_VERSION in env_var_names
-        assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
-        assert POLYAXON_KEYS_RUN_INSTANCE in env_var_names
+        assert EV_KEYS_K8S_POD_ID in env_var_names
+        assert EV_KEYS_K8S_NAMESPACE in env_var_names
+        assert EV_KEYS_HOST in env_var_names
+        assert EV_KEYS_IS_MANAGED in env_var_names
+        assert EV_KEYS_API_VERSION in env_var_names
+        assert EV_KEYS_K8S_POD_ID in env_var_names
+        assert EV_KEYS_RUN_INSTANCE in env_var_names
 
         env_vars = get_service_env_vars(
             header="foo",
@@ -407,18 +407,18 @@ class TestEnvVars(BaseTestCase):
         )
         assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]
-        assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
-        assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names
-        assert POLYAXON_KEYS_HOST in env_var_names
-        assert POLYAXON_KEYS_IS_MANAGED in env_var_names
-        assert POLYAXON_KEYS_API_VERSION in env_var_names
-        assert POLYAXON_KEYS_HEADER in env_var_names
-        assert POLYAXON_KEYS_HEADER_SERVICE in env_var_names
-        assert POLYAXON_KEYS_SECRET_KEY in env_var_names
-        assert POLYAXON_KEYS_SECRET_INTERNAL_TOKEN in env_var_names
-        assert POLYAXON_KEYS_AUTHENTICATION_TYPE in env_var_names
-        assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
-        assert POLYAXON_KEYS_RUN_INSTANCE in env_var_names
+        assert EV_KEYS_K8S_POD_ID in env_var_names
+        assert EV_KEYS_K8S_NAMESPACE in env_var_names
+        assert EV_KEYS_HOST in env_var_names
+        assert EV_KEYS_IS_MANAGED in env_var_names
+        assert EV_KEYS_API_VERSION in env_var_names
+        assert EV_KEYS_HEADER in env_var_names
+        assert EV_KEYS_HEADER_SERVICE in env_var_names
+        assert EV_KEYS_SECRET_KEY in env_var_names
+        assert EV_KEYS_SECRET_INTERNAL_TOKEN in env_var_names
+        assert EV_KEYS_AUTHENTICATION_TYPE in env_var_names
+        assert EV_KEYS_K8S_POD_ID in env_var_names
+        assert EV_KEYS_RUN_INSTANCE in env_var_names
 
         env_vars = get_service_env_vars(
             header="foo",
@@ -436,15 +436,15 @@ class TestEnvVars(BaseTestCase):
         )
         assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]
-        assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
-        assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names
-        assert POLYAXON_KEYS_HOST in env_var_names
-        assert POLYAXON_KEYS_IS_MANAGED in env_var_names
-        assert POLYAXON_KEYS_API_VERSION in env_var_names
-        assert POLYAXON_KEYS_HEADER in env_var_names
-        assert POLYAXON_KEYS_HEADER_SERVICE in env_var_names
-        assert POLYAXON_KEYS_SECRET_KEY in env_var_names
-        assert POLYAXON_KEYS_AUTH_TOKEN in env_var_names
-        assert POLYAXON_KEYS_AUTHENTICATION_TYPE in env_var_names
-        assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
-        assert POLYAXON_KEYS_RUN_INSTANCE in env_var_names
+        assert EV_KEYS_K8S_POD_ID in env_var_names
+        assert EV_KEYS_K8S_NAMESPACE in env_var_names
+        assert EV_KEYS_HOST in env_var_names
+        assert EV_KEYS_IS_MANAGED in env_var_names
+        assert EV_KEYS_API_VERSION in env_var_names
+        assert EV_KEYS_HEADER in env_var_names
+        assert EV_KEYS_HEADER_SERVICE in env_var_names
+        assert EV_KEYS_SECRET_KEY in env_var_names
+        assert EV_KEYS_AUTH_TOKEN in env_var_names
+        assert EV_KEYS_AUTHENTICATION_TYPE in env_var_names
+        assert EV_KEYS_K8S_POD_ID in env_var_names
+        assert EV_KEYS_RUN_INSTANCE in env_var_names

@@ -23,8 +23,8 @@ from marshmallow import ValidationError, fields, validates_schema
 import polyaxon_sdk
 
 from polyaxon import types
-from polyaxon.contexts import refs as contexts_refs
-from polyaxon.contexts import sections as contexts_sections
+from polyaxon.contexts import refs as ctx_refs
+from polyaxon.contexts import sections as ctx_sections
 from polyaxon.contexts.params import PARAM_REGEX
 from polyaxon.parser import parser
 from polyaxon.polyflow.init import V1Init
@@ -81,19 +81,19 @@ class ParamValueMixin:
     def entity_value(self) -> Optional[str]:
         if not self.is_ref:
             return None
-        return contexts_refs.get_entity_value(self.value)
+        return ctx_refs.get_entity_value(self.value)
 
     @property
     def entity_type(self) -> Optional[str]:
         if not self.is_ref:
             return None
-        return contexts_refs.get_entity_type(self.value)
+        return ctx_refs.get_entity_type(self.value)
 
     @property
     def searchable_ref(self) -> str:
         if not self.is_ref or self.is_join_ref:
             return ""
-        return "{}.{}".format(self.ref, contexts_refs.parse_ref_value(self.value))
+        return "{}.{}".format(self.ref, ctx_refs.parse_ref_value(self.value))
 
     def get_spec(
         self,
@@ -127,31 +127,28 @@ class ParamValueMixin:
                         self.value, name
                     )
                 )
-            if (
-                len(value_parts) == 1
-                and value_parts[0] not in contexts_sections.CONTEXTS
-            ):
+            if len(value_parts) == 1 and value_parts[0] not in ctx_sections.CONTEXTS:
                 raise ValidationError(
                     "Received an invalid value `{}` for param `{}`. "
                     "Value must be one of `{}`".format(
-                        self.value, name, contexts_sections.CONTEXTS
+                        self.value, name, ctx_sections.CONTEXTS
                     )
                 )
             # Check the case of current DAG, it should not allow to use outputs
             if (
                 len(value_parts) == 1
                 and self.is_dag_ref
-                and value_parts[0] == contexts_sections.OUTPUTS
+                and value_parts[0] == ctx_sections.OUTPUTS
             ):
                 raise ValidationError(
                     "Received an invalid value `{}` for param `{}`. "
                     "You can not use `{}` of current dag".format(
-                        self.value, name, contexts_sections.OUTPUTS
+                        self.value, name, ctx_sections.OUTPUTS
                     )
                 )
             if (
                 len(value_parts) == 2
-                and value_parts[0] not in contexts_sections.CONTEXTS_WITH_NESTING
+                and value_parts[0] not in ctx_sections.CONTEXTS_WITH_NESTING
             ):
                 raise ValidationError(
                     "Received an invalid value `{}` for param `{}`. "
@@ -159,14 +156,14 @@ class ParamValueMixin:
                         self.value,
                         name,
                         value_parts[0],
-                        contexts_sections.CONTEXTS_WITH_NESTING,
+                        ctx_sections.CONTEXTS_WITH_NESTING,
                     )
                 )
-            if len(value_parts) == 3 and value_parts[0] != contexts_sections.ARTIFACTS:
+            if len(value_parts) == 3 and value_parts[0] != ctx_sections.ARTIFACTS:
                 raise ValidationError(
                     "Received an invalid value `{}` for param `{}`. "
                     "Value `{}` must can only be equal to `{}`".format(
-                        self.value, name, value_parts[0], contexts_sections.ARTIFACTS
+                        self.value, name, value_parts[0], ctx_sections.ARTIFACTS
                     )
                 )
         if self.is_ref:
@@ -182,7 +179,7 @@ class ParamValueMixin:
                         )
                     )
             else:
-                contexts_refs.validate_ref(ref=self.ref, name=name)
+                ctx_refs.validate_ref(ref=self.ref, name=name)
 
         return ParamSpec(
             name=name,
@@ -218,9 +215,7 @@ class ParamSchema(BaseCamelSchema):
         )
 
 
-class V1Param(
-    BaseConfig, contexts_refs.RefMixin, ParamValueMixin, polyaxon_sdk.V1Param
-):
+class V1Param(BaseConfig, ctx_refs.RefMixin, ParamValueMixin, polyaxon_sdk.V1Param):
     """Params can provide values to inputs/outputs.
 
     Params can be passed in several ways

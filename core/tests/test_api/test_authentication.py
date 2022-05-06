@@ -16,7 +16,7 @@
 
 import pytest
 
-from polyaxon.env_vars.keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
+from polyaxon.env_vars.keys import EV_KEYS_AUTH_TOKEN, EV_KEYS_AUTH_USERNAME
 from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
 from polyaxon.utils.test_utils import BaseTestCase
 
@@ -25,8 +25,8 @@ from polyaxon.utils.test_utils import BaseTestCase
 class TestAccessConfigs(BaseTestCase):
     def test_access_token_config(self):
         config_dict = {
-            POLYAXON_KEYS_AUTH_USERNAME: "username",
-            POLYAXON_KEYS_AUTH_TOKEN: "sdfsdf098sdf80s9dSDF800",
+            EV_KEYS_AUTH_USERNAME: "username",
+            EV_KEYS_AUTH_TOKEN: "sdfsdf098sdf80s9dSDF800",
         }
         config = AccessTokenConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

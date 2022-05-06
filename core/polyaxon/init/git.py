@@ -23,10 +23,10 @@ from git import Repo as GitRepo
 
 from polyaxon.client.init import get_client_or_raise
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_GIT_CREDENTIALS,
-    POLYAXON_KEYS_GIT_CREDENTIALS_STORE,
-    POLYAXON_KEYS_SSH_PATH,
-    POLYAXON_KEYS_SSH_PRIVATE_KEY,
+    EV_KEYS_GIT_CREDENTIALS,
+    EV_KEYS_GIT_CREDENTIALS_STORE,
+    EV_KEYS_SSH_PATH,
+    EV_KEYS_SSH_PRIVATE_KEY,
 )
 from polyaxon.exceptions import PolyaxonContainerException
 from polyaxon.lifecycle import V1Statuses
@@ -46,22 +46,22 @@ _logger = logging.getLogger("polyaxon.repos.git")
 
 
 def has_cred_access() -> bool:
-    return os.environ.get(POLYAXON_KEYS_GIT_CREDENTIALS) is not None
+    return os.environ.get(EV_KEYS_GIT_CREDENTIALS) is not None
 
 
 def has_cred_store_access() -> bool:
-    cred_store_path = os.environ.get(POLYAXON_KEYS_GIT_CREDENTIALS_STORE)
+    cred_store_path = os.environ.get(EV_KEYS_GIT_CREDENTIALS_STORE)
     return bool(cred_store_path and os.path.exists(cred_store_path))
 
 
 def has_ssh_access() -> bool:
-    ssh_path = os.environ.get(POLYAXON_KEYS_SSH_PATH)
+    ssh_path = os.environ.get(EV_KEYS_SSH_PATH)
     return bool(ssh_path and os.path.exists(ssh_path))
 
 
 def get_ssh_cmd():
-    ssh_path = os.environ.get(POLYAXON_KEYS_SSH_PATH)
-    ssh_key_name = os.environ.get(POLYAXON_KEYS_SSH_PRIVATE_KEY, "id_rsa")
+    ssh_path = os.environ.get(EV_KEYS_SSH_PATH)
+    ssh_key_name = os.environ.get(EV_KEYS_SSH_PRIVATE_KEY, "id_rsa")
     return "ssh -i {}/{} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no".format(
         ssh_path, ssh_key_name
     )
@@ -83,7 +83,7 @@ def get_clone_url(url: str) -> str:
             _url = _url.replace(":", "/")
         else:
             _url = url
-        creds = os.environ.get(POLYAXON_KEYS_GIT_CREDENTIALS)
+        creds = os.environ.get(EV_KEYS_GIT_CREDENTIALS)
         # Add user:pass to the git url
         return "https://{}@{}".format(creds, _url)
     if has_cred_store_access():

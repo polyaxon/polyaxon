@@ -16,9 +16,9 @@
 import os
 
 from polyaxon.api import LOCALHOST
-from polyaxon.env_vars.keys import POLYAXON_KEYS_PLATFORM_HOST
+from polyaxon.env_vars.keys import EV_KEYS_PLATFORM_HOST
 from polyaxon.utils.http_utils import clean_host
 
 
 def get_api_host(default: str = LOCALHOST):
-    return clean_host(os.environ.get(POLYAXON_KEYS_PLATFORM_HOST, default))
+    return clean_host(os.environ.get(EV_KEYS_PLATFORM_HOST, default))

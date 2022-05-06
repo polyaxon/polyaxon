@@ -24,19 +24,19 @@ from polyaxon.connections.reader import (
     get_connection_schema_env_name,
 )
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_API_VERSION,
-    POLYAXON_KEYS_AUTH_TOKEN,
-    POLYAXON_KEYS_AUTHENTICATION_TYPE,
-    POLYAXON_KEYS_HEADER,
-    POLYAXON_KEYS_HEADER_SERVICE,
-    POLYAXON_KEYS_HOST,
-    POLYAXON_KEYS_IS_MANAGED,
-    POLYAXON_KEYS_K8S_NAMESPACE,
-    POLYAXON_KEYS_K8S_NODE_NAME,
-    POLYAXON_KEYS_K8S_POD_ID,
-    POLYAXON_KEYS_RUN_INSTANCE,
-    POLYAXON_KEYS_SECRET_INTERNAL_TOKEN,
-    POLYAXON_KEYS_SECRET_KEY,
+    EV_KEYS_API_VERSION,
+    EV_KEYS_AUTH_TOKEN,
+    EV_KEYS_AUTHENTICATION_TYPE,
+    EV_KEYS_HEADER,
+    EV_KEYS_HEADER_SERVICE,
+    EV_KEYS_HOST,
+    EV_KEYS_IS_MANAGED,
+    EV_KEYS_K8S_NAMESPACE,
+    EV_KEYS_K8S_NODE_NAME,
+    EV_KEYS_K8S_POD_ID,
+    EV_KEYS_RUN_INSTANCE,
+    EV_KEYS_SECRET_INTERNAL_TOKEN,
+    EV_KEYS_SECRET_KEY,
 )
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
@@ -221,13 +221,9 @@ def get_env_from_k8s_resources(
 
 def get_base_env_vars(use_proxy_env_vars_use_in_ops: bool):
     env = [
-        get_from_field_ref(
-            name=POLYAXON_KEYS_K8S_NODE_NAME, field_path="spec.nodeName"
-        ),
-        get_from_field_ref(
-            name=POLYAXON_KEYS_K8S_NAMESPACE, field_path="metadata.namespace"
-        ),
-        get_from_field_ref(name=POLYAXON_KEYS_K8S_POD_ID, field_path="metadata.name"),
+        get_from_field_ref(name=EV_KEYS_K8S_NODE_NAME, field_path="spec.nodeName"),
+        get_from_field_ref(name=EV_KEYS_K8S_NAMESPACE, field_path="metadata.namespace"),
+        get_from_field_ref(name=EV_KEYS_K8S_POD_ID, field_path="metadata.name"),
     ]
     env += get_proxy_env_vars(use_proxy_env_vars_use_in_ops)
     return env
@@ -248,27 +244,25 @@ def get_service_env_vars(
     use_proxy_env_vars_use_in_ops: bool,
 ) -> List[k8s_schemas.V1EnvVar]:
     env_vars = get_base_env_vars(use_proxy_env_vars_use_in_ops) + [
-        get_env_var(name=POLYAXON_KEYS_HOST, value=api_host),
-        get_env_var(name=POLYAXON_KEYS_IS_MANAGED, value=True),
-        get_env_var(name=POLYAXON_KEYS_API_VERSION, value=api_version),
+        get_env_var(name=EV_KEYS_HOST, value=api_host),
+        get_env_var(name=EV_KEYS_IS_MANAGED, value=True),
+        get_env_var(name=EV_KEYS_API_VERSION, value=api_version),
         get_run_instance_env_var(run_instance),
     ]
     if header:
         env_vars.append(
             get_env_var(
-                name=POLYAXON_KEYS_HEADER,
+                name=EV_KEYS_HEADER,
                 value=PolyaxonServiceHeaders.get_header(header),
             )
         )
     if service_header:
-        env_vars.append(
-            get_env_var(name=POLYAXON_KEYS_HEADER_SERVICE, value=service_header)
-        )
+        env_vars.append(get_env_var(name=EV_KEYS_HEADER_SERVICE, value=service_header))
     if include_secret_key:
         env_vars.append(
             get_from_secret(
-                key_name=POLYAXON_KEYS_SECRET_KEY,
-                secret_key_name=POLYAXON_KEYS_SECRET_KEY,
+                key_name=EV_KEYS_SECRET_KEY,
+                secret_key_name=EV_KEYS_SECRET_KEY,
                 secret_ref_name=polyaxon_default_secret_ref,
             )
         )
@@ -277,8 +271,8 @@ def get_service_env_vars(
         internal = True
         env_vars.append(
             get_from_secret(
-                POLYAXON_KEYS_SECRET_INTERNAL_TOKEN,
-                POLYAXON_KEYS_SECRET_INTERNAL_TOKEN,
+                EV_KEYS_SECRET_INTERNAL_TOKEN,
+                EV_KEYS_SECRET_INTERNAL_TOKEN,
                 secret_ref_name=polyaxon_default_secret_ref,
             )
         )
@@ -289,22 +283,20 @@ def get_service_env_vars(
             )
         env_vars.append(
             get_from_secret(
-                POLYAXON_KEYS_AUTH_TOKEN,
-                POLYAXON_KEYS_AUTH_TOKEN,
+                EV_KEYS_AUTH_TOKEN,
+                EV_KEYS_AUTH_TOKEN,
                 secret_ref_name=polyaxon_agent_secret_ref,
             )
         )
     if authentication_type:
         env_vars.append(
-            get_env_var(
-                name=POLYAXON_KEYS_AUTHENTICATION_TYPE, value=authentication_type
-            )
+            get_env_var(name=EV_KEYS_AUTHENTICATION_TYPE, value=authentication_type)
         )
     return env_vars
 
 
 def get_run_instance_env_var(run_instance: str) -> k8s_schemas.V1EnvVar:
-    return get_env_var(name=POLYAXON_KEYS_RUN_INSTANCE, value=run_instance)
+    return get_env_var(name=EV_KEYS_RUN_INSTANCE, value=run_instance)
 
 
 def get_connection_env_var(

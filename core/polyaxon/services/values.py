@@ -15,7 +15,7 @@
 # limitations under the License.
 import os
 
-from polyaxon.env_vars.keys import POLYAXON_KEYS_SERVICE
+from polyaxon.env_vars.keys import EV_KEYS_SERVICE
 
 
 class PolyaxonServices:  # noqa
@@ -60,7 +60,7 @@ class PolyaxonServices:  # noqa
 
     @classmethod
     def set_service_name(cls, value: str = None):
-        cls.SERVICE = value or os.environ.get(POLYAXON_KEYS_SERVICE)
+        cls.SERVICE = value or os.environ.get(EV_KEYS_SERVICE)
 
     @classmethod
     def is_agent(cls, value: str = None):

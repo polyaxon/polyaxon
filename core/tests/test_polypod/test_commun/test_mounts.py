@@ -22,12 +22,7 @@ from polyaxon.connections.schemas import (
     V1HostPathConnection,
     V1K8sResourceSchema,
 )
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_CONFIGS,
-    CONTEXT_MOUNT_DOCKER,
-    CONTEXT_MOUNT_SHM,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.polypod.common import constants
 from polyaxon.polypod.common.mounts import (
     get_artifacts_context_mount,
@@ -107,21 +102,21 @@ class TestMounts(BaseTestCase):
 
     def test_get_docker_context_mount(self):
         mount = get_docker_context_mount()
-        assert mount.name == constants.CONTEXT_VOLUME_DOCKER
-        assert mount.mount_path == CONTEXT_MOUNT_DOCKER
+        assert mount.name == constants.VOLUME_MOUNT_DOCKER
+        assert mount.mount_path == ctx_paths.CONTEXT_MOUNT_DOCKER
 
     def test_get_auth_context_mount(self):
         mount = get_auth_context_mount()
-        assert mount.name == constants.CONTEXT_VOLUME_CONFIGS
-        assert mount.mount_path == CONTEXT_MOUNT_CONFIGS
+        assert mount.name == constants.VOLUME_MOUNT_CONFIGS
+        assert mount.mount_path == ctx_paths.CONTEXT_MOUNT_CONFIGS
         assert mount.read_only is None
         mount = get_auth_context_mount(read_only=True)
         assert mount.read_only is True
 
     def test_get_artifacts_context_mount(self):
         mount = get_artifacts_context_mount()
-        assert mount.name == constants.CONTEXT_VOLUME_ARTIFACTS
-        assert mount.mount_path == CONTEXT_MOUNT_ARTIFACTS
+        assert mount.name == constants.VOLUME_MOUNT_ARTIFACTS
+        assert mount.mount_path == ctx_paths.CONTEXT_MOUNT_ARTIFACTS
         assert mount.read_only is None
         mount = get_artifacts_context_mount(read_only=True)
         assert mount.read_only is True
@@ -134,8 +129,8 @@ class TestMounts(BaseTestCase):
 
     def test_get_shm_context_mount(self):
         mount = get_shm_context_mount()
-        assert mount.name == constants.CONTEXT_VOLUME_SHM
-        assert mount.mount_path == CONTEXT_MOUNT_SHM
+        assert mount.name == constants.VOLUME_MOUNT_SHM
+        assert mount.mount_path == ctx_paths.CONTEXT_MOUNT_SHM
         assert mount.read_only is None
 
     def test_get_mounts(self):

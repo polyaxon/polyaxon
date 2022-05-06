@@ -28,7 +28,7 @@ import polyaxon_sdk
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.constants.globals import DEFAULT
-from polyaxon.containers import contexts as container_contexts
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.lifecycle import V1ProjectVersionKind, V1StageCondition
 from polyaxon.logger import logger
@@ -1390,7 +1390,7 @@ class ProjectClient:
             return
         if not path or not os.path.exists(path):
             check_or_create_path(path, is_dir=True)
-        version_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_VERSION)
+        version_path = "{}/{}".format(path, ctx_paths.CONTEXT_LOCAL_VERSION)
         with open(version_path, "w") as config_file:
             config_file.write(
                 ujson.dumps(self.client.sanitize_for_serialization(config))
@@ -1398,14 +1398,10 @@ class ProjectClient:
         if not config.content:
             return
         if config.kind == V1ProjectVersionKind.COMPONENT:
-            version_path = "{}/{}".format(
-                path, container_contexts.CONTEXT_LOCAL_POLYAXONFILE
-            )
+            version_path = "{}/{}".format(path, ctx_paths.CONTEXT_LOCAL_POLYAXONFILE)
         else:
             # Persist content metadata as content.json file
-            version_path = "{}/{}".format(
-                path, container_contexts.CONTEXT_LOCAL_CONTENT
-            )
+            version_path = "{}/{}".format(path, ctx_paths.CONTEXT_LOCAL_CONTENT)
         with open(version_path, "w") as config_file:
             config_file.write(config.content)
 
@@ -1496,7 +1492,7 @@ class ProjectClient:
             download_artifacts: bool, optional, to download the artifacts based on linked lineage.
             use_canonical_prefix: bool, optional, flag to use the canonical path prefix `project/versions`
         """
-        path = path or container_contexts.CONTEXT_OFFLINE_ROOT
+        path = path or ctx_paths.CONTEXT_OFFLINE_ROOT
         if use_canonical_prefix:
             path = "{}/{}/{}s".format(path, self.project, kind)
         path = "{}/{}".format(path, version)

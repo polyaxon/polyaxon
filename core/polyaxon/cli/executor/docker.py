@@ -21,12 +21,9 @@ import sys
 from typing import List
 
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.containers.contexts import (
-    CONTEXT_TMP_POLYAXON_PATH,
-    CONTEXT_USER_POLYAXON_PATH,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.deploy.operators.docker import DockerOperator
-from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_OP
+from polyaxon.env_vars.keys import EV_KEYS_NO_OP
 from polyaxon.exceptions import (
     PolyaxonClientException,
     PolyaxonException,
@@ -55,8 +52,8 @@ def _get_env_vars(project, experiment_id, params, data_paths=None):
             ),
         ),
     ]
-    if POLYAXON_KEYS_NO_OP in os.environ:
-        env_vars += [(POLYAXON_KEYS_NO_OP, "true")]
+    if EV_KEYS_NO_OP in os.environ:
+        env_vars += [(EV_KEYS_NO_OP, "true")]
     if "POLYAXON_IS_OFFLINE" in os.environ:
         env_vars += [("POLYAXON_IS_OFFLINE", "true")]
 
@@ -73,7 +70,12 @@ def _get_env_vars(project, experiment_id, params, data_paths=None):
 
 
 def _get_config_volume():
-    return ["-v", "{}:{}".format(CONTEXT_USER_POLYAXON_PATH, CONTEXT_TMP_POLYAXON_PATH)]
+    return [
+        "-v",
+        "{}:{}".format(
+            ctx_paths.CONTEXT_USER_POLYAXON_PATH, ctx_paths.CONTEXT_TMP_POLYAXON_PATH
+        ),
+    ]
 
 
 def _get_data_bind_mounts(mount_refs=None):

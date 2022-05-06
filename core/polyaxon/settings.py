@@ -19,7 +19,7 @@ import os
 from marshmallow import ValidationError
 
 from polyaxon.api import LOCALHOST
-from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_CONFIG, POLYAXON_KEYS_SET_AGENT
+from polyaxon.env_vars.keys import EV_KEYS_NO_CONFIG, EV_KEYS_SET_AGENT
 from polyaxon.managers.client import ClientConfigManager
 from polyaxon.managers.user import UserConfigManager
 from polyaxon.services.values import PolyaxonServices
@@ -57,7 +57,7 @@ def set_agent_config():
 
 
 def set_sandbox_config():
-    from polyaxon.containers.contexts import mount_sandbox
+    from polyaxon.contexts.paths import mount_sandbox
     from polyaxon.managers.agent import SandboxConfigManager
 
     mount_sandbox()
@@ -114,12 +114,10 @@ def set_auth_config():
         Printer.print_warning("Your user configuration was purged!")
 
 
-if not to_bool(os.environ.get(POLYAXON_KEYS_NO_CONFIG, False)):
+if not to_bool(os.environ.get(EV_KEYS_NO_CONFIG, False)):
     set_auth_config()
     set_client_config()
-    if PolyaxonServices.is_agent() or to_bool(
-        os.environ.get(POLYAXON_KEYS_SET_AGENT, False)
-    ):
+    if PolyaxonServices.is_agent() or to_bool(os.environ.get(EV_KEYS_SET_AGENT, False)):
         set_agent_config()
     if PolyaxonServices.is_sandbox():
         set_sandbox_config()

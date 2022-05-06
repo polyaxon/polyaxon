@@ -23,9 +23,9 @@ from marshmallow import ValidationError
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1BucketConnection, V1K8sResourceSchema
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
-    POLYAXON_KEYS_AGENT_CONNECTIONS,
-    POLYAXON_KEYS_K8S_NAMESPACE,
+    EV_KEYS_AGENT_ARTIFACTS_STORE,
+    EV_KEYS_AGENT_CONNECTIONS,
+    EV_KEYS_K8S_NAMESPACE,
 )
 from polyaxon.schemas.cli.agent_config import AgentConfig, SandboxConfig
 from polyaxon.utils.test_utils import BaseTestCase
@@ -34,28 +34,28 @@ from polyaxon.utils.test_utils import BaseTestCase
 @pytest.mark.schemas_mark
 class TestSandboxConfig(BaseTestCase):
     def test_sandbox_config(self):
-        config_dict = {POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: 12}
+        config_dict = {EV_KEYS_AGENT_ARTIFACTS_STORE: 12}
         with self.assertRaises(ValidationError):
             SandboxConfig.from_dict(config_dict)
 
-        config_dict = {POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: "some"}
+        config_dict = {EV_KEYS_AGENT_ARTIFACTS_STORE: "some"}
         with self.assertRaises(ValidationError):
             SandboxConfig.from_dict(config_dict)
 
         config_dict = {
-            POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: {
+            EV_KEYS_AGENT_ARTIFACTS_STORE: {
                 "name": "some",
                 "kind": V1ConnectionKind.GCS,
                 "schema": V1BucketConnection(bucket="gs://test").to_dict(),
             },
-            POLYAXON_KEYS_AGENT_CONNECTIONS: [],
+            EV_KEYS_AGENT_CONNECTIONS: [],
         }
         config = SandboxConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
         config_dict = {
-            POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: "some",
-            POLYAXON_KEYS_AGENT_CONNECTIONS: [
+            EV_KEYS_AGENT_ARTIFACTS_STORE: "some",
+            EV_KEYS_AGENT_CONNECTIONS: [
                 {
                     "name": "some",
                     "kind": V1ConnectionKind.GCS,
@@ -68,13 +68,13 @@ class TestSandboxConfig(BaseTestCase):
             SandboxConfig.from_dict(config_dict)
 
         config_dict = {
-            POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: {
+            EV_KEYS_AGENT_ARTIFACTS_STORE: {
                 "name": "test",
                 "kind": V1ConnectionKind.GCS,
                 "schema": V1BucketConnection(bucket="gs://test").to_dict(),
                 "secret": V1K8sResourceSchema(name="some").to_dict(),
             },
-            POLYAXON_KEYS_AGENT_CONNECTIONS: [
+            EV_KEYS_AGENT_CONNECTIONS: [
                 {
                     "name": "some",
                     "kind": V1ConnectionKind.GCS,
@@ -93,7 +93,7 @@ class TestSandboxConfig(BaseTestCase):
 
     def test_agent_config_from_str_envs(self):
         config_dict = {
-            POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: ujson.dumps(
+            EV_KEYS_AGENT_ARTIFACTS_STORE: ujson.dumps(
                 {
                     "name": "test1",
                     "kind": V1ConnectionKind.GCS,
@@ -101,7 +101,7 @@ class TestSandboxConfig(BaseTestCase):
                     "secret": V1K8sResourceSchema(name="some").to_dict(),
                 }
             ),
-            POLYAXON_KEYS_AGENT_CONNECTIONS: ujson.dumps(
+            EV_KEYS_AGENT_CONNECTIONS: ujson.dumps(
                 [
                     {
                         "name": "test2",
@@ -120,36 +120,36 @@ class TestSandboxConfig(BaseTestCase):
 
         config = SandboxConfig.from_dict(config_dict)
         assert len(config.secrets) == 1
-        assert len(config.to_light_dict()[POLYAXON_KEYS_AGENT_CONNECTIONS]) == 2
+        assert len(config.to_light_dict()[EV_KEYS_AGENT_CONNECTIONS]) == 2
 
 
 @pytest.mark.schemas_mark
 class TestAgentConfig(BaseTestCase):
     def test_agent_config(self):
-        config_dict = {POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: 12}
+        config_dict = {EV_KEYS_AGENT_ARTIFACTS_STORE: 12}
         with self.assertRaises(ValidationError):
             AgentConfig.from_dict(config_dict)
 
-        config_dict = {POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: "some"}
+        config_dict = {EV_KEYS_AGENT_ARTIFACTS_STORE: "some"}
         with self.assertRaises(ValidationError):
             AgentConfig.from_dict(config_dict)
 
         config_dict = {
-            POLYAXON_KEYS_K8S_NAMESPACE: "foo",
-            POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: {
+            EV_KEYS_K8S_NAMESPACE: "foo",
+            EV_KEYS_AGENT_ARTIFACTS_STORE: {
                 "name": "some",
                 "kind": V1ConnectionKind.GCS,
                 "schema": V1BucketConnection(bucket="gs://test").to_dict(),
             },
-            POLYAXON_KEYS_AGENT_CONNECTIONS: [],
+            EV_KEYS_AGENT_CONNECTIONS: [],
         }
         config = AgentConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
         config_dict = {
-            POLYAXON_KEYS_K8S_NAMESPACE: "foo",
-            POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: "some",
-            POLYAXON_KEYS_AGENT_CONNECTIONS: [
+            EV_KEYS_K8S_NAMESPACE: "foo",
+            EV_KEYS_AGENT_ARTIFACTS_STORE: "some",
+            EV_KEYS_AGENT_CONNECTIONS: [
                 {
                     "name": "some",
                     "kind": V1ConnectionKind.GCS,
@@ -162,14 +162,14 @@ class TestAgentConfig(BaseTestCase):
             AgentConfig.from_dict(config_dict)
 
         config_dict = {
-            POLYAXON_KEYS_K8S_NAMESPACE: "foo",
-            POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: {
+            EV_KEYS_K8S_NAMESPACE: "foo",
+            EV_KEYS_AGENT_ARTIFACTS_STORE: {
                 "name": "test",
                 "kind": V1ConnectionKind.GCS,
                 "schema": V1BucketConnection(bucket="gs://test").to_dict(),
                 "secret": V1K8sResourceSchema(name="some").to_dict(),
             },
-            POLYAXON_KEYS_AGENT_CONNECTIONS: [
+            EV_KEYS_AGENT_CONNECTIONS: [
                 {
                     "name": "some",
                     "kind": V1ConnectionKind.GCS,
@@ -188,8 +188,8 @@ class TestAgentConfig(BaseTestCase):
 
     def test_agent_config_from_str_envs(self):
         config_dict = {
-            POLYAXON_KEYS_K8S_NAMESPACE: "foo",
-            POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: ujson.dumps(
+            EV_KEYS_K8S_NAMESPACE: "foo",
+            EV_KEYS_AGENT_ARTIFACTS_STORE: ujson.dumps(
                 {
                     "name": "test1",
                     "kind": V1ConnectionKind.GCS,
@@ -197,7 +197,7 @@ class TestAgentConfig(BaseTestCase):
                     "secret": V1K8sResourceSchema(name="some").to_dict(),
                 }
             ),
-            POLYAXON_KEYS_AGENT_CONNECTIONS: ujson.dumps(
+            EV_KEYS_AGENT_CONNECTIONS: ujson.dumps(
                 [
                     {
                         "name": "test2",
@@ -216,4 +216,4 @@ class TestAgentConfig(BaseTestCase):
 
         config = AgentConfig.from_dict(config_dict)
         assert len(config.secrets) == 1
-        assert len(config.to_light_dict()[POLYAXON_KEYS_AGENT_CONNECTIONS]) == 2
+        assert len(config.to_light_dict()[EV_KEYS_AGENT_CONNECTIONS]) == 2

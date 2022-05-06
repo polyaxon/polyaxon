@@ -22,8 +22,8 @@ from mock import MagicMock, patch
 from marshmallow import ValidationError
 
 from polyaxon import pkg
-from polyaxon.containers import contexts as container_contexts
-from polyaxon.env_vars.keys import POLYAXON_KEYS_USE_GIT_REGISTRY
+from polyaxon.contexts import paths as ctx_paths
+from polyaxon.env_vars.keys import EV_KEYS_USE_GIT_REGISTRY
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.lifecycle import V1ProjectVersionKind
 from polyaxon.polyaxonfile import check_polyaxonfile
@@ -92,7 +92,7 @@ class TestPolyaxonfiles(BaseTestCase):
             check_polyaxonfile(hub="component:12", is_cli=False, to_op=False)
 
     def test_from_git_hub(self):
-        os.environ[POLYAXON_KEYS_USE_GIT_REGISTRY] = "true"
+        os.environ[EV_KEYS_USE_GIT_REGISTRY] = "true"
         with patch("polyaxon.config_reader.spec._read_from_public_hub") as request_mock:
             request_mock.return_value = os.path.abspath(
                 "tests/fixtures/plain/simple_job.yml"
@@ -102,7 +102,7 @@ class TestPolyaxonfiles(BaseTestCase):
         assert request_mock.call_count == 1
         assert operation.kind == "operation"
         assert operation.hub_ref == "component:12"
-        del os.environ[POLYAXON_KEYS_USE_GIT_REGISTRY]
+        del os.environ[EV_KEYS_USE_GIT_REGISTRY]
 
     def test_from_public_hub(self):
         with patch("polyaxon_sdk.ProjectsV1Api.get_version") as request_mock:
@@ -700,7 +700,7 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.run.to_dict() == expected_run
 
     def test_specification_with_context_requirement(self):
-        context_root = container_contexts.CONTEXT_ROOT
+        context_root = ctx_paths.CONTEXT_ROOT
         contexts = {
             "globals": {
                 "owner_name": "user",
@@ -764,7 +764,7 @@ class TestPolyaxonfiles(BaseTestCase):
                     "artifacts": {
                         "files": [
                             "{}/artifacts/test/outputs/foo".format(
-                                container_contexts.CONTEXT_ROOT
+                                ctx_paths.CONTEXT_ROOT
                             )
                         ],
                     },
@@ -774,9 +774,7 @@ class TestPolyaxonfiles(BaseTestCase):
             "container": {
                 "image": "continuumio/miniconda3",
                 "command": ["python"],
-                "workingDir": "{}/artifacts/repo".format(
-                    container_contexts.CONTEXT_ROOT
-                ),
+                "workingDir": "{}/artifacts/repo".format(ctx_paths.CONTEXT_ROOT),
                 "args": ["-c \"print('Tweet tweet')\""],
                 "name": "polyaxon-main",
             },

@@ -17,7 +17,7 @@ import uuid
 
 from typing import Optional
 
-from polyaxon.containers.contexts import CONTEXT_MOUNT_DOCKER
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
@@ -25,7 +25,7 @@ from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 
 def get_volume_name(path: str) -> str:
     name = uuid.uuid5(namespace=uuid.NAMESPACE_DNS, name=path).hex
-    return constants.CONTEXT_VOLUME_CONNECTIONS_FORMAT.format(name)
+    return constants.VOLUME_MOUNT_CONNECTIONS_FORMAT.format(name)
 
 
 def get_volume_from_connection(
@@ -97,16 +97,16 @@ def get_volume(
 
 def get_docker_context_volume() -> k8s_schemas.V1Volume:
     return get_volume(
-        volume=constants.CONTEXT_VOLUME_DOCKER, host_path=CONTEXT_MOUNT_DOCKER
+        volume=constants.VOLUME_MOUNT_DOCKER, host_path=ctx_paths.CONTEXT_MOUNT_DOCKER
     )
 
 
 def get_configs_context_volume() -> k8s_schemas.V1Volume:
-    return get_volume(volume=constants.CONTEXT_VOLUME_CONFIGS)
+    return get_volume(volume=constants.VOLUME_MOUNT_CONFIGS)
 
 
 def get_artifacts_context_volume() -> k8s_schemas.V1Volume:
-    return get_volume(volume=constants.CONTEXT_VOLUME_ARTIFACTS)
+    return get_volume(volume=constants.VOLUME_MOUNT_ARTIFACTS)
 
 
 def get_connections_context_volume(name: str) -> k8s_schemas.V1Volume:
@@ -122,6 +122,6 @@ def get_shm_context_volume() -> k8s_schemas.V1Volume:
     such as some experiments running on Pytorch.
     """
     return k8s_schemas.V1Volume(
-        name=constants.CONTEXT_VOLUME_SHM,
+        name=constants.VOLUME_MOUNT_SHM,
         empty_dir=k8s_schemas.V1EmptyDirVolumeSource(medium="Memory"),
     )

@@ -19,8 +19,8 @@ import pytest
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1GitConnection
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.containers.names import INIT_GIT_CONTAINER_PREFIX, generate_container_name
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolypodException
 from polyaxon.polyflow import V1Plugins
 from polyaxon.polypod.common import constants
@@ -126,8 +126,8 @@ class TestInitGit(BaseTestCase):
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [
             get_connections_context_mount(
-                name=constants.CONTEXT_VOLUME_ARTIFACTS,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                name=constants.VOLUME_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
             ),
             get_auth_context_mount(read_only=True),
         ]
@@ -147,14 +147,16 @@ class TestInitGit(BaseTestCase):
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["polyaxon", "initializer", "git"]
         assert container.args == [
-            "--repo-path={}/{}".format(CONTEXT_MOUNT_ARTIFACTS, connection.name),
+            "--repo-path={}/{}".format(
+                ctx_paths.CONTEXT_MOUNT_ARTIFACTS, connection.name
+            ),
             "--url={}".format(connection.schema.url),
         ]
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [
             get_connections_context_mount(
-                name=constants.CONTEXT_VOLUME_ARTIFACTS,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                name=constants.VOLUME_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
             ),
             get_auth_context_mount(read_only=True),
         ]

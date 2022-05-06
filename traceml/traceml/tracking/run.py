@@ -32,11 +32,7 @@ from polyaxon.client import RunClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.connections.reader import get_connection_type
 from polyaxon.constants.globals import UNKNOWN
-from polyaxon.containers import contexts as container_contexts
-from polyaxon.containers.contexts import (
-    CONTEXTS_EVENTS_SUBPATH_FORMAT,
-    CONTEXTS_SYSTEM_RESOURCES_EVENTS_SUBPATH_FORMAT,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.env_vars.getters import (
     get_artifacts_store_name,
     get_collect_artifacts,
@@ -211,9 +207,7 @@ class Run(RunClient):
 
         # no artifacts path is set, we use the temp path
         if not self._artifacts_path:
-            artifacts_path = container_contexts.CONTEXT_ARTIFACTS_FORMAT.format(
-                self.run_uuid
-            )
+            artifacts_path = ctx_paths.CONTEXT_ARTIFACTS_FORMAT.format(self.run_uuid)
             self.set_artifacts_path(artifacts_path)
 
         if self._artifacts_path and get_collect_artifacts(
@@ -362,10 +356,8 @@ class Run(RunClient):
         if use_store_path:
             artifacts_path = self._get_store_path()
             if artifacts_path:
-                outputs_path = (
-                    container_contexts.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
-                        artifacts_path
-                    )
+                outputs_path = ctx_paths.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
+                    artifacts_path
                 )
             else:
                 outputs_path = self._outputs_path
@@ -416,21 +408,17 @@ class Run(RunClient):
         if artifacts_path:
             _artifacts_path = artifacts_path
         elif self._is_offline:
-            _artifacts_path = container_contexts.CONTEXT_OFFLINE_FORMAT.format(
+            _artifacts_path = ctx_paths.CONTEXT_OFFLINE_FORMAT.format(self.run_uuid)
+        elif is_related:
+            _artifacts_path = ctx_paths.CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT.format(
                 self.run_uuid
             )
-        elif is_related:
-            _artifacts_path = (
-                container_contexts.CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT.format(
-                    self.run_uuid
-                )
-            )
         else:
-            _artifacts_path = container_contexts.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(
+            _artifacts_path = ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(
                 self.run_uuid
             )
 
-        _outputs_path = container_contexts.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
+        _outputs_path = ctx_paths.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
             _artifacts_path
         )
         self._artifacts_path = _artifacts_path
@@ -1684,11 +1672,13 @@ class Run(RunClient):
         if sync_artifacts:
             self.sync_events_summaries(
                 last_check=None,
-                events_path=CONTEXTS_EVENTS_SUBPATH_FORMAT.format(self._artifacts_path),
+                events_path=ctx_paths.CONTEXTS_EVENTS_SUBPATH_FORMAT.format(
+                    self._artifacts_path
+                ),
             )
             self.sync_system_events_summaries(
                 last_check=None,
-                events_path=CONTEXTS_SYSTEM_RESOURCES_EVENTS_SUBPATH_FORMAT.format(
+                events_path=ctx_paths.CONTEXTS_SYSTEM_RESOURCES_EVENTS_SUBPATH_FORMAT.format(
                     self._artifacts_path
                 ),
             )

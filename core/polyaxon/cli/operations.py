@@ -32,7 +32,7 @@ from polyaxon.cli.options import OPTIONS_NAME, OPTIONS_PROJECT, OPTIONS_RUN_UID
 from polyaxon.cli.utils import handle_output
 from polyaxon.client import RunClient, get_run_logs
 from polyaxon.constants.metadata import META_IS_EXTERNAL, META_REWRITE_PATH
-from polyaxon.containers import contexts as container_contexts
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import (
     PolyaxonClientException,
@@ -268,9 +268,9 @@ def ls(
     $ polyaxon ops ls -q "kind: service"
     """
     if offline:
-        offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
+        offline_path = offline_path or ctx_paths.CONTEXT_OFFLINE_ROOT
         offline_path_format = "{}/{{}}/{}".format(
-            offline_path, container_contexts.CONTEXT_LOCAL_RUN
+            offline_path, ctx_paths.CONTEXT_LOCAL_RUN
         )
         if not os.path.exists(offline_path) or not os.path.isdir(offline_path):
             Printer.print_error(
@@ -429,10 +429,8 @@ def get(ctx, project, uid, offline, offline_path, output):
     uid = uid or ctx.obj.get("run_uuid")
 
     if offline:
-        offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
-        offline_path = "{}/{}/{}".format(
-            offline_path, uid, container_contexts.CONTEXT_LOCAL_RUN
-        )
+        offline_path = offline_path or ctx_paths.CONTEXT_OFFLINE_ROOT
+        offline_path = "{}/{}/{}".format(offline_path, uid, ctx_paths.CONTEXT_LOCAL_RUN)
         if not os.path.exists(offline_path):
             Printer.print_error(
                 f"Could not get offline run, the path `{offline_path}` "
@@ -1763,7 +1761,7 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
         project or ctx.obj.get("project"), is_cli=True
     )
 
-    offline_path = path or container_contexts.CONTEXT_OFFLINE_ROOT
+    offline_path = path or ctx_paths.CONTEXT_OFFLINE_ROOT
     offline_path_format = "{}/{{}}".format(offline_path)
 
     def _push(run_uuid: str):

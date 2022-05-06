@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 import sys
 
 from typing import Callable, List, Optional, Union
@@ -25,7 +24,6 @@ from urllib3.exceptions import HTTPError
 from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import PolyaxonClient, ProjectClient
-from polyaxon.containers import contexts as container_contexts
 from polyaxon.lifecycle import V1ProjectVersionKind
 from polyaxon.utils.formatting import (
     Printer,

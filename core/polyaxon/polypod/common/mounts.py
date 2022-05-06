@@ -16,12 +16,7 @@
 
 from typing import List, Optional
 
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_CONFIGS,
-    CONTEXT_MOUNT_DOCKER,
-    CONTEXT_MOUNT_SHM,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
@@ -53,22 +48,22 @@ def get_mount_from_resource(
 
 def get_docker_context_mount() -> k8s_schemas.V1VolumeMount:
     return k8s_schemas.V1VolumeMount(
-        name=constants.CONTEXT_VOLUME_DOCKER, mount_path=CONTEXT_MOUNT_DOCKER
+        name=constants.VOLUME_MOUNT_DOCKER, mount_path=ctx_paths.CONTEXT_MOUNT_DOCKER
     )
 
 
 def get_auth_context_mount(read_only=None) -> k8s_schemas.V1VolumeMount:
     return k8s_schemas.V1VolumeMount(
-        name=constants.CONTEXT_VOLUME_CONFIGS,
-        mount_path=CONTEXT_MOUNT_CONFIGS,
+        name=constants.VOLUME_MOUNT_CONFIGS,
+        mount_path=ctx_paths.CONTEXT_MOUNT_CONFIGS,
         read_only=read_only,
     )
 
 
 def get_artifacts_context_mount(read_only=None) -> k8s_schemas.V1VolumeMount:
     return k8s_schemas.V1VolumeMount(
-        name=constants.CONTEXT_VOLUME_ARTIFACTS,
-        mount_path=CONTEXT_MOUNT_ARTIFACTS,
+        name=constants.VOLUME_MOUNT_ARTIFACTS,
+        mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
         read_only=read_only,
     )
 
@@ -88,7 +83,7 @@ def get_shm_context_mount() -> k8s_schemas.V1VolumeMount:
     such as some experiments running on Pytorch.
     """
     return k8s_schemas.V1VolumeMount(
-        name=constants.CONTEXT_VOLUME_SHM, mount_path=CONTEXT_MOUNT_SHM
+        name=constants.VOLUME_MOUNT_SHM, mount_path=ctx_paths.CONTEXT_MOUNT_SHM
     )
 
 

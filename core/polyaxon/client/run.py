@@ -38,19 +38,8 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS
-from polyaxon.containers import contexts as container_contexts
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
-    CONTEXT_MOUNT_RUN_ASSETS_FORMAT,
-    CONTEXT_MOUNT_RUN_EVENTS_FORMAT,
-    CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
-    CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT,
-    CONTEXT_OFFLINE_FORMAT,
-    CONTEXT_OFFLINE_ROOT,
-    CONTEXT_ROOT,
-)
 from polyaxon.containers.names import MAIN_CONTAINER_NAMES
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.env_vars.getters import (
     get_artifacts_store_name,
     get_project_error_message,
@@ -1734,19 +1723,24 @@ class RunClient:
 
     def _sanitize_filename(self, filename: str, for_patterns: List[str] = None) -> str:
         """Ensures that the filename never includes common context paths"""
-        if not self.run_uuid or CONTEXT_ROOT not in filename:
+        if not self.run_uuid or ctx_paths.CONTEXT_ROOT not in filename:
             return to_fqn_name(filename)
 
         for_patterns = for_patterns or []
         if not self._default_filename_sanitize_paths:
             self._default_filename_sanitize_paths = [
-                CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(self.run_uuid) + os.sep,
-                CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(self.run_uuid) + os.sep,
-                CONTEXT_MOUNT_RUN_ASSETS_FORMAT.format(self.run_uuid) + os.sep,
-                CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(self.run_uuid)
+                ctx_paths.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(self.run_uuid)
                 + os.sep,
-                CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid) + os.sep,
-                CONTEXT_OFFLINE_FORMAT.format(self.run_uuid) + os.sep,
+                ctx_paths.CONTEXT_MOUNT_RUN_EVENTS_FORMAT.format(self.run_uuid)
+                + os.sep,
+                ctx_paths.CONTEXT_MOUNT_RUN_ASSETS_FORMAT.format(self.run_uuid)
+                + os.sep,
+                ctx_paths.CONTEXT_MOUNT_RUN_SYSTEM_RESOURCES_EVENTS_FORMAT.format(
+                    self.run_uuid
+                )
+                + os.sep,
+                ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid) + os.sep,
+                ctx_paths.CONTEXT_OFFLINE_FORMAT.format(self.run_uuid) + os.sep,
             ]
         for p in self._default_filename_sanitize_paths + for_patterns:
             if filename.startswith(p):
@@ -1784,7 +1778,9 @@ class RunClient:
         if getattr(self, "_store_path"):
             for_patterns.append(getattr(self, "_store_path"))
         context_root = (
-            CONTEXT_OFFLINE_ROOT if self._is_offline else CONTEXT_MOUNT_ARTIFACTS
+            ctx_paths.CONTEXT_OFFLINE_ROOT
+            if self._is_offline
+            else ctx_paths.CONTEXT_MOUNT_ARTIFACTS
         )
         for_patterns += [os.path.join(context_root, self.run_uuid), context_root]
 
@@ -1881,9 +1877,9 @@ class RunClient:
             try:
                 if os.path.exists(path):
                     context_root = (
-                        CONTEXT_OFFLINE_ROOT
+                        ctx_paths.CONTEXT_OFFLINE_ROOT
                         if self._is_offline
-                        else CONTEXT_MOUNT_ARTIFACTS
+                        else ctx_paths.CONTEXT_MOUNT_ARTIFACTS
                     )
                     summary["path"] = os.path.relpath(path, context_root)
                 else:
@@ -2476,7 +2472,7 @@ class RunClient:
             return
         if not path or not os.path.exists(path):
             check_or_create_path(path, is_dir=True)
-        run_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_RUN)
+        run_path = "{}/{}".format(path, ctx_paths.CONTEXT_LOCAL_RUN)
         with open(run_path, "w") as config_file:
             config_file.write(
                 ujson.dumps(self.client.sanitize_for_serialization(self.run_data))
@@ -2486,7 +2482,7 @@ class RunClient:
             logger.debug("Persist offline run call did not find any lineage data. ")
             return
 
-        lineages_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_LINEAGES)
+        lineages_path = "{}/{}".format(path, ctx_paths.CONTEXT_LOCAL_LINEAGES)
         with open(lineages_path, "w") as config_file:
             config_file.write(
                 ujson.dumps(
@@ -2521,7 +2517,7 @@ class RunClient:
             raise_if_not_found: bool, optional, a flag to raise an error if the local path does not
                  contain a persisted run.
         """
-        run_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_RUN)
+        run_path = "{}/{}".format(path, ctx_paths.CONTEXT_LOCAL_RUN)
         if not os.path.isfile(run_path):
             if raise_if_not_found:
                 raise PolyaxonClientException(f"Offline data was not found: {run_path}")
@@ -2551,7 +2547,7 @@ class RunClient:
             run_client._run_data = run_config
             logger.info(f"Offline data loaded from: {run_path}")
 
-        lineages_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_LINEAGES)
+        lineages_path = "{}/{}".format(path, ctx_paths.CONTEXT_LOCAL_LINEAGES)
         if not os.path.isfile(lineages_path):
             logger.info(f"Offline lineage data was not found: {lineages_path}")
             return run_client
@@ -2581,7 +2577,7 @@ class RunClient:
             download_artifacts: bool, optional, flag to trigger artifacts download.
             use_canonical_prefix: bool, optional, flag to use the canonical path prefix `project/runs`
         """
-        path = path or CONTEXT_OFFLINE_ROOT
+        path = path or ctx_paths.CONTEXT_OFFLINE_ROOT
         if use_canonical_prefix:
             path = "{}/{}/runs".format(path, self.project)
         path = "{}/{}".format(path, self.run_uuid)

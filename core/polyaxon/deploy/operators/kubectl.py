@@ -16,7 +16,7 @@
 
 import os
 
-from polyaxon.containers.contexts import CONTEXT_USER_POLYAXON_PATH
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.deploy.operators.cmd_operator import CmdOperator
 
 
@@ -46,7 +46,9 @@ class KubectlOperator(CmdOperator):
         env.update(
             dict(
                 KUBECONFIG=env.get("KUBECONFIG", ""),
-                PATH="{}:{}".format(CONTEXT_USER_POLYAXON_PATH, env.get("PATH", "")),
+                PATH="{}:{}".format(
+                    ctx_paths.CONTEXT_USER_POLYAXON_PATH, env.get("PATH", "")
+                ),
             )
         )
         return env

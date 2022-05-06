@@ -19,9 +19,9 @@ import os
 from datetime import datetime
 from typing import Dict
 
-from polyaxon.containers import contexts
-from polyaxon.contexts import keys as contexts_keys
-from polyaxon.contexts import sections as contexts_sections
+from polyaxon.contexts import keys as ctx_keys
+from polyaxon.contexts import paths as ctx_paths
+from polyaxon.contexts import sections as ctx_sections
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1Plugins, V1RunKind
 from polyaxon.polypod.compiler.contexts.job import JobContextsManager
@@ -75,59 +75,57 @@ def resolve_globals_contexts(
 ) -> Dict:
 
     resolved_contexts = {
-        contexts_sections.GLOBALS: {
-            contexts_keys.OWNER_NAME: owner_name,
-            contexts_keys.PROJECT_NAME: project_name,
-            contexts_keys.PROJECT_UNIQUE_NAME: get_project_instance(
+        ctx_sections.GLOBALS: {
+            ctx_keys.OWNER_NAME: owner_name,
+            ctx_keys.PROJECT_NAME: project_name,
+            ctx_keys.PROJECT_UNIQUE_NAME: get_project_instance(
                 owner_name, project_name
             ),
-            contexts_keys.PROJECT_UUID: project_uuid,
-            contexts_keys.RUN_INFO: get_run_instance(
-                owner_name, project_name, run_uuid
-            ),
-            contexts_keys.NAME: run_name,
-            contexts_keys.UUID: run_uuid,
-            contexts_keys.NAMESPACE: namespace,
-            contexts_keys.ITERATION: iteration,
-            contexts_keys.CONTEXT_PATH: contexts.CONTEXT_ROOT,
-            contexts_keys.ARTIFACTS_PATH: contexts.CONTEXT_MOUNT_ARTIFACTS,
-            contexts_keys.CREATED_AT: created_at,
-            contexts_keys.COMPILED_AT: compiled_at,
-            contexts_keys.SCHEDULE_AT: schedule_at,
-            contexts_keys.STARTED_AT: started_at,
-            contexts_keys.FINISHED_AT: finished_at,
-            contexts_keys.DURATION: duration,
-            contexts_keys.CLONING_KIND: cloning_kind,
-            contexts_keys.ORIGINAL_UUID: original_uuid,
-            contexts_keys.IS_INDEPENDENT: is_independent,
-            contexts_keys.STORE_PATH: "",
+            ctx_keys.PROJECT_UUID: project_uuid,
+            ctx_keys.RUN_INFO: get_run_instance(owner_name, project_name, run_uuid),
+            ctx_keys.NAME: run_name,
+            ctx_keys.UUID: run_uuid,
+            ctx_keys.NAMESPACE: namespace,
+            ctx_keys.ITERATION: iteration,
+            ctx_keys.CONTEXT_PATH: ctx_paths.CONTEXT_ROOT,
+            ctx_keys.ARTIFACTS_PATH: ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
+            ctx_keys.CREATED_AT: created_at,
+            ctx_keys.COMPILED_AT: compiled_at,
+            ctx_keys.SCHEDULE_AT: schedule_at,
+            ctx_keys.STARTED_AT: started_at,
+            ctx_keys.FINISHED_AT: finished_at,
+            ctx_keys.DURATION: duration,
+            ctx_keys.CLONING_KIND: cloning_kind,
+            ctx_keys.ORIGINAL_UUID: original_uuid,
+            ctx_keys.IS_INDEPENDENT: is_independent,
+            ctx_keys.STORE_PATH: "",
         },
     }
 
     contexts_spec = PluginsContextsSpec.from_config(plugins)
 
     if contexts_spec.collect_artifacts:
-        run_artifacts_path = contexts.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path)
-        run_outputs_path = contexts.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path)
-        resolved_contexts[contexts_sections.GLOBALS][
-            contexts_keys.RUN_ARTIFACTS_PATH
+        run_artifacts_path = ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path)
+        run_outputs_path = ctx_paths.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path)
+        resolved_contexts[ctx_sections.GLOBALS][
+            ctx_keys.RUN_ARTIFACTS_PATH
         ] = run_artifacts_path
-        resolved_contexts[contexts_sections.GLOBALS][
-            contexts_keys.RUN_OUTPUTS_PATH
+        resolved_contexts[ctx_sections.GLOBALS][
+            ctx_keys.RUN_OUTPUTS_PATH
         ] = run_outputs_path
     elif artifacts_store:
         run_artifacts_path = os.path.join(artifacts_store.store_path, run_path)
         run_outputs_path = os.path.join(run_artifacts_path, "outputs")
-        resolved_contexts[contexts_sections.GLOBALS][
-            contexts_keys.RUN_ARTIFACTS_PATH
+        resolved_contexts[ctx_sections.GLOBALS][
+            ctx_keys.RUN_ARTIFACTS_PATH
         ] = run_artifacts_path
-        resolved_contexts[contexts_sections.GLOBALS][
-            contexts_keys.RUN_OUTPUTS_PATH
+        resolved_contexts[ctx_sections.GLOBALS][
+            ctx_keys.RUN_OUTPUTS_PATH
         ] = run_outputs_path
 
     if contexts_spec.mount_artifacts_store and artifacts_store:
-        resolved_contexts[contexts_sections.GLOBALS][
-            contexts_keys.STORE_PATH
+        resolved_contexts[ctx_sections.GLOBALS][
+            ctx_keys.STORE_PATH
         ] = artifacts_store.store_path
     return resolved_contexts
 

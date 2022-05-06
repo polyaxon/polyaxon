@@ -20,8 +20,8 @@ VOLUME_CLAIM_NAME = "plx-pvc-{vol_name}"
 CONFIG_MAP_NAME = "plx-config-{uuid}"
 SECRET_NAME = "plx-secret-{uuid}"  # noqa, secret
 
-CONTEXT_VOLUME_DOCKER = "docker"
-CONTEXT_VOLUME_SHM = "shm"
-CONTEXT_VOLUME_CONFIGS = "configs-context"
-CONTEXT_VOLUME_ARTIFACTS = "artifacts-context"
-CONTEXT_VOLUME_CONNECTIONS_FORMAT = "connections-context-{}"
+VOLUME_MOUNT_DOCKER = "docker"
+VOLUME_MOUNT_SHM = "shm"
+VOLUME_MOUNT_CONFIGS = "configs-context"
+VOLUME_MOUNT_ARTIFACTS = "artifacts-context"
+VOLUME_MOUNT_CONNECTIONS_FORMAT = "connections-context-{}"

@@ -16,11 +16,11 @@
 
 from typing import List, Optional
 
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.containers.names import (
     INIT_CUSTOM_CONTAINER_PREFIX,
     generate_container_name,
 )
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
@@ -54,11 +54,9 @@ def get_custom_init_container(
         raise PolypodException("A connection is required to create a repo context.")
 
     volume_name = (
-        get_volume_name(mount_path)
-        if mount_path
-        else constants.CONTEXT_VOLUME_ARTIFACTS
+        get_volume_name(mount_path) if mount_path else constants.VOLUME_MOUNT_ARTIFACTS
     )
-    mount_path = mount_path or CONTEXT_MOUNT_ARTIFACTS
+    mount_path = mount_path or ctx_paths.CONTEXT_MOUNT_ARTIFACTS
     volume_mounts = [
         get_connections_context_mount(name=volume_name, mount_path=mount_path)
     ]

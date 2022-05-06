@@ -16,11 +16,7 @@
 
 import pytest
 
-from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_DEBUG,
-    POLYAXON_KEYS_HOST,
-    POLYAXON_KEYS_VERIFY_SSL,
-)
+from polyaxon.env_vars.keys import EV_KEYS_DEBUG, EV_KEYS_HOST, EV_KEYS_VERIFY_SSL
 from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon.services.auth import AuthenticationTypes
 from polyaxon.utils.test_utils import BaseTestCase
@@ -35,9 +31,9 @@ class TestClientConfig(BaseTestCase):
 
     def test_client_config(self):
         config_dict = {
-            POLYAXON_KEYS_DEBUG: True,
-            POLYAXON_KEYS_HOST: "http://localhost:8000",
-            POLYAXON_KEYS_VERIFY_SSL: True,
+            EV_KEYS_DEBUG: True,
+            EV_KEYS_HOST: "http://localhost:8000",
+            EV_KEYS_VERIFY_SSL: True,
         }
         config = ClientConfig.from_dict(config_dict)
         assert config.debug is True

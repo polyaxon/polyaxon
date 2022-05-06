@@ -19,14 +19,11 @@ import os
 from typing import List, Optional, Tuple, Union
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
-)
 from polyaxon.containers.names import (
     INIT_ARTIFACTS_CONTAINER_PREFIX,
     generate_container_name,
 )
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
@@ -282,18 +279,16 @@ def get_store_container(
         container = k8s_schemas.V1Container(name=container_name)
 
     volume_name = (
-        get_volume_name(mount_path)
-        if mount_path
-        else constants.CONTEXT_VOLUME_ARTIFACTS
+        get_volume_name(mount_path) if mount_path else constants.VOLUME_MOUNT_ARTIFACTS
     )
-    volume_mount_path = mount_path or CONTEXT_MOUNT_ARTIFACTS
+    volume_mount_path = mount_path or ctx_paths.CONTEXT_MOUNT_ARTIFACTS
     volume_mounts = [
         get_connections_context_mount(name=volume_name, mount_path=volume_mount_path)
     ]
     mount_path = mount_path or (
-        CONTEXT_MOUNT_ARTIFACTS
+        ctx_paths.CONTEXT_MOUNT_ARTIFACTS
         if is_default_artifacts_store
-        else CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
+        else ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
     )
 
     return get_base_store_container(

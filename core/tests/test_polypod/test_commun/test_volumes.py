@@ -23,7 +23,7 @@ from polyaxon.connections.schemas import (
     V1HostPathConnection,
     V1K8sResourceSchema,
 )
-from polyaxon.containers.contexts import CONTEXT_MOUNT_DOCKER
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
 from polyaxon.polypod.common.volumes import (
@@ -151,17 +151,17 @@ class TestVolumes(BaseTestCase):
 
     def test_get_docker_context_volume(self):
         volume = get_docker_context_volume()
-        assert volume.name == constants.CONTEXT_VOLUME_DOCKER
-        assert volume.host_path.path == CONTEXT_MOUNT_DOCKER
+        assert volume.name == constants.VOLUME_MOUNT_DOCKER
+        assert volume.host_path.path == ctx_paths.CONTEXT_MOUNT_DOCKER
 
     def test_get_configs_context_volume(self):
         volume = get_configs_context_volume()
-        assert volume.name == constants.CONTEXT_VOLUME_CONFIGS
+        assert volume.name == constants.VOLUME_MOUNT_CONFIGS
         assert isinstance(volume.empty_dir, k8s_schemas.V1EmptyDirVolumeSource)
 
     def test_get_artifacts_context_volume(self):
         volume = get_artifacts_context_volume()
-        assert volume.name == constants.CONTEXT_VOLUME_ARTIFACTS
+        assert volume.name == constants.VOLUME_MOUNT_ARTIFACTS
         assert isinstance(volume.empty_dir, k8s_schemas.V1EmptyDirVolumeSource)
 
     def test_get_connections_context_volume(self):
@@ -171,5 +171,5 @@ class TestVolumes(BaseTestCase):
 
     def test_get_shm_context_volume(self):
         volume = get_shm_context_volume()
-        assert volume.name == constants.CONTEXT_VOLUME_SHM
+        assert volume.name == constants.VOLUME_MOUNT_SHM
         assert isinstance(volume.empty_dir, k8s_schemas.V1EmptyDirVolumeSource)

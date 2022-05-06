@@ -17,7 +17,7 @@ from typing import Dict, Set
 
 from marshmallow import fields, validate
 
-from polyaxon.contexts import refs as contexts_refs
+from polyaxon.contexts import refs as ctx_refs
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow.component.base import BaseComponent, BaseComponentSchema
 from polyaxon.polyflow.events import EventTriggerSchema, V1EventKind
@@ -69,7 +69,7 @@ class BaseOp(BaseComponent, MatrixMixin, ScheduleMixin):
         statuses_by_refs = {u: [] for u in upstream}
         events = self.events or []  # type: List[V1EventTrigger]
         for e in events:
-            entity_ref = contexts_refs.get_entity_ref(e.ref)
+            entity_ref = ctx_refs.get_entity_ref(e.ref)
             if not entity_ref:
                 continue
             if entity_ref not in statuses_by_refs:
@@ -84,7 +84,7 @@ class BaseOp(BaseComponent, MatrixMixin, ScheduleMixin):
     def has_events_for_upstream(self, upstream: str) -> bool:
         events = self.events or []  # type: List[V1EventTrigger]
         for e in events:
-            entity_ref = contexts_refs.get_entity_ref(e.ref)
+            entity_ref = ctx_refs.get_entity_ref(e.ref)
             if not entity_ref:
                 continue
             if entity_ref == upstream:

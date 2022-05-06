@@ -22,7 +22,7 @@ from typing import Dict, List
 
 from marshmallow import fields
 
-from polyaxon.containers.contexts import CONTEXT_MOUNT_FILE_WATCHER
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.utils.date_utils import path_last_modified
 from polyaxon.utils.path_utils import get_files_and_dirs_in_path
@@ -90,7 +90,7 @@ class FSWatcher:
         self._file_mapping = file_mapping or {}
 
     @classmethod
-    def read(cls, config_path: str = CONTEXT_MOUNT_FILE_WATCHER):
+    def read(cls, config_path: str = ctx_paths.CONTEXT_MOUNT_FILE_WATCHER):
         if not os.path.exists(config_path):
             return cls()
         config = FSWatcherConfig.read(config_path)
@@ -98,7 +98,7 @@ class FSWatcher:
             dir_mapping=config.get_dir_mapping(), file_mapping=config.get_file_mapping()
         )
 
-    def write(self, config_path: str = CONTEXT_MOUNT_FILE_WATCHER):
+    def write(self, config_path: str = ctx_paths.CONTEXT_MOUNT_FILE_WATCHER):
         config = FSWatcherConfig.read(
             {
                 "dir_mapping": self._dir_mapping,

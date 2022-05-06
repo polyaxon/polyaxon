@@ -19,7 +19,7 @@ from datetime import timedelta
 
 from marshmallow import fields
 
-from polyaxon.env_vars.keys import POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK
+from polyaxon.env_vars.keys import EV_KEYS_INTERVALS_COMPATIBILITY_CHECK
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.utils.tz_utils import now
 
@@ -47,7 +47,7 @@ class ChecksConfig(BaseConfig):
         if interval is not None:
             return interval
         interval = int(
-            os.environ.get(POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK, self.INTERVAL)
+            os.environ.get(EV_KEYS_INTERVALS_COMPATIBILITY_CHECK, self.INTERVAL)
         )
         if interval == -1:
             return interval

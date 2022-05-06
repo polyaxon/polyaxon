@@ -23,7 +23,7 @@ from polyaxon.connections.schemas import (
     V1HostPathConnection,
     V1K8sResourceSchema,
 )
-from polyaxon.env_vars.keys import POLYAXON_KEYS_LOG_LEVEL
+from polyaxon.env_vars.keys import EV_KEYS_LOG_LEVEL
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Init, V1Plugins
@@ -211,9 +211,7 @@ class TestMainContainer(BaseTestCase):
         assert container.command == ["cmd", "-p", "-c"]
         assert container.args == ["arg1", "arg2"]
         assert container.ports == [k8s_schemas.V1ContainerPort(container_port=23)]
-        assert container.env == [
-            get_env_var(name=POLYAXON_KEYS_LOG_LEVEL, value="info")
-        ]
+        assert container.env == [get_env_var(name=EV_KEYS_LOG_LEVEL, value="info")]
         assert container.env_from == []
         assert container.resources == resources
         assert container.volume_mounts == initial_mounts

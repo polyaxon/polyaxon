@@ -49,12 +49,12 @@ import click
 )
 def sandbox(host: str, port: int, workers: int, per_core: bool, path: str, uds: str):
     """Start sandbox service."""
-    from polyaxon.env_vars.keys import POLYAXON_KEYS_SANDBOX_ROOT, POLYAXON_KEYS_SERVICE
+    from polyaxon.env_vars.keys import EV_KEYS_SANDBOX_ROOT, EV_KEYS_SERVICE
     from polyaxon.services.values import PolyaxonServices
     from polyaxon_deploy.runners.sandbox import start
 
-    os.environ[POLYAXON_KEYS_SERVICE] = PolyaxonServices.SANDBOX
+    os.environ[EV_KEYS_SERVICE] = PolyaxonServices.SANDBOX
     if path:
-        os.environ[POLYAXON_KEYS_SANDBOX_ROOT] = path
+        os.environ[EV_KEYS_SANDBOX_ROOT] = path
 
     start(host=host, port=port, workers=workers, per_core=per_core, uds=uds)

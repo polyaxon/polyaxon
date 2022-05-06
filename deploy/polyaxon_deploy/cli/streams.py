@@ -45,8 +45,8 @@ import click
 )
 def streams(host: str, port: int, workers: int, per_core: bool, uds: str):
     """Start streams service."""
-    from polyaxon.env_vars.keys import POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT
+    from polyaxon.env_vars.keys import EV_KEYS_PROXY_STREAMS_TARGET_PORT
     from polyaxon_deploy.runners.streams import start
 
-    port = port or os.environ.get(POLYAXON_KEYS_PROXY_STREAMS_TARGET_PORT)
+    port = port or os.environ.get(EV_KEYS_PROXY_STREAMS_TARGET_PORT)
     start(host=host, port=port, workers=workers, per_core=per_core, uds=uds)

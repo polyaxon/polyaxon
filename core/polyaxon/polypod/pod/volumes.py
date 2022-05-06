@@ -96,7 +96,7 @@ def get_pod_volumes(
         volume_name = (
             get_volume_name(init_connection.path)
             if init_connection.path
-            else constants.CONTEXT_VOLUME_ARTIFACTS
+            else constants.VOLUME_MOUNT_ARTIFACTS
         )
         if volume_name in volume_names:
             continue
@@ -117,9 +117,9 @@ def get_pod_volumes(
 
     # Add logs/outputs stores
     if contexts and (contexts.collect_artifacts or contexts.collect_logs):
-        if constants.CONTEXT_VOLUME_ARTIFACTS not in volume_names:
+        if constants.VOLUME_MOUNT_ARTIFACTS not in volume_names:
             volumes.append(get_artifacts_context_volume())
-            volume_names.add(constants.CONTEXT_VOLUME_ARTIFACTS)
+            volume_names.add(constants.VOLUME_MOUNT_ARTIFACTS)
         if artifacts_store and artifacts_store.name not in connection_ids:
             connection_ids.add(artifacts_store.name)
             add_volume_from_connection(connection=artifacts_store)

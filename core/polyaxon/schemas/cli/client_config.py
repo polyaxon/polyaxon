@@ -20,35 +20,35 @@ from marshmallow import EXCLUDE, fields
 import polyaxon_sdk
 
 from polyaxon.api import LOCALHOST, POLYAXON_CLOUD_HOST
-from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_API_VERSION,
-    POLYAXON_KEYS_ARCHIVE_ROOT,
-    POLYAXON_KEYS_ASSERT_HOSTNAME,
-    POLYAXON_KEYS_AUTHENTICATION_TYPE,
-    POLYAXON_KEYS_CERT_FILE,
-    POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE,
-    POLYAXON_KEYS_DEBUG,
-    POLYAXON_KEYS_DISABLE_ERRORS_REPORTING,
-    POLYAXON_KEYS_HEADER,
-    POLYAXON_KEYS_HEADER_SERVICE,
-    POLYAXON_KEYS_HOST,
-    POLYAXON_KEYS_INTERVAL,
-    POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK,
-    POLYAXON_KEYS_IS_MANAGED,
-    POLYAXON_KEYS_IS_OFFLINE,
-    POLYAXON_KEYS_K8S_IN_CLUSTER,
-    POLYAXON_KEYS_K8S_NAMESPACE,
-    POLYAXON_KEYS_KEY_FILE,
-    POLYAXON_KEYS_LOG_LEVEL,
-    POLYAXON_KEYS_NO_API,
-    POLYAXON_KEYS_NO_OP,
-    POLYAXON_KEYS_SSL_CA_CERT,
-    POLYAXON_KEYS_TIME_ZONE,
-    POLYAXON_KEYS_TIMEOUT,
-    POLYAXON_KEYS_TRACKING_TIMEOUT,
-    POLYAXON_KEYS_VERIFY_SSL,
-    POLYAXON_KEYS_WATCH_INTERVAL,
+    EV_KEYS_API_VERSION,
+    EV_KEYS_ARCHIVE_ROOT,
+    EV_KEYS_ASSERT_HOSTNAME,
+    EV_KEYS_AUTHENTICATION_TYPE,
+    EV_KEYS_CERT_FILE,
+    EV_KEYS_CONNECTION_POOL_MAXSIZE,
+    EV_KEYS_DEBUG,
+    EV_KEYS_DISABLE_ERRORS_REPORTING,
+    EV_KEYS_HEADER,
+    EV_KEYS_HEADER_SERVICE,
+    EV_KEYS_HOST,
+    EV_KEYS_INTERVAL,
+    EV_KEYS_INTERVALS_COMPATIBILITY_CHECK,
+    EV_KEYS_IS_MANAGED,
+    EV_KEYS_IS_OFFLINE,
+    EV_KEYS_K8S_IN_CLUSTER,
+    EV_KEYS_K8S_NAMESPACE,
+    EV_KEYS_KEY_FILE,
+    EV_KEYS_LOG_LEVEL,
+    EV_KEYS_NO_API,
+    EV_KEYS_NO_OP,
+    EV_KEYS_SSL_CA_CERT,
+    EV_KEYS_TIME_ZONE,
+    EV_KEYS_TIMEOUT,
+    EV_KEYS_TRACKING_TIMEOUT,
+    EV_KEYS_VERIFY_SSL,
+    EV_KEYS_WATCH_INTERVAL,
 )
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.pkg import VERSION
@@ -60,46 +60,42 @@ from polyaxon.utils.http_utils import clean_host
 
 
 class ClientSchema(BaseSchema):
-    host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HOST)
-    version = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_API_VERSION)
-    debug = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_DEBUG)
-    log_level = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_LOG_LEVEL)
+    host = fields.Str(allow_none=True, data_key=EV_KEYS_HOST)
+    version = fields.Str(allow_none=True, data_key=EV_KEYS_API_VERSION)
+    debug = fields.Bool(allow_none=True, data_key=EV_KEYS_DEBUG)
+    log_level = fields.Str(allow_none=True, data_key=EV_KEYS_LOG_LEVEL)
     authentication_type = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_AUTHENTICATION_TYPE
+        allow_none=True, data_key=EV_KEYS_AUTHENTICATION_TYPE
     )
-    is_managed = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_MANAGED)
-    is_offline = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_OFFLINE)
-    in_cluster = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_K8S_IN_CLUSTER)
-    no_op = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_NO_OP)
-    timeout = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_TIMEOUT)
-    tracking_timeout = fields.Float(
-        allow_none=True, data_key=POLYAXON_KEYS_TRACKING_TIMEOUT
-    )
-    timezone = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_TIME_ZONE)
-    watch_interval = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_WATCH_INTERVAL)
-    interval = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_INTERVAL)
-    verify_ssl = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_VERIFY_SSL)
-    ssl_ca_cert = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_SSL_CA_CERT)
-    cert_file = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_CERT_FILE)
-    key_file = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_KEY_FILE)
-    assert_hostname = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_ASSERT_HOSTNAME
-    )
+    is_managed = fields.Bool(allow_none=True, data_key=EV_KEYS_IS_MANAGED)
+    is_offline = fields.Bool(allow_none=True, data_key=EV_KEYS_IS_OFFLINE)
+    in_cluster = fields.Bool(allow_none=True, data_key=EV_KEYS_K8S_IN_CLUSTER)
+    no_op = fields.Bool(allow_none=True, data_key=EV_KEYS_NO_OP)
+    timeout = fields.Float(allow_none=True, data_key=EV_KEYS_TIMEOUT)
+    tracking_timeout = fields.Float(allow_none=True, data_key=EV_KEYS_TRACKING_TIMEOUT)
+    timezone = fields.Str(allow_none=True, data_key=EV_KEYS_TIME_ZONE)
+    watch_interval = fields.Int(allow_none=True, data_key=EV_KEYS_WATCH_INTERVAL)
+    interval = fields.Float(allow_none=True, data_key=EV_KEYS_INTERVAL)
+    verify_ssl = fields.Bool(allow_none=True, data_key=EV_KEYS_VERIFY_SSL)
+    ssl_ca_cert = fields.Str(allow_none=True, data_key=EV_KEYS_SSL_CA_CERT)
+    cert_file = fields.Str(allow_none=True, data_key=EV_KEYS_CERT_FILE)
+    key_file = fields.Str(allow_none=True, data_key=EV_KEYS_KEY_FILE)
+    assert_hostname = fields.Bool(allow_none=True, data_key=EV_KEYS_ASSERT_HOSTNAME)
     connection_pool_maxsize = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE
+        allow_none=True, data_key=EV_KEYS_CONNECTION_POOL_MAXSIZE
     )
-    archive_root = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_ARCHIVE_ROOT)
+    archive_root = fields.Str(allow_none=True, data_key=EV_KEYS_ARCHIVE_ROOT)
 
-    header = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER)
-    header_service = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER_SERVICE)
+    header = fields.Str(allow_none=True, data_key=EV_KEYS_HEADER)
+    header_service = fields.Str(allow_none=True, data_key=EV_KEYS_HEADER_SERVICE)
 
-    namespace = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_NAMESPACE)
-    no_api = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_NO_API)
+    namespace = fields.Str(allow_none=True, data_key=EV_KEYS_K8S_NAMESPACE)
+    no_api = fields.Bool(allow_none=True, data_key=EV_KEYS_NO_API)
     disable_errors_reporting = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_DISABLE_ERRORS_REPORTING
+        allow_none=True, data_key=EV_KEYS_DISABLE_ERRORS_REPORTING
     )
     compatibility_check_interval = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK
+        allow_none=True, data_key=EV_KEYS_INTERVALS_COMPATIBILITY_CHECK
     )
 
     @staticmethod
@@ -117,32 +113,32 @@ class ClientConfig(BaseConfig):
     UNKNOWN_BEHAVIOUR = EXCLUDE
 
     REDUCED_ATTRIBUTES = [
-        POLYAXON_KEYS_HOST,
-        POLYAXON_KEYS_API_VERSION,
-        POLYAXON_KEYS_ASSERT_HOSTNAME,
-        POLYAXON_KEYS_AUTHENTICATION_TYPE,
-        POLYAXON_KEYS_CERT_FILE,
-        POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE,
-        POLYAXON_KEYS_ARCHIVE_ROOT,
-        POLYAXON_KEYS_DEBUG,
-        POLYAXON_KEYS_HEADER,
-        POLYAXON_KEYS_HEADER_SERVICE,
-        POLYAXON_KEYS_K8S_IN_CLUSTER,
-        POLYAXON_KEYS_INTERVAL,
-        POLYAXON_KEYS_IS_MANAGED,
-        POLYAXON_KEYS_IS_OFFLINE,
-        POLYAXON_KEYS_K8S_NAMESPACE,
-        POLYAXON_KEYS_KEY_FILE,
-        POLYAXON_KEYS_LOG_LEVEL,
-        POLYAXON_KEYS_NO_API,
-        POLYAXON_KEYS_NO_OP,
-        POLYAXON_KEYS_SSL_CA_CERT,
-        POLYAXON_KEYS_TIMEOUT,
-        POLYAXON_KEYS_TRACKING_TIMEOUT,
-        POLYAXON_KEYS_VERIFY_SSL,
-        POLYAXON_KEYS_WATCH_INTERVAL,
-        POLYAXON_KEYS_DISABLE_ERRORS_REPORTING,
-        POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK,
+        EV_KEYS_HOST,
+        EV_KEYS_API_VERSION,
+        EV_KEYS_ASSERT_HOSTNAME,
+        EV_KEYS_AUTHENTICATION_TYPE,
+        EV_KEYS_CERT_FILE,
+        EV_KEYS_CONNECTION_POOL_MAXSIZE,
+        EV_KEYS_ARCHIVE_ROOT,
+        EV_KEYS_DEBUG,
+        EV_KEYS_HEADER,
+        EV_KEYS_HEADER_SERVICE,
+        EV_KEYS_K8S_IN_CLUSTER,
+        EV_KEYS_INTERVAL,
+        EV_KEYS_IS_MANAGED,
+        EV_KEYS_IS_OFFLINE,
+        EV_KEYS_K8S_NAMESPACE,
+        EV_KEYS_KEY_FILE,
+        EV_KEYS_LOG_LEVEL,
+        EV_KEYS_NO_API,
+        EV_KEYS_NO_OP,
+        EV_KEYS_SSL_CA_CERT,
+        EV_KEYS_TIMEOUT,
+        EV_KEYS_TRACKING_TIMEOUT,
+        EV_KEYS_VERIFY_SSL,
+        EV_KEYS_WATCH_INTERVAL,
+        EV_KEYS_DISABLE_ERRORS_REPORTING,
+        EV_KEYS_INTERVALS_COMPATIBILITY_CHECK,
     ]
 
     def __init__(
@@ -197,7 +193,7 @@ class ClientConfig(BaseConfig):
         self.key_file = key_file
         self.assert_hostname = self._get_bool(assert_hostname, None)
         self.connection_pool_maxsize = connection_pool_maxsize
-        self.archive_root = archive_root or CONTEXT_ARCHIVE_ROOT
+        self.archive_root = archive_root or ctx_paths.CONTEXT_ARCHIVE_ROOT
         self.header = header
         self.header_service = header_service
         self.timeout = timeout or 20

@@ -21,8 +21,8 @@ from typing import Any, List, Optional, Set, Union
 from marshmallow import ValidationError
 
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_CONNECTION_CONTEXT_PATH_FORMAT,
-    POLYAXON_KEYS_CONNECTION_SCHEMA_FORMAT,
+    EV_KEYS_CONNECTION_CONTEXT_PATH_FORMAT,
+    EV_KEYS_CONNECTION_SCHEMA_FORMAT,
 )
 from polyaxon.logger import logger
 from polyaxon.schemas.types import V1ConnectionType
@@ -91,11 +91,11 @@ def get_from_path(context_path: str, keys: Union[Set[str], List[str], str]) -> A
 
 
 def get_connection_context_path_env_name(name: str) -> str:
-    return POLYAXON_KEYS_CONNECTION_CONTEXT_PATH_FORMAT.format(name.upper())
+    return EV_KEYS_CONNECTION_CONTEXT_PATH_FORMAT.format(name.upper())
 
 
 def get_connection_schema_env_name(name: str) -> str:
-    return POLYAXON_KEYS_CONNECTION_SCHEMA_FORMAT.format(name.upper())
+    return EV_KEYS_CONNECTION_SCHEMA_FORMAT.format(name.upper())
 
 
 def get_connection_context_path(name: Optional[str]) -> Optional[str]:

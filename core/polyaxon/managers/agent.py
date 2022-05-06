@@ -17,10 +17,7 @@ import os
 
 from polyaxon.config_reader.manager import ConfigManager
 from polyaxon.config_reader.spec import ConfigSpec
-from polyaxon.containers.contexts import (
-    CONTEXT_TMP_POLYAXON_PATH,
-    CONTEXT_USER_POLYAXON_PATH,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.k8s.namespace import DEFAULT_NAMESPACE
 from polyaxon.managers.base import BaseConfigManager
 from polyaxon.schemas.cli.agent_config import AgentConfig, SandboxConfig
@@ -69,8 +66,12 @@ class AgentConfigManager(BaseConfigManager):
 
     @classmethod
     def get_config_from_env(cls) -> AgentConfig:
-        tmp_path = os.path.join(CONTEXT_TMP_POLYAXON_PATH, cls.CONFIG_FILE_NAME)
-        user_path = os.path.join(CONTEXT_USER_POLYAXON_PATH, cls.CONFIG_FILE_NAME)
+        tmp_path = os.path.join(
+            ctx_paths.CONTEXT_TMP_POLYAXON_PATH, cls.CONFIG_FILE_NAME
+        )
+        user_path = os.path.join(
+            ctx_paths.CONTEXT_USER_POLYAXON_PATH, cls.CONFIG_FILE_NAME
+        )
 
         config_paths = [
             os.environ,

@@ -20,7 +20,7 @@ import aiofiles
 
 from kubernetes_asyncio.client.models import V1Pod
 
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.logging.async_monitor import query_k8s_pod_logs
 from polyaxon.types import AwareDT
@@ -36,7 +36,7 @@ async def sync_logs(
     stream: bool = False,
     is_running: bool = True,
 ):
-    path_from = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_uuid)
+    path_from = ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_uuid)
     path_from = "{}/.tmpplxlogs".format(path_from)
 
     if not is_running:

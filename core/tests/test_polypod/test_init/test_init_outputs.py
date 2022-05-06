@@ -19,11 +19,11 @@ import pytest
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1BucketConnection, V1ClaimConnection
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.containers.names import (
     INIT_ARTIFACTS_CONTAINER_PREFIX,
     generate_container_name,
 )
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.mounts import get_artifacts_context_mount
@@ -74,7 +74,7 @@ class TestInitOutputsStore(BaseTestCase):
         init_args.append(
             get_volume_args(
                 store=store,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
                 artifacts=V1ArtifactsType(dirs=["run_uid"]),
                 paths=None,
                 sync_fw=True,
@@ -115,7 +115,7 @@ class TestInitOutputsStore(BaseTestCase):
         init_args.append(
             get_volume_args(
                 store=store,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
                 artifacts=V1ArtifactsType(dirs=["run_uid"]),
                 paths=None,
                 sync_fw=True,
@@ -156,7 +156,7 @@ class TestInitOutputsStore(BaseTestCase):
         init_args.append(
             get_volume_args(
                 store=store,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                mount_path=ctx_paths.CONTEXT_MOUNT_ARTIFACTS,
                 artifacts=V1ArtifactsType(dirs=["run_uid"]),
                 paths=None,
                 sync_fw=True,

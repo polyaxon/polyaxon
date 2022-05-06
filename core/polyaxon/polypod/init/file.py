@@ -17,14 +17,11 @@
 from typing import List, Optional
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
-from polyaxon.containers.contexts import (
-    CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
-)
 from polyaxon.containers.names import (
     INIT_FILE_CONTAINER_PREFIX,
     generate_container_name,
 )
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
 from polyaxon.polypod.common.containers import patch_container
@@ -52,11 +49,9 @@ def get_file_init_container(
     env = env + [get_run_instance_env_var(run_instance)]
 
     volume_name = (
-        get_volume_name(mount_path)
-        if mount_path
-        else constants.CONTEXT_VOLUME_ARTIFACTS
+        get_volume_name(mount_path) if mount_path else constants.VOLUME_MOUNT_ARTIFACTS
     )
-    mount_path = mount_path or CONTEXT_MOUNT_ARTIFACTS
+    mount_path = mount_path or ctx_paths.CONTEXT_MOUNT_ARTIFACTS
     volume_mounts = [
         get_connections_context_mount(name=volume_name, mount_path=mount_path)
     ]
@@ -72,7 +67,9 @@ def get_file_init_container(
         args=[
             "--file-context={}".format(file_args.to_dict(dump=True)),
             "--filepath={}".format(mount_path),
-            "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path)),
+            "--copy-path={}".format(
+                ctx_paths.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path)
+            ),
             "--track",
         ],
         env=env,

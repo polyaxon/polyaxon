@@ -19,7 +19,7 @@ import tempfile
 
 from datetime import timedelta
 
-from polyaxon.env_vars.keys import POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK
+from polyaxon.env_vars.keys import EV_KEYS_INTERVALS_COMPATIBILITY_CHECK
 from polyaxon.schemas.cli.checks_config import ChecksConfig
 from polyaxon.utils.test_utils import BaseTestCase
 from polyaxon.utils.tz_utils import now
@@ -37,13 +37,13 @@ class TestChecksConfig(BaseTestCase):
         assert config.get_interval(-1) == -1
         assert config.get_interval(-2) == -2
         assert config.get_interval() == ChecksConfig.INTERVAL
-        os.environ[POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK] = "-1"
+        os.environ[EV_KEYS_INTERVALS_COMPATIBILITY_CHECK] = "-1"
         assert config.get_interval() == -1
-        os.environ[POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK] = "-2"
+        os.environ[EV_KEYS_INTERVALS_COMPATIBILITY_CHECK] = "-2"
         assert config.get_interval() == ChecksConfig.INTERVAL
-        os.environ[POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK] = "1"
+        os.environ[EV_KEYS_INTERVALS_COMPATIBILITY_CHECK] = "1"
         assert config.get_interval() == ChecksConfig.INTERVAL
-        os.environ[POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK] = str(
+        os.environ[EV_KEYS_INTERVALS_COMPATIBILITY_CHECK] = str(
             ChecksConfig.INTERVAL + 1
         )
         assert config.get_interval() == ChecksConfig.INTERVAL + 1

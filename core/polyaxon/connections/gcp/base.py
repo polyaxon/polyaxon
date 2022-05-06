@@ -26,7 +26,7 @@ import google.oauth2.service_account
 from google.oauth2.service_account import Credentials
 
 from polyaxon.connections.reader import read_keys
-from polyaxon.containers.contexts import CONTEXT_MOUNT_GC
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.logger import logger
 
@@ -104,8 +104,8 @@ def get_gc_credentials(
 
     if not key_path and not keyfile_dict:
         # Look for default GC path
-        if os.path.exists(CONTEXT_MOUNT_GC):
-            key_path = CONTEXT_MOUNT_GC
+        if os.path.exists(ctx_paths.CONTEXT_MOUNT_GC):
+            key_path = ctx_paths.CONTEXT_MOUNT_GC
 
     if not key_path and not keyfile_dict:
         logger.info(

@@ -16,7 +16,7 @@
 import pytest
 
 from polyaxon import settings
-from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.utils.test_utils import BaseTestCase
 
 
@@ -46,7 +46,7 @@ class TestSettings(BaseTestCase):
         assert settings.PROXIES_CONFIG.nginx_indent_width == 4
         assert settings.PROXIES_CONFIG.ssl_path == "/etc/ssl/polyaxon"
         assert settings.PROXIES_CONFIG.ssl_enabled is False
-        assert settings.PROXIES_CONFIG.archive_root == CONTEXT_ARCHIVE_ROOT
+        assert settings.PROXIES_CONFIG.archive_root == ctx_paths.CONTEXT_ARCHIVE_ROOT
         assert settings.PROXIES_CONFIG.ssl_path == "/etc/ssl/polyaxon"
         assert settings.PROXIES_CONFIG.ssl_enabled is False
         assert settings.PROXIES_CONFIG.auth_enabled is False

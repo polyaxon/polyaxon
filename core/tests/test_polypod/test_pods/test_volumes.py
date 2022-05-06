@@ -371,7 +371,7 @@ class TestPodVolumes(BaseTestCase):
         )
 
         # Managed versions
-        ctx_volume_name = constants.CONTEXT_VOLUME_ARTIFACTS
+        ctx_volume_name = constants.VOLUME_MOUNT_ARTIFACTS
         self.assert_single_init_artifacts_store(
             store=self.s3_store,
             results=[

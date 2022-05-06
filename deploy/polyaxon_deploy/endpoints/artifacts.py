@@ -89,7 +89,7 @@ async def download_artifact(
                 archived_path=archived_path, check_cache=not force
             )
         return FileResponse(archived_path, filename=os.path.basename(archived_path))
-    return redirect_file(archived_path)
+    return await redirect_file(archived_path)
 
 
 async def upload_artifact(request: Request) -> Response:
@@ -146,7 +146,7 @@ async def download_artifacts(request: Request) -> Response:
             content="Artifact not found: filepath={}".format(archived_path),
             status_code=status.HTTP_404_NOT_FOUND,
         )
-    return redirect_file(archived_path)
+    return await redirect_file(archived_path)
 
 
 async def upload_artifacts(request: Request) -> Response:

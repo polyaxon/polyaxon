@@ -17,10 +17,7 @@ import os
 
 from polyaxon.config_reader.manager import ConfigManager
 from polyaxon.config_reader.spec import ConfigSpec
-from polyaxon.containers.contexts import (
-    CONTEXT_TMP_POLYAXON_PATH,
-    CONTEXT_USER_POLYAXON_PATH,
-)
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.managers.base import BaseConfigManager
 from polyaxon.schemas.cli.client_config import ClientConfig
 
@@ -34,8 +31,12 @@ class ClientConfigManager(BaseConfigManager):
 
     @classmethod
     def get_config_from_env(cls, **kwargs) -> ClientConfig:
-        tmp_path = os.path.join(CONTEXT_TMP_POLYAXON_PATH, cls.CONFIG_FILE_NAME)
-        user_path = os.path.join(CONTEXT_USER_POLYAXON_PATH, cls.CONFIG_FILE_NAME)
+        tmp_path = os.path.join(
+            ctx_paths.CONTEXT_TMP_POLYAXON_PATH, cls.CONFIG_FILE_NAME
+        )
+        user_path = os.path.join(
+            ctx_paths.CONTEXT_USER_POLYAXON_PATH, cls.CONFIG_FILE_NAME
+        )
 
         config = ConfigManager.read_configs(
             [

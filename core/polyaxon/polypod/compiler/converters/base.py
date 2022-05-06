@@ -23,7 +23,7 @@ from polyaxon.api import VERSION_V1
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, V1PolyaxonSidecarContainer
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.containers.names import INIT_PREFIX, SIDECAR_PREFIX
-from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_API
+from polyaxon.env_vars.keys import EV_KEYS_NO_API
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Environment, V1Init, V1Plugins
@@ -203,7 +203,7 @@ class BaseConverter(ConverterAbstract):
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
         env = []
         if settings.CLIENT_CONFIG.no_api:
-            env += [get_env_var(name=POLYAXON_KEYS_NO_API, value=True)]
+            env += [get_env_var(name=EV_KEYS_NO_API, value=True)]
         proxy_env = get_proxy_env_vars(
             settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops
         )
@@ -221,7 +221,7 @@ class BaseConverter(ConverterAbstract):
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
         env = []
         if settings.CLIENT_CONFIG.no_api:
-            env += [get_env_var(name=POLYAXON_KEYS_NO_API, value=True)]
+            env += [get_env_var(name=EV_KEYS_NO_API, value=True)]
         proxy_env = get_proxy_env_vars(
             settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops
         )

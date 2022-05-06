@@ -16,7 +16,7 @@
 
 from typing import Iterable, List, Optional
 
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Init
 from polyaxon.polypod.common import constants
@@ -50,14 +50,14 @@ def get_volume_mounts(
         volume_mounts += to_list(
             get_artifacts_context_mount(read_only=False), check_none=True
         )
-        volume_names.add(constants.CONTEXT_VOLUME_ARTIFACTS)
+        volume_names.add(constants.VOLUME_MOUNT_ARTIFACTS)
     for init_connection in init:
         volume_name = (
             get_volume_name(init_connection.path)
             if init_connection.path
-            else constants.CONTEXT_VOLUME_ARTIFACTS
+            else constants.VOLUME_MOUNT_ARTIFACTS
         )
-        mount_path = init_connection.path or CONTEXT_MOUNT_ARTIFACTS
+        mount_path = init_connection.path or ctx_paths.CONTEXT_MOUNT_ARTIFACTS
         if volume_name in volume_names:
             continue
         volume_names.add(volume_name)

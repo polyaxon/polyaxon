@@ -18,13 +18,13 @@ from marshmallow import EXCLUDE, fields
 
 import polyaxon_sdk
 
-from polyaxon.env_vars.keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
+from polyaxon.env_vars.keys import EV_KEYS_AUTH_TOKEN, EV_KEYS_AUTH_USERNAME
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 
 class AccessTokenSchema(BaseSchema):
-    username = fields.Str(data_key=POLYAXON_KEYS_AUTH_USERNAME)
-    token = fields.Str(data_key=POLYAXON_KEYS_AUTH_TOKEN)
+    username = fields.Str(data_key=EV_KEYS_AUTH_USERNAME)
+    token = fields.Str(data_key=EV_KEYS_AUTH_TOKEN)
 
     @staticmethod
     def schema_config():

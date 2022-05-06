@@ -23,10 +23,10 @@ from polyaxon.connections.schemas import (
     V1K8sResourceSchema,
 )
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_ARTIFACTS_STORE_NAME,
-    POLYAXON_KEYS_COLLECT_ARTIFACTS,
-    POLYAXON_KEYS_COLLECT_RESOURCES,
-    POLYAXON_KEYS_LOG_LEVEL,
+    EV_KEYS_ARTIFACTS_STORE_NAME,
+    EV_KEYS_COLLECT_ARTIFACTS,
+    EV_KEYS_COLLECT_RESOURCES,
+    EV_KEYS_LOG_LEVEL,
 )
 from polyaxon.exceptions import PolypodException
 from polyaxon.polyflow import V1Plugins
@@ -172,8 +172,8 @@ class TestMainEnvVars(BaseTestCase):
             secrets=None,
             config_maps=None,
         ) == [
-            get_env_var(name=POLYAXON_KEYS_COLLECT_ARTIFACTS, value=True),
-            get_env_var(name=POLYAXON_KEYS_COLLECT_RESOURCES, value=True),
+            get_env_var(name=EV_KEYS_COLLECT_ARTIFACTS, value=True),
+            get_env_var(name=EV_KEYS_COLLECT_RESOURCES, value=True),
         ]
 
         assert (
@@ -222,7 +222,7 @@ class TestMainEnvVars(BaseTestCase):
             connections=None,
             secrets=None,
             config_maps=None,
-        ) == [get_env_var(name=POLYAXON_KEYS_COLLECT_ARTIFACTS, value=True)]
+        ) == [get_env_var(name=EV_KEYS_COLLECT_ARTIFACTS, value=True)]
 
     def test_get_env_vars_with_secrets(self):
         assert get_env_vars(
@@ -329,10 +329,10 @@ class TestMainEnvVars(BaseTestCase):
             ],
         )
         expected = [
-            get_env_var(name=POLYAXON_KEYS_LOG_LEVEL, value="info"),
-            get_env_var(name=POLYAXON_KEYS_COLLECT_ARTIFACTS, value=True),
-            get_env_var(name=POLYAXON_KEYS_COLLECT_RESOURCES, value=True),
-            get_env_var(name=POLYAXON_KEYS_ARTIFACTS_STORE_NAME, value="test"),
+            get_env_var(name=EV_KEYS_LOG_LEVEL, value="info"),
+            get_env_var(name=EV_KEYS_COLLECT_ARTIFACTS, value=True),
+            get_env_var(name=EV_KEYS_COLLECT_RESOURCES, value=True),
+            get_env_var(name=EV_KEYS_ARTIFACTS_STORE_NAME, value="test"),
         ]
         expected += get_connection_env_var(connection=connection, secret=self.resource6)
         expected += get_kv_env_vars([["key1", "val1"], ["key2", "val2"]])

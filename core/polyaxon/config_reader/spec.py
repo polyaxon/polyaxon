@@ -24,10 +24,7 @@ from requests import HTTPError
 from yaml.parser import ParserError
 from yaml.scanner import ScannerError
 
-from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_PUBLIC_REGISTRY,
-    POLYAXON_KEYS_USE_GIT_REGISTRY,
-)
+from polyaxon.env_vars.keys import EV_KEYS_PUBLIC_REGISTRY, EV_KEYS_USE_GIT_REGISTRY
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.utils.dict_utils import deep_update
 from polyaxon.utils.list_utils import to_list
@@ -85,7 +82,7 @@ class ConfigSpec:
             return _read_from_url(self.value)
 
         if self.config_type == "hub":
-            if os.environ.get(POLYAXON_KEYS_USE_GIT_REGISTRY, False):
+            if os.environ.get(EV_KEYS_USE_GIT_REGISTRY, False):
                 return _read_from_public_hub(self.value)
             return _read_from_polyaxon_hub(self.value)
 
@@ -133,7 +130,7 @@ def _read_from_url(url: str):
 
 def get_default_registry():
     return os.environ.get(
-        POLYAXON_KEYS_PUBLIC_REGISTRY,
+        EV_KEYS_PUBLIC_REGISTRY,
         "https://raw.githubusercontent.com/polyaxon/polyaxon-hub/master",
     )
 

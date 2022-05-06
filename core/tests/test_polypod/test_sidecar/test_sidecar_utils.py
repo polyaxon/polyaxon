@@ -17,10 +17,7 @@
 import pytest
 
 from polyaxon.auxiliaries import get_sidecar_resources
-from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_ARTIFACTS_STORE_NAME,
-    POLYAXON_KEYS_CONTAINER_ID,
-)
+from polyaxon.env_vars.keys import EV_KEYS_ARTIFACTS_STORE_NAME, EV_KEYS_CONTAINER_ID
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.env_vars import get_env_var
 from polyaxon.polypod.sidecar.container import get_sidecar_args
@@ -36,8 +33,8 @@ class TestSidecarUtils(BaseTestCase):
         )
 
         assert sidecar_env_vars == [
-            get_env_var(name=POLYAXON_KEYS_CONTAINER_ID, value="foo"),
-            get_env_var(name=POLYAXON_KEYS_ARTIFACTS_STORE_NAME, value="name"),
+            get_env_var(name=EV_KEYS_CONTAINER_ID, value="foo"),
+            get_env_var(name=EV_KEYS_ARTIFACTS_STORE_NAME, value="name"),
         ]
 
         # Initial env vars
@@ -50,8 +47,8 @@ class TestSidecarUtils(BaseTestCase):
         )
 
         assert sidecar_env_vars == env_vars + [
-            get_env_var(name=POLYAXON_KEYS_CONTAINER_ID, value="foo"),
-            get_env_var(name=POLYAXON_KEYS_ARTIFACTS_STORE_NAME, value="name"),
+            get_env_var(name=EV_KEYS_CONTAINER_ID, value="foo"),
+            get_env_var(name=EV_KEYS_ARTIFACTS_STORE_NAME, value="name"),
         ]
 
         # Outputs Path
@@ -60,8 +57,8 @@ class TestSidecarUtils(BaseTestCase):
         )
 
         assert sidecar_env_vars == [
-            get_env_var(name=POLYAXON_KEYS_CONTAINER_ID, value="foo"),
-            get_env_var(name=POLYAXON_KEYS_ARTIFACTS_STORE_NAME, value="name"),
+            get_env_var(name=EV_KEYS_CONTAINER_ID, value="foo"),
+            get_env_var(name=EV_KEYS_ARTIFACTS_STORE_NAME, value="name"),
         ]
 
     def test_get_sidecar_resources(self):

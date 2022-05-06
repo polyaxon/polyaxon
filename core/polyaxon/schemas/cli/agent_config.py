@@ -25,30 +25,30 @@ from polyaxon.auxiliaries import (
     PolyaxonSidecarContainerSchema,
     V1DefaultScheduling,
 )
-from polyaxon.containers import contexts
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
-    POLYAXON_KEYS_AGENT_CLEANER,
-    POLYAXON_KEYS_AGENT_COMPRESSED_LOGS,
-    POLYAXON_KEYS_AGENT_CONNECTIONS,
-    POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
-    POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
-    POLYAXON_KEYS_AGENT_INIT,
-    POLYAXON_KEYS_AGENT_IS_REPLICA,
-    POLYAXON_KEYS_AGENT_NOTIFIER,
-    POLYAXON_KEYS_AGENT_RUNS_SA,
-    POLYAXON_KEYS_AGENT_SECRET_NAME,
-    POLYAXON_KEYS_AGENT_SIDECAR,
-    POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
-    POLYAXON_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS,
-    POLYAXON_KEYS_K8S_APP_SECRET_NAME,
-    POLYAXON_KEYS_K8S_NAMESPACE,
-    POLYAXON_KEYS_SANDBOX_DEBUG,
-    POLYAXON_KEYS_SANDBOX_HOST,
-    POLYAXON_KEYS_SANDBOX_PER_CORE,
-    POLYAXON_KEYS_SANDBOX_PORT,
-    POLYAXON_KEYS_SANDBOX_SSL_ENABLED,
-    POLYAXON_KEYS_SANDBOX_WORKERS,
+    EV_KEYS_AGENT_ARTIFACTS_STORE,
+    EV_KEYS_AGENT_CLEANER,
+    EV_KEYS_AGENT_COMPRESSED_LOGS,
+    EV_KEYS_AGENT_CONNECTIONS,
+    EV_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
+    EV_KEYS_AGENT_DEFAULT_SCHEDULING,
+    EV_KEYS_AGENT_INIT,
+    EV_KEYS_AGENT_IS_REPLICA,
+    EV_KEYS_AGENT_NOTIFIER,
+    EV_KEYS_AGENT_RUNS_SA,
+    EV_KEYS_AGENT_SECRET_NAME,
+    EV_KEYS_AGENT_SIDECAR,
+    EV_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
+    EV_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS,
+    EV_KEYS_K8S_APP_SECRET_NAME,
+    EV_KEYS_K8S_NAMESPACE,
+    EV_KEYS_SANDBOX_DEBUG,
+    EV_KEYS_SANDBOX_HOST,
+    EV_KEYS_SANDBOX_PER_CORE,
+    EV_KEYS_SANDBOX_PORT,
+    EV_KEYS_SANDBOX_SSL_ENABLED,
+    EV_KEYS_SANDBOX_WORKERS,
 )
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.parser import parser
@@ -87,12 +87,12 @@ class BaseAgentSchema(BaseSchema):
     artifacts_store = fields.Nested(
         ConnectionTypeSchema,
         allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
+        data_key=EV_KEYS_AGENT_ARTIFACTS_STORE,
     )
     connections = fields.List(
         fields.Nested(ConnectionTypeSchema),
         allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_CONNECTIONS,
+        data_key=EV_KEYS_AGENT_CONNECTIONS,
     )
 
     @validates_schema
@@ -106,10 +106,10 @@ class BaseAgentSchema(BaseSchema):
 
     @pre_load
     def pre_validate(self, data, **kwargs):
-        connections = data.get(POLYAXON_KEYS_AGENT_CONNECTIONS)
+        connections = data.get(EV_KEYS_AGENT_CONNECTIONS)
         try:
             connections = parser.get_dict(
-                key=POLYAXON_KEYS_AGENT_CONNECTIONS,
+                key=EV_KEYS_AGENT_CONNECTIONS,
                 value=connections,
                 is_list=True,
                 is_optional=True,
@@ -117,12 +117,12 @@ class BaseAgentSchema(BaseSchema):
         except PolyaxonSchemaError as e:
             raise ValidationError("Received an invalid connections") from e
         if connections:
-            data[POLYAXON_KEYS_AGENT_CONNECTIONS] = connections
+            data[EV_KEYS_AGENT_CONNECTIONS] = connections
 
-        artifacts_store = data.get(POLYAXON_KEYS_AGENT_ARTIFACTS_STORE)
+        artifacts_store = data.get(EV_KEYS_AGENT_ARTIFACTS_STORE)
         try:
             artifacts_store = parser.get_dict(
-                key=POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
+                key=EV_KEYS_AGENT_ARTIFACTS_STORE,
                 value=artifacts_store,
                 is_optional=True,
             )
@@ -131,7 +131,7 @@ class BaseAgentSchema(BaseSchema):
                 "Received an invalid artifacts store `{}`".format(artifacts_store)
             ) from e
         if artifacts_store:
-            data[POLYAXON_KEYS_AGENT_ARTIFACTS_STORE] = artifacts_store
+            data[EV_KEYS_AGENT_ARTIFACTS_STORE] = artifacts_store
 
         return data
 
@@ -139,8 +139,8 @@ class BaseAgentSchema(BaseSchema):
 class BaseAgentConfig(BaseConfig):
     UNKNOWN_BEHAVIOUR = EXCLUDE
     REDUCED_ATTRIBUTES = [
-        POLYAXON_KEYS_AGENT_ARTIFACTS_STORE,
-        POLYAXON_KEYS_AGENT_CONNECTIONS,
+        EV_KEYS_AGENT_ARTIFACTS_STORE,
+        EV_KEYS_AGENT_CONNECTIONS,
     ]
 
     def __init__(
@@ -201,7 +201,7 @@ class BaseAgentConfig(BaseConfig):
 
     @property
     def local_root(self):
-        artifacts_root = contexts.CONTEXT_ARTIFACTS_ROOT
+        artifacts_root = ctx_paths.CONTEXT_ARTIFACTS_ROOT
         if not self.artifacts_store:
             return artifacts_root
 
@@ -212,7 +212,7 @@ class BaseAgentConfig(BaseConfig):
 
     @property
     def store_root(self):
-        artifacts_root = contexts.CONTEXT_ARTIFACTS_ROOT
+        artifacts_root = ctx_paths.CONTEXT_ARTIFACTS_ROOT
         if not self.artifacts_store:
             return artifacts_root
 
@@ -222,14 +222,12 @@ class BaseAgentConfig(BaseConfig):
 class SandboxSchema(BaseAgentSchema):
     REQUIRED_ARTIFACTS_STORE = False
 
-    port = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_SANDBOX_PORT)
-    host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_SANDBOX_HOST)
-    ssl_enabled = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_SANDBOX_SSL_ENABLED
-    )
-    debug = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_SANDBOX_DEBUG)
-    workers = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_SANDBOX_WORKERS)
-    per_core = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_SANDBOX_PER_CORE)
+    port = fields.Int(allow_none=True, data_key=EV_KEYS_SANDBOX_PORT)
+    host = fields.Str(allow_none=True, data_key=EV_KEYS_SANDBOX_HOST)
+    ssl_enabled = fields.Bool(allow_none=True, data_key=EV_KEYS_SANDBOX_SSL_ENABLED)
+    debug = fields.Bool(allow_none=True, data_key=EV_KEYS_SANDBOX_DEBUG)
+    workers = fields.Int(allow_none=True, data_key=EV_KEYS_SANDBOX_WORKERS)
+    per_core = fields.Bool(allow_none=True, data_key=EV_KEYS_SANDBOX_PER_CORE)
 
     @staticmethod
     def schema_config():
@@ -240,12 +238,12 @@ class SandboxConfig(BaseAgentConfig):
     SCHEMA = SandboxSchema
     IDENTIFIER = "sandbox"
     REDUCED_ATTRIBUTES = BaseAgentConfig.REDUCED_ATTRIBUTES + [
-        POLYAXON_KEYS_SANDBOX_PORT,
-        POLYAXON_KEYS_SANDBOX_HOST,
-        POLYAXON_KEYS_SANDBOX_SSL_ENABLED,
-        POLYAXON_KEYS_SANDBOX_DEBUG,
-        POLYAXON_KEYS_SANDBOX_WORKERS,
-        POLYAXON_KEYS_SANDBOX_PER_CORE,
+        EV_KEYS_SANDBOX_PORT,
+        EV_KEYS_SANDBOX_HOST,
+        EV_KEYS_SANDBOX_SSL_ENABLED,
+        EV_KEYS_SANDBOX_DEBUG,
+        EV_KEYS_SANDBOX_WORKERS,
+        EV_KEYS_SANDBOX_PER_CORE,
     ]
 
     def __init__(
@@ -277,54 +275,54 @@ class SandboxConfig(BaseAgentConfig):
 class AgentSchema(BaseAgentSchema):
     REQUIRED_ARTIFACTS_STORE = True
 
-    namespace = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_NAMESPACE)
-    is_replica = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_AGENT_IS_REPLICA)
+    namespace = fields.Str(allow_none=True, data_key=EV_KEYS_K8S_NAMESPACE)
+    is_replica = fields.Bool(allow_none=True, data_key=EV_KEYS_AGENT_IS_REPLICA)
     compressed_logs = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_AGENT_COMPRESSED_LOGS
+        allow_none=True, data_key=EV_KEYS_AGENT_COMPRESSED_LOGS
     )
     sidecar = fields.Nested(
         PolyaxonSidecarContainerSchema,
         allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_SIDECAR,
+        data_key=EV_KEYS_AGENT_SIDECAR,
     )
     init = fields.Nested(
-        PolyaxonInitContainerSchema, allow_none=True, data_key=POLYAXON_KEYS_AGENT_INIT
+        PolyaxonInitContainerSchema, allow_none=True, data_key=EV_KEYS_AGENT_INIT
     )
     notifier = fields.Nested(
-        PolyaxonNotifierSchema, allow_none=True, data_key=POLYAXON_KEYS_AGENT_NOTIFIER
+        PolyaxonNotifierSchema, allow_none=True, data_key=EV_KEYS_AGENT_NOTIFIER
     )
     cleaner = fields.Nested(
-        PolyaxonCleanerSchema, allow_none=True, data_key=POLYAXON_KEYS_AGENT_CLEANER
+        PolyaxonCleanerSchema, allow_none=True, data_key=EV_KEYS_AGENT_CLEANER
     )
     use_proxy_env_vars_use_in_ops = fields.Bool(
-        allow_none=True, data_key=POLYAXON_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS
+        allow_none=True, data_key=EV_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS
     )
     default_scheduling = fields.Nested(
         DefaultSchedulingSchema,
         allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
+        data_key=EV_KEYS_AGENT_DEFAULT_SCHEDULING,
     )
     default_image_pull_secrets = fields.List(
         fields.Str(),
         allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
+        data_key=EV_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
     )
     app_secret_name = fields.Str(
         allow_none=True,
-        data_key=POLYAXON_KEYS_K8S_APP_SECRET_NAME,
+        data_key=EV_KEYS_K8S_APP_SECRET_NAME,
     )
     agent_secret_name = fields.Str(
         allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_SECRET_NAME,
+        data_key=EV_KEYS_AGENT_SECRET_NAME,
     )
     runs_sa = fields.Str(
         allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_RUNS_SA,
+        data_key=EV_KEYS_AGENT_RUNS_SA,
     )
     # This refresh logic will mitigate several issues with AKS's numerous networking problems
     spawner_refresh_interval = fields.Integer(
         allow_none=True,
-        data_key=POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
+        data_key=EV_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
     )
 
     @staticmethod
@@ -335,56 +333,54 @@ class AgentSchema(BaseAgentSchema):
     def pre_validate(self, data, **kwargs):
         data = super().pre_validate(data, **kwargs)
 
-        sidecar = data.get(POLYAXON_KEYS_AGENT_SIDECAR)
+        sidecar = data.get(EV_KEYS_AGENT_SIDECAR)
         try:
             sidecar = parser.get_dict(
-                key=POLYAXON_KEYS_AGENT_SIDECAR, value=sidecar, is_optional=True
+                key=EV_KEYS_AGENT_SIDECAR, value=sidecar, is_optional=True
             )
         except PolyaxonSchemaError as e:
             raise ValidationError(
                 "Received an invalid sidecar `{}`".format(sidecar)
             ) from e
         if sidecar:
-            data[POLYAXON_KEYS_AGENT_SIDECAR] = sidecar
+            data[EV_KEYS_AGENT_SIDECAR] = sidecar
 
-        init = data.get(POLYAXON_KEYS_AGENT_INIT)
+        init = data.get(EV_KEYS_AGENT_INIT)
         try:
-            init = parser.get_dict(
-                key=POLYAXON_KEYS_AGENT_INIT, value=init, is_optional=True
-            )
+            init = parser.get_dict(key=EV_KEYS_AGENT_INIT, value=init, is_optional=True)
         except PolyaxonSchemaError as e:
             raise ValidationError("Received an invalid init `{}`".format(init)) from e
         if init:
-            data[POLYAXON_KEYS_AGENT_INIT] = init
+            data[EV_KEYS_AGENT_INIT] = init
 
-        cleaner = data.get(POLYAXON_KEYS_AGENT_CLEANER)
+        cleaner = data.get(EV_KEYS_AGENT_CLEANER)
         try:
             cleaner = parser.get_dict(
-                key=POLYAXON_KEYS_AGENT_CLEANER, value=cleaner, is_optional=True
+                key=EV_KEYS_AGENT_CLEANER, value=cleaner, is_optional=True
             )
         except PolyaxonSchemaError as e:
             raise ValidationError(
                 "Received an invalid cleaner `{}`".format(cleaner)
             ) from e
         if cleaner:
-            data[POLYAXON_KEYS_AGENT_CLEANER] = cleaner
+            data[EV_KEYS_AGENT_CLEANER] = cleaner
 
-        notifier = data.get(POLYAXON_KEYS_AGENT_NOTIFIER)
+        notifier = data.get(EV_KEYS_AGENT_NOTIFIER)
         try:
             notifier = parser.get_dict(
-                key=POLYAXON_KEYS_AGENT_NOTIFIER, value=notifier, is_optional=True
+                key=EV_KEYS_AGENT_NOTIFIER, value=notifier, is_optional=True
             )
         except PolyaxonSchemaError as e:
             raise ValidationError(
                 "Received an invalid notifier `{}`".format(notifier)
             ) from e
         if notifier:
-            data[POLYAXON_KEYS_AGENT_NOTIFIER] = notifier
+            data[EV_KEYS_AGENT_NOTIFIER] = notifier
 
-        default_scheduling = data.get(POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING)
+        default_scheduling = data.get(EV_KEYS_AGENT_DEFAULT_SCHEDULING)
         try:
             default_scheduling = parser.get_dict(
-                key=POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
+                key=EV_KEYS_AGENT_DEFAULT_SCHEDULING,
                 value=default_scheduling,
                 is_optional=True,
             )
@@ -393,14 +389,12 @@ class AgentSchema(BaseAgentSchema):
                 "Received an invalid default_scheduling `{}`".format(default_scheduling)
             ) from e
         if default_scheduling:
-            data[POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING] = default_scheduling
+            data[EV_KEYS_AGENT_DEFAULT_SCHEDULING] = default_scheduling
 
-        default_image_pull_secrets = data.get(
-            POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS
-        )
+        default_image_pull_secrets = data.get(EV_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS)
         try:
             default_image_pull_secrets = parser.get_string(
-                key=POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
+                key=EV_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
                 value=default_image_pull_secrets,
                 is_optional=True,
                 is_list=True,
@@ -412,9 +406,7 @@ class AgentSchema(BaseAgentSchema):
                 )
             ) from e
         if default_image_pull_secrets:
-            data[
-                POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS
-            ] = default_image_pull_secrets
+            data[EV_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS] = default_image_pull_secrets
 
         return data
 
@@ -423,19 +415,19 @@ class AgentConfig(BaseAgentConfig):
     SCHEMA = AgentSchema
     IDENTIFIER = "agent"
     REDUCED_ATTRIBUTES = BaseAgentConfig.REDUCED_ATTRIBUTES + [
-        POLYAXON_KEYS_AGENT_SIDECAR,
-        POLYAXON_KEYS_AGENT_INIT,
-        POLYAXON_KEYS_AGENT_NOTIFIER,
-        POLYAXON_KEYS_AGENT_CLEANER,
-        POLYAXON_KEYS_AGENT_IS_REPLICA,
-        POLYAXON_KEYS_AGENT_COMPRESSED_LOGS,
-        POLYAXON_KEYS_K8S_APP_SECRET_NAME,
-        POLYAXON_KEYS_AGENT_SECRET_NAME,
-        POLYAXON_KEYS_AGENT_RUNS_SA,
-        POLYAXON_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
-        POLYAXON_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS,
-        POLYAXON_KEYS_AGENT_DEFAULT_SCHEDULING,
-        POLYAXON_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
+        EV_KEYS_AGENT_SIDECAR,
+        EV_KEYS_AGENT_INIT,
+        EV_KEYS_AGENT_NOTIFIER,
+        EV_KEYS_AGENT_CLEANER,
+        EV_KEYS_AGENT_IS_REPLICA,
+        EV_KEYS_AGENT_COMPRESSED_LOGS,
+        EV_KEYS_K8S_APP_SECRET_NAME,
+        EV_KEYS_AGENT_SECRET_NAME,
+        EV_KEYS_AGENT_RUNS_SA,
+        EV_KEYS_AGENT_SPAWNER_REFRESH_INTERVAL,
+        EV_KEYS_AGENT_USE_PROXY_ENV_VARS_IN_OPS,
+        EV_KEYS_AGENT_DEFAULT_SCHEDULING,
+        EV_KEYS_AGENT_DEFAULT_IMAGE_PULL_SECRETS,
     ]
 
     def __init__(

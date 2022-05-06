@@ -23,7 +23,7 @@ from marshmallow import ValidationError
 
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.connections.kinds import V1ConnectionKind
-from polyaxon.containers.contexts import CONTEXT_MOUNT_FILE_WATCHER
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.fs.watcher import FSWatcher
 from polyaxon.logger import logger
@@ -120,7 +120,7 @@ def _sync_fw(path: str):
     try:
         fw = FSWatcher()
         fw.sync(path)
-        fw.write(CONTEXT_MOUNT_FILE_WATCHER)
+        fw.write(ctx_paths.CONTEXT_MOUNT_FILE_WATCHER)
     except Exception as e:  # File watcher should not prevent job from starting
         logger.warning(
             "File watcher failed syncing path: {}.\nError: {}".format(path, e)

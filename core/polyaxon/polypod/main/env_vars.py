@@ -17,10 +17,10 @@
 from typing import Iterable, List
 
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_ARTIFACTS_STORE_NAME,
-    POLYAXON_KEYS_COLLECT_ARTIFACTS,
-    POLYAXON_KEYS_COLLECT_RESOURCES,
-    POLYAXON_KEYS_LOG_LEVEL,
+    EV_KEYS_ARTIFACTS_STORE_NAME,
+    EV_KEYS_COLLECT_ARTIFACTS,
+    EV_KEYS_COLLECT_RESOURCES,
+    EV_KEYS_LOG_LEVEL,
 )
 from polyaxon.exceptions import PolyaxonSchemaError, PolypodException
 from polyaxon.k8s import k8s_schemas
@@ -48,19 +48,17 @@ def get_env_vars(
     connections = connections or []
 
     if log_level:
-        env_vars.append(get_env_var(name=POLYAXON_KEYS_LOG_LEVEL, value=log_level))
+        env_vars.append(get_env_var(name=EV_KEYS_LOG_LEVEL, value=log_level))
 
     if contexts and contexts.collect_artifacts:
-        env_vars.append(get_env_var(name=POLYAXON_KEYS_COLLECT_ARTIFACTS, value=True))
+        env_vars.append(get_env_var(name=EV_KEYS_COLLECT_ARTIFACTS, value=True))
 
     if contexts and contexts.collect_resources:
-        env_vars.append(get_env_var(name=POLYAXON_KEYS_COLLECT_RESOURCES, value=True))
+        env_vars.append(get_env_var(name=EV_KEYS_COLLECT_RESOURCES, value=True))
 
     if artifacts_store_name:
         env_vars.append(
-            get_env_var(
-                name=POLYAXON_KEYS_ARTIFACTS_STORE_NAME, value=artifacts_store_name
-            )
+            get_env_var(name=EV_KEYS_ARTIFACTS_STORE_NAME, value=artifacts_store_name)
         )
 
     # Add connection env vars information

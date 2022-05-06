@@ -20,7 +20,7 @@ import sys
 
 from functools import wraps
 
-from polyaxon.env_vars.keys import POLYAXON_KEYS_DEBUG, POLYAXON_KEYS_LOG_LEVEL
+from polyaxon.env_vars.keys import EV_KEYS_DEBUG, EV_KEYS_LOG_LEVEL
 
 logger = logging.getLogger("polyaxon.cli")
 
@@ -30,11 +30,7 @@ def configure_logger(verbose):
     from polyaxon import settings
     from polyaxon.plugins.sentry import set_raven_client
 
-    if (
-        verbose
-        or settings.CLIENT_CONFIG.debug
-        or os.environ.get(POLYAXON_KEYS_DEBUG, False)
-    ):
+    if verbose or settings.CLIENT_CONFIG.debug or os.environ.get(EV_KEYS_DEBUG, False):
         log_level = logging.DEBUG
         settings.CLIENT_CONFIG.debug = True
     else:
@@ -42,7 +38,7 @@ def configure_logger(verbose):
             set_raven_client()
         log_level = (
             logging.DEBUG
-            if os.environ.get(POLYAXON_KEYS_LOG_LEVEL) in ["debug", "DEBUG"]
+            if os.environ.get(EV_KEYS_LOG_LEVEL) in ["debug", "DEBUG"]
             else logging.INFO
         )
         if settings.CLIENT_CONFIG.log_level:

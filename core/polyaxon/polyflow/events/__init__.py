@@ -18,7 +18,7 @@ from marshmallow import fields, validate
 
 import polyaxon_sdk
 
-from polyaxon.contexts import refs as contexts_refs
+from polyaxon.contexts import refs as ctx_refs
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
@@ -60,7 +60,7 @@ class EventTriggerSchema(BaseCamelSchema):
         return V1EventTrigger
 
 
-class V1EventTrigger(BaseConfig, contexts_refs.RefMixin, polyaxon_sdk.V1EventTrigger):
+class V1EventTrigger(BaseConfig, ctx_refs.RefMixin, polyaxon_sdk.V1EventTrigger):
     """Events are an advanced triggering logic that users can take advantage of in addition to:
       * Manual triggers via API/CLI/UI.
       * Time-based triggers with schedules and crons.

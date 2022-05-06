@@ -23,7 +23,7 @@ from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon import settings
 from polyaxon.constants.globals import DEFAULT_UPLOADS_PATH
-from polyaxon.env_vars.keys import POLYAXON_KEYS_UPLOAD_SIZE
+from polyaxon.env_vars.keys import EV_KEYS_UPLOAD_SIZE
 from polyaxon.exceptions import (
     HTTP_ERROR_MESSAGES_MAPPING,
     PolyaxonClientException,
@@ -92,7 +92,7 @@ class PolyaxonStore:
         session=None,
         show_progress=True,
     ):
-        upload_size_max = os.environ.get(POLYAXON_KEYS_UPLOAD_SIZE)
+        upload_size_max = os.environ.get(EV_KEYS_UPLOAD_SIZE)
         if not upload_size_max:
             # Backwards compatibility
             upload_size_max = os.environ.get("POLYAXON_UPLOAD_SIZE_MAX")

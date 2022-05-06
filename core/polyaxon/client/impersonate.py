@@ -17,14 +17,14 @@
 from urllib3.exceptions import HTTPError
 
 from polyaxon.client.client import PolyaxonClient
-from polyaxon.containers.contexts import CONTEXT_MOUNT_AUTH
+from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 from polyaxon_sdk.rest import ApiException
 
 
 def create_context_auth(access_token, context_auth_path=None):
-    context_auth_path = context_auth_path or CONTEXT_MOUNT_AUTH
+    context_auth_path = context_auth_path or ctx_paths.CONTEXT_MOUNT_AUTH
     with open(context_auth_path, "w") as config_file:
         config_file.write(access_token.to_dict(dump=True))
 
