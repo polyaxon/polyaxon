@@ -170,11 +170,11 @@ def ls(owner, query, sort, limit, offset):
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header("Projects for owner {}".format(owner))
-        Printer.print_header("Navigation:")
+        Printer.print_heading("Projects for owner {}".format(owner))
+        Printer.print_heading("Navigation:")
         dict_tabulate(meta)
     else:
-        Printer.print_header("No projects found for owner {}".format(owner))
+        Printer.print_heading("No projects found for owner {}".format(owner))
 
     objects = list_dicts_to_tabulate(
         [o.to_dict() for o in response.results],
@@ -192,7 +192,7 @@ def ls(owner, query, sort, limit, offset):
         ],
     )
     if objects:
-        Printer.print_header("Projects:")
+        Printer.print_heading("Projects:")
         dict_tabulate(objects, is_list_dict=True)
 
 
@@ -380,10 +380,8 @@ def dashboard(ctx, _project, yes, url):
     if url:
         Printer.print_header("The dashboard is available at: {}".format(project_url))
         sys.exit(0)
-    if not yes:
-        click.confirm(
-            "Dashboard page will now open in your browser. Continue?",
-            abort=True,
-            default=True,
-        )
-    click.launch(project_url)
+    if yes or click.confirm(
+        "Dashboard page will now open in your browser. Continue?",
+        default=True,
+    ):
+        click.launch(project_url)

@@ -48,27 +48,27 @@ def get_version_details(response, content_callback: Callable = None):
         exclude_attrs=["content", "meta_info", "stage_conditions", "readme"],
     )
 
-    Printer.print_header("Version info:")
+    Printer.print_heading("Version info:")
     dict_tabulate(response)
 
     if meta_info:
         artifacts = meta_info.pop("artifacts", None)
         lineage = meta_info.pop("lineage", artifacts)
         if meta_info:
-            Printer.print_header("Version meta info:")
+            Printer.print_heading("Version meta info:")
             dict_tabulate(meta_info)
 
         if lineage:
-            Printer.print_header("Version artifacts lineage:")
+            Printer.print_heading("Version artifacts lineage:")
             Printer.print_json(lineage)
 
     if readme:
-        Printer.print_header("Version readme:")
+        Printer.print_heading("Version readme:")
         Printer.print_md(readme)
 
     def get_content(_content: str):
         if _content:
-            Printer.print_header("Content:")
+            Printer.print_heading("Content:")
             Printer.print_yaml(_content)
 
     content_callback = content_callback or get_content
@@ -79,10 +79,10 @@ def get_version_stages_table(stage, conditions):
     table = Printer.get_table()
 
     if not conditions:
-        Printer.console.print(table)
+        Printer.print(table)
         return
 
-    Printer.console.print(
+    Printer.print(
         "Latest stage: {}".format(
             Printer.add_status_color({"stage": stage}, status_key="stage")["stage"]
         )
@@ -93,7 +93,7 @@ def get_version_stages_table(stage, conditions):
     ]
 
     if not objects:
-        Printer.console.print(table)
+        Printer.print(table)
         return
 
     if not table.columns:
@@ -103,7 +103,7 @@ def get_version_stages_table(stage, conditions):
         for o in objects:
             table.add_row(*o.values())
 
-    Printer.console.print(table)
+    Printer.print(table)
 
 
 def list_project_versions_response(
@@ -151,8 +151,8 @@ def list_project_versions(
     )
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header("Versions for {}".format(version_info))
-        Printer.print_header("Navigation:")
+        Printer.print_heading("Versions for {}".format(version_info))
+        Printer.print_heading("Navigation:")
         dict_tabulate(meta)
     else:
         Printer.print_header("No version found for {}".format(version_info))
@@ -176,7 +176,7 @@ def list_project_versions(
         ],
     )
     if objects:
-        Printer.print_header("Versions:")
+        Printer.print_heading("Versions:")
         dict_tabulate(objects, is_list_dict=True)
 
 
@@ -472,13 +472,11 @@ def open_project_version_dashboard(
     if url:
         Printer.print_header("The dashboard is available at: {}".format(artifact_url))
         sys.exit(0)
-    if not yes:
-        click.confirm(
-            "Dashboard page will now open in your browser. Continue?",
-            abort=True,
-            default=True,
-        )
-    click.launch(artifact_url)
+    if yes or click.confirm(
+        "Dashboard page will now open in your browser. Continue?",
+        default=True,
+    ):
+        click.launch(artifact_url)
 
 
 def pull_project_version(
@@ -494,9 +492,8 @@ def pull_project_version(
     polyaxon_client = ProjectClient(owner=owner, project=project_name)
 
     try:
-        Printer.print_header(
+        Printer.print_heading(
             "Pulling the {} version [white]`{}`[/white] ...".format(kind, fqn_version),
-            pad=False,
         )
         path = polyaxon_client.pull_version(
             kind,
@@ -551,11 +548,9 @@ def pull_one_or_many_project_versions(
             offset=offset,
             query=query,
         ).results
-        Printer.print_header(
-            f"Pulling {kind} versions (total: {len(versions)}) ...", pad=False
-        )
+        Printer.print_header(f"Pulling {kind} versions (total: {len(versions)}) ...")
         for idx, version in enumerate(versions):
-            Printer.print_header(f"Pulling version {idx + 1}/{len(versions)} ...")
+            Printer.print_heading(f"Pulling version {idx + 1}/{len(versions)} ...")
             _pull(version.name)
     elif version:
         _pull(version)

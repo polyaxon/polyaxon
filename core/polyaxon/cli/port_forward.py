@@ -78,8 +78,8 @@ def port_forward(port, namespace, deployment_type, release_name):
         _config = ClientConfigManager.get_config_or_default()
     except Exception as e:
         handle_cli_error(e, message="Polyaxon load configuration.")
-        Printer.print_header(
-            "You can reset your config by running: polyaxon config purge"
+        Printer.print_heading(
+            "You can reset your config by running: `polyaxon config purge`"
         )
         sys.exit(1)
 

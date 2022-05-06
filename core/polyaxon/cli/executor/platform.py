@@ -239,6 +239,6 @@ def run(
         if shell:
             for instance in runs_to_watch:
                 Printer.print_header(
-                    f"Starting shell session for run: {get_instance_info(instance)}"
+                    f"Starting shell session for run: {get_instance_info(instance)}",
                 )
                 start_run_shell(instance.uuid)

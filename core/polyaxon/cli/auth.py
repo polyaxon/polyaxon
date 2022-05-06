@@ -144,5 +144,5 @@ def whoami():
         handle_cli_error(e, message="Could not load user info.", sys_exit=True)
 
     response = dict_to_tabulate(user.to_dict(), exclude_attrs=["role", "theme"])
-    Printer.print_header("User info:")
+    Printer.print_heading("User info:")
     dict_tabulate(response)

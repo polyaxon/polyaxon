@@ -85,7 +85,7 @@ def handle_run_statuses(status, conditions, table):
     if not conditions:
         return False
 
-    Printer.console.print(
+    Printer.print(
         "Latest status: {}".format(
             Printer.add_status_color({"status": status}, status_key="status")["status"]
         )
@@ -110,27 +110,27 @@ def handle_run_statuses(status, conditions, table):
 
 def get_run_details(run):  # pylint:disable=redefined-outer-name
     if run.description:
-        Printer.print_header("Run description:")
+        Printer.print_heading("Run description:")
         click.echo("{}\n".format(run.description))
 
     if run.inputs:
-        Printer.print_header("Run inputs:")
+        Printer.print_heading("Run inputs:")
         dict_tabulate(run.inputs)
 
     if run.outputs:
-        Printer.print_header("Run outputs:")
+        Printer.print_heading("Run outputs:")
         dict_tabulate(run.outputs)
 
     if run.settings:
-        Printer.print_header("Run settings:")
+        Printer.print_heading("Run settings:")
         dict_tabulate(run.settings.to_dict())
 
     if run.meta_info:
-        Printer.print_header("Run meta info:")
+        Printer.print_heading("Run meta info:")
         dict_tabulate(run.meta_info)
 
     if run.readme:
-        Printer.print_header("Run readme:")
+        Printer.print_heading("Run readme:")
         Printer.print_md(run.readme)
 
     response = Printer.add_status_color(run.to_dict())
@@ -153,7 +153,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
         ],
     )
 
-    Printer.print_header("Run info:")
+    Printer.print_heading("Run info:")
     dict_tabulate(response)
 
 
@@ -307,13 +307,13 @@ def ls(
             return
         meta = get_meta_response(response)
         if meta:
-            Printer.print_header(
+            Printer.print_heading(
                 "Runs for project `{}/{}`.".format(owner, project_name)
             )
-            Printer.print_header("Navigation:")
+            Printer.print_heading("Navigation:")
             dict_tabulate(meta)
         else:
-            Printer.print_header(
+            Printer.print_heading(
                 "No runs found for project `{}/{}`.".format(owner, project_name)
             )
 
@@ -369,8 +369,8 @@ def ls(
             for o in objects:
                 o.pop("project_name", None)
             all_columns = objects[0].keys()
-            Printer.print_header("Displayed columns ({}):".format(len(all_columns)))
-            Printer.console.print(" | ".join(all_columns))
+            Printer.print_heading("Displayed columns ({}):".format(len(all_columns)))
+            Printer.print(" | ".join(all_columns))
             Printer.print_info("\nTips:")
             Printer.print_tip(
                 "  1. You can enable the inputs/outputs columns using `-io`"
@@ -378,7 +378,7 @@ def ls(
             Printer.print_tip(
                 "  2. You can select the columns to show using `-c col1,cl2,col3,...`"
             )
-            Printer.print_header("Runs:")
+            Printer.print_heading("Runs:")
             dict_tabulate(objects, is_list_dict=True)
 
 
@@ -900,7 +900,7 @@ def statuses(ctx, project, uid, watch):
         try:
             status, conditions = client.get_statuses()
             handle_run_statuses(status, conditions, table)
-            Printer.console.print(table)
+            Printer.print(table)
         except (ApiException, HTTPError, PolyaxonClientException) as e:
             handle_cli_error(
                 e, message="Could get status for run `{}`.".format(run_uuid)
@@ -1200,7 +1200,7 @@ def artifacts(
     lineage_kinds = to_list(lineage_kinds, check_none=True)
 
     def _download_all():
-        Printer.print_header("Downloading all run's artifacts", pad=False)
+        Printer.print_header("Downloading all run's artifacts")
         try:
             download_path = client.download_artifacts(
                 path="", path_to=path_to, untar=not no_untar
@@ -1218,7 +1218,7 @@ def artifacts(
         _download_all()
 
     def _download_file():
-        Printer.print_header(f"Downloading file path {f} ...", pad=False)
+        Printer.print_header(f"Downloading file path {f} ...")
         try:
             download_path = client.download_artifact(
                 path=f,
@@ -1239,7 +1239,7 @@ def artifacts(
         _download_file()
 
     def _download_dir():
-        Printer.print_header(f"Downloading dir path {f} ...", pad=False)
+        Printer.print_header(f"Downloading dir path {f} ...")
         try:
             download_path = client.download_artifacts(
                 path=f, path_to=path_to, untar=not no_untar
@@ -1286,9 +1286,7 @@ def artifacts(
             )
 
     if lineages:
-        Printer.console.print(
-            "Loaded artifact lineage information for run {}".format(run_uuid)
-        )
+        Printer.print("Loaded artifact lineage information for run {}".format(run_uuid))
 
     # To avoid duplicates
     lineage_keys = set([])
@@ -1299,7 +1297,6 @@ def artifacts(
         )
         Printer.print_header(
             f"Downloading assets for {lineage_def} ...",
-            pad=False,
         )
         try:
             download_path = client.download_artifact_for_lineage(
@@ -1525,7 +1522,19 @@ def service(ctx, project, uid, yes, external, url):
         is_cli=True,
     )
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
-    client.refresh_data()
+    try:
+        client.refresh_data()
+    except (
+        ApiException,
+        HTTPError,
+        PolyaxonHTTPError,
+        PolyaxonShouldExitError,
+        PolyaxonClientException,
+    ) as e:
+        handle_cli_error(
+            e, message="Could not find run `{}`.".format(run_uuid), sys_exit=True
+        )
+
     if client.run_data.kind != V1RunKind.SERVICE:
         Printer.print_warning(
             "Command expected an operation of "
@@ -1647,7 +1656,7 @@ def pull(
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
 
         try:
-            Printer.print_header(f"Pulling remote run {run_uuid}", pad=False)
+            Printer.print_header(f"Pulling remote run {run_uuid}")
             run_path = client.pull_remote_run(
                 path=path,
                 download_artifacts=not no_artifacts,
@@ -1677,9 +1686,9 @@ def pull(
                 e, message="Could not get runs for project `{}`.".format(project_name)
             )
             sys.exit(1)
-        Printer.print_header(f"Pulling remote runs (total: {len(runs)})...", pad=False)
+        Printer.print_header(f"Pulling remote runs (total: {len(runs)})...")
         for idx, run in enumerate(runs):
-            Printer.print_header(f"Pulling run {idx + 1}/{len(runs)} ...")
+            Printer.print_heading(f"Pulling run {idx + 1}/{len(runs)} ...")
             _pull(run.uuid)
     elif uid:
         _pull(uid)
@@ -1765,7 +1774,7 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
     offline_path_format = "{}/{{}}".format(offline_path)
 
     def _push(run_uuid: str):
-        Printer.print_header(f"Pushing offline run {run_uuid}", pad=False)
+        Printer.print_header(f"Pushing offline run {run_uuid}")
         client = RunClient(
             owner=owner, project=project_name, run_uuid=run_uuid, is_offline=True
         )
@@ -1819,11 +1828,9 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
             )
             sys.exit(1)
         run_paths = os.listdir(offline_path)
-        Printer.print_header(
-            f"Pushing local runs (total: {len(run_paths)}) ...", pad=False
-        )
+        Printer.print_header(f"Pushing local runs (total: {len(run_paths)}) ...")
         for idx, uid in enumerate(run_paths):
-            Printer.print_header(f"Pushing run {idx + 1}/{len(run_paths)} ...")
+            Printer.print_heading(f"Pushing run {idx + 1}/{len(run_paths)} ...")
             _push(uid)
     elif uid:
         _push(uid)

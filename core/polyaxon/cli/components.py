@@ -66,16 +66,16 @@ def get_specification_details(content):
         return
     specification = get_specification(data=content)
     if specification.inputs:
-        Printer.print_header("Component inputs:")
+        Printer.print_heading("Component inputs:")
         objects = list_dicts_to_tabulate([i.to_dict() for i in specification.inputs])
         dict_tabulate(objects, is_list_dict=True)
 
     if specification.outputs:
-        Printer.print_header("Component outputs:")
+        Printer.print_heading("Component outputs:")
         objects = list_dicts_to_tabulate([o.to_dict() for o in specification.outputs])
         dict_tabulate(objects, is_list_dict=True)
 
-    Printer.print_header("Content:")
+    Printer.print_heading("Content:")
     Printer.print_yaml(content)
 
 

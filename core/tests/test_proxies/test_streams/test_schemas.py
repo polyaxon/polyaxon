@@ -37,6 +37,8 @@ location /tmp/plx/archives/ {
     alias                     /tmp/plx/archives/;
     expires                   0;
     add_header                Cache-Control private;
+    set                       $x_content_length $upstream_http_x_content_length;
+    add_header                X-Content-Length $x_content_length;
     internal;
 }
 """  # noqa

@@ -80,6 +80,8 @@ location {archives_root} {{
     alias                     {archives_root};
     expires                   0;
     add_header                Cache-Control private;
+    set                       $x_content_length $upstream_http_x_content_length;
+    add_header                X-Content-Length $x_content_length;
     internal;
 }}
 """

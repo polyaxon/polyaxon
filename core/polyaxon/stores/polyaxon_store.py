@@ -17,7 +17,7 @@ import json
 import os
 import requests
 
-from typing import List
+from typing import Dict, List
 
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
@@ -161,6 +161,14 @@ class PolyaxonStore:
 
             return _download_impl(progress_callback)
 
+    def _get_header_value(self, headers: Dict, key: str):
+        headers = headers or {}
+        for k in headers.keys():
+            kh = k.lower()
+            if kh == key or kh == f"x-{key}":
+                return headers.get(k, "")
+        return ""
+
     def download(
         self,
         url,
@@ -186,14 +194,18 @@ class PolyaxonStore:
         session = session or requests.Session()
 
         try:
-            response = session.get(
-                url=url,
-                params=params,
-                headers=request_headers,
-                timeout=timeout,
-                stream=True,
+            with Printer.console.status("Loading content ..."):
+                response = session.get(
+                    url=url,
+                    params=params,
+                    headers=request_headers,
+                    timeout=timeout,
+                    stream=True,
+                )
+            has_tar = "tar" in self._get_header_value(
+                headers=response.headers,
+                key="content-disposition",
             )
-            has_tar = "tar" in response.headers.get("content-disposition", "")
             if has_tar:
                 filename = filename + ".tar.gz"
             if untar:
@@ -201,28 +213,28 @@ class PolyaxonStore:
 
             self.check_response_status(response, url)
             with open(filename, "wb") as f:
-                # chunk mode response doesn't have content-length so we are
-                # using a custom header here
-                content_length = response.headers.get("x-polyaxon-content-length")
-                if not content_length:
-                    content_length = response.headers.get("content-length")
-                expected_size = (
-                    (int(content_length) / 1024) + 1 if content_length else None
+                content_length = self._get_header_value(
+                    headers=response.headers,
+                    key="content-length",
                 )
+                content_length = float(content_length) if content_length else None
+                chunk_size = 1024 * 10
 
                 def _download_impl():
-                    for idx, chunk in enumerate(response.iter_content(chunk_size=1024)):
+                    for chunk in response.iter_content(chunk_size=chunk_size):
                         if progress:
                             progress.update(
                                 task,
-                                advance=idx / expected_size if expected_size else None,
+                                advance=len(chunk),
                             )
                         if chunk:
                             f.write(chunk)
 
                 if show_progress:
                     with Printer.get_progress() as progress:
-                        task = progress.add_task("[cyan]Writing contents:", total=1)
+                        task = progress.add_task(
+                            "Writing contents:", total=content_length
+                        )
                         _download_impl()
                 else:
                     _download_impl()

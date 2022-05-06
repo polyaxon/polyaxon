@@ -123,10 +123,10 @@ def check_cli_version(config, is_cli: bool = True):
 def version(check):
     """Print the current version of the cli and platform."""
     check_old_packages()
-    Printer.print_header("Current cli version: {}.".format(pkg.VERSION))
+    Printer.print_heading("Current cli version: {}.".format(pkg.VERSION))
     if check:
         config = set_versions_config()
-        Printer.print_header("Platform:")
+        Printer.print_heading("Platform:")
         config_installation = (
             dict_to_tabulate(
                 config.installation,
@@ -137,7 +137,7 @@ def version(check):
             else {"Server": "not found or not deployed"}
         )
         dict_tabulate(config_installation)
-        Printer.print_header("Compatibility versions:")
+        Printer.print_heading("Compatibility versions:")
         dict_tabulate(config.compatibility)
         check_cli_version(config)
 

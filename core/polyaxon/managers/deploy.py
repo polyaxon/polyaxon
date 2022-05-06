@@ -305,7 +305,7 @@ class DeployConfigManager:
             self.install_on_heroku()
 
     def upgrade_on_kubernetes(self):
-        Printer.console.print("Running checks for upgrade command ...")
+        Printer.print("Running checks for upgrade command ...")
         if self.release_name:
             Printer.print_info(
                 "Deployment release name: `{}`".format(self.release_name)

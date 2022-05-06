@@ -29,7 +29,9 @@ sidebar: "releases"
  * **Enhancement**: Add missing `stages` to commands `components`, `artifacts`, and `models` to list stage transitions and conditions.
  * **Enhancement**: Improve pull logic to create a valid structure `/base/path/PROJECT_NAME/runs`, `/base/path/PROJECT_NAME/models`, ...
  * **Enhancement**: Improve CLI overall CLI behavior with better interactive spinner and upload/download progress bar.
- * **Enhancement**: Add rendering for readme section to project, run, component, model, artifact `get` commands
+ * **Enhancement**: Add rendering for readme section to project, run, component, model, artifact `get` commands.
+ * **Enhancement**: Improve download CLI logic to show more meta data about eta and download speed.
+ * **Fix**: Issue in completion command.
 
 ### Core
 

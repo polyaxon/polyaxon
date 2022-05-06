@@ -21,6 +21,7 @@ import click
 from polyaxon import settings
 from polyaxon.api import POLYAXON_CLOUD_HOST
 from polyaxon.logger import clean_outputs
+from polyaxon.utils.formatting import Printer
 from polyaxon.utils.http_utils import clean_host
 
 
@@ -36,16 +37,13 @@ def get_dashboard_url(
 
 def get_dashboard(dashboard_url: str, url_only: bool, yes: bool):
     if url_only:
-        click.echo(dashboard_url)
+        Printer.print_header("The dashboard is available at: {}".format(dashboard_url))
         sys.exit(0)
-    if not yes:
-        click.confirm(
-            "Dashboard page will now open in your browser. Continue?",
-            abort=True,
-            default=True,
-        )
-
-    click.launch(dashboard_url)
+    if yes or click.confirm(
+        "Dashboard page will now open in your browser. Continue?",
+        default=True,
+    ):
+        click.launch(dashboard_url)
 
 
 @click.command()

@@ -63,11 +63,11 @@ def config(_list):  # pylint:disable=redefined-builtin
 def show():
     """Show the current cli, client, and user configs."""
     _config = ClientConfigManager.get_config_or_default()
-    Printer.print_header("Client config:")
+    Printer.print_heading("Client config:")
     dict_tabulate(_config.to_dict())
     _config = CliConfigManager.get_config_or_default()
     if _config:
-        Printer.print_header("CLI config:")
+        Printer.print_heading("CLI config:")
         if _config.current_version:
             click.echo("Version {}".format(_config.current_version))
         else:
@@ -83,7 +83,7 @@ def show():
             Printer.print_warning("This cli is not connected to a Polyaxon Host.")
     _config = UserConfigManager.get_config_or_default()
     if _config:
-        Printer.print_header("User config:")
+        Printer.print_heading("User config:")
         config_user = dict_to_tabulate(
             _config.to_dict(),
             humanize_values=True,
@@ -156,8 +156,8 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
         _config = ClientConfigManager.get_config_or_default()
     except Exception as e:
         handle_cli_error(e, message="Polyaxon load configuration.")
-        Printer.print_header(
-            "You can reset your config by running: polyaxon config purge"
+        Printer.print_heading(
+            "You can reset your config by running: `polyaxon config purge`"
         )
         sys.exit(1)
 

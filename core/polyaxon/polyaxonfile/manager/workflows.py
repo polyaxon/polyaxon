@@ -117,7 +117,7 @@ def get_eager_matrix_operations(
             "I should not be here!"
         )
     if is_cli:
-        Printer.print_header("Creating {} operations".format(len(suggestions)))
+        Printer.print_heading("Creating {} operations".format(len(suggestions)))
     return get_ops_from_suggestions(
         content=content, compiled_operation=compiled_operation, suggestions=suggestions
     )

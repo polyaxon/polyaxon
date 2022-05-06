@@ -34,7 +34,7 @@ async def _redirect(
         headers.update(additional_headers)
     if is_file:
         stat_result = await aio_stat(redirect_path)
-        headers["Content-Length"] = str(stat_result.st_size)
+        headers["X-Content-Length"] = str(stat_result.st_size)
         headers["Content-Disposition"] = 'attachment; filename="{}"'.format(
             os.path.basename(redirect_path)
         )

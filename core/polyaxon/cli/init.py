@@ -138,7 +138,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore, yes):
         init_project = False
         if ProjectConfigManager.is_initialized():
             local_project = get_local_project(is_cli=True)
-            click.echo(
+            Printer.print_warning(
                 "Warning! This project is already initialized with the following project:"
             )
             with indentation.indent(4):
@@ -160,12 +160,12 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore, yes):
                 config, init=True, visibility=ProjectConfigManager.VISIBILITY_LOCAL
             )
             Printer.print_success("Project was initialized")
-            Printer.print_header(
+            Printer.print_heading(
                 "Make sure to add the local cache `.polyaxon` "
                 "to your `.gitignore` and `.dockerignore` files."
             )
         else:
-            Printer.print_header("Project config was not changed.")
+            Printer.print_heading("Project config was not changed.")
 
     if git_connection or git_url:
         init_git = False
@@ -191,7 +191,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore, yes):
                 "New {} file was created.".format(GitConfigManager.CONFIG_FILE_NAME)
             )
         else:
-            Printer.print_header(
+            Printer.print_heading(
                 "{} file was not changed.".format(GitConfigManager.CONFIG_FILE_NAME)
             )
 
@@ -217,6 +217,6 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore, yes):
                 "New {} file was created.".format(IgnoreConfigManager.CONFIG_FILE_NAME)
             )
         else:
-            Printer.print_header(
+            Printer.print_heading(
                 "{} file was not changed.".format(IgnoreConfigManager.CONFIG_FILE_NAME)
             )

@@ -32,47 +32,48 @@ def completion(shell):
     """
 
     if shell == "bash":
-        Printer.print_header(
+        Printer.print_heading(
             "Please save the following scripts:",
         )
-        click.echo(
+        Printer.print(
             "_POLYAXON_COMPLETE=bash_source polyaxon > ~/.polyaxon-complete.bash"
         )
-        click.echo("_PLX_COMPLETE=bash_source plx > ~/.plx-complete.bash")
-        Printer.print_header(
+        Printer.print("_PLX_COMPLETE=bash_source plx > ~/.plx-complete.bash")
+        Printer.print_heading(
             "Add the following lines to your: `~/.bashrc`",
         )
-        click.echo("# Polyaxon completion")
-        click.echo(". ~/.polyaxon-complete.bash")
-        click.echo(". ~/.plx-complete.bash")
-        Printer.print_header(
+        Printer.print_text(
+            "# Polyaxon completion\n. ~/.polyaxon-complete.bash\n. ~/.plx-complete.bash"
+        )
+        Printer.print_heading(
             "Reload your shell.",
         )
     elif shell == "zsh":
-        Printer.print_header(
+        Printer.print_heading(
             "Please save the following scripts:",
         )
-        click.echo("_POLYAXON_COMPLETE=zsh_source polyaxon > ~/.polyaxon-complete.zsh")
-        click.echo("_PLX_COMPLETE=zsh_source plx > ~/.plx-complete.zsh")
-        Printer.print_header(
+        Printer.print(
+            "_POLYAXON_COMPLETE=zsh_source polyaxon > ~/.polyaxon-complete.zsh"
+        )
+        Printer.print("_PLX_COMPLETE=zsh_source plx > ~/.plx-complete.zsh")
+        Printer.print_heading(
             "Add the following lines to your: `~/.zshrc`",
         )
-        click.echo("# Polyaxon completion")
-        click.echo(". ~/.polyaxon-complete.zsh")
-        click.echo(". ~/.plx-complete.zsh")
-        Printer.print_header(
+        Printer.print_text(
+            "# Polyaxon completion\n. ~/.polyaxon-complete.zsh\n. ~/.plx-complete.zsh"
+        )
+        Printer.print_heading(
             "Reload your shell.",
         )
     elif shell == "fish":
-        Printer.print_header(
+        Printer.print_heading(
             "Please save the following scripts under `~/.config/fish/completions`:",
         )
-        click.echo(
+        Printer.print(
             "_POLYAXON_COMPLETE=fish_source polyaxon > ~/.config/fish/completions/polyaxon-complete.fish"  # noqa
         )
-        click.echo(
+        Printer.print(
             "_PLX_COMPLETE=fish_source plx > ~/.config/fish/completions/plx-complete.fish"
         )
     else:
-        click.echo("Shell {} is not supported.".format(shell))
-    raise click.exceptions.Exit(1)
+        Printer.print("Shell {} is not supported.".format(shell))

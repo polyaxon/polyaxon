@@ -40,7 +40,7 @@ gzip_proxied                any;
 charset utf-8;
 
 
-client_max_body_size        4G;
+client_max_body_size        0;
 client_body_buffer_size     50m;
 client_body_in_file_only clean;
 sendfile on;
@@ -98,6 +98,8 @@ location /tmp/plx/archives/ {
     alias                     /tmp/plx/archives/;
     expires                   0;
     add_header                Cache-Control private;
+    set                       $x_content_length $upstream_http_x_content_length;
+    add_header                X-Content-Length $x_content_length;
     internal;
 }
 
@@ -139,7 +141,7 @@ gzip_proxied                any;
 charset utf-8;
 
 
-client_max_body_size        4G;
+client_max_body_size        0;
 client_body_buffer_size     50m;
 client_body_in_file_only clean;
 sendfile on;
@@ -197,6 +199,8 @@ location /tmp/plx/archives/ {
     alias                     /tmp/plx/archives/;
     expires                   0;
     add_header                Cache-Control private;
+    set                       $x_content_length $upstream_http_x_content_length;
+    add_header                X-Content-Length $x_content_length;
     internal;
 }
 

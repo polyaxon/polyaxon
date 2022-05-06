@@ -304,7 +304,7 @@ def clean_ops(namespace, in_cluster, delete):
     if not ops:
         return
 
-    Printer.print_header(f"Cleaning {len(ops)} ops ...", pad=False)
+    Printer.print_header(f"Cleaning {len(ops)} ops ...")
     for idx, op in enumerate(ops):
         with Printer.console.status(f"Cleaning operation {idx + 1}/{len(ops)} ..."):
             _patch_op()

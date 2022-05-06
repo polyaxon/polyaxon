@@ -41,7 +41,7 @@ gzip_proxied                any;
 charset utf-8;
 
 
-client_max_body_size        4G;
+client_max_body_size        0;
 client_body_buffer_size     50m;
 client_body_in_file_only clean;
 sendfile on;
@@ -238,7 +238,7 @@ gzip_proxied                any;
 charset utf-8;
 
 
-client_max_body_size        4G;
+client_max_body_size        0;
 client_body_buffer_size     50m;
 client_body_in_file_only clean;
 sendfile on;

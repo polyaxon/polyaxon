@@ -20,15 +20,15 @@ from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 
 def get_entity_details(entity: any, entity_name: str):
     if entity.description:
-        Printer.print_header("{} description:".format(entity_name))
-        Printer.console.print("{}\n".format(entity.description))
+        Printer.print_heading("{} description:".format(entity_name))
+        Printer.print("{}\n".format(entity.description))
 
     if entity.settings:
-        Printer.print_header("{} settings:".format(entity_name))
-        Printer.console.print("{}\n".format(entity.settings.to_dict()))
+        Printer.print_heading("{} settings:".format(entity_name))
+        Printer.print("{}\n".format(entity.settings.to_dict()))
 
     if entity.readme:
-        Printer.print_header("{} readme:".format(entity_name))
+        Printer.print_heading("{} readme:".format(entity_name))
         Printer.print_md(entity.readme)
 
     response = dict_to_tabulate(
@@ -37,7 +37,7 @@ def get_entity_details(entity: any, entity_name: str):
         exclude_attrs=["description", "settings", "readme"],
     )
 
-    Printer.print_header("{} info:".format(entity_name))
+    Printer.print_heading("{} info:".format(entity_name))
     dict_tabulate(response)
 
 
