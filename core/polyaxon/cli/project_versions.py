@@ -490,30 +490,32 @@ def pull_project_version(
     version: str,
     path: str,
     download_artifacts: bool = True,
+    use_canonical_prefix: bool = True,
 ):
     fqn_version = get_versioned_entity_full_name(owner, project_name, version)
     polyaxon_client = ProjectClient(owner=owner, project=project_name)
 
     try:
-        Printer.console.print(
-            "Pulling the {} version [white]`{}`[/white] to `{} ...".format(
-                kind, fqn_version, path
-            )
+        Printer.print_header(
+            "Pulling the {} version [white]`{}`[/white] ...".format(kind, fqn_version),
+            pad=False,
         )
-        polyaxon_client.pull_version(
-            kind, version, path=path, download_artifacts=download_artifacts
+        path = polyaxon_client.pull_version(
+            kind,
+            version,
+            path=path,
+            download_artifacts=download_artifacts,
+            use_canonical_prefix=use_canonical_prefix,
         )
         Printer.print_success(
-            "Finished pulling the {} version `{}` to `{}`.".format(
+            "Finished pulling the {} version `{}` to `{}`".format(
                 kind, fqn_version, path
             )
         )
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e,
-            message="Could not pull the {} version `{}` to `{}`.".format(
-                kind, fqn_version, path
-            ),
+            message="Could not pull the {} version `{}`".format(kind, fqn_version),
         )
 
 
@@ -528,28 +530,18 @@ def pull_one_or_many_project_versions(
     offset: int = None,
     path: str = None,
     download_artifacts: bool = True,
+    use_canonical_prefix: bool = True,
 ):
-    offline_path = path or os.path.join(
-        container_contexts.CONTEXT_OFFLINE_ROOT, "{}s".format(kind)
-    )
-    offline_path_format = "{}/{{}}".format(offline_path)
-
-    def _pull_impl(version_name: str):
-        version_path = offline_path_format.format(version_name)
+    def _pull(version_name: str):
         pull_project_version(
             owner=owner,
             project_name=project_name,
             kind=kind,
             version=version_name,
-            path=version_path,
+            path=path,
             download_artifacts=download_artifacts,
+            use_canonical_prefix=use_canonical_prefix,
         )
-
-    def _pull(version_name: str):
-        with Printer.console.status(
-            f"[header]Pulling remote versions {version_name}[/header] ",
-        ):
-            _pull_impl(version_name)
 
     if all_versions or any([query, limit, offset]):
         limit = 1000 if all_versions else limit

@@ -551,10 +551,26 @@ def transfer(ctx, project, version, to_project):
     help="Optional path where the component versions are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
+@click.option(
+    "--disable-canonical-prefix",
+    is_flag=True,
+    default=False,
+    help="Optional flag to disable the usage of the canonical path prefix `project/components`.",
+)
 @click.pass_context
 @not_in_ce
 @clean_outputs
-def pull(ctx, project, version, all_versions, query, limit, offset, path):
+def pull(
+    ctx,
+    project,
+    version,
+    all_versions,
+    query,
+    limit,
+    offset,
+    path,
+    disable_canonical_prefix,
+):
     """Package and download a component version or multiple component versions to a local path.
 
     Uses /docs/core/cli/#caching
@@ -584,6 +600,7 @@ def pull(ctx, project, version, all_versions, query, limit, offset, path):
         offset=offset,
         path=path,
         download_artifacts=False,
+        use_canonical_prefix=not disable_canonical_prefix,
     )
 
 

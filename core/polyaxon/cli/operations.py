@@ -269,7 +269,9 @@ def ls(
     """
     if offline:
         offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
-        offline_path_format = "{}/{{}}/run_data.json".format(offline_path)
+        offline_path_format = "{}/{{}}/{}".format(
+            offline_path, container_contexts.CONTEXT_LOCAL_RUN
+        )
         if not os.path.exists(offline_path) or not os.path.isdir(offline_path):
             Printer.print_error(
                 f"Could not list offline runs, the path `{offline_path}` "
@@ -428,7 +430,9 @@ def get(ctx, project, uid, offline, offline_path, output):
 
     if offline:
         offline_path = offline_path or container_contexts.CONTEXT_OFFLINE_ROOT
-        offline_path = "{}/{}/run_data.json".format(offline_path, uid)
+        offline_path = "{}/{}/{}".format(
+            offline_path, uid, container_contexts.CONTEXT_LOCAL_RUN
+        )
         if not os.path.exists(offline_path):
             Printer.print_error(
                 f"Could not get offline run, the path `{offline_path}` "
@@ -1198,6 +1202,7 @@ def artifacts(
     lineage_kinds = to_list(lineage_kinds, check_none=True)
 
     def _download_all():
+        Printer.print_header("Downloading all run's artifacts", pad=False)
         try:
             download_path = client.download_artifacts(
                 path="", path_to=path_to, untar=not no_untar
@@ -1212,12 +1217,10 @@ def artifacts(
             sys.exit(1)
 
     if not any([files, dirs, lineage_names, lineage_kinds]):
-        with Printer.console.status(
-            "[header]Downloading all run's artifacts[/header] "
-        ):
-            return _download_all()
+        _download_all()
 
     def _download_file():
+        Printer.print_header(f"Downloading file path {f} ...", pad=False)
         try:
             download_path = client.download_artifact(
                 path=f,
@@ -1235,10 +1238,10 @@ def artifacts(
             )
 
     for f in files:
-        with Printer.console.status(f"[header]Downloading file path {f} ...[/header]"):
-            _download_file()
+        _download_file()
 
     def _download_dir():
+        Printer.print_header(f"Downloading dir path {f} ...", pad=False)
         try:
             download_path = client.download_artifacts(
                 path=f, path_to=path_to, untar=not no_untar
@@ -1255,8 +1258,7 @@ def artifacts(
             )
 
     for f in dirs:
-        with Printer.console.status(f"[header]Downloading dir path {f} ...[/header]"):
-            _download_dir()
+        _download_dir()
 
     # collecting all artifact lineage reference
     lineages = []
@@ -1264,9 +1266,6 @@ def artifacts(
         query = "name: {}".format("|".join(lineage_names))
         try:
             lineages += client.get_artifacts_lineage(query=query, limit=1000).results
-            Printer.console.print(
-                "Loaded artifact lineage information for run {}".format(run_uuid)
-            )
         except (ApiException, HTTPError) as e:
             handle_cli_error(
                 e,
@@ -1279,9 +1278,6 @@ def artifacts(
         query = "kind: {}".format("|".join(lineage_kinds))
         try:
             lineages += client.get_artifacts_lineage(query=query, limit=1000).results
-            Printer.console.print(
-                "Loaded artifact lineage information for run {}".format(run_uuid)
-            )
         except (ApiException, HTTPError) as e:
             handle_cli_error(
                 e,
@@ -1290,10 +1286,23 @@ def artifacts(
                     lineages,
                 ),
             )
+
+    if lineages:
+        Printer.console.print(
+            "Loaded artifact lineage information for run {}".format(run_uuid)
+        )
+
     # To avoid duplicates
     lineage_keys = set([])
 
     def _download_lineage():
+        lineage_def = "artifact lineage {} (kind: {})".format(
+            lineage.name, lineage.kind
+        )
+        Printer.print_header(
+            f"Downloading assets for {lineage_def} ...",
+            pad=False,
+        )
         try:
             download_path = client.download_artifact_for_lineage(
                 lineage=lineage, path_to=path_to
@@ -1315,13 +1324,7 @@ def artifacts(
         else:
             lineage_keys.add(lineage.name)
 
-        lineage_def = "artifact lineage {} (kind: {})".format(
-            lineage.name, lineage.kind
-        )
-        with Printer.console.status(
-            f"[header]Downloading assets for {lineage_def} ...[/header]"
-        ):
-            _download_lineage()
+        _download_lineage()
 
 
 @ops.command()
@@ -1597,9 +1600,26 @@ def service(ctx, project, uid, yes, external, url):
     help="Optional path where the runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
+@click.option(
+    "--disable-canonical-prefix",
+    is_flag=True,
+    default=False,
+    help="Optional flag to disable the usage of the canonical path prefix `project/runs`.",
+)
 @click.pass_context
 @clean_outputs
-def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
+def pull(
+    ctx,
+    project,
+    uid,
+    all_runs,
+    query,
+    limit,
+    offset,
+    no_artifacts,
+    path,
+    disable_canonical_prefix,
+):
     """Pull a remote run or multiple remote runs to a local path.
 
     Uses /docs/core/cli/#caching
@@ -1625,19 +1645,17 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
         project or ctx.obj.get("project"), is_cli=True
     )
 
-    offline_path = path or container_contexts.CONTEXT_OFFLINE_ROOT
-    offline_path_format = "{}/{{}}".format(offline_path)
-
-    def _pull_impl(run_uuid: str):
+    def _pull(run_uuid: str):
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
-        artifacts_path = offline_path_format.format(run_uuid)
+
         try:
-            client.pull_remote_run(
-                path=artifacts_path, download_artifacts=not no_artifacts
+            Printer.print_header(f"Pulling remote run {run_uuid}", pad=False)
+            run_path = client.pull_remote_run(
+                path=path,
+                download_artifacts=not no_artifacts,
+                use_canonical_prefix=not disable_canonical_prefix,
             )
-            Printer.print_success(
-                f"Finished pulling run {run_uuid} to {artifacts_path}"
-            )
+            Printer.print_success(f"Finished pulling run {run_uuid} to {run_path}")
         except (
             ApiException,
             HTTPError,
@@ -1646,10 +1664,6 @@ def pull(ctx, project, uid, all_runs, query, limit, offset, no_artifacts, path):
             PolyaxonClientException,
         ) as e:
             handle_cli_error(e, message="Could not pull run `{}`.".format(run_uuid))
-
-    def _pull(run_uuid: str):
-        with Printer.console.status(f"[header]Pulling remote run {run_uuid}[/header] "):
-            _pull_impl(run_uuid)
 
     if all_runs or any([query, limit, offset]):
         limit = 1000 if all_runs else limit
@@ -1752,7 +1766,8 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
     offline_path = path or container_contexts.CONTEXT_OFFLINE_ROOT
     offline_path_format = "{}/{{}}".format(offline_path)
 
-    def _push_impl(run_uuid: str):
+    def _push(run_uuid: str):
+        Printer.print_header(f"Pushing offline run {run_uuid}", pad=False)
         client = RunClient(
             owner=owner, project=project_name, run_uuid=run_uuid, is_offline=True
         )
@@ -1793,12 +1808,6 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
                 e, message="Could not push offline run `{}`.".format(run_uuid)
             )
             return
-
-    def _push(run_uuid: str):
-        with Printer.console.status(
-            f"[header]Pushing offline run {run_uuid}[/header] "
-        ):
-            _push_impl(run_uuid)
 
     if all_runs:
         if (

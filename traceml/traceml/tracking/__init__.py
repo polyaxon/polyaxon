@@ -985,13 +985,15 @@ sync_system_events_summaries.__doc__ = Run.sync_system_events_summaries.__doc__
 
 
 def pull_remote_run(
-    path: str,
+    path: str = None,
     download_artifacts: bool = True,
+    use_canonical_path: bool = True,
 ):
     global TRACKING_RUN
     TRACKING_RUN.pull_remote_run(
         path=path,
         download_artifacts=download_artifacts,
+        use_canonical_path=use_canonical_path,
     )
 
 

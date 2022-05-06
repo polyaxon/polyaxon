@@ -38,6 +38,7 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS
+from polyaxon.containers import contexts as container_contexts
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS,
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
@@ -2475,7 +2476,7 @@ class RunClient:
             return
         if not path or not os.path.exists(path):
             check_or_create_path(path, is_dir=True)
-        run_path = "{}/run_data.json".format(path)
+        run_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_RUN)
         with open(run_path, "w") as config_file:
             config_file.write(
                 ujson.dumps(self.client.sanitize_for_serialization(self.run_data))
@@ -2485,7 +2486,7 @@ class RunClient:
             logger.debug("Persist offline run call did not find any lineage data. ")
             return
 
-        lineages_path = "{}/lineages.json".format(path)
+        lineages_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_LINEAGES)
         with open(lineages_path, "w") as config_file:
             config_file.write(
                 ujson.dumps(
@@ -2520,7 +2521,7 @@ class RunClient:
             raise_if_not_found: bool, optional, a flag to raise an error if the local path does not
                  contain a persisted run.
         """
-        run_path = "{}/run_data.json".format(path)
+        run_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_RUN)
         if not os.path.isfile(run_path):
             if raise_if_not_found:
                 raise PolyaxonClientException(f"Offline data was not found: {run_path}")
@@ -2550,7 +2551,7 @@ class RunClient:
             run_client._run_data = run_config
             logger.info(f"Offline data loaded from: {run_path}")
 
-        lineages_path = "{}/lineages.json".format(path)
+        lineages_path = "{}/{}".format(path, container_contexts.CONTEXT_LOCAL_LINEAGES)
         if not os.path.isfile(lineages_path):
             logger.info(f"Offline lineage data was not found: {lineages_path}")
             return run_client
@@ -2568,20 +2569,28 @@ class RunClient:
     @client_handler(check_no_op=True)
     def pull_remote_run(
         self,
-        path: str,
+        path: str = None,
         download_artifacts: bool = True,
+        use_canonical_prefix: bool = True,
     ):
         """Download a run on Polyaxon's API and artifacts store to local path.
 
         Args:
-            path: str, root path where the run's metadata & artifacts will be stored.
+            path: str, optional, defaults to the offline root path,
+                 path where the run's metadata & artifacts will be stored.
             download_artifacts: bool, optional, flag to trigger artifacts download.
+            use_canonical_prefix: bool, optional, flag to use the canonical path prefix `project/runs`
         """
+        path = path or CONTEXT_OFFLINE_ROOT
+        if use_canonical_prefix:
+            path = "{}/{}/runs".format(path, self.project)
+        path = "{}/{}".format(path, self.run_uuid)
         delete_path(path)
         self.refresh_data(load_artifacts_lineage=True, load_conditions=True)
         if download_artifacts:
             self.download_artifacts(path_to=path)
         self.persist_run(path)
+        return path
 
     @client_handler(check_no_op=True)
     def push_offline_run(

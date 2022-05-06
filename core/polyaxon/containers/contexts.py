@@ -35,6 +35,15 @@ def polyaxon_user_path():
 
 CONTEXT_RELATED_RUNS = "_related_runs"
 
+# Local contexts
+CONTEXT_LOCAL_LINEAGES = "lineages.plx.json"
+CONTEXT_LOCAL_CONTENT = "content.plx.json"
+CONTEXT_LOCAL_README = "readme.plx.md"
+CONTEXT_LOCAL_POLYAXONFILE = "polyaxonfile.plx.md"
+CONTEXT_LOCAL_PROJECT = "project.plx.json"
+CONTEXT_LOCAL_RUN = "run.plx.json"
+CONTEXT_LOCAL_VERSION = "version.plx.json"
+
 CONTEXT_ROOT = os.environ.get(POLYAXON_KEYS_CONTEXT_ROOT, "/plx-context")
 CONTEXT_MOUNT_GC = "{}/.gc/gc-secret.json".format(CONTEXT_ROOT)
 CONTEXT_MOUNT_CONFIGS = "{}/.configs".format(CONTEXT_ROOT)

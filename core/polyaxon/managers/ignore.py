@@ -162,10 +162,8 @@ class IgnoreConfigManager(BaseConfigManager):
     @staticmethod
     def get_push_patterns():
         return [
-            Pattern.create("lineages.json"),
-            Pattern.create("run_data.json"),
-            Pattern.create("version_data.json"),
-            Pattern.create(".plxindex"),
+            Pattern.create("*.plx.json"),
+            Pattern.create("*.plx.index"),
             Pattern.create("./.polyaxon"),
         ]
 

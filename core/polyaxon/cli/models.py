@@ -516,9 +516,26 @@ def transfer(ctx, project, version, to_project):
     default=False,
     help="To disable downloading the run's artifacts and only persist the metadata.",
 )
+@click.option(
+    "--disable-canonical-prefix",
+    is_flag=True,
+    default=False,
+    help="Optional flag to disable the usage of the canonical path prefix `project/models`.",
+)
 @click.pass_context
 @clean_outputs
-def pull(ctx, project, version, all_versions, query, limit, offset, path, no_artifacts):
+def pull(
+    ctx,
+    project,
+    version,
+    all_versions,
+    query,
+    limit,
+    offset,
+    path,
+    no_artifacts,
+    disable_canonical_prefix,
+):
     """Package and download a model version or multiple model versions
     to a local path with or without artifacts.
 
@@ -549,6 +566,7 @@ def pull(ctx, project, version, all_versions, query, limit, offset, path, no_art
         offset=offset,
         path=path,
         download_artifacts=not no_artifacts,
+        use_canonical_prefix=not disable_canonical_prefix,
     )
 
 
