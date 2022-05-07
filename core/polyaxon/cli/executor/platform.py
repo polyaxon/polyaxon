@@ -116,7 +116,9 @@ def run(
             )
             if not eager:
                 cache_run(response)
-                click.echo("You can view this run on Polyaxon UI: {}".format(run_url))
+                Printer.print(
+                    "You can view this run on Polyaxon UI: {}".format(run_url)
+                )
             return response
         except (ApiException, HTTPError) as e:
             handle_cli_error(
@@ -168,7 +170,7 @@ def run(
         ctx.invoke(approve)
 
     if not output:
-        click.echo("Creating a new run...")
+        Printer.print("Creating a new run...")
     run_meta_info = None
     if eager:
         run_meta_info = {META_EAGER_MODE: True}
@@ -208,10 +210,10 @@ def run(
         compiled_operation = V1CompiledOperation.read(polyaxon_client.run_data.content)
         matrix_content = polyaxon_client.run_data.raw_content
         # Delete matrix placeholder
-        click.echo("Cleaning matrix run placeholder...")
+        Printer.print("Cleaning matrix run placeholder...")
         delete_run()
         # Suggestions
-        click.echo("Starting eager mode...")
+        Printer.print("Starting eager mode...")
         for op_spec in get_eager_matrix_operations(
             content=matrix_content,
             compiled_operation=compiled_operation,

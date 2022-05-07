@@ -170,7 +170,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore, yes):
     if git_connection or git_url:
         init_git = False
         if GitConfigManager.is_initialized():
-            click.echo(
+            Printer.print_warning(
                 "Warning! A {} file was found.".format(
                     GitConfigManager.CONFIG_FILE_NAME
                 )
@@ -201,7 +201,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore, yes):
     if polyaxonignore:
         init_ignore = False
         if IgnoreConfigManager.is_initialized():
-            click.echo(
+            Printer.print_warning(
                 "Warning! A {} file was found.".format(
                     IgnoreConfigManager.CONFIG_FILE_NAME
                 )

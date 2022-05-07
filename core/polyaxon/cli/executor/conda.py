@@ -18,8 +18,6 @@ import os
 import subprocess
 import sys
 
-import click
-
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.deploy.operators.conda import CondaOperator
 from polyaxon.exceptions import (
@@ -50,7 +48,7 @@ def _run(
     env_names = [os.path.basename(env) for env in envs["envs"]]
     project_env_name = _get_conda_env_name(conda_env)
     if project_env_name not in env_names:
-        click.echo("Creating conda environment {}".format(project_env_name))
+        Printer.print_info("Creating conda environment {}".format(project_env_name))
         conda.execute(
             ["env", "create", "-n", project_env_name, "--file", conda_env], stream=True
         )

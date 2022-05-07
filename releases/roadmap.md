@@ -32,6 +32,7 @@ sidebar: "releases"
  * **Enhancement**: Add rendering for readme section to project, run, component, model, artifact `get` commands.
  * **Enhancement**: Improve download CLI logic to show more meta data about eta and download speed.
  * **Fix**: Issue in completion command.
+ * **Fix**: Issue typos in command printed help.
 
 ### Core
 
@@ -104,7 +105,9 @@ sidebar: "releases"
  * **Enhancement**: Keep configuration of logs, artifacts, and dashboards tabs unchanged when changing tabs of the same run.
  * **Enhancement**: Improve queues usage to remove `.0` in the denominator.
  * **Enhancement**: Improve datetime fields expansion behavior.
- * **Enhancement**: Add tensorboard action to the runs multi-action button on the table similar to the overview page.
+ * **Enhancement**: Consolidate Tensorboard actions in the run's dropdown.
+ * **Enhancement**: Add Tensorboard action to the runs multi-action button on the table similar to the overview page.
+ * **Enhancement**: Optimize screen size for runs table.
  * **Fix**: Typo in tip for registering component/model/artifact versions.
  * **Fix**: Regression in multi-run scatter plot.
  * **Fix**: Issue with table filter popovers and actions popovers scrolling with pages.
@@ -114,7 +117,7 @@ sidebar: "releases"
 
  * **New**: Add DVC(data version control) integration.
  * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
- * **New**: Extend the component versions for tensorboard with a new `plugins` input of type `List[str]` to allow users to install custom plugins. 
+ * **New**: Extend the component versions for tensorboard with a new `plugins` input of type `List[str]` to allow users to install custom plugins.
 
 ### Docs
 

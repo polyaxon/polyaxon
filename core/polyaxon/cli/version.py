@@ -31,7 +31,7 @@ PROJECT_CLI_NAME = "polyaxon"
 
 def pip_upgrade(project_name=PROJECT_CLI_NAME):
     PipOperator.execute(["install", "--upgrade", project_name], stream=True)
-    click.echo("polyaxon upgraded.")
+    Printer.print("polyaxon upgraded!")
 
 
 def get_version(package: str, show_error: bool = True):
@@ -74,7 +74,7 @@ def check_cli_version(config, is_cli: bool = True):
         else:
             return
     if compare_versions(current=current_version, reference=min_version, comparator="<"):
-        click.echo(
+        Printer.print(
             "Your version of Polyaxon CLI ({}) is no longer supported.".format(
                 config.current_version
             )
@@ -123,10 +123,10 @@ def check_cli_version(config, is_cli: bool = True):
 def version(check):
     """Print the current version of the cli and platform."""
     check_old_packages()
-    Printer.print_heading("Current cli version: {}.".format(pkg.VERSION))
+    Printer.print_heading("Current cli version: {}".format(pkg.VERSION))
     if check:
         config = set_versions_config()
-        Printer.print_heading("Platform:")
+        Printer.print_heading("Platform version:")
         config_installation = (
             dict_to_tabulate(
                 config.installation,

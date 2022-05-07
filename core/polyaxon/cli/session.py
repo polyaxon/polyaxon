@@ -40,7 +40,7 @@ def session_expired():
     AuthConfigManager.purge()
     UserConfigManager.purge()
     CliConfigManager.purge()
-    click.echo("Session has expired, please try again.")
+    Printer.print("Session has expired, please try again!")
     sys.exit(1)
 
 

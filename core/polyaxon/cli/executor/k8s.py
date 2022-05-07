@@ -18,8 +18,6 @@ import sys
 
 from typing import List
 
-import click
-
 from polyaxon import settings
 from polyaxon.agents.spawners.spawner import Spawner
 from polyaxon.cli.errors import handle_cli_error
@@ -51,7 +49,7 @@ def run(
         return
 
     def create_run():
-        click.echo("Creating a run.")
+        Printer.print("Creating a run.")
         try:
             compiled_operation = OperationSpecification.compile_operation(op_spec)
             run_name = compiled_operation.name or name

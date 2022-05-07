@@ -123,7 +123,7 @@ def create(ctx, name, description, tags, public, init):
     Printer.print_success(
         "Project `{}` was created successfully.".format(_project.name)
     )
-    click.echo(
+    Printer.print(
         "You can view this project on Polyaxon UI: {}".format(
             get_dashboard_url(subpath="{}/{}".format(owner, _project.name))
         )
@@ -264,7 +264,7 @@ def delete(ctx, _project, yes):
     if not yes and not click.confirm(
         "Are sure you want to delete project `{}/{}`".format(owner, project_name)
     ):
-        click.echo("Existing without deleting project.")
+        Printer.print("Exiting without deleting project.")
         sys.exit(1)
 
     try:

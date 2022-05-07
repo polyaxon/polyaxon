@@ -111,7 +111,7 @@ def handle_run_statuses(status, conditions, table):
 def get_run_details(run):  # pylint:disable=redefined-outer-name
     if run.description:
         Printer.print_heading("Run description:")
-        click.echo("{}\n".format(run.description))
+        Printer.print_text("{}\n".format(run.description))
 
     if run.inputs:
         Printer.print_heading("Run inputs:")
@@ -516,7 +516,7 @@ def delete(ctx, project, uid, yes):
     if not yes and not click.confirm(
         "Are sure you want to delete run `{}`".format(run_uuid)
     ):
-        click.echo("Existing without deleting the run.")
+        Printer.print("Exiting without deleting the run.")
         sys.exit(1)
 
     try:
@@ -659,7 +659,7 @@ def stop(ctx, project, uid, yes):
     if not yes and not click.confirm(
         "Are sure you want to stop " "run `{}`".format(run_uuid)
     ):
-        click.echo("Existing without stopping run.")
+        Printer.print("Exiting without stopping run.")
         sys.exit(0)
 
     try:

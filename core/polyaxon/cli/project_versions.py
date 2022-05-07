@@ -216,7 +216,7 @@ def register_project_version(
         sys.exit(1)
 
     Printer.print_success("Version `{}` was created successfully.".format(fqn_version))
-    click.echo(
+    Printer.print(
         "You can view this version on Polyaxon UI: {}".format(
             get_dashboard_url(
                 subpath="{}/{}/{}s/{}".format(owner, project_name, kind, version)
@@ -266,7 +266,7 @@ def copy_project_version(
             fqn_version, fqn_copied_version
         )
     )
-    click.echo(
+    Printer.print(
         "You can view this version on Polyaxon UI: {}".format(
             get_dashboard_url(
                 subpath="{}/{}/{}s/{}".format(
@@ -339,7 +339,7 @@ def delete_project_version(
     if not yes and not click.confirm(
         "Are sure you want to delete {} version `{}`".format(kind, fqn_version)
     ):
-        click.echo("Existing without deleting {} version.".format(kind))
+        Printer.print("Exiting without deleting {} version.".format(kind))
         sys.exit(1)
 
     try:
@@ -492,8 +492,8 @@ def pull_project_version(
     polyaxon_client = ProjectClient(owner=owner, project=project_name)
 
     try:
-        Printer.print_heading(
-            "Pulling the {} version [white]`{}`[/white] ...".format(kind, fqn_version),
+        Printer.print_header(
+            "Pulling {} version [white]`{}`[/white] ...".format(kind, fqn_version),
         )
         path = polyaxon_client.pull_version(
             kind,

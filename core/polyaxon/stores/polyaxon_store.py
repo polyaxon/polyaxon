@@ -136,7 +136,7 @@ class PolyaxonStore:
 
         session = session or requests.Session()
 
-        def _download_impl(callback=None):
+        def _upload_impl(callback=None):
             multipart_encoder_monitor = MultipartEncoderMonitor(
                 multipart_encoder, callback
             )
@@ -149,17 +149,15 @@ class PolyaxonStore:
             )
 
         if not show_progress:
-            return _download_impl()
+            return _upload_impl()
 
         with Printer.get_progress() as progress:
             task = progress.add_task("[cyan]Uploading contents:", total=1)
 
             def progress_callback(monitor):
-                progress.update(
-                    task, completed=monitor.bytes_read / multipart_encoder.len
-                )
+                progress.update(task, completed=monitor.bytes_read)
 
-            return _download_impl(progress_callback)
+            return _upload_impl(progress_callback)
 
     def _get_header_value(self, headers: Dict, key: str):
         headers = headers or {}

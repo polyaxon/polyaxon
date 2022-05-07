@@ -113,4 +113,12 @@ async def get_default_fs(**kwargs):
 
 async def close_fs(fs):
     if hasattr(fs, "close_session"):
-        fs.close_session(fs.loop, fs.session)
+        try:
+            fs.close_session(fs.loop, fs.session)
+        except:  # noqa
+            pass
+    if hasattr(fs, "close"):
+        try:
+            await fs.close()
+        except:  # noqa
+            pass

@@ -24,7 +24,6 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 from urllib.parse import urlparse
 
-import click
 import ujson
 
 from marshmallow import EXCLUDE
@@ -2681,7 +2680,7 @@ def get_run_logs(
                 )
             )
         else:
-            click.echo(
+            Printer.print(
                 "{}".format(
                     Printer.add_status_color(
                         {"status": last_status}, status_key="status"

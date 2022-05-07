@@ -383,7 +383,7 @@ def run(
     if ignore_template:
         op_spec.disable_template()
     if op_spec.is_template():
-        click.echo("Please customize the specification or disable the template.")
+        Printer.print("Please customize the specification or disable the template!")
         sys.exit(1)
 
     owner, project_name = get_project_or_local(project, is_cli=True)

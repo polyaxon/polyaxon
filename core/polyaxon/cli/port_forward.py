@@ -93,4 +93,4 @@ def port_forward(port, namespace, deployment_type, release_name):
     stdout = kubectl.execute(
         args=args, is_json=False, stream=settings.CLIENT_CONFIG.debug
     )
-    click.echo(stdout)
+    Printer.print(stdout)

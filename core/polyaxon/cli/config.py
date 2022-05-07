@@ -69,7 +69,7 @@ def show():
     if _config:
         Printer.print_heading("CLI config:")
         if _config.current_version:
-            click.echo("Version {}".format(_config.current_version))
+            Printer.print("Version {}".format(_config.current_version))
         else:
             Printer.print_warning("This cli is not configured.")
         if _config.installation:
@@ -78,6 +78,7 @@ def show():
                 humanize_values=True,
                 exclude_attrs=["hmac", "auth", "host"],
             )
+            Printer.print_heading("Platform config:")
             dict_tabulate(config_installation)
         else:
             Printer.print_warning("This cli is not connected to a Polyaxon Host.")
@@ -114,7 +115,7 @@ def get(keys):
         if hasattr(_config, key):
             print_values[key] = getattr(_config, key)
         else:
-            click.echo("Key `{}` is not recognised.".format(key))
+            Printer.print("Key `{}` is not recognised.".format(key))
 
     dict_tabulate(print_values)
 

@@ -196,12 +196,13 @@ class BaseConfig:
     @classmethod
     def init_file(cls, filepath: str, config=None):
         if not os.path.exists(filepath):
-            cls.write(config or cls(), filepath=filepath)
-            os.chmod(filepath, cls.WRITE_MODE)
+            cls.write(config or cls(), filepath=filepath, mode=cls.WRITE_MODE)
 
-    def write(self, filepath: str):
+    def write(self, filepath: str, mode: int = None):
         with open(filepath, "w") as config_file:
             config_file.write(self.to_dict(dump=True))
+            if mode is not None:
+                os.chmod(filepath, mode)
 
     def clone(self):
         return self.from_dict(self.to_dict())

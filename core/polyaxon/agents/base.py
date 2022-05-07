@@ -71,7 +71,7 @@ class BaseAgent:
         config = cls.get_healthz_config()
         if config:
             config.last_check = now()
-            config.write(cls.HEALTH_FILE)
+            config.write(cls.HEALTH_FILE, mode=config.WRITE_MODE)
 
     @classmethod
     def pong(cls, interval: int = 15) -> bool:
