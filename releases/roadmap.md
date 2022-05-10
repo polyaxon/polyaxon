@@ -23,7 +23,7 @@ sidebar: "releases"
 
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
  * **Enhancement**: Move `clean-ops` under `admin` namespace to allow users to clean stranded operations without exporting any environment variables.
- * **Enhancement**: Extend `clean-ops` with a `--uuid` repeat flag to allow filtering for specific operations to force clean/delete.
+ * **Enhancement**: Extend `clean-ops` with a `--uuids/--uid` to allow filtering for specific operations to force clean/delete.
  * **Enhancement**: Improve statuses watch to refresh the table instead of drawing a new table.
  * **Enhancement**: Improve wait for condition to update the last status in place.
  * **Enhancement**: Add missing `stages` to commands `components`, `artifacts`, and `models` to list stage transitions and conditions.
@@ -93,11 +93,9 @@ sidebar: "releases"
 
 ### UI
 
- * **New**: Add operation status color indicator to the page's favicon.
- * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
- * **New**: Add Metrics/Params correlation and importance.
- * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
- * **New**: Add connection information to artifacts lineage.
+ * **New**: Allow selecting the (dark/light) themes in Polyaxon CE.
+ * **New**: Allow showing the order in the runs table.
+ * **Enhancement**: Simplify themes selection without going to the user profile. 
  * **Enhancement**: Improve table with comparison features natively and allow transposing the table to vertical comparison table.
  * **Enhancement**: Update the queues table with a link next to each queue to filter all runs by a specific queue.
  * **Enhancement**: Update the connections table with a link next to each connection to filter all runs by a specific connection.
@@ -181,6 +179,11 @@ sidebar: "releases"
 
 ### UI
 
+ * **New**: Add operation status color indicator to the page's favicon.
+ * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
+ * **New**: Add Metrics/Params correlation and importance.
+ * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
+ * **New**: Add connection information to artifacts lineage.
  * **New**: Add new advanced filters, allow filtering the runs in the comparison table based on:
    * parallel coordinate.
    * histogram.

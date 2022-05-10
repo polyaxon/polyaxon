@@ -24,7 +24,9 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.deploy import DeployConfigManager
 from polyaxon.utils.formatting import Printer
+from polyaxon.utils.fqn_utils import get_resource_name
 from polyaxon.utils.list_utils import to_list
+from polyaxon.utils.validation import validate_tags
 
 
 def read_deployment_config(filepaths, command: str):
@@ -251,13 +253,21 @@ def dashboard(yes, url):
 @click.option("--namespace", type=str)
 @click.option("--in-cluster", is_flag=True, default=False)
 @click.option("--delete", is_flag=True, default=False)
-def clean_ops(namespace, in_cluster, delete):
+@click.option(
+    "--uuids",
+    "--uids",
+    type=str,
+    help="List of uuid of operations to clean/delete (comma separated values).",
+)
+def clean_ops(namespace, in_cluster, delete, uuids):
     """clean-ops command."""
     from polyaxon.k8s.custom_resources import operation
     from polyaxon.k8s.manager import K8SManager
 
     if not namespace:
-        raise ValueError("namespace is required!")
+        raise Printer.print_error(
+            "The argument `--namespace` is required!", sys_exit=True
+        )
 
     manager = K8SManager(namespace=namespace, in_cluster=in_cluster)
 
@@ -266,7 +276,7 @@ def clean_ops(namespace, in_cluster, delete):
         while retry < 2:
             try:
                 manager.update_custom_object(
-                    name=op["metadata"]["name"],
+                    name=op,
                     group=operation.GROUP,
                     version=operation.API_VERSION,
                     plural=operation.PLURAL,
@@ -284,7 +294,7 @@ def clean_ops(namespace, in_cluster, delete):
         while retry < 2:
             try:
                 manager.delete_custom_object(
-                    name=op["metadata"]["name"],
+                    name=op,
                     group=operation.GROUP,
                     version=operation.API_VERSION,
                     plural=operation.PLURAL,
@@ -296,11 +306,18 @@ def clean_ops(namespace, in_cluster, delete):
                 time.sleep(0.1)
                 retry += 1
 
-    ops = manager.list_custom_objects(
-        group=operation.GROUP,
-        version=operation.API_VERSION,
-        plural=operation.PLURAL,
-    )
+    uuids = validate_tags(uuids, validate_yaml=True)
+    if uuids:
+        ops = [get_resource_name(o) for o in uuids]
+    else:
+        ops = [
+            o["metadata"]["name"]
+            for o in manager.list_custom_objects(
+                group=operation.GROUP,
+                version=operation.API_VERSION,
+                plural=operation.PLURAL,
+            )
+        ]
     if not ops:
         return
 
@@ -310,4 +327,4 @@ def clean_ops(namespace, in_cluster, delete):
             _patch_op()
             if delete:
                 _delete_op()
-        Printer.print_success(f"Operation {op['metadata']['name']} was cleaned")
+        Printer.print_success(f"Operation {op} was cleaned")

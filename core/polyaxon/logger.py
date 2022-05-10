@@ -19,6 +19,7 @@ import os
 import sys
 
 from functools import wraps
+from typing import List, Union
 
 from polyaxon.env_vars.keys import EV_KEYS_DEBUG, EV_KEYS_LOG_LEVEL
 
@@ -90,3 +91,14 @@ def not_in_ce(fn):
         return fn(*args, **kwargs)
 
     return not_in_ce_wrapper
+
+
+def reconfigure_loggers(
+    logger_names: List[str],
+    log_level: Union[int, str] = logging.WARNING,
+    disable: bool = True,
+):
+    for logger_name in logger_names:
+        logging.getLogger(logger_name).setLevel(log_level)
+        if disable:
+            logging.getLogger(logger_name).disabled = True
