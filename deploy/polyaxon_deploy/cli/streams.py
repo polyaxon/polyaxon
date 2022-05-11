@@ -15,35 +15,8 @@
 # limitations under the License.
 import os
 
-import click
 
-
-@click.command()
-@click.option(
-    "--host",
-    help="The service host.",
-)
-@click.option(
-    "--port",
-    type=int,
-    help="The service port.",
-)
-@click.option(
-    "--workers",
-    type=int,
-    help="Number of workers.",
-)
-@click.option(
-    "--per-core",
-    is_flag=True,
-    default=False,
-    help="To enable workers per core.",
-)
-@click.option(
-    "--uds",
-    help="UNIX domain socket binding.",
-)
-def streams(host: str, port: int, workers: int, per_core: bool, uds: str):
+def start_streams(host: str, port: int, workers: int, per_core: bool, uds: str):
     """Start streams service."""
     from polyaxon.env_vars.keys import EV_KEYS_PROXY_STREAMS_TARGET_PORT
     from polyaxon_deploy.runners.streams import start

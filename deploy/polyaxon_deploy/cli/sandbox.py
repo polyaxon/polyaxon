@@ -15,39 +15,8 @@
 # limitations under the License.
 import os
 
-import click
 
-
-@click.command()
-@click.option(
-    "--host",
-    help="The service host.",
-)
-@click.option(
-    "--port",
-    type=int,
-    help="The service port.",
-)
-@click.option(
-    "--workers",
-    type=int,
-    help="Number of workers.",
-)
-@click.option(
-    "--per-core",
-    is_flag=True,
-    default=False,
-    help="To enable workers per core.",
-)
-@click.option(
-    "--path",
-    help="The service host.",
-)
-@click.option(
-    "--uds",
-    help="UNIX domain socket binding.",
-)
-def sandbox(host: str, port: int, workers: int, per_core: bool, path: str, uds: str):
+def start_sandbox(host: str, port: int, workers: int, per_core: bool, path: str, uds: str):
     """Start sandbox service."""
     from polyaxon.env_vars.keys import EV_KEYS_SANDBOX_ROOT, EV_KEYS_SERVICE
     from polyaxon.services.values import PolyaxonServices

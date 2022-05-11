@@ -95,8 +95,7 @@ def get_eager_matrix_operations(
     except ImportError as e:
         if is_cli:
             Printer.print_error(
-                "numpy and hypertune is required for the eager mode, "
-                "please run 'pip install polyaxon hypertune'",
+                "numpy is required for the eager mode!",
                 sys_exit=True,
             )
         raise e

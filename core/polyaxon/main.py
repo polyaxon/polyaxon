@@ -33,6 +33,7 @@ from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
 from polyaxon.cli.run import run
+from polyaxon.cli.services.sandbox import sandbox
 from polyaxon.cli.session import set_versions_config
 from polyaxon.cli.version import check_cli_version, upgrade, version
 from polyaxon.logger import clean_outputs, configure_logger
@@ -182,14 +183,7 @@ cli.add_command(dashboard)
 cli.add_command(admin)
 cli.add_command(port_forward)
 cli.add_command(completion)
-
-# Sandbox
-try:
-    from polyaxon_deploy.cli.sandbox import sandbox
-
-    cli.add_command(sandbox)
-except ImportError:
-    pass
+cli.add_command(sandbox)
 
 # INIT
 if PolyaxonServices.is_init():
@@ -239,12 +233,9 @@ if (
 
 # Streams
 if PolyaxonServices.is_streams():
-    try:
-        from polyaxon_deploy.cli.streams import streams
+    from polyaxon.cli.services.streams import streams
 
-        cli.add_command(streams)
-    except ImportError:
-        pass
+    cli.add_command(streams)
 
 
 def main():
