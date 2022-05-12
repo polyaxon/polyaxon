@@ -21,6 +21,9 @@ from polyaxon.connections.gcp.base import get_gc_credentials, get_project_id
 class GCSFileSystem(BaseGCSFileSystem):
     retries = 3
 
+    async def set_session(self):
+        return await self._set_session()
+
 
 def get_fs(
     context_path: str = None,

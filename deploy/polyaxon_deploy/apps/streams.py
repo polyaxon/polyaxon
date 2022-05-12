@@ -39,7 +39,9 @@ app = Starlette(
     debug=settings.CLIENT_CONFIG.debug,
     routes=routes,
     middleware=get_middleware(
-        ssl_enabled=settings.CLIENT_CONFIG.verify_ssl, disable_cors=False
+        ssl_enabled=settings.CLIENT_CONFIG.verify_ssl,
+        disable_cors=False,
+        gzip=True,
     ),
     exception_handlers=exception_handlers,
     on_startup=[AppFS.set_fs],

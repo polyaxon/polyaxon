@@ -11,137 +11,7 @@ tags:
 sidebar: "releases"
 ---
 
-## Next Release V1.18.0
-
-> **Note**: This minor version is WIP and not released yet.
-
-### Sandbox
-
- * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
-
-### CLI
-
- * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
- * **Enhancement**: Move `clean-ops` under `admin` namespace to allow users to clean stranded operations without exporting any environment variables.
- * **Enhancement**: Extend `clean-ops` with a `--uuids/--uid` to allow filtering for specific operations to force clean/delete.
- * **Enhancement**: Improve statuses watch to refresh the table instead of drawing a new table.
- * **Enhancement**: Improve wait for condition to update the last status in place.
- * **Enhancement**: Add missing `stages` to commands `components`, `artifacts`, and `models` to list stage transitions and conditions.
- * **Enhancement**: Improve pull logic to create a valid structure `/base/path/PROJECT_NAME/runs`, `/base/path/PROJECT_NAME/models`, ...
- * **Enhancement**: Improve CLI overall CLI behavior with better interactive spinner and upload/download progress bar.
- * **Enhancement**: Add rendering for readme section to project, run, component, model, artifact `get` commands.
- * **Enhancement**: Improve download CLI logic to show more meta data about eta and download speed.
- * **Fix**: Issue in completion command.
- * **Fix**: Issue typos in command printed help.
-
-### Core
-
- * **New**: Add support for annotations in the connections specification.
- * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
- * **New**: Allow configuring git credential as volume secret using a git credential.helper store.
- * **Enhancement**: Add handling for more edge cases around git urls.
- * **Enhancement**: Migrate hyperparameter tuning and tracking modules to separate repos.
- * **Enhancement**: Improve query manager to return distinct values.
-
-### Client
-
- * **Beta**: Async client version.
- * **New**: Add promote method to a model version or artifact version directly from the `RunClient`:
-   * `RunClient.promote_to_model_version` this is similar to `ProjectClient.register_model_version` but directly from the run client instance.
-   * `RunClient.promote_to_artifact_version` this is similar to `ProjectClient.register_artifact_version` but directly from the run client instance.
- * **New**: Add `get_runs_artifacts_lineage` to `RunClient` to allow listing artifacts lineage information from multiple runs under the same project based on a query specification.
- * **New**: Add new `OrganizationClient`, this client will only be accessible to users with enough permissions or it will raise 401/403 errors:
-    * Allows listing and interacting with agents.
-    * Allows listing and interacting with connections.
-    * Allows listing projects.
-    * Allows listing cross project runs.
- * **Enhancement**: Add retries configuration option.
- * **Enhancement**: Improve issues around `SSL` verification.
- * **Enhancement**: Improve download logic based on a lineage reference.
- * **Enhancement**: Improve wait for condition to be resilient to backend errors.
-
-### Operator
-
- * **Enhancement**: Update training operator to use the newest Kubeflow release.
-
-### Query Language
-
- * **New**: Allow filtering by connections:
-    * By name `connections.name: CONNECTION1 | CONNECTION2`
-    * By tag `connections.tags: TAG1 | TAG2`
-    * By kind `connections.kind: git`
- * **New**: Allow filtering by artifacts lineage:
-    * By name `artifacts.name: LINEAGE1 | LINEAGE2`
-    * By kind `artifacts.kind: model`
-    * By path `artifacts.path: foo/bar`
-    * By state `artifacts.state: STATE`
-
-### Tracking
-
- * **New**: Allow to specify the connection name when logging assets and artifacts to associate the lineage to a specific connection.
- * **Enhancement**: Improve logic around assets and artifacts logging to only trigger versioned behavior (step-wise) when a step parameter is provided.
- * **Enhancement**: Improve outputs state calculation.
- * **Enhancement**: Improve artifacts names auto-generator to respect the name size limit.
-
-### Streams
-
- * **New**: Add support for multi-connections:
-   * Possibility to mount multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
- * **Enhancement**: Improve cache access and optimize artifacts downloads.
- * **Enhancement**: Improve k8s connections and handling.
- * **Enhancement**: Update fs backends.
-
-### UI
-
- * **New**: Allow selecting the (dark/light) themes in Polyaxon CE.
- * **New**: Allow showing the order in the runs table.
- * **Enhancement**: Simplify themes selection without going to the user profile. 
- * **Enhancement**: Improve table with comparison features natively and allow transposing the table to vertical comparison table.
- * **Enhancement**: Update the queues table with a link next to each queue to filter all runs by a specific queue.
- * **Enhancement**: Update the connections table with a link next to each connection to filter all runs by a specific connection.
- * **Enhancement**: Show artifact' state on the lineage tables.
- * **Enhancement**: Keep configuration of logs, artifacts, and dashboards tabs unchanged when changing tabs of the same run.
- * **Enhancement**: Improve queues usage to remove `.0` in the denominator.
- * **Enhancement**: Improve datetime fields expansion behavior.
- * **Enhancement**: Consolidate Tensorboard actions in the run's dropdown.
- * **Enhancement**: Add Tensorboard action to the runs multi-action button on the table similar to the overview page.
- * **Enhancement**: Optimize screen size for runs table.
- * **Fix**: Typo in tip for registering component/model/artifact versions.
- * **Fix**: Regression in multi-run scatter plot.
- * **Fix**: Issue with table filter popovers and actions popovers scrolling with pages.
- * **Fix**: Issues in Markdown editor.
-
-### Hub
-
- * **New**: Add DVC(data version control) integration.
- * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
- * **New**: Extend the component versions for tensorboard with a new `plugins` input of type `List[str]` to allow users to install custom plugins.
-
-### Docs
-
- * **Enhancement**: Improve navigation and provide short-cuts.
- * **Enhancement**: Improve `ProjectClient` and `RunClient` reference docs.
- * **Enhancement**: Add new intro tutorial about registering components, models, and artifacts.
- * **Fix**: Edit links to point to the correct code files.
-
-### Deployment
-
- * **Security**: Fix CVE issues.
- * **Enhancement**: Improve streams deployment to limit the number of workers per core.
- * **Enhancement**: Reduce sql-proxy's logs vebosity.
-
-### Commercial
-
- * **New**: Project and organization info pages redesign.
- * **New**: Add support for readme on component/model/artifact versions.
- * **New**: Add cross-projects artifact/component/model versions view similar to `All Runs`.
- * **New**: Add a new tab to explore unregistered artifact/component/model versions under each project.
- * **New**: Allow getting a connection's schema by name.
- * **Enhancement**: Improve operations in DAGs with pending approval and upstream failures.
- * **Enhancement**: Reduce member roles confusion:
-   * Add a note to `admin` to emphasize that is a `Project admin`.
-   * Add a note to `manager` to emphasize that is a `Organization admin`.
- * **Enhancement**: Improve compilation process to better handle converting artifact lineage, model, and artifact versions references.
+## Next Release V1.19.0
 
 ## Short Term Roadmap
 
@@ -151,10 +21,17 @@ sidebar: "releases"
 
 ### Core
 
+ * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
  * **Enhancement**: Add mid-runtime update with `apply` logic.
 
 ### CLI
- ...
+ 
+ * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
+
+### Hub
+
+ * **New**: Add DVC(data version control) integration.
+ * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
 
 ### Agent
 
@@ -179,7 +56,6 @@ sidebar: "releases"
 
 ### UI
 
- * **New**: Add operation status color indicator to the page's favicon.
  * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
  * **New**: Add Metrics/Params correlation and importance.
  * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
@@ -209,8 +85,16 @@ sidebar: "releases"
  * **New**: Add custom bar plots.
  * **Enhancement**: Allow tracking dataframes as parquet files.
 
+### Streams
+
+ * **New**: Add support for multi-connections:
+   * Possibility to mount multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
+
 ### Commercial
 
+ * **New**: Project and organization info pages redesign.
+ * **New**: Add cross-projects artifact/component/model versions view similar to `All Runs`.
+ * **New**: Add a new tab to explore unregistered artifact/component/model versions under each project.
  * **New**: Add notification center to allow users to control and manage notifications using the UI.
  * **New**: Add selection reports, this is similar to selection in v0 but the new implementation will support all the new features and dashboard flexibility (events, artifacts, lineages, comparison, custom columns selection, multi-field sorting, ...):
    * Allows adding single runs to a report from the run's overview page.

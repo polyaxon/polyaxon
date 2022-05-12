@@ -78,6 +78,8 @@ DEFAULT_EXCLUDE = [
     "status_conditions",
     "graph",
     "resources",
+    "merge",
+    "pending",
 ]
 
 

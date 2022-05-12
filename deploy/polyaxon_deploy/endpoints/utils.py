@@ -15,9 +15,9 @@
 # limitations under the License.
 import os
 
-from aiofiles.os import stat as aio_stat
 from typing import Dict
 
+from aiofiles.os import stat as aio_stat
 from starlette import status
 from starlette.requests import Request
 from starlette.responses import FileResponse, Response
@@ -42,7 +42,9 @@ async def _redirect(
     return Response(headers=headers)
 
 
-async def redirect_file(archived_path: str, additional_headers: Dict = None) -> Response:
+async def redirect_file(
+    archived_path: str, additional_headers: Dict = None
+) -> Response:
     if not archived_path:
         return Response(
             content="Artifact not found: filepath={}",

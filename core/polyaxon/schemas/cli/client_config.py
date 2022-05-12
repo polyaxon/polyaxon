@@ -254,7 +254,7 @@ class ClientConfig(BaseConfig):
         config.debug = self.debug
         config.host = clean_host(self.host)
         config.verify_ssl = self.verify_ssl
-        if config.verify_ssl is False:
+        if not config.verify_ssl:
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         config.ssl_ca_cert = self.ssl_ca_cert
         config.cert_file = self.cert_file

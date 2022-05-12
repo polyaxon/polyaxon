@@ -16,7 +16,9 @@
 import os
 
 
-def start_sandbox(host: str, port: int, workers: int, per_core: bool, path: str, uds: str):
+def start_sandbox(
+    host: str, port: int, workers: int, per_core: bool, path: str, uds: str
+):
     """Start sandbox service."""
     from polyaxon.env_vars.keys import EV_KEYS_SANDBOX_ROOT, EV_KEYS_SERVICE
     from polyaxon.services.values import PolyaxonServices

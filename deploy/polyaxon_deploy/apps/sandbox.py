@@ -20,12 +20,9 @@ from polyaxon import settings
 from polyaxon_deploy.apps.middlewares import get_middleware
 from polyaxon_deploy.connections.fs import AppFS
 from polyaxon_deploy.endpoints.artifacts import artifacts_routes
-from polyaxon_deploy.endpoints.base import (
-    base_routes,
-    base_sandbox_routes,
-    exception_handlers,
-)
+from polyaxon_deploy.endpoints.base import base_routes, exception_handlers
 from polyaxon_deploy.endpoints.events import events_routes
+from polyaxon_deploy.endpoints.index import home_routes
 from polyaxon_deploy.endpoints.k8s import k8s_routes
 from polyaxon_deploy.endpoints.logs import logs_routes
 from polyaxon_deploy.endpoints.notifications import notifications_routes
@@ -39,7 +36,7 @@ routes = (
     + events_routes
     + runs_routes
     + base_routes
-    + base_sandbox_routes
+    + home_routes
 )
 
 app = Starlette(
@@ -48,6 +45,7 @@ app = Starlette(
     middleware=get_middleware(
         ssl_enabled=settings.SANDBOX_CONFIG.ssl_enabled,
         disable_cors=settings.SANDBOX_CONFIG.debug,
+        gzip=True,
     ),
     exception_handlers=exception_handlers,
     on_startup=[AppFS.set_fs],

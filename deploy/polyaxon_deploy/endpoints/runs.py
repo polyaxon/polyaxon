@@ -23,7 +23,7 @@ from starlette.routing import Route
 from polyaxon import settings
 from polyaxon.api import API_V1_LOCATION
 from polyaxon.contexts import paths as ctx_paths
-from polyaxon_deploy.endpoints.base import ConfigResponse
+from polyaxon_deploy.endpoints.base import ConfigResponse, UJSONResponse
 
 
 async def get_run_details(request: Request) -> Response:
@@ -33,7 +33,7 @@ async def get_run_details(request: Request) -> Response:
         run_uuid,
         ctx_paths.CONTEXT_LOCAL_RUN,
     )
-    if not os.path.exists(data_path) or not os.path.isdir(data_path):
+    if not os.path.exists(data_path) or not os.path.isfile(data_path):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     with open(data_path, "r") as config_file:
@@ -48,7 +48,7 @@ async def get_run_artifact_lineage(request: Request) -> Response:
         run_uuid,
         ctx_paths.CONTEXT_LOCAL_LINEAGES,
     )
-    if not os.path.exists(data_path) or not os.path.isdir(data_path):
+    if not os.path.exists(data_path) or not os.path.isfile(data_path):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     with open(data_path, "r") as config_file:
@@ -58,6 +58,28 @@ async def get_run_artifact_lineage(request: Request) -> Response:
     return ConfigResponse(config_str)
 
 
+async def list_runs(request: Request) -> Response:
+    data_path = os.path.join(settings.SANDBOX_CONFIG.store_root, "runs")
+    if not os.path.exists(data_path) or not os.path.isdir(data_path):
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+
+    data = []
+    for run in os.listdir(data_path):
+        run_path = os.path.join(data_path, run, ctx_paths.CONTEXT_LOCAL_RUN)
+        if not os.path.exists(run_path) or not os.path.isfile(run_path):
+            continue
+
+        with open(run_path, "r") as config_file:
+            data.append(config_file.read())
+    data_str = ",".join(data)
+    config_str = f'{{"results": [{data_str}], "count": {len(data)}}}'
+    return ConfigResponse(config_str)
+
+
+async def get_project_details(request: Request) -> Response:
+    return UJSONResponse({"name": "demo"})
+
+
 URLS_RUNS_DETAILS = API_V1_LOCATION + "{owner:str}/{project:str}/runs/{run_uuid:str}/"
 URLS_RUNS_STATUSES = (
     API_V1_LOCATION + "{owner:str}/{project:str}/runs/{run_uuid:str}/statuses"
@@ -65,6 +87,8 @@ URLS_RUNS_STATUSES = (
 URLS_RUNS_LINEAGE_ARTIFACTS = (
     API_V1_LOCATION + "{owner:str}/{project:str}/runs/{run_uuid:str}/lineage/artifacts"
 )
+URLS_RUNS_LIST = API_V1_LOCATION + "{owner:str}/{project:str}/runs/"
+URLS_PROJECTS_DETAILS = API_V1_LOCATION + "{owner:str}/{project:str}/"
 
 # fmt: off
 runs_routes = [
@@ -84,6 +108,18 @@ runs_routes = [
         URLS_RUNS_LINEAGE_ARTIFACTS,
         get_run_artifact_lineage,
         name="get_run_artifact_lineage",
+        methods=["GET"],
+    ),
+    Route(
+        URLS_RUNS_LIST,
+        list_runs,
+        name="list_runs",
+        methods=["GET"],
+    ),
+    Route(
+        URLS_PROJECTS_DETAILS,
+        get_project_details,
+        name="get_project_details",
         methods=["GET"],
     ),
 ]

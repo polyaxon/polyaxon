@@ -19,13 +19,14 @@ import os
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 
 from polyaxon.env_vars.keys import EV_KEYS_CUSTOM_ERRORS_OPTIONS
 from polyaxon.plugins.sentry import set_raven_client
 
 
-def get_middleware(ssl_enabled: bool, disable_cors: bool):
+def get_middleware(ssl_enabled: bool, disable_cors: bool, gzip: bool):
     errors_options = os.environ.get(EV_KEYS_CUSTOM_ERRORS_OPTIONS)
     if errors_options:
         errors_options = json.loads(errors_options)
@@ -38,6 +39,9 @@ def get_middleware(ssl_enabled: bool, disable_cors: bool):
 
     if ssl_enabled:  # pragma: nocover
         middleware.append(Middleware(HTTPSRedirectMiddleware))
+
+    if gzip:
+        middleware.append(Middleware(GZipMiddleware, minimum_size=1000))
 
     if disable_cors:
         middleware.append(
