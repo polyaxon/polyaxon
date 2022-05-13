@@ -27,6 +27,7 @@ from polyaxon.env_vars.keys import EV_KEYS_NO_API
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Environment, V1Init, V1Plugins
+from polyaxon.polypod.common.annotations import get_connection_annotations
 from polyaxon.polypod.common.containers import ensure_container_name, sanitize_container
 from polyaxon.polypod.common.env_vars import (
     get_base_env_vars,
@@ -176,9 +177,24 @@ class BaseConverter(ConverterAbstract):
             "operation.polyaxon.com/kind": self.K8S_ANNOTATIONS_KIND,
         }
 
-    def get_annotations(self, annotations: Dict):
+    def get_annotations(
+        self,
+        annotations: Dict,
+        artifacts_store: Optional[V1ConnectionType],
+        init_connections: Optional[List[V1Init]],
+        connections: List[str],
+        connection_by_names: Optional[Dict[str, V1ConnectionType]],
+    ):
         annotations = annotations or {}
         annotations = copy.copy(annotations)
+        connections_annotations = get_connection_annotations(
+            artifacts_store=artifacts_store,
+            init_connections=init_connections,
+            connections=connections,
+            connection_by_names=connection_by_names,
+        )
+        connections_annotations = connections_annotations or {}
+        annotations.update(connections_annotations)
         annotations.update(self.annotations)
         return sanitize_string_dict(annotations)
 
@@ -581,7 +597,13 @@ class BaseConverter(ConverterAbstract):
         )
 
         labels = self.get_labels(version=pkg.VERSION, labels=environment.labels)
-        annotations = self.get_annotations(annotations=environment.annotations)
+        annotations = self.get_annotations(
+            annotations=environment.annotations,
+            artifacts_store=artifacts_store,
+            connections=connections,
+            init_connections=init_connections,
+            connection_by_names=connection_by_names,
+        )
         return ReplicaSpec(
             volumes=volumes,
             init_containers=init_containers,

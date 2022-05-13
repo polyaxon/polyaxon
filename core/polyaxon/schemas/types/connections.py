@@ -43,6 +43,8 @@ class ConnectionTypeSchema(BaseCamelSchema):
     schema = fields.Nested(ConnectionSchema, allow_none=True)
     secret = fields.Nested(K8sResourceSchema, allow_none=True)
     config_map = fields.Nested(K8sResourceSchema, allow_none=True)
+    env = fields.List(fields.Dict(), allow_none=True)
+    annotations = fields.Dict(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -113,6 +115,8 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
         schema: dict, optional
         secret: str, optional
         config_map: str, optional
+        env: List[Dict], optional
+        annotations: Dict, optional
 
 
     ## YAML usage
@@ -261,6 +265,42 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
                      instead of exposing its items as environment variables.
         * items: List[str], optional, if you only want to expose a subset
                  of the items in the configMap.
+
+    ### env
+
+    > **Note**: This is available starting from v1.18
+
+    Optional list environment variables to always inject with the connection.
+
+    Example
+
+    ```yaml
+    >>> name: ...
+    >>> kind: ...
+    >>> secret:
+    >>>   name: ...
+    >>> env:
+    >>>   - name: KEY1
+    >>>     value: VALUE1
+    >>>   - name: KEY2
+    >>>     value: VALUE2
+    ```
+
+    ### annotations
+
+    > **Note**: This is available starting from v1.18
+
+    A list of annotations to always use with the connection.
+
+    From [Kubernetes docs](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)  # noqa
+
+    > You can use Kubernetes annotations to attach arbitrary non-identifying metadata to objects.
+    > Clients such as tools and libraries can retrieve this metadata.
+
+    ```yaml
+    >>> annotations:
+    >>>   key1: "value1"
+    >>>   key2: "value2"
     """
 
     IDENTIFIER = "connection"
@@ -273,6 +313,8 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
         "schema",
         "secret",
         "configMap",
+        "env",
+        "annotations",
     ]
 
     @classmethod
@@ -293,6 +335,8 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
                 "schema": schema,
                 "secret": secret,
                 "configMap": config_map,
+                "env": model.env,
+                "annotations": model.annotations,
             }
         )
 

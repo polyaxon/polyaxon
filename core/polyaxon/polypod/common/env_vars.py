@@ -43,6 +43,7 @@ from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.accelerators import requests_gpu
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 from polyaxon.services.headers import PolyaxonServiceHeaders
+from polyaxon.utils.list_utils import to_list
 
 
 def get_str_var(value: Any) -> str:
@@ -308,6 +309,9 @@ def get_connection_env_var(
 
     connection_schema_env_name = get_connection_schema_env_name(connection.name)
     env_vars = [get_env_var(connection_schema_env_name, connection.to_dict())]
+
+    if connection.env:
+        env_vars += to_list(connection.env, check_none=True)
 
     if not secret or not secret.schema.mount_path:
         return env_vars

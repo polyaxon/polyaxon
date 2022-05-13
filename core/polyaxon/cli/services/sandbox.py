@@ -49,6 +49,10 @@ from polyaxon.utils.formatting import Printer
     help="UNIX domain socket binding.",
 )
 def sandbox(host: str, port: int, workers: int, per_core: bool, path: str, uds: str):
+    """Start a new sandbox session.
+
+    This command is available starting from v1.18.
+    """
     try:
         from polyaxon_deploy.cli.sandbox import start_sandbox
 
