@@ -30,6 +30,7 @@ N.B. Polyaxon supports public and private GitHub repos, you don't need to have a
 to use code from public GitHub repositories. e.g. `https://github.com/polyaxon/polyaxon-quick-start`
 
 ## Open GitHub Developer Settings
+
 At the bottom of the settings menu on the left, click Developer Settings.
 
 ![github-integration1](../../content/images/integrations/github/img1.png)
@@ -57,11 +58,30 @@ you can click the blue icon next to the token to automatically copy it to the cl
 
 ## Create a secret
 
+ * Simple method using inline token:
+
 ```yaml
-kubectl -n polyaxon create secret generic github-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="TokenHash"
+kubectl -n polyaxon create secret generic github-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="<TOKEN_HASH>"
+```
+ * Advanced method using a git cred store (allows pulling submodules):
+
+```yaml
+kind: Secret
+apiVersion: v1
+metadata:
+  name: github-connection-2
+type: Opaque
+stringData:
+  .gitconfig: |
+    [credential "https://<HOSTNAME>"]
+      helper = store
+  .git-credentials: |
+    https://<USERNAME>:<TOKEN_HASH>@<HOSTNAME>
 ```
 
 ## Add the repos you want to use to the connections catalog
+
+ * Simple method using the inline token:
 
 ```yaml
 connections:
@@ -83,4 +103,24 @@ connections:
       url: https://github.com/org/repo3
     secret:
       name: "other-connection"
+```
+
+ * Advanced method using the git cred store:
+
+```yaml
+connections:
+  - name: repo4
+    kind: git
+    schema:
+      url: https://github.com/org/repo4
+    secret:
+      name: "github-connection-2"
+      mountPath: "/root"
+  - name: repo5
+    kind: git
+    schema:
+      url: https://github.com/org/repo5
+    secret:
+      name: "github-connection-2"
+      mountPath: "/root"
 ```

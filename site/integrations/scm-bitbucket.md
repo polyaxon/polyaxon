@@ -36,11 +36,30 @@ you can also create a user `polyaxon` with read-only access to your organization
 
 ## Create a secret
 
+ * Simple method using inline token:
+
+```bash
+kubectl -n polyaxon create secret generic bitbucket-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="<USERNAME>:<TOKEN_HASH>"
+```
+ * Advanced method using a git cred store (allows pulling submodules):
+
 ```yaml
-kubectl -n polyaxon create secret generic bitbucket-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="username:password"
+kind: Secret
+apiVersion: v1
+metadata:
+  name: bitbucket-connection-2
+type: Opaque
+stringData:
+  .gitconfig: |
+    [credential "https://<HOSTNAME>"]
+      helper = store
+  .git-credentials: |
+    https://<USERNAME>:<TOKEN_HASH>@<HOSTNAME>
 ```
 
 ## Add the repos you want to use to the connections catalog
+
+ * Simple method using the inline token:
 
 ```yaml
 connections:
@@ -62,4 +81,24 @@ connections:
       url: https://bitbucket.com/org/repo3
     secret:
       name: "other-connection"
+```
+
+ * Advanced method using the git cred store:
+
+```yaml
+connections:
+  - name: repo4
+    kind: git
+    schema:
+      url: https://bitbucket.com/org/repo4
+    secret:
+      name: "bitbucket-connection-2"
+      mountPath: "/root"
+  - name: repo5
+    kind: git
+    schema:
+      url: https://bitbucket.com/org/repo5
+    secret:
+      name: "bitbucket-connection-2"
+      mountPath: "/root"
 ```

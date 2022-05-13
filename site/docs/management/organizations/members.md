@@ -19,13 +19,20 @@ The system is designed so each end user is assigned to a single Polyaxon account
 Each end user should have their own account, where they can manage their personal preferences and security settings.
 You can invite members to your organization and assign them roles with specific permissions.
 
-## Organization members
+## Organization membership
 
-After creating an organization, you can invite or remove members using the organization's settings.
+Polyaxon comes with the following membership roles:
+ * [Owner](/docs/management/organizations/members/#owner)
+ * [Manager (Organization Level Admin)](/docs/management/organizations/members/#manager)
+ * [Admin (Project Level Admin)](/docs/management/organizations/members/#admin)
+ * [Member](/docs/management/organizations/members/#member)
+ * [Viewer](/docs/management/organizations/members/#viewer)
+
+After creating an organization, you can invite or remove members using the organization's settings:
 
 ![organization-invite](../../../../content/images/dashboard/orgs/invite.png)
 
-You can also update their roles.
+You can also update their roles:
 
 ![organization-roles](../../../../content/images/dashboard/orgs/roles.png)
 
