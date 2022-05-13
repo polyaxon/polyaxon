@@ -36,12 +36,12 @@ you can also create a user `polyaxon` with read-only access to your organization
 
 ## Create a secret
 
- * Simple method using inline token:
+ * Simple method using an inline token:
 
 ```bash
 kubectl -n polyaxon create secret generic bitbucket-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="<USERNAME>:<TOKEN_HASH>"
 ```
- * Advanced method using a git cred store (allows pulling submodules):
+ * Advanced method using a git credentials store (allows pulling submodules):
 
 ```yaml
 kind: Secret

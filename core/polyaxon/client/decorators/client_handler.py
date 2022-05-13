@@ -52,22 +52,25 @@ def client_handler(
             return ...
     """
 
+    def _check_global_or_inline_config(args, config_key):
+        self_arg = args[0] if args else None
+        config_value = getattr(self_arg, f"_{config_key}", None)
+        if config_value is not None:
+            return config_value
+        config_client = getattr(self_arg, "_client", None)
+        if config_client and config_client.config:
+            return getattr(config_client.config, f"_{config_key}", None)
+        return getattr(settings.CLIENT_CONFIG, config_key, None)
+
     def client_handler_wrapper(f):
         @functools.wraps(f)
         def wrapper(*args, **kwargs):
-            if check_no_op and settings.CLIENT_CONFIG.no_op:
+            if check_no_op and _check_global_or_inline_config(args, "no_op"):
                 logger.debug("Using NO_OP mode")
                 return None
-            if check_offline:
-                self_arg = args[0] if args else None
-                is_offline = getattr(self_arg, "_is_offline", None)
-                if (
-                    is_offline
-                    if is_offline is not None
-                    else settings.CLIENT_CONFIG.is_offline
-                ):
-                    logger.debug("Using IS_OFFLINE mode")
-                    return None
+            if check_offline and _check_global_or_inline_config(args, "is_offline"):
+                logger.debug("Using IS_OFFLINE mode")
+                return None
             if args:
                 self_arg = args[0]
 

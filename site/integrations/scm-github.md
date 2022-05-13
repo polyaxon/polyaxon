@@ -58,12 +58,12 @@ you can click the blue icon next to the token to automatically copy it to the cl
 
 ## Create a secret
 
- * Simple method using inline token:
+ * Simple method using an inline token:
 
-```yaml
+```bash
 kubectl -n polyaxon create secret generic github-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="<TOKEN_HASH>"
 ```
- * Advanced method using a git cred store (allows pulling submodules):
+ * Advanced method using a git credentials store (allows pulling submodules):
 
 ```yaml
 kind: Secret
