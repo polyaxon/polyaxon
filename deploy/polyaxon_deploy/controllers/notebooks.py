@@ -36,7 +36,6 @@ async def render_notebook(archived_path: str, check_cache=True):
         read_data = await f.read()
         notebook = await run_in_threadpool(nbformat.reads, read_data, as_version=4)
         html_exporter = HTMLExporter()
-        html_exporter.template_file = "basic"
         (body, resources) = await run_in_threadpool(
             html_exporter.from_notebook_node, notebook
         )

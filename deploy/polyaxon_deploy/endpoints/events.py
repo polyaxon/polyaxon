@@ -35,6 +35,7 @@ from polyaxon_deploy.endpoints.base import UJSONResponse
 from polyaxon_deploy.endpoints.utils import redirect_file
 from traceml.artifacts import V1ArtifactKind
 from traceml.events import V1Events
+from traceml.processors.importance_processors import calculate_importance_correlation
 
 
 async def get_multi_run_events(request: Request) -> UJSONResponse:
@@ -136,6 +137,15 @@ async def get_run_resources(request: Request) -> UJSONResponse:
     return UJSONResponse({"data": events})
 
 
+async def get_run_importance_correlation(request: Request) -> UJSONResponse:
+    body = await request.json()
+    data = body.get("data")
+    data = data or {}
+    params = data.get("params")
+    metrics = data.get("metrics")
+    return UJSONResponse({"data": calculate_importance_correlation(metrics=metrics, params=params)})
+
+
 URLS_RUNS_MULTI_EVENTS = (
     STREAMS_V1_LOCATION
     + "{namespace:str}/{owner:str}/{project:str}/runs/multi/events/{event_kind:str}"
@@ -147,6 +157,10 @@ URLS_RUNS_EVENTS = (
 URLS_RUNS_RESOURCES = (
     STREAMS_V1_LOCATION + "{namespace:str}/{owner:str}/{project:str}/runs/"
     "{run_uuid:str}/resources"
+)
+URLS_RUNS_IMPORTANCE_CORRELATION = (
+    STREAMS_V1_LOCATION + "{namespace:str}/{owner:str}/{project:str}/runs/"
+    "{run_uuid:str}/importance"
 )
 
 # fmt: off
@@ -162,6 +176,12 @@ events_routes = [
         get_run_resources,
         name="resources",
         methods=["GET"],
+    ),
+    Route(
+        URLS_RUNS_IMPORTANCE_CORRELATION,
+        get_run_importance_correlation,
+        name="resources",
+        methods=["POST"],
     ),
     Route(
         URLS_RUNS_EVENTS,

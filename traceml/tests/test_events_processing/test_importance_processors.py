@@ -19,29 +19,28 @@ import pytest
 
 from unittest import TestCase
 
-from traceml.processors.importance_processors import calculate_importance
+from traceml.processors.importance_processors import calculate_importance_correlation
 
 
 @pytest.mark.processors_mark
 class TestFeatureImportance(TestCase):
-    def test_params_empty(self):
-        assert calculate_importance(None, None) is None
+    def test_empty_value(self):
+        assert calculate_importance_correlation(None, None) is None
 
-    def test_params_single(self):
-        res = calculate_importance([4], [{"param1": 3}])
+    def test_single_value(self):
+        res = calculate_importance_correlation([{"param1": 3}], [4])
         exp = {"param1": {"correlation": None, "importance": 0.0}}
         assert res == exp
 
-    def test_params_perfect(self):
-        res = calculate_importance(
-            [3, 4, 5], [{"param1": 3}, {"param1": 4}, {"param1": 5}]
+    def test_correct_values(self):
+        res = calculate_importance_correlation(
+            [{"param1": 3}, {"param1": 4}, {"param1": 5}], [3, 4, 5],
         )
         exp = {"param1": {"correlation": 1.0, "importance": 1.0}}
         assert res == exp
 
-    def test_params_2_count_3(self):
-        res = calculate_importance(
-            [1, 2, 3],
+    def test_multiple_params(self):
+        res = calculate_importance_correlation(
             [
                 {
                     "param1": 1,
@@ -56,6 +55,7 @@ class TestFeatureImportance(TestCase):
                     "param2": 1,
                 },
             ],
+            [1, 2, 3],
         )
         exp = {
             "param1": {"correlation": 1.0, "importance": 0.464},
@@ -63,14 +63,13 @@ class TestFeatureImportance(TestCase):
         }
         assert res == exp
 
-    def test_params_str_bad(self):
-        assert calculate_importance(["foo", "bar"], []) is None
+    def test_wrong_string_params(self):
+        assert calculate_importance_correlation(["foo", "bar"], []) is None
 
-    def test_params_mixed(self):
-        res = calculate_importance(
-            [1, 2], [{"param1": "str1", "param2": 1}, {"param1": 2, "param2": 2}]
+    def test_complex_params(self):
+        res = calculate_importance_correlation(
+            [{"param1": "str1", "param2": 1}, {"param1": 2, "param2": 2}], [1, 2]
         )
-        # what is this?
         exp = {
             "param1_2": {"correlation": 1.0, "importance": 0.348},
             "param1_str1": {"correlation": -1.0, "importance": 0.308},
@@ -78,13 +77,13 @@ class TestFeatureImportance(TestCase):
         }
         assert res == exp
 
-    def test_params_nan(self):
+    def test_nan_value(self):
         assert (
-            calculate_importance(
-                [np.nan, 2], [{"param1": 3, "param2": 1}, {"param1": 2, "param2": 2}]
+            calculate_importance_correlation(
+                [{"param1": 3, "param2": 1}, {"param1": 2, "param2": 2}], [np.nan, 2]
             )
             is None
         )
 
-    def test_params_dict(self):
-        assert calculate_importance([{"foo": 2, "bar": 4}], []) is None
+    def test_empty_metrics(self):
+        assert calculate_importance_correlation([{"foo": 2, "bar": 4}], []) is None
