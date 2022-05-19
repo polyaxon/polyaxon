@@ -18,29 +18,48 @@ from typing import List, Optional
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.containers.names import (
-    INIT_FILE_CONTAINER_PREFIX,
+    INIT_TENSORBOARD_CONTAINER_PREFIX,
     generate_container_name,
 )
 from polyaxon.contexts import paths as ctx_paths
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
-from polyaxon.polypod.common.containers import patch_container
 from polyaxon.polypod.common.env_vars import get_run_instance_env_var
 from polyaxon.polypod.common.mounts import (
     get_auth_context_mount,
     get_connections_context_mount,
 )
 from polyaxon.polypod.common.volumes import get_volume_name
+from polyaxon.polypod.init.store import get_base_store_container
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
-from polyaxon.schemas.types import V1FileType
+from polyaxon.schemas.types import V1ConnectionType, V1TensorboardType
 from polyaxon.utils.list_utils import to_list
+from polyaxon.utils.validation import validate_tags
 
 
-def get_file_init_container(
+def _get_args(tb_args: V1TensorboardType):
+    args = []
+    if tb_args.port:
+        args.append("--port={}".format(tb_args.port))
+    if tb_args.uuids:
+        uuids = validate_tags(tb_args.uuids, validate_yaml=True)
+        args.append("--uuids={}".format(",".join(uuids)))
+    if tb_args.use_names:
+        args.append("--use-names")
+    if tb_args.path_prefix:
+        args.append("--path-prefix={}".format(tb_args.path_prefix)),
+    if tb_args.plugins:
+        plugins = validate_tags(tb_args.plugins, validate_yaml=True)
+        args.append("--plugins={}".format(",".join(plugins)))
+
+    return args
+
+
+def get_tensorboard_init_container(
     polyaxon_init: V1PolyaxonInitContainer,
-    file_args: V1FileType,
+    artifacts_store: V1ConnectionType,
+    tb_args: V1TensorboardType,
     contexts: PluginsContextsSpec,
-    run_path: str,
     run_instance: str,
     container: Optional[k8s_schemas.V1Container] = None,
     env: List[k8s_schemas.V1EnvVar] = None,
@@ -49,7 +68,7 @@ def get_file_init_container(
     env = to_list(env, check_none=True)
     env = env + [get_run_instance_env_var(run_instance)]
 
-    container_name = generate_container_name(INIT_FILE_CONTAINER_PREFIX)
+    container_name = generate_container_name(INIT_TENSORBOARD_CONTAINER_PREFIX)
     if not container:
         container = k8s_schemas.V1Container(name=container_name)
 
@@ -63,22 +82,21 @@ def get_file_init_container(
     if contexts and contexts.auth:
         volume_mounts.append(get_auth_context_mount(read_only=True))
 
-    file_args.filename = file_args.filename or "file"
-    return patch_container(
+    args = [
+        "--context-from={}".format(artifacts_store.store_path),
+        "--context-to={}".format(mount_path),
+        "--connection-kind={}".format(artifacts_store.kind),
+    ]
+    args += _get_args(tb_args)
+
+    return get_base_store_container(
         container=container,
-        name=container_name,
-        image=polyaxon_init.get_image(),
-        image_pull_policy=polyaxon_init.image_pull_policy,
-        command=["polyaxon", "initializer", "file"],
-        args=[
-            "--file-context={}".format(file_args.to_dict(dump=True)),
-            "--filepath={}".format(mount_path),
-            "--copy-path={}".format(
-                ctx_paths.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path)
-            ),
-            "--track",
-        ],
+        container_name=container_name,
+        polyaxon_init=polyaxon_init,
+        store=artifacts_store,
+        command=["polyaxon", "initializer", "tensorboard"],
+        args=args,
         env=env,
+        env_from=[],
         volume_mounts=volume_mounts,
-        resources=polyaxon_init.get_resources(),
     )

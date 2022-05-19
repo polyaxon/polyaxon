@@ -29,6 +29,7 @@ from polyaxon.schemas.types import (
     DockerfileTypeSchema,
     FileTypeSchema,
     GitTypeSchema,
+    TensorboardTypeSchema,
 )
 from polyaxon.utils.signal_decorators import check_partial
 
@@ -39,6 +40,7 @@ class InitSchema(BaseCamelSchema):
     git = fields.Nested(GitTypeSchema, allow_none=True)
     dockerfile = fields.Nested(DockerfileTypeSchema, allow_none=True)
     file = fields.Nested(FileTypeSchema, allow_none=True)
+    tensorboard = fields.Nested(TensorboardTypeSchema, allow_none=True)
     lineage_ref = fields.Str(allow_none=True)
     model_ref = fields.Str(allow_none=True)
     artifact_ref = fields.Str(allow_none=True)
@@ -62,6 +64,7 @@ class InitSchema(BaseCamelSchema):
         git = data.get("git")
         dockerfile = data.get("dockerfile")
         file = data.get("file")
+        tensorboard = data.get("tensorboard")
         lineage_ref = data.get("lineageRef")
         model_ref = data.get("modelRef")
         artifact_ref = data.get("artifactRef")
@@ -76,6 +79,8 @@ class InitSchema(BaseCamelSchema):
         if dockerfile:
             schemas += 1
         if file:
+            schemas += 1
+        if tensorboard:
             schemas += 1
         if lineage_ref:
             schemas += 1
@@ -116,6 +121,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
         git: [V1GitType](/docs/core/specification/types/#v1gittype), optional
         dockerfile: [V1DockerfileType](/docs/core/specification/types/#v1dockerfiletype), optional
         file: [V1FileType](/docs/core/specification/types/#v1Filetype), optional
+        tensorboard: [V1TensorboardType](/docs/core/specification/types/#v1Tensorboardtype), optional
         lineage_ref: str, optional
         model_ref: str, optional
         artifact_ref: str, optional
@@ -284,6 +290,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
         "artifacts",
         "git",
         "dockerfile",
+        "tensorboard",
         "file",
         "lineageRef",
         "artifactRef",
@@ -299,6 +306,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
                 self.connection,
                 self.git,
                 self.dockerfile,
+                self.tensorboard,
                 self.file,
                 self.artifacts,
                 self.paths,

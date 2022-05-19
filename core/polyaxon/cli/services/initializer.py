@@ -23,12 +23,8 @@ from marshmallow import ValidationError
 
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.connections.kinds import V1ConnectionKind
-from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolyaxonSchemaError
-from polyaxon.fs.watcher import FSWatcher
-from polyaxon.logger import logger
-from polyaxon.parser import parser
-from polyaxon.schemas.types import V1ConnectionType, V1FileType
+from polyaxon.schemas.types import V1FileType
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.path_utils import check_or_create_path, copy_file
 
@@ -101,6 +97,7 @@ def file(file_context, filepath, copy_path, track):
 def git(url, repo_path, revision, connection, flags):
     """Create auth context."""
     from polyaxon.init.git import create_code_repo
+    from polyaxon.parser import parser
 
     if flags:
         flags = parser.get_string("flags", flags, is_list=True)
@@ -114,55 +111,6 @@ def git(url, repo_path, revision, connection, flags):
     )
 
     Printer.print_success("Git Repo is initialized, path: `{}`".format(repo_path))
-
-
-def _sync_fw(path: str):
-    try:
-        fw = FSWatcher()
-        fw.sync(path)
-        fw.write(ctx_paths.CONTEXT_MOUNT_FILE_WATCHER)
-    except Exception as e:  # File watcher should not prevent job from starting
-        logger.warning(
-            "File watcher failed syncing path: {}.\nError: {}".format(path, e)
-        )
-
-
-def _download(
-    connection_name: str,
-    connection_kind: str,
-    path_from: str,
-    path_to: str,
-    is_file: bool,
-    raise_errors: bool,
-    sync_fw: bool,
-    check_path: bool,
-):
-    from polyaxon.fs.fs import get_sync_fs_from_type
-    from polyaxon.fs.manager import download_file_or_dir
-
-    connection_type = V1ConnectionType(name=connection_name, kind=connection_kind)
-    fs = get_sync_fs_from_type(connection_type=connection_type)
-
-    try:
-        download_file_or_dir(
-            fs=fs,
-            path_from=path_from,
-            path_to=path_to,
-            is_file=is_file,
-            check_path=check_path,
-        )
-        if sync_fw:
-            _sync_fw(path_to)
-        Printer.print_success(
-            "{} path is initialized, path: `{}`".format(connection_kind, path_to)
-        )
-    except Exception as e:
-        if raise_errors:
-            raise e
-        else:
-            logger.debug(
-                "Initialization failed, the error was ignored. Error details %s", e
-            )
 
 
 @initializer.command()
@@ -195,7 +143,9 @@ def _download(
 )
 def s3(connection_name, path_from, path_to, is_file, check_path, raise_errors, sync_fw):
     """Create s3 path context."""
-    _download(
+    from polyaxon.init.artifacts import download_artifact
+
+    download_artifact(
         connection_name=connection_name,
         connection_kind=V1ConnectionKind.S3,
         path_from=path_from,
@@ -239,7 +189,9 @@ def gcs(
     connection_name, path_from, path_to, is_file, check_path, raise_errors, sync_fw
 ):
     """Create gcs path context."""
-    _download(
+    from polyaxon.init.artifacts import download_artifact
+
+    download_artifact(
         connection_name=connection_name,
         connection_kind=V1ConnectionKind.GCS,
         path_from=path_from,
@@ -283,7 +235,9 @@ def wasb(
     connection_name, path_from, path_to, is_file, check_path, raise_errors, sync_fw
 ):
     """Create wasb path context."""
-    _download(
+    from polyaxon.init.artifacts import download_artifact
+
+    download_artifact(
         connection_name=connection_name,
         connection_kind=V1ConnectionKind.WASB,
         path_from=path_from,
@@ -334,8 +288,10 @@ def path(
     raise_errors,
     sync_fw,
 ):
-    """Create wasb path context."""
-    _download(
+    """Create path context."""
+    from polyaxon.init.artifacts import download_artifact
+
+    download_artifact(
         connection_name=connection_name,
         connection_kind=connection_kind,
         path_from=path_from,
@@ -348,6 +304,57 @@ def path(
 
 
 @initializer.command()
+@click.option("--port", type=int, help="The connection kind.")
+@click.option("--connection-kind", help="The connection kind.")
+@click.option("--connection-name", help="The connection name.")
+@click.option(
+    "--context-from", help="The context path where to load the tensorboard logs from."
+)
+@click.option("--context-to", help="The context path to store the tensorboard logs.")
+@click.option(
+    "--uuids",
+    "--uuid",
+    "-uid",
+    help="The operation uuids to initialize.",
+)
+@click.option(
+    "--use-names", is_flag=True, help="Use run names to initialize hte paths."
+)
+@click.option("--path-prefix", help="The operation name to initialize.")
+@click.option("--plugins", help="The operation uuids to initialize.")
+def tensorboard(
+    port,
+    connection_kind,
+    connection_name,
+    context_from,
+    context_to,
+    uuids,
+    use_names,
+    path_prefix,
+    plugins,
+):
+    """Create path context."""
+    from polyaxon.init.tensorboard import initialize_tensorboard
+    from polyaxon.utils.validation import validate_tags
+
+    uuids = validate_tags(uuids)
+    plugins = validate_tags(plugins)
+    initialize_tensorboard(
+        port=port,
+        connection_name=connection_name,
+        connection_kind=connection_kind,
+        context_from=context_from,
+        context_to=context_to or ".",
+        uuids=uuids,
+        use_names=use_names,
+        path_prefix=path_prefix,
+        plugins=plugins,
+    )
+
+
+@initializer.command()
 @click.option("--path", help="The local path to store the data.")
 def fswatch(path):
-    _sync_fw(path)
+    from polyaxon.init.artifacts import sync_file_watcher
+
+    sync_file_watcher(path)

@@ -26,7 +26,7 @@ from marshmallow import EXCLUDE
 import polyaxon_sdk
 
 from polyaxon.client.client import PolyaxonClient
-from polyaxon.client.decorators import client_handler
+from polyaxon.client.decorators import client_handler, get_global_or_inline_config
 from polyaxon.constants.globals import DEFAULT
 from polyaxon.contexts import paths as ctx_paths
 from polyaxon.exceptions import PolyaxonClientException
@@ -67,6 +67,10 @@ class ProjectClient:
         client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/), optional,
              an instance of a configured client, if not passed,
              a new instance will be created based on the available environment.
+        is_offline: bool, optional,
+             To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+        no_op: bool, optional,
+             To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
 
     Raises:
         PolyaxonClientException: If no owner is passed and Polyaxon cannot
@@ -79,7 +83,19 @@ class ProjectClient:
         owner: str = None,
         project: str = None,
         client: PolyaxonClient = None,
+        is_offline: bool = None,
+        no_op: bool = None,
     ):
+        self._is_offline = get_global_or_inline_config(
+            config_key="is_offline", config_value=is_offline, client=client
+        )
+        self._no_op = get_global_or_inline_config(
+            config_key="no_op", config_value=no_op, client=client
+        )
+
+        if self._no_op:
+            return
+
         if not owner and project:
             owner, project = get_entity_info(
                 get_entity_full_name(owner=owner, entity=project)
@@ -1475,7 +1491,6 @@ class ProjectClient:
         version: str,
         path: str,
         download_artifacts: bool = True,
-        use_canonical_prefix: bool = True,
     ):
         """Packages and downloads the version to a local path.
 
@@ -1490,12 +1505,9 @@ class ProjectClient:
             path: str, optional, defaults to the offline root path,
                  path where to persist the metadata and artifacts.
             download_artifacts: bool, optional, to download the artifacts based on linked lineage.
-            use_canonical_prefix: bool, optional, flag to use the canonical path prefix `project/versions`
         """
         path = path or ctx_paths.CONTEXT_OFFLINE_ROOT
-        if use_canonical_prefix:
-            path = "{}/{}/{}s".format(path, self.project, kind)
-        path = "{}/{}".format(path, version)
+        path = "{}/{}s/{}".format(path, kind, version)
         delete_path(path)
         config = self.get_version(kind=kind, version=version)
         self.persist_version(config=config, path=path)
@@ -1508,21 +1520,18 @@ class ProjectClient:
         self,
         version: str,
         path: str,
-        use_canonical_prefix: bool = True,
     ):
         """Packages and downloads the component version to a local path.
 
         Args:
             version: str, required, the version name/tag.
             path: str, local path where to persist the metadata and artifacts.
-            use_canonical_prefix: bool, optional, flag to use the canonical path prefix `project/components`
         """
         return self.pull_version(
             kind=V1ProjectVersionKind.COMPONENT,
             version=version,
             path=path,
             download_artifacts=False,
-            use_canonical_prefix=use_canonical_prefix,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1531,7 +1540,6 @@ class ProjectClient:
         version: str,
         path: str,
         download_artifacts: bool = True,
-        use_canonical_prefix: bool = True,
     ):
         """Packages and downloads the model version to a local path.
 
@@ -1539,14 +1547,12 @@ class ProjectClient:
             version: str, required, the version name/tag.
             path: str, local path where to persist the metadata and artifacts.
             download_artifacts: bool, optional, to download the artifacts based on linked lineage.
-            use_canonical_prefix: bool, optional, flag to use the canonical path prefix `project/models`
         """
         return self.pull_version(
             kind=V1ProjectVersionKind.MODEL,
             version=version,
             path=path,
             download_artifacts=download_artifacts,
-            use_canonical_prefix=use_canonical_prefix,
         )
 
     @client_handler(check_no_op=True, check_offline=True)
@@ -1555,7 +1561,6 @@ class ProjectClient:
         version: str,
         path: str,
         download_artifacts: bool = True,
-        use_canonical_prefix: bool = True,
     ):
         """Packages and downloads the artifact version to a local path.
 
@@ -1563,12 +1568,10 @@ class ProjectClient:
             version: str, required, the version name/tag.
             path: str, local path where to persist the metadata and artifacts.
             download_artifacts: bool, optional, to download the artifacts based on linked lineage.
-            use_canonical_prefix: bool, optional, flag to use the canonical path prefix `project/artifacts`
         """
         return self.pull_version(
             kind=V1ProjectVersionKind.ARTIFACT,
             version=version,
             path=path,
             download_artifacts=download_artifacts,
-            use_canonical_prefix=use_canonical_prefix,
         )

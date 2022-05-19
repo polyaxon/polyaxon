@@ -23,15 +23,15 @@ from starlette.routing import Route
 from polyaxon import settings
 from polyaxon.api import API_V1_LOCATION
 from polyaxon.contexts import paths as ctx_paths
+from polyaxon.lifecycle import V1ProjectFeature
 from polyaxon_deploy.endpoints.base import ConfigResponse, UJSONResponse
 
 
 async def get_run_details(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
-    data_path = os.path.join(
-        settings.SANDBOX_CONFIG.store_root,
-        run_uuid,
-        ctx_paths.CONTEXT_LOCAL_RUN,
+    subpath = os.path.join(run_uuid, ctx_paths.CONTEXT_LOCAL_RUN)
+    data_path = settings.SANDBOX_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
     )
     if not os.path.exists(data_path) or not os.path.isfile(data_path):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
@@ -43,10 +43,9 @@ async def get_run_details(request: Request) -> Response:
 
 async def get_run_artifact_lineage(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
-    data_path = os.path.join(
-        settings.SANDBOX_CONFIG.store_root,
-        run_uuid,
-        ctx_paths.CONTEXT_LOCAL_LINEAGES,
+    subpath = os.path.join(run_uuid, ctx_paths.CONTEXT_LOCAL_LINEAGES)
+    data_path = settings.SANDBOX_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
     )
     if not os.path.exists(data_path) or not os.path.isfile(data_path):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
@@ -59,7 +58,10 @@ async def get_run_artifact_lineage(request: Request) -> Response:
 
 
 async def list_runs(request: Request) -> Response:
-    data_path = os.path.join(settings.SANDBOX_CONFIG.store_root, "runs")
+    # project = request.path_params["project"]
+    data_path = settings.SANDBOX_CONFIG.get_store_path(
+        subpath="", entity=V1ProjectFeature.RUNTIME
+    )
     if not os.path.exists(data_path) or not os.path.isdir(data_path):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
@@ -77,7 +79,41 @@ async def list_runs(request: Request) -> Response:
 
 
 async def get_project_details(request: Request) -> Response:
-    return UJSONResponse({"name": "demo"})
+    project = request.path_params["project"]
+    data_path = settings.SANDBOX_CONFIG.get_store_path(
+        subpath=project, entity="project"
+    )
+    if not os.path.exists(data_path) or not os.path.isdir(data_path):
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+
+    data_path = os.path.join(data_path, ctx_paths.CONTEXT_LOCAL_PROJECT)
+    if os.path.exists(data_path) and os.path.isfile(data_path):
+        with open(data_path, "r") as config_file:
+            config_str = config_file.read()
+        return ConfigResponse(config_str)
+
+    # Use basic project configuration
+    return UJSONResponse({"name": project})
+
+
+async def list_projects(request: Request) -> Response:
+    data_path = settings.SANDBOX_CONFIG.get_store_path(subpath="", entity="project")
+    if not os.path.exists(data_path) or not os.path.isdir(data_path):
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+
+    data = []
+    for proj in os.listdir(data_path):
+
+        data_path = os.path.join(data_path, proj, ctx_paths.CONTEXT_LOCAL_PROJECT)
+        if os.path.exists(data_path) and os.path.isfile(data_path):
+            with open(data_path, "r") as config_file:
+                data.append(config_file.read())
+        else:
+            data.append(f'{{"name": {proj}}}')
+
+    data_str = ",".join(data)
+    config_str = f'{{"results": [{data_str}], "count": {len(data)}}}'
+    return ConfigResponse(config_str)
 
 
 URLS_RUNS_DETAILS = API_V1_LOCATION + "{owner:str}/{project:str}/runs/{run_uuid:str}/"
@@ -88,10 +124,11 @@ URLS_RUNS_LINEAGE_ARTIFACTS = (
     API_V1_LOCATION + "{owner:str}/{project:str}/runs/{run_uuid:str}/lineage/artifacts"
 )
 URLS_RUNS_LIST = API_V1_LOCATION + "{owner:str}/{project:str}/runs/"
+URLS_PROJECTS_LIST = API_V1_LOCATION + "{owner:str}/projects/list"
 URLS_PROJECTS_DETAILS = API_V1_LOCATION + "{owner:str}/{project:str}/"
 
 # fmt: off
-runs_routes = [
+sandbox_routes = [
     Route(
         URLS_RUNS_DETAILS,
         get_run_details,
@@ -114,6 +151,12 @@ runs_routes = [
         URLS_RUNS_LIST,
         list_runs,
         name="list_runs",
+        methods=["GET"],
+    ),
+    Route(
+        URLS_PROJECTS_LIST,
+        list_projects,
+        name="get_project_details",
         methods=["GET"],
     ),
     Route(

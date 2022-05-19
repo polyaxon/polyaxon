@@ -23,6 +23,7 @@ from polyaxon import settings
 from polyaxon.fs.tar import tar_dir
 from polyaxon.fs.tar import tar_files as sync_tar_files
 from polyaxon.fs.types import FSSystem
+from polyaxon.lifecycle import V1ProjectFeature
 from polyaxon.logger import logger
 from polyaxon.utils.coroutine import run_sync
 from polyaxon.utils.hashing import hash_value
@@ -40,7 +41,9 @@ async def ensure_async_execution(
 
 
 async def upload_data(fs: FSSystem, subpath: str, data):
-    path_to = os.path.join(settings.AGENT_CONFIG.store_root, subpath)
+    path_to = settings.AGENT_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
     try:
         return await ensure_async_execution(
             fs=fs,
@@ -55,8 +58,12 @@ async def upload_data(fs: FSSystem, subpath: str, data):
 
 
 async def upload_file(fs: FSSystem, subpath: str):
-    path_from = os.path.join(settings.AGENT_CONFIG.local_root, subpath)
-    path_to = os.path.join(settings.AGENT_CONFIG.store_root, subpath)
+    path_from = settings.AGENT_CONFIG.get_local_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
+    path_to = settings.AGENT_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
     try:
         return await ensure_async_execution(
             fs=fs,
@@ -72,7 +79,9 @@ async def upload_file(fs: FSSystem, subpath: str):
 
 
 async def check_is_file(fs: FSSystem, subpath: str) -> bool:
-    filepath = os.path.join(settings.AGENT_CONFIG.store_root, subpath)
+    filepath = settings.AGENT_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
     try:
         return await ensure_async_execution(
             fs=fs,
@@ -89,8 +98,12 @@ async def check_is_file(fs: FSSystem, subpath: str) -> bool:
 
 
 async def upload_dir(fs: FSSystem, subpath: str) -> Optional[str]:
-    path_from = os.path.join(settings.AGENT_CONFIG.local_root, subpath)
-    path_to = os.path.join(settings.AGENT_CONFIG.store_root, subpath)
+    path_from = settings.AGENT_CONFIG.get_local_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
+    path_to = settings.AGENT_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
     try:
         return await ensure_async_execution(
             fs=fs,
@@ -108,7 +121,9 @@ async def upload_dir(fs: FSSystem, subpath: str) -> Optional[str]:
 async def download_file(
     fs: FSSystem, subpath: str, check_cache: bool = True
 ) -> Optional[str]:
-    path_from = os.path.join(settings.AGENT_CONFIG.store_root, subpath)
+    path_from = settings.AGENT_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
 
     if os.path.exists(path_to):
@@ -162,7 +177,9 @@ async def download_files(
 async def open_file(
     fs: FSSystem, subpath: str, check_cache: bool = True
 ) -> Optional[str]:
-    path_from = os.path.join(settings.AGENT_CONFIG.store_root, subpath)
+    path_from = settings.AGENT_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
 
     if os.path.exists(path_to):
@@ -201,7 +218,9 @@ async def open_file(
 async def download_dir(
     fs: FSSystem, subpath: str, to_tar: bool = False
 ) -> Optional[str]:
-    path_from = os.path.join(settings.AGENT_CONFIG.store_root, subpath)
+    path_from = settings.AGENT_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
     check_or_create_path(path_to, is_dir=True)
     try:
@@ -253,7 +272,9 @@ async def download_dirs(
 async def list_files(
     fs: FSSystem, subpath: str, filepath: str = None, force: bool = False
 ) -> Dict:
-    store_path = os.path.join(settings.AGENT_CONFIG.store_root, subpath)
+    store_path = settings.AGENT_CONFIG.get_store_path(
+        subpath=subpath, entity=V1ProjectFeature.RUNTIME
+    )
     if filepath:
         store_path = os.path.join(store_path, filepath)
     try:
@@ -287,7 +308,9 @@ async def delete_file_or_dir(
             fs=fs,
             fct="rm",
             is_async=fs.async_impl,
-            path=os.path.join(settings.AGENT_CONFIG.store_root, subpath),
+            path=settings.AGENT_CONFIG.get_store_path(
+                subpath=subpath, entity=V1ProjectFeature.RUNTIME
+            ),
             recursive=not is_file,
         )
         return True

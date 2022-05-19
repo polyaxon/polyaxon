@@ -17,8 +17,6 @@
 import sys
 import uuid
 
-import click
-
 from urllib3.exceptions import HTTPError
 
 from polyaxon import pkg

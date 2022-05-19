@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
 import os
 
 from typing import List
@@ -41,8 +40,6 @@ from polyaxon.utils.code_reference import (
 )
 from polyaxon.utils.path_utils import check_or_create_path
 from traceml.artifacts import V1ArtifactKind, V1RunArtifact
-
-_logger = logging.getLogger("polyaxon.repos.git")
 
 
 def has_cred_access() -> bool:

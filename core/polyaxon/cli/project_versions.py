@@ -486,7 +486,6 @@ def pull_project_version(
     version: str,
     path: str,
     download_artifacts: bool = True,
-    use_canonical_prefix: bool = True,
 ):
     fqn_version = get_versioned_entity_full_name(owner, project_name, version)
     polyaxon_client = ProjectClient(owner=owner, project=project_name)
@@ -500,7 +499,6 @@ def pull_project_version(
             version,
             path=path,
             download_artifacts=download_artifacts,
-            use_canonical_prefix=use_canonical_prefix,
         )
         Printer.print_success(
             "Finished pulling the {} version `{}` to `{}`".format(
@@ -525,7 +523,6 @@ def pull_one_or_many_project_versions(
     offset: int = None,
     path: str = None,
     download_artifacts: bool = True,
-    use_canonical_prefix: bool = True,
 ):
     def _pull(version_name: str):
         pull_project_version(
@@ -535,7 +532,6 @@ def pull_one_or_many_project_versions(
             version=version_name,
             path=path,
             download_artifacts=download_artifacts,
-            use_canonical_prefix=use_canonical_prefix,
         )
 
     if all_versions or any([query, limit, offset]):

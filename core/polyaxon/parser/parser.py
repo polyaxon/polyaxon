@@ -39,6 +39,7 @@ from polyaxon.schemas.types import (
     V1GcsType,
     V1GitType,
     V1S3Type,
+    V1TensorboardType,
     V1UriType,
     V1WasbType,
 )
@@ -789,6 +790,54 @@ def get_file_init(
         key=key,
         value=value,
         target_type=V1FileType,
+        type_convert=convert_to_file_init,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+        base_types=(str, Mapping),
+    )
+
+
+def get_tensorboard_init(
+    key, value, is_list=False, is_optional=False, default=None, options=None
+):
+    """
+    Get the value corresponding to the key and converts
+    it to `V1TensorboardType`/`list(V1TensorboardType)`.
+
+    Args:
+        key: the dict key.
+        value: the value to parse.
+        is_list: If this is one element or a list of elements.
+        is_optional: To raise an error if key was not found.
+        default: default value if is_optional is True.
+        options: list/tuple if provided, the value must be one of these values.
+
+    Returns:
+        `date`: value corresponding to the key.
+    """
+
+    def convert_to_file_init(x):
+        if not isinstance(x, Mapping):
+            x = convert_to_dict(x, key)
+        return V1TensorboardType.from_dict(x)
+
+    if is_list:
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=V1TensorboardType,
+            type_convert=convert_to_file_init,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+            base_types=(str, Mapping),
+        )
+
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=V1TensorboardType,
         type_convert=convert_to_file_init,
         is_optional=is_optional,
         default=default,

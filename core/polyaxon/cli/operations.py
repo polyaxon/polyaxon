@@ -1609,12 +1609,6 @@ def service(ctx, project, uid, yes, external, url):
     help="Optional path where the runs are persisted, "
     "default value is taken from the env var: `POLYAXON_OFFLINE_ROOT`.",
 )
-@click.option(
-    "--disable-canonical-prefix",
-    is_flag=True,
-    default=False,
-    help="Optional flag to disable the usage of the canonical path prefix `project/runs`.",
-)
 @click.pass_context
 @clean_outputs
 def pull(
@@ -1627,7 +1621,6 @@ def pull(
     offset,
     no_artifacts,
     path,
-    disable_canonical_prefix,
 ):
     """Pull a remote run or multiple remote runs to a local path.
 
@@ -1662,7 +1655,6 @@ def pull(
             run_path = client.pull_remote_run(
                 path=path,
                 download_artifacts=not no_artifacts,
-                use_canonical_prefix=not disable_canonical_prefix,
             )
             Printer.print_success(f"Finished pulling run {run_uuid} to {run_path}")
         except (

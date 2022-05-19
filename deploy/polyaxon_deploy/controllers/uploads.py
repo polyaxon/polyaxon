@@ -29,6 +29,7 @@ from polyaxon import settings
 from polyaxon.constants.globals import DEFAULT_UPLOADS_PATH
 from polyaxon.fs.async_manager import upload_dir, upload_file
 from polyaxon.fs.types import FSSystem
+from polyaxon.lifecycle import V1ProjectFeature
 from polyaxon.utils.path_utils import check_or_create_path, delete_path, untar_file
 
 
@@ -58,8 +59,13 @@ async def handle_posted_data(
             root_path = tmp_path
     if not untar:
         tmp_path = root_path
-    full_tmppath = os.path.join(settings.AGENT_CONFIG.local_root, tmp_path)
-    full_filepath = os.path.join(settings.AGENT_CONFIG.local_root, root_path)
+
+    full_tmppath = settings.AGENT_CONFIG.get_local_path(
+        subpath=tmp_path, entity=V1ProjectFeature.RUNTIME
+    )
+    full_filepath = settings.AGENT_CONFIG.get_local_path(
+        subpath=root_path, entity=V1ProjectFeature.RUNTIME
+    )
 
     if overwrite and os.path.exists(full_filepath):
         delete_path(full_filepath)

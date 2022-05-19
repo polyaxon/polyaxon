@@ -208,6 +208,7 @@ def get_base_store_container(
     env_from: List[k8s_schemas.V1EnvFromSource],
     volume_mounts: List[k8s_schemas.V1VolumeMount],
     args: List[str],
+    command: List[str] = None,
 ) -> Optional[k8s_schemas.V1Container]:
     env = env or []
     env_from = env_from or []
@@ -253,7 +254,7 @@ def get_base_store_container(
         name=container_name,
         image=polyaxon_init.get_image(),
         image_pull_policy=polyaxon_init.image_pull_policy,
-        command=["/bin/sh", "-c"],
+        command=command or ["/bin/sh", "-c"],
         args=args,
         env=env,
         env_from=env_from,

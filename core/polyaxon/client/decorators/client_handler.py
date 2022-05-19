@@ -18,6 +18,7 @@ import functools
 from urllib3.exceptions import HTTPError
 
 from polyaxon import settings
+from polyaxon.client import PolyaxonClient
 from polyaxon.logger import logger
 from polyaxon_sdk.rest import ApiException
 
@@ -55,12 +56,11 @@ def client_handler(
     def _check_global_or_inline_config(args, config_key):
         self_arg = args[0] if args else None
         config_value = getattr(self_arg, f"_{config_key}", None)
-        if config_value is not None:
-            return config_value
-        config_client = getattr(self_arg, "_client", None)
-        if config_client and config_client.config:
-            return getattr(config_client.config, f"_{config_key}", None)
-        return getattr(settings.CLIENT_CONFIG, config_key, None)
+        return get_global_or_inline_config(
+            config_key=config_key,
+            config_value=config_value,
+            client=getattr(self_arg, "_client", None),
+        )
 
     def client_handler_wrapper(f):
         @functools.wraps(f)
@@ -103,3 +103,15 @@ def client_handler(
         return wrapper
 
     return client_handler_wrapper
+
+
+def get_global_or_inline_config(
+    config_key: str,
+    config_value: bool = None,
+    client: PolyaxonClient = None,
+):
+    if config_value is not None:
+        return config_value
+    if client and client.config and getattr(client.config, config_key) is not None:
+        return getattr(client.config, config_key)
+    return getattr(settings.CLIENT_CONFIG, config_key, None)

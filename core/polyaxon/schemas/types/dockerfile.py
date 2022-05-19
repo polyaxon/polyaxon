@@ -59,7 +59,7 @@ class DockerfileTypeSchema(BaseCamelSchema):
 class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
     """Dockerfile type.
 
-    This type allows you to easily construct a dockerfile without
+    This type allows to easily construct a dockerfile without
     the need to clone repo or download a file. It exposes a very simple interface for generating
     a dockerfile to build your container.
 

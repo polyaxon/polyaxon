@@ -200,10 +200,11 @@ class PolyaxonStore:
                     timeout=timeout,
                     stream=True,
                 )
-            has_tar = "tar" in self._get_header_value(
+            content_disposition = self._get_header_value(
                 headers=response.headers,
                 key="content-disposition",
             )
+            untar = '.tar"' in content_disposition or '.tar.gz"' in content_disposition
             if has_tar:
                 filename = filename + ".tar.gz"
             if untar:

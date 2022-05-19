@@ -29,8 +29,10 @@ from polyaxon.polypod.compiler.converters import PlatformJobConverter
 from polyaxon.polypod.init.artifacts import get_artifacts_path_container
 from polyaxon.polypod.init.auth import get_auth_context_container
 from polyaxon.polypod.init.dockerfile import get_dockerfile_init_container
+from polyaxon.polypod.init.file import get_file_init_container
 from polyaxon.polypod.init.git import get_git_init_container
 from polyaxon.polypod.init.store import get_store_container
+from polyaxon.polypod.init.tensorboard import get_tensorboard_init_container
 from polyaxon.polypod.main.container import get_main_container
 from polyaxon.polypod.sidecar.container import get_sidecar_container
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
@@ -40,6 +42,7 @@ from polyaxon.schemas.types import (
     V1DockerfileType,
     V1FileType,
     V1K8sResourceType,
+    V1TensorboardType,
 )
 from polyaxon.services.values import PolyaxonServices
 from polyaxon.utils.test_utils import BaseTestCase
@@ -340,29 +343,72 @@ class TestJobConverter(BaseTestCase):
             contexts=None,
             artifacts_store=None,
             init_connections=[
-                V1Init(dockerfile=file_args1),
-                V1Init(dockerfile=file_args2, path="/test"),
+                V1Init(file=file_args1),
+                V1Init(file=file_args2, path="/test"),
             ],
             init_containers=[],
             connection_by_names={},
             polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
         )
         expected_containers = [
-            get_dockerfile_init_container(
-                dockerfile_args=file_args1,
+            get_file_init_container(
                 polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                file_args=file_args1,
                 env=self.converter.get_init_service_env_vars(),
                 contexts=None,
                 run_path=self.converter.run_path,
                 run_instance=self.converter.run_instance,
             ),
-            get_dockerfile_init_container(
-                dockerfile_args=file_args2,
+            get_file_init_container(
                 polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                file_args=file_args2,
                 env=self.converter.get_init_service_env_vars(),
                 mount_path="/test",
                 contexts=None,
                 run_path=self.converter.run_path,
+                run_instance=self.converter.run_instance,
+            ),
+        ]
+
+        self.assert_containers(expected_containers, containers)
+
+    def test_get_init_containers_with_tensorboard(self):
+        store = V1ConnectionType(
+            name="test_gcs",
+            kind=V1ConnectionKind.S3,
+            schema=V1BucketConnection(bucket="s3://foo"),
+        )
+        tb_args1 = V1TensorboardType(
+            port=8000, uuids="uuid1,uuid2", plugins="plug1,plug2"
+        )
+        tb_args2 = V1TensorboardType(port=8000, uuids="uuid1", use_names=True)
+        containers = self.converter.get_init_containers(
+            contexts=None,
+            artifacts_store=store,
+            init_connections=[
+                V1Init(tensorboard=tb_args1),
+                V1Init(tensorboard=tb_args2, path="/test"),
+            ],
+            init_containers=[],
+            connection_by_names={},
+            polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+        )
+        expected_containers = [
+            get_tensorboard_init_container(
+                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                artifacts_store=store,
+                tb_args=tb_args1,
+                env=self.converter.get_init_service_env_vars(),
+                contexts=None,
+                run_instance=self.converter.run_instance,
+            ),
+            get_tensorboard_init_container(
+                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                artifacts_store=store,
+                tb_args=tb_args2,
+                env=self.converter.get_init_service_env_vars(),
+                mount_path="/test",
+                contexts=None,
                 run_instance=self.converter.run_instance,
             ),
         ]

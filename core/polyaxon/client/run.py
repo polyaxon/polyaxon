@@ -35,7 +35,7 @@ from polyaxon import settings
 from polyaxon.api import K8S_V1_LOCATION, STREAMS_V1_LOCATION
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client.client import PolyaxonClient
-from polyaxon.client.decorators import client_handler
+from polyaxon.client.decorators import client_handler, get_global_or_inline_config
 from polyaxon.constants.metadata import META_COPY_ARTIFACTS
 from polyaxon.containers.names import MAIN_CONTAINER_NAMES
 from polyaxon.contexts import paths as ctx_paths
@@ -111,6 +111,10 @@ class RunClient:
         client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/), optional,
              an instance of a configured client, if not passed,
              a new instance will be created based on the available environment.
+        is_offline: bool, optional,
+             To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+        no_op: bool, optional,
+             To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
 
     Raises:
         PolyaxonClientException: If no owner and/or project are passed and Polyaxon cannot
@@ -125,10 +129,18 @@ class RunClient:
         run_uuid: str = None,
         client: PolyaxonClient = None,
         is_offline: bool = None,
+        no_op: bool = None,
     ):
-        self._is_offline = (
-            is_offline if is_offline is not None else settings.CLIENT_CONFIG.is_offline
+        self._is_offline = get_global_or_inline_config(
+            config_key="is_offline", config_value=is_offline, client=client
         )
+        self._no_op = get_global_or_inline_config(
+            config_key="no_op", config_value=no_op, client=client
+        )
+
+        if self._no_op:
+            return
+
         try:
             owner, project = get_project_or_local(
                 get_entity_full_name(owner=owner, entity=project)
@@ -177,6 +189,28 @@ class RunClient:
         self._default_filename_sanitize_paths = []
         self._last_update = None
         self._store = None
+
+    def _set_is_offline(
+        self,
+        client: PolyaxonClient = None,
+        is_offline: bool = None,
+    ):
+        if is_offline is not None:
+            return is_offline
+        if client and client.config and client.config.is_offline is not None:
+            return client.config.is_offline
+        return settings.CLIENT_CONFIG.is_offline
+
+    def _set_no_op(
+        self,
+        client: PolyaxonClient = None,
+        no_op: bool = None,
+    ):
+        if no_op is not None:
+            return no_op
+        if client and client.config and client.config.no_op is not None:
+            return client.config.no_op
+        return settings.CLIENT_CONFIG.no_op
 
     @property
     def client(self):
@@ -2566,7 +2600,6 @@ class RunClient:
         self,
         path: str = None,
         download_artifacts: bool = True,
-        use_canonical_prefix: bool = True,
     ):
         """Download a run on Polyaxon's API and artifacts store to local path.
 
@@ -2574,12 +2607,9 @@ class RunClient:
             path: str, optional, defaults to the offline root path,
                  path where the run's metadata & artifacts will be stored.
             download_artifacts: bool, optional, flag to trigger artifacts download.
-            use_canonical_prefix: bool, optional, flag to use the canonical path prefix `project/runs`
         """
         path = path or ctx_paths.CONTEXT_OFFLINE_ROOT
-        if use_canonical_prefix:
-            path = "{}/{}/runs".format(path, self.project)
-        path = "{}/{}".format(path, self.run_uuid)
+        path = "{}/runs/{}".format(path, self.run_uuid)
         delete_path(path)
         self.refresh_data(load_artifacts_lineage=True, load_conditions=True)
         if download_artifacts:

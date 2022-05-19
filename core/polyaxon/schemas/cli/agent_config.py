@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
+
 from typing import List
 
 from marshmallow import EXCLUDE, ValidationError, fields, pre_load, validates_schema
@@ -51,6 +53,7 @@ from polyaxon.env_vars.keys import (
     EV_KEYS_SANDBOX_WORKERS,
 )
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.lifecycle import V1ProjectFeature
 from polyaxon.parser import parser
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.types import ConnectionTypeSchema, V1K8sResourceType
@@ -210,6 +213,18 @@ class BaseAgentConfig(BaseConfig):
 
         return artifacts_root
 
+    def get_local_path(self, subpath: str, entity: str = None):
+        full_path = self.local_root
+        if entity == V1ProjectFeature.RUNTIME:
+            from polyaxon.services.values import PolyaxonServices
+
+            if PolyaxonServices.is_sandbox():
+                full_path = os.path.join(full_path, "runs")
+        else:
+            full_path = os.path.join(full_path, f"{entity}s")
+
+        return f"{full_path}/{subpath}"
+
     @property
     def store_root(self):
         artifacts_root = ctx_paths.CONTEXT_ARTIFACTS_ROOT
@@ -217,6 +232,20 @@ class BaseAgentConfig(BaseConfig):
             return artifacts_root
 
         return self.artifacts_store.store_path
+
+    def get_store_path(self, subpath: str, entity: str = None):
+        full_path = self.store_root
+        if entity == V1ProjectFeature.RUNTIME:
+            from polyaxon.services.values import PolyaxonServices
+
+            if PolyaxonServices.is_sandbox():
+                full_path = os.path.join(full_path, "runs")
+        else:
+            full_path = os.path.join(full_path, f"{entity}s")
+
+        if subpath:
+            full_path = os.path.join(full_path, subpath)
+        return full_path
 
 
 class SandboxSchema(BaseAgentSchema):
@@ -256,13 +285,13 @@ class SandboxConfig(BaseAgentConfig):
         debug: bool = None,
         workers: int = None,
         per_core: bool = None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(
             artifacts_store=artifacts_store,
             connections=connections,
             namespace="sandbox",
-            **kwargs
+            **kwargs,
         )
         self.host = clean_host(host) if host else host
         self.port = port
@@ -448,13 +477,13 @@ class AgentConfig(BaseAgentConfig):
         default_scheduling=None,
         use_proxy_env_vars_use_in_ops=None,
         default_image_pull_secrets=None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(
             artifacts_store=artifacts_store,
             connections=connections,
             namespace=namespace,
-            **kwargs
+            **kwargs,
         )
         self.is_replica = is_replica
         self.compressed_logs = compressed_logs

@@ -28,7 +28,7 @@ import ujson
 import polyaxon_sdk
 
 from polyaxon import settings
-from polyaxon.client import RunClient
+from polyaxon.client import RunClient, PolyaxonClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.connections.reader import get_connection_type
 from polyaxon.constants.globals import UNKNOWN
@@ -101,11 +101,13 @@ class Run(RunClient):
         collect_resources: bool, optional,
              similar to the env var flag `POLYAXON_COLLECT_RESOURCES`, this env var is `True`
              by default for managed runs and is controlled by the plugins section.
-        is_offline: bool, optional,
-             To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
         is_new: bool, optional,
              Force the creation of a new run instead of trying to discover a cached run or
              refreshing an instance from the env var
+        is_offline: bool, optional,
+             To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+        no_op: bool, optional,
+             To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
         name: str, optional,
              When `is_new` or `is_offline` is set to true, a new instance is created and
              you can initialize that new run with a name.
@@ -127,7 +129,7 @@ class Run(RunClient):
         owner: str = None,
         project: str = None,
         run_uuid: str = None,
-        client: RunClient = None,
+        client: PolyaxonClient = None,
         track_code: bool = True,
         track_env: bool = True,
         track_logs: bool = True,
@@ -135,8 +137,9 @@ class Run(RunClient):
         artifacts_path: str = None,
         collect_artifacts: bool = None,
         collect_resources: bool = None,
-        is_offline: bool = None,
         is_new: bool = None,
+        is_offline: bool = None,
+        no_op: bool = None,
         name: str = None,
         description: str = None,
         tags: List[str] = None,
@@ -148,6 +151,7 @@ class Run(RunClient):
             run_uuid=run_uuid,
             client=client,
             is_offline=is_offline,
+            no_op=no_op,
         )
         track_logs = track_logs if track_logs is not None else self._is_offline
         self._logs_history = V1Logs(logs=[])

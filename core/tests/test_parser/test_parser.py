@@ -30,6 +30,7 @@ from polyaxon.schemas.types import (
     V1GcsType,
     V1GitType,
     V1S3Type,
+    V1TensorboardType,
     V1UriType,
     V1WasbType,
 )
@@ -1451,6 +1452,137 @@ class TestParser(BaseTestCase):
 
         self.assertEqual(
             parser.get_git_init(
+                key="dict_non_existing_key", value=None, is_optional=True
+            ),
+            None,
+        )
+
+    def test_get_tensorboard_init(self):
+        value = parser.get_tensorboard_init(key="dict_key_1", value={"port": 8000})
+        self.assertEqual(value, V1TensorboardType(port=8000))
+
+        value = parser.get_tensorboard_init(
+            key="dict_key_1",
+            value={"port": 8000},
+        )
+        self.assertEqual(value, V1TensorboardType(port=8000))
+
+        value = parser.get_tensorboard_init(
+            key="dict_key_1", value={"port": 8000, "uuids": ["uuid1", "uuid2"]}
+        )
+        self.assertEqual(value, V1TensorboardType(port=8000, uuids=["uuid1", "uuid2"]))
+
+        value = parser.get_tensorboard_init(
+            key="dict_key_1", value='{"port": 8000, "uuids": ["uuid1","uuid2"]}'
+        )
+        self.assertEqual(value, V1TensorboardType(port=8000, uuids=["uuid1", "uuid2"]))
+
+        value = parser.get_tensorboard_init(
+            key="dict_key_1", value='{"useNames": false}'
+        )
+        self.assertEqual(value, V1TensorboardType(use_names=False))
+
+        value = parser.get_tensorboard_init(
+            key="dict_list_key_1",
+            value=[
+                {"useNames": False},
+                {"uuids": ["uuid1", "uuid2"]},
+                {
+                    "port": 8000,
+                    "uuids": ["uuid1", "uuid2"],
+                    "plugins": ["plug1", "plug2"],
+                },
+            ],
+            is_list=True,
+        )
+        self.assertEqual(
+            value,
+            [
+                V1TensorboardType(use_names=False),
+                V1TensorboardType(uuids=["uuid1", "uuid2"]),
+                V1TensorboardType(
+                    port=8000, uuids=["uuid1", "uuid2"], plugins=["plug1", "plug2"]
+                ),
+            ],
+        )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_error_key_1",
+                value=dict(port="foo"),
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_error_key_1", value=dict(port=8000, init=True)
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_error_key_1", value=dict(port=8000, connection="foo")
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(key="dict_error_key_1", value="foo")
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(key="dict_error_key_2", value=1)
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(key="dict_error_key_3", value=False)
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(key="dict_error_key_4", value=["1", "foo"])
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_list_key_1", value=["123", {"key3": True}]
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_list_error_key_1", value=["123", {"key3": True}], is_list=True
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_list_error_key_2", value=[{"key3": True}, 12.3], is_list=True
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_list_error_key_3", value=[{"key3": True}, None], is_list=True
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_list_error_key_4",
+                value=[{"key3": True}, "123", False],
+                is_list=True,
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_key_1",
+                value={"key1": "foo", "key2": 2, "key3": False, "key4": "1"},
+                is_list=True,
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(key="dict_non_existing_key", value=None)
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_non_existing_key", value=NO_VALUE_FOUND
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_tensorboard_init(
+                key="dict_non_existing_key", value=None, is_list=True
+            )
+
+        self.assertEqual(
+            parser.get_tensorboard_init(
                 key="dict_non_existing_key", value=None, is_optional=True
             ),
             None,

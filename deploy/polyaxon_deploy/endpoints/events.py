@@ -143,7 +143,9 @@ async def get_run_importance_correlation(request: Request) -> UJSONResponse:
     data = data or {}
     params = data.get("params")
     metrics = data.get("metrics")
-    return UJSONResponse({"data": calculate_importance_correlation(metrics=metrics, params=params)})
+    return UJSONResponse(
+        {"data": calculate_importance_correlation(metrics=metrics, params=params)}
+    )
 
 
 URLS_RUNS_MULTI_EVENTS = (

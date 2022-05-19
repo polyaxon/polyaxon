@@ -38,7 +38,7 @@ class TestInitFile(BaseTestCase):
         container = get_file_init_container(
             polyaxon_init=V1PolyaxonInitContainer(image="foo", image_tag=""),
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
-            file_args=V1FileType(content="test"),
+            file_args=file_args,
             run_path="test",
             run_instance="foo.bar.runs.uuid",
         )
@@ -54,7 +54,7 @@ class TestInitFile(BaseTestCase):
             ),
             get_auth_context_mount(read_only=True),
         ]
-        assert file_args.to_dict(dump=True) == '{"content":"test"}'
+        assert file_args.to_dict(dump=True) == '{"content":"test","filename":"file"}'
         assert container.args == [
             "--file-context={}".format('{"content":"test","filename":"file"}'),
             "--filepath={}".format(ctx_paths.CONTEXT_MOUNT_ARTIFACTS),

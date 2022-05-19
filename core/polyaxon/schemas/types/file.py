@@ -42,7 +42,7 @@ class FileTypeSchema(BaseCamelSchema):
 class V1FileType(BaseTypeConfig, polyaxon_sdk.V1FileType):
     """File type.
 
-    This type allows you to easily construct pass a file content without
+    This type allows to easily construct a file content without
     the need to clone repo or download a from an external localtion.
     It exposes a very simple interface for generating a file or a script
     that can be used by your containers.

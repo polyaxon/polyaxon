@@ -43,6 +43,7 @@ from polyaxon.polypod.init.dockerfile import get_dockerfile_init_container
 from polyaxon.polypod.init.file import get_file_init_container
 from polyaxon.polypod.init.git import get_git_init_container
 from polyaxon.polypod.init.store import get_store_container
+from polyaxon.polypod.init.tensorboard import get_tensorboard_init_container
 from polyaxon.polypod.main.container import get_main_container
 from polyaxon.polypod.pod.volumes import get_pod_volumes
 from polyaxon.polypod.sidecar.container import get_sidecar_container
@@ -440,6 +441,7 @@ class BaseConverter(ConverterAbstract):
                                 external_host=external_host
                             ),
                             mount_path=init_connection.path,
+                            container=init_connection.container,
                             contexts=contexts,
                             run_path=self.run_path,
                             run_instance=self.run_instance,
@@ -455,8 +457,25 @@ class BaseConverter(ConverterAbstract):
                                 external_host=external_host
                             ),
                             mount_path=init_connection.path,
+                            container=init_connection.container,
                             contexts=contexts,
                             run_path=self.run_path,
+                            run_instance=self.run_instance,
+                        )
+                    )
+                # Tensorboard initialization
+                if init_connection.tensorboard:
+                    containers.append(
+                        get_tensorboard_init_container(
+                            polyaxon_init=polyaxon_init,
+                            artifacts_store=artifacts_store,
+                            tb_args=init_connection.tensorboard,
+                            env=self.get_init_service_env_vars(
+                                external_host=external_host
+                            ),
+                            mount_path=init_connection.path,
+                            container=init_connection.container,
+                            contexts=contexts,
                             run_instance=self.run_instance,
                         )
                     )

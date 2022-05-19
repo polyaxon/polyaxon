@@ -26,7 +26,7 @@ from polyaxon_deploy.endpoints.index import home_routes
 from polyaxon_deploy.endpoints.k8s import k8s_routes
 from polyaxon_deploy.endpoints.logs import logs_routes
 from polyaxon_deploy.endpoints.notifications import notifications_routes
-from polyaxon_deploy.endpoints.runs import runs_routes
+from polyaxon_deploy.endpoints.sandbox import sandbox_routes
 
 routes = (
     logs_routes
@@ -34,7 +34,7 @@ routes = (
     + notifications_routes
     + artifacts_routes
     + events_routes
-    + runs_routes
+    + sandbox_routes
     + base_routes
     + home_routes
 )

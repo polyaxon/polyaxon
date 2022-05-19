@@ -27,5 +27,6 @@ from polyaxon.schemas.types.k8s_resources import (
     V1K8sResourceType,
 )
 from polyaxon.schemas.types.s3 import S3TypeSchema, V1S3Type
+from polyaxon.schemas.types.tensorboard import TensorboardTypeSchema, V1TensorboardType
 from polyaxon.schemas.types.uri import UriTypeSchema, V1UriType
 from polyaxon.schemas.types.wasb import V1WasbType, WasbTypeSchema
