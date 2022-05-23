@@ -41,6 +41,7 @@ from polyaxon.env_vars.keys import (
     EV_KEYS_RUN_INSTANCE,
 )
 from polyaxon.exceptions import PolyaxonClientException
+from polyaxon.lifecycle import V1ProjectFeature
 from polyaxon.utils.path_utils import create_path
 from polyaxon.utils.test_utils import TestEnvVarsCase, tensor_np
 from traceml.artifacts import V1ArtifactKind
@@ -341,7 +342,9 @@ class TestRunTracking(TestEnvVarsCase):
         with patch("traceml.tracking.run.Run._set_exit_handler") as exit_mock:
             run = Run(project="test.test", run_uuid="uid")
         assert exit_mock.call_count == 1
-        artifacts_path = ctx_paths.CONTEXT_OFFLINE_FORMAT.format("uid")
+        artifacts_path = ctx_paths.get_offline_path(
+            entity_value="uid", entity_kind=V1ProjectFeature.RUNTIME
+        )
         assert run.get_artifacts_path() == artifacts_path
         assert (
             run.get_outputs_path()

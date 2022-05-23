@@ -16,7 +16,6 @@
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Sequence, Union
 
-from polyaxon import settings
 from polyaxon.client import RunClient
 from traceml.artifacts import V1ArtifactKind, V1RunArtifact
 from traceml.tracking.run import Run
@@ -138,9 +137,8 @@ def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
     if TRACKING_RUN:
         return TRACKING_RUN
 
-    if settings.CLIENT_CONFIG.is_managed:
-        init()
-        return TRACKING_RUN
+    init()
+    return TRACKING_RUN
 
 
 def get_artifacts_path(
@@ -989,7 +987,7 @@ def pull_remote_run(
     download_artifacts: bool = True,
 ):
     global TRACKING_RUN
-    TRACKING_RUN.pull_remote_run(
+    return TRACKING_RUN.pull_remote_run(
         path=path,
         download_artifacts=download_artifacts,
     )
@@ -1012,6 +1010,54 @@ def push_offline_run(
 
 
 push_offline_run.__doc__ = Run.push_offline_run.__doc__
+
+
+def promote_to_model_version(
+    version: str,
+    description: str = None,
+    tags: Union[str, List[str]] = None,
+    content: Union[str, Dict] = None,
+    connection: str = None,
+    artifacts: List[str] = None,
+    force: bool = False,
+):
+    global TRACKING_RUN
+    return TRACKING_RUN.promote_to_model_version(
+        version=version,
+        description=description,
+        tags=tags,
+        content=content,
+        connection=connection,
+        artifacts=artifacts,
+        force=force,
+    )
+
+
+promote_to_model_version.__doc__ = Run.promote_to_model_version.__doc__
+
+
+def promote_to_artifact_version(
+    version: str,
+    description: str = None,
+    tags: Union[str, List[str]] = None,
+    content: Union[str, Dict] = None,
+    connection: str = None,
+    artifacts: List[str] = None,
+    force: bool = False,
+):
+    global TRACKING_RUN
+    return TRACKING_RUN.promote_to_artifact_version(
+        version=version,
+        description=description,
+        tags=tags,
+        content=content,
+        connection=connection,
+        artifacts=artifacts,
+        force=force,
+    )
+
+
+promote_to_artifact_version.__doc__ = Run.promote_to_artifact_version.__doc__
 
 
 __all__ = [
@@ -1077,4 +1123,6 @@ __all__ = [
     "sync_system_events_summaries",
     "pull_remote_run",
     "push_offline_run",
+    "promote_to_model_version",
+    "promote_to_artifact_version",
 ]

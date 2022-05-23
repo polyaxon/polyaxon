@@ -45,7 +45,7 @@ class Callback(SessionRunHook):
         self,
         summary_op: Any = None,
         steps_per_log: int = 1000,
-        run: Run = None,
+        run: "Run" = None,
         log_image: bool = False,
         log_histo: bool = False,
         log_tensor: bool = False,

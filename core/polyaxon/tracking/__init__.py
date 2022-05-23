@@ -19,9 +19,8 @@
 from typing import List, Optional
 
 from polyaxon.client import RunClient
+from traceml import tracking
 from traceml.tracking import *
-from traceml.tracking import get_or_create_run as base_get_or_create_run
-from traceml.tracking import init as base_init
 
 TRACKING_RUN = None
 
@@ -45,7 +44,7 @@ def init(
 ) -> Optional[Run]:
     global TRACKING_RUN
 
-    TRACKING_RUN = base_init(
+    TRACKING_RUN = tracking.init(
         owner=owner,
         project=project,
         run_uuid=run_uuid,
@@ -68,5 +67,5 @@ def init(
 def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
     global TRACKING_RUN
 
-    TRACKING_RUN = base_get_or_create_run(tracking_run)
+    TRACKING_RUN = tracking.get_or_create_run(tracking_run)
     return TRACKING_RUN

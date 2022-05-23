@@ -25,7 +25,13 @@ def get_entity_details(entity: any, entity_name: str):
 
     if entity.settings:
         Printer.print_heading("{} settings:".format(entity_name))
-        Printer.print("{}\n".format(entity.settings.to_dict()))
+        Printer.print(
+            "{}\n".format(
+                entity.settings.to_dict()
+                if hasattr(entity.settings, "to_dict")
+                else entity.settings
+            )
+        )
 
     if entity.readme:
         Printer.print_heading("{} readme:".format(entity_name))

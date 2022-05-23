@@ -54,7 +54,7 @@ class Logger:
         cls,
         summary: Any,
         global_step: int = None,
-        run: Run = None,
+        run: "Run" = None,
         log_image: bool = False,
         log_histo: bool = False,
         log_tensor: bool = False,

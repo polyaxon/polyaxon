@@ -15,7 +15,7 @@
 # limitations under the License.
 
 NAME = "polyaxon-deploy"
-VERSION = "1.0.0-rc0"
+VERSION = "1.0.0"
 SCHEMA_VERSION = 1.1
 DESC = "Polyaxon deployment and serving tools: streams, sandbox, ML-API, and spaces."
 URL = "https://github.com/polyaxon/polyaxon"

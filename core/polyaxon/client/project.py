@@ -1506,8 +1506,9 @@ class ProjectClient:
                  path where to persist the metadata and artifacts.
             download_artifacts: bool, optional, to download the artifacts based on linked lineage.
         """
-        path = path or ctx_paths.CONTEXT_OFFLINE_ROOT
-        path = "{}/{}s/{}".format(path, kind, version)
+        path = ctx_paths.get_offline_path(
+            entity_value=version, entity_kind=kind, path=path
+        )
         delete_path(path)
         config = self.get_version(kind=kind, version=version)
         self.persist_version(config=config, path=path)

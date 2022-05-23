@@ -80,6 +80,22 @@ CONTEXTS_EVENTS_SUBPATH_FORMAT = "{}/events"
 CONTEXTS_SYSTEM_RESOURCES_EVENTS_SUBPATH_FORMAT = "{}/resources"
 
 
+def get_offline_base_path(entity_kind: str, path: str = None):
+    from polyaxon.lifecycle import V1ProjectFeature
+
+    path = path or CONTEXT_OFFLINE_ROOT
+    entity_kind = "run" if entity_kind == V1ProjectFeature.RUNTIME else entity_kind
+    return "{}/{}s".format(path, entity_kind)
+
+
+def get_offline_path(entity_value: str, entity_kind: str, path: str = None):
+    from polyaxon.lifecycle import V1ProjectFeature
+
+    path = path or CONTEXT_OFFLINE_ROOT
+    entity_kind = "run" if entity_kind == V1ProjectFeature.RUNTIME else entity_kind
+    return "{}/{}s/{}".format(path, entity_kind, entity_value)
+
+
 def mount_sandbox():
     global CONTEXT_SANDBOX_ROOT
     global CONTEXT_OFFLINE_ROOT

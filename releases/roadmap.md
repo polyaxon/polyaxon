@@ -13,11 +13,22 @@ sidebar: "releases"
 
 ## Next Release V1.19.0
 
-## Short Term Roadmap
+### Sandbox
+
+ * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
 
 ### CE
 
  * **New**: Add support for agent based deployment.
+
+### Tracking
+
+ * **New**: Allow to specify the connection name when logging assets and artifacts to associate the lineage to a specific connection.
+ * **Enhancement**: Improve logic around assets and artifacts logging to only trigger versioned behavior (step-wise) when a step parameter is provided.
+ * **Enhancement**: Improve outputs state calculation.
+ * **Enhancement**: Improve artifacts names auto-generator to respect the name size limit.
+
+## Short Term Roadmap
 
 ### Core
 

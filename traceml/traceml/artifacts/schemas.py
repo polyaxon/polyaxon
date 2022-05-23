@@ -70,8 +70,8 @@ class V1RunArtifact(BaseConfig, polyaxon_sdk.V1RunArtifact):
     def get_state(self, namespace: uuid.UUID):
         if self.state:
             return self.state
-
-        if self.path:
-            return uuid.uuid5(namespace, self.path)
-
-        return uuid.uuid5(namespace, str(self.summary))
+        summary = self.summary or {}
+        content = str(summary)
+        if not summary.get("hash") and self.path:
+            content += self.path
+        return uuid.uuid5(namespace, content)

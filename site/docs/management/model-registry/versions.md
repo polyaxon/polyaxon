@@ -39,6 +39,9 @@ Polyaxon's [ProjectClient](/docs/core/python-library/project-client/) library ex
  * [stage_model_version](/docs/core/python-library/project-client/#stage_model_version)
  * [pull_model_version](/docs/core/python-library/project-client/#pull_model_version)
 
+Since `v1.18`, Polyaxon's [RunClient](/docs/core/python-library/run-client/) library exposes a method to automatically promote the run to a model version:
+ * [promote_to_model_version](/docs/core/python-library/run-client/#promote_to_model_version)
+
 ## Model version creation
 
 You can create your model versions using the CLI, API, or the UI.
@@ -199,4 +202,37 @@ project_client.pull_model_version(
     version="v1",
     path="/tmp/path"
 )
+```
+
+## Model version promotion from a run tracking
+
+### Client
+
+```python
+from polyaxon import tracking
+
+tracking.init()
+
+# Model lineage reference
+model_ref = "model"
+
+# Logging the model as pickle
+with tempfile.TemporaryDirectory() as d:
+    model_path = os.path.join(d, "model.pkl")
+    with open(model_path, "wb") as out:
+        pickle.dump(gbc, out)
+    tracking.log_model(model_path, name=model_ref, framework="scikit-learn")
+
+# Promoting the run to a model version
+if some_condition:
+    tracking.promote_to_model_version(
+        version="rc2", 
+        description="model promoted directly from the run",
+        tags=["tag1", "tag2"],
+        content={"key": "value"},
+        artifacts=[model_ref]
+    )
+
+# End
+tracking.end()
 ```

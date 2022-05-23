@@ -39,7 +39,7 @@ from polyaxon.exceptions import (
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )
-from polyaxon.lifecycle import LifeCycle, V1Statuses
+from polyaxon.lifecycle import LifeCycle, V1ProjectFeature, V1Statuses
 from polyaxon.logger import clean_outputs, not_in_ce
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.polyaxonfile import OperationSpecification
@@ -67,6 +67,7 @@ DEFAULT_EXCLUDE = [
     "raw_content",
     "live_state",
     "readme",
+    "bookmarked",
     "settings",
     "meta_info",
     "is_approved",
@@ -125,7 +126,9 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
 
     if run.settings:
         Printer.print_heading("Run settings:")
-        dict_tabulate(run.settings.to_dict())
+        dict_tabulate(
+            run.settings.to_dict() if hasattr(run.settings, "to_dict") else run.settings
+        )
 
     if run.meta_info:
         Printer.print_heading("Run meta info:")
@@ -270,9 +273,8 @@ def ls(
     $ polyaxon ops ls -q "kind: service"
     """
     if offline:
-        offline_path = offline_path or ctx_paths.CONTEXT_OFFLINE_ROOT
-        offline_path_format = "{}/{{}}/{}".format(
-            offline_path, ctx_paths.CONTEXT_LOCAL_RUN
+        offline_path = ctx_paths.get_offline_base_path(
+            entity_kind=V1ProjectFeature.RUNTIME, path=offline_path
         )
         if not os.path.exists(offline_path) or not os.path.isdir(offline_path):
             Printer.print_error(
@@ -282,7 +284,7 @@ def ls(
             sys.exit(1)
         results = []
         for uid in os.listdir(offline_path):
-            run_path = offline_path_format.format(uid)
+            run_path = "{}/{}/{}".format(offline_path, uid, ctx_paths.CONTEXT_LOCAL_RUN)
             if os.path.exists(run_path):
                 results.append(RunConfigManager.read_from_path(run_path))
             else:
@@ -345,7 +347,7 @@ def ls(
                 include_attrs=columns,
                 exclude_attrs=DEFAULT_EXCLUDE,
                 humanize_values=True,
-                upper_keys=True,
+                upper_keys=False,
             )
     else:
         if to_csv:
@@ -360,7 +362,7 @@ def ls(
                 include_attrs=columns,
                 exclude_attrs=DEFAULT_EXCLUDE + ["inputs", "outputs"],
                 humanize_values=True,
-                upper_keys=True,
+                upper_keys=False,
             )
     if objects:
         if to_csv:
@@ -431,8 +433,10 @@ def get(ctx, project, uid, offline, offline_path, output):
     uid = uid or ctx.obj.get("run_uuid")
 
     if offline:
-        offline_path = offline_path or ctx_paths.CONTEXT_OFFLINE_ROOT
-        offline_path = "{}/{}/{}".format(offline_path, uid, ctx_paths.CONTEXT_LOCAL_RUN)
+        offline_path = ctx_paths.get_offline_path(
+            entity_value=uid, entity_kind=V1ProjectFeature.RUNTIME, path=offline_path
+        )
+        offline_path = "{}/{}".format(offline_path, ctx_paths.CONTEXT_LOCAL_RUN)
         if not os.path.exists(offline_path):
             Printer.print_error(
                 f"Could not get offline run, the path `{offline_path}` "
@@ -1764,15 +1768,16 @@ def push(ctx, project, uid, all_runs, no_artifacts, clean, path, reset_project):
         project or ctx.obj.get("project"), is_cli=True
     )
 
-    offline_path = path or ctx_paths.CONTEXT_OFFLINE_ROOT
-    offline_path_format = "{}/{{}}".format(offline_path)
+    offline_path = ctx_paths.get_offline_base_path(
+        entity_kind=V1ProjectFeature.RUNTIME, path=path
+    )
 
     def _push(run_uuid: str):
         Printer.print_header(f"Pushing offline run {run_uuid}")
         client = RunClient(
             owner=owner, project=project_name, run_uuid=run_uuid, is_offline=True
         )
-        artifacts_path = offline_path_format.format(run_uuid)
+        artifacts_path = "{}/{}".format(offline_path, run_uuid)
         try:
             client.load_offline_run(
                 path=artifacts_path,

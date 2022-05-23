@@ -4,7 +4,7 @@ GitPython<3.2.0
 numpy<=1.23
 scipy<1.8.0
 pandas
-fsspec==2022.3.0
+fsspec==2022.5.0
 
 moto==2.0.5
 

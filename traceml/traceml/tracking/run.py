@@ -28,7 +28,7 @@ import ujson
 import polyaxon_sdk
 
 from polyaxon import settings
-from polyaxon.client import RunClient, PolyaxonClient
+from polyaxon.client import PolyaxonClient, RunClient
 from polyaxon.client.decorators import client_handler
 from polyaxon.connections.reader import get_connection_type
 from polyaxon.constants.globals import UNKNOWN
@@ -39,7 +39,7 @@ from polyaxon.env_vars.getters import (
     get_collect_resources,
     get_log_level,
 )
-from polyaxon.lifecycle import LifeCycle
+from polyaxon.lifecycle import LifeCycle, V1ProjectFeature
 from polyaxon.sidecar.processor import SidecarThread
 from polyaxon.utils.env import get_run_env
 from polyaxon.utils.fqn_utils import to_fqn_name
@@ -321,7 +321,10 @@ class Run(RunClient):
         if rel_path:
             path = os.path.join(artifacts_path, rel_path)
             if ensure_path and not use_store_path:
-                check_or_create_path(path, is_dir=is_dir)
+                try:
+                    check_or_create_path(path, is_dir=is_dir)
+                except Exception as e:  # noqa
+                    logger.debug("Failed ensuring paths {}. Error {}", path, e)
             return path
         return artifacts_path
 
@@ -412,7 +415,9 @@ class Run(RunClient):
         if artifacts_path:
             _artifacts_path = artifacts_path
         elif self._is_offline:
-            _artifacts_path = ctx_paths.CONTEXT_OFFLINE_FORMAT.format(self.run_uuid)
+            _artifacts_path = ctx_paths.get_offline_path(
+                entity_value=self.run_uuid, entity_kind=V1ProjectFeature.RUNTIME
+            )
         elif is_related:
             _artifacts_path = ctx_paths.CONTEXT_MOUNT_ARTIFACTS_RELATED_FORMAT.format(
                 self.run_uuid
@@ -425,6 +430,11 @@ class Run(RunClient):
         _outputs_path = ctx_paths.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
             _artifacts_path
         )
+        try:
+            check_or_create_path(_artifacts_path, is_dir=True)
+            check_or_create_path(_outputs_path, is_dir=True)
+        except Exception as e:  # noqa
+            logger.debug("Failed ensuring outputs/artifacts paths {}", e)
         self._artifacts_path = _artifacts_path
         self._outputs_path = _outputs_path
 

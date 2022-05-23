@@ -47,7 +47,12 @@ from polyaxon.env_vars.getters import (
     get_run_or_local,
 )
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
+from polyaxon.lifecycle import (
+    LifeCycle,
+    V1ProjectFeature,
+    V1StatusCondition,
+    V1Statuses,
+)
 from polyaxon.logger import logger
 from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.polyaxonfile import check_polyaxonfile
@@ -805,8 +810,14 @@ class RunClient:
         while not condition():
             if last_status:
                 time.sleep(settings.CLIENT_CONFIG.watch_interval)
-            last_status, _conditions = self.get_statuses(last_status)
-            yield last_status, _conditions
+            try:
+                last_status, _conditions = self.get_statuses(last_status)
+                yield last_status, _conditions
+            except ApiException as e:
+                if e.status in {500, 502, 503, 504}:
+                    yield last_status, []
+                else:
+                    raise e
 
     @client_handler(check_no_op=True, check_offline=True)
     def wait_for_condition(
@@ -1773,7 +1784,10 @@ class RunClient:
                 )
                 + os.sep,
                 ctx_paths.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid) + os.sep,
-                ctx_paths.CONTEXT_OFFLINE_FORMAT.format(self.run_uuid) + os.sep,
+                ctx_paths.get_offline_path(
+                    entity_value=self.run_uuid, entity_kind=V1ProjectFeature.RUNTIME
+                )
+                + os.sep,
             ]
         for p in self._default_filename_sanitize_paths + for_patterns:
             if filename.startswith(p):
@@ -2188,7 +2202,7 @@ class RunClient:
         is_input: bool = False,
         rel_path: str = None,
     ):
-        """Logs dir reference.
+        """Logs tensorboard reference.
 
         Args:
             path: str, path to the tensorboard logdir.
@@ -2608,8 +2622,9 @@ class RunClient:
                  path where the run's metadata & artifacts will be stored.
             download_artifacts: bool, optional, flag to trigger artifacts download.
         """
-        path = path or ctx_paths.CONTEXT_OFFLINE_ROOT
-        path = "{}/runs/{}".format(path, self.run_uuid)
+        path = ctx_paths.get_offline_path(
+            entity_value=self.run_uuid, entity_kind=V1ProjectFeature.RUNTIME, path=path
+        )
         delete_path(path)
         self.refresh_data(load_artifacts_lineage=True, load_conditions=True)
         if download_artifacts:

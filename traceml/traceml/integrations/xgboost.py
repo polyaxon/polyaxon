@@ -77,7 +77,7 @@ def callback(
     log_model: bool = True,
     log_importance: bool = True,
     max_num_features: int = None,
-    run: Run = None,
+    run: "Run" = None,
 ):
     run = tracking.get_or_create_run(run)
 
@@ -120,7 +120,7 @@ def callback(
 class Callback(xgb.callback.TrainingCallback):
     def __init__(
         self,
-        run: Run = None,
+        run: "Run" = None,
         log_model: bool = True,
         log_importance: bool = True,
         importance_type: str = "gain",

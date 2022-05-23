@@ -343,13 +343,22 @@ def get_proxy_env_vars(use_proxy_env_vars_use_in_ops: bool):
     if use_proxy_env_vars_use_in_ops:
         env_vars = []
         https_proxy = get_proxy_env_var("HTTPS_PROXY")
+        if not https_proxy:
+            https_proxy = get_proxy_env_var("https_proxy")
         if https_proxy:
             env_vars += add_proxy_env_var(name="HTTPS_PROXY", value=https_proxy)
+            env_vars += add_proxy_env_var(name="https_proxy", value=https_proxy)
         http_proxy = get_proxy_env_var("HTTP_PROXY")
+        if not http_proxy:
+            http_proxy = get_proxy_env_var("http_proxy")
         if http_proxy:
             env_vars += add_proxy_env_var(name="HTTP_PROXY", value=http_proxy)
+            env_vars += add_proxy_env_var(name="http_proxy", value=http_proxy)
         no_proxy = get_proxy_env_var("NO_PROXY")
+        if not no_proxy:
+            no_proxy = get_proxy_env_var("no_proxy")
         if no_proxy:
             env_vars += add_proxy_env_var(name="NO_PROXY", value=no_proxy)
-        return []
+            env_vars += add_proxy_env_var(name="no_proxy", value=no_proxy)
+        return env_vars
     return []

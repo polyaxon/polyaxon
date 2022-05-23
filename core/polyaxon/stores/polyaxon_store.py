@@ -152,7 +152,7 @@ class PolyaxonStore:
             return _upload_impl()
 
         with Printer.get_progress() as progress:
-            task = progress.add_task("[cyan]Uploading contents:", total=1)
+            task = progress.add_task("[cyan]Uploading contents:", total=files_size)
 
             def progress_callback(monitor):
                 progress.update(task, completed=monitor.bytes_read)
@@ -204,7 +204,9 @@ class PolyaxonStore:
                 headers=response.headers,
                 key="content-disposition",
             )
-            untar = '.tar"' in content_disposition or '.tar.gz"' in content_disposition
+            has_tar = (
+                '.tar"' in content_disposition or '.tar.gz"' in content_disposition
+            )
             if has_tar:
                 filename = filename + ".tar.gz"
             if untar:

@@ -76,7 +76,9 @@ def _get_value(x):
     return round(sanitize_np_types(x), 3)
 
 
-def calculate_importance_correlation(params: List[Dict], metrics: List[Union[int, float]]):
+def calculate_importance_correlation(
+    params: List[Dict], metrics: List[Union[int, float]]
+):
     values = clean_values(params, metrics)
     if not values:
         return None

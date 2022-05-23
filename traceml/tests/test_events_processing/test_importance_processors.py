@@ -34,7 +34,8 @@ class TestFeatureImportance(TestCase):
 
     def test_correct_values(self):
         res = calculate_importance_correlation(
-            [{"param1": 3}, {"param1": 4}, {"param1": 5}], [3, 4, 5],
+            [{"param1": 3}, {"param1": 4}, {"param1": 5}],
+            [3, 4, 5],
         )
         exp = {"param1": {"correlation": 1.0, "importance": 1.0}}
         assert res == exp

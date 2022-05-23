@@ -40,6 +40,9 @@ Polyaxon's [ProjectClient](/docs/core/python-library/project-client/) library ex
  * [stage_artifact_version](/docs/core/python-library/project-client/#stage_artifact_version)
  * [pull_artifact_version](/docs/core/python-library/project-client/#pull_artifact_version)
 
+Since `v1.18`, Polyaxon's [RunClient](/docs/core/python-library/run-client/) library exposes a method to automatically promote the run to an artifact version:
+ * [promote_to_artifact_version](/docs/core/python-library/run-client/#promote_to_artifact_version)
+
 ## Artifact version creation
 
 You can create your artifact versions using the CLI, API, or the UI.
@@ -203,4 +206,33 @@ project_client.pull_artifact_version(
     version="v1",
     path="/tmp/path"
 )
+```
+
+## Artifact version promotion from a run tracking
+
+### Client
+
+```python
+from polyaxon import tracking
+
+tracking.init()
+
+# Artifact lineage reference
+artifact_ref = "dataset-view"
+
+# Logging a reference
+tracking.log_artifact_ref("path/to/artifact", name=artifact_ref)
+
+# Promoting the run to an artifact version
+if some_condition:
+    tracking.promote_to_artifact_version(
+        version="rc2", 
+        description="artifact promoted directly from the run",
+        tags=["tag1", "tag2"],
+        content={"key": "value"},
+        artifacts=[artifact_ref]
+    )
+
+# End
+tracking.end()
 ```
