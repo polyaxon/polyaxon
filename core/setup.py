@@ -49,7 +49,6 @@ with open("requirements/requirements.txt") as requirements_file:
     requirements = requirements_file.read().splitlines()
 
 if os.environ.get("USE_PROD_PACKAGES"):
-    requirements.append("polyaxon-sdk=={}".format(pkg["VERSION"]))
     with open("requirements/prod.txt") as requirements_file:
         requirements += requirements_file.read().splitlines()
 

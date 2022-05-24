@@ -85,9 +85,12 @@ def get_compatibility(
                 e,
                 message="Could not parse the version {}.".format(version),
             )
-    polyaxon_client = polyaxon_client or PolyaxonClient(
-        config=ClientConfig(use_cloud_host=True, verify_ssl=False), token=NO_AUTH
+    config = (
+        ClientConfig.patch_from(polyaxon_client.config, token=None, retries=0)
+        if polyaxon_client and polyaxon_client.config
+        else ClientConfig(use_cloud_host=True, verify_ssl=False, retries=0)
     )
+    polyaxon_client = PolyaxonClient(config=config, token=NO_AUTH)
     try:
         return polyaxon_client.versions_v1.get_compatibility(
             uuid=key,
@@ -176,3 +179,10 @@ def set_versions_config(
         compatibility=compatibility.to_dict() if compatibility else {},
         log_handler=log_handler.to_dict() if log_handler else {},
     )
+
+
+def ensure_cli_config():
+    from polyaxon import settings
+
+    if not settings.CLI_CONFIG or not settings.CLI_CONFIG.installation:
+        settings.CLI_CONFIG = set_versions_config(set_compatibility=False)
