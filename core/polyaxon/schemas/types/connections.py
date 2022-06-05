@@ -270,7 +270,7 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
 
     > **Note**: This is available starting from v1.18
 
-    Optional list environment variables to always inject with the connection.
+    Optional list of environment variables to always inject with the connection.
 
     Example
 

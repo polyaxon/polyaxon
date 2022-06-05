@@ -250,9 +250,9 @@ def dashboard(yes, url):
 
 
 @admin.command()
-@click.option("--namespace", type=str)
+@click.option("--namespace", "-n", type=str)
 @click.option("--in-cluster", is_flag=True, default=False)
-@click.option("--delete", is_flag=True, default=False)
+@click.option("--delete", "-d", is_flag=True, default=False)
 @click.option(
     "--uuids",
     "--uids",
