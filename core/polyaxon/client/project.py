@@ -263,9 +263,9 @@ class ProjectClient:
         Args:
             kind: V1ProjectVersionKind, kind of the project version.
             query: str, optional, query filters, please refer to
-                 [Run PQL](/docs/core/query-language/project-versions/#query)
+                 [Project Version PQL](/docs/core/query-language/project-versions/#query)
             sort: str, optional, fields to order by, please refer to
-                 [Run PQL](/docs/core/query-language/project-versions/#sort)
+                 [Project Version PQL](/docs/core/query-language/project-versions/#sort)
             limit: int, optional, limit of project versions to return.
             offset: int, optional, offset pages to paginate project versions.
 
@@ -294,9 +294,9 @@ class ProjectClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                 [Run PQL](/docs/core/query-language/project-versions/#query)
+                 [Project Version PQL](/docs/core/query-language/project-versions/#query)
             sort: str, optional, fields to order by, please refer to
-                 [Run PQL](/docs/core/query-language/project-versions/#sort)
+                 [Project Version PQL](/docs/core/query-language/project-versions/#sort)
             limit: int, optional, limit of project versions to return.
             offset: int, optional, offset pages to paginate project versions.
 
@@ -325,9 +325,9 @@ class ProjectClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                 [Run PQL](/docs/core/query-language/project-versions/#query)
+                 [Project Version PQL](/docs/core/query-language/project-versions/#query)
             sort: str, optional, fields to order by, please refer to
-                 [Run PQL](/docs/core/query-language/project-versions/#sort)
+                 [Project Version PQL](/docs/core/query-language/project-versions/#sort)
             limit: int, optional, limit of project versions to return.
             offset: int, optional, offset pages to paginate project versions.
 
@@ -356,9 +356,9 @@ class ProjectClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                 [Run PQL](/docs/core/query-language/project-versions/#query)
+                 [Project Version PQL](/docs/core/query-language/project-versions/#query)
             sort: str, optional, fields to order by, please refer to
-                 [Run PQL](/docs/core/query-language/project-versions/#sort)
+                 [Project Version PQL](/docs/core/query-language/project-versions/#sort)
             limit: int, optional, limit of project versions to return.
             offset: int, optional, offset pages to paginate project versions.
 
