@@ -28,7 +28,7 @@ In this guide, we will learn how to improve our polyaxonfile to adapt it to diff
 
 ## Remove the git initializer from the component
 
-In order to make the component work in different situations, i.e. get executed based on an initialized git repo or from local code, we will start by removing the git initializer and the `conrainer.workingDir` section:
+In order to make the component work in different situations, i.e. get executed based on an initialized git repo or from local code, we will start by removing the git initializer and the `container.workingDir` section:
 
 ```yaml
 version: 1.1
