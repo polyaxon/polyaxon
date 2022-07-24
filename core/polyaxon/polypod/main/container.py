@@ -43,7 +43,6 @@ def get_main_container(
     connection_by_names: Dict[str, V1ConnectionType],
     secrets: Optional[Iterable[V1K8sResourceType]],
     config_maps: Optional[Iterable[V1K8sResourceType]],
-    log_level: str,
     run_path: Optional[str],
     kv_env_vars: List[List] = None,
     env: List[k8s_schemas.V1EnvVar] = None,
@@ -88,7 +87,6 @@ def get_main_container(
     env = to_list(env, check_none=True)
     env = env + get_env_vars(
         contexts=contexts,
-        log_level=log_level,
         kv_env_vars=kv_env_vars,
         artifacts_store_name=artifacts_store.name if artifacts_store else None,
         connections=requested_connections,

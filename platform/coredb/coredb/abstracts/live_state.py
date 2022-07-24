@@ -28,6 +28,7 @@ class LiveStateModel(models.Model):
         blank=True,
         default=live_state.STATE_LIVE,
         choices=live_state.CHOICES,
+        db_index=True,
     )
 
     objects = LiveManager()

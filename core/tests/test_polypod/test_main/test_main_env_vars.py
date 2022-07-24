@@ -26,7 +26,6 @@ from polyaxon.env_vars.keys import (
     EV_KEYS_ARTIFACTS_STORE_NAME,
     EV_KEYS_COLLECT_ARTIFACTS,
     EV_KEYS_COLLECT_RESOURCES,
-    EV_KEYS_LOG_LEVEL,
 )
 from polyaxon.exceptions import PolypodException
 from polyaxon.polyflow import V1Plugins
@@ -101,7 +100,6 @@ class TestMainEnvVars(BaseTestCase):
         assert (
             get_env_vars(
                 contexts=None,
-                log_level=None,
                 kv_env_vars=None,
                 artifacts_store_name=None,
                 connections=None,
@@ -116,7 +114,6 @@ class TestMainEnvVars(BaseTestCase):
         with self.assertRaises(PolypodException):
             get_env_vars(
                 contexts=None,
-                log_level=None,
                 kv_env_vars=["x", "y", "z"],
                 artifacts_store_name=None,
                 connections=None,
@@ -126,7 +123,6 @@ class TestMainEnvVars(BaseTestCase):
         with self.assertRaises(PolypodException):
             get_env_vars(
                 contexts=None,
-                log_level=None,
                 kv_env_vars={"x": "y"},
                 artifacts_store_name=None,
                 connections=None,
@@ -137,7 +133,6 @@ class TestMainEnvVars(BaseTestCase):
         # Valid kv env vars
         assert get_env_vars(
             contexts=None,
-            log_level=None,
             kv_env_vars=[["key1", "val1"], ["key2", "val2"]],
             artifacts_store_name=None,
             connections=None,
@@ -149,7 +144,6 @@ class TestMainEnvVars(BaseTestCase):
         assert (
             get_env_vars(
                 contexts=None,
-                log_level=None,
                 kv_env_vars=None,
                 artifacts_store_name=None,
                 connections=None,
@@ -165,7 +159,6 @@ class TestMainEnvVars(BaseTestCase):
                     collect_logs=False, collect_artifacts=True, collect_resources=True
                 )
             ),
-            log_level=None,
             kv_env_vars=None,
             artifacts_store_name=None,
             connections=None,
@@ -185,7 +178,6 @@ class TestMainEnvVars(BaseTestCase):
                         collect_resources=False,
                     )
                 ),
-                log_level=None,
                 kv_env_vars=None,
                 artifacts_store_name=None,
                 connections=None,
@@ -198,7 +190,6 @@ class TestMainEnvVars(BaseTestCase):
         assert (
             get_env_vars(
                 contexts=None,
-                log_level=None,
                 kv_env_vars=None,
                 artifacts_store_name=None,
                 connections=None,
@@ -216,7 +207,6 @@ class TestMainEnvVars(BaseTestCase):
                     collect_resources=False,
                 )
             ),
-            log_level=None,
             kv_env_vars=None,
             artifacts_store_name=None,
             connections=None,
@@ -227,7 +217,6 @@ class TestMainEnvVars(BaseTestCase):
     def test_get_env_vars_with_secrets(self):
         assert get_env_vars(
             contexts=None,
-            log_level=None,
             kv_env_vars=None,
             artifacts_store_name=None,
             connections=None,
@@ -239,7 +228,6 @@ class TestMainEnvVars(BaseTestCase):
 
         assert get_env_vars(
             contexts=None,
-            log_level=None,
             kv_env_vars=None,
             artifacts_store_name=None,
             connections=None,
@@ -261,7 +249,6 @@ class TestMainEnvVars(BaseTestCase):
     def test_get_env_vars_with_config_maps(self):
         assert get_env_vars(
             contexts=None,
-            log_level=None,
             kv_env_vars=None,
             artifacts_store_name=None,
             connections=None,
@@ -275,7 +262,6 @@ class TestMainEnvVars(BaseTestCase):
 
         assert get_env_vars(
             contexts=None,
-            log_level=None,
             kv_env_vars=None,
             artifacts_store_name=None,
             connections=None,
@@ -310,7 +296,6 @@ class TestMainEnvVars(BaseTestCase):
                     collect_logs=False, collect_artifacts=True, collect_resources=True
                 )
             ),
-            log_level="info",
             kv_env_vars=[["key1", "val1"], ["key2", "val2"]],
             artifacts_store_name="test",
             connections=[connection],
@@ -329,7 +314,6 @@ class TestMainEnvVars(BaseTestCase):
             ],
         )
         expected = [
-            get_env_var(name=EV_KEYS_LOG_LEVEL, value="info"),
             get_env_var(name=EV_KEYS_COLLECT_ARTIFACTS, value=True),
             get_env_var(name=EV_KEYS_COLLECT_RESOURCES, value=True),
             get_env_var(name=EV_KEYS_ARTIFACTS_STORE_NAME, value="test"),

@@ -60,7 +60,6 @@ def get_sidecar_container(
     artifacts_store: V1ConnectionType,
     contexts: PluginsContextsSpec,
     run_path: Optional[str],
-    log_level: str = None,
 ) -> Optional[k8s_schemas.V1Container]:
 
     if artifacts_store and not contexts:
@@ -82,7 +81,6 @@ def get_sidecar_container(
         env_vars=env,
         container_id=container_id,
         artifacts_store_name=artifacts_store.name,
-        log_level=log_level,
     )
 
     volume_mounts = get_mounts(

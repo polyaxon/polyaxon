@@ -112,7 +112,6 @@ class TestMainContainer(BaseTestCase):
                     V1Plugins(collect_artifacts=True, collect_logs=False)
                 ),
                 volume_mounts=None,
-                log_level=None,
                 artifacts_store=store,
                 init=None,
                 connection_by_names=None,
@@ -146,7 +145,6 @@ class TestMainContainer(BaseTestCase):
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=None,
             volume_mounts=None,
-            log_level=None,
             artifacts_store=None,
             init=None,
             connection_by_names=None,
@@ -192,7 +190,6 @@ class TestMainContainer(BaseTestCase):
             ),
             contexts=None,
             volume_mounts=initial_mounts,
-            log_level="info",
             artifacts_store=None,
             init=None,
             connection_by_names=None,
@@ -211,7 +208,6 @@ class TestMainContainer(BaseTestCase):
         assert container.command == ["cmd", "-p", "-c"]
         assert container.args == ["arg1", "arg2"]
         assert container.ports == [k8s_schemas.V1ContainerPort(container_port=23)]
-        assert container.env == [get_env_var(name=EV_KEYS_LOG_LEVEL, value="info")]
         assert container.env_from == []
         assert container.resources == resources
         assert container.volume_mounts == initial_mounts
@@ -222,7 +218,6 @@ class TestMainContainer(BaseTestCase):
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=None,
             volume_mounts=None,
-            log_level=None,
             artifacts_store=None,
             init=[V1Init(connection=self.claim_store.name)],
             connections=None,
@@ -258,7 +253,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=None,
             init=[V1Init(connection=self.claim_store.name)],
             connections=None,
@@ -286,7 +280,6 @@ class TestMainContainer(BaseTestCase):
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=None,
             volume_mounts=None,
-            log_level=None,
             artifacts_store=None,
             init=[V1Init(connection=self.claim_store.name)],
             connections=[self.claim_store.name],
@@ -318,7 +311,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=self.claim_store,
             init=None,
             connections=[],
@@ -355,7 +347,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=self.claim_store,
             init=None,
             connections=[],
@@ -390,7 +381,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=self.s3_store,
             init=None,
             connections=None,
@@ -427,7 +417,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=self.gcs_store,
             init=None,
             connections=None,
@@ -463,7 +452,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=self.s3_store,
             init=None,
             connections=None,
@@ -497,7 +485,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=self.s3_store,
             init=None,
             connections=None,
@@ -531,7 +518,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=self.s3_store,
             init=None,
             connections=None,
@@ -564,7 +550,6 @@ class TestMainContainer(BaseTestCase):
                 )
             ),
             volume_mounts=None,
-            log_level=None,
             artifacts_store=self.s3_store,
             init=None,
             connections=None,
@@ -595,7 +580,6 @@ class TestMainContainer(BaseTestCase):
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=None,
             volume_mounts=None,
-            log_level=None,
             artifacts_store=None,
             init=[
                 V1Init(connection=self.claim_store.name),
@@ -667,7 +651,6 @@ class TestMainContainer(BaseTestCase):
                 V1Plugins(collect_artifacts=True, collect_logs=True)
             ),
             volume_mounts=volume_mounts,
-            log_level=None,
             artifacts_store=artifacts_store,
             init=[],
             connections=[],

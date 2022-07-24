@@ -3,6 +3,8 @@
     items:
     - title: Roadmap
       link: /docs/releases/roadmap/
+    - title: V1.19
+      link: /docs/releases/1-19/
     - title: V1.18
       link: /docs/releases/1-18/
     - title: V1.17

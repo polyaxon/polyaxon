@@ -23,7 +23,7 @@ from polyaxon.api import VERSION_V1
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, V1PolyaxonSidecarContainer
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.containers.names import INIT_PREFIX, SIDECAR_PREFIX
-from polyaxon.env_vars.keys import EV_KEYS_NO_API
+from polyaxon.env_vars.keys import EV_KEYS_LOG_LEVEL, EV_KEYS_NO_API
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Environment, V1Init, V1Plugins
@@ -63,13 +63,14 @@ from polyaxon.utils.string_utils import slugify
 
 class ConverterAbstract:
     def get_main_env_vars(
-        self, external_host: bool = False, **kwargs
+        self, external_host: bool = False, log_level: str = None, **kwargs
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
         raise NotImplementedError
 
     def get_polyaxon_sidecar_service_env_vars(
         self,
         external_host: bool = False,
+        log_level: str = None,
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
         raise NotImplementedError
 
@@ -79,7 +80,9 @@ class ConverterAbstract:
         raise NotImplementedError
 
     def get_init_service_env_vars(
-        self, external_host: bool = False
+        self,
+        external_host: bool = False,
+        log_level: str = None,
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
         raise NotImplementedError
 
@@ -210,17 +213,22 @@ class BaseConverter(ConverterAbstract):
         return {c.name: c for c in values}
 
     def get_main_env_vars(
-        self, external_host: bool = False, **kwargs
+        self, external_host: bool = False, log_level: str = None, **kwargs
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
-        return get_base_env_vars(settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops)
+        return get_base_env_vars(
+            settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops, log_level=log_level
+        )
 
     def get_polyaxon_sidecar_service_env_vars(
         self,
         external_host: bool = False,
+        log_level: str = None,
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
         env = []
         if settings.CLIENT_CONFIG.no_api:
             env += [get_env_var(name=EV_KEYS_NO_API, value=True)]
+        if log_level:
+            env += [get_env_var(name=EV_KEYS_LOG_LEVEL, value=log_level)]
         proxy_env = get_proxy_env_vars(
             settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops
         )
@@ -234,11 +242,15 @@ class BaseConverter(ConverterAbstract):
         return None
 
     def get_init_service_env_vars(
-        self, external_host: bool = False
+        self,
+        external_host: bool = False,
+        log_level: str = None,
     ) -> Optional[List[k8s_schemas.V1EnvVar]]:
         env = []
         if settings.CLIENT_CONFIG.no_api:
-            env += [get_env_var(name=EV_KEYS_NO_API, value=True)]
+            env.append(get_env_var(name=EV_KEYS_NO_API, value=True))
+        if log_level:
+            env.append(get_env_var(name=EV_KEYS_LOG_LEVEL, value=log_level))
         proxy_env = get_proxy_env_vars(
             settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops
         )
@@ -261,7 +273,8 @@ class BaseConverter(ConverterAbstract):
         ports: List[int] = None,
     ) -> k8s_schemas.V1Container:
         env = self.get_main_env_vars(
-            external_host=contexts.external_host if contexts else False
+            external_host=contexts.external_host if contexts else False,
+            log_level=log_level,
         )
         volume_mounts = get_mounts(
             use_auth_context=contexts.auth,
@@ -274,7 +287,6 @@ class BaseConverter(ConverterAbstract):
             container_id=self.MAIN_CONTAINER_ID,
             main_container=main_container,
             volume_mounts=volume_mounts,
-            log_level=log_level,
             contexts=contexts,
             artifacts_store=artifacts_store,
             connections=connections,
@@ -304,12 +316,12 @@ class BaseConverter(ConverterAbstract):
             container_id=self.MAIN_CONTAINER_ID,
             polyaxon_sidecar=polyaxon_sidecar,
             env=self.get_polyaxon_sidecar_service_env_vars(
-                external_host=contexts.external_host if contexts else False
+                external_host=contexts.external_host if contexts else False,
+                log_level=log_level,
             ),
             artifacts_store=artifacts_store,
             contexts=contexts,
             run_path=self.run_path,
-            log_level=log_level,
         )
         containers = to_list(polyaxon_sidecar_container, check_none=True)
         containers += sidecar_containers
@@ -322,6 +334,7 @@ class BaseConverter(ConverterAbstract):
         init_connections: List[V1Init],
         connection_by_names: Dict[str, V1ConnectionType],
         contexts: PluginsContextsSpec,
+        log_level: str = None,
     ) -> List[k8s_schemas.V1Container]:
         containers = []
         external_host = contexts.external_host if contexts else False
@@ -342,7 +355,8 @@ class BaseConverter(ConverterAbstract):
                             connection=connection_spec,
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             contexts=contexts,
@@ -358,7 +372,8 @@ class BaseConverter(ConverterAbstract):
                             connection=connection_spec,
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             contexts=contexts,
@@ -374,7 +389,8 @@ class BaseConverter(ConverterAbstract):
                             paths=init_connection.paths,
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             is_default_artifacts_store=artifacts_store
@@ -387,7 +403,8 @@ class BaseConverter(ConverterAbstract):
                             connection=connection_spec,
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             contexts=contexts,
@@ -404,7 +421,8 @@ class BaseConverter(ConverterAbstract):
                             paths=init_connection.paths,
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             is_default_artifacts_store=True,
@@ -424,7 +442,8 @@ class BaseConverter(ConverterAbstract):
                             ),
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             contexts=contexts,
@@ -438,7 +457,8 @@ class BaseConverter(ConverterAbstract):
                             polyaxon_init=polyaxon_init,
                             dockerfile_args=init_connection.dockerfile,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             container=init_connection.container,
@@ -454,7 +474,8 @@ class BaseConverter(ConverterAbstract):
                             polyaxon_init=polyaxon_init,
                             file_args=init_connection.file,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             container=init_connection.container,
@@ -471,7 +492,8 @@ class BaseConverter(ConverterAbstract):
                             artifacts_store=artifacts_store,
                             tb_args=init_connection.tensorboard,
                             env=self.get_init_service_env_vars(
-                                external_host=external_host
+                                external_host=external_host,
+                                log_level=log_level,
                             ),
                             mount_path=init_connection.path,
                             container=init_connection.container,
@@ -490,6 +512,7 @@ class BaseConverter(ConverterAbstract):
         init_connections: List[V1Init],
         init_containers: List[k8s_schemas.V1Container],
         connection_by_names: Dict[str, V1ConnectionType],
+        log_level: str = None,
     ) -> List[k8s_schemas.V1Container]:
         init_containers = [
             ensure_container_name(container=c, prefix=INIT_PREFIX)
@@ -530,6 +553,7 @@ class BaseConverter(ConverterAbstract):
             init_connections=init_connections,
             connection_by_names=connection_by_names,
             contexts=contexts,
+            log_level=log_level,
         )
         init_containers = containers + init_containers
         return [sanitize_container(c) for c in init_containers]
@@ -592,6 +616,7 @@ class BaseConverter(ConverterAbstract):
             init_connections=init_connections,
             init_containers=self.filter_containers_from_init(init=init),
             connection_by_names=connection_by_names,
+            log_level=plugins.log_level,
         )
 
         sidecar_containers = self.get_sidecar_containers(
@@ -599,6 +624,7 @@ class BaseConverter(ConverterAbstract):
             contexts=contexts,
             artifacts_store=artifacts_store,
             sidecar_containers=sidecars,
+            log_level=plugins.log_level,
         )
 
         main_container = self.get_main_container(
@@ -654,6 +680,7 @@ class PlatformConverterMixin(ConverterAbstract):
         include_agent_token: bool = False,
         authentication_type: str = None,
         external_host: bool = False,
+        log_level: str = None,
     ) -> List[k8s_schemas.V1EnvVar]:
         header = header or PolyaxonServiceHeaders.SERVICE
         return get_service_env_vars(
@@ -666,19 +693,25 @@ class PlatformConverterMixin(ConverterAbstract):
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=self.get_api_host(external_host),
+            log_level=log_level,
             api_version=VERSION_V1,
             run_instance=self.run_instance,
             use_proxy_env_vars_use_in_ops=settings.AGENT_CONFIG.use_proxy_env_vars_use_in_ops,
         )
 
-    def get_main_env_vars(self, external_host: bool = False, **kwargs):
+    def get_main_env_vars(
+        self, external_host: bool = False, log_level: str = None, **kwargs
+    ):
         return self.get_service_env_vars(
             service_header=PolyaxonServices.RUNNER,
             external_host=external_host,
+            log_level=log_level,
         )
 
     def get_auth_service_env_vars(
-        self, external_host: bool = False
+        self,
+        external_host: bool = False,
+        log_level: str = None,
     ) -> List[k8s_schemas.V1EnvVar]:
         return self.get_service_env_vars(
             service_header=PolyaxonServices.INITIALIZER,
@@ -695,24 +728,29 @@ class PlatformConverterMixin(ConverterAbstract):
                 else PolyaxonServiceHeaders.SERVICE
             ),
             external_host=external_host,
+            log_level=log_level,
         )
 
     def get_polyaxon_sidecar_service_env_vars(
-        self, external_host: bool = False
+        self, external_host: bool = False, log_level: str = None
     ) -> List[k8s_schemas.V1EnvVar]:
         return self.get_service_env_vars(
             service_header=PolyaxonServices.SIDECAR,
             authentication_type=AuthenticationTypes.TOKEN,
             header=PolyaxonServiceHeaders.SERVICE,
             external_host=external_host,
+            log_level=log_level,
         )
 
     def get_init_service_env_vars(
-        self, external_host: bool = False
+        self,
+        external_host: bool = False,
+        log_level: str = None,
     ) -> List[k8s_schemas.V1EnvVar]:
         return self.get_service_env_vars(
             service_header=PolyaxonServices.INITIALIZER,
             authentication_type=AuthenticationTypes.TOKEN,
             header=PolyaxonServiceHeaders.SERVICE,
             external_host=external_host,
+            log_level=log_level,
         )

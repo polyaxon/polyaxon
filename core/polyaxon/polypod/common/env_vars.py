@@ -34,6 +34,7 @@ from polyaxon.env_vars.keys import (
     EV_KEYS_K8S_NAMESPACE,
     EV_KEYS_K8S_NODE_NAME,
     EV_KEYS_K8S_POD_ID,
+    EV_KEYS_LOG_LEVEL,
     EV_KEYS_RUN_INSTANCE,
     EV_KEYS_SECRET_INTERNAL_TOKEN,
     EV_KEYS_SECRET_KEY,
@@ -220,12 +221,14 @@ def get_env_from_k8s_resources(
     return env_vars
 
 
-def get_base_env_vars(use_proxy_env_vars_use_in_ops: bool):
+def get_base_env_vars(use_proxy_env_vars_use_in_ops: bool, log_level: str = None):
     env = [
         get_from_field_ref(name=EV_KEYS_K8S_NODE_NAME, field_path="spec.nodeName"),
         get_from_field_ref(name=EV_KEYS_K8S_NAMESPACE, field_path="metadata.namespace"),
         get_from_field_ref(name=EV_KEYS_K8S_POD_ID, field_path="metadata.name"),
     ]
+    if log_level:
+        env.append(get_env_var(name=EV_KEYS_LOG_LEVEL, value=log_level))
     env += get_proxy_env_vars(use_proxy_env_vars_use_in_ops)
     return env
 
@@ -243,6 +246,7 @@ def get_service_env_vars(
     api_version: str,
     run_instance: str,
     use_proxy_env_vars_use_in_ops: bool,
+    log_level: str,
 ) -> List[k8s_schemas.V1EnvVar]:
     env_vars = get_base_env_vars(use_proxy_env_vars_use_in_ops) + [
         get_env_var(name=EV_KEYS_HOST, value=api_host),
@@ -250,6 +254,8 @@ def get_service_env_vars(
         get_env_var(name=EV_KEYS_API_VERSION, value=api_version),
         get_run_instance_env_var(run_instance),
     ]
+    if log_level:
+        env_vars.append(get_env_var(name=EV_KEYS_LOG_LEVEL, value=log_level))
     if header:
         env_vars.append(
             get_env_var(

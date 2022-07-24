@@ -1,9 +1,9 @@
 [![License: Apache 2](https://img.shields.io/badge/License-apache2-blue.svg?style=flat&longCache=true)](LICENSE)
 [![Polyaxon API](https://img.shields.io/docker/pulls/polyaxon/polyaxon-api)](https://hub.docker.com/r/polyaxon/polyaxon-api)
-[![Slack](https://img.shields.io/badge/Slack-1.4k%20members-blue.svg?style=flat&logo=slack&longCache=true)](https://polyaxon.com/slack/)
+[![Slack](https://img.shields.io/badge/Slack-1.5k%20members-blue.svg?style=flat&logo=slack&longCache=true)](https://polyaxon.com/slack/)
 
 [![Docs](https://img.shields.io/badge/docs-stable-brightgreen.svg?style=flat&longCache=true)](https://polyaxon.com/docs/)
-[![Release](https://img.shields.io/badge/release-v1.18.2-brightgreen.svg?longCache=true)](https://polyaxon.com/docs/releases/1-18/)
+[![Release](https://img.shields.io/badge/release-v1.19.0-brightgreen.svg?longCache=true)](https://polyaxon.com/docs/releases/1-19/)
 [![GitHub](https://img.shields.io/badge/issue_tracker-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/issues)
 [![GitHub](https://img.shields.io/badge/roadmap-github-blue?style=flat&logo=github&longCache=true)](https://github.com/orgs/polyaxon/projects/5)
 

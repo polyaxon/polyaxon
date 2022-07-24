@@ -609,7 +609,6 @@ class TestJobConverter(BaseTestCase):
                 use_docker_context=False,
                 use_shm_context=False,
             ),
-            log_level="info",
             artifacts_store=store,
             connections=[],
             init=[],
@@ -617,7 +616,7 @@ class TestJobConverter(BaseTestCase):
             secrets=[],
             config_maps=[],
             kv_env_vars=[],
-            env=self.converter.get_main_env_vars(),
+            env=self.converter.get_main_env_vars(log_level="info"),
             ports=None,
             run_path="/test",
         )

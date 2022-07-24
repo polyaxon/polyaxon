@@ -20,7 +20,6 @@ from polyaxon.env_vars.keys import (
     EV_KEYS_ARTIFACTS_STORE_NAME,
     EV_KEYS_COLLECT_ARTIFACTS,
     EV_KEYS_COLLECT_RESOURCES,
-    EV_KEYS_LOG_LEVEL,
 )
 from polyaxon.exceptions import PolyaxonSchemaError, PolypodException
 from polyaxon.k8s import k8s_schemas
@@ -37,7 +36,6 @@ from polyaxon.utils.list_utils import to_list
 
 def get_env_vars(
     contexts: PluginsContextsSpec,
-    log_level: str,
     kv_env_vars: List[List],
     artifacts_store_name: str,
     connections: Iterable[V1ConnectionType],
@@ -46,9 +44,6 @@ def get_env_vars(
 ) -> List[k8s_schemas.V1EnvVar]:
     env_vars = []
     connections = connections or []
-
-    if log_level:
-        env_vars.append(get_env_var(name=EV_KEYS_LOG_LEVEL, value=log_level))
 
     if contexts and contexts.collect_artifacts:
         env_vars.append(get_env_var(name=EV_KEYS_COLLECT_ARTIFACTS, value=True))

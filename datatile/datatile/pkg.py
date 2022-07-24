@@ -15,7 +15,7 @@
 # limitations under the License.
 
 NAME = "datatile"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 DESC = "A library for managing, summarizing, and visualizing data."
 URL = "https://github.com/polyaxon/datatile"
 AUTHOR = "Polyaxon, Inc."

@@ -11,24 +11,7 @@ tags:
 sidebar: "releases"
 ---
 
-## Next Release V1.19.0
-
-### Sandbox
-
- * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
-
-### CE
-
- * **New**: Add support for agent based deployment.
-
-### Tracking
-
- * **New**: Allow to specify the connection name when logging assets and artifacts to associate the lineage to a specific connection.
- * **Enhancement**: Improve logic around assets and artifacts logging to only trigger versioned behavior (step-wise) when a step parameter is provided.
- * **Enhancement**: Improve outputs state calculation.
- * **Enhancement**: Improve artifacts names auto-generator to respect the name size limit.
-
-## Short Term Roadmap
+## Upcoming features and enhancements
 
 ### Core
 
@@ -38,11 +21,20 @@ sidebar: "releases"
 ### CLI
  
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
+ 
+### Sandbox
+
+ * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
+
+### CE
+
+ * **New**: Add support for agent based deployment.
 
 ### Hub
 
  * **New**: Add DVC(data version control) integration.
  * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
+ * **New**: Allow registering init containers as plugins with a hub reference. 
 
 ### Agent
 
@@ -64,6 +56,7 @@ sidebar: "releases"
 
  * **New**: (Beta) Multi-container pipeline orchestration in a single operation.
  * **Enhancement**: Allow setting DAG outputs without the SDK/Client.
+ * **Enhancement**: Improve auto-complete plugins.
 
 ### UI
 
@@ -87,13 +80,16 @@ sidebar: "releases"
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
  * **Enhancement**: Do not render large artifacts and provide preview button.
- * **Fix**: Issue with heat fields not persisted with saved queries.
 
 ### Tracking
-
+ 
+ * **New**: Allow to specify the connection name when logging assets and artifacts to associate the lineage to a specific connection.
  * **New**: Add support for logging data versions, summaries, reports, and quality.
  * **New**: Add log table.
  * **New**: Add custom bar plots.
+ * **Enhancement**: Improve logic around assets and artifacts logging to only trigger versioned behavior (step-wise) when a step parameter is provided.
+ * **Enhancement**: Improve outputs state calculation.
+ * **Enhancement**: Improve artifacts names auto-generator to respect the name size limit.
  * **Enhancement**: Allow tracking dataframes as parquet files.
 
 ### Streams

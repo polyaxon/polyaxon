@@ -65,6 +65,7 @@ class TestBaseConverter(BaseTestCase):
         assert env_vars == get_service_env_vars(
             header=PolyaxonServiceHeaders.SERVICE,
             service_header=None,
+            log_level=None,
             authentication_type=None,
             include_secret_key=False,
             include_internal_token=False,
@@ -93,6 +94,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=True,
             include_internal_token=True,
             include_agent_token=False,
+            log_level=None,
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -117,6 +119,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=True,
+            log_level=None,
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -141,6 +144,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=True,
+            log_level=None,
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -148,13 +152,14 @@ class TestBaseConverter(BaseTestCase):
             run_instance=self.converter.run_instance,
             use_proxy_env_vars_use_in_ops=False,
         )
-        # Setting an env var for the EV_KEYS_PLATFORM_HOST
+        # Setting an env var for the EV_KEYS_PLATFORM_HOST and LOG_LEVEL
         current = os.environ.get(EV_KEYS_PLATFORM_HOST)
         os.environ[EV_KEYS_PLATFORM_HOST] = "foo"
         env_vars = self.converter.get_service_env_vars(
             service_header="sa-foo",
             header="header-foo",
             authentication_type="internal",
+            log_level="info",
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=True,
@@ -167,6 +172,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=True,
+            log_level="info",
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host="foo",
@@ -187,6 +193,7 @@ class TestBaseConverter(BaseTestCase):
                 include_internal_token=True,
                 include_agent_token=True,
                 authentication_type="internal",
+                log_level="info",
             )
 
     def test_get_auth_service_env_vars(self):
@@ -199,6 +206,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=True,
             include_agent_token=False,
+            log_level=None,
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -208,7 +216,7 @@ class TestBaseConverter(BaseTestCase):
         )
 
         self.converter.internal_auth = False
-        env_vars = self.converter.get_auth_service_env_vars()
+        env_vars = self.converter.get_auth_service_env_vars(log_level="info")
         assert env_vars == get_service_env_vars(
             header=PolyaxonServiceHeaders.SERVICE,
             service_header=PolyaxonServices.INITIALIZER,
@@ -216,6 +224,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=True,
+            log_level="info",
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -232,6 +241,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=True,
+            log_level=None,
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -250,6 +260,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=True,
+            log_level=None,
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host="foo",
@@ -272,6 +283,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=False,
+            log_level=None,
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -281,7 +293,9 @@ class TestBaseConverter(BaseTestCase):
         )
 
         self.converter.internal_auth = False
-        env_vars = self.converter.get_polyaxon_sidecar_service_env_vars()
+        env_vars = self.converter.get_polyaxon_sidecar_service_env_vars(
+            log_level="info"
+        )
         assert env_vars == get_service_env_vars(
             header=PolyaxonServiceHeaders.SERVICE,
             service_header=PolyaxonServices.SIDECAR,
@@ -289,6 +303,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=False,
+            log_level="info",
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -297,7 +312,7 @@ class TestBaseConverter(BaseTestCase):
             use_proxy_env_vars_use_in_ops=False,
         )
         env_vars = self.converter.get_polyaxon_sidecar_service_env_vars(
-            external_host=True
+            external_host=True, log_level="debug"
         )
         # Default platform host
         assert env_vars == get_service_env_vars(
@@ -307,6 +322,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=False,
+            log_level="debug",
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
@@ -318,7 +334,8 @@ class TestBaseConverter(BaseTestCase):
         current = os.environ.get(EV_KEYS_PLATFORM_HOST)
         os.environ[EV_KEYS_PLATFORM_HOST] = "foo"
         env_vars = self.converter.get_polyaxon_sidecar_service_env_vars(
-            external_host=True
+            external_host=True,
+            log_level="debug",
         )
         assert env_vars == get_service_env_vars(
             header=PolyaxonServiceHeaders.SERVICE,
@@ -327,6 +344,7 @@ class TestBaseConverter(BaseTestCase):
             include_secret_key=False,
             include_internal_token=False,
             include_agent_token=False,
+            log_level="debug",
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host="foo",
