@@ -1,6 +1,6 @@
 pandas
 ipython
-numpy<=1.23
+numpy<=1.24
 scipy<1.8.0
 scikit-learn<1.1
 hyperopt==0.2.5

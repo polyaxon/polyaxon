@@ -1,4 +1,4 @@
-fsspec==2022.5.0
+fsspec==2022.7.1
 
 aiofiles==0.8.0
 kubernetes_asyncio>=12.1.1,<22.6.0

@@ -1,2 +1,2 @@
-numpy<=1.23
+numpy<=1.24
 pandas
