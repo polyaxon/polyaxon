@@ -44,7 +44,9 @@ def configure_logger(verbose):
         )
         if settings.CLIENT_CONFIG.log_level:
             try:
-                log_level = logging.getLevelName(settings.CLIENT_CONFIG.log_level.upper())
+                log_level = logging.getLevelName(
+                    settings.CLIENT_CONFIG.log_level.upper()
+                )
             except Exception:  # noqa
                 pass
     logging.basicConfig(format="%(message)s", level=log_level, stream=sys.stdout)

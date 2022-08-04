@@ -20,6 +20,7 @@ from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Environment
 from polyaxon.utils.list_utils import to_list
+from polyaxon.utils.sanitizers import sanitize_string_dict
 
 
 def get_pod_spec(
@@ -61,14 +62,16 @@ def get_pod_spec(
         image_pull_secrets=image_pull_secrets,
         security_context=environment.security_context,
         service_account_name=environment.service_account_name,
-        node_selector=environment.node_selector,
+        node_selector=sanitize_string_dict(environment.node_selector),
         tolerations=environment.tolerations,
         affinity=environment.affinity,
         dns_config=environment.dns_config,
         dns_policy=environment.dns_policy,
         host_aliases=environment.host_aliases,
         host_network=environment.host_network,
-        host_pid=environment.host_pid,
+        host_pid=str(environment.host_pid)
+        if environment.host_pid is not None
+        else environment.host_pid,
         node_name=environment.node_name,
         priority=environment.priority,
         priority_class_name=environment.priority_class_name,
