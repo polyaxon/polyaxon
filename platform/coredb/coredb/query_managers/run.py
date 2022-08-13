@@ -66,6 +66,10 @@ class RunQueryManager(BaseQueryManager):
         "downstream": "downstream_runs",
         "user": "user__username",
     }
+    FIELDS_DISTINCT = {
+        "artifacts",
+        "connections",
+    }
     FIELDS_ORDERING = (
         "created_at",
         "updated_at",

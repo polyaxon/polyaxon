@@ -33,7 +33,8 @@ SCHEDULER_CORE_ROUTES = {
     CoreSchedulerCeleryTasks.RUNS_DELETE: {"queue": CeleryCoreQueues.SCHEDULER_RUNS},
     # Scheduler artifacts
     CoreSchedulerCeleryTasks.RUNS_SET_ARTIFACTS: {
-        "queue": CeleryCoreQueues.SCHEDULER_ARTIFACTS
+        "queue": CeleryCoreQueues.SCHEDULER_ARTIFACTS,
+        "priority": 0,
     },
 }
 

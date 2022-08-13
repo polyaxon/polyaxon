@@ -31,7 +31,6 @@ class ArtifactQueryManager(BaseQueryManager):
         "state": "artifact__state",
     }
     CHECK_ALIVE = False
-    DISTINCT = False
     PARSERS_BY_FIELD = {
         # Name
         "name": parse_search_operation,

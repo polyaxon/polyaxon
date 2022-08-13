@@ -35,7 +35,9 @@ class NameableModel(models.Model):
 
 class RequiredNameableModel(models.Model):
     name = models.CharField(
-        max_length=128, validators=[validate_slug, validate_blacklist_name]
+        max_length=128,
+        validators=[validate_slug, validate_blacklist_name],
+        db_index=True,
     )
 
     class Meta:

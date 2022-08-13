@@ -253,7 +253,7 @@ class TestQueryManager(BaseTestQuery):
                 Q(started_at__hour="10"),
                 Q(started_at__minute="10"),
             ),
-        ).distinct()
+        )
         assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
@@ -261,7 +261,7 @@ class TestQueryManager(BaseTestQuery):
         )
         expected_query = Run.objects.filter(
             Q(created_at__date="2020-10-10"),
-        ).distinct()
+        )
         assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
@@ -269,7 +269,7 @@ class TestQueryManager(BaseTestQuery):
         )
         expected_query = Run.objects.filter(
             Q(outputs__loss__lte=0.8), Q(status__in=["starting", "running"])
-        ).distinct()
+        )
         assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
@@ -277,7 +277,7 @@ class TestQueryManager(BaseTestQuery):
         )
         expected_query = Run.objects.filter(
             ~Q(tags__overlap=["tag1", "tag2"]), Q(tags__contains=["tag3"])
-        ).distinct()
+        )
         assert str(result_queryset.query) == str(expected_query.query)
 
         result_queryset = RunQueryManager.apply(
@@ -285,7 +285,7 @@ class TestQueryManager(BaseTestQuery):
         )
         expected_query = Run.objects.filter(
             Q(name__icontains="foo"), ~Q(description__istartswith="bal")
-        ).distinct()
+        )
 
         assert str(result_queryset.query) == str(expected_query.query)
 
@@ -294,7 +294,7 @@ class TestQueryManager(BaseTestQuery):
         )
         expected_query = Run.objects.filter(
             Q(outputs__loss__isnull=True), Q(status__isnull=False)
-        ).distinct()
+        )
         assert str(result_queryset.query) == str(expected_query.query)
 
 

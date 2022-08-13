@@ -61,6 +61,7 @@ def set_celery(context, config: ConfigManager, routes: Dict):
         context["CELERY_BROKER_TRANSPORT"] = "memory"
 
     context["CELERY_ACCEPT_CONTENT"] = ["application/json"]
+    context["CELERY_TASK_DEFAULT_PRIORITY"] = 10
     context["CELERY_TASK_SERIALIZER"] = "json"
     context["CELERY_RESULT_SERIALIZER"] = "json"
     context["CELERY_TASK_IGNORE_RESULT"] = True
