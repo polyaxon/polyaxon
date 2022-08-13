@@ -31,12 +31,12 @@ class PQLManager:
     FIELDS_ORDERING = None
     FIELDS_ORDERING_PROXY = None
     FIELDS_DEFAULT_ORDERING = None
+    FIELDS_DISTINCT = None
     CHECK_ALIVE = True
     PARSERS_BY_FIELD = {}
     CONDITIONS_BY_FIELD = {}
     QUERY_BACKEND = None
     TIMEZONE = None
-    DISTINCT = True
 
     @classmethod
     def proxy_field(cls, field: str) -> str:
@@ -77,6 +77,12 @@ class PQLManager:
                 ] = cls.FIELDS_TRANS[field]["type"]
         else:
             update_tokenized_query[key] = tokenized_query[key]
+
+    @classmethod
+    def trigger_distinct(cls, key: str):
+        if cls.FIELDS_DISTINCT and key in cls.FIELDS_DISTINCT:
+            return True
+        return False
 
     @classmethod
     def tokenize(cls, query_spec: str) -> Dict[str, Iterable]:
@@ -133,8 +139,11 @@ class PQLManager:
     def apply(cls, query_spec: str, queryset: Any) -> Any:
         built_query = cls.handle_query(query_spec=query_spec)
         operators = []
+        trigger_distinct = False
         for key, cond_specs in built_query.items():
             key = cls.proxy_field(key)
+            if not trigger_distinct:
+                trigger_distinct = cls.trigger_distinct(key)
             for cond_spec in cond_specs:
                 try:
                     operator = cond_spec.cond.apply_operator(
@@ -151,6 +160,6 @@ class PQLManager:
                 operators.append(operator)
 
         queryset = queryset.filter(*operators)
-        if cls.DISTINCT:
+        if trigger_distinct:
             queryset = queryset.distinct()
         return queryset

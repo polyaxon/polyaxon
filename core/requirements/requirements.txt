@@ -1,7 +1,7 @@
 click>=7.1.1,<9.0.0
 Jinja2>=2.10.3,<3.1.0
 kubernetes>=10.0.1
-marshmallow<3.16.0
+marshmallow<3.18.0
 python-dateutil>=2.7.3
 pytz>=2019.2
 PyYAML>=5.1

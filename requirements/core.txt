@@ -1,5 +1,5 @@
 celery==5.2.7
-Django==4.0.6
+Django==4.0.7
 djangorestframework==3.13.1
 numpy<=1.24
 psycopg2-binary==2.9.3
