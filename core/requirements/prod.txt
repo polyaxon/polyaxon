@@ -1,4 +1,4 @@
 traceml<1.1
 datatile<1.1
 hypertune<1.1
-polyaxon-sdk==1.19.0
+polyaxon-sdk==1.20.0
