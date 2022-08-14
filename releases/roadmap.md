@@ -17,6 +17,7 @@ sidebar: "releases"
 
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
  * **Enhancement**: Add mid-runtime update with `apply` logic.
+ * **Enhancement**: Improve `modelRef` and `artifactRef` initialization process and allow passing custom init path to not not force the user to know the run uuid.
 
 ### CLI
  
@@ -34,7 +35,7 @@ sidebar: "releases"
 
  * **New**: Add DVC(data version control) integration.
  * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
- * **New**: Allow registering init containers as plugins with a hub reference. 
+ * **New**: Allow registering init containers as plugins with a hub reference.
 
 ### Agent
 
