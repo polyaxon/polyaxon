@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import time
 
 import click
 import ujson
@@ -57,10 +58,12 @@ def bayes(matrix, configs, metrics, iteration):
 
     client = RunClient()
 
-    retry = 1
+    retry = 0
     exp = None
     suggestions = None
     while retry < 3:
+        if retry:
+            time.sleep(retry**2)
         try:
             suggestions = BayesSearchManager(
                 config=matrix,
@@ -117,10 +120,12 @@ def hyperband(matrix, configs, metrics, iteration, bracket_iteration):
 
     client = RunClient()
 
-    retry = 1
+    retry = 0
     exp = None
     suggestions = None
     while retry < 3:
+        if retry:
+            time.sleep(retry**2)
         try:
             suggestions = HyperbandManager(config=matrix).get_suggestions(
                 configs=configs,
@@ -131,7 +136,6 @@ def hyperband(matrix, configs, metrics, iteration, bracket_iteration):
             exp = None
             break
         except Exception as e:
-            retry += 1
             logger.warning(e)
             exp = e
 
@@ -173,10 +177,12 @@ def hyperopt(matrix, configs, metrics, iteration):
 
     client = RunClient()
 
-    retry = 1
+    retry = 0
     exp = None
     suggestions = None
     while retry < 3:
+        if retry:
+            time.sleep(retry**2)
         try:
             suggestions = HyperoptManager(config=matrix).get_suggestions(
                 configs=configs, metrics=metrics

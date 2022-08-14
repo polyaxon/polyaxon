@@ -273,7 +273,9 @@ def clean_ops(namespace, in_cluster, delete, uuids):
 
     def _patch_op():
         retry = 0
-        while retry < 2:
+        while retry < 3:
+            if retry:
+                time.sleep(retry * 2)
             try:
                 manager.update_custom_object(
                     name=op,
@@ -286,12 +288,13 @@ def clean_ops(namespace, in_cluster, delete, uuids):
             except Exception as e:
                 print("Exception %s", e)
                 print("retrying")
-                time.sleep(0.1)
                 retry += 1
 
     def _delete_op():
         retry = 0
-        while retry < 2:
+        while retry <= 2:
+            if retry:
+                time.sleep(retry)
             try:
                 manager.delete_custom_object(
                     name=op,
@@ -303,7 +306,6 @@ def clean_ops(namespace, in_cluster, delete, uuids):
             except Exception as e:
                 print("Exception %s", e)
                 print("retrying")
-                time.sleep(0.1)
                 retry += 1
 
     uuids = validate_tags(uuids, validate_yaml=True)

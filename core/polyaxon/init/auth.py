@@ -28,10 +28,12 @@ def create_auth_context():
     except PolyaxonClientException as e:
         raise PolyaxonContainerException(e)
 
-    retry = 1
+    retry = 0
     done = False
     exp = None
     while not done and retry <= 3:
+        if retry:
+            time.sleep(retry**2)
         try:
             impersonate(
                 owner=run_client.owner,
@@ -47,6 +49,5 @@ def create_auth_context():
             exp = "Polyaxon auth initializer failed authenticating the operation: {}\n{}".format(
                 repr(e), traceback.format_exc()
             )
-            time.sleep(retry)
     run_client.log_failed(reason="AuthContext", message=exp)
     raise PolyaxonContainerException("Init job did not succeed authenticating job.")

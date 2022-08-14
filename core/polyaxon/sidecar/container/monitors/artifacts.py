@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import asyncio
 import os
 
 from typing import List
@@ -23,6 +22,8 @@ from polyaxon.fs.async_manager import ensure_async_execution
 from polyaxon.fs.types import FSSystem
 from polyaxon.fs.watcher import FSWatcher
 from polyaxon.logger import logger
+
+from fsspec.asyn import _run_coros_in_chunks  # noqa
 
 
 async def sync_fs(
@@ -35,8 +36,9 @@ async def sync_fs(
 
     rm_files = fw.get_files_to_rm()
     logger.debug("rm_files {}".format(rm_files))
-    await asyncio.gather(
-        *[
+
+    await _run_coros_in_chunks(
+        [
             ensure_async_execution(
                 fs=fs,
                 fct="rm_file",
@@ -46,12 +48,13 @@ async def sync_fs(
             )
             for (_, subpath) in rm_files
         ],
-        return_exceptions=True
+        return_exceptions=True,
+        nofiles=True,
     )
     rm_dirs = fw.get_dirs_to_rm()
     logger.debug("rm_dirs {}".format(rm_dirs))
-    await asyncio.gather(
-        *[
+    await _run_coros_in_chunks(
+        [
             ensure_async_execution(
                 fs=fs,
                 fct="rm",
@@ -61,12 +64,13 @@ async def sync_fs(
             )
             for (_, subpath) in rm_dirs
         ],
-        return_exceptions=True
+        return_exceptions=True,
+        nofiles=True,
     )
     put_files = fw.get_files_to_put()
     logger.debug("put_files {}".format(put_files))
-    await asyncio.gather(
-        *[
+    await _run_coros_in_chunks(
+        [
             ensure_async_execution(
                 fs=fs,
                 fct="put",
@@ -77,7 +81,8 @@ async def sync_fs(
             )
             for (r_base_path, subpath) in put_files
         ],
-        return_exceptions=True
+        return_exceptions=True,
+        nofiles=True,
     )
 
 

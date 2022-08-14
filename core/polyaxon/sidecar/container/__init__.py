@@ -69,7 +69,7 @@ async def start_sidecar(
     fs = await get_async_fs_from_type(connection_type=connection_type)
     fw = FSWatcher.read(ctx_paths.CONTEXT_MOUNT_FILE_WATCHER)
 
-    retry = 1
+    retry = 0
     is_running = True
     counter = 0
     state = {
@@ -121,18 +121,19 @@ async def start_sidecar(
 
     while is_running and retry <= 3:
         await asyncio.sleep(sleep_interval)
+        if retry:
+            await asyncio.sleep(retry * 2)
         try:
             is_running = await k8s_manager.is_pod_running(pod_id, container_id)
         except ApiException as e:
             retry += 1
             logger.info("Exception %s" % repr(e))
             logger.info("Sleeping ...")
-            await asyncio.sleep(retry)
             continue
 
         logger.debug("Syncing ...")
         if is_running:
-            retry = 1
+            retry = 0
 
         counter += 1
         if counter == sync_interval:

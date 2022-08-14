@@ -27,6 +27,8 @@ from polyaxon.connections.aws.base import (
 
 
 class S3FileSystem(BaseS3FileSystem):
+    retries = 5
+
     async def _ls(self, path, detail=False, force=False):
         return await super()._ls(path, detail=detail, refresh=force)
 

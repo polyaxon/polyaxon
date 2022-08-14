@@ -208,6 +208,8 @@ def build(
     retry = 0
     is_done = False
     while retry < max_retries and not is_done:
+        if retry:
+            time.sleep(sleep_interval)
         try:
             docker_builder = _build(
                 context=context,
@@ -221,7 +223,6 @@ def build(
             return docker_builder
         except ReadTimeoutError:
             retry += 1
-            time.sleep(sleep_interval)
     if not is_done:
         raise PolyaxonBuildException(
             "The docker image could not be built, client timed out."
@@ -233,6 +234,8 @@ def push(destination, docker=None, max_retries=3, sleep_interval=1):
     retry = 0
     is_done = False
     while retry < max_retries and not is_done:
+        if retry:
+            time.sleep(sleep_interval)
         try:
             if not docker_pusher.push():
                 raise PolyaxonBuildException("The docker image could not be pushed.")
@@ -240,7 +243,6 @@ def push(destination, docker=None, max_retries=3, sleep_interval=1):
                 is_done = True
         except ReadTimeoutError:
             retry += 1
-            time.sleep(sleep_interval)
 
     if not is_done:
         raise PolyaxonBuildException(

@@ -61,15 +61,16 @@ def start(max_retries, sleep_interval):
         else:
             Agent(owner=owner, agent_uuid=agent_uuid).start()
 
-    retry = 1
+    retry = 0
     while retry < max_retries:
+        if retry:
+            time.sleep(5 * retry)
         try:
             start_agent()
             return
         except Exception as e:
             logger.warning("Polyaxon agent retrying, error %s", e)
             retry += 1
-            time.sleep(5 * retry)
 
 
 @agent.command()

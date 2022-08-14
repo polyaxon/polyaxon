@@ -59,8 +59,10 @@ async def sidecar(
     """
     from polyaxon.sidecar.container import start_sidecar
 
-    retry = 1
+    retry = 0
     while retry < max_retries:
+        if retry:
+            await asyncio.sleep(retry**2)
         try:
             await start_sidecar(
                 container_id=container_id,
@@ -73,4 +75,3 @@ async def sidecar(
         except Exception as e:
             logger.warning("Polyaxon sidecar retrying, error %s", e)
             retry += 1
-            await asyncio.sleep(retry)

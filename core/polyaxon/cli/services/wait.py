@@ -38,15 +38,16 @@ def wait(uuid: str, kind: str, max_retries: int):
     from polyaxon.agents.spawners.spawner import Spawner
 
     spawner = Spawner(namespace=settings.CLIENT_CONFIG.namespace, in_cluster=True)
-    retry = 1
+    retry = 0
     while retry < max_retries:
+        if retry:
+            time.sleep(retry**2)
         try:
             k8s_operation = spawner.get(run_uuid=uuid, run_kind=kind)
         except Exception:  # noqa
             k8s_operation = None
         if k8s_operation:
             retry += 1
-            time.sleep(retry)
         else:
             return
 
