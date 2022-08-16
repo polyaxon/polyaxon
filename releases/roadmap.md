@@ -43,6 +43,10 @@ sidebar: "releases"
    * Show nodes's states and health.
    * Show nodes's CPU/Memory/GPU consumption.
 
+### Deployment
+
+ * **Enhancement**: Allow passing custom labels to the Helm charts.
+
 ### Client
 
  * **New**: Add `@component` decorator to allow declaring components based on Python functions.
