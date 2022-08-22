@@ -109,7 +109,7 @@ async def list_projects(request: Request) -> Response:
             with open(data_path, "r") as config_file:
                 data.append(config_file.read())
         else:
-            data.append(f'{{"name": {proj}}}')
+            data.append(f'{{"name": "{proj}"}}')
 
     data_str = ",".join(data)
     config_str = f'{{"results": [{data_str}], "count": {len(data)}}}'
