@@ -300,7 +300,7 @@ worker:
     requests:
       cpu: 130m
       memory: 200Mi
-  celery: {workerPrefetchMultiplier: 10}
+  celery: { workerPrefetchMultiplier: 10 }
   hpa:
     enabled: false
     cputhreshold: 70

@@ -22,7 +22,7 @@ from traceml.artifacts import V1ArtifactKind, V1RunArtifact
 
 
 def collect_lineage_artifacts_path(artifact_path: str) -> Optional[V1RunArtifact]:
-    name = os.path.basename(artifact_path)
+    name = os.path.basename(artifact_path.rstrip("/"))  # Trim handles cases like `foo/` -> ''
     return V1RunArtifact(
         name=to_fqn_name(name),
         kind=V1ArtifactKind.DIR,
