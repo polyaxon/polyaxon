@@ -81,7 +81,7 @@ Each parameter with `ref` can request the following information that reference:
  * `artifacts.base`: The base path of the run, basically the path defined by `uuid`.
  * `artifacts.outputs`: The base outputs path of the run, basically the path defined by `uuid/outputs`.
  * `artifacts.*`: Specific path coming logged in the lineage table, e.g. `artifacts.tensorboard`.
- * `{"file": [..., ...], "dirs": [..., ...]}`: An [ArtifactsType](/docs/core/specification/types/#v1artifactstype) definition, this is generally can be used with `toInit` or can be passed to the `init` section. 
+ * `{"file": [..., ...], "dirs": [..., ...]}`: An [ArtifactsType](/docs/core/specification/types/#v1artifactstype) definition, and it can be used with `toInit` or can be passed to the `init` section. 
  
 
 ## Exceptions
