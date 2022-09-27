@@ -16,13 +16,14 @@ sidebar: "releases"
 ### Core
 
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
+ * * **Enhancement**: Increase artifact's name length to allow longer names.
  * **Enhancement**: Add mid-runtime update with `apply` logic.
  * **Enhancement**: Improve `modelRef` and `artifactRef` initialization process and allow passing custom init path to not not force the user to know the run uuid.
 
 ### CLI
- 
+
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
- 
+
 ### Sandbox
 
  * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
@@ -45,6 +46,7 @@ sidebar: "releases"
 
 ### Deployment
 
+ * **Security**: Fix CVE issues.
  * **Enhancement**: Allow passing custom labels to the Helm charts.
 
 ### Client
@@ -87,7 +89,7 @@ sidebar: "releases"
  * **Enhancement**: Do not render large artifacts and provide preview button.
 
 ### Tracking
- 
+
  * **New**: Allow to specify the connection name when logging assets and artifacts to associate the lineage to a specific connection.
  * **New**: Add support for logging data versions, summaries, reports, and quality.
  * **New**: Add log table.

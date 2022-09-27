@@ -492,3 +492,51 @@ class ArrayCondition(EqualityCondition):
         cls, name: str, params: Any, query_backend: Any, timezone: str
     ) -> Any:
         return ~cls._in_operator(name, params, query_backend, timezone)
+
+
+class KeysCondition(EqualityCondition):
+    VALUES = EqualityCondition.VALUES | {"in"}
+    REPRESENTATIONS = EqualityCondition.REPRESENTATIONS | {"|"}
+    REPRESENTATION_MAPPING = EqualityCondition.REPRESENTATION_MAPPING + (("|", "in"),)
+
+    @classmethod
+    def _get_operator(cls, op: str, negation: bool = False) -> Optional[Callable]:
+        if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
+            return None
+
+        _op = cls._get_eq_operator(op, negation)
+        if _op:
+            return _op
+
+        if negation:
+            return cls._nin_operator
+        return cls._in_operator
+
+    @classmethod
+    def _get_eq_operator(cls, op: str, negation: bool = False) -> Optional[Callable]:
+        if (
+            op not in EqualityCondition.VALUES
+            and op not in EqualityCondition.REPRESENTATIONS
+        ):
+            return None
+
+        if negation:
+            return cls._neq_operator
+        return cls._eq_operator
+
+    @staticmethod
+    def _eq_operator(name: str, params: Any, query_backend: Any, timezone: str) -> Any:
+        name = "{}__has_key".format(name)
+        return query_backend(**{name: to_list(params)})
+
+    @staticmethod
+    def _in_operator(name: str, params: Any, query_backend: Any, timezone: str) -> Any:
+        assert isinstance(params, (list, tuple))
+        name = "{}__has_any_keys".format(name)
+        return query_backend(**{name: params})
+
+    @classmethod
+    def _nin_operator(
+        cls, name: str, params: Any, query_backend: Any, timezone: str
+    ) -> Any:
+        return ~cls._in_operator(name, params, query_backend, timezone)

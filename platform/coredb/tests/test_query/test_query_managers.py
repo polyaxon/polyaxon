@@ -27,6 +27,7 @@ from polyaxon.pql.builder import (
     ArrayCondition,
     ComparisonCondition,
     DateTimeCondition,
+    KeysCondition,
     QueryCondSpec,
     SearchCondition,
     ValueCondition,
@@ -203,6 +204,22 @@ class TestQueryManager(BaseTestQuery):
                 QueryCondSpec(ArrayCondition(op="=", negation=False), params="tag3"),
             ]
         }
+
+        # Set to different condition
+        RunQueryManager.CONDITIONS_BY_FIELD["tags"] = KeysCondition
+        tokenized_query = RunQueryManager.tokenize(self.query4)
+        parsed_query = RunQueryManager.parse(tokenized_query)
+        built_query = RunQueryManager.build(parsed_query)
+        assert built_query == {
+            "tags": [
+                QueryCondSpec(
+                    KeysCondition(op="|", negation=True), params=["tag1", "tag2"]
+                ),
+                QueryCondSpec(KeysCondition(op="=", negation=False), params="tag3"),
+            ]
+        }
+        # Reset to original condition
+        RunQueryManager.CONDITIONS_BY_FIELD["tags"] = ArrayCondition
 
         tokenized_query = RunQueryManager.tokenize(self.query5)
         parsed_query = RunQueryManager.parse(tokenized_query)
