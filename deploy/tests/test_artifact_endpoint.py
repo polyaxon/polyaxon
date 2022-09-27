@@ -68,47 +68,47 @@ class TestArtifactEndpoints(BaseTestCase):
         assert response.status_code == 404
 
     def test_download_artifact_passing_path(self):
-        filepath = os.path.join(self.archive_run_path, "1")
+        filepath = os.path.join(self.archive_run_path, "file1.txt")
         assert os.path.exists(filepath) is False
-        response = self.client.get(self.base_url + "?path=1")
+        response = self.client.get(self.base_url + "?path=file1.txt")
         assert response.status_code == 200
         assert os.path.exists(filepath) is True
         assert response.headers["Content-Type"] == ""
         assert response.headers["X-Accel-Redirect"] == os.path.join(
-            self.archive_run_path, "1"
+            self.archive_run_path, "file1.txt"
         )
         assert response.headers[
             "Content-Disposition"
-        ] == 'attachment; filename="{}"'.format("1")
+        ] == 'attachment; filename="{}"'.format("file1.txt")
 
         # Nested dirs
         nested_path = os.path.join(self.run_path, "foo")
         create_path(nested_path)
         create_tmp_files(nested_path)
-        filepath = os.path.join(self.archive_run_path, "foo", "1")
+        filepath = os.path.join(self.archive_run_path, "foo", "file1.txt")
         assert os.path.exists(filepath) is False
-        response = self.client.get(self.base_url + "?path=foo/1")
+        response = self.client.get(self.base_url + "?path=foo/file1.txt")
         assert response.status_code == 200
         assert os.path.exists(filepath) is True
         assert response.headers["Content-Type"] == ""
         assert response.headers["X-Accel-Redirect"] == os.path.join(
-            self.archive_run_path, "foo/1"
+            self.archive_run_path, "foo/file1.txt"
         )
         assert response.headers[
             "Content-Disposition"
-        ] == 'attachment; filename="{}"'.format("1")
+        ] == 'attachment; filename="{}"'.format("file1.txt")
 
         # The file is cached
         shutil.rmtree(self.run_path)
-        response = self.client.get(self.base_url + "?path=foo/1")
+        response = self.client.get(self.base_url + "?path=foo/file1.txt")
         assert response.status_code == 200
         assert response.headers["X-Accel-Redirect"] == os.path.join(
-            self.archive_run_path, "foo/1"
+            self.archive_run_path, "foo/file1.txt"
         )
 
         # Remove the cached should raise
         shutil.rmtree(os.path.join(self.archive_run_path, "foo"))
-        response = self.client.get(self.base_url + "?stream=true&path=foo/1")
+        response = self.client.get(self.base_url + "?stream=true&path=foo/file1.txt")
         assert response.status_code == 404
 
     def test_download_artifact_passing_path_with_force(self):
@@ -116,18 +116,18 @@ class TestArtifactEndpoints(BaseTestCase):
         nested_path = os.path.join(self.run_path, "foo")
         create_path(nested_path)
         create_tmp_files(nested_path)
-        filepath = os.path.join(self.archive_run_path, "foo", "1")
+        filepath = os.path.join(self.archive_run_path, "foo", "file1.txt")
         assert os.path.exists(filepath) is False
-        response = self.client.get(self.base_url + "?path=foo/1")
+        response = self.client.get(self.base_url + "?path=foo/file1.txt")
         assert response.status_code == 200
         assert os.path.exists(filepath) is True
         assert response.headers["Content-Type"] == ""
         assert response.headers["X-Accel-Redirect"] == os.path.join(
-            self.archive_run_path, "foo/1"
+            self.archive_run_path, "foo/file1.txt"
         )
         assert response.headers[
             "Content-Disposition"
-        ] == 'attachment; filename="{}"'.format("1")
+        ] == 'attachment; filename="{}"'.format("file1.txt")
 
         # The file is cached but we force check
         shutil.rmtree(self.run_path)
@@ -135,9 +135,9 @@ class TestArtifactEndpoints(BaseTestCase):
         assert response.status_code == 404
 
     def test_stream_artifact_passing_path(self):
-        filepath = os.path.join(self.archive_run_path, "1")
+        filepath = os.path.join(self.archive_run_path, "file1.txt")
         assert os.path.exists(filepath) is False
-        response = self.client.get(self.base_url + "?stream=true&path=1")
+        response = self.client.get(self.base_url + "?stream=true&path=file1.txt")
         assert response.status_code == 200
         assert os.path.exists(filepath) is True
         assert response.headers["Content-Type"] == "text/plain; charset=utf-8"
@@ -149,9 +149,9 @@ class TestArtifactEndpoints(BaseTestCase):
         nested_path = os.path.join(self.run_path, "foo")
         create_path(nested_path)
         create_tmp_files(nested_path)
-        filepath = os.path.join(self.archive_run_path, "foo", "1")
+        filepath = os.path.join(self.archive_run_path, "foo", "file1.txt")
         assert os.path.exists(filepath) is False
-        response = self.client.get(self.base_url + "?stream=true&path=foo/1")
+        response = self.client.get(self.base_url + "?stream=true&path=foo/file1.txt")
         assert response.status_code == 200
         assert os.path.exists(filepath) is True
         assert response.headers["Content-Type"] == "text/plain; charset=utf-8"
@@ -162,14 +162,14 @@ class TestArtifactEndpoints(BaseTestCase):
         # The file is cached
         shutil.rmtree(self.run_path)
         assert os.path.exists(filepath) is True
-        response = self.client.get(self.base_url + "?stream=true&path=foo/1")
+        response = self.client.get(self.base_url + "?stream=true&path=foo/file1.txt")
         assert response.status_code == 200
         assert os.path.exists(filepath) is True
 
         # Remove the cached should raise
         shutil.rmtree(os.path.join(self.archive_run_path, "foo"))
         assert os.path.exists(filepath) is False
-        response = self.client.get(self.base_url + "?stream=true&path=foo/1")
+        response = self.client.get(self.base_url + "?stream=true&path=foo/file1.txt")
         assert response.status_code == 404
         assert os.path.exists(filepath) is False
 
@@ -178,9 +178,9 @@ class TestArtifactEndpoints(BaseTestCase):
         nested_path = os.path.join(self.run_path, "foo")
         create_path(nested_path)
         create_tmp_files(nested_path)
-        filepath = os.path.join(self.archive_run_path, "foo", "1")
+        filepath = os.path.join(self.archive_run_path, "foo", "file1.txt")
         assert os.path.exists(filepath) is False
-        response = self.client.get(self.base_url + "?stream=true&path=foo/1")
+        response = self.client.get(self.base_url + "?stream=true&path=foo/file1.txt")
         assert response.status_code == 200
         assert os.path.exists(filepath) is True
         assert response.headers["Content-Type"] == "text/plain; charset=utf-8"
@@ -195,9 +195,9 @@ class TestArtifactEndpoints(BaseTestCase):
         assert response.status_code == 404
 
     def test_delete_artifact_passing_path(self):
-        filepath = os.path.join(self.run_path, "1")
+        filepath = os.path.join(self.run_path, "file1.txt")
         assert os.path.exists(filepath) is True
-        response = self.client.delete(self.base_url + "?path=1")
+        response = self.client.delete(self.base_url + "?path=file1.txt")
         assert response.status_code == 204
         assert os.path.exists(filepath) is False
 
@@ -205,12 +205,12 @@ class TestArtifactEndpoints(BaseTestCase):
         nested_path = os.path.join(self.run_path, "foo")
         create_path(nested_path)
         create_tmp_files(nested_path)
-        filepath = os.path.join(self.run_path, "foo", "1")
+        filepath = os.path.join(self.run_path, "foo", "file1.txt")
         assert os.path.exists(filepath) is True
-        response = self.client.delete(self.base_url + "?path=foo/1")
+        response = self.client.delete(self.base_url + "?path=foo/file1.txt")
         assert response.status_code == 204
         assert os.path.exists(filepath) is False
 
         # Deleting same file
-        response = self.client.delete(self.base_url + "?path=foo/1")
+        response = self.client.delete(self.base_url + "?path=foo/file1.txt")
         assert response.status_code == 400

@@ -49,7 +49,7 @@ class TestArtifactsTreeEndpoints(BaseTestCase):
         assert response.status_code == 200
         assert response.json() == {
             "dirs": [],
-            "files": {"0": 0, "1": 0, "2": 0, "3": 0},
+            "files": {"file0.txt": 0, "file1.txt": 0, "file2.txt": 0, "file3.txt": 0},
         }
 
         # add nested
@@ -61,14 +61,14 @@ class TestArtifactsTreeEndpoints(BaseTestCase):
         assert response.status_code == 200
         assert response.json() == {
             "dirs": ["foo"],
-            "files": {"0": 0, "1": 0, "2": 0, "3": 0},
+            "files": {"file0.txt": 0, "file1.txt": 0, "file2.txt": 0, "file3.txt": 0},
         }
 
         response = self.client.get(self.base_url + "?path=foo")
         assert response.status_code == 200
         assert response.json() == {
             "dirs": [],
-            "files": {"0": 0, "1": 0, "2": 0, "3": 0},
+            "files": {"file0.txt": 0, "file1.txt": 0, "file2.txt": 0, "file3.txt": 0},
         }
 
         response = self.client.get(self.base_url + "?path=foo/1")

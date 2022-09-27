@@ -187,4 +187,4 @@ def set_store():
 
 def create_tmp_files(path):
     for i in range(4):
-        open("{}/{}".format(path, i), "+w")
+        open("{}/file{}.txt".format(path, i), "+w")

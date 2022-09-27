@@ -13,16 +13,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Any, List, Union
+from typing import Any, List, Optional, Union
 
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.path_utils import get_files_in_path
 
 
-def hash_value(value: Any, hash_length: int = 12) -> str:
+def hash_value(value: Any, hash_length: Optional[int] = 12) -> str:
     import hashlib
 
-    return hashlib.md5(str(value).encode("utf-8")).hexdigest()[:hash_length]
+    value = hashlib.md5(str(value).encode("utf-8")).hexdigest()
+    return value[:hash_length] if hash_length is not None else value
 
 
 def hash_file(
