@@ -26,10 +26,12 @@ from coredb.models.runs import Run
 from polyaxon.exceptions import PQLException
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.pql.builder import (
+    ArrayCondition,
     BoolCondition,
     ComparisonCondition,
     DateTimeCondition,
     EqualityCondition,
+    KeysCondition,
     NilCondition,
     SearchCondition,
     ValueCondition,
@@ -1061,17 +1063,30 @@ class TestDateTimeCondition(BaseTestQuery):
         )
         assert queryset.count() == 2
 
-        queryset = range_cond.apply(
-            queryset=Run.objects,
-            name="created_at",
-            params=(
-                DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
-                DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
-            ),
-            query_backend=Q,
-            timezone=settings.TIME_ZONE,
-        )
-        assert queryset.count() == 0
+        if settings.DB_ENGINE_NAME == "sqlite":
+            queryset = range_cond.apply(
+                queryset=Run.objects,
+                name="created_at",
+                params=(
+                    DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
+                    DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
+                ),
+                query_backend=Q,
+                timezone=settings.TIME_ZONE,
+            )
+            assert queryset.count() == 1
+        else:
+            queryset = range_cond.apply(
+                queryset=Run.objects,
+                name="created_at",
+                params=(
+                    DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
+                    DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
+                ),
+                query_backend=Q,
+                timezone=settings.TIME_ZONE,
+            )
+            assert queryset.count() == 0
 
         # nrange
         queryset = nrange_cond.apply(
@@ -1122,17 +1137,30 @@ class TestDateTimeCondition(BaseTestQuery):
         )
         assert queryset.count() == 0
 
-        queryset = nrange_cond.apply(
-            queryset=Run.objects,
-            name="created_at",
-            params=(
-                DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
-                DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
-            ),
-            query_backend=Q,
-            timezone=settings.TIME_ZONE,
-        )
-        assert queryset.count() == 2
+        if settings.DB_ENGINE_NAME == "sqlite":
+            queryset = nrange_cond.apply(
+                queryset=Run.objects,
+                name="created_at",
+                params=(
+                    DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
+                    DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
+                ),
+                query_backend=Q,
+                timezone=settings.TIME_ZONE,
+            )
+            assert queryset.count() == 1
+        else:
+            queryset = nrange_cond.apply(
+                queryset=Run.objects,
+                name="created_at",
+                params=(
+                    DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
+                    DateTimeFormatter.extract("2010-01-01", settings.TIME_ZONE),
+                ),
+                query_backend=Q,
+                timezone=settings.TIME_ZONE,
+            )
+            assert queryset.count() == 2
 
 
 class TestValueCondition(BaseTestQuery):
@@ -1515,6 +1543,176 @@ class TestSearchCondition(BaseTestQuery):
             timezone=settings.TIME_ZONE,
         )
         assert queryset.count() == 2
+
+
+class TestArrayOrKeysCondition(BaseTestQuery):
+    def test_equality_operators(self):
+        # Array
+        op = ArrayCondition._eq_operator(
+            "field", "value", query_backend=Q, timezone=settings.TIME_ZONE
+        )
+        assert op == Q(field__contains=["value"])
+        op = ArrayCondition._neq_operator(
+            "field", "value", query_backend=Q, timezone=settings.TIME_ZONE
+        )
+        assert op == ~Q(field__contains=["value"])
+
+        # Keys
+        op = KeysCondition._eq_operator(
+            "field", "value", query_backend=Q, timezone=settings.TIME_ZONE
+        )
+        assert op == Q(field__has_key=["value"])
+        op = KeysCondition._neq_operator(
+            "field", "value", query_backend=Q, timezone=settings.TIME_ZONE
+        )
+        assert op == ~Q(field__has_key=["value"])
+
+    def test_equality_condition_init_with_correct_operator(self):
+        # Array
+        eq_cond = ArrayCondition(op="eq")
+        assert eq_cond.operator == ArrayCondition._eq_operator
+        neq_cond = ArrayCondition(op="eq", negation=True)
+        assert neq_cond.operator == ArrayCondition._neq_operator
+
+        # Keys
+        eq_cond = KeysCondition(op="eq")
+        assert eq_cond.operator == KeysCondition._eq_operator
+        neq_cond = KeysCondition(op="eq", negation=True)
+        assert neq_cond.operator == KeysCondition._neq_operator
+
+    def test_in_operators(self):
+        # Array
+        op = ArrayCondition._in_operator(
+            "field", ["value"], query_backend=Q, timezone=settings.TIME_ZONE
+        )
+        assert op == Q(field__overlap=["value"])
+        op = ArrayCondition._nin_operator(
+            "field", ["value"], query_backend=Q, timezone=settings.TIME_ZONE
+        )
+        assert op == ~Q(field__overlap=["value"])
+
+        # Keys
+        op = KeysCondition._in_operator(
+            "field", ["value"], query_backend=Q, timezone=settings.TIME_ZONE
+        )
+        assert op == Q(field__has_any_keys=["value"])
+        op = KeysCondition._nin_operator(
+            "field", ["value"], query_backend=Q, timezone=settings.TIME_ZONE
+        )
+        assert op == ~Q(field__has_any_keys=["value"])
+
+    def test_in_condition_init_with_correct_operator(self):
+        # Array
+        eq_cond = ArrayCondition(op="in")
+        assert eq_cond.operator == ArrayCondition._in_operator
+        neq_cond = ArrayCondition(op="in", negation=True)
+        assert neq_cond.operator == ArrayCondition._nin_operator
+
+        # Keys
+        eq_cond = KeysCondition(op="in")
+        assert eq_cond.operator == KeysCondition._in_operator
+        neq_cond = KeysCondition(op="in", negation=True)
+        assert neq_cond.operator == KeysCondition._nin_operator
+
+    def test_equality_apply(self):
+        if settings.DB_ENGINE_NAME == "sqlite":
+            eq_cond = KeysCondition(op="eq")
+            neq_cond = KeysCondition(op="eq", negation=True)
+            self.run.tags = {"foo": ""}
+            self.run.save(update_fields=["tags"])
+        else:
+            eq_cond = ArrayCondition(op="eq")
+            neq_cond = ArrayCondition(op="eq", negation=True)
+            self.run.tags = ["foo"]
+            self.run.save(update_fields=["tags"])
+
+        # eq
+        queryset = eq_cond.apply(
+            queryset=Run.objects,
+            name="tags",
+            params="foo",
+            query_backend=Q,
+            timezone=settings.TIME_ZONE,
+        )
+        assert queryset.count() == 1
+
+        queryset = eq_cond.apply(
+            queryset=Run.objects,
+            name="tags",
+            params="baz",
+            query_backend=Q,
+            timezone=settings.TIME_ZONE,
+        )
+        assert queryset.count() == 0
+
+        # neq
+        queryset = neq_cond.apply(
+            queryset=Run.objects,
+            name="tags",
+            params="foo",
+            query_backend=Q,
+            timezone=settings.TIME_ZONE,
+        )
+        assert queryset.count() == 0
+
+        queryset = neq_cond.apply(
+            queryset=Run.objects,
+            name="tags",
+            params="baz",
+            query_backend=Q,
+            timezone=settings.TIME_ZONE,
+        )
+        assert queryset.count() == 1
+
+    def test_in_apply(self):
+        if settings.DB_ENGINE_NAME == "sqlite":
+            eq_cond = KeysCondition(op="eq")
+            neq_cond = KeysCondition(op="eq", negation=True)
+            self.run.tags = {"foo": "", "bar": "", "moo": ""}
+            self.run.save(update_fields=["tags"])
+        else:
+            eq_cond = ArrayCondition(op="eq")
+            neq_cond = ArrayCondition(op="eq", negation=True)
+            self.run.tags = ["foo", "bar", "moo"]
+            self.run.save(update_fields=["tags"])
+
+        # eq
+        queryset = eq_cond.apply(
+            queryset=Run.objects,
+            name="tags",
+            params=["foo"],
+            query_backend=Q,
+            timezone=settings.TIME_ZONE,
+        )
+        assert queryset.count() == 1
+
+        queryset = eq_cond.apply(
+            queryset=Run.objects,
+            name="tags",
+            params="baz",
+            query_backend=Q,
+            timezone=settings.TIME_ZONE,
+        )
+        assert queryset.count() == 0
+
+        # neq
+        queryset = neq_cond.apply(
+            queryset=Run.objects,
+            name="tags",
+            params=["foo"],
+            query_backend=Q,
+            timezone=settings.TIME_ZONE,
+        )
+        assert queryset.count() == 0
+
+        queryset = neq_cond.apply(
+            queryset=Run.objects,
+            name="tags",
+            params="baz",
+            query_backend=Q,
+            timezone=settings.TIME_ZONE,
+        )
+        assert queryset.count() == 1
 
 
 del BaseTestQuery
