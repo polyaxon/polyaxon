@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon import tracking
 from polyaxon.client.decorators import client_handler
+from traceml import tracking
 from traceml.exceptions import TracemlException
 from traceml.logger import logger
 from traceml.processors import events_processors

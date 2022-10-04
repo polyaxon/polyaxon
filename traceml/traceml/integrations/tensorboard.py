@@ -18,7 +18,7 @@ import os
 
 from typing import TYPE_CHECKING, Any
 
-from polyaxon import tracking
+from traceml import tracking
 from traceml.exceptions import TracemlException
 from traceml.logger import logger
 

@@ -16,7 +16,7 @@
 
 from typing import TYPE_CHECKING, Any
 
-from polyaxon import tracking
+from traceml import tracking
 from traceml.exceptions import TracemlException
 from traceml.integrations.tensorboard import Logger
 
