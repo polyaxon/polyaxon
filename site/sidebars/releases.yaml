@@ -3,6 +3,10 @@
     items:
     - title: Roadmap
       link: /docs/releases/roadmap/
+    - title: V1.22 [WIP]
+      link: /docs/releases/1-22/
+    - title: V1.21
+      link: /docs/releases/1-21/
     - title: V1.20
       link: /docs/releases/1-20/
     - title: V1.19

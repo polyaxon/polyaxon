@@ -16,17 +16,12 @@ sidebar: "releases"
 ### Core
 
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
- * * **Enhancement**: Increase artifact's name length to allow longer names.
  * **Enhancement**: Add mid-runtime update with `apply` logic.
- * **Enhancement**: Improve `modelRef` and `artifactRef` initialization process and allow passing custom init path to not not force the user to know the run uuid.
+ * **Enhancement**: Improve `modelRef` and `artifactRef` initialization process and allow passing custom init path to not force the user to know the run uuid.
 
 ### CLI
 
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
-
-### Sandbox
-
- * **Beta**: A new sandbox debugger for running and visualizing on a local machine without any docker requirement.
 
 ### CE
 
@@ -40,6 +35,9 @@ sidebar: "releases"
 
 ### Agent
 
+ * **New**: Allow multi-namespace management.
+ * **New**: Add support for managing multiple artifacts stores using a single deployment.
+ * **New**: Add support for multi-connections management and mounting of multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
  * **New**: (Beta) Add cluster and namespace monitoring:
    * Show nodes's states and health.
    * Show nodes's CPU/Memory/GPU consumption.
@@ -67,6 +65,7 @@ sidebar: "releases"
 
 ### UI
 
+ * **New**: Reports; new interface to create dashboards and shareable notes.
  * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
  * **New**: Add Metrics/Params correlation and importance.
  * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
@@ -98,11 +97,6 @@ sidebar: "releases"
  * **Enhancement**: Improve outputs state calculation.
  * **Enhancement**: Improve artifacts names auto-generator to respect the name size limit.
  * **Enhancement**: Allow tracking dataframes as parquet files.
-
-### Streams
-
- * **New**: Add support for multi-connections:
-   * Possibility to mount multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
 
 ### Commercial
 
