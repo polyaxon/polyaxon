@@ -1,4 +1,4 @@
-name: Traceml
+name: CLI
 
 on: [push, pull_request]
 
@@ -10,8 +10,10 @@ jobs:
         python-version: [3.5, 3.6, 3.7, 3.8, 3.9, '3.10', '3.11']
     steps:
     - run: |
-        pip install -U traceml
+        pip install -U polyaxon
+        polyaxon version
   tests:
+#    if: github.event.comment.body == 'test cli'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -30,14 +32,14 @@ jobs:
         which python
         python -m pip install --upgrade pip
     - name: Install dependencies
-      run: pip install -r traceml/traceml/requirements/test.txt
+      run: pip install -r cli/cli/requirements/test.txt
     - name: Install master dependencies
-      run: pip install -r traceml/traceml/requirements/master.txt
+      run: pip install -r cli/cli/requirements/master.txt
     - name: Install dev libraries
       run: |
-        cd traceml
-        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "traceml[dev]"
+        cd cli
+        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[dev,fsspec,init,sidecar]"
     - name: Test with pytest
       run: |
-        cd traceml/traceml
+        cd cli/cli
         pytest -vv

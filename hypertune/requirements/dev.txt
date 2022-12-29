@@ -1,6 +1,0 @@
-pandas
-ipython
-numpy
-scipy
-scikit-learn<1.1
-hyperopt==0.2.5

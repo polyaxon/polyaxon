@@ -1,6 +1,0 @@
-global-exclude *.py[cod]
-prune tests
-prune __pycache__
-include ../README.md
-include ../LICENSE
-include ../CONTRIBUTING.md

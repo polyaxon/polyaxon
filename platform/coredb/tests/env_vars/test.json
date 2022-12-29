@@ -1,9 +1,0 @@
-{
-  "POLYAXON_DB_ENGINE": "django.db.backends.postgresql",
-  "POLYAXON_DB_NAME": "polyaxon",
-  "POLYAXON_DB_USER": "polyaxon",
-  "POLYAXON_DB_PASSWORD": "polyaxon",
-  "POLYAXON_DB_HOST": "postgres",
-  "POLYAXON_DB_PORT": "5432",
-  "AUTH_USER_MODEL": "eedb.user"
-}

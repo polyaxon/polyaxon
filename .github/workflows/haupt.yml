@@ -1,0 +1,77 @@
+name: Haupt
+
+on: [push, pull_request]
+
+jobs:
+  library:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9, '3.10', '3.11']
+    steps:
+    - run: |
+        pip install -U haupt
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, '3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Upgrade pip
+      run: |
+        which python
+        python -m pip install --upgrade pip
+    - name: Install test dependencies
+      run: pip install -r haupt/haupt/requirements/test.txt
+    - name: Install platform test dependencies
+      run: pip install -r haupt/haupt/requirements/platform-test.txt
+    - name: Install dev dependencies
+      run: pip install -r haupt/haupt/requirements/dev.txt
+    - name: Install master dependencies
+      run: pip install -r haupt/haupt/requirements/master.txt
+    - name: Install required dependencies
+      run: pip install -r haupt/haupt/requirements/requirements.txt
+    - name: Install platform dependencies
+      run: pip install -r haupt/haupt/requirements/platform.txt
+    - name: Install streams dependencies
+      run: pip install -r haupt/haupt/requirements/streams.txt
+    - name: Test with sqlite locally
+      run: |
+        cd haupt
+        cmd/test local-sqlite
+  container-sqlite-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+    - name: build
+      run: |
+        cd haupt
+        cmd/rebuild
+    - name: test
+      run: |
+        cd haupt
+        cmd/test container-sqlite
+  container-pgsql-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+    - name: build
+      run: |
+        cd haupt
+        cmd/rebuild
+    - name: test
+      run: |
+        cd haupt
+        cmd/test container-pgsql

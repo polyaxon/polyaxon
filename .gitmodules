@@ -1,0 +1,24 @@
+[submodule "cli"]
+	path = cli
+	url = git@github.com:polyaxon/cli.git
+[submodule "datatile"]
+	path = datatile
+	url = git@github.com:polyaxon/datatile.git
+[submodule "haupt"]
+	path = haupt
+	url = git@github.com:polyaxon/haupt.git
+[submodule "hypertune"]
+	path = hypertune
+	url = git@github.com:polyaxon/hypertune
+[submodule "traceml"]
+	path = traceml
+	url = git@github.com:polyaxon/traceml.git
+[submodule "charts"]
+	path = charts
+	url = git@github.com:polyaxon/charts
+[submodule "mloperator"]
+	path = mloperator
+	url = git@github.com:polyaxon/mloperator
+[submodule "sdks"]
+	path = sdks
+	url = git@github.com:polyaxon/sdks

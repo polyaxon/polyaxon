@@ -19,6 +19,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: true
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -28,11 +30,14 @@ jobs:
         which python
         python -m pip install --upgrade pip
     - name: Install dependencies
-      run: pip install -r requirements/test.txt
+      run: pip install -r hypertune/hypertune/requirements/test.txt
     - name: Install master dependencies
-      run: pip install -r hypertune/requirements/master.txt
-    - name: Test with pytest
+      run: pip install -r hypertune/hypertune/requirements/master.txt
+    - name: Install dev libraries
       run: |
         cd hypertune
-        pip install -e ".[dev]"
+        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "hypertune[dev]"
+    - name: Test with pytest
+      run: |
+        cd hypertune/hypertune
         pytest -vv
