@@ -38,7 +38,7 @@ jobs:
     - name: Install dev libraries
       run: |
         cd cli
-        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[dev,fsspec,init,sidecar]"
+        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[dev,k8s_async,fsspec,init,sidecar]"
     - name: Test with pytest
       run: |
         cd cli/cli
