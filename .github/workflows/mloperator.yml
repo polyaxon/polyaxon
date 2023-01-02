@@ -11,6 +11,8 @@ jobs:
       with:
         go-version: 1.17.1
     - uses: actions/checkout@v3
+      with:
+        submodules: true
     - uses: helm/kind-action@v1.4.0
     - name: test
       env:
@@ -26,6 +28,7 @@ jobs:
         sudo mv /tmp/kubebuilder /usr/local/kubebuilder
         export PATH=$PATH:/usr/local/kubebuilder/bin
         cd mloperator
+        ls -ltr
         go version
         go install
         make test
