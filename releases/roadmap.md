@@ -1,7 +1,7 @@
 ---
 title: "Roadmap"
 sub_link: "roadmap"
-code_link: "releases/roadmap.md"
+code_link: "https://github.com/polyaxon/polyaxon/blob/master/releases/roadmap.md"
 meta_title: "Polyaxon Roadmap and upcoming release notes - Polyaxon Releases"
 meta_description: "Polyaxon roadmap, release notes, migrations, and deprecation notes."
 visibility: public
