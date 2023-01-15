@@ -1,7 +1,7 @@
 ---
 title: "Custom tuner"
 sub_link: "optimization-engine/tuner"
-code_link: " core/polyaxon/polyflow/matrix/tuner.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/matrix/tuner.py"
 meta_title: "Custom tuner - Polyaxonfile Specification Sections - Polyaxon References"
 meta_description: "Customizing the default tuners' logic - Polyaxonfile Specification Sections."
 visibility: public

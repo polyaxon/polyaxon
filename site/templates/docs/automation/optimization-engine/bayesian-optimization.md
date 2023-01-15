@@ -1,7 +1,7 @@
 ---
 title: "Bayesian Optimization"
 sub_link: "optimization-engine/bayesian-optimization"
-code_link: " core/polyaxon/polyflow/matrix/bayes.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/matrix/bayes.py"
 meta_title: "Polyaxon Optimization Engine - Bayesian Optimization Specification - Polyaxon References"
 meta_description: "Bayesian optimization is an extremely powerful technique. The main idea behind it is to compute a posterior distribution over the objective function based on the data, and then select good points to try with respect to this distribution.
 The way Polyaxon performs bayesian optimization is by measuring the expected increase in the maximum objective value seen over all experiments in the group, given the next point we pick."

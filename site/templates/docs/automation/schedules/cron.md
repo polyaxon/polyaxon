@@ -1,7 +1,7 @@
 ---
 title: "Cron Schedules"
 sub_link: "schedules/cron"
-code_link: " core/polyaxon/polyflow/schedule/cron.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/schedule/cron.py"
 meta_title: "Cron Schedules - Polyaxon Automation"
 meta_description: "Cron schedules to trigger components repeatedly using a cron definition."
 visibility: public

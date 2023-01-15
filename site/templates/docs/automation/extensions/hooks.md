@@ -1,7 +1,7 @@
 ---
 title: "Hooks Specification"
 sub_link: "extensions/hooks"
-code_link: " core/polyaxon/polyflow/hooks/__init__.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/hooks/__init__.py"
 meta_title: "Hooks - Polyaxon Specification"
 meta_description: "Hooks for sending webhooks and alerts on Slack/Discord/... when a job fails, succeeds, stops... and integrating with external systems"
 visibility: public

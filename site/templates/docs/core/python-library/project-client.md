@@ -1,7 +1,7 @@
 ---
 title: "Project Client Reference"
 sub_link: "python-library/project-client"
-code_link: " core/polyaxon/client/project.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/client/project.py"
 meta_title: "Project client - Polyaxon References"
 meta_description: "The project client allows to communicate with project APIs."
 visibility: public

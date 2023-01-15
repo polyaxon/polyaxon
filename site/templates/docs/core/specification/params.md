@@ -1,7 +1,7 @@
 ---
 title: "Params Specification"
 sub_link: "specification/params"
-code_link: " core/polyaxon/polyflow/params/params.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/params/params.py"
 meta_title: "Params - Polyaxon Specification"
 meta_description: "Params can provide values to inputs/outputs."
 visibility: public

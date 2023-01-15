@@ -2,7 +2,7 @@
 title: "Interval Schedules"
 sub_link: "schedules/interval"
 meta_title: "Interval Schedules - Polyaxon Automation"
-code_link: " core/polyaxon/polyflow/schedule/interval.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/schedule/interval.py"
 meta_description: "Interval schedules to trigger components following a specific interval."
 visibility: public
 status: published

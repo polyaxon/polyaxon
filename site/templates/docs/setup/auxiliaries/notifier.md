@@ -1,7 +1,7 @@
 ---
 title: "Notifier job setup"
 sub_link: "auxiliaries/notifier"
-code_link: " core/polyaxon/auxiliaries/notifier.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/auxiliaries/notifier.py"
 meta_title: "Polyaxon's Auxiliary Containers - Polyaxon Notifier"
 meta_description: "Polyaxon notifier is a helper job that gets scheduled to handle post-done events and send webhooks for operations annotated with `hooks` or `notifications`."
 visibility: public

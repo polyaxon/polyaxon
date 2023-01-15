@@ -1,7 +1,7 @@
 ---
 title: "Service Specification"
 sub_link: "services/specification"
-code_link: " core/polyaxon/polyflow/run/service.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/run/service.py"
 meta_title: "Service Specification - Experimentation"
 meta_description: "Services are used to expose dashboards and APIs, run notebooks, JupyterHub, Tensorboards, Streamlit, Voila, ..."
 visibility: public

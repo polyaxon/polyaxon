@@ -1,7 +1,7 @@
 ---
 title: "Connection specification"
 sub_link: "connections/specification"
-code_link: " core/polyaxon/schemas/types/connections.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/schemas/types/connections.py"
 meta_title: "Connections - Polyaxon Specification"
 meta_description: "Connections are how Polyaxon connects several types of external system and resources to your operations."
 visibility: public
