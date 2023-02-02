@@ -26,7 +26,7 @@ If you run with a high workload, or have concerns about fitting the pending work
 then RabbitMQ is an ideal candidate for backing Polyaxon’s asynchronous workers.
 
 ```yaml
-rabbitmq-ha:
+rabbitmq:
   enabled: true
 ```
 

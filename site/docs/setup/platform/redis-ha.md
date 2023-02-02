@@ -14,7 +14,7 @@ tags:
 sidebar: "setup"
 ---
 
-Polyaxon ships with a default redis based on the stable [Helm chart](https://github.com/helm/charts/tree/master/stable/redis).
+Polyaxon ships with a default redis based on the stable [Helm chart](https://github.com/bitnami/charts/tree/main/bitnami/redis).
 
 You can check the chart values to extend its configuration.
 

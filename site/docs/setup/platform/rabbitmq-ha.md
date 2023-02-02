@@ -14,7 +14,7 @@ tags:
 sidebar: "setup"
 ---
 
-Polyaxon ships with a default Rabbitmq based on the stable [Helm chart](https://github.com/helm/charts/tree/master/stable/rabbitmq-ha).
+Polyaxon ships with a default Rabbitmq based on the stable [Helm chart](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq).
 
 You can check the chart values to extend its configuration.
 
@@ -27,7 +27,7 @@ you need to disable the in-cluster Rabbitmq, and provide the information needed 
 ```yaml
 broker: rabbitmq
 
-rabbitmq-ha:
+rabbitmq:
   enabled: false
 
 externalServices:

@@ -26,7 +26,7 @@ You can deploy an in-cluster NFS provisioner to simplify the creation of ReadWri
 
 This guide shows how to use the NFS provisioner to mount data to your jobs and experiments.
 
-The [nfs-provisioner chart](https://github.com/helm/charts/tree/master/stable/nfs-server-provisioner) provides a stable Helm chart, to easily deploy and spin NFS-volumes to use with Polyaxon.
+The [nfs-provisioner chart](https://github.com/bitnami/charts/tree/main/bitnami/nfs-server-provisioner) provides a stable Helm chart, to easily deploy and spin NFS-volumes to use with Polyaxon.
 
 ## Install Helm
 
@@ -49,7 +49,7 @@ kubectl create namespace polyaxon
 helm install plx-nfs stable/nfs-server-provisioner --namespace=polyaxon
 ```
 
-Create volumes to be used as [data store](https://github.com/helm/charts/tree/master/stable/nfs-server-provisioner#recommended-persistence-configuration-examples).
+Create volumes to be used as [data store](https://github.com/bitnami/charts/tree/main/bitnami/nfs-server-provisioner#recommended-persistence-configuration-examples).
 
 ## Use the PVC to mount data to your experiments and jobs in Polyaxon
 

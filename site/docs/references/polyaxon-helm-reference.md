@@ -23,9 +23,9 @@ a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) p
 
 It also packages some required dependencies for Polyaxon:
 
- * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
- * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
- * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq-ha)
+ * [PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+ * [Redis](https://github.com/bitnami/charts/tree/main/bitnami/redis)
+ * [Rabbitmq](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
 
 > **Note**: It's possible to provide your own managed version of each one for these dependencies.
 
@@ -153,9 +153,9 @@ You can also provide different annotations for the ingress and it will not use `
 
 Note: using TLS requires either:
  - a preconfigured secret with the TLS secrets in it
- - or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
+ - or the user of [cert-manager](https://github.com/bitnami/charts/tree/main/bitnami/cert-manager) to auto request certs from let's encrypt and store them in a secret.
 
-It's also possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
+It's also possible to use a service like [externalDNS](https://github.com/bitnami/charts/tree/main/bitnami/external-dns) to auto create the DNS entry for the polyaxon API service.
 
 ## Securing API server with TLS
 
@@ -166,8 +166,8 @@ then set the secret name in the values file.
 
 To automate the creation and registration of new domain name you can use the following services:
 
-* [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager)
-* [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) (Route53 / Google CloudDNS)
+* [cert-manager](https://github.com/bitnami/charts/tree/main/bitnami/cert-manager)
+* [externalDNS](https://github.com/bitnami/charts/tree/main/bitnami/external-dns) (Route53 / Google CloudDNS)
 
 once installed, you can set the values for `ingress.tls`:
 
@@ -542,7 +542,7 @@ Dependent charts can also have values overwritten. Preface values with
 
  * `postgresql.*`
  * `redis.*`
- * `rabbitmq-ha.*`
+ * `rabbitmq.*`
 
 
 Polyaxon provides a list of options to select which nodes should be used for the core platform, for the dependencies, and for the runs.
@@ -574,7 +574,7 @@ redis:
     nodeSelector:
       ...
 
-rabbitmq-ha:
+rabbitmq:
   nodeSelector:
     ...
 ```
@@ -601,7 +601,7 @@ redis:
     tolerations:
       ...
 
-rabbitmq-ha:
+rabbitmq:
   tolerations:
     ...
 ```
@@ -647,7 +647,7 @@ redis:
     affinity:
       ...
 
-rabbitmq-ha:
+rabbitmq:
   affinity:
     ...
 ```

@@ -68,7 +68,7 @@ Or using Polyaxon CLI
 polyaxon port-forward -r agent
 ```
 
-> **Note**: `[-r/--release-name]` could be different if you deployed with a different release name 
+> **Note**: `[-r/--release-name]` could be different if you deployed with a different release name
 
 ## Ingress and Gateway service
 
@@ -92,9 +92,9 @@ If you enable ingress, please set the gateway service type value to:
 
 Note: using TLS requires either:
  - a preconfigured secret with the TLS secrets in it
- - or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
+ - or the user of [cert-manager](https://github.com/bitnami/charts/tree/main/bitnami/cert-manager) to auto request certs from let's encrypt and store them in a secret.
 
-It's also possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
+It's also possible to use a service like [externalDNS](https://github.com/bitnami/charts/tree/main/bitnami/external-dns) to auto create the DNS entry for the polyaxon API service.
 
 ### Ingress Annotations
 
@@ -120,8 +120,8 @@ then set the secret name in the values file.
 
 To automate the creation and registration of new domain name you can use the following services:
 
-* [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager)
-* [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) (Route53 / Google CloudDNS)
+* [cert-manager](https://github.com/bitnami/charts/tree/main/bitnami/cert-manager)
+* [externalDNS](https://github.com/bitnami/charts/tree/main/bitnami/external-dns) (Route53 / Google CloudDNS)
 
 once installed, you can set the values for `ingress.tls`:
 
@@ -159,7 +159,7 @@ annotations:
     spec:
       domains:
         - polyaxon.acme.com
-    ``` 
+    ```
  3. The gateway must be changed to use a node port service type in GKE for the ingress to function correctly:
     ```yaml
     gateway:
