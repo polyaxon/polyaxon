@@ -21,11 +21,14 @@ jobs:
         config: [default, test-config1, test-config2]  # TODO: re-enable test-config3
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: azure/setup-helm@v2.1
       - uses: helm/kind-action@v1.4.0
       - name: generate
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
+          cd charts
           helm dependency build polyaxon
           helm dependency build agent
       - uses: actions/setup-python@v4
@@ -37,5 +40,5 @@ jobs:
         run: |
           export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
           pip3 install -r charts/ci/master-requirements.txt
-          polyaxon admin deploy -f charts/ci/${{ matrix.config }}.yml --manager-path=./polyaxon
+          polyaxon admin deploy -f charts/ci/${{ matrix.config }}.yml --manager-path=charts/polyaxon
           polyaxon admin teardown
