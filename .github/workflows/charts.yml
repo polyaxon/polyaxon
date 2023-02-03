@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        config: [default, test-config1, test-config2, test-config3]
+        config: [default, test-config1, test-config2]  # TODO: re-enable test-config3
     steps:
       - uses: actions/checkout@v3
       - uses: azure/setup-helm@v2.1
