@@ -8,7 +8,6 @@
 [![GitHub](https://img.shields.io/badge/roadmap-github-blue?style=flat&logo=github&longCache=true)](https://github.com/orgs/polyaxon/projects/5)
 
 [![CLI](https://github.com/polyaxon/polyaxon/actions/workflows/cli.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/cli.yml)
-[![Datatile](https://github.com/polyaxon/polyaxon/actions/workflows/datatile.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/datatile.yml)
 [![Haupt](https://github.com/polyaxon/polyaxon/actions/workflows/haupt.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/haupt.yml)
 [![Hypertune](https://github.com/polyaxon/polyaxon/actions/workflows/hypertune.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/hypertune.yml)
 [![Traceml](https://github.com/polyaxon/polyaxon/actions/workflows/traceml.yml/badge.svg)](https://github.com/polyaxon/polyaxon/actions/workflows/traceml.yml)

@@ -1,9 +1,6 @@
 [submodule "cli"]
 	path = cli
 	url = git@github.com:polyaxon/cli.git
-[submodule "datatile"]
-	path = datatile
-	url = git@github.com:polyaxon/datatile.git
 [submodule "haupt"]
 	path = haupt
 	url = git@github.com:polyaxon/haupt.git
