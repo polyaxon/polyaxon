@@ -19,4 +19,6 @@ All runs in Polyaxon has some similar characteristics, based on the [component/o
    * name, description, and tags
    * inputs/outputs
 
-![run-overview](../../../../content/images/dashboard/runs/overview.png)
+![run-overview](../../../../content/images/dashboard/runs/overview1.png)
+
+![run-overview](../../../../content/images/dashboard/runs/overview2.png)

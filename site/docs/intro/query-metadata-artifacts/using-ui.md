@@ -14,7 +14,7 @@ sidebar: "intro"
 
 ## Overview
 
-The UI's runs table provides the interface to interact with the runs started by the scheduling logic or logged using the tracking module. 
+The UI's runs table provides the interface to interact with the runs started by the scheduling logic or logged using the tracking module.
 It has several features for filtering, sorting, comparing, and visualizing the runs history:
 
 ![table-search-runs](../../../../content/images/dashboard/query-metadata-artifacts/table-search-runs.png)
@@ -37,7 +37,7 @@ The search configuration above can be saved to a CSV file by clicking the `Actio
 
 ![runs-table-csv](../../../../content/images/dashboard/query-metadata-artifacts/runs-table-csv.png)
 
-## Getting more information about the runs 
+## Getting more information about the runs
 
 In order to view and explore the runs in the table, we can view each run in the flyout mode:
 
@@ -45,16 +45,16 @@ In order to view and explore the runs in the table, we can view each run in the 
 
 ## Downloading artifacts for single runs
 
-Polyaxon provides an `artifacts` tab to view, navigate, render, and download the artifacts: 
+Polyaxon provides an `artifacts` tab to view, navigate, render, and download the artifacts:
 
  * All artifacts
 
 ![run-download-artifacts](../../../../content/images/dashboard/query-metadata-artifacts/run-download-artifacts.png)
-  
- * Specific file or dir based on a path 
+
+ * Specific file or dir based on a path
 
 ![run-download-path](../../../../content/images/dashboard/query-metadata-artifacts/run-download-path.png)
 
  * Specific artifacts based on the lineage
- 
+
 ![run-download-lineage](../../../../content/images/dashboard/query-metadata-artifacts/run-download-lineage.png)
