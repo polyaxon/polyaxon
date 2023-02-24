@@ -23,28 +23,14 @@ sidebar: "releases"
 
  * **Enhancement**: Collect `hash` information for uploaded artifacts in the lineage metadata.
 
-### CE
-
- * **New**: Add support for agent based deployment.
-
 ### Hub
 
  * **New**: Add DVC(data version control) integration.
  * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
  * **New**: Allow registering init containers as plugins with a hub reference.
 
-### Agent
-
- * **New**: Allow multi-namespace management.
- * **New**: Add support for managing multiple artifacts stores using a single deployment.
- * **New**: Add support for multi-connections management and mounting of multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
- * **New**: (Beta) Add cluster and namespace monitoring:
-   * Show nodes's states and health.
-   * Show nodes's CPU/Memory/GPU consumption.
-
 ### Deployment
 
- * **Security**: Fix CVE issues.
  * **Enhancement**: Allow passing custom labels to the Helm charts.
 
 ### Client
@@ -67,7 +53,6 @@ sidebar: "releases"
 
  * **New**: Reports; new interface to create dashboards and shareable notes.
  * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
- * **New**: Add Metrics/Params correlation and importance.
  * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
  * **New**: Add connection information to artifacts lineage.
  * **New**: Add new advanced filters, allow filtering the runs in the comparison table based on:
@@ -83,6 +68,7 @@ sidebar: "releases"
    * video events.
    * image events.
    * histogram events.
+ * **New**: UI to pass parameters and check their types automatically.
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
  * **Enhancement**: Do not render large artifacts and provide preview button.
