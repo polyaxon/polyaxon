@@ -1,10 +1,12 @@
 - groups:
-  - group: V1
+  - group: V2
     items:
     - title: Roadmap
       link: /docs/releases/roadmap/
     - title: V2.0 [WIP]
       link: /docs/releases/2-0/
+  - group: V1
+    items:
     - title: V1.22
       link: /docs/releases/1-22/
     - title: V1.21
