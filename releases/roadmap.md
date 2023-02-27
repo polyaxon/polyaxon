@@ -29,9 +29,6 @@ sidebar: "releases"
  * **New**: Add support for ssh connection to allow connecting VSCode and Pycharm.
  * **New**: Allow registering init containers as plugins with a hub reference.
 
-### Deployment
-
- * **Enhancement**: Allow passing custom labels to the Helm charts.
 
 ### Client
 
