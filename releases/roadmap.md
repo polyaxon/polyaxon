@@ -83,9 +83,6 @@ sidebar: "releases"
 
 ### Commercial
 
- * **New**: Project and organization info pages redesign.
- * **New**: Add cross-projects artifact/component/model versions view similar to `All Runs`.
- * **New**: Add a new tab to explore unregistered artifact/component/model versions under each project.
  * **New**: Add notification center to allow users to control and manage notifications using the UI.
  * **New**: Add selection reports, this is similar to selection in v0 but the new implementation will support all the new features and dashboard flexibility (events, artifacts, lineages, comparison, custom columns selection, multi-field sorting, ...):
    * Allows adding single runs to a report from the run's overview page.
@@ -103,6 +100,5 @@ sidebar: "releases"
  * **Enhancement**: Add possibility to save custom analytics searches.
  * **Enhancement**: Add more informative messages and handling when scaling down usage/agents/seats or when downgrading to a plan missing a specific feature.
  * **Enhancement**: Add support for resuming pipelines and matrix operations.
- * **Enhancement**: Improve resuming or restarting an operation that is part of a pipeline.
  * **Enhancement**: Investigate the new `suspend` feature to provide immediate concurrency change instead of the current [draining logic](/faq/How-does-changing-concurrency-work/).
  * **Fix**: Regression in metric early stopping policies.
