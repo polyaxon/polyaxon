@@ -28,8 +28,6 @@ Polyaxon's Python library is a high level Python module, you can use it to:
 pip install -U polyaxon
 ```
 
-N.B. `polyaxon` library is Python 3.5+ package, if you are still using Python 2 `polyaxon-sdk` is python 2/3 compatible.
-
 ## CLI
 
 [Polyaxon CLI](/docs/core/cli/) is a tool and a client to interact with Polyaxon, it allows you to manage your cluster, projects, and experiments.

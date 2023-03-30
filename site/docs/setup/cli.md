@@ -22,8 +22,6 @@ To install it simply run:
 pip install -U polyaxon
 ```
 
-N.B. `polyaxon` library is a Python 3.5+ package, if you are still using Python 2 `polyaxon-sdk` is Python 2/3 compatible.
-
 ## Configure
 
 In order for Polyaxon CLI to work correctly,
