@@ -56,7 +56,7 @@ jobs:
     - name: build
       run: |
         cd haupt
-        cmd/rebuild
+        cmd/rebuild/amd
     - name: test
       run: |
         cd haupt
@@ -70,7 +70,7 @@ jobs:
     - name: build
       run: |
         cd haupt
-        cmd/rebuild
+        cmd/rebuild/amd
     - name: test
       run: |
         cd haupt
