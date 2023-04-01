@@ -10,7 +10,7 @@ jobs:
       - name: Fetch history
         run: git fetch --prune --unshallow
       - name: Run chart-testing (lint)
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
         with:
           command: lint
           config: charts/ci/ct.yaml
