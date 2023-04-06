@@ -33,8 +33,10 @@ jobs:
         python -m pip install --upgrade pip
     - name: Install dependencies
       run: pip install -r cli/cli/requirements/test.txt
-    - name: Install master dependencies
-      run: pip install -r cli/cli/requirements/master.txt
+    - name: traceml
+      run: pip install -e traceml/traceml
+    - name: hypertune
+      run: pip install -e hypertune/hypertune
     - name: Install dev libraries
       run: |
         cd cli

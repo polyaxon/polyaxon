@@ -11,7 +11,7 @@ jobs:
     steps:
     - run: |
         pip install -U haupt
-  tests:
+  local-tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,8 +35,12 @@ jobs:
       run: pip install -r haupt/haupt/requirements/platform-test.txt
     - name: Install dev dependencies
       run: pip install -r haupt/haupt/requirements/dev.txt
-    - name: Install master dependencies
-      run: pip install -r haupt/haupt/requirements/master.txt
+    - name: cli
+      run: pip install -e cli/cli
+    - name: traceml
+      run: pip install -e traceml/traceml
+    - name: hypertune
+      run: pip install -e hypertune/hypertune
     - name: Install required dependencies
       run: pip install -r haupt/haupt/requirements/requirements.txt
     - name: Install platform dependencies
