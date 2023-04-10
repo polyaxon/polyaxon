@@ -16,6 +16,7 @@ sidebar: "releases"
 ### Core
 
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
+ * **New**: Add support for HuggingFace (huggingface_hub) `hf://` filesystem.
  * **Enhancement**: Add mid-runtime update with `apply` logic.
  * **Enhancement**: Improve `modelRef` and `artifactRef` initialization process and allow passing custom init path to not force the user to know the run uuid.
 
