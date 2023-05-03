@@ -23,7 +23,7 @@ In this sections we will learn how to run components interactively inside a Jupy
 ## Overview
 
 [Notebooks](https://jupyter.org/) allow users to create and share documents that contain live code,
-visualizations and explanatory texts. 
+visualizations and explanatory texts.
 Notebooks are great for interactively writing and debugging your code and visualizing your results and data.
 
 ## Start a notebook
@@ -48,7 +48,7 @@ hubRef: jupyterlab:tensorflow
 runPatch:
   container:
     resources:
-      requests: 
+      requests:
         cpu: 200m
         gpu: 1
         memory: 512
@@ -108,7 +108,7 @@ We will programmatically schedule some experiments from the notebook, all experi
 Each one of those experiments will be managed separately by Polyaxon and will create a new record under the runs table in the database.
 
 ```python
-from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager
+from polyaxon.polytune.search_managers.grid_search import GridSearchManager
 from polyaxon.polyflow import V1GridSearch, V1HpChoice, V1HpLinSpace
 from polyaxon.client import RunClient
 
@@ -162,12 +162,12 @@ Install some plotting dependencies
 !pip install plotly hiplot
 ```
 
-If you are using Jupyter notebook you can skip this step, otherwise, to use Plotly Express in JupyterLab, 
+If you are using Jupyter notebook you can skip this step, otherwise, to use Plotly Express in JupyterLab,
 you will need to install the express extension (mode details can be found [in Plotly troubleshooting page](https://plotly.com/python/troubleshooting/#jupyterlab-problems)), in a new terminal run and reload the notebook:
 
 ```bash
 jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyterlab-plotly
-``` 
+```
 
 Plot a line chart
 
