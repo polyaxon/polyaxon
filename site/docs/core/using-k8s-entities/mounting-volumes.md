@@ -1,3 +1,4 @@
+
 ---
 title: "How to mount volumes manually"
 sub_link: "using-k8s-entities/mounting-volumes"
@@ -32,7 +33,7 @@ kind: component
 ...
 run:
   kind: job
-  
+
   volumes:
   - name: volume1
     persistentVolumeClaim:
@@ -44,14 +45,14 @@ run:
     volumeMounts:
     - name: volume1
       mountPath: /mnt1/vol1/path
-  - name: volume2
+    - name: volume2
       mountPath: /mnt2/vol2/path
 ```
 
 ## Moving Volumes to connections
 
-If you find yourself defining the same volumes in all operations, or if you have non-Kubernetes experts using Polyaxon, 
-we suggest that you define those volumes as [connections](/integrations/data-on-pvc/), by doing so, 
+If you find yourself defining the same volumes in all operations, or if you have non-Kubernetes experts using Polyaxon,
+we suggest that you define those volumes as [connections](/integrations/data-on-pvc/), by doing so,
 users of the cluster will just request those volumes using a single line:
 
 ```yaml
