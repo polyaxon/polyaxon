@@ -1,4 +1,3 @@
-
 ---
 title: "How to mount volumes manually"
 sub_link: "using-k8s-entities/mounting-volumes"
