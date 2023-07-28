@@ -78,7 +78,7 @@ Polyaxon exposes a flow engine that enables users to author workflows and DAGs w
  * Caching
  * Concurrency and parallelism
  * Native integration with team management, ACL, and RBAC rules
- * Native support for ML workload: Kubeflow Operators, Hyperparameter tuning, Spark jobs, Dask Jobs...
+ * Native support for ML workload: Kubeflow Operators, Hyperparameter tuning, Ray jobs, Dask Jobs...
 
 
 ## Built-in Optimization engine
@@ -115,8 +115,8 @@ Deploy Polyaxon with sensible user roles and permissions from the start.
 - **Billing:** Can see/edit billing information and subscription details only.
 - **Owners:** Gains full permission across the organization. Can manage members as well as perform catastrophic operations such as removing the organization.
 
-Polyaxon also comes with a concept called `Team` that allows you to promote a user role on specific teams, 
-e.g. an organization wide viewer can have the member or admin role on a specific team. 
+Polyaxon also comes with a concept called `Team` that allows you to promote a user role on specific teams,
+e.g. an organization wide viewer can have the member or admin role on a specific team.
 All projects that authorize that team will give the additional permissions to that user with the global viewer role.
 
 ## Queuing & Scheduling

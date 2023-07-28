@@ -61,7 +61,7 @@ Polyaxon supports distributed jobs for model training or data processing via sev
  * [TFJob](/docs/experimentation/distributed/tf-jobs/)
  * [MpiJob](/docs/experimentation/distributed/mpi-jobs/)
  * [PytorchJob](/docs/experimentation/distributed/pytorch-jobs/)
- * [SparkJob](/docs/experimentation/distributed/spark-jobs/)
+ * [RayJob](/docs/experimentation/distributed/ray-jobs/)
  * [DaskJob](/docs/experimentation/distributed/dask-jobs/)
 
 <blockquote class="light">Please refer to <a href="/docs/experimentation/distributed/">experimentation/distrbuted-jobs</a> for more details.</blockquote>

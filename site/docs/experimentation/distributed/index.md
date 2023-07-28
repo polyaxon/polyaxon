@@ -3,7 +3,7 @@ title: "Distributed Jobs"
 sub_link: "distributed"
 is_index: true
 meta_title: "Distributed Jobs in Polyaxon - Experimentation"
-meta_description: "Polyaxon supports distributed jobs for training or data processing via TF-Job, MPI-Job, Pytorch-Job, Spark-Job, Dask-Job."
+meta_description: "Polyaxon supports distributed jobs for training or data processing via TF-Job, MPI-Job, Pytorch-Job, Ray-Job, Dask-Job."
 tags:
   - concepts
   - polyaxon
@@ -45,11 +45,11 @@ Please check the [MXNetJob](/docs/experimentation/distributed/mxnet-jobs/) guide
 
 Please check the [XGBoostJob](/docs/experimentation/distributed/xgboost-jobs/) guide to learn about all details for running XGBoostJobs in Polyaxon.
 
-## Spark
+## Ray
 
-In order to run SparkJobs you will need to deploy the spark-on-k8s-operator before executing a job from Polyaxon.
+In order to run RayJobs you will need to deploy the kuberay before executing a job from Polyaxon.
 
-Please check the [SparkJob](/docs/experimentation/distributed/spark-jobs/) guide to learn about all details for running SparkJobs in Polyaxon.
+Please check the [RayJob](/docs/experimentation/distributed/ray-jobs/) guide to learn about all details for running RayJobs in Polyaxon.
 
 ## Dask
 
