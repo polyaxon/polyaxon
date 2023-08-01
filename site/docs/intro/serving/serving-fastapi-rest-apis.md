@@ -16,14 +16,14 @@ sidebar: "intro"
 ## Overview
 
 In the previous guide we trained several models. In this section we will learn how to deploy a serving REST API with FastAPI.
-This is an example of creating a REST API that you can host using Polyaxon, this type of APIs are intended for internal use or for testing purposes 
-before moving to a platform that specializes in serving or inference. 
+This is an example of creating a REST API that you can host using Polyaxon, this type of APIs are intended for internal use or for testing purposes
+before moving to a platform that specializes in serving or inference.
 
 The same principles in this guides can be used to deploy similar REST APIs using any other framework of your choice.
 
 All code and manifests used in this tutorial can be found in this [github repo](https://github.com/polyaxon/polyaxon-ml-serving).
 
-> **Note**: On Polyaxon EE or Polyaxon Cloud, the REST APIs will be protected and can only be accessed by users who have access to your organization following the permissions defined for each member. 
+> **Note**: On Polyaxon EE or Polyaxon Cloud, the REST APIs will be protected and can only be accessed by users who have access to your organization following the permissions defined for each member.
 
 ## Logged model
 
@@ -141,7 +141,7 @@ run:
 
 ## Scheduling the service
 
-To schedule this REST API with Polyaxon: 
+To schedule this REST API with Polyaxon:
 
 ```bash
 polyaxon run -f fastapi-serving/polyaxonfile.yaml -P uuid=f8176c9463a345908ce6865c9c7894a9
@@ -153,7 +153,7 @@ You can now interact with the service using Python or curl. You can get the serv
 
 ```bash
 polyaxon ops service --external --url
-``` 
+```
 
 You can also retrieve the URL by going to the service tab and click fullscreen:
 
