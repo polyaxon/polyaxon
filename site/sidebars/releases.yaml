@@ -7,6 +7,8 @@
       link: /docs/releases/2-0/
   - group: V1
     items:
+    - title: V1.26
+      link: /docs/releases/1-26/
     - title: V1.25
       link: /docs/releases/1-25/
     - title: V1.24
