@@ -6,7 +6,7 @@ jobs:
   lint-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Fetch history
         run: git fetch --prune --unshallow
       - name: Run chart-testing (lint)
@@ -20,7 +20,7 @@ jobs:
       matrix:
         config: [default, test-config1, test-config2]  # TODO: re-enable test-config3
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
       - uses: azure/setup-helm@v3.5
