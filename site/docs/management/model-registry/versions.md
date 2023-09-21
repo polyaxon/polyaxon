@@ -49,7 +49,7 @@ You can create your model versions using the CLI, API, or the UI.
 ### CLI
 
 ```bash
-polyaxon models register -p OWNER_NAME/MODEL_NAME --version VERSION_NAME --description ... --tags tag1,tag2,... --artifacts model-name,env,asset-version 
+polyaxon models register -p OWNER_NAME/MODEL_NAME --version VERSION_NAME --description ... --tags tag1,tag2,... --artifacts model-name,env,asset-version
 ```
 
 ### Client
@@ -69,7 +69,7 @@ version = project_client.register_model_version(
 )
 ```
 
-> **Note**: You can use `force=True` to override a previous version registered with the same name.  
+> **Note**: You can use `force=True` to override a previous version registered with the same name.
 
 ### UI
 
@@ -127,9 +127,9 @@ from polyaxon.client import ProjectClient
 project_client = ProjectClient(project="ORGANIZATION/bot-detection")
 
 project_client.stage_model_version(
-    version="v1", 
-    stage=V1Stages.STAGING, 
-    reason="AirflowPipelineStageUpdate", 
+    version="v1",
+    stage=V1Stages.STAGING,
+    reason="AirflowPipelineStageUpdate",
     message="Tests passed and the model was automatically moved to staging",
 )
 ```
@@ -154,7 +154,7 @@ Or update specific info:
 polyaxon models update -ver ...
 ```
 
-and delete  
+and delete
 
 ```bash
 polyaxon models delete -ver ...
@@ -170,7 +170,7 @@ project_client = ProjectClient(project="ORGANIZATION/bot-detection")
 # Update
 project_client.patch_model_version(
     version="v1",
-    data={"description": "new description", "tags": ["new-tag1", "new-tag2"]} 
+    data={"description": "new description", "tags": ["new-tag1", "new-tag2"]}
 )
 
 # Delete
@@ -226,7 +226,7 @@ with tempfile.TemporaryDirectory() as d:
 # Promoting the run to a model version
 if some_condition:
     tracking.promote_to_model_version(
-        version="rc2", 
+        version="rc2",
         description="model promoted directly from the run",
         tags=["tag1", "tag2"],
         content={"key": "value"},

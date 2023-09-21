@@ -47,24 +47,26 @@ run:
 ## Python usage
 
 ```python
-from polyaxon.polyflow import V1Component, V1Job
-from polyaxon.k8s import k8s_schemas
+from polyaxon.schemas import V1Component, V1Job
+from polyaxon import k8s
+
 component = V1Component(
     run=V1Job(
-       sidecars=[
-            k8s_schemas.V1Container(
+        sidecars=[
+            k8s.V1Container(
                 name="sidecar1",
                 image="busybox:1.28",
-                resources=k8s_schemas.V1ResourceRequirements(requests={"memory": "256Mi", "cpu": "500m"}),
+                resources=k8s.V1ResourceRequirements(
+                    requests={"memory": "256Mi", "cpu": "500m"}),
                 command=['sh', '-c', 'echo sidecar1']
             ),
-            k8s_schemas.V1Container(
+            k8s.V1Container(
                 name="sidecar2",
                 image="busybox:1.28",
                 command=['sh', '-c', 'echo sidecar2']
             )
-       ],
-       container=k8s_schemas.V1Container(...)
+        ],
+        container=k8s.V1Container(...)
     )
 )
 ```

@@ -41,6 +41,7 @@ It's also possible to set the offline mode using the client directly:
 
 ```python
 from polyaxon.client import RunClient
+
 ...
 run_client = RunClient(..., is_offline=True, ...)
 ...
@@ -51,7 +52,7 @@ print(run_client.run_uuid)
 print(run_client.run_data)
 ...
 run_client.persist_run(path="/tmp/offline/")
-``` 
+```
 
 ## Resuming an offline run
 

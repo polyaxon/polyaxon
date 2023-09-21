@@ -44,12 +44,12 @@ run:
 The same example in Python:
 
 ```python
-from polyaxon.polyflow import V1Component, V1Service
-from polyaxon.k8s import k8s_schemas
+from polyaxon.schemas import V1Component, V1Service
+from polyaxon import k8s
 
 service = V1Service(
     ports=[8888],
-    container=k8s_schemas.V1Container(
+    container=k8s.V1Container(
         image="jupyter/tensorflow-notebook",
         command=["jupyter", "lab"],
         args=[

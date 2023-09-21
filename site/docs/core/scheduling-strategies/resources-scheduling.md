@@ -40,12 +40,12 @@ run:
 In Python
 
 ```python
-from polyaxon.k8s import k8s_schemas
+from polyaxon import k8s
 
-container = k8s_schemas.V1Container(
+container = k8s.V1Container(
     name="job",
     image="busybox:1.28",
-    resources=k8s_schemas.V1ResourceRequirements(requests={"nvidia.com/gpu": "2"}),
+    resources=k8s.V1ResourceRequirements(requests={"nvidia.com/gpu": "2"}),
     command=['sh', '...']
 )
 ```
@@ -71,14 +71,14 @@ run:
 In Python
 
 ```python
-from polyaxon.polyflow import V1Environment
-from polyaxon.k8s import k8s_schemas
+from polyaxon.schemas import V1Environment
+from polyaxon import k8s
 
 environment = V1Environment(node_selector={"cloud.google.com/gke-accelerator": "nvidia-tesla-p4"})
-container = k8s_schemas.V1Container(
+container = k8s.V1Container(
     name="job",
     image="busybox:1.28",
-    resources=k8s_schemas.V1ResourceRequirements(requests={"nvidia.com/gpu": "2"}),
+    resources=k8s.V1ResourceRequirements(requests={"nvidia.com/gpu": "2"}),
     command=['sh', '...']
 )
 ```
@@ -107,14 +107,14 @@ container:
 In Python
 
 ```python
-from polyaxon.polyflow import V1Environment
-from polyaxon.k8s import k8s_schemas
+from polyaxon.schemas import V1Environment
+from polyaxon import k8s
 
 environment = V1Environment(annotations={"tf-version.cloud-tpus.google.com": "1.12"})
-container = k8s_schemas.V1Container(
+container = k8s.V1Container(
     name="job",
     image="busybox:1.28",
-    resources=k8s_schemas.V1ResourceRequirements(limits={"cloud-tpus.google.com/v2": "8"}),
+    resources=k8s.V1ResourceRequirements(limits={"cloud-tpus.google.com/v2": "8"}),
     command=['sh', '...']
 )
 ```

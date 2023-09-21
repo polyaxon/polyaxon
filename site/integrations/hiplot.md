@@ -33,10 +33,10 @@ You can use the module [MultiRunPlot](/docs/experimentation/visualizations/progr
 ## Example
 
 ```python
-from polyaxon.polyplot import MultiRunPlot
+from polyaxon.client import RunClient
 
-client = MultiRunPlot()
-exp = client.get_hiplot(query="metrics.loss:<0.1")
+client = RunClient()
+exp = client.get_runs_as_hiplot(query="metrics.loss:<0.1")
 exp.display()
 ```
 

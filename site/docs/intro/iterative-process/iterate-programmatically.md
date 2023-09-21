@@ -68,9 +68,9 @@ This component does not use all sections that Polyaxon exposes, but similar logi
 
 ```python
 from polyaxon import types
-from polyaxon.k8s.k8s_schemas import V1Container
-from polyaxon.schemas.types import V1GitType
-from polyaxon.polyflow import V1Component, V1Init, V1IO, V1Job
+from polyaxon._k8s.k8s_schemas import V1Container
+from polyaxon._schemas.types import V1GitType
+from polyaxon.schemas import V1Component, V1Init, V1IO, V1Job
 
 inputs = [
     V1IO(name="conv1_size", type=types.INT, value=32, is_optional=True),
@@ -96,15 +96,15 @@ job = V1Job(
         working_dir="{{ globals.artifacts_path }}",
         command=["python3", "polyaxon-quick-start/model.py"],
         args=[
-          "--conv1_size={{ conv1_size }}",
-          "--conv2_size={{ conv2_size }}",
-          "--dropout={{ dropout }}",
-          "--hidden1_size={{ hidden1_size }}",
-          "--optimizer={{ optimizer }}",
-          "--conv_activation={{ conv_activation }}",
-          "--dense_activation={{ dense_activation }}",
-          "--learning_rate={{ learning_rate }}",
-          "--epochs={{ epochs }}"
+            "--conv1_size={{ conv1_size }}",
+            "--conv2_size={{ conv2_size }}",
+            "--dropout={{ dropout }}",
+            "--hidden1_size={{ hidden1_size }}",
+            "--optimizer={{ optimizer }}",
+            "--conv_activation={{ conv_activation }}",
+            "--dense_activation={{ dense_activation }}",
+            "--learning_rate={{ learning_rate }}",
+            "--epochs={{ epochs }}"
         ]
     ),
 )
@@ -122,13 +122,14 @@ component = V1Component(
 It's also possible to create a component and then assign the IO or the run fields after:
 
 ```python
-from polyaxon.polyflow import V1Cache, V1Component, V1Job
+from polyaxon.schemas import V1Cache, V1Component, V1Job
+
 ...
 component = V1Component()
 component.run = V1Job(...)
 component.queue = "agent/queue"
 component.cache = V1Cache(...)
-... 
+...
 ```
 
 ## Running the python manifests programmatically
@@ -137,7 +138,7 @@ In order to execute the previous component programmatically, we will use `RunCli
 
 ```python
 from polyaxon.client import RunClient
-from polyaxon.polyflow import V1Operation, V1Param
+from polyaxon.schemas import V1Operation, V1Param
 
 client = RunClient(...)
 
@@ -158,7 +159,7 @@ It's possible to pass additional override information with the operation:
 
 ```python
 from polyaxon.client import RunClient
-from polyaxon.polyflow import V1Environment, V1Operation, V1Param, V1Job
+from polyaxon.schemas import V1Environment, V1Operation, V1Param, V1Job
 
 client = RunClient(...)
 
@@ -180,19 +181,17 @@ client.create(content=operation)
 
 If you are running on Polyaxon EE or Polyaxon Cloud, you can also pass a matrix definition:
 
-
 ```python
 from polyaxon.client import RunClient
-from polyaxon.polyflow import (
-    V1Environment, 
-    V1Operation, 
-    V1Param, 
-    V1Job, 
-    V1RandomSearch, 
+from polyaxon.schemas import (
+    V1Environment,
+    V1Operation,
+    V1Param,
+    V1Job,
+    V1RandomSearch,
     V1HpChoice,
     V1HpLinSpace,
 )
-
 
 client = RunClient(...)
 
@@ -220,8 +219,8 @@ operation = V1Operation(
 
 client.create(content=operation)
 ```
- 
-## Running the python manifests with the CLI 
+
+## Running the python manifests with the CLI
 
 By using `V1Component` and `V1Operation` it's possible to extend Polyaxon beyond the interfaces exposed via the CLI, hence allowing users to create custom workflows.
 
@@ -233,16 +232,16 @@ We can start a new experiment by running the following command:
 
 ```bash
 polyaxon run -pm path/to/typed_experiment.py:component -P epochs=10 -l
-``` 
+```
 
 You probably noticed that we passed the name of the variable `component` in `typed_experiment.py:component`.
-This is how we tell the CLI to execute that component by providing a variable name, by default the CLI looks for a component named `main` otherwise it raises an error. 
+This is how we tell the CLI to execute that component by providing a variable name, by default the CLI looks for a component named `main` otherwise it raises an error.
 So we need to pass a name to point to a specific variable, which is also useful if the Python module has more than one component.
 
 For instance, if we have a Python file with 3 components:
 
 ```python
-from polyaxon.polyflow import V1Component
+from polyaxon.schemas import V1Component
 
 component1 = V1Component(...)
 component2 = V1Component(...)
@@ -250,7 +249,7 @@ main = V1Component(...)
 ```
 
 By running the following command:
- 
+
 ```bash
 polyaxon run -pm path/to/typed_experiment.py -P epochs=10 -l
 ```
@@ -263,5 +262,5 @@ polyaxon run -pm path/to/typed_experiment.py:component1 -P ...
 
 # component2
 polyaxon run -pm path/to/typed_experiment.py:component2 -P ...
-``` 
+```
 

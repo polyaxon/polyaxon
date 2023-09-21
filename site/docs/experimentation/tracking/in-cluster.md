@@ -18,7 +18,7 @@ sidebar: "experimentation"
 
 ## Overview
 
-When calling tracking module in-cluster, Polyaxon performs a couple of checks to automatically load a context defined by the scheduler. 
+When calling tracking module in-cluster, Polyaxon performs a couple of checks to automatically load a context defined by the scheduler.
 Additionally, this context contains a scoped token to communicate with the API to only authorize the job or service to perform requests to accessible entities only.
 
 ## In-cluster tracking
@@ -29,7 +29,7 @@ If you are running an experiment in-cluster:
 
 from random import random, randint
 
-from polyaxon.polyboard.artifacts import V1ArtifactKind
+from polyaxon.schemas import V1ArtifactKind
 from polyaxon import tracking
 
 if __name__ == "__main__":
@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     # Log additional parameter
     tracking.log_inputs(param1=randint(0, 100))
-    
+
     # Log additional tags
     tracking.log_tags(["foo", "bar"])
 
@@ -46,9 +46,9 @@ if __name__ == "__main__":
     tracking.log_metric(name="metric1", value=random(), step=OPTIONAL, timestamp=OPTIONAL)
     # Log multiple metrics at once
     tracking.log_metrics(metric2=random(), metric3=random(), step=OPTIONAL, timestamp=OPTIONAL)
-    
+
     # Log a final results
-    tracking.log_outputs(res1=randint(0, 100), res2="test value", ...) 
+    tracking.log_outputs(res1=randint(0, 100), res2="test value", ...)
 
     # Save the artifact
     asset_path = tracking.get_outputs_path("test.txt")
@@ -56,8 +56,8 @@ if __name__ == "__main__":
         f.write("Artifact content.")
     # Track the lineage Name will default to test
     tracking.log_artifact_ref(path=asset_path, kind=V1ArtifactKind.FILE)
-    
-    # Save a second artifact 
+
+    # Save a second artifact
     asset_path = tracking.get_outputs_path("file.csv")
     with open(asset_path, "w") as f:
         f.write("Artifact content.")

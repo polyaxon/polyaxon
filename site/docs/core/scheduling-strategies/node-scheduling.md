@@ -116,7 +116,7 @@ environment:
 In Python
 
 ```python
-from polyaxon.polyflow import V1Environment
+from polyaxon.schemas import V1Environment
 
 environment = V1Environment(annotations={"cloud.google.com/gke-preemptible": "true"})
 ```
@@ -138,7 +138,7 @@ environment:
 In Python
 
 ```python
-from polyaxon.polyflow import V1Environment
+from polyaxon.schemas import V1Environment
 
 environment = V1Environment(
     annotations={"cloud.google.com/gke-preemptible": "true"},

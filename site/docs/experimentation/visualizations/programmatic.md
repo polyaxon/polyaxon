@@ -23,7 +23,7 @@ You can use the module `Polyplot` which requires `Plotly express` to drive visua
 the module comes with functions to load events, and visualize them:
 
 ```python
-from polyaxon.polyplot import RunPlot
+from polyaxon.client import RunPlot
 
 client = RunPlot(run_uuid="...")
 client.get_metrics(names="loss,accuracy")
@@ -42,10 +42,10 @@ You can use the module `MultiRunPlot` which requires `hiplot` to create interact
 
 
 ```python
-from polyaxon.polyplot import MultiRunPlot
+from polyaxon.client import RunClient
 
-client = MultiRunPlot()
-exp = client.get_hiplot(query="metrics.loss:<0.1")
+client = RunClient()
+exp = client.get_runs_as_hiplot(query="metrics.loss:<0.1")
 exp.display()
 ```
 

@@ -31,7 +31,6 @@ In order to use Polyaxon with airflow you just need to create a custom Airflow o
 
 Here's a simple operator that will submit a job and can wait for the job to finish based on a flag.
 
-
 ```python
 import os
 

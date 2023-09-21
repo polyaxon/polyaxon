@@ -125,17 +125,20 @@ pip install polyaxon[s3]
 Creating a sync instance of the s3fs client:
 
 ```python
-from polyaxon.fs.fs import get_fs_from_name
+from polyaxon.fs import get_fs_from_name
+
 ...
 fs = get_fs_from_name("s3-dataset1")  # You can pass additional kwargs to the function
-...  
+...
 ```
 
 Creating an async instance of the s3fs client:
 
 ```python
-from polyaxon.fs.fs import get_fs_from_name
+from polyaxon.fs import get_fs_from_name
+
 ...
-fs = get_fs_from_name("s3-dataset1", asynchronous=True)  # You can pass additional kwargs to the function
-...  
+fs = get_fs_from_name("s3-dataset1",
+                      asynchronous=True)  # You can pass additional kwargs to the function
+...
 ```

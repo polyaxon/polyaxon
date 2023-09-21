@@ -108,20 +108,24 @@ We will programmatically schedule some experiments from the notebook, all experi
 Each one of those experiments will be managed separately by Polyaxon and will create a new record under the runs table in the database.
 
 ```python
-from polyaxon.polytune.search_managers.grid_search import GridSearchManager
-from polyaxon.polyflow import V1GridSearch, V1HpChoice, V1HpLinSpace
+from polyaxon.tuners.grid_search import GridSearchManager
+from polyaxon.schemas import V1GridSearch, V1HpChoice, V1HpLinSpace
 from polyaxon.client import RunClient
 
 client = RunClient()
 
 grid_search_config = V1GridSearch(
-    params={"optimizer": V1HpChoice(value=["adam", "sgd", "rmsprop"]), "dropout": V1HpLinSpace(value={'num': 20, 'start': 0.1, 'stop': 0.5}), "epochs": V1HpChoice(value=[5, 10])},
+    params={"optimizer": V1HpChoice(value=["adam", "sgd", "rmsprop"]),
+            "dropout": V1HpLinSpace(value={'num': 20, 'start': 0.1, 'stop': 0.5}),
+            "epochs": V1HpChoice(value=[5, 10])},
     num_runs=5
 )
 
 suggestions = GridSearchManager(grid_search_config).get_suggestions()
 for suggestion in suggestions:
-    client.create_from_url(url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml", params=suggestion)
+    client.create_from_url(
+        url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml",
+        params=suggestion)
 ```
 
 
@@ -145,7 +149,7 @@ print(run_client.get_outputs())
 Get metrics for a specific run
 
 ```python
-from polyaxon.polyplot import RunPlot
+from polyaxon.client import RunPlot
 run_client = RunPlot(run_uuid=run.uuid)
 run_client.get_metrics('loss,accuracy')
 ```
@@ -184,12 +188,12 @@ Example in notebook:
 Let's compare several runs:
 
 ```python
-from polyaxon.polyplot import MultiRunPlot
+from polyaxon.client import RunClient
 
-client = MultiRunPlot()
+client = RunClient()
 # This is an example of getting top 100 based on loss of all experiment
 # that have one of the tags experiment or examples
-hiplot_experiment = client.get_hiplot(query="tags:experiment|examples", sort="-metrics.loss", limit=100)
+hiplot_experiment = client.get_runs_as_hiplot(query="tags:experiment|examples", sort="-metrics.loss", limit=100)
 hiplot_experiment.display()
 ```
 

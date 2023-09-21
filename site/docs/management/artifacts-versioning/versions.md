@@ -50,7 +50,7 @@ You can create your artifact versions using the CLI, API, or the UI.
 ### CLI
 
 ```bash
-polyaxon artifacts register -p OWNER_NAME/PROJECT_NAME --version VERSION_NAME --description ... --tags tag1,tag2,... --artifacts artifact-name,env,summary 
+polyaxon artifacts register -p OWNER_NAME/PROJECT_NAME --version VERSION_NAME --description ... --tags tag1,tag2,... --artifacts artifact-name,env,summary
 ```
 
 ### Client
@@ -70,7 +70,7 @@ version = project_client.register_artifact_version(
 )
 ```
 
-> **Note**: You can use `force=True` to override a previous version registered with the same name.  
+> **Note**: You can use `force=True` to override a previous version registered with the same name.
 
 
 ### UI
@@ -129,9 +129,9 @@ from polyaxon.client import ProjectClient
 project_client = ProjectClient(project="ORGANIZATION/bot-detection")
 
 project_client.stage_artifact_version(
-    version="v1", 
-    stage=V1Stages.STAGING, 
-    reason="AirflowPipelineStageUpdate", 
+    version="v1",
+    stage=V1Stages.STAGING,
+    reason="AirflowPipelineStageUpdate",
     message="Tests passed and the artifact was automatically moved to staging",
 )
 ```
@@ -157,7 +157,7 @@ Or update specific info:
 polyaxon artifacts update -ver ...
 ```
 
-and delete  
+and delete
 
 ```bash
 polyaxon artifacts delete -ver ...
@@ -173,7 +173,7 @@ project_client = ProjectClient(project="ORGANIZATION/bot-detection")
 # Update
 project_client.patch_artifact_version(
     version="v1",
-    data={"description": "new description", "tags": ["new-tag1", "new-tag2"]} 
+    data={"description": "new description", "tags": ["new-tag1", "new-tag2"]}
 )
 
 # Delete
@@ -226,7 +226,7 @@ tracking.log_artifact_ref("path/to/artifact", name=artifact_ref)
 # Promoting the run to an artifact version
 if some_condition:
     tracking.promote_to_artifact_version(
-        version="rc2", 
+        version="rc2",
         description="artifact promoted directly from the run",
         tags=["tag1", "tag2"],
         content={"key": "value"},

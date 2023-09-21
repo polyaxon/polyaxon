@@ -16,7 +16,7 @@ sidebar: "intro"
 ## Overview
 
 In the previous guide we trained several models. In this section we will demonstrate how to deploy a batch scoring job.
-This type of jobs can be used for batch inference or data processing workloads, 
+This type of jobs can be used for batch inference or data processing workloads,
 it can be used also for running ML models using a variety of frameworks such as: PyTorch, ONNX, scikit-learn, XGBoost, TensorFlow (if not using SavedModels), etc.
 
 All code and manifests used in this tutorial can be found in this [github repo](https://github.com/polyaxon/polyaxon-ml-serving).
@@ -46,7 +46,7 @@ import joblib
 import pandas as pd
 
 from polyaxon import tracking
-from polyaxon.polyboard.artifacts import V1ArtifactKind
+from polyaxon.schemas import V1ArtifactKind
 
 IRIS_CLASS_MAPPING = {0: "setosa", 1: "versicolor", 2: "virginica"}
 
@@ -123,7 +123,7 @@ run:
     command: ["python", "-u", "scoring_job.py"]
 ```
 
-To schedule the job with Polyaxon: 
+To schedule the job with Polyaxon:
 
 ```bash
 polyaxon run -f batch-scoring/polyaxonfile.yaml -P uuid=f8176c9463a345908ce6865c9c7894a9
@@ -133,11 +133,11 @@ polyaxon run -f batch-scoring/polyaxonfile.yaml -P uuid=f8176c9463a345908ce6865c
 
 The job will perform the scoring and then save an updated CSV file with the prediction results:
 
-![scoring-results](../../../../content/images/dashboard/runs/scoring-results.png) 
+![scoring-results](../../../../content/images/dashboard/runs/scoring-results.png)
 
 We also logged the artifacts reference to the lineage tab:
 
-![scoring-results-lineage](../../../../content/images/dashboard/runs/scoring-results-lineage.png) 
+![scoring-results-lineage](../../../../content/images/dashboard/runs/scoring-results-lineage.png)
 
 ## Running the job on schedule
 
@@ -153,7 +153,7 @@ schedule:
   kind: cron
   cron: "0 0 * * MON"
 pathRef: ./polyaxonfile.yaml
-``` 
+```
 
 You can also use an interval instead of a cron:
 

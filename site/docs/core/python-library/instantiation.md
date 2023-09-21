@@ -15,8 +15,8 @@ sidebar: "core"
 
 ## Overview
 
-When instantiating any of the Python clients or modules, Polyaxon performs a couple of checks to load a context if it exists. 
-The context can be defined in the current user path if the CLI was initialized or authenticated, it can be defined using environment variables, 
+When instantiating any of the Python clients or modules, Polyaxon performs a couple of checks to load a context if it exists.
+The context can be defined in the current user path if the CLI was initialized or authenticated, it can be defined using environment variables,
 or it can be defined by Polyaxon Scheduling if the module is called in an in-cluster job or service.
 
 ## In-cluster
@@ -91,7 +91,8 @@ Configuring and authenticating a client using environment variables could be use
 ```python
 from polyaxon.client import PolyaxonClient, ProjectClient, RunClient
 
-client = PolyaxonClient(token=API_TOKEN, config=ClientConfig(host=HOST, use_https=None, verify_ssl=None))
+client = PolyaxonClient(token=API_TOKEN,
+                        config=ClientConfig(host=HOST, use_https=None, verify_ssl=None))
 
 project_client = ProjectClient(owner="org1", project="project-name", client=client)
 run_client = RunClient(owner="org1", project="project-name", run_uuid="uuid", client=client)

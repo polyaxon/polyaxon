@@ -32,11 +32,11 @@ run:
 The same example in Python.
 
 ```python
-from polyaxon.polyflow import V1Component, V1Job
-from polyaxon.k8s import k8s_schemas
+from polyaxon.schemas import V1Component, V1Job
+from polyaxon import k8s
 
 job = V1Job(
-    container=k8s_schemas.V1Container(image="my-image", command=["python", "model.py"]),
+    container=k8s.V1Container(image="my-image", command=["python", "model.py"]),
 )
 
 component = V1Component(run=job)
