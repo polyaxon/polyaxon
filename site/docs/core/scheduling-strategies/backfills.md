@@ -11,18 +11,16 @@ tags:
 sidebar: "core"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
-Users can leverage the `matrix` section with the grid search algorithm to execute backfills. 
+Users can leverage the `matrix` section with the grid search algorithm to execute backfills.
 Polyaxon provides a [daterange](/docs/automation/optimization-engine/params/#v1hpdaterange) and a [datetimerange](/docs/automation/optimization-engine/params/#v1hpdatetimerange)
-generators that can be used to specify interval to use for running the backfill. Users can also specify if they need to execute the backfill sequentially by setting 
+generators that can be used to specify interval to use for running the backfill. Users can also specify if they need to execute the backfill sequentially by setting
 the concurrency to `1`.
 
 ## IO of a backfill operation
 
-In order to correctly execute a backfill, users should only create a matrix with a single search param. The component can expect several inputs/outputs, 
+In order to correctly execute a backfill, users should only create a matrix with a single search param. The component can expect several inputs/outputs,
 but it should expect one of the inputs/outputs to be of type `date` or `datetime`.
 
 ### Backfill Component
@@ -80,7 +78,7 @@ matrix:
     dt:
       kind: datetimerange
       value: ["2021-05-01 10:00", "2021-05-01 16:00", 3600]
-``` 
+```
 
 Daily backfill example:
 
@@ -97,7 +95,7 @@ matrix:
     dt:
       kind: daterange
       value: ["2021-05-01", "2021-05-08", 1]
-``` 
+```
 
 ## Alternative
 

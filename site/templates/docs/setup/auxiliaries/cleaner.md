@@ -1,7 +1,7 @@
 ---
 title: "Cleaner job setup"
 sub_link: "auxiliaries/cleaner"
-code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/auxiliaries/cleaner.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_auxiliaries/cleaner.py"
 meta_title: "Polyaxon's Auxiliary Containers - Polyaxon Cleaner"
 meta_description: "Polyaxon cleaner is a helper job that gets scheduled to clean artifacts when a run is deleted."
 visibility: public

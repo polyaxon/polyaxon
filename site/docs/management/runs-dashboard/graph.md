@@ -9,7 +9,6 @@ tags:
   - management
 sidebar: "management"
 ---
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
 ## Overview
 
@@ -18,18 +17,18 @@ The graph view is a powerful tool for listing, filtering, and comparing runs of 
 
 ## Feature
 
-The graph view provides similar features as the timeline view, but instead of showing a table it shows a dependency graph, you can zoom in, zoom out, fit the graph, and open operations in flyout : 
+The graph view provides similar features as the timeline view, but instead of showing a table it shows a dependency graph, you can zoom in, zoom out, fit the graph, and open operations in flyout :
 
 ![graph-flyout](../../../../content/images/dashboard/graph/graph-flyout.png)
 
 The graph view comes with two direction:
- 
- * `right` direction for deep graphs 
+
+ * `right` direction for deep graphs
 
 ![graph-deep](../../../../content/images/dashboard/graph/graph-deep.png)
 
  * `down` direction for wide graphs
- 
+
 ![graph-wide](../../../../content/images/dashboard/graph/graph-wide.png)
 
 When hovering an operation, the upstream edges are colored based on the status of the upstream operations

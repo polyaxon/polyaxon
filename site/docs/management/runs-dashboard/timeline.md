@@ -9,7 +9,6 @@ tags:
   - management
 sidebar: "management"
 ---
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
 ## Overview
 

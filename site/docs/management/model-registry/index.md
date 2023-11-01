@@ -11,7 +11,6 @@ tags:
 sidebar: "management"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
 <blockquote class="info">This feature is still in Beta!</blockquote>
 
 ## Overview
@@ -44,9 +43,9 @@ By using `:tag`, you can add new versions to a project, Polyaxon uses the `owner
 
 ## Usage
 
-As soon as a model is registered in your organization's registry, 
+As soon as a model is registered in your organization's registry,
 you can use API/SDK to query information about your model and use that information to deploy specific versions.
 
 At the moment the model registry is accessible to all organization for locking experiment runs, and for organizing candidate models and their lifecycle.
 
-Some customers have access to the monitoring and the post-deployment events API, which should be opened to everyone as soon as the events interface is finalized.   
+Some customers have access to the monitoring and the post-deployment events API, which should be opened to everyone as soon as the events interface is finalized.

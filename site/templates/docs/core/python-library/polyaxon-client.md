@@ -1,7 +1,7 @@
 ---
 title: "Polyaxon Client Reference"
 sub_link: "python-library/polyaxon-client"
-code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/client/client.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_client/client.py"
 meta_title: "Polyaxon client - Polyaxon References"
 meta_description: "Polyaxon client is the base client with logic to pass config and token to other specific clients."
 visibility: public

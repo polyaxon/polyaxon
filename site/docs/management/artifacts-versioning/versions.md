@@ -11,8 +11,6 @@ tags:
 sidebar: "management"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 A project can have one or more artifact versions, each version:

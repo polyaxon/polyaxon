@@ -11,7 +11,6 @@ tags:
 sidebar: "management"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
 <blockquote class="info">This feature is still in Beta!</blockquote>
 
 ## Overview
@@ -44,5 +43,5 @@ By using `:tag`, you can add new versions to a project, Polyaxon uses the `owner
 
 ## Usage
 
-As soon as a artifact version is registered in a project, 
+As soon as a artifact version is registered in a project,
 you can use API/SDK to query information about it and use that information to deploy or request specific versions.

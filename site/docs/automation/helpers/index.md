@@ -13,8 +13,6 @@ tags:
 sidebar: "automation"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 Running dags and hyperparameter tuning is often important to optimize and build strong models,

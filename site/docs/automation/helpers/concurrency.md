@@ -15,8 +15,6 @@ tags:
 sidebar: "automation"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 Several automation tools provided by Polyaxon can run multiple operations in parallel,

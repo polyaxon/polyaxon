@@ -16,8 +16,6 @@ tags:
 sidebar: "automation"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 Components are by default triggered one time when a user creates an operation,

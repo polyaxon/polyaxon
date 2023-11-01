@@ -1,7 +1,7 @@
 ---
 title: "XGBoost-Job Specification"
 sub_link: "distributed/mpi-jobs"
-code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/run/kubeflow/xgboost_job.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/run/kubeflow/xgboost_job.py"
 meta_title: "Kubeflow XGBoost-Job Specification - Experimentation"
 meta_description: "Kubeflow XGBoost-Job provides an interface to train distributed experiments with XGBoostJob."
 visibility: public

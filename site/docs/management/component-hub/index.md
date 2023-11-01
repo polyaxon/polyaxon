@@ -12,8 +12,6 @@ tags:
 sidebar: "management"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 Polyaxon Component Hub is a product for managing versioned and reusable components, each component:

@@ -1,7 +1,7 @@
 ---
 title: "Operation Specification"
 sub_link: "specification/operation"
-code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/operations/operation.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/operations/operation.py"
 meta_title: "Operation - Polyaxon Specification"
 meta_description: "An operation is how Polyaxon executes a component by passing parameters, connections, and a run environment."
 visibility: public

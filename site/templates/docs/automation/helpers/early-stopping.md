@@ -1,7 +1,7 @@
 ---
 title: "Early Stopping Specification"
 sub_link: "helpers/early-stopping"
-code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/polyflow/early_stopping/policies.py"
+code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/early_stopping/policies.py"
 meta_title: "Early Stopping  - Polyaxon Automation Specification"
 meta_description: "Polyaxon provides several ways to optimize your pipelines,
 speeds up your hyperparameter tuning, and early terminate workflows and underperforming runs."
@@ -16,8 +16,6 @@ tags:
   - optimization
 sidebar: "automation"
 ---
-
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
 Polyaxon provides several ways to optimize your pipelines,
 speeds up your hyperparameter tuning, and early terminate workflows and underperforming runs.

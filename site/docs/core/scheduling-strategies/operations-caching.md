@@ -11,13 +11,11 @@ tags:
 sidebar: "core"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 Polyaxon's operation cache is a feature to reduce the cost and execution time by avoiding and skipping similar work.
 
-Oftentimes, operations can perform expensive computations to produce some outputs. 
+Oftentimes, operations can perform expensive computations to produce some outputs.
 In order to leverage those results, without rerunning the same operations, Polyaxon provides a state that users can use to check if a computation is already performed or not.
 
 > Please check the [cache specification](/docs/automation/helpers/cache/) for more details.
@@ -47,13 +45,13 @@ At the moment and in order to use the cache, users have to define the configurat
 
 If you need to include an artifact in the state calculation, you can report a lineage metadata about that artifact, for example, the path or a hash, and set that value as an input.
 
-> **Note**: We intend to make it easy to tell Polyaxon if it should consider the artifacts lineage in the state calculation. 
+> **Note**: We intend to make it easy to tell Polyaxon if it should consider the artifacts lineage in the state calculation.
 
 ## Further reading
 
 ### IO cache heuristic
 
-If an operation needs to run in the future based on a schedule, or when a user initiates a hyperparameter tuning pipeline, 
+If an operation needs to run in the future based on a schedule, or when a user initiates a hyperparameter tuning pipeline,
 Polyaxon will memoize all params that can be resolved immediately, to avoid recalculating those values, and will only calculate the values that are specific to each run that is part of the pipeline.
 
 ### Artifacts cache

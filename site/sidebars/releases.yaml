@@ -3,7 +3,7 @@
     items:
     - title: Roadmap
       link: /docs/releases/roadmap/
-    - title: V2.0 [WIP]
+    - title: V2.0
       link: /docs/releases/2-0/
   - group: V1
     items:

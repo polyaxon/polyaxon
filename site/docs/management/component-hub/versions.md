@@ -11,8 +11,6 @@ tags:
 sidebar: "management"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 A component can have one or more versions, each version:
@@ -45,7 +43,7 @@ You can create your component versions using the CLI, API, or the UI.
 ### CLI
 
 ```bash
-polyaxon components register --version OWNER_NAME/COMPONENT_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml 
+polyaxon components register --version OWNER_NAME/COMPONENT_NAME[:tag] --description ... --tags tag1,tag2,... -f path/to/polyaxonfile.yaml
 ```
 
 ### UI
@@ -108,7 +106,7 @@ Or update specific info:
 polyaxon components update -ver ...
 ```
 
-Or delete the version:  
+Or delete the version:
 
 ```bash
 polyaxon components delete -ver ...

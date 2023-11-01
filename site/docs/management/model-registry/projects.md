@@ -11,8 +11,6 @@ tags:
 sidebar: "management"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 A `Model` is a project that manages several versions of a model asset created in Polyaxon or other system, it can:
@@ -29,8 +27,8 @@ You can version your models in each project or create a project to manage models
 Alternatively you can create a project using the CLI:
 
 ```bash
-polyaxon project create --name OWNER_NAME/MODEL_NAME --description ... --tags tag1,tag2,... 
-``` 
+polyaxon project create --name OWNER_NAME/MODEL_NAME --description ... --tags tag1,tag2,...
+```
 
 And then configure the project features using the UI
 
@@ -80,8 +78,8 @@ polyaxon project delete [-p] [-ver]...
 
 ### UI
 
-You can manage a project(model) using the UI, you can also manage who can contribute and have access to the project and the model versions, 
+You can manage a project(model) using the UI, you can also manage who can contribute and have access to the project and the model versions,
 as well as from which projects users are allowed to promote runs
- 
+
 ![model-admin](../../../../content/images/dashboard/registry/model-admin.png)
 

@@ -13,7 +13,6 @@ tags:
 sidebar: "automation"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
 <blockquote class="info">This feature is still in Beta and requires v1.9.2 or higher!</blockquote>
 
 ## Overview
@@ -27,5 +26,5 @@ Users can define a build process or attach a build preset:
 
  * To dynamically create new containers before starting the main operation or the hyperparameter tuning process.
  * To automate the process of building fast changing and dynamic environments.
- * To package different requirements, artifacts, and code in a single container.  
- * To quickly test new configurations before building a stable image. 
+ * To package different requirements, artifacts, and code in a single container.
+ * To quickly test new configurations before building a stable image.

@@ -81,8 +81,6 @@ Similar logic can be used for other `environment.*` sections.
 
 ## Conditional scheduling
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 In order to skip an operation, you can use the `conditions` key:
 
 ```yaml
@@ -99,6 +97,6 @@ Polyaxon always assumes that conditions are parametrized and need to be resolved
 
 If the condition is `false` the operation will be skipped.
 
-> **Note**: Although it's possible to use conditions in an independent operation, 
+> **Note**: Although it's possible to use conditions in an independent operation,
 > it generally makes more sense when it's running in the context of a pipeline (DAG, Matrix, or Schedule), when an operation is used as a hook, or when an operation is subscribing to events.
 

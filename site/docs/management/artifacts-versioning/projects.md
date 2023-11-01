@@ -11,8 +11,6 @@ tags:
 sidebar: "management"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 A `Project` is an abstraction that defines one or multiple artifacts created in Polyaxon or other system, it can:
@@ -29,8 +27,8 @@ You can version your artifacts in each project or create a project to manage art
 Alternatively you can create a project using the CLI:
 
 ```bash
-polyaxon project create --name OWNER_NAME/MODEL_NAME --description ... --tags tag1,tag2,... 
-``` 
+polyaxon project create --name OWNER_NAME/MODEL_NAME --description ... --tags tag1,tag2,...
+```
 
 And then configure the project features using the UI
 
@@ -80,8 +78,8 @@ polyaxon project delete -p ...
 
 ### UI
 
-You can manage a project using the UI, you can also manage who can contribute and have access to the artifacts versions, 
+You can manage a project using the UI, you can also manage who can contribute and have access to the artifacts versions,
 as well as from which projects users are allowed to promote runs
- 
+
 ![artifacts-admin](../../../../content/images/dashboard/artifacts-versioning/artifacts-admin.png)
 

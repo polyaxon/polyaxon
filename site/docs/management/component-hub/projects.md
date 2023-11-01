@@ -11,8 +11,6 @@ tags:
 sidebar: "management"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 A `Component` is the abstraction that defines the runtime in Polyaxon, it can:
@@ -30,8 +28,8 @@ In order to store multiple related versions of a Polyaxonfile, users can create 
 Alternatively you can create a project using the CLI:
 
 ```bash
-polyaxon project create --name OWNER_NAME/COMPONENT_NAME --description ... --tags tag1,tag2,... 
-``` 
+polyaxon project create --name OWNER_NAME/COMPONENT_NAME --description ... --tags tag1,tag2,...
+```
 
 And then configure the project features using the UI
 
@@ -81,5 +79,5 @@ polyaxon project delete -p ...
 ```
 
 You can manage a component using the UI, you can also manage who can contribute and have access to the component and its versions
- 
+
 ![component-admin](../../../../content/images/dashboard/hub/component-admin.png)

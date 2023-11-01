@@ -15,8 +15,6 @@ tags:
 sidebar: "automation"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
 ## Overview
 
 Polyaxon DAGs is a tool that provides a container-native engine for running machine learning pipelines on Polyaxon.
