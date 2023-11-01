@@ -123,7 +123,7 @@ polyaxon artifacts stage -ver VERSION_NAME -to staging --reason CISystem --messa
 ### Client
 
 ```python
-from polyaxon.lifecycle import V1Stages
+from polyaxon.client import V1Stages
 from polyaxon.client import ProjectClient
 
 project_client = ProjectClient(project="ORGANIZATION/bot-detection")

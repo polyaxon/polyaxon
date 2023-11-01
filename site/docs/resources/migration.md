@@ -19,6 +19,48 @@ polyaxon version --check
 
 ## Migration from v1.x to v2.y
 
+### Migrating the CLI/Client
+
+Please make sure to uninstall the previous version of the CLI/Client before installing the new version.
+
+```bash
+pip uninstall -y polyaxon polyaxon-sdk
+```
+
+Then proceed with the upgrade to Polyaxon v2:
+
+```bash
+pip install -U polyaxon
+```
+
+In Polyaxon v2 most imports are exposed on `client`, if you have an issue with an import, for example:
+
+```python
+from polyaxon.module.submodule import Class or function
+```
+
+Please update your imports to:
+
+```python
+from polyaxon.client import Class or function
+```
+
+In addition to `client` schema/model classes can be imported from `polyaxon.schemas`, for example:
+
+```python
+from polyaxon.schemas import SomeSchemaClass
+# Or
+from polyaxon.client import SomeSchemaClass
+```
+
+All K8s related schemas are exposed under `k8s`
+
+```python
+from polyaxon.k8s import V1Container
+```
+
+### Migrating the platform/agent
+
 Before migrating to Polyaxon v2, please make sure to remove previous deployments and clean up all resources, this will result in a temporary downtime.
 
 ```bash
@@ -27,7 +69,7 @@ kubectl delete deployments -n [NAMESPACE] -l 'app.kubernetes.io/instance=polyaxo
 
 Then proceed with the upgrade to Polyaxon v2:
 
-### Polyaxon platform
+### Polyaxon CE
 
 This upgrade comes with an automatic migration that might take some time to execute.
 

@@ -68,8 +68,8 @@ This component does not use all sections that Polyaxon exposes, but similar logi
 
 ```python
 from polyaxon import types
-from polyaxon._k8s.k8s_schemas import V1Container
-from polyaxon._schemas.types import V1GitType
+from polyaxon.k8s import V1Container
+from polyaxon.schemas import V1GitType
 from polyaxon.schemas import V1Component, V1Init, V1IO, V1Job
 
 inputs = [

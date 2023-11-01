@@ -149,15 +149,15 @@ print(run_client.get_outputs())
 Get metrics for a specific run
 
 ```python
-from polyaxon.client import RunPlot
-run_client = RunPlot(run_uuid=run.uuid)
-run_client.get_metrics('loss,accuracy')
+from polyaxon.client import RunClient
+run_client = RunClient()
+run_client.get_metrics(['loss', 'accuracy'])
 ```
 
 Tidy dataframe
 
 ```python
-run_client.get_tidy_df()
+run_client.get_metrics_as_tidy_df()
 ```
 
 Install some plotting dependencies
@@ -176,7 +176,7 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyterlab-plot
 Plot a line chart
 
 ```python
-run_client.line()
+run_client.get_metrics_as_line_chart()
 ```
 
 Example in notebook:
