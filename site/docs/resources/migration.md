@@ -17,6 +17,26 @@ Please run the following command to check the minimum supported versions and the
 polyaxon version --check
 ```
 
+## Migration from v1.x to v2.y
+
+Before migrating to Polyaxon v2, please make sure to remove previous deployments and clean up all resources, this will result in a temporary downtime.
+
+```bash
+kubectl delete deployments -n [NAMESPACE] -l 'app.kubernetes.io/instance=polyaxon-1.20.0,app.kubernetes.io/part-of=polyaxon-core,app.kubernetes.io/managed-by=Helm'
+```
+
+Then proceed with the upgrade to Polyaxon v2:
+
+### Polyaxon platform
+
+This upgrade comes with an automatic migration that might take some time to execute.
+
+Please check the [Polyaxon platform upgrade section](/docs/setup/platform/#upgrade-polyaxon)
+
+### Polyaxon Agent
+
+Please check the [Polyaxon Agent upgrade section](/docs/setup/agent/#upgrade-polyaxon-agent)
+
 ## Migration from v1.x to v1.y
 
 ### Polyaxon CE
@@ -25,8 +45,8 @@ You can migrate from any Polyaxon `v1.x` to any `v1.y` for any `y >= x`, there a
 
 ### Polyaxon Agent
 
-You can migrate from any Polyaxon `v1.x` to any `v1.y` for any `y` and `x`. 
-We recommend however to use at least the minimum supported version to benefit from security fixes, and the latest version to benefit from all new enhancements. 
+You can migrate from any Polyaxon `v1.x` to any `v1.y` for any `y` and `x`.
+We recommend however to use at least the minimum supported version to benefit from security fixes, and the latest version to benefit from all new enhancements.
 
 ## Migration from v0.x to v1.y
 
