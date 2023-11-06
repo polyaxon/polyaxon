@@ -22,7 +22,7 @@ In this section, we will learn how to train a machine learning model and deploy 
  * An REST API with FastAPI.
  * A Batch Scoring Job.
 
-In order to create the various serving services and batch scoring jobs, we will need first to create and log a model.   
+In order to create the various serving services and batch scoring jobs, we will need first to create and log a model.
 
 ## Clone the repo
 
@@ -46,7 +46,7 @@ Let's create a new project `ml-serving`:
 polyaxon project create --name=ml-serving --init
 ```
 
-This command will both create a new project on Polyaxon and initialize the local folder so that we can run the command without providing the project name everytime we want to schedule a new operation. 
+This command will both create a new project on Polyaxon and initialize the local folder so that we can run the command without providing the project name everytime we want to schedule a new operation.
 
 ## Training a machine learning model
 
@@ -180,7 +180,7 @@ Running the example with the default parameters:
 polyaxon run -f train/polyaxonfile.yaml -l
 ```
 
-You will notice that we did not set the `-f` argument of the run command, the reason why is that `polyaxon run` command by default will look for any file called `polyaxonfil.y*ml` and will execute it. 
+You will notice that we did not set the `-f` argument of the run command, the reason why is that `polyaxon run` command by default will look for any file called `polyaxonfil.y*ml` and will execute it.
 
 Running with a different parameters:
 
@@ -193,19 +193,10 @@ polyaxon run -f train/polyaxonfile.yaml -l -P n_neighbors=50
 Instead of manually changing the parameters, we will automate this process by exploring a space of configurations:
 
 ```bash
-polyaxon run -f train/hyper-polyaxonfile.yaml --eager
+polyaxon run -f train/hyper-polyaxonfile.yaml
 ```
 
-You will see the CLI creating several experiments that will run in parallel:
-
-```bash
-Starting eager mode...
-Creating 15 operations
-A new run `b6cdaaee8ce74e25bc057e23196b24e6` was created
-...
-```
-
-For users with access to Polyaxon EE or Polyaxon Cloud you can also run the `hyper-polyaxonfile.yaml` file without `--eager`. In that case you will be able to follow the pipeline progress:
+This will create several experiments that will run in parallel:
 
 ![notebook-pipeline-progress](../../../../content/images/dashboard/runs/notebook-pipeline-progress.png)
 

@@ -12,8 +12,6 @@ tags:
 sidebar: "intro"
 ---
 
-> **Note**: This section of the tutorial can only run on Polyaxon EE and Polyaxon Cloud.
-
 Hooks are a simpler abstraction compared to a DAG. It allows to trigger post-done operations, like sending notifications or triggering a logic in response to the final state of an operation.
 You can use any component as a hook, as long as it's registered in the public component hub or in a private hub in your organization.
 
@@ -39,7 +37,7 @@ hooks:
 
 ## Running multiple hooks
 
-It's also possible to have multiple hooks or the same hook based on different conditions, for instance, 
+It's also possible to have multiple hooks or the same hook based on different conditions, for instance,
 a user can both send a slack notification and start a tensorboard after a successful experiment:
 
 ```yaml

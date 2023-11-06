@@ -14,12 +14,12 @@ sidebar: "intro"
 
 Passing the parameters as args requires that you create and expose your programs as simple command-line applications.
 
-Creating command-line applications is a powerful way of exposing work, it forces users to think about how to structure and organize programs, 
-it provides documentation for the expected inputs and performs checks that other users can benefit from when interacting with a program. 
+Creating command-line applications is a powerful way of exposing work, it forces users to think about how to structure and organize programs,
+it provides documentation for the expected inputs and performs checks that other users can benefit from when interacting with a program.
 
 ## Passing params to a simple program
 
-Your program can be written in any language, the only requirements to use this method for passing configurations (inputs/outputs), is that you need to provide an interface to consume arguments. 
+Your program can be written in any language, the only requirements to use this method for passing configurations (inputs/outputs), is that you need to provide an interface to consume arguments.
 
 Let's consider the `echo` command, you can past this content directly to Polyaxon UI or you can save it under `echo.yaml`:
 
@@ -90,8 +90,6 @@ To pass `test 1` and `test 2` to our program without invoking the CLI multiple t
 polyaxon run -f echo.yaml -HP message='choice:["test 1","test 2"]'
 ```
 
-> **Note**: If you are using Polyaxon CE you should add `--eager`.
-
 This command will automatically create a [grid search](/docs/intro/scaling/hyperparameter-tuning/#grid-search) with the following matrix configuration:
 
 ```yaml
@@ -110,15 +108,15 @@ You should notice that the CLI uses the following format: `kind:value` to pass [
 Another important aspect to notice is that matrix is of kind [grid search](/docs/automation/optimization-engine/grid-search/) and it runs the operations sequentially by setting the `concurrency` to `1`.
 You can configure those options via CLI as well by passing the following extra arguments `--matrix-kind`, `--matrix-concurrency`, and `--matrix-num-runs`.
 
-The CLI arg `-HP` is a nice way to avoid creating configuration files when iterating, however if you are to create a complex operation with multiple inputs/outputs and complex matrix defintion, 
-we suggest that you use a proper Polyaxonfile. 
+The CLI arg `-HP` is a nice way to avoid creating configuration files when iterating, however if you are to create a complex operation with multiple inputs/outputs and complex matrix defintion,
+we suggest that you use a proper Polyaxonfile.
 See the intro for the hyperparameter tuning in this [section](/docs/intro/scaling/hyperparameter-tuning/) and the [optimization engine reference](/docs/automation/optimization-engine/).
 
 ## Creating a custom program
 
 Since most Polyaxon's users are data-scientists or machine learning engineers, they generally write their programs in Python, so the content of these tutorials will be in Python as well.
 
-This is a simple application that prints your inputs, in this example we will use the `argparse` package to consume the parameters, 
+This is a simple application that prints your inputs, in this example we will use the `argparse` package to consume the parameters,
 but the same logic can be used with [python-fire](https://github.com/google/python-fire), [click](https://github.com/pallets/click), or any other library of your choice.
 
 ```python
@@ -132,13 +130,13 @@ if __name__ == '__main__':
         '--message',
         type=str,
         default="Default message")
-    
+
     args = parser.parse_args()
-    
+
     print(args.message)
 ```
 
-We can adjust our previous polyaxonfile to run this python program, in order to avoid [uploading code](/docs/intro/iterative-process/iterate-in-notebooks/) or [cloning a repo](/docs/intro/iterative-process/iterate-with-cli-git-code/), 
+We can adjust our previous polyaxonfile to run this python program, in order to avoid [uploading code](/docs/intro/iterative-process/iterate-in-notebooks/) or [cloning a repo](/docs/intro/iterative-process/iterate-with-cli-git-code/),
 we will pass the python code [inline](/docs/intro/iterative-process/iterate-with-inline-scripts/):
 
 Let's save this changes under `echo.yaml`:
@@ -158,16 +156,16 @@ run:
 
           if __name__ == '__main__':
               parser = argparse.ArgumentParser()
-          
+
               parser.add_argument(
                   '--message',
                   type=str,
                   default="Default message")
-              
+
               args = parser.parse_args()
-              
+
               print(args.message)
-              
+
         filename: echo.py
   container:
     image: polyaxon/polyaxon-quick-start
@@ -197,7 +195,7 @@ For the purpose of this example, we provided our program as an init file, we cou
 ```
 - echo-example/
   - echo.yaml
-  - echo.py 
+  - echo.py
 ```
 
 Where the `echo.py` contains:
@@ -212,9 +210,9 @@ if __name__ == '__main__':
         '--message',
         type=str,
         default="Default message")
-    
+
     args = parser.parse_args()
-    
+
     print(args.message)
 ```
 
@@ -233,15 +231,15 @@ run:
     workingDir: "{{ globals.run_artifacts_path }}/uploads"
     command: [python3, -u, echo.py]
     args: ["{{ params.message.as_arg }}"]
-``` 
+```
 
 In that case we could have used the `--upload/-u` flag to upload the code necessary for running the component:
- 
+
 ```bash
 polyaxon run -u -f echo.yaml -P message="test 1" -l
 ```
 
-> **Note**: You can learn more about how to iterate with upload, git, and inline scripts in the [iterative process introduction section](/docs/intro/iterative-process/iterate-in-notebooks/). 
+> **Note**: You can learn more about how to iterate with upload, git, and inline scripts in the [iterative process introduction section](/docs/intro/iterative-process/iterate-in-notebooks/).
 
 ## Multiple params
 
@@ -259,19 +257,19 @@ if __name__ == '__main__':
         '--message1',
         type=str,
         default="Default message1")
-        
+
     parser.add_argument(
         '--message2',
         type=str,
         default="Default message2")
-        
+
     parser.add_argument(
         '--message3',
         type=str,
         default="Default message3")
-    
+
     args = parser.parse_args()
-    
+
     print(args.message1)
     print(args.message2)
     print(args.message3)

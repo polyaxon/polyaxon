@@ -12,8 +12,6 @@ tags:
 sidebar: "intro"
 ---
 
-> **Note**: DAGs in eager mode are not available yet, this section of the tutorial can only run on Polyaxon EE and Polyaxon Cloud.
-
 Polyaxon provides several features for scaling and automating your workflows.
 
 There are different ways to scale your operations:

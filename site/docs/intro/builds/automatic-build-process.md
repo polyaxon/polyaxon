@@ -12,8 +12,6 @@ tags:
 sidebar: "intro"
 ---
 
-<blockquote class="commercial">This is currently available on Polyaxon Cloud only.</blockquote>
-
 > **Note**: Requires Polyaxon v1.9.2 or higher.
 
 Polyaxon provides a section to automate the process of building new containers and setting the destination image automatically on the main container section.
@@ -39,8 +37,8 @@ build:
   connection: docker-connection
 ```
 
-Let's save this file as `build-override.yaml`, you should notice that this includes the same content as in the standalone build operation, but it does not set a destination param. 
-Although it's possible to set a static destination or a templated destination based on the context of the operation, the intention behind of the per-operation build section 
+Let's save this file as `build-override.yaml`, you should notice that this includes the same content as in the standalone build operation, but it does not set a destination param.
+Although it's possible to set a static destination or a templated destination based on the context of the operation, the intention behind of the per-operation build section
 is to completely automate the destination image and it's usage in the job or service by replacing the predefined image.
 
 Now we can start `simple.yaml` file with this override file (we can also use this override with the typed component and the hyperparameter tuning operation):
@@ -82,9 +80,9 @@ This is similar to the result of the previous section with the preset, the build
 
 ## Single file
 
-In some situations where the operation is expected to change very frequently, or when the user intends to package several dependencies(requirements, config files, artifacts, ...) into a single container, 
+In some situations where the operation is expected to change very frequently, or when the user intends to package several dependencies(requirements, config files, artifacts, ...) into a single container,
 the build section can live in the same polyaxonfile:
- 
+
 ```yaml
 version: 1.1
 kind: component
@@ -116,7 +114,7 @@ You can notice here that we completely removed the image because this component 
 
 Since we are building a container and because the quick-start project has a already a valid Dockerfile, we can use it for building the new image:
 
- 
+
 ```yaml
 version: 1.1
 kind: component
@@ -137,7 +135,7 @@ run:
 
 ## Using a local folder with upload
 
-Similar to the behavior above, if we clone the quick-start repo and initialize it locally, we can iterate and upload the content, 
+Similar to the behavior above, if we clone the quick-start repo and initialize it locally, we can iterate and upload the content,
 which will trigger a new build and then a new experiment:
 
 ```yaml

@@ -16,8 +16,6 @@ tags:
 sidebar: "automation"
 ---
 
-> **Note**: Mapping in Polyaxon CE is supported in eager mode only with no concurrency management.
-
 ## Overview
 
 Polyaxon mapping is an automation tool to apply a list of parameters combination to a component sequentially or in parallel following a concurrency.
