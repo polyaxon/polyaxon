@@ -73,9 +73,13 @@ Then proceed with the upgrade to Polyaxon v2:
 
 This upgrade comes with an automatic migration that might take some time to execute.
 
+If you have configured the `api` section in your deployment config file, please note that in the v2 release `gateway` and `api` were merged into a single pod `gateway`.
+
 Please check the [Polyaxon platform upgrade section](/docs/setup/platform/#upgrade-polyaxon)
 
 ### Polyaxon Agent
+
+If you have configured the `streams` section in your deployment config file, please note that in the v2 release `gateway` and `streams` were merged into a single pod `gateway`.
 
 Please check the [Polyaxon Agent upgrade section](/docs/setup/agent/#upgrade-polyaxon-agent)
 

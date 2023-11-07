@@ -76,8 +76,6 @@ agent:
   enabled: false
 operator:
   enabled: false
-streams:
-  enabled: false
 ```
 
 ## Enable the scheduler

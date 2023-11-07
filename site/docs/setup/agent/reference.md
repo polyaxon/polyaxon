@@ -291,7 +291,7 @@ proxy:
   kind: transparent or connect
 ```
 
-> **Note**: make sure that the in-cluster traffic, including access to the `streams` and `gateway` services is accessible by name `NAMESPACE-RELEASE-streams` and `NAMESPACE-RELEASE-gateway`, is specified in the `noProxy` field.
+> **Note**: make sure that the in-cluster traffic, including access to the `gateway` service is accessible by name `NAMESPACE-RELEASE-gateway`, is specified in the `noProxy` field.
 
 ## Auth
 
@@ -346,11 +346,6 @@ gateway:
     # If null, the global nodeSelector will be used
     ...
 
-streams:
-  nodeSelector:
-    # If null, the global nodeSelector will be used
-    ...
-
 operator:
   nodeSelector:
     # If null, the global nodeSelector will be used
@@ -376,11 +371,6 @@ tolerations:
   ...
 
 gateway:
-  tolerations:
-    # If null, the global tolerations will be used
-    ...
-
-streams:
   tolerations:
     # If null, the global tolerations will be used
     ...
@@ -423,11 +413,6 @@ affinity:
           topologyKey: "kubernetes.io/hostname"
 
 gateway:
-  affinity:
-    # If null, the global affinity will be used
-    ...
-
-streams:
   affinity:
     # If null, the global affinity will be used
     ...

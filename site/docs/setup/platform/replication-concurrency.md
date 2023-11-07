@@ -30,13 +30,6 @@ gateway:
   replicas: 3
 ```
 
-## API
-
-```yaml
-api:
-  replicas: 3
-```
-
 ## Scheduler
 
 ```yaml
@@ -48,13 +41,6 @@ scheduler:
 
 ```yaml
 worker:
-  replicas: 3
-```
-
-## Streams
-
-```yaml
-streams:
   replicas: 3
 ```
 

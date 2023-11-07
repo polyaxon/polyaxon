@@ -23,6 +23,6 @@ you should definitely look at the other persistence strategies.
 When the user uses a local path to store outputs, a couple of things could happen:
  * If you have more than one node, i.e. using other nodes to schedule experiments and jobs, you will not be able to see the outputs, because they will be stored on the node where the experiment/job was scheduled.
  * The host node might be deleted, or replaced, and all outputs will be deleted as well.
- * If the streams pod is replicated on different nodes the same thing could happen as well.
+ * If the gateway pod is replicated on different nodes the same thing could happen as well.
 
 Polyaxon provides several options to make robust persistence of your outputs.

@@ -29,11 +29,7 @@ You need to override the default tag that comes with the Polyaxon version you ar
 all images will be using a tag: `1.x.x`, in the deployment config file you need to override that value with `multiarch-1.x.x`:
 
 ```yaml
-api:
-  imageTag: multiarch-1.x.x
 scheduler:
-  imageTag: multiarch-1.x.x
-streams:
   imageTag: multiarch-1.x.x
 gateway:
   imageTag: multiarch-1.x.x

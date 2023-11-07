@@ -30,14 +30,12 @@ or you can also spend some time to configure a load balancer or ingress.
 
 ## Enable agent services
 
-Polyaxon Community Edition manages the operator and the streams in a single deployment, and they must be enabled, please do not disable these services:
+Polyaxon Community Edition manages the operator and the gateway in a single deployment, and they must be enabled, please do not disable these services:
 
 > **Note**: This is the default configuration of the chart, you do not need to add this to your deployment config file.
 
 ```yaml
 operator:
-  enabled: true
-streams:
   enabled: true
 ```
 

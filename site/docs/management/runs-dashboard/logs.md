@@ -19,7 +19,7 @@ all runs have a similar logging experience, which helps users detect issues rela
 
 ## Logs in CLI
 
-You can streams logs from the CLI or from the UI, which will reduce the need to reach out for Kubernetes to check per container issues
+You can stream logs from the CLI or from the UI, which will reduce the need to reach out for Kubernetes to check per container issues
 
 ![run-logs-cli](../../../../content/images/dashboard/runs/logs-cli.png)
 

@@ -344,11 +344,6 @@ gateway:
     # If null, the global node selector will be used
     ...
 
-streams:
-  nodeSelector:
-    # If null, the global node selector will be used
-    ...
-
 operator:
   nodeSelector:
     # If null, the global node selector will be used
@@ -393,11 +388,6 @@ scheduler:
     ...
 
 gateway:
-  tolerations:
-    # If null, the global tolerations will be used
-    ...
-
-streams:
   tolerations:
     # If null, the global tolerations will be used
     ...
@@ -467,11 +457,6 @@ scheduler:
     ...
 
 gateway:
-  affinity:
-    # If null, the global affinity will be used
-    ...
-
-streams:
   affinity:
     # If null, the global affinity will be used
     ...
