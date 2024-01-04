@@ -42,7 +42,4 @@ connections:
     secret:
       name: aws-secret
       mountPath: /root/.aws/
-    configMap:
-      name: docker-config
-      mountPath: /kaniko/.docker/
 ```

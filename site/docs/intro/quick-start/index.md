@@ -35,6 +35,17 @@ Add Polyaxon charts repo:
 helm repo add polyaxon https://charts.polyaxon.com
 ```
 
+Please note that the default values use the host_path as an artifacts store, if the deployment does not show files or metrics, you should probably provide a valid host path:
+
+```yaml
+artifactsStore:
+  name: tmp_artifacts_store
+  kind: host_path
+  schema: {"hostPath": "<VALID-MACHINE-PATH>", "mountPath": "/artifactsStore"}
+```
+
+For example the path could be `/Users/<USER>/tmp/artifactsStore`.
+
 Deploy Polyaxon with default config values on Minikube:
 
 ```bash
@@ -55,11 +66,12 @@ polyaxon port-forward -t minikube
 
 > **Tip**: You can learn more about how to customize your Polyaxon Deployment in the [setup section](/docs/setup/).
 
+
 ## Create a new project
 
 You can create a project using [Polyaxon UI](/docs/management/projects/general/) or with [Polyaxon CLI](/docs/core/cli/project/#project-create)
 
-For this tutorial you can run this command to a create a new project, 
+For this tutorial you can run this command to a create a new project,
 this will also set this project in the global cache so that we can run subsequent commands without passing the name of the project.
 We will also learn in a future tutorial how to initialize a local folder with a specific project.
 
