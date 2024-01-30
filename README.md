@@ -3,7 +3,7 @@
 [![Slack](https://img.shields.io/badge/Slack-1.5k%20members-blue.svg?style=flat&logo=slack&longCache=true)](https://polyaxon.com/slack/)
 
 [![Docs](https://img.shields.io/badge/docs-stable-brightgreen.svg?style=flat&longCache=true)](https://polyaxon.com/docs/)
-[![Release](https://img.shields.io/badge/release-v2.0.0-brightgreen.svg?longCache=true)](https://polyaxon.com/docs/releases/2-0/)
+[![Release](https://img.shields.io/badge/release-v2.1.0-brightgreen.svg?longCache=true)](https://polyaxon.com/docs/releases/2-1/)
 [![GitHub](https://img.shields.io/badge/issue_tracker-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/issues)
 [![GitHub](https://img.shields.io/badge/roadmap-github-blue?style=flat&logo=github&longCache=true)](https://github.com/orgs/polyaxon/projects/5)
 
