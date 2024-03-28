@@ -61,7 +61,6 @@ sidebar: "releases"
 
  * **New**: Add metrics/params performance widget to dashboards.
  * **New**: Add Metrics/Params correlation and importance.
- * **New**: Add dashboard level configuration to set smoothing and sizes.
  * **New**: Reports; new interface to create dashboards and shareable notes.
  * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
  * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
