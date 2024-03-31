@@ -83,6 +83,9 @@ sidebar: "releases"
  * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
  * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
  * **Enhancement**: Do not render large artifacts and provide preview button.
+ * **Enhancement**: Improve widget download to provide option to download the data in CSV format in addition to image formats.
+ * **Enhancement**: Simplify switching to data view in metrics widgets.
+ * **Enhancement**: Allow controlling sample size.
 
 ### Tracking
 
@@ -101,6 +104,7 @@ sidebar: "releases"
 
 ### Integrations
 
+ * **New**: Add fiftyone integration.
  * **New**: Add gradio integration.
  * **New**: Add mlflow integration.
 
