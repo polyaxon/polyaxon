@@ -45,7 +45,7 @@ All commands and sub-command of `project` and `ops` support this caching mechani
 
 Every time you create a project or start a run, Polyaxon will save the response of that entity to the cache. For example:
 
-`polyaxon project create --name test` will create a new project and will automatically cache the value of that project.
+`polyaxon project create --name test [--init]` will create a new project and will automatically cache the value of that project.
 In all subsequent commands, if the user does not provide a project `--project`, Polyaxon CLI will use this project that was created.
 
 `polyaxon run ...` will create a new run and will automatically cache the value.
@@ -53,8 +53,8 @@ In all subsequent commands, if the user does not provide a project `--project/-p
 
 By creating new runs, Polyaxon will keep updating the cache detail to the latest created run.
 
-You can also influence the run cache by getting a specific run, e.g. `polyaxon ops get -uid UUID` 
-will fetch the information about that specific run and persist the result to the cache so that you can run further commands 
+You can also influence the run cache by getting a specific run, e.g. `polyaxon ops get -uid UUID`
+will fetch the information about that specific run and persist the result to the cache so that you can run further commands
 without the need to pass the `-uid UUID`, e.g. `polyaxon ops logs` will use the same `UUID`.
 
 ## Caching visibility
