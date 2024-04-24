@@ -287,6 +287,7 @@ proxy:
   httpsProxy: "12.12.12.12:8080"
   noProxy: "12.12.12.12:8080"
   host: "12.12.12.12"
+  protocol: "http"  # or https
   port: 8080
   kind: transparent or connect
 ```
