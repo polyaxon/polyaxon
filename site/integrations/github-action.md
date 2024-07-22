@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     container: docker://polyaxon/polyaxon-cli:1.x.x.
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v4
       - name: lint
         run: |
           polyaxon check -f polyaxonfies/operation.yaml
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     container: docker://polyaxon/polyaxon-cli:1.x.x.
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v4
       - name: config
         run: polyaxon config --host=${{ secrets.POLYAXON_HOST }}
       - name: login
