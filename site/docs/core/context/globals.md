@@ -18,7 +18,7 @@ sidebar: "core"
 ## Overview
 
 `globals.*` is the section that defines the information that is unique to each run. Each run in Polyaxon has a project, an owner, and a user.
-It has as well several metadata like datetimes, e.g. time of creation, 
+It has as well several metadata like datetimes, e.g. time of creation,
 as well as information specific to the kind and runtime of the operation.
 
 ## Definition
@@ -29,6 +29,7 @@ this prevents information about a run to not conflict with the inputs and output
 The following information can be accessed by all Polyaxon sections:
 
  * `{{ globals.owner_name }}`: The owner of the project where the run is saved.
+ * `{{ globals.username }}`: The user who created the run (if available).
  * `{{ globals.project_name }}`: The project where the run is saved.
  * `{{ globals.project_unique_name }}`: Unique name of the project `owner.project_name`.
  * `{{ globals.project_uuid }}`: Project uuid.
@@ -63,13 +64,13 @@ If the Polyaxonfile contains a service runtime, the globals prefix will include 
 
 When an operation is automatically created by a [schedule](/docs/automation/schedules/), the globals prefix will include additionally these information:
 
- * `{{ globals.schedule_at }}`: Datetime when the operation was supposed to be scheduled. 
+ * `{{ globals.schedule_at }}`: Datetime when the operation was supposed to be scheduled.
 
 ## Contexts and references
 
 ### Additional values
 
-The context globals includes additional fields when used with a reference: 
+The context globals includes additional fields when used with a reference:
 
  * `{{ globals.status }}`: The last status of the reference operation.
  * `{{ globals.condition }}`: The last condition of the reference operation.
@@ -103,7 +104,7 @@ At first, you might think that all these params will have the same value, but th
  * If an operation is running in the context of a DAG, the value of `param3` will be the `uuid` of the pipeline managing the execution graph.
  * If an operation is running in the context of a DAG, the value of `param4` will be the `uuid` of the upstream operation that the current operation depends on.
 
-> **Note**: For more details about references, please check [context references section](/docs/core/context/globals/) for more details. 
+> **Note**: For more details about references, please check [context references section](/docs/core/context/globals/) for more details.
 
 ## Distributed jobs
 
