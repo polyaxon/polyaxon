@@ -17,7 +17,6 @@ sidebar: "releases"
 
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
  * **New**: Add support for HuggingFace (huggingface_hub) `hf://` filesystem.
- * **New**: Add new notifications/alerts/events layer to the clients to allow sending mid-run events to external systems.
  * **New**: Add logic to enforce outputs validation.
  * **Discussion**: Allow to test connection directly in the polyaxonfile before setting global connections on the cluster/agent level, issue is that users who can submit jobs will be able to mount connections that are not defined by a cluster admin.
  * **Enhancement**: Add mid-runtime update with `apply` logic.

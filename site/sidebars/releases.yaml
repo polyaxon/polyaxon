@@ -3,6 +3,8 @@
     items:
     - title: Roadmap
       link: /docs/releases/roadmap/
+    - title: V2.5
+      link: /docs/releases/2-5/
     - title: V2.4
       link: /docs/releases/2-4/
     - title: V2.3
