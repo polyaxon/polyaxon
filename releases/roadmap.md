@@ -18,6 +18,7 @@ sidebar: "releases"
  * **New**: Add support for Alibaba Cloud (Aliyun) Object Storage System (OSS).
  * **New**: Add support for HuggingFace (huggingface_hub) `hf://` filesystem.
  * **New**: Add logic to enforce outputs validation.
+ * **New**: Allow connecting Pycharm and VSCode to Polyaxon services.
  * **Discussion**: Allow to test connection directly in the polyaxonfile before setting global connections on the cluster/agent level, issue is that users who can submit jobs will be able to mount connections that are not defined by a cluster admin.
  * **Enhancement**: Add mid-runtime update with `apply` logic.
  * **Enhancement**: Improve `modelRef` and `artifactRef` initialization process and allow passing custom init path to not force the user to know the run uuid.
@@ -42,6 +43,29 @@ sidebar: "releases"
    * The decorator automatically detects `NO_OP` and defaults to a local python function call.
  * **New**: Add support for Python type hints in the both the class and the decorator component declarations.
  * **New**: Automatically detect if the filesystem should use the stream or the artifacts store directly.
+
+### Operator
+
+ * **New**: Add deployments to allow starting Ray, Dask, Spark clusters.
+
+### Docs
+
+ * **Enhancement**: Add docs for policies.
+ * **Enhancement**: Add docs for team spaces.
+ * **Enhancement**: Update docs for projects and orgs settings.
+ * **Enhancement**: Add docs for inspection and events debugging.
+ * **Enhancement**: Add docs for multi-namespaces management.
+ * **Enhancement**: Add docs for S3 ARN support.
+ * **Enhancement**: Add docs for agent's annotations for service accounts scheduling.
+ * **Enhancement**: Add docs for mounting connections to agents.
+ * **Enhancement**: Add docs for agents monitoring and inspection features.
+ * **Enhancement**: Add docs for organization's level cross-projects views for registries, runs, and analytics.
+ * **Enhancement**: Add docs for switching between organizations and team-spaces.
+ * **Enhancement**: Add docs for saving analytics views.
+ * **Enhancement**: Add docs for the pushing/pulling runs and viewing local runs.
+ * **Enhancement**: Add docs for integrations.
+ * **Enhancement**: Add docs for automations.
+ * **Enhancement**: Add docs for incoming events.
 
 ### Agent
 
