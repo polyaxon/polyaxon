@@ -521,6 +521,15 @@ ui:
   adminEnabled: false
 ```
 
+For EE deployments, admins can also set `singleUrl` to deploy the control plane with a single URL and automatic redirection to the right agent, and `defaultStrems` to set the default streams for the UI.
+
+```yaml
+ui:
+  singleUrl: true
+  defaultStreamsUrl: https://agent.ai-corp.test
+```
+
+
 ## Security context
 
 | Parameter                               | Description                                                                                         | Default
