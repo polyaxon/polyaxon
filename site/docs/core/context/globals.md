@@ -30,6 +30,7 @@ The following information can be accessed by all Polyaxon sections:
 
  * `{{ globals.owner_name }}`: The owner of the project where the run is saved.
  * `{{ globals.username }}`: The user who created the run (if available).
+ * `{{ globals.user_email }}`: The email of the user who created the run (if available).
  * `{{ globals.project_name }}`: The project where the run is saved.
  * `{{ globals.project_unique_name }}`: Unique name of the project `owner.project_name`.
  * `{{ globals.project_uuid }}`: Project uuid.
