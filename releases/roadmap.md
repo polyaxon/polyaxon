@@ -85,10 +85,8 @@ sidebar: "releases"
  * **New**: Add metrics/params performance widget to dashboards.
  * **New**: Add Metrics/Params correlation and importance.
  * **New**: Reports; new interface to create dashboards and shareable notes.
- * **New**: Add markdown, scalar, summary, lineage, and performance widgets.
  * **New**: Show an indicator on artifacts lineage if it's promoted to a model version or artifact version.
  * **New**: Add connection information to artifacts lineage.
- * **New**: Add logs and resources view to quickly check health of agent pods.
  * **New**: Add new advanced filters, allow filtering the runs in the comparison table based on:
    * parallel coordinate.
    * histogram.
@@ -97,17 +95,8 @@ sidebar: "releases"
  * **New**: Allow comparing resources with metrics and cross runs resources.
  * **New**: Add predefined hyperparameter tuning widgets/visualizations.
  * **New**: When possible, the `?` will show a direct link to the docs relevant to the UI current page. e.g. if the user is on the service accounts setting tab the `?` will have a link to the guides related to the service accounts.
- * **New**: Data table widget for rendering multi-step events in addition to the per-step slider widget for:
-   * audio events.
-   * video events.
-   * image events.
-   * histogram events.
  * **New**: UI to pass parameters and check their types automatically.
- * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
- * **Enhancement**: Implement lazy loading of widgets in dashboards based on their visibility in viewport.
- * **Enhancement**: Do not render large artifacts and provide preview button.
  * **Enhancement**: Improve widget download to provide option to download the data in CSV format in addition to image formats.
- * **Enhancement**: Simplify switching to data view in metrics widgets.
  * **Enhancement**: Allow controlling sample size.
 
 ### Tracking
@@ -130,6 +119,7 @@ sidebar: "releases"
  * **New**: Add fiftyone integration.
  * **New**: Add gradio integration.
  * **New**: Add mlflow integration.
+ * **New**: Add mario integration.
 
 ### Commercial
 
@@ -147,8 +137,6 @@ sidebar: "releases"
  * **New**: Add a new tab to explore unregistered artifact/component/model versions under each project.
  * **Enhancement**: Improve reassignment of the main organization owner.
  * **Enhancement**: Allow owner/billing users to reset the billing anchor date, several users asked to change when they get billed during month.
- * **Enhancement**: Add possibility to save searches on the global runs table.
- * **Enhancement**: Add possibility to save custom analytics searches.
  * **Enhancement**: Add more informative messages and handling when scaling down usage/agents/seats or when downgrading to a plan missing a specific feature.
  * **Enhancement**: Add support for resuming pipelines and matrix operations.
  * **Enhancement**: Investigate the new `suspend` feature to provide immediate concurrency change instead of the current [draining logic](/faq/How-does-changing-concurrency-work/).
