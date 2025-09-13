@@ -3,7 +3,7 @@ title: "Kubeflow-Replica Specification"
 sub_link: "distributed/kubeflow-replica"
 code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/run/kubeflow/replica.py"
 meta_title: "Kubeflow-Replica Specification - Experimentation"
-meta_description: "Kubeflow-Replica provides an interface to define a replica for TFJob/MPIJob/PytorchJob/MXNetJob/XGBoost."
+meta_description: "Kubeflow-Replica provides an interface to define a replica for TFJob/MPIJob/PytorchJob."
 visibility: public
 status: published
 tags:

@@ -55,8 +55,6 @@ In order to use Kubeflow as a backend for running:
   * [distributed Tensorflow experiments](/integrations/tfjob/)
   * [distributed Pytorch experiments](/integrations/pytorchjob/)
   * [distributed MPI experiments](/integrations/mpijob/)
-  * [distributed MXNet experiments](/integrations/mxnetjob/)
-  * [distributed XGBoost experiments](/integrations/xgboostjob/)
 
 you need to deploy `polyaxon/trainingjobs` on the same namespace where Polyaxon (CE or Agent) is deployed
 

@@ -15,10 +15,6 @@
       link: /docs/experimentation/distributed/pytorch-jobs/
     - title: MPI-Job Specification
       link: /docs/experimentation/distributed/mpi-jobs/
-    - title: MXNet-Job Specification
-      link: /docs/experimentation/distributed/mxnet-jobs/
-    - title: XGBoost-Job Specification
-      link: /docs/experimentation/distributed/xgboost-jobs/
     - title: Dask-Job Specification
       link: /docs/experimentation/distributed/dask-jobs/
     - title: Kubeflow-Replica Specification
