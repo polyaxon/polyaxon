@@ -21,8 +21,8 @@ Supports multiple authentication schemes:
 
   * Signup/login with username/e-mail and password
   * Signup with LDAP
-  * Signup/Login with Github accounts
-  * Signup/Login with Gitlab accounts
+  * Signup/Login with GitHub accounts
+  * Signup/Login with GitLab accounts
   * Signup/Login with Bitbucket accounts
   * Signup/Login with Microsoft (Office 365, Azure) accounts
   * Connecting more than one social account to an account based on email/username
@@ -57,9 +57,9 @@ auth:
     denyGroup:  # e.g. "cn=disabled,ou=groups,dc=example,dc=com"
 ```
 
-### Github
+### GitHub
 
-You need to register a new [application on github](https://github.com/settings/applications/new).
+You need to register a new [application on GitHub](https://github.com/settings/applications/new).
 
 You should provide a callback URL: [Domain/IP]`/sso/github`
 
@@ -67,14 +67,14 @@ And use your client id and secret token using the settings page (auth section).
 
 Please see this [section for more details](/integrations/sso-github/).
 
-### Gitlab
+### GitLab
 
-You need to register a new [application on gitlab](http://doc.gitlab.com/ce/integration/oauth_provider.html).
+You need to register a new [application on GitLab](https://docs.gitlab.com/ce/integration/oauth_provider.html).
 
 You should provide a callback URL: [Domain/IP]`/sso/gitlab`
 
 And use your client id and secret token using the settings page (auth section).
-If you have an on-premise Gitlab installation you can additionally provide your Gitlab url.
+If you have an on-premise GitLab installation you can additionally provide your GitLab url.
 
 Please see this [section for more details](/integrations/sso-gitlab/).
 

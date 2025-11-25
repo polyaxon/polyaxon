@@ -2,7 +2,7 @@
 title: "Hugging Face"
 meta_title: "Hugging Face"
 meta_description: "Polyaxon allows to schedule experiments based on the hugging-face's transformers library, and supports tracking metrics, outputs, and models natively."
-custom_excerpt: "Hugging Face - Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX."
+custom_excerpt: "Hugging Face - Transformers: State-of-the-art Machine Learning for PyTorch, TensorFlow, and JAX."
 image: "../../content/images/integrations/hugging-face.png"
 author:
   name: "Polyaxon"

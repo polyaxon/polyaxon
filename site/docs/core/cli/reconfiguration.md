@@ -28,32 +28,32 @@ polyaxon config --help
 
 ## Connecting to different hosts
 
-In order to connect Polyaxon CLI to a different host: 
+In order to connect Polyaxon CLI to a different host:
 
 ```bash
 polyaxon config set --host=IP [--no-purge]
 ```
 
-or 
+or
 
 ```bash
 polyaxon config set --host=https://IP:PORT [--no-purge]
 ```
 
-or 
+or
 
 ```bash
 polyaxon config set --host=http://localhost:PORT [--no-purge]
 ```
 
 
-or 
+or
 
 ```bash
 polyaxon config set --host=https://polyaxon.acme.com [--no-purge]
 ```
 
-When a user reconfigures their CLI, it will automatically purge all previous configurations and will reset the auth information, in order to avoid resetting the previous configuration and only change the host:
+When a user reconfigures their CLI, it will automatically purge all previous configurations and will reset the auth information. In order to avoid resetting the previous configuration and only change the host, you can use the `--no-purge` flag:
 
 ```bash
 polyaxon config set --host=https://polyaxon.acme.com --no-purge

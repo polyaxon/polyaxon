@@ -45,7 +45,7 @@ The run command consumes configuration files, also called Polyaxonfile, from dif
 
 ## Understanding the Polyaxonfile
 
-Polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/Typescript,
+Polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/TypeScript,
 files to check that they can be compiled and executed by Polyaxon.
 
 Let's first look at the content of the url:
@@ -81,7 +81,7 @@ Every Polyaxonfile must have a kind [component](/docs/core/specification/compone
 In this section, we will explore the component kind, and in the next part of the tutorial we will dive into the operation kind.
 
 
-This simple file runs a container with a custom image `polyaxon/polyaxon-quick-start`, the image is based on Tensorflow, and a command that executes our custom code.
+This simple file runs a container with a custom image `polyaxon/polyaxon-quick-start`, the image is based on TensorFlow, and a command that executes our custom code.
 The component also clones the quick start repo, this allows us to change the repo without having to rebuild the docker image,
 every time we run this component, Polyaxon will clone the repo and inject it in a context inside our main container.
 

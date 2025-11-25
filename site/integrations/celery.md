@@ -32,7 +32,7 @@ the Celery scheduler can be enabled if:
 In order to use the scheduler you need to enable a [broker](/docs/setup/platform/broker/), Polyaxon provides two options for that:
 
  * [Redis](/docs/setup/platform/redis-ha/)
- * [Rabbitmq](/docs/setup/platform/rabbitmq-ha/)
+ * [RabbitMQ](/docs/setup/platform/rabbitmq-ha/)
 
 
 ## Enable the scheduler

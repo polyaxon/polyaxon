@@ -1,6 +1,6 @@
 ---
-title: "Github Action"
-meta_title: "Github Action"
+title: "GitHub Action"
+meta_title: "GitHub Action"
 meta_description: "Polyaxon can be used with GitHub Actions to create a continuous machine learning pipeline and CI/CD for Machine Learning Projects."
 custom_excerpt: "GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD. Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue triaging work the way you want."
 image: "../../content/images/integrations/github.png"
@@ -21,12 +21,12 @@ visibility: public
 status: published
 ---
 
-You can use Polyaxon CLI in your Github Actions to lint and check your Polyaxonfiles, pull information about projects and runs, and submit operations remotely from Github.
+You can use Polyaxon CLI in your GitHub Actions to lint and check your Polyaxonfiles, pull information about projects and runs, and submit operations remotely from GitHub.
 
 ## Lint & Check
 
 In order to automate the process of checking and linting your Polyaxonfile, you can use `polyaxon/polyaxon-cli`
-docker image in your Github Actions similarly to how you would do in your local machine:
+docker image in your GitHub Actions similarly to how you would do in your local machine:
 
 ```yaml
 name: Test Component
@@ -49,7 +49,7 @@ jobs:
 
 ## Submit runs
 
-In order to submit runs from a Github action, you need to provide information about your `host` if you are using Polyaxon CE,
+In order to submit runs from a GitHub action, you need to provide information about your `host` if you are using Polyaxon CE,
 and your token if you are using one of Polyaxon commercial products.
 
 This example assumes that the user changes the `operation.yaml` file with new params and/or new information about the environment (e.g. GPU) on every push.

@@ -1,7 +1,7 @@
 ---
 title: "Ignite tracking"
 meta_title: "Ignite tracking"
-meta_description: "Polyaxon allows to schedule Pytorch Ignite experiments, and supports tracking metrics, outputs, and models natively."
+meta_description: "Polyaxon allows to schedule PyTorch Ignite experiments, and supports tracking metrics, outputs, and models natively."
 custom_excerpt: "Keras is a high-level library to help with training neural networks in PyTorch."
 image: "../../content/images/integrations/ignite.png"
 author:
@@ -142,5 +142,5 @@ plx_logger.attach_opt_params_handler(
 
 ## More info
 
-For a complete reference on how to use Ignite's PolyaxonLogger, please visit 
+For a complete reference on how to use Ignite's PolyaxonLogger, please visit
 the [Ignite's documentation](https://pytorch.org/ignite/contrib/handlers.html#module-ignite.contrib.handlers.polyaxon_logger).

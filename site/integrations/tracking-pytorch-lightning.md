@@ -1,7 +1,7 @@
 ---
-title: "Pytorch-Lightning Tracking"
-meta_title: "Pytorch-Lightning Tracking"
-meta_description: "Polyaxon allows to schedule Pytorch-Lightning experiments, and supports tracking metrics, outputs, and models natively."
+title: "PyTorch-Lightning Tracking"
+meta_title: "PyTorch-Lightning Tracking"
+meta_description: "Polyaxon allows to schedule PyTorch-Lightning experiments, and supports tracking metrics, outputs, and models natively."
 custom_excerpt: "PyTorch Lightning is an open-source Python library that provides a high-level interface for PyTorch, a popular deep learning framework."
 image: "../../content/images/integrations/pytorch-lightning.png"
 author:
@@ -18,7 +18,7 @@ visibility: public
 status: published
 ---
 
-Polyaxon allows to schedule Pytorch-Lightning experiments and supports tracking metrics, outputs, and models.
+Polyaxon allows to schedule PyTorch-Lightning experiments and supports tracking metrics, outputs, and models.
 
 With Polyaxon you can:
 
@@ -35,11 +35,11 @@ With Polyaxon you can:
 
 Polyaxon provides a [tracking API](/docs/experimentation/tracking/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard.
 
-You can use the tracking API to create a custom tracking experience with Pytorch-Lightning.
+You can use the tracking API to create a custom tracking experience with PyTorch-Lightning.
 
 ## Setup
 
-In order to use Polyaxon tracking with Pytorch-Lightning, you need to install Polyaxon library
+In order to use Polyaxon tracking with PyTorch-Lightning, you need to install Polyaxon library
 
 ```bash
 pip install polyaxon
@@ -82,7 +82,7 @@ trainer = pl.Trainer(
     progress_bar_refresh_rate=20,
     max_epochs=2,
     logger=PolyaxonCallback(
-        project="project-name", 
+        project="project-name",
         name="test",
         run_uuid="UUID",
         ...
@@ -101,7 +101,7 @@ tracking.log_mtrics(loss=loss)
 ```
 
  * log artifacts
- 
+
 ```python
 tracking.log_artifact_ref(asset_path)
 ```
@@ -117,9 +117,9 @@ callback.experiment.log_...
 
 ## Example
 
-In this example we will go through the process of logging a Pytorch-Lightning model using Polyaxon's callback.
+In this example we will go through the process of logging a PyTorch-Lightning model using Polyaxon's callback.
 
-This example can be used with the offline mode `POLYAXON_OFFLINE=true` and it does not require a Polyaxon API to run locally. 
+This example can be used with the offline mode `POLYAXON_OFFLINE=true` and it does not require a Polyaxon API to run locally.
 
 ```python
 import os

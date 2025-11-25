@@ -1,9 +1,9 @@
 ---
-title: "Pytorch-Job Specification"
+title: "PyTorch-Job Specification"
 sub_link: "distributed/pytorch-jobs"
 code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/run/kubeflow/pytorch_job.py"
-meta_title: "Kubeflow Pytorch-Job Specification - Experimentation"
-meta_description: "Kubeflow Pytorch-Job provides an interface to train distributed experiments with Pytorch."
+meta_title: "Kubeflow PyTorch-Job Specification - Experimentation"
+meta_description: "Kubeflow PyTorch-Job provides an interface to train distributed experiments with PyTorch."
 visibility: public
 status: published
 tags:

@@ -1,8 +1,8 @@
 ---
-title: "Pytorch Tracking"
-meta_title: "Pytorch Tracking"
-meta_description: "Polyaxon allows to schedule Pytorch experiments, and supports tracking metrics, outputs, and models natively."
-custom_excerpt: "Pytorch is an open source deep learning framework commonly used for building neural network models. Polyaxon helps with keeping track of model training metadata."
+title: "PyTorch Tracking"
+meta_title: "PyTorch Tracking"
+meta_description: "Polyaxon allows to schedule PyTorch experiments, and supports tracking metrics, outputs, and models natively."
+custom_excerpt: "PyTorch is an open source deep learning framework commonly used for building neural network models. Polyaxon helps with keeping track of model training metadata."
 image: "../../content/images/integrations/pytorch.png"
 author:
   name: "Polyaxon"
@@ -18,7 +18,7 @@ visibility: public
 status: published
 ---
 
-Polyaxon allows to schedule Pytorch experiments and distributed Pytorch experiments, and supports tracking metrics, outputs, and models.
+Polyaxon allows to schedule PyTorch experiments and distributed PyTorch experiments, and supports tracking metrics, outputs, and models.
 
 With Polyaxon you can:
 
@@ -36,11 +36,11 @@ With Polyaxon you can:
 
 Polyaxon provides a [tracking API](/docs/experimentation/tracking/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard.
 
-You can use the tracking API to create a custom tracking experience with Pytorch.
+You can use the tracking API to create a custom tracking experience with PyTorch.
 
 ## Setup
 
-In order to use Polyaxon tracking with Pytorch, you need to install Polyaxon library
+In order to use Polyaxon tracking with PyTorch, you need to install Polyaxon library
 
 ```bash
 pip install polyaxon
@@ -72,7 +72,7 @@ for batch_idx, (data, target) in enumerate(train_loader):
 ```
 
  * log the model
- 
+
 ```python
 asset_path = tracking.get_outputs_path('model.ckpt')
 torch.save(model.state_dict(), asset_path)

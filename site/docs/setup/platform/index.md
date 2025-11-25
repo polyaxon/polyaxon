@@ -63,7 +63,7 @@ postgresql:
 
 ## Install Polyaxon
 
-First of all, you need to [add](https://github.com/kubernetes/helm/blob/master/docs/chart_repository.md) the [Polyaxon helm repository](https://charts.polyaxon.com/)
+First of all, you need to [add](https://github.com/kubernetes/helm/blob/master/docs/chart_repository.md) the [Polyaxon Helm repository](https://charts.polyaxon.com/)
 to your Helm, so you can install Polyaxon from it.
 This makes it easy to refer to the Polyaxon chart without having to use a long URL each time.
 
@@ -119,7 +119,7 @@ helm install <RELEASE_NAME> polyaxon/polyaxon \
     -f config.yaml
 ```
 
-`--name` or `name` is an identifier used by helm to refer to this deployment.
+`--name` or `name` is an identifier used by Helm to refer to this deployment.
 You need it when you are changing the configuration of this install or deleting it.
 We recommend using `RELEASE_NAME = polyaxon` or `RELEASE_NAME = plx`.
 
@@ -145,7 +145,7 @@ You can see the pods being created by entering in a different terminal:
 kubectl --namespace=<NAMESPACE> get pod
 ```
 
-When helm is done deploying Polyaxon, it will output some instructions `NOTES`,
+When Helm is done deploying Polyaxon, it will output some instructions `NOTES`,
 these note will be different depending on your configuration (the service type used and/or ingress);
 
 ```

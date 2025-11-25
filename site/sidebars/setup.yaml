@@ -17,7 +17,7 @@
       link: /docs/setup/platform/common-reference/
     - title: PostgreSQL HA
       link: /docs/setup/platform/postgresql-ha/
-    - title: Rabbitmq HA
+    - title: RabbitMQ HA
       link: /docs/setup/platform/rabbitmq-ha/
     - title: Redis HA
       link: /docs/setup/platform/redis-ha/

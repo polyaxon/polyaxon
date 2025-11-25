@@ -32,10 +32,10 @@ Configure your IDE to reference Polyaxonfile's schema:
 ![intellij-configure](../../content/images/integrations/ide/intellij-configure.png)
 
 The schema is located at [https://raw.githubusercontent.com/polyaxon/polyaxon/master/sdks/jsonschema/v1/polyaxonfile.schema.json](https://raw.githubusercontent.com/polyaxon/polyaxon/master/sdks/jsonschema/v1/polyaxonfile.schema.json).
- 
+
 We recommend to use a file glob pattern that is specific to your Polyaxonfiles, for example:
  * `polyaxonfile*.yaml`: All files that start with `polyaxonfile` and end with `.yaml`.
- * `polyaxonfiles/**/*.yaml`: All files located under `polyonaxfiles` path.
+ * `polyaxonfiles/**/*.yaml`: All files located under `polyaxonfiles` path.
 
 ## Restart the IDE to use the completion and validation
 

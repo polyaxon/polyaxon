@@ -1,7 +1,7 @@
 ---
 title: "SSH Connections"
 sub_link: "connections/ssh"
-meta_title: "Use SSH to integrate your workflow with external system or to load git repos from github, gitlab, bitbucket in Polyaxon - Configuration"
+meta_title: "Use SSH to integrate your workflow with external system or to load git repos from GitHub, GitLab, bitbucket in Polyaxon - Configuration"
 meta_description: "Polyaxon allows to use ssh connections to connect to external systems and to integrate with git providers for code management."
 tags:
   - configuration
@@ -18,7 +18,7 @@ sidebar: "setup"
 
 Polyaxon allows to use ssh connections to connect to external systems, including to connect to private or public git repos.
 
-SSH connections can be used as an alternative connection to authorize jobs to clone and pull code from different git providers such as Github, Gitlab, and Bitbucket.
+SSH connections can be used as an alternative connection to authorize jobs to clone and pull code from different git providers such as GitHub, GitLab, and Bitbucket.
 
 By default, an ssh connection is not automatically used for pulling git repos by Polyaxon unless it is used with a git initializer.
 

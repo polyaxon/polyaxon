@@ -55,6 +55,8 @@
       link: /docs/core/python-library/offline/
     - title: Polyaxon Client
       link: /docs/core/python-library/polyaxon-client/
+    - title: Organization Client
+      link: /docs/core/python-library/organization-client/
     - title: Project Client
       link: /docs/core/python-library/project-client/
     - title: Run Client

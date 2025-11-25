@@ -1,7 +1,7 @@
 ---
 title: "Git Connections"
 sub_link: "connections/git"
-meta_title: "Integrate your workflow with github, gitlab, bitbucket in Polyaxon - Configuration"
+meta_title: "Integrate your workflow with GitHub, GitLab, bitbucket in Polyaxon - Configuration"
 meta_description: "Polyaxon allows to use external git providers for code management."
 tags:
   - configuration
@@ -18,7 +18,7 @@ sidebar: "setup"
 
 Polyaxon allows to use external git providers for code management.
 
-Git connections are how you can authorize your jobs to clone and pull code from different git providers such as Github, Gitlab, and Bitbucket.
+Git connections are how you can authorize your jobs to clone and pull code from different git providers such as GitHub, GitLab, and Bitbucket.
 
 ## Schema Fields
 
@@ -112,7 +112,7 @@ run:
 ## Connecting public repos
 
 To add a connection for a public repo, you don't need to set a secret,
-for example we can clone `https://github.com/polyaxon/polyaxon-quick-start` github repo:
+for example we can clone `https://github.com/polyaxon/polyaxon-quick-start` GitHub repo:
 
 ```yaml
 connections:

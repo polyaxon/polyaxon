@@ -28,12 +28,12 @@ Users can leverage the service abstraction to schedule ML apps created using [St
 
 In this guide, we will show how to easily schedule and expose such work on your Kubernetes cluster using Polyaxon.
 
-For users using Polyaxon Cloud or Polyaxon EE, the app will be automatically protected with authentication and only users with enough permissions 
+For users using Polyaxon Cloud or Polyaxon EE, the app will be automatically protected with authentication and only users with enough permissions
 and who have access to the project where the app is running can interact with the service.
 
 The code used for this example is hosted on [github](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo).
 
-This demo shows how to use [Spacy](https://spacy.io/) to analyze text provided by the end user. 
+This demo shows how to use [Spacy](https://spacy.io/) to analyze text provided by the end user.
 
 ## App code
 
@@ -70,7 +70,7 @@ spacy_streamlit.visualize(
 
 ## Polyaxon component to schedule the app
 
-To schedule this app on Polyaxon, we just need to run this [simple component manifest](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/polyaxonfiles/app.yaml): 
+To schedule this app on Polyaxon, we just need to run this [simple component manifest](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/polyaxonfiles/app.yaml):
 
 ```yaml
 version: 1.1
@@ -101,7 +101,7 @@ polyaxon run -f polayxonfiles/app.yaml
 > **Note**: You might need to provide the correct project with `-p PROJECT_NAME`
 
 
-## Viewing the service 
+## Viewing the service
 
 Go to the UI under `service` tab:
 
@@ -121,13 +121,13 @@ Or to get the service in full-screen mode:
 polyaxon ops service --external [-uid] [-p]
 ```
 
-Using the light the theme:
+Using the light theme:
 
 ![spacy-streamlit-light-1](../../content/images/integrations/streamlit/spacy-streamlit-light-1.png)
 
 ![spacy-streamlit-light-2](../../content/images/integrations/streamlit/spacy-streamlit-light-2.png)
 
-Using the dark the theme:
+Using the dark theme:
 
 ![spacy-streamlit-dark-1](../../content/images/integrations/streamlit/spacy-streamlit-dark-1.png)
 
@@ -154,6 +154,6 @@ runPatch:
 hubRef: kaniko
 ```
 
-This operation clones the repo (https://github.com/polyaxon/spacy-streamlit-polyaxon-demo), 
-and builds the container using the [Dockerfile](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/Dockerfile) 
+This operation clones the repo (https://github.com/polyaxon/spacy-streamlit-polyaxon-demo),
+and builds the container using the [Dockerfile](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/Dockerfile)
 that is hosted inside the repo, which basically just copies the code and runs `pip3 install -r requirements.txt`.

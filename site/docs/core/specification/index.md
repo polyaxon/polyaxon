@@ -21,7 +21,7 @@ In order to schedule runs on Polyaxon, users need to create Polyaxonfiles.
 
 These files use a specification to describe how jobs, distributed jobs, services, parallel executions, and pipelines should run on Polyaxon.
 
-The Polyaxonfile specification can be authored in YAML, json, python, and partially in Go, Typescript, and Java. 
+The Polyaxonfile specification can be authored in YAML, json, python, and partially in Go, TypeScript, and Java.
 This specification is based on a list of sections, in this guide, we describe the required and optional sections.
 
 ## Primitives

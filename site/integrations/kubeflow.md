@@ -1,7 +1,7 @@
 ---
-title: "KubeFlow"
-meta_title: "KubeFlow"
-meta_description: "How to schedule, track, and manage KubeFlow operators on Polyaxon. Polyaxon can schedule and manage KubeFlow operators natively."
+title: "Kubeflow"
+meta_title: "Kubeflow"
+meta_description: "How to schedule, track, and manage Kubeflow operators on Polyaxon. Polyaxon can schedule and manage Kubeflow operators natively."
 custom_excerpt: "The Kubeflow project is dedicated to making deployments of machine learning (ML) workflows on Kubernetes simple, portable and scalable."
 image: "../../content/images/integrations/kubeflow.png"
 author:
@@ -18,7 +18,7 @@ visibility: public
 status: published
 ---
 
-Polyaxon provides native support for several KubeFlow components.
+Polyaxon provides native support for several Kubeflow components.
 
 ## Overview
 
@@ -52,8 +52,8 @@ helm repo update
 ## Deploying/Deleting the TrainingJobs operator
 
 In order to use Kubeflow as a backend for running:
-  * [distributed Tensorflow experiments](/integrations/tfjob/)
-  * [distributed Pytorch experiments](/integrations/pytorchjob/)
+  * [distributed TensorFlow experiments](/integrations/tfjob/)
+  * [distributed PyTorch experiments](/integrations/pytorchjob/)
   * [distributed MPI experiments](/integrations/mpijob/)
 
 you need to deploy `polyaxon/trainingjobs` on the same namespace where Polyaxon (CE or Agent) is deployed

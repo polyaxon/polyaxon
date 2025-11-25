@@ -129,7 +129,7 @@ It's still possible to start Tensorboard and Notebook in a simple way, e.g.:
 
  * The built-in docker registry is removed: users can still deploy an in-cluster registry for managing docker images,
    but the behavior is now standardized across all registry providers.
- * Celery Scheduler is disabled by default: which means no dependency on Redis or Rabbitmq unless the scheduler is enabled, and only one dependency is required.
+ * Celery Scheduler is disabled by default: which means no dependency on Redis or RabbitMQ unless the scheduler is enabled, and only one dependency is required.
  * Git is managed through external providers by default: no volume for managing repos is required anymore.
  * Logs and outputs are managed through a single artifacts store: One artifacts store connection to manage logs, events, and outputs.
 

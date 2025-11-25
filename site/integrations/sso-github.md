@@ -1,7 +1,7 @@
 ---
-title: "SSO with Github"
+title: "SSO with GitHub"
 meta_title: "SSO with Github"
-meta_description: "How to use github to manage users authentication on Polyaxon. You can easily integrate github to manage users authentication on Polyaxon."
+meta_description: "How to use GitHub to manage users authentication on Polyaxon. You can easily integrate GitHub to manage users authentication on Polyaxon."
 custom_excerpt: "GitHub is an online service for software development projects that use the Git revision control system."
 image: "../../content/images/integrations/github.png"
 author:
@@ -22,7 +22,7 @@ You can use GitHub to manage your organization’s entire membership.
 
 ## Register a GitHub application
 
-You need to register a [new application](https://github.com/settings/applications/new) on github.
+You need to register a [new application](https://github.com/settings/applications/new) on GitHub.
 
 ![github-integration1](../../content/images/integrations/sso/github.png)
 

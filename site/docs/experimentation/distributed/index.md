@@ -3,7 +3,7 @@ title: "Distributed Jobs"
 sub_link: "distributed"
 is_index: true
 meta_title: "Distributed Jobs in Polyaxon - Experimentation"
-meta_description: "Polyaxon supports distributed jobs for training or data processing via TF-Job, MPI-Job, Pytorch-Job, Ray-Job, Dask-Job."
+meta_description: "Polyaxon supports distributed jobs for training or data processing via TF-Job, MPI-Job, PyTorch-Job."
 tags:
   - concepts
   - polyaxon
@@ -23,7 +23,7 @@ or you should deploy the operator(s) before starting an execution.
 
 ## Training operator
 
-In order to run TFJobs/MpiJobs/PytorchJobs/MXNetJobs/PytorchJobs you will need to deploy training operator before executing a job from Polyaxon.
+In order to run TFJobs/MpiJobs/PyTorchJobs/MXNetJobs/PyTorchJobs you will need to deploy training operator before executing a job from Polyaxon.
 
 ### TFJob
 
@@ -33,16 +33,6 @@ Please check the [TFJob](/docs/experimentation/distributed/tf-jobs/) guide to le
 
 Please check the [MpiJob](/docs/experimentation/distributed/mpi-jobs/) guide to learn about all details for running MpiJobs in Polyaxon.
 
-### PytorchJob
+### PyTorchJob
 
-Please check the [PytorchJob](/docs/experimentation/distributed/pytorch-jobs/) guide to learn about all details for running PytorchJobs in Polyaxon.
-
-## Ray
-
-In order to run RayJobs you will need to deploy the kuberay before executing a job from Polyaxon.
-
-Please check the [RayJob](/docs/experimentation/distributed/ray-jobs/) guide to learn about all details for running RayJobs in Polyaxon.
-
-## Dask
-
-Please check the [DaskJob](/docs/experimentation/distributed/dask-jobs/) guide to learn about all details for running DaskJobs in Polyaxon.
+Please check the [PyTorchJob](/docs/experimentation/distributed/pytorch-jobs/) guide to learn about all details for running PyTorchJobs in Polyaxon.

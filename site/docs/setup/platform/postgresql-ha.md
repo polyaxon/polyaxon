@@ -1,7 +1,7 @@
 ---
 title: "PostgreSQL HA"
 sub_link: "platform/postgresql-ha"
-meta_title: "High availability of postgresql database in Polyaxon - Configuration"
+meta_title: "High availability of PostgreSQL database in Polyaxon - Configuration"
 meta_description: "Keeping database records of your users, projects, experiments, and jobs is very important. Polyaxon offers a couple of ways to set a high available database."
 tags:
   - configuration
@@ -17,7 +17,7 @@ sidebar: "setup"
 Since keeping database records of your users, projects, experiments, and jobs is very important.
 Polyaxon offers a couple of ways to set a high available database.
 
-> **Note**: We strongly recommend that you do not deploy a production database using this chart. Although the provided database can persist data if configured, 
+> **Note**: We strongly recommend that you do not deploy a production database using this chart. Although the provided database can persist data if configured,
 > you might encounter an issue in the future if we upgrade the dependency requirements or the version of the database image changes.
 
 ## Persistence
@@ -57,7 +57,7 @@ you need to define a PVC and assign it to the `persistence.existingClaim`.
         existingClaim: myClaimName
     ```
 
-## External Postgresql
+## External PostgreSQL
 
 If you prefer to have the postgresql database managed and hosted outside of Kubernetes,
 instead of the in-cluster one provided by Polyaxon, e.g.
@@ -80,7 +80,7 @@ externalServices:
     host: 35.262.163.88
 ```
 
-Please check this [integration guide](/integrations/database/) for cloud specific instructions on how to setup a postgreSQL server instance.
+Please check this [integration guide](/integrations/database/) for cloud specific instructions on how to setup a PostgreSQL server instance.
 
 
 ## Scheduling

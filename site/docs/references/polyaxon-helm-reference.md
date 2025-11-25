@@ -19,13 +19,13 @@ Polyaxon chart is a Helm chart for creating reproducible and maintainable deploy
 ## Introduction
 
 This chart bootstraps a [Polyaxon](https://polyaxon.com) deployment on
-a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 It also packages some required dependencies for Polyaxon:
 
  * [PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
  * [Redis](https://github.com/bitnami/charts/tree/main/bitnami/redis)
- * [Rabbitmq](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
+ * [RabbitMQ](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
 
 > **Note**: It's possible to provide your own managed version of each one for these dependencies.
 
@@ -347,7 +347,7 @@ This is how you specify where your NVidia library is on your host
 | `dirs.nvidia.bin`     | The nvidia bin:e .g "/usr/lib/nvidia-384/bin"                         | ``
 | `dirs.nvidia.libcuda` | The nvidia libcuda.so.1:e .g "/usr/lib/x86_64-linux-gnu/libcuda.so.1" | ``
 
-This where you want to mount these libraries on the pods, by default Polyaxon will same values from dirs if not provided.
+This where you want to mount these libraries on the pods, by default Polyaxon will use the same values from dirs if not provided.
 
 | Parameter                   | Description                                                           | Default
 | ----------------------------| ----------------------------------------------------------------------| ----------------------------------------------------------
@@ -583,7 +583,7 @@ rabbitmq:
 
 If one or more taints are applied to a node,
 and you want to make sure some pods should not deploy on it,
-Polyaxon provides tolerations option for the core platform, as well as for all dependencies, e.i. database, broker, expose their own tolerations option.
+Polyaxon provides tolerations option for the core platform, as well as for all dependencies, i.e. database, broker, expose their own tolerations option.
 
 ```yaml
 tolerations:
@@ -673,7 +673,7 @@ allowedHosts:
 
 ### API Host
 
-In order to receive email and notifcation with a clickable link to the objects on the platform
+In order to receive email and notification with a clickable link to the objects on the platform
 
 ```yaml
 hostName: 159.203.150.212
@@ -706,7 +706,7 @@ ui:
 | `runAsNonRoot`                          | Indicates that the container must run as a non-root user                                            | `true`
 | `fsGroupChangePolicy`                   | defines behavior of changing ownership and permission of the volume before being exposed inside Pod |
 
-Polyaxon runs all containers as root by default, this configuration is often fine for several deployment,
+Polyaxon runs all containers as root by default, this configuration is often fine for several deployments,
 however, in some use cases it can expose a compliance issue for some teams.
 
 Polyaxon provides a simple way to enable a security context for all core components.
@@ -757,7 +757,7 @@ This will enable a security context to run all containers using a UID/GID == 111
 You can use port forwarding to access the API and dashboard on localhost:
 
 ```bash
-kubectl port-forward  svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon
+kubectl port-forward svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon
 ```
 
 ## Upgrade Polyaxon

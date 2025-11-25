@@ -1,7 +1,7 @@
 ---
 title: "SSO with GitLab"
 meta_title: "SSO with GitLab"
-meta_description: "How to use github to manage users authentication on Polyaxon. You can easily integrate github to manage users authentication on Polyaxon."
+meta_description: "How to use GitLab to manage users authentication on Polyaxon. You can easily integrate GitLab to manage users authentication on Polyaxon."
 custom_excerpt: "GitLab is a single application for the entire software development lifecycle. From project planning and source code management to CI/CD, monitoring, and security."
 image: "../../content/images/integrations/gitlab.png"
 author:
@@ -40,7 +40,7 @@ externalServices:
         options: {client_id: "#####", client_secret: "#####"}
 ```
 
-If you have an on-premise Gitlab installation you can additionally provide your Gitlab url:
+If you have an on-premise GitLab installation you can additionally provide your GitLab url:
 
 ```yaml
 externalServices:

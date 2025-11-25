@@ -1,7 +1,7 @@
 ---
-title: "Tensorflow Tracking"
-meta_title: "Tensorflow Tracking"
-meta_description: "Polyaxon allows to schedule Tensorflow experiments, and supports tracking metrics, outputs, and models natively."
+title: "TensorFlow Tracking"
+meta_title: "TensorFlow Tracking"
+meta_description: "Polyaxon allows to schedule TensorFlow experiments, and supports tracking metrics, outputs, and models natively."
 custom_excerpt: "TensorFlow is a free and open-source software library for dataflow and differentiable programming across a range of tasks. It is a symbolic math library, and is also used for machine learning applications such as neural networks."
 image: "../../content/images/integrations/tensorflow.png"
 author:
@@ -18,7 +18,7 @@ visibility: public
 status: published
 ---
 
-Polyaxon allows to schedule Tensorflow experiments and distributed Tensorflow experiments, and supports tracking metrics, outputs, and models.
+Polyaxon allows to schedule TensorFlow experiments and distributed TensorFlow experiments, and supports tracking metrics, outputs, and models.
 
 With Polyaxon you can:
 
@@ -36,11 +36,11 @@ With Polyaxon you can:
 
 Polyaxon provides a [tracking API](/docs/experimentation/tracking/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard.
 
-You can use the tracking API to create a custom tracking experience with Tensorflow.
+You can use the tracking API to create a custom tracking experience with TensorFlow.
 
 ## Setup
 
-In order to use Polyaxon tracking with Tensorflow, you need to install Polyaxon library
+In order to use Polyaxon tracking with TensorFlow, you need to install Polyaxon library
 
 ```bash
 pip install polyaxon
@@ -56,9 +56,9 @@ from polyaxon import tracking
 tracking.init(...)
 ```
 
-## Tensorflow Callback
+## TensorFlow Callback
 
-Polyaxon provides a Tensorflow callback, you can use this callback with your experiment to report metrics automatically
+Polyaxon provides a TensorFlow callback, you can use this callback with your experiment to report metrics automatically
 
 ```python
 from polyaxon.tracking.contrib.tensorflow import PolyaxonCallback
@@ -73,13 +73,13 @@ estimator.train(hooks=[PolyaxonCallback(...)])
 Polyaxon's callback can be customized to alter the default behavior:
 
  * It will use the current initialized run unless you pass a different run
- * You can enable images logging 
- * You can enable histograms logging 
+ * You can enable images logging
+ * You can enable histograms logging
  * You can enable tensors  logging
- 
+
 ```python
 PolyaxonCallback(run=run, log_image=True, log_histo=True, log_tensor=True)
-``` 
+```
 
 ## Manual logging
 

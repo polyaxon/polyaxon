@@ -1,8 +1,8 @@
 ---
 title: "Using the Client"
 sub_link: "query-metadata-artifacts/using-client"
-meta_title: "Introduction to Querying Metadata and Artifacts Using Polyaxon the Client - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Introduction to Querying Metadata and Artifacts Using Polyaxon the Client - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+meta_title: "Introduction to Querying Metadata and Artifacts Using Polyaxon Client - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Introduction to Querying Metadata and Artifacts Using Polyaxon Client - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:
@@ -160,7 +160,7 @@ run_client = RunClient(project="PROJECT_NAME", run_uuid="8aac02e3a62a4f0aaa257c5
 run_client.pull_remote_run(path="/tmp/save/to/path", download_artifacts=False)
 ```
 
- * Pulling the the metadata, lineage metadata, and artifacts
+ * Pulling the metadata, lineage metadata, and artifacts
 
 ```python
 from polyaxon.client import RunClient
