@@ -22,6 +22,18 @@ and users can run any additional sidecar containers.
 
 the sidecar section accepts a list of [Kubernetes Containers](https://kubernetes.io/docs/concepts/containers/).
 
+## Connections and Context
+
+User-defined sidecars automatically receive the same connections (volumes, environment variables, secrets, config maps) and context volumes (e.g., auth, artifacts) as the main container. This allows sidecars to access databases, storage buckets, and other resources defined in the operation.
+
+If you don't want sidecars to inherit these connections, you can disable this behavior using the sidecar plugin setting:
+
+```yaml
+plugins:
+  sidecar:
+    noConnections: true
+```
+
 ## Yaml usage
 
 ```yaml
