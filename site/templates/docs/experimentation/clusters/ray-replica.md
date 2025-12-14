@@ -3,7 +3,7 @@ title: "Ray-Replica Specification"
 sub_link: "distributed/ray-replica"
 code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/run/ray/replica.py"
 meta_title: "Ray-Replica Specification - Experimentation"
-meta_description: "Ray-Replica provides an interface to define a replica for RayJob."
+meta_description: "Ray-Replica provides an interface to define a replica for RayCluster."
 visibility: public
 status: published
 tags:

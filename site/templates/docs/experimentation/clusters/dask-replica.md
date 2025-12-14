@@ -3,7 +3,7 @@ title: "Dask-Replica Specification"
 sub_link: "distributed/dask-replica"
 code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/run/dask/replica.py"
 meta_title: "Dask-Replica Specification - Experimentation"
-meta_description: "Dask-Replica provides an interface to define a replica for DaskJob."
+meta_description: "Dask-Replica provides an interface to define a replica for DaskCluster."
 visibility: public
 status: published
 tags:

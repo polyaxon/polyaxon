@@ -1,9 +1,9 @@
 ---
-title: "Ray-Job Specification"
-sub_link: "distributed/ray-jobs"
+title: "Ray-Cluster Specification"
+sub_link: "distributed/ray-clusters"
 code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/run/ray.py"
-meta_title: "Ray-Job Specification - Experimentation"
-meta_description: "Ray-Job provides an interface to run Ray jobs on Kubernetes."
+meta_title: "Ray-Cluster Specification - Experimentation"
+meta_description: "Ray-Cluster provides an interface to run Ray clusters on Kubernetes."
 visibility: public
 status: published
 tags:

@@ -1,9 +1,9 @@
 ---
-title: "Dask-Job Specification"
-sub_link: "distributed/dask-jobs"
+title: "Dask-Cluster Specification"
+sub_link: "distributed/dask-clusters"
 code_link: "https://github.com/polyaxon/cli/blob/master/cli/polyaxon/_flow/run/dask/dask.py"
-meta_title: "Dask-Job Specification - Experimentation"
-meta_description: "Dask-Job provides an interface to run Dask jobs on Kubernetes."
+meta_title: "Dask-Cluster Specification - Experimentation"
+meta_description: "Dask-Cluster provides an interface to run Dask clusters on Kubernetes."
 visibility: public
 status: published
 tags:

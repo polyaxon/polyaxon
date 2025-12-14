@@ -103,7 +103,7 @@
       link: /docs/core/cli/check/
     - title: Config Command
       link: /docs/core/cli/config/
-    - title: Project Command
+    - title: Projects Command
       link: /docs/core/cli/project/
     - title: Run Command
       link: /docs/core/cli/run/
