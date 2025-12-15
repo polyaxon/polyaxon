@@ -18,7 +18,7 @@ jobs:
         python-version: [3.9, '3.10', '3.11', '3.12', '3.13']
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: true
     - name: Set up Python ${{ matrix.python-version }}
@@ -54,7 +54,7 @@ jobs:
   container-sqlite-tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: true
     - name: build
@@ -68,7 +68,7 @@ jobs:
   container-pgsql-tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: true
     - name: build
