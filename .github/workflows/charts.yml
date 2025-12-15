@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: azure/setup-helm@v3.5
+      - uses: azure/setup-helm@v4
       - uses: helm/kind-action@v1
       - name: generate
         run: |
@@ -31,7 +31,7 @@ jobs:
           cd charts
           helm dependency build polyaxon
           helm dependency build agent
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: 3.9
       - name: test
