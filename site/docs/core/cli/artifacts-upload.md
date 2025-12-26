@@ -16,7 +16,7 @@ sidebar: "core"
 
 ## Overview
 
-Polyaxon users will often need to upload some artifacts, code, or small dataset before starting an operation 
+Polyaxon users will often need to upload some artifacts, code, or small dataset before starting an operation
 or might need to attach additional artifacts during the progress of an interactive session or after a run is finished.
 
 If you are dealing with large datasets, we recommend that you host those datasets directly on the data store or the connection and not use Polyaxon CLI for uploading them.
@@ -33,13 +33,13 @@ Polyaxon provides two commands to upload artifacts.
 
 This is useful to upload artifacts before starting a run.
 
-To just trigger the default upload behavior, you can use the flag argument: 
+To just trigger the default upload behavior, you can use the flag argument:
 
 ```bash
 polyaxon run ... -u/--upload
 ```
 
-To control where the upload manager should set the artifacts under the run's artifacts path: 
+To control where the upload manager should set the artifacts under the run's artifacts path:
 
 ```bash
 polyaxon run ... -u-to/--upload-to subpath/to/use
@@ -60,6 +60,47 @@ polyaxon run ... -u-from/--upload-from local/subpath/to/use -u-to/--upload-to re
 ```
 
 > For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/core/cli/run/)
+
+### Mount Section
+
+> N.B. mount is available from Polyaxon 2.13+
+
+You can also rely on the Polyaxonfile to declare the uploads you want to mount for your run.
+Polyaxon provides a `mount` section to declare a list of files/dirs to upload to the artifacts store.
+
+#### Short syntax
+
+You look use the string syntax `local_path:remote_path` or just `local_path` (which maps to `local_path:`).
+
+```yaml
+version: 1.1
+kind: component
+mount:
+  - "script.py"
+  - "data/foo.csv:data/foo.csv"
+run: ...
+```
+
+#### Long syntax
+
+You can also use the key/value syntax:
+
+```yaml
+version: 1.1
+kind: component
+mount:
+  - from: "script.py"
+    to: "script.py"
+  - from: "data/foo.csv"
+    to: "data/foo.csv"
+run: ...
+```
+
+When you run a Polyaxonfile with a `mount` section, the CLI will automatically upload the declared files/dirs to the artifacts store.
+
+```bash
+polyaxon run -f polyaxonfile.yaml
+```
 
 ### Ops command
 
