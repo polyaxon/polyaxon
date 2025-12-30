@@ -156,3 +156,152 @@ If culling is not working as expected:
 4. **Service must be running**: Culling only applies to services in the running state
 
 See the [services timeout preset documentation](/docs/core/scheduling-presets/services-timeout/) for more examples and preset configurations.
+
+## Fine-grained failure handling with Pod Failure Policy
+
+> **Note**: Available from v2.13. Requires Kubernetes v1.25+ with `PodDisruptionConditions` and `JobPodFailurePolicy` feature gates enabled. Stable in Kubernetes v1.31+.
+
+By default, all pod failures count towards the `maxRetries` (backoff limit). This can be problematic when:
+* Pods are preempted or evicted (involuntary disruptions) - these shouldn't count as actual failures
+* Certain exit codes indicate non-retriable errors (e.g., invalid configuration) - the job should fail immediately instead of retrying
+* You want to optimize resource utilization by avoiding unnecessary retries
+
+The `podFailurePolicy` feature allows you to define fine-grained rules for how different types of pod failures should be handled.
+
+### Configuration
+
+```yaml
+termination:
+  maxRetries: 3
+  podFailurePolicy:
+    rules:
+      # Fail immediately on exit code 42 (non-retriable error)
+      - action: FailJob
+        onExitCodes:
+          containerName: main
+          operator: In
+          values: [42]
+      # Ignore pod disruptions (preemption, eviction)
+      - action: Ignore
+        onPodConditions:
+          - type: DisruptionTarget
+```
+
+### Available Actions
+
+| Action | Description |
+|--------|-------------|
+| `FailJob` | Mark the job as failed immediately without further retries. Use for non-retriable errors. |
+| `Ignore` | Don't count this failure towards the backoff limit. Use for involuntary disruptions. |
+| `Count` | Count towards the backoff limit. This is the default behavior. |
+| `FailIndex` | For indexed jobs, fail only the specific index without failing the entire job. |
+
+### Matching Conditions
+
+#### Exit Codes (`onExitCodes`)
+
+Match on container exit codes:
+
+```yaml
+podFailurePolicy:
+  rules:
+    - action: FailJob
+      onExitCodes:
+        containerName: main  # Optional: matches all containers if not specified
+        operator: In         # In or NotIn
+        values: [42, 137]
+```
+
+Common exit codes:
+* `0`: Success
+* `1`: General errors
+* `137`: SIGKILL (often OOM killed)
+* `143`: SIGTERM (graceful termination)
+
+#### Pod Conditions (`onPodConditions`)
+
+Match on pod condition types:
+
+```yaml
+podFailurePolicy:
+  rules:
+    - action: Ignore
+      onPodConditions:
+        - type: DisruptionTarget
+          status: "True"  # Optional, defaults to "True"
+```
+
+The most useful condition is `DisruptionTarget` which allows you to ignore failures caused by involuntary disruptions like preemption or eviction.
+
+### Common Patterns
+
+**Ignore preemption and eviction:**
+
+```yaml
+termination:
+  maxRetries: 3
+  podFailurePolicy:
+    rules:
+      - action: Ignore
+        onPodConditions:
+          - type: DisruptionTarget
+```
+
+**Fail fast on invalid configuration:**
+
+```yaml
+termination:
+  maxRetries: 3
+  podFailurePolicy:
+    rules:
+      - action: FailJob
+        onExitCodes:
+          operator: In
+          values: [42]  # Custom "invalid config" exit code
+```
+
+**Fail on OOM kills:**
+
+```yaml
+termination:
+  maxRetries: 3
+  podFailurePolicy:
+    rules:
+      - action: FailJob
+        onExitCodes:
+          operator: In
+          values: [137]  # SIGKILL, often from OOM
+```
+
+**Combined policy:**
+
+```yaml
+termination:
+  maxRetries: 5
+  podFailurePolicy:
+    rules:
+      # Fail immediately on configuration errors
+      - action: FailJob
+        onExitCodes:
+          operator: In
+          values: [42]
+      # Fail immediately on OOM
+      - action: FailJob
+        onExitCodes:
+          operator: In
+          values: [137]
+      # Ignore disruptions
+      - action: Ignore
+        onPodConditions:
+          - type: DisruptionTarget
+```
+
+### How it works
+
+1. When a pod fails, Kubernetes evaluates the rules in order
+2. The first matching rule determines the action taken
+3. If no rules match, the default behavior (`Count`) applies
+4. Rules with `Ignore` action don't count the failure towards the backoff limit
+5. Rules with `FailJob` action immediately fail the job without retrying
+
+See the [Kubernetes Pod Failure Policy documentation](https://kubernetes.io/docs/tasks/job/pod-failure-policy/) for more details.
