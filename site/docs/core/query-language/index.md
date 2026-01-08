@@ -145,7 +145,90 @@ the nil operator can be used with negation as well, e.g. `x:~nil`.
 
 ## Query by combining multiple conditions
 
-Every time you put a comma `,` Polyaxon will filter further by the condition that comes after the comma.
+PQL supports combining conditions using AND and OR operators, with parentheses for grouping.
+
+### AND operator
+
+Use a comma `,` or the `AND` keyword to combine conditions with AND logic. Both syntaxes are equivalent:
+
+```
+# Using comma
+status:running, metrics.loss:<0.5
+
+# Using AND keyword
+status:running AND metrics.loss:<0.5
+```
+
+All conditions must be true for a result to match.
+
+### OR operator
+
+Use the `OR` keyword to combine conditions with OR logic:
+
+```
+# Match runs that are either running OR failed
+status:running OR status:failed
+
+# Using pipe with spaces also works as OR
+status:running | status:failed
+```
+
+At least one condition must be true for a result to match.
+
+> **Note:** The pipe `|` has different meanings based on context:
+> - **Within a field value** (no spaces): IN operator, e.g., `status:running|failed` matches status IN (running, failed)
+> - **Between expressions** (with spaces): OR operator, e.g., `status:running | name:test` matches status=running OR name=test
+
+### Grouping with parentheses
+
+Use parentheses to control precedence and group conditions:
+
+```
+# Match (running AND loss < 0.5) OR failed
+(status:running AND metrics.loss:<0.5) OR status:failed
+
+# Match running AND (loss < 0.5 OR accuracy > 0.9)
+status:running AND (metrics.loss:<0.5 OR metrics.accuracy:>0.9)
+```
+
+### Operator precedence
+
+AND has higher precedence than OR. This means:
+
+```
+# This query:
+status:running AND metrics.loss:<0.5 OR status:failed
+
+# Is equivalent to:
+(status:running AND metrics.loss:<0.5) OR status:failed
+```
+
+Use parentheses to explicitly control grouping when mixing AND and OR.
+
+### Case insensitivity
+
+The `AND` and `OR` keywords are case-insensitive:
+
+```
+status:running AND name:test
+status:running and name:test
+status:running And name:test
+```
+
+All three are equivalent.
+
+### Complex query examples
+
+```
+# Runs that are running or building, created in 2024
+(status:running OR status:building) AND created_at:>2024-01-01
+
+# Runs with either low loss or high accuracy, that are finished
+(metrics.loss:<0.1 OR metrics.accuracy:>0.95) AND status:succeeded
+
+# Nested grouping
+((status:running AND kind:job) OR (status:pending AND kind:service)) AND name:%test%
+```
 
 ## Entities
 
