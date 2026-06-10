@@ -40,12 +40,12 @@ that will be scheduled on Kubernetes:
   - __queue__: str, optional
   - __namespace__: str, optional
   - __cache__: [V1Cache](/docs/orchestration/helpers/cache/), optional
-  - __termination__: [V1Termination](/docs/scheduling/specification/termination/), optional
-  - __plugins__: [V1Plugins](/docs/scheduling/specification/plugins/), optional
-  - __params__: Dict[str, [V1Param](/docs/scheduling/specification/params/)], optional
+  - __termination__: [V1Termination](/docs/reference/polyaxonfile/specification/termination/), optional
+  - __plugins__: [V1Plugins](/docs/reference/polyaxonfile/specification/plugins/), optional
+  - __params__: Dict[str, [V1Param](/docs/reference/polyaxonfile/specification/params/)], optional
   - __schedule__: Union[[V1CronSchedule](/docs/orchestration/schedules/cron/), [V1IntervalSchedule](/docs/orchestration/schedules/interval/), [V1DateTimeSchedule](/docs/orchestration/schedules/datetime/)], optional  
   - __events__: List[[V1EventTrigger](/docs/orchestration/events/)], optional
-  - __mount__: List[[V1Mount](/docs/scheduling/specification/mount/)], optional
+  - __mount__: List[[V1Mount](/docs/reference/polyaxonfile/specification/mount/)], optional
   - __build__: [V1Build](/docs/orchestration/builds/), optional
   - __hooks__: List[[V1Hook](/docs/orchestration/hooks/)], optional
   - __matrix__: Union[[V1Mapping](/docs/orchestration/mapping/), [V1GridSearch](/docs/orchestration/optimization-engine/grid-search/), [V1RandomSearch](/docs/orchestration/optimization-engine/random-search/), [V1Hyperband](/docs/orchestration/optimization-engine/hyperband/), [V1Bayes](/docs/orchestration/optimization-engine/bayesian-optimization/), [V1Hyperopt](/docs/orchestration/optimization-engine/hyperopt/), [V1Iterative](/docs/orchestration/optimization-engine/iterative/)], optional  
@@ -59,8 +59,8 @@ that will be scheduled on Kubernetes:
   - __dag_ref__: str, optional
   - __url_ref__: str, optional
   - __path_ref__: str, optional
-  - __component__: [V1Component](/docs/scheduling/specification/component/), optional
-  - __template__: [V1Template](/docs/scheduling/specification/template/), optional
+  - __component__: [V1Component](/docs/reference/polyaxonfile/specification/component/), optional
+  - __template__: [V1Template](/docs/reference/polyaxonfile/specification/template/), optional
 
 ## YAML usage
 
@@ -276,7 +276,7 @@ operation:
 
 ### termination
 
-The [termination](/docs/scheduling/specification/termination/) to use for this operation run,
+The [termination](/docs/reference/polyaxonfile/specification/termination/) to use for this operation run,
 if provided, it will override the component's termination otherwise
 the termination of the component will be used if it exists.
 
@@ -288,7 +288,7 @@ operation:
 
 ### plugins
 
-The [plugins](/docs/scheduling/specification/plugins/) to use for this operation run,
+The [plugins](/docs/reference/polyaxonfile/specification/plugins/) to use for this operation run,
 if provided, it will override the component's plugins otherwise
 the plugins of the component will be used if it exists.
 
@@ -304,7 +304,7 @@ operation:
 
 ### params
 
-The [params](/docs/scheduling/specification/params/)  to pass to the component,
+The [params](/docs/reference/polyaxonfile/specification/params/)  to pass to the component,
 they will be validated against the inputs/outputs.
 If a parameter is passed and the component does not define a corresponding inputs/outputs,
 a validation error will be raised unless the param has the `contextOnly` flag enabled.
@@ -320,7 +320,7 @@ operation:
 
 ### mount
 
-> **Note**: ver 2.13+. Please check [V1Mount](/docs/scheduling/specification/mount/) for more details.
+> **Note**: ver 2.13+. Please check [V1Mount](/docs/reference/polyaxonfile/specification/mount/) for more details.
 
 This section defines a list of mounts to be used for this operation.
 Mounts can be defined either as strings or as full objects.

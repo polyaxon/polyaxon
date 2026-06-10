@@ -1,5 +1,5 @@
 ---
-title: "Context"
+title: "Overview"
 description: "Polyaxon provides a context to all runs to resolve information about params, id, project, ...."
 ---
 
@@ -59,7 +59,7 @@ This information is available first and can be used immediately in all areas of 
 
 > **Note**: It's very important to note that when `globals.*` is used in a param section with `ref`, it will not correspond anymore to the current run, but will be resolved from the reference defined in the `param.ref`.
 
-> **Note**: Please check the [context globals section](/docs/scheduling/context/globals/) for more details.
+> **Note**: Please check the [context globals section](/docs/reference/polyaxonfile/context/globals/) for more details.
 
 
 ### Params
@@ -90,19 +90,19 @@ the context will only have one entry, if the output has a valid value, it will b
 
 After finishing the params section, the next section is the params defined in [joins](/docs/orchestration/joins/).
 This implies that users can leverage information coming from `globals.*` and `params.*` (or as a shortcut `*`).
-In general all values resolved in the joins params are lists, unless the values are defined using the [ArtifactsType](/docs/scheduling/specification/types/#v1artifactstype), 
-in which case the value is just a merged [ArtifactsType](/docs/scheduling/specification/types/#v1artifactstype).
+In general all values resolved in the joins params are lists, unless the values are defined using the [ArtifactsType](/docs/reference/polyaxonfile/specification/types/#v1artifactstype), 
+in which case the value is just a merged [ArtifactsType](/docs/reference/polyaxonfile/specification/types/#v1artifactstype).
 
 After resolving the joins, all resulting values will be available in the context, and the compiler moves to the last params section, params defined in the matrix section 
 ([Optimization](/docs/orchestration/optimization-engine/) or [Mapping](/docs/orchestration/mapping/)).
 
-> **Note**: Please check the [context params section](/docs/scheduling/context/params/) for more details.
+> **Note**: Please check the [context params section](/docs/reference/polyaxonfile/context/params/) for more details.
 
 ### Connections
 
 Finally, if the main container requests a connection or if an init container requests a connection, and if that connection has a schema, it will be available in the context.
 
-> **Note**: Please check the [context connections section](/docs/scheduling/context/connections/) for more details.
+> **Note**: Please check the [context connections section](/docs/reference/polyaxonfile/context/connections/) for more details.
 
 ## Distributed jobs
 

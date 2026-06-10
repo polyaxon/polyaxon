@@ -17,8 +17,8 @@ inputs and outputs types are used to validate the flow of information
 going from one operation to another.
 
 The final value of an input/output can be resolved
-from [params](/docs/scheduling/specification/params/), or from other values in
-the [context](/docs/scheduling/context/).
+from [params](/docs/reference/polyaxonfile/specification/params/), or from other values in
+the [context](/docs/reference/polyaxonfile/context/overview/).
 
 - __Examples__:
  * A build component may have a git repository as input and a container image as output.
@@ -37,7 +37,7 @@ It's also possible to control how the param should be
 converted to an argument using the `arg_format`.
 
 To learn how to pass valid values,
-please check the [param section](/docs/scheduling/specification/params/).
+please check the [param section](/docs/reference/polyaxonfile/specification/params/).
 
 - __Args__:
   - __name__: str
@@ -51,7 +51,7 @@ please check the [param section](/docs/scheduling/specification/params/).
   - __connection__: str, optional
   - __to_init__: bool, optional
   - __to_env__: str, optional
-  - __validation__: [V1Validation](/docs/scheduling/specification/validation/), optional
+  - __validation__: [V1Validation](/docs/reference/polyaxonfile/specification/validation/), optional
   - __delay_validation__: bool, optional (**Deprecated**: please see validation.delay)
   - __options__: List[any], optional (**Deprecated**: please see validation)
 
@@ -142,7 +142,7 @@ inputs:
 ```
 
 for more details about composite type validation and schema,
-please check the [types section](/docs/scheduling/specification/types/),
+please check the [types section](/docs/reference/polyaxonfile/specification/types/),
 possible types include any python type hint, pydantic built-in types, and:
   * URI: "uri"
   * LIST: "list"
