@@ -16,12 +16,12 @@ and dashboards based on your models and data analysis.
 
 - __Args__:
   - __kind__: str, should be equal `service`
-  - __environment__: [V1Environment](/docs/scheduling/specification/environment/), optional
+  - __environment__: [V1Environment](/docs/polyaxonfile/specification/environment/), optional
   - __connections__: List[str], optional
   - __volumes__: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
     optional
-  - __init__: List[[V1Init](/docs/scheduling/specification/init/)], optional
-  - __sidecars__: List[[sidecar containers](/docs/scheduling/specification/sidecars/)], optional
+  - __init__: List[[V1Init](/docs/polyaxonfile/specification/init/)], optional
+  - __sidecars__: List[[sidecar containers](/docs/polyaxonfile/specification/sidecars/)], optional
   - __container__: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
   - __ports__: List[int], optional
   - __rewrite_path__: bool, optional
@@ -78,7 +78,7 @@ run:
 
 ### environment
 
-Optional [environment section](/docs/scheduling/specification/environment/),
+Optional [environment section](/docs/polyaxonfile/specification/environment/),
 it provides a way to inject pod related information.
 
 ```yaml
@@ -147,7 +147,7 @@ run:
 
 ### init
 
-A list of [init handlers and containers](/docs/scheduling/specification/init/)
+A list of [init handlers and containers](/docs/polyaxonfile/specification/init/)
 to resolve for the service.
 
 <blockquote className="light">
@@ -182,7 +182,7 @@ run:
 ### sidecars
 
 
-A list of [sidecar containers](/docs/scheduling/specification/sidecars/)
+A list of [sidecar containers](/docs/polyaxonfile/specification/sidecars/)
 that will be used as sidecars.
 
 ```yaml

@@ -21,8 +21,8 @@ Params can be passed in several ways
 
 
 When a param is passed from the CLI or directly in the YAML/Python specification,
-it will be validated against the [inputs/outputs](/docs/reference/polyaxonfile/specification/io/)
-defined in the [component](/docs/reference/polyaxonfile/specification/component/)
+it will be validated against the [inputs/outputs](/docs/polyaxonfile/specification/io/)
+defined in the [component](/docs/polyaxonfile/specification/component/)
 
 - __Args__:
   - __value__: any
@@ -115,7 +115,7 @@ params:
     value: 0.001
 ```
 
-The value could be coming from the [context](/docs/reference/polyaxonfile/context/overview/), for example:
+The value could be coming from the [context](/docs/polyaxonfile/context/overview/), for example:
 
 ```yaml
 params:
@@ -162,7 +162,7 @@ Resolving paths from the artifacts and lineages of the reference:
 ```
 
 Resolving artifacts manually from the reference based on the
-[ArtifactsType](/docs/reference/polyaxonfile/specification/types/#v1artifactstype)
+[ArtifactsType](/docs/polyaxonfile/specification/types/#v1artifactstype)
 
 ```yaml
   files_and_dirs:
@@ -172,7 +172,7 @@ Resolving artifacts manually from the reference based on the
 ```
 
 > **Note**: the difference between using `artifacts.lineage_name`
-> and [ArtifactsType](/docs/reference/polyaxonfile/specification/types/#v1artifactstype),
+> and [ArtifactsType](/docs/polyaxonfile/specification/types/#v1artifactstype),
 > is that the former will only expose the path based on any lineage logged during the runtime,
 > the later is a manual way of selecting specific files and dirs.
 
@@ -233,7 +233,7 @@ is provided, it will override the that value and will be added to the context.
 if True the param will be converted to an init container.
 
 For example, to initialize some artifacts without using the
-[init section](/docs/reference/polyaxonfile/specification/init/), you can use `toInit` to turn an artifacts value
+[init section](/docs/polyaxonfile/specification/init/), you can use `toInit` to turn an artifacts value
 or git value to an init container:
 
 ```yaml

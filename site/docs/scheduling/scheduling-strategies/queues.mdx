@@ -47,8 +47,8 @@ In that case, if a queue is created with the default configuration it will be us
 When a user runs an independent operation, Polyaxon will automatically start compiling and resolving that operation and will put it on the queue defined in the operation,
 if no queue is defined in the operation, the default queue assigned to the project will be used.
 
-> To define a queue on the [component](/docs/scheduling/specification/component/#queue),
-> on the [operation](/docs/scheduling/specification/operation/#queue),
+> To define a queue on the [component](/docs/polyaxonfile/specification/component/#queue),
+> on the [operation](/docs/polyaxonfile/specification/operation/#queue),
 > using the [CLI's](/docs/cli/run/) `--queue` flag, or using the [client's create methods](/docs/python-library/run-client/#create)
 
 If a user runs a workflow with concurrency defined, e.g. parallel executions, DAGs, hyperparameter optimization,

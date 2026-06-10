@@ -5,10 +5,10 @@ description: "Polyaxon provides a list of options to select which nodes should b
 
 Polyaxon provides a list of options to select which nodes should be used for running operations.
 
-Every component in Polyaxon can set an [environment section](/docs/scheduling/specification/environment/)
+Every component in Polyaxon can set an [environment section](/docs/polyaxonfile/specification/environment/)
 which exposes many pod level options.
 
-Component's environment section can be [patched](/docs/scheduling/specification/operation/#runPatch)
+Component's environment section can be [patched](/docs/polyaxonfile/specification/operation/#runPatch)
 by the operation to override the default environment section per execution.
 
 The environment section can be used as well to configure a particular job of a distributed experiment on a specific node,

@@ -8,8 +8,8 @@ description: "A feature to pause and suspend operations and pipelines and wait f
 There are several situations when an operation or a pipeline might require some manual approval to continue.
 
 Polyaxon provides a flag `isApproved: false` to perform human in the loop pattern. This flag can be set:
- * As default configuration on the [component level](/docs/scheduling/specification/component/#isapproved).
- * On [per operation basis](/docs/scheduling/specification/operation/#isapproved).
+ * As default configuration on the [component level](/docs/polyaxonfile/specification/component/#isapproved).
+ * On [per operation basis](/docs/polyaxonfile/specification/operation/#isapproved).
  * Via a [preset](/docs/scheduling/scheduling-presets/).
  
 In all these cases, if a run is decorated with this flag, the operation will be waiting and can only be resumed by an individual or event, either from the UI, the CLI, or the API.

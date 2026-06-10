@@ -12,7 +12,7 @@ Polyaxon login command allows to authenticate your CLI and creates a context for
 Polyaxon CLI provides several options to create an auth context. Both the CLI and the Python Client, if used, will look for an auth context to perform API calls. 
 
 When running an operation in-cluster, Polyaxon will automatically provide a scoped auth context based on the user who started the operation, so the user does not have to authenticate their runs manually.
-It's also possible to disable this default behavior by setting the [auth plugin](/docs/scheduling/specification/plugins/#auth):
+It's also possible to disable this default behavior by setting the [auth plugin](/docs/polyaxonfile/specification/plugins/#auth):
 
 ```yaml
 plugins:

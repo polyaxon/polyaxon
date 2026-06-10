@@ -37,15 +37,15 @@ with default queues, container resources requirements, node scheduling, ...
   - __queue__: str, optional
   - __namespace__: str, optional
   - __cache__: [V1Cache](/docs/orchestration/helpers/cache/), optional
-  - __termination__: [V1Termination](/docs/reference/polyaxonfile/specification/termination/), optional
-  - __plugins__: [V1Plugins](/docs/reference/polyaxonfile/specification/plugins/), optional
-  - __mount__: List[[V1Mount](/docs/reference/polyaxonfile/specification/mount/)], optional
+  - __termination__: [V1Termination](/docs/polyaxonfile/specification/termination/), optional
+  - __plugins__: [V1Plugins](/docs/polyaxonfile/specification/plugins/), optional
+  - __mount__: List[[V1Mount](/docs/polyaxonfile/specification/mount/)], optional
   - __build__: [V1Build](/docs/orchestration/builds/), optional
   - __hooks__: List[[V1Hook](/docs/orchestration/hooks/)], optional
-  - __inputs__: [V1IO](/docs/reference/polyaxonfile/specification/io/), optional
-  - __outputs__: [V1IO](/docs/reference/polyaxonfile/specification/io/), optional
+  - __inputs__: [V1IO](/docs/polyaxonfile/specification/io/), optional
+  - __outputs__: [V1IO](/docs/polyaxonfile/specification/io/), optional
   - __run__: Union[[V1Job](/docs/workload/jobs/), [V1Service](/docs/workload/services/), [V1TFJob](/docs/workload/distributed/tf-jobs/), [V1PytorchJob](/docs/workload/distributed/pytorch-jobs/), [V1MPIJob](/docs/workload/distributed/mpi-jobs/), [V1RayCluster](/docs/workload/clusters/ray-clusters/), [V1DaskCluster](/docs/workload/clusters/dask-clusters/), [V1Dag](/docs/orchestration/flow-engine/specification/)]  
-  - __template__: [V1Template](/docs/reference/polyaxonfile/specification/template/), optional
+  - __template__: [V1Template](/docs/polyaxonfile/specification/template/), optional
 
 ## YAML usage
 
@@ -228,7 +228,7 @@ component:
 
 ### termination
 
-The default component [termination](/docs/reference/polyaxonfile/specification/termination/).
+The default component [termination](/docs/polyaxonfile/specification/termination/).
 
 This termination definition will be passed as the default value to
 all operations using this component,
@@ -242,7 +242,7 @@ component:
 
 ### plugins
 
-The default component [plugins](/docs/reference/polyaxonfile/specification/plugins/).
+The default component [plugins](/docs/polyaxonfile/specification/plugins/).
 
 This plugins definition will be passed as the default value to
 all operations using this component,
@@ -271,7 +271,7 @@ component:
 
 ### inputs
 
-The [inputs](/docs/reference/polyaxonfile/specification/io/) definition for this component.
+The [inputs](/docs/polyaxonfile/specification/io/) definition for this component.
 
 If the component defines required inputs, anytime a user tries to run
 this component without passing the required params or passing params with wrong types,
@@ -293,7 +293,7 @@ component:
 
 ### outputs
 
-The [outputs](/docs/reference/polyaxonfile/specification/io/) definition for this component.
+The [outputs](/docs/polyaxonfile/specification/io/) definition for this component.
 
 If the component defines required outputs, no exception will be raised at execution time,
 since Polyaxon considers the output values will be resolved in the future,
@@ -318,7 +318,7 @@ component:
 
 ### mount
 
-> **Note**: ver 2.13+. Please check [V1Mount](/docs/reference/polyaxonfile/specification/mount/) for more details.
+> **Note**: ver 2.13+. Please check [V1Mount](/docs/polyaxonfile/specification/mount/) for more details.
 
 This section defines a list of mounts to be used for this operation.
 Mounts can be defined either as strings or as full objects.

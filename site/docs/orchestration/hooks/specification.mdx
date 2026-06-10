@@ -53,7 +53,7 @@ like params, globals, ...
   - __namespace__: str, optional
   - __presets__: List[str], optional
   - __disableDefaults__: bool, optional
-  - __params__: Dict[str, [V1Param](/docs/scheduling/specification/params/)], optional
+  - __params__: Dict[str, [V1Param](/docs/polyaxonfile/specification/params/)], optional
 
 ## YAML usage
 
@@ -192,7 +192,7 @@ hook:
 
 ### params
 
-The [params](/docs/scheduling/specification/params/) to pass if the handler requires extra params,
+The [params](/docs/polyaxonfile/specification/params/) to pass if the handler requires extra params,
 they will be validated against the inputs/outputs.
 If a parameter is passed and the component does not define a corresponding inputs/outputs,
 a validation error will be raised unless the param has the `contextOnly` flag enabled.

@@ -1,0 +1,34 @@
+---
+title: "Overview"
+description: "Configure how Polyaxon routes workloads through queues, resources, presets, approvals, and Kubernetes execution settings."
+---
+
+# Overview
+
+Polyaxon scheduling controls where workloads run, which resources they request, how they are prioritized, and which execution rules apply before and during runtime.
+
+Use this section when you need to route jobs, services, distributed workloads, or interactive sessions through the right queues, resource pools, presets, and Kubernetes entities.
+
+## Scheduling Strategies
+
+[Scheduling strategies](/docs/scheduling/scheduling-strategies/overview/) cover the operational behavior of workload execution:
+
+- Queues and external scheduling.
+- CPU, memory, GPU, and node placement.
+- Priority and concurrency.
+- Conditional scheduling and manual approvals.
+- Backfills, restarts, termination, caching, and cost estimation.
+
+## Scheduling Presets
+
+[Scheduling presets](/docs/scheduling/scheduling-presets/overview/) package reusable workload settings so users do not need to repeat common configuration in every operation.
+
+Use presets for shared queues, resources, service timeouts, workload security context, machine catalogs, and team conventions.
+
+## Kubernetes Entities
+
+[Kubernetes entity guides](/docs/scheduling/using-k8s-entities/service-accounts/) explain how to use service accounts, security context, volumes, secrets, and config maps with Polyaxon workloads.
+
+## Polyaxonfile Reference
+
+The Polyaxonfile schema now lives under [Reference > Polyaxonfile](/docs/polyaxonfile/overview/). Use that section for exact component, operation, environment, parameter, context, and validation fields.

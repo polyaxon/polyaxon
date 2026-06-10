@@ -68,7 +68,7 @@ run:
     image: polyaxon/polyaxon-quick-start
 ```
 
-Every Polyaxonfile must have a kind [component](/docs/scheduling/specification/component/) or [operation](/docs/scheduling/specification/operation/).
+Every Polyaxonfile must have a kind [component](/docs/polyaxonfile/specification/component/) or [operation](/docs/polyaxonfile/specification/operation/).
 In this section, we will explore the component kind, and in the next part of the tutorial we will dive into the operation kind.
 
 
@@ -76,7 +76,7 @@ This simple file runs a container with a custom image `polyaxon/polyaxon-quick-s
 The component also clones the quick start repo, this allows us to change the repo without having to rebuild the docker image,
 every time we run this component, Polyaxon will clone the repo and inject it in a context inside our main container.
 
-> Please check this section to learn more about [initializers](/docs/scheduling/specification/init/)
+> Please check this section to learn more about [initializers](/docs/polyaxonfile/specification/init/)
 
 In a nutshell, what Polyaxon provides is a simple way to schedule and run containerized workload.
 
@@ -205,7 +205,7 @@ file and pushing a new commit then starting a new experiment, which is not ideal
 ## Inputs / Outputs
 
 Instead of changing files and pushing and then starting a new experiment,
-we can use the [inputs and outputs](/docs/scheduling/specification/io/) sections to parametrize our program.
+we can use the [inputs and outputs](/docs/polyaxonfile/specification/io/) sections to parametrize our program.
 
 Let's look at the typed file:
 

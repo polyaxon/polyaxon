@@ -16,15 +16,15 @@ Components can process data directly, train a model, or orchestrate external sys
 There are almost no restrictions on what a component can do.
 
 Furthermore, each component receives metadata about its environment and upstream dependencies (if it's defined in a DAG) before it runs,
-it's called the [context](/docs/scheduling/context/), even if it does not receive any explicit data inputs,
+it's called the [context](/docs/polyaxonfile/context/overview/), even if it does not receive any explicit data inputs,
 giving it an opportunity to change its behavior depending on the context it's running inside.
 
 Since Polyaxon runs containers, it is agnostic to the code each component runs and there are no restrictions on what inputs and outputs can be.
 
-<blockquote className="light">Please refer to [scheduling/specification/component](/docs/scheduling/specification/component/)
+<blockquote className="light">Please refer to the [component specification](/docs/polyaxonfile/specification/component/)
 to learn about the component specification and [registry/Component Hub](/docs/registry/component-hub/overview/) for details about the Component Hub.</blockquote>
 
-Each component can have one runtime that it's specified in the [run section of a component](/docs/scheduling/specification/component/#run).
+Each component can have one runtime that it's specified in the [run section of a component](/docs/polyaxonfile/specification/component/#run).
 Polyaxon supports several runtimes:
  * Jobs
  * Distributed Jobs
@@ -99,7 +99,7 @@ An `operation` is how you execute your components, it allows you to:
  * subscribe a component to events to trigger executions automatically.
 
 <blockquote className="light">
-Please refer to [scheduling/specification/operation](/docs/scheduling/specification/operation/) and [tracking/runs-dashboard](/docs/tracking/runs-dashboard/overview/) to learn about the operation specification.
+Please refer to the [operation specification](/docs/polyaxonfile/specification/operation/) and [runs dashboard](/docs/tracking/runs-dashboard/overview/) to learn about operation metadata.
 </blockquote>
 
 

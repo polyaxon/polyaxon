@@ -11,8 +11,8 @@ but also for queue routing and access level control.
 ## Why using a preset
 
 It's possible to set for each operation an
-[environment section](/docs/scheduling/specification/environment/), a [queue](/docs/scheduling/specification/operation/#queue), a [container resources requirements](https://kubernetes.io/docs/concepts/containers/),
-a [termination](/docs/scheduling/specification/termination/). But oftentimes, you might want to reuse some or all of these options
+[environment section](/docs/polyaxonfile/specification/environment/), a [queue](/docs/polyaxonfile/specification/operation/#queue), a [container resources requirements](https://kubernetes.io/docs/concepts/containers/),
+a [termination](/docs/polyaxonfile/specification/termination/). But oftentimes, you might want to reuse some or all of these options
 and apply them to a certain type of operations.
 
 One way to achieve such workflow is to push as many configuration sections as possible to the components, but this is not always possible and it's not recommended,
@@ -22,7 +22,7 @@ Polyaxon provides a concept called `Presets`, that you can use to package severa
 
 ## Defining presets
 
-Presets use all sections that the [operation specification](/docs/scheduling/specification/operation/) offers, except for sections that define the component runtime, i.e.:
+Presets use all sections that the [operation specification](/docs/polyaxonfile/specification/operation/) offers, except for sections that define the component runtime, i.e.:
  * hubRef
  * dagRef
  * urlRef
@@ -122,6 +122,6 @@ If you have access to Polyaxon Cloud or Polyaxon EE you can also save these pres
 You can additionally set the default preset on your organization or on a project level using Polyaxon UI, 
 such preset will be applied to all operations in the organization or the project where it's set.    
 
-Users can just reference the presets in their [operations specification](/docs/scheduling/specification/operation/#presets) or using the CLI/Client `polyaxon run ... --presets=preset1,preset2`
+Users can just reference the presets in their [operations specification](/docs/polyaxonfile/specification/operation/#presets) or using the CLI/Client `polyaxon run ... --presets=preset1,preset2`
 
 In order to create and manage scheduling presets, please check the [management section for more details](/docs/administration/organizations/presets/)

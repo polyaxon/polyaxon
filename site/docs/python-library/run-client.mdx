@@ -188,8 +188,8 @@ if you run a component/operation from the CLI/UI an instance will be created aut
 - __Args__:
   - __polyaxonfile__: str, path to the polyaxonfile containing a YAML/Json specification.
         The polyaxonfile should contain a
-        [V1Component](/docs/scheduling/specification/component/) or an
-        [V1Operation](/docs/scheduling/specification/operation/).
+        [V1Component](/docs/polyaxonfile/specification/component/) or an
+        [V1Operation](/docs/polyaxonfile/specification/operation/).
   - __name__: str, optional,
         it will override the name in the operation if provided.
   - __description__: str, optional,
@@ -247,8 +247,8 @@ if you run a component/operation from the CLI/UI an instance will be created aut
 - __Args__:
   - __url__: str, url containing a YAML/Json specification.
         The url's polyaxonfile should contain a
-        [V1Component](/docs/scheduling/specification/component/) or an
-        [V1Operation](/docs/scheduling/specification/operation/).
+        [V1Component](/docs/polyaxonfile/specification/component/) or an
+        [V1Operation](/docs/polyaxonfile/specification/operation/).
   - __name__: str, optional, it will override the name in the operation if provided.
   - __description__: str, optional,
         it will override the description in the operation if provided.
@@ -369,7 +369,7 @@ N.B you will probably use one of the simpler methods:
 [Run API](/docs/api/#operation/CreateRunStatus)
 
 - __Args__:
-  - __status__: str, a valid [Statuses](/docs/scheduling/specification/lifecycle/) value.
+  - __status__: str, a valid [Statuses](/docs/polyaxonfile/specification/lifecycle/) value.
   - __reason__: str, optional, reason or service issuing the status change.
   - __message__: str, optional, message to log with this status.
   - __last_transition_time__: datetime, default `now`.
@@ -393,7 +393,7 @@ Gets the run's statuses.
 [Run API](/docs/api/#operation/GetRunStatus)
 
 - __Args__:
-  - __last_status__: str, a valid [Statuses](/docs/scheduling/specification/lifecycle/) value.
+  - __last_status__: str, a valid [Statuses](/docs/polyaxonfile/specification/lifecycle/) value.
 
 - __Returns__:
   Tuple[str, List[Conditions]], last status and ordered status conditions.

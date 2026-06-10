@@ -2,8 +2,6 @@
   "title": "Scheduling",
   "pages": [
     "overview",
-    "specification",
-    "context",
     "scheduling-strategies",
     "scheduling-presets",
     "using-k8s-entities"

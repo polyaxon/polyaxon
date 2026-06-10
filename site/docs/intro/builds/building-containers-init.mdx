@@ -35,7 +35,7 @@ hubRef: kaniko
 ```
 
 This configuration is using a public component called Kaniko,
-it uses an initializer [dockerfile](/docs/scheduling/specification/init/) which generates simple dockerfile.
+it uses an initializer [dockerfile](/docs/polyaxonfile/specification/init/) which generates simple dockerfile.
 
 > **Note**: We could have created a dockerfile, and used a git initializer to clone the repo containing the dockerfile.
 
@@ -48,7 +48,7 @@ we are just installing `polyaxon` library and some extra dependencies to use wit
 
 The `hubRef` is the reference of the component we are going to run, in this case, it's a Kaniko component for building the image.
 
-We are also passing a parameter `destination` which is of type [image](/docs/scheduling/specification/types/),
+We are also passing a parameter `destination` which is of type [image](/docs/polyaxonfile/specification/types/),
 it defines the name of the image and the connection to use for pushing the image.
 The [docker-connection](/setup/connections/registry/) is a [connection](/setup/connections/)
 that we configured to authenticate Kaniko to push images.
