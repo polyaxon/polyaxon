@@ -1,0 +1,19 @@
+{
+  "title": "Sandboxes",
+  "pages": [
+    "overview",
+    "quick-start",
+    "connect-with-ssh",
+    "use-terminals",
+    "use-notebooks",
+    "work-with-git",
+    "manage-files-and-artifacts",
+    "configure-environments",
+    "secrets-and-connections",
+    "resources-and-gpus",
+    "network-access",
+    "persist-outputs",
+    "debug-sessions",
+    "automate-with-cli-and-sdk"
+  ]
+}

@@ -1,0 +1,40 @@
+---
+title: "Network Access"
+description: "Understand service ports, SSH tunnels, and outbound access for sandbox-enabled runs."
+---
+
+# Network Access
+
+Sandbox network behavior depends on the underlying service run, agent configuration, Kubernetes networking, and organization policy.
+
+## Service Ports
+
+Declare ports for services that expose HTTP applications such as notebooks, dashboards, or custom apps:
+
+```yaml
+run:
+  kind: service
+  ports:
+    - 8888
+  container:
+    image: jupyter/scipy-notebook
+    command: ["start-notebook.py"]
+```
+
+For service workload details, see [services](/docs/workload/services/overview/).
+
+## SSH Tunnels
+
+Use SSH tunnels when a local tool needs access to a port inside the sandbox:
+
+```bash
+polyaxon ssh connect -p owner/project -uid <run-uuid> -- -L 8888:127.0.0.1:8888 -N
+```
+
+## Outbound Access
+
+Outbound network access is controlled by your cluster, agent, and network policies. If a command cannot reach a package index, Git host, model provider, or data service, check with the platform team before changing the workload.
+
+## Access Model
+
+Polyaxon routes sandbox and SSH access through authenticated project permissions. Do not expose debug services directly unless your deployment and security policy allow it.

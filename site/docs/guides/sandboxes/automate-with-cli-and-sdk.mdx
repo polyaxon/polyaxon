@@ -1,0 +1,44 @@
+---
+title: "Automate with CLI and SDK"
+description: "Script sandbox commands, file transfer, background execution, and run lifecycle automation."
+---
+
+# Automate with CLI and SDK
+
+Sandbox workflows can be scripted with the CLI and combined with the Python client for run lifecycle and project automation. Use this when you need repeatable setup checks, environment probes, file transfer, or command execution inside a live service run.
+
+## Script Commands
+
+```bash
+polyaxon sandbox ping -p owner/project -uid <run-uuid>
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
+polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- pytest tests/smoke
+```
+
+## Run Background Work
+
+```bash
+EXEC_ID=$(polyaxon sandbox exec -p owner/project -uid <run-uuid> --detach -- sh -lc 'python scripts/profile.py')
+polyaxon sandbox logs -p owner/project -uid <run-uuid> "$EXEC_ID"
+```
+
+## Move Files
+
+```bash
+polyaxon sandbox upload -p owner/project -uid <run-uuid> ./config.yaml /workspace/config.yaml
+polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/profile.json ./profile.json
+```
+
+## Combine with Client Automation
+
+Use the [Python library](/docs/python-library/overview/) for project and run automation, and call sandbox CLI commands from your automation runner when you need command execution inside a live run.
+
+For low-level API details, see the [API reference](/docs/api/).
+
+## Keep Automation Reproducible
+
+- Keep scripts in version control.
+- Use project and run UUIDs explicitly.
+- Fail fast when `polyaxon sandbox ping` fails.
+- Stream logs for commands used in CI or operational checks.
+- Store durable outputs in artifacts or Git, not only in the sandbox filesystem.

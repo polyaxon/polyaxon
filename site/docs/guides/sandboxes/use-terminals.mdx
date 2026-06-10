@@ -1,0 +1,66 @@
+---
+title: "Use Terminals"
+description: "Choose between sandbox shells, tmux sessions, and SSH terminals for interactive work."
+---
+
+# Use Terminals
+
+Polyaxon supports several terminal workflows for sandbox-enabled runs. Pick the smallest access mode that fits the task.
+
+## Terminal Options
+
+| Access mode | Best for | Command |
+| --- | --- | --- |
+| Sandbox shell | Quick interactive shell access through Polyaxon | `polyaxon sandbox shell` |
+| Sandbox exec | One-off or scripted commands | `polyaxon sandbox exec` |
+| tmux shell | Reconnectable terminal sessions | `polyaxon ops shell` |
+| SSH | IDEs, native terminal tooling, tunnels, SFTP, SCP, rsync | `polyaxon ssh connect` |
+
+## One-Off Commands
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
+```
+
+Use streaming for long-running commands:
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- sh -lc 'pip list'
+```
+
+## Detached Commands
+
+Detached commands keep running after the CLI exits:
+
+```bash
+EXEC_ID=$(polyaxon sandbox exec -p owner/project -uid <run-uuid> --detach -- sh -lc 'python train.py')
+```
+
+Read logs later:
+
+```bash
+polyaxon sandbox logs -p owner/project -uid <run-uuid> "$EXEC_ID"
+```
+
+## Interactive Shell
+
+```bash
+polyaxon sandbox shell -p owner/project -uid <run-uuid>
+```
+
+Use this for quick inspection and short-lived debugging.
+
+## Reconnectable Shell
+
+Enable `plugins.tmux` when you want a terminal session that survives browser, websocket, or local terminal disconnects:
+
+```yaml
+plugins:
+  tmux: true
+```
+
+Attach with:
+
+```bash
+polyaxon ops shell -p owner/project -uid <run-uuid>
+```

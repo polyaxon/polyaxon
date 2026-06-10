@@ -1,0 +1,46 @@
+---
+title: "Configure Environments"
+description: "Choose images, commands, packages, environment variables, and presets for sandbox-enabled runs."
+---
+
+# Configure Environments
+
+A sandbox runs inside the container image and environment you define for the workload. The most reproducible setup is to build dependencies into the image or apply them through organization presets.
+
+## Choose an Image
+
+Start with an image that already has the tools required by your workflow:
+
+```yaml
+run:
+  kind: service
+  container:
+    image: python:3.11
+    command: ["sleep", "infinity"]
+```
+
+For notebook workflows, use a notebook image. For GPU workflows, use an image with compatible CUDA, framework, and driver expectations.
+
+## Install Temporary Packages
+
+Temporary installs are useful while debugging:
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- pip install rich
+```
+
+Promote repeated package changes into a Docker image or preset once the workflow stabilizes.
+
+## Set Environment Values
+
+Use the Polyaxonfile [environment specification](/docs/reference/polyaxonfile/specification/environment/) and presets for environment variables, node selectors, service accounts, security context, and Kubernetes-specific options.
+
+## Use Presets
+
+Presets let platform teams provide reusable defaults for queues, resources, connections, security, and environment settings:
+
+```bash
+polyaxon run -f sandbox.yaml -p owner/project --presets dev-sandbox
+```
+
+See [scheduling presets](/docs/scheduling/scheduling-presets/overview/) for details.

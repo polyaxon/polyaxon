@@ -1,0 +1,46 @@
+---
+title: "Work with Git"
+description: "Clone repositories, inspect diffs, and push changes from sandbox-enabled runs."
+---
+
+# Work with Git
+
+Sandboxes are useful for inspecting code and runtime state in the same environment that Polyaxon uses to run workloads. For reproducible work, prefer starting from a known Git commit and pushing durable changes back to a remote repository.
+
+## Clone Code at Startup
+
+Use your normal Polyaxonfile initialization and connection patterns to clone code before the service starts. For Git over SSH, configure an [SSH connection](/setup/connections/ssh/) and reference it from your component or preset.
+
+## Inspect the Repository
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git status
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git diff
+```
+
+Open a shell when you need an interactive Git workflow:
+
+```bash
+polyaxon sandbox shell -p owner/project -uid <run-uuid>
+```
+
+## Upload Local Changes
+
+For small files or patches:
+
+```bash
+polyaxon sandbox upload -p owner/project -uid <run-uuid> ./train.py /workspace/train.py
+```
+
+For larger repository workflows, use SSH with your local Git tooling or clone directly from inside the sandbox.
+
+## Push Changes
+
+Push changes only when the sandbox has an appropriate Git credential. In most teams, that means mounting a scoped SSH connection or using a service account with limited repository permissions.
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git status
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git push origin HEAD
+```
+
+Keep credentials in Polyaxon connections rather than baking them into images or notebooks.

@@ -1,0 +1,54 @@
+---
+title: "Use Notebooks"
+description: "Run notebook services as sandbox-enabled Polyaxon workloads."
+---
+
+# Use Notebooks
+
+Notebook sessions are service workloads. You can combine a notebook server with sandbox, SSH, and tmux plugins when you need both browser-based exploration and lower-level terminal access.
+
+## Start from a Hub Component
+
+If your organization uses the public or organization component hub, start a notebook component and pass the queue or presets required by your cluster:
+
+```bash
+polyaxon run --hub notebook -p owner/project
+```
+
+See the [Jupyter Notebook integration](/integrations/services/notebook/) for notebook-specific examples.
+
+## Add Sandbox Access to a Notebook Service
+
+When authoring a custom notebook component, enable only the plugins you need:
+
+```yaml
+kind: component
+version: 1.1
+name: notebook-sandbox
+
+plugins:
+  sandbox: true
+  ssh: true
+  tmux: true
+
+run:
+  kind: service
+  ports:
+    - 8888
+  container:
+    image: jupyter/scipy-notebook
+    command: ["start-notebook.py"]
+```
+
+## Common Workflow
+
+1. Start the notebook service.
+2. Open the notebook from the run page.
+3. Use `polyaxon sandbox exec` for quick checks outside the notebook kernel.
+4. Use `polyaxon sandbox upload` and `download` to move small files.
+5. Use SSH when you need IDE access or port forwarding.
+6. Stop the run when the notebook is no longer active.
+
+## Track Experiments from a Notebook
+
+When the notebook runs in-cluster, Polyaxon can resolve project and run context automatically. See [tracking in notebooks](/docs/tracking/tracking/in-notebooks/) for tracking examples.

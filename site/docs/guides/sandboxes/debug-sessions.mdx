@@ -1,0 +1,58 @@
+---
+title: "Debug Sessions"
+description: "Debug sandbox-enabled runs using health checks, logs, file inspection, and scheduling diagnostics."
+---
+
+# Debug Sessions
+
+Most sandbox issues fall into four groups: the run is not running, the plugin is not enabled, the user does not have access, or the container environment is missing required tools.
+
+## Check Run Status
+
+Open the run page or inspect the run from the CLI:
+
+```bash
+polyaxon ops get -p owner/project -uid <run-uuid>
+```
+
+If the run is pending, check the queue, resources, node selectors, and project limits.
+
+## Check Sandbox Health
+
+```bash
+polyaxon sandbox ping -p owner/project -uid <run-uuid>
+```
+
+If the ping fails, confirm that `plugins.sandbox` is enabled and that the run is a supported service workload.
+
+## Inspect Logs
+
+Use run logs for container startup issues:
+
+```bash
+polyaxon ops logs -p owner/project -uid <run-uuid>
+```
+
+Use sandbox logs for detached sandbox commands:
+
+```bash
+polyaxon sandbox logs -p owner/project -uid <run-uuid> <exec-id>
+```
+
+## Validate the Environment
+
+Run simple commands before debugging application code:
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- pwd
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- env
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
+```
+
+## Common Fixes
+
+- Enable the required plugin: `sandbox`, `ssh`, or `tmux`.
+- Use a long-running service command such as `sleep infinity` for development sessions.
+- Route the run to a queue that supports services and the requested resources.
+- Move credentials into Polyaxon connections instead of the container image.
+- Stop stale sandbox runs that are holding scarce resources.

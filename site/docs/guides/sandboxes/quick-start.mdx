@@ -1,0 +1,86 @@
+---
+title: "Quick Start"
+description: "Start a sandbox-enabled run and connect to it with the Polyaxon CLI."
+---
+
+# Quick Start
+
+This guide starts a minimal sandbox-enabled service and runs commands inside it from your local terminal.
+
+## Prerequisites
+
+Before you start, make sure you have:
+
+- Access to a Polyaxon project.
+- A configured [Polyaxon CLI](/setup/cli/).
+- A queue or agent that can run service workloads.
+- Sandbox support enabled by your Polyaxon deployment or agent administrator.
+
+## Create a Sandbox Component
+
+Create a Polyaxonfile named `sandbox.yaml`:
+
+```yaml
+kind: component
+version: 1.1
+name: sandbox-dev
+
+plugins:
+  sandbox: true
+  ssh: true
+  tmux: true
+
+run:
+  kind: service
+  container:
+    image: python:3.11
+    command: ["sleep", "infinity"]
+```
+
+## Start the Run
+
+```bash
+polyaxon run -f sandbox.yaml -p owner/project
+```
+
+When the run starts, copy its UUID from the command output or from the run page.
+
+## Check Sandbox Health
+
+```bash
+polyaxon sandbox ping -p owner/project -uid <run-uuid>
+```
+
+## Execute a Command
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
+```
+
+Stream command output when the command may take longer:
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- sh -lc 'python -V && pwd'
+```
+
+## Open an Interactive Shell
+
+```bash
+polyaxon sandbox shell -p owner/project -uid <run-uuid>
+```
+
+If `plugins.tmux` is enabled, you can also attach to a reconnectable terminal session:
+
+```bash
+polyaxon ops shell -p owner/project -uid <run-uuid>
+```
+
+## Stop the Run
+
+Stop the run when you are done to release CPU, memory, and GPU resources:
+
+```bash
+polyaxon ops stop -p owner/project -uid <run-uuid>
+```
+
+For exact command options, see the [sandbox CLI reference](/docs/cli/sandbox/).

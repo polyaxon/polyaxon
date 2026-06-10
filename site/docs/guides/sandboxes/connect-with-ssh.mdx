@@ -1,0 +1,65 @@
+---
+title: "Connect with SSH"
+description: "Use Polyaxon SSH commands to connect local terminals, IDEs, and tunnels to sandbox-enabled runs."
+---
+
+# Connect with SSH
+
+SSH access lets you use regular local developer tools against a sandbox-enabled run. Use it for terminal access, IDE remote development, SFTP, SCP, rsync, and port forwarding.
+
+## Enable SSH
+
+Enable the SSH plugin on a service run:
+
+```yaml
+plugins:
+  ssh: true
+
+run:
+  kind: service
+  container:
+    image: python:3.11
+    command: ["sleep", "infinity"]
+```
+
+## Prepare SSH Access
+
+Run setup once for the target run:
+
+```bash
+polyaxon ssh setup -p owner/project -uid <run-uuid>
+```
+
+Polyaxon manages the default sandbox key and known hosts file unless you provide explicit files.
+
+## Connect
+
+```bash
+polyaxon ssh connect -p owner/project -uid <run-uuid>
+```
+
+You can pass standard SSH options after `--`:
+
+```bash
+polyaxon ssh connect -p owner/project -uid <run-uuid> -- -L 8888:127.0.0.1:8888 -N
+```
+
+## Use Your SSH Client
+
+Print a config block and add it to your SSH config:
+
+```bash
+polyaxon ssh config -p owner/project -uid <run-uuid>
+```
+
+Then connect with your local client:
+
+```bash
+ssh polyaxon-<run-uuid>
+```
+
+The generated host can also be used by IDEs and file-transfer tools that support SSH config entries.
+
+## Reference
+
+See the [SSH CLI reference](/docs/cli/ssh/) for all options.

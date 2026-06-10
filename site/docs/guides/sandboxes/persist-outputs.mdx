@@ -1,0 +1,53 @@
+---
+title: "Persist Outputs"
+description: "Keep useful files, logs, metrics, and code changes after a sandbox session ends."
+---
+
+# Persist Outputs
+
+Interactive sessions are useful for discovery, but the container filesystem is not the right long-term storage layer. Save anything important before stopping or replacing a sandbox run.
+
+## Persist Artifacts
+
+Write generated files to a configured artifact path or log them with the tracking library:
+
+```python
+from polyaxon import tracking
+from polyaxon.schemas import V1ArtifactKind
+
+tracking.init()
+report_path = tracking.get_outputs_path("reports/evaluation.json")
+# Write the report to report_path from your code.
+tracking.log_artifact_ref(
+    path=report_path,
+    kind=V1ArtifactKind.FILE,
+    name="evaluation-report",
+)
+tracking.end()
+```
+
+See [tracking artifacts](/docs/tracking/tracking/artifacts/) for artifact logging patterns.
+
+## Download Small Files
+
+```bash
+polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/report.json ./report.json
+```
+
+## Commit Code Changes
+
+If the sandbox produced code changes that should live beyond the session, push them to a Git branch using a scoped credential:
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git status
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git push origin HEAD
+```
+
+## Preserve Reproducibility
+
+When a manual session discovers a useful fix, move the change into a reproducible place:
+
+- Source code in Git.
+- Dependencies in an image or lockfile.
+- Runtime settings in a Polyaxonfile or preset.
+- Results in artifacts, metrics, or model registry entries.

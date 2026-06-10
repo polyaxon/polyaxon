@@ -1,0 +1,40 @@
+---
+title: "Resources and GPUs"
+description: "Request CPU, memory, GPUs, queues, and node placement for sandbox-enabled runs."
+---
+
+# Resources and GPUs
+
+Sandboxes consume cluster resources for as long as the backing service run is active. Request only what the session needs and stop it when work is complete.
+
+## Select a Queue
+
+Use queues to route sandboxes to the right agent, cluster, or resource pool:
+
+```bash
+polyaxon run -f sandbox.yaml -p owner/project -q agent-name/queue-name
+```
+
+See [queues](/docs/scheduling/scheduling-strategies/queues/) for scheduling behavior.
+
+## Request Resources
+
+Resource requests and limits are defined through the workload environment, presets, or cluster policies. For reusable sandbox profiles, prefer presets:
+
+```bash
+polyaxon run -f sandbox.yaml -p owner/project --presets gpu-dev
+```
+
+## Use GPUs
+
+GPU sandboxes are useful for profiling, interactive model debugging, and notebook exploration. Make sure the selected queue can schedule GPU workloads and that the image matches the GPU runtime requirements.
+
+For node selectors, priority, annotations, and other Kubernetes placement controls, see [resources scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling/) and [node scheduling](/docs/scheduling/scheduling-strategies/node-scheduling/).
+
+## Cost Controls
+
+Use timeouts and culling presets for long-running interactive services:
+
+- [Service timeouts](/docs/scheduling/scheduling-presets/services-timeout/)
+- [Cost estimation](/docs/scheduling/scheduling-strategies/estimating-cost/)
+- [Spend alerts](/docs/administration/spend-alerts/)
