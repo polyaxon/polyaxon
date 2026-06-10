@@ -1,0 +1,10 @@
+---
+title: "Multiarch Deployment"
+description: "Deploying Polyaxon on Kubernetes clusters with heterogeneous CPU architectures."
+---
+
+## Overview
+
+Teams deploying Polyaxon on-premise may have clusters with heterogeneous CPU architectures, such as a mixture of amd64, arm64, and ppc64le nodes.
+
+All Polyaxon images are built as multiarch manifests and support multiple architectures out of the box. No special configuration or image tag overrides are required — Kubernetes will automatically pull the correct architecture variant for each node.

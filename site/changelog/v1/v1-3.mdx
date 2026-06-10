@@ -1,0 +1,179 @@
+---
+title: "Release notes for v1.3"
+description: "Polyaxon release notes, migrations, and deprecation notes for v1.3.x."
+author: Polyaxon
+---
+## v1.3.5
+
+> **Note**: Release for Polyaxon CLI.
+
+### CLI
+
+ * **Enhancement**: Improve local project loading.
+ * **Enhancement**: Add user local cache for resolving the default owner.
+ * **Enhancement**: Remove unused transport from client.
+ * **Enhancement**: Improve operation detail command `ops get` with settings and meta_info details.
+ * **Enhancement**: Do not purge polyaxon-ignore and git-presets.
+ * **Fix**: Some CLI commands' error messages.
+ * **Fix**: Regression caused by the deletion of the compatibility checks, Polyaxon CE users were receiving uninformative error: `Please provide a valid project.`
+
+### Core
+
+ * **Fix**: Issue with `log_artifact` not handling directories.
+
+### Docs
+
+ * **Enhancement**: Add mention of the ingress class annotation in the integration docs.
+
+
+## v1.3.4
+
+> **Note**: Release for Polyaxon CLI, Polyaxon Agent, and Polyaxon Cloud.
+
+### CLI
+
+ * **Enhancement**: Prioritize env vars over local config for client/cli settings, this should make flags like `NO_OP` more consistent.
+
+### Core
+
+ * **Enhancement**: Always send `is_approved` flag in run's API calls.
+ * **Fix**: Correct the types for `is_approved` and `is_managed` in the proto files.
+
+### UI
+
+ * **Enhancement**: Add action `approve` to run's actions in the overview page and to runs in the table comparison page.
+ * **Enhancement**: Add new quick flag `Show runs pending approval`.
+
+### Docs
+
+ * **Fix**: Typos in docstrings.
+ * **Fix**: Gitlab scm guide.
+
+## v1.3.3
+
+> **Note**: Release for Polyaxon CLI, Polyaxon Agent, and Polyaxon Cloud.
+
+### CLI
+
+ * **Enhancement**: Add `polyaxon ops upload` command:
+   * Can be used with the run command: `polyaxom run -u ...` or `polyaxom run -u-to path/to/use ...`  or `polyaxom run -u-from local/path/to/use ...`
+   * Allows to upload a single artifact or a directory.
+   * Can resolve relative and absolute paths, defaults to the current path.
+   * allows to customize the destination path on the artifacts store relative the run's root path.
+ * **Enhancement**: Remove automated compatibility checks from cli.
+
+### Core
+
+ * **Enhancement**: Add possibility to approve runs and do human validation to prevent automatic queueing.
+   * This feature is useful when using external events like commits, github actions, ... and other operations in DAGs that need human in the loop.
+ * **Enhancement**: Optimize stopping logic.
+ * **Enhancement**: Add `upload_artifact` and `upload_artifacts` to the run client.
+
+### UI
+
+ * **Fix**: Double clicks on the table's header freeze for a moment all browsers.
+ * **Fix**: Issues with several drop-downs load content slowly when they contain icons in Safari.
+ * **Fix**: Issue with table comparison's header is separated from the table's body in Firefox.
+ * **Fix**: Issue with flags filter not closing after a second click.
+
+### House Keeping
+
+ * **Enhancement**: Decorate some flaky tests.
+
+### Deployment & Setup
+
+ * **Enhancement**: Add missing `flower` and `apiHooks` to the deployment validation schema.
+ * **Fix**: Typo in the ingress definition.
+
+### Agent
+
+ * **Enhancement**: Improve response time of the state endpoint.
+
+## v1.3.2
+
+### Core
+
+ * **Enhancement**: Consolidate metadata keys.
+ * **Enhancement**: Consolidate run kind/runtime check.
+ * **Enhancement**: Add better error message and instruction to flush the config cache to avoid implicit errors in CLI/Client.
+
+### House Keeping
+
+ * **Enhancement**: Fix tests breaking because of the new urllib release.
+ * **Enhancement**: update moto and aws mock tests.
+
+## v1.3.1
+
+### Core
+
+ * **Enhancement**: Improve `to_init` parser to raise an error if both `to_init` and `context_only` are used at the same time to avoid unknown param types.
+ * **Enhancement**: Improve `to_init` logic to validate the types before turning a param to an initializer.
+
+### Docs
+
+ * **Enhancement**: Update query syntax docs to include several new fields and examples.
+ * **Enhancement**: Add running on schedule quick start.
+
+### UI
+
+ * **Fix**: Regression in restarts and copy original operations treated as cache.
+
+### Commercial
+
+ * **Fix**: Regression in run details API.
+
+## v1.3.0
+
+### CLI
+
+ * **Enhancement**: Add a better error message when a project is not initialized or not passed instead of the generic error message.
+
+### Core
+
+ * **Enhancement**: Expose `log_meta`(to be used carefully) on the `RunClient` to update meta information about current run.
+ * **Enhancement**: Consolidate context logic via params and drop global `dag.*` default context namespace injection.
+ * **Enhancement**: Consolidate status trigger enumeration on a single class `V1Statuses` and drop `HookTrigger/NotificationTrigger`.
+ * **Enhancement**: Improve params parsing and validation.
+ * **Enhancement**: Add container section to all hyperparameter tuning schemas to allow overriding the resources and the full container of the tuners.
+ * **Enhancement**: Improve auth initializer.
+ * **Enhancement**: Clean run protos; add `schedule_at` and remove `is_helper`.
+ * **Fix**: Add `contexts` io section to `CompiledOperation` spec to keep track of all `contextOnly` params.
+ * **Fix**: Regression introduced in the context-only params not passed to the context.
+ * **Fix**: Service runtime to always default to the operation kind.
+ * **Fix**: Log verbosity in streams service.
+
+### Operator
+
+ * **Enhancement**: Relax finalizer until the openapi version is upgraded or a better retry mechanism is introduced.
+
+### Docs
+
+ * **Fix**: Several guides.
+
+### UI
+
+ * **Enhancement**: Improve empty state when the table and the dashboard are both used.
+ * **Enhancement**: Show the agent and queue used for a specific run in the run's overview page.
+ * **Enhancement**: Improve the search facet to include the run kind.
+ * **Enhancement**: Improve the header's breadcrumbs to include the run kind sublink and to truncate long project names.
+ * **Enhancement**: Improve cached operations dashboard views to proxy content from the original operation.
+ * **Enhancement**: Show indicator for upcoming runs with a calendar icon.
+
+### House Keeping
+
+ * **Enhancement**: Relax some tests requirements to reduce the dependabot PRs.
+
+### Agent
+
+ * **Enhancement**: Several improvements to scheduling cleaners, tuners, and schedules.
+
+### Commercial
+
+ * **Enhancement**: Refactor pricing and plans access.
+ * **Enhancement**: Consolidate Schedules and include `maxRuns` to `Interval Schedule` and `Cron Schedule` and remove `Repeatable Schedule` as it can be achieved via those schemas.
+ * **Enhancement**: Rename and migrate `ExtactTimeSchedule` to `DatetimeSchedule`.
+ * **Enhancement**: Add support for simple presets e.g. `@hourly`, `@daily`, `@weekly`, ... in the `CronSchedule`.
+ * **Enhancement**: Pass queue and cache to sub ops from matrices.
+ * **Enhancement**: Improve latency for agent checks.
+ * **Enhancement**: Return consistent `full` indicator to agents if any of the queues/workflows/schedules have queued, non scheduled, or upcoming runs.
+ * **Fix**: Regression in operations services not checking allowed kinds

@@ -1,0 +1,21 @@
+{
+  "title": "Organizations",
+  "pages": [
+    "overview",
+    "general",
+    "members",
+    "teams",
+    "agents",
+    "queues",
+    "presets",
+    "tags",
+    "searches",
+    "dashboards",
+    "connections",
+    "service-accounts",
+    "user-profile",
+    "analytics",
+    "activities",
+    "billing"
+  ]
+}

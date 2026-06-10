@@ -1,0 +1,129 @@
+---
+title: "Release notes for v1.16"
+description: "Polyaxon release notes, migrations, and deprecation notes for v1.16.x."
+author: Polyaxon
+---
+## V1.16.1
+
+### UI
+
+  * **Fix**: Regression with rewrite services showing 404, issues happens with `vscode` services.
+
+### Tracking
+
+  * **Enhancement**: Improve progress tracking.
+
+### Commercial
+
+  * **New**: Show total consumption card: total = Memory/CPU/GPU/Custom/Cost * duration.
+  * **Enhancement**: Improve analytics to show totals for cost/cpu/memory/gpu/custom in stats and series.
+  * **Enhancement**: Improve cost validation.
+
+## V1.16.0
+
+### CLI
+
+ * **New**: Add `polyaxon ops inspect [-p] [-uid]` command similar to the inspect button.
+ * **New**: Add `polyaxon ops shell [-p] [-uid]` command similar to the shell tab.
+ * **New**: Add `polyaxon run ... --shell` command to start an operation and provide a shell session as soon as it starts running.
+ * **New**: Add `polyaxon ops transfer [-p] [-uid] --to-project=DESTINATION_PROJECT`.
+ * **New**: Add `polyaxon models transfer [-p] [-ver] --to-project=DESTINATION_PROJECT`.
+ * **New**: Add `polyaxon artifacts transfer [-p] [-ver] --to-project=DESTINATION_PROJECT`.
+ * **New**: Add `polyaxon component transfer [-p] [-ver] --to-project=DESTINATION_PROJECT`.
+ * **New**: Add `polyaxon models copy [-p] [-ver] [--to-project=DESTINATION_PROJECT] [--name=NEW_VERSION_NAME]`.
+ * **New**: Add `polyaxon artifacts copy [-p] [-ver] [--to-project=DESTINATION_PROJECT] [--name=NEW_VERSION_NAME]`.
+ * **New**: Add `polyaxon component copy [-p] [-ver] [--to-project=DESTINATION_PROJECT] [--name=NEW_VERSION_NAME]`.
+ * **Enhancement**: Improve CLI compatibility with server.
+ * **Enhancement**: Improve env var to disable CLI compatibility checks.
+ * **Enhancement**: Strip spaces during tags validation.
+ * **Enhancement**: Add `-y/--yes` arg to `init` and `delete` commands to assume "yes" as answer to all prompts and run non-interactively.
+ * **Enhancement**: Allow to pass tags as lists `[a, b, c]` or `["a", "b", "c"]` in addition to handling string values `a, b, c` or `a,b,c`.
+ * **Enhancement**: Improve models/artifacts/components CLI get commands.
+ * **Enhancement**: Add `--is-file` to the `plx ops artifacts --path --is-file` to allow specifying if the path corresponds to a single file being downloaded.
+ * **Enhancement**: Improve upload to automatically pass the `--is-file` flag based on the path.
+ * **Fix**: Types in CLI docstrings.
+ * **Fix**: Issue with FQN for model/artifact/component versions in CLI errors.
+
+### Client
+
+ * **New**: Add transfer method to the `RunClient`.
+ * **New**: Add transfer method for versions to the `ProjectClient`.
+ * **New**: Add copy method for versions to the `ProjectClient`, if no new name is provided:
+   * A new `-copy` suffix will be appended.
+   * Same name will be used if the destination project is provided and is different from the original project.
+ * **Enhancement**: Improve `get_inputs` and `get_outputs` to auto-refresh the run data if no value is detected.
+
+### Core
+
+ * **Enhancement**: Improve kubernetes validation and improve support for 1.23.
+ * **Enhancement**: Make `IfNotPresent` the default for all containers.
+
+### Tracking
+
+ * **New**: Re-enable histogram rendering and logging.
+ * **New**: Add `log_progress` method to the `RunClient` to allow sending progress of a job/experiment meta-data.
+ * **Enhancement**: Improve filenames sanitization process to prevent wrong naming conventions.
+
+### Sidecar
+
+ * **Enhancement**: Improve the artifacts syncing logic to be more resilient to failed requests or intermittent errors.
+
+### UI
+
+ * **New**: Data table widget for rendering multi-step events in addition to the per-step slider widget for:
+   * text events.
+   * html events.
+   * dataframe/csv/tsv events.
+ * **New**: Allow rendering csv/tsv files and plx events as tables in addition to the code editor in the artifacts view.
+ * **New**: Allow inspecting charts and showing the data used.
+ * **New**: Allow rendering files (image, dataframe, csv, tsv, audio, video) without the events requirements.
+ * **New**: Show a UI progress bar on the run's overview page when using log progress e.g. `log_progress(0.3)`.
+ * **Enhancement**: Improve image rendering in the dashboards tab.
+ * **Enhancement**: Show a slider on the section's height controller to simplify resizing widgets dashboards.
+ * **Enhancement**: Disable widgets with no logged events and show the empty prompt that links to the docs as a tooltip.
+ * **Enhancement**: Automatically select the `model` artifact in the model registry form.
+ * **Enhancement**: Show sidebar by default and allow users to hide it.
+ * **Enhancement**: Improve performance of several pages.
+ * **Enhancement**: Improve global search to switch between `search` and `history` by further clicking `cmd + /` or `ctrl + /`.
+ * **Enhancement**: Improve DAGs with nested schedules UI.
+ * **Enhancement**: Improve DAGs mouse wheel resizing behavior.
+ * **Enhancement**: Improve model/artifact/component version copy button to show a project selection for the version destination.
+ * **Enhancement**: Improve the logs viewer's memoization process.
+ * **Enhancement**: Improve the expand button content for the `original` and `pipeline` columns in the runs table.
+ * **Enhancement**: Automatically hide tabs for runs that do not have specific capabilities.
+ * **Enhancement**: Improve raw code renderer.
+ * **Enhancement**: Improve focus issues of the dropdowns in the dashboard's widgets.
+ * **Enhancement**: Improve dashboard's widget titles and hover effect.
+ * **Enhancement**: Improve artifact lineage's download button.
+ * **Enhancement**: Improve widget's download button.
+ * **Enhancement**: Show spinner on download buttons while the download process is active.
+ * **Fix**: Issue with the automatic dashboard sections generator not detecting some event types.
+ * **Fix**: Issue with preset's form update not fitting the full page.
+ * **Security**: Update packages with CVE.
+
+### Streams
+
+ * **New**: Add package method to download all assets related to an event.
+ * **Enhancement**: Update the file system backends.
+ * **Enhancement**: Add path guessing for artifacts download.
+
+### Operator
+
+ * **Fix**: Regression in job retries status watch process.
+
+### Docs
+
+ * **Enhancement**: Add new integrations docs for rendering csv/tsv/piped files.
+ * **Enhancement**: Add guides to show how to include Polyaxon client and tracking in unit testing.
+ * **Fix**: Several typos and guides.
+
+### Commercial
+
+ * **Enhancement**: Improve UI to support redirection to the original page after authentication.
+ * **Enhancement**: Improve service account roles and access checks.
+ * **Enhancement**: Optimize and speed-up the agent sync process.
+ * **Enhancement**: Improve support for DAGs with nested schedules metadata.
+ * **Enhancement**: Add project resource and run resource strict scopes to prevent read access to some run endpoints by users with the `viewer` role.
+ * **Enhancement**: Improve login and signup forms.
+ * **Fix**: Regression in multi-run stop/delete buttons in the cross-project table.
+ * **Fix**: Regression in operations cache invalidation API.

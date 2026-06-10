@@ -1,0 +1,153 @@
+---
+title: "Run CLI Reference"
+description: "Polyaxonfile Command Line Interface Specification - Run CLI Reference."
+---
+
+### run
+
+```bash
+Usage: polyaxon run [OPTIONS]
+
+  Run polyaxonfile specification.
+
+  Examples:
+
+  $ polyaxon run -f file -f file_override ...
+
+  Run and set description and tags for this run
+
+  $ polyaxon run -f file --description="Description of the current run" --tags="foo, bar, moo"
+
+  Run and set a unique name for this run
+
+  polyaxon run --name=foo
+
+  Run for a specific project
+
+  $ polyaxon run -p project1 -f file.yaml
+
+  Run with updated params
+
+  $ polyaxon run -p project1 -f file.yaml -P param1=234.2 -P param2=relu
+
+  If a python file contains a component main, you can run that component
+
+  $ polyaxon run -pm path/to/my-component.py
+
+  If a python file contains more than one component, you can specify the
+  component to run
+
+  $ polyaxon run -pm path/to/my-component.py:componentA
+
+  Uploading current folder to the default uploads path
+
+  $ polyaxon run ... -u
+
+  Uploading from a subfolder to a custom path
+
+  $ polyaxon run ... -u -u-from ./code -u-to code
+
+  Mounting multiple paths using -m
+
+  $ polyaxon run ... -m ./src:code -m ./data:datasets -m ./models
+
+Options:
+  -p, --project TEXT              The project name, e.g. 'mnist' or
+                                  'acme/mnist'.
+  -f, --file PATH                 The polyaxonfiles to run.
+  -pm, --python-module TEXT       The python module containing the
+                                  polyaxonfile to run.
+  --url TEXT                      The url containing the polyaxonfile to run.
+  --hub TEXT                      The Component Hub name containing the
+                                  polyaxonfile to run.
+  -n, --name TEXT                 Name to give to this run, must be unique
+                                  within the project, could be none.
+  --tags TEXT                     Tags of this run (comma separated values).
+  --description TEXT              The description to give to this run.
+  -s, --shell                     To start a shell session after scheduling
+                                  the run.
+  -l, --log, --logs               To start logging after scheduling the run.
+  -u, --upload                    Upload the current working directory to
+                                  run's artifacts path as an init context
+                                  before scheduling the run. Uploads to
+                                  'uploads/' by default.
+  -m, --mount TEXT                Mount local paths to run artifacts. Syntax:
+                                  './src:dest' or './src' (defaults to
+                                  'uploads/' destination). Can be specified
+                                  multiple times. Examples: -m ./code -m
+                                  ./data:datasets -m ./models:models
+  -u-from, --upload-from TEXT     The path to upload from relative the current
+                                  location (or absolute path), Note that this
+                                  must be a valid path, or the CLI will raise
+                                  an error. Defaults to the current path.
+  -u-to, --upload-to TEXT         The path to upload to relative the run's
+                                  root context.To upload to root path you can
+                                  use `/`, otherwise the values should start
+                                  without the separator, e.g. `uploads`,
+                                  `code`, `dataset/images/values`, ...
+  -w, --watch                     To start statuses watch loop after
+                                  scheduling the run.
+  --local                         To start the run locally, with `docker`
+                                  environment as default.
+  -exc, --executor TEXT           The local executor to use, possible values
+                                  are: docker, k8s, process.
+  -P, --params, --param NAME=VALUE
+                                  A parameter to override the default params
+                                  of the run, form `-P name=value` or `--param
+                                  name=value`.
+  -HP, --hparams, --hparam NAME=VALUE
+                                  A hyper-parameter to override the default
+                                  params of the run, form: -HP
+                                  name='range:start:stop:step' or -HP
+                                  name='range:[start,stop,step]' or -HP
+                                  name='choice:[v1,v2,v3,...]'
+  --matrix-kind TEXT              Matrix kind if hparams are provided, default
+                                  grid.
+  --matrix-concurrency INTEGER    Matrix concurrency if hparams are provided,
+                                  default 1.
+  --matrix-num-runs INTEGER       Matrix maximum number of runs to create,
+                                  default all.
+  --presets TEXT                  Name of the presets to use for this run.
+  -q, --queue TEXT                Name of the queue to use for this run. If
+                                  the name is not namespaced by the agent name
+                                  the default agent is used: queue-name or
+                                  agent-name/queue-name
+  -ns, --namespace TEXT           Namespace to use for this run. By default it
+                                  will use the agent's namespace.
+  --nocache                       [DEPRECATED] Please use '--cache=f' instead.
+                                  Disable cache check before starting this
+                                  operation.
+  --cache TEXT                    To enable/disable cache check before
+                                  starting this operation, similar to 'cache:
+                                  {disable: true/false}'. Can be used with
+                                  yes/no, y/n, false/true, f/t, 1/0. e.g. '--
+                                  cache=1', '--cache=yes', '--cache=false', '
+                                  --cache=t', ...
+  -ap, --approved TEXT            To enable/disable human in the loop
+                                  validation without changing the
+                                  polyaxonfile, similar to 'isApproved:
+                                  true/false'. Can be used with yes/no, y/n,
+                                  false/true, f/t, 1/0. e.g. '--approved=1', '
+                                  --approved=yes', '--approved=false', '--
+                                  approved=t', ...
+  -aa, --approve-after INTEGER    To delay or automatically approve a run
+                                  after a certain number of seconds.
+  --git-preset                    A flag to enable automatic injection of a
+                                  git initializer as a preset using the
+                                  initialized git connection.
+  --git-revision TEXT             If provided, Polyaxon will use this git
+                                  revision instead of trying to detected and
+                                  use the latest commit. The git revision
+                                  could be a commit or a branch or any valid
+                                  tree-ish. This flag is only used when the
+                                  repo is initialized with: `polyaxon init
+                                  [--git-connection] [--git-url]`
+  --ignore-template               If provided, Polyaxon will ignore template
+                                  definition and submit the manifest to be
+                                  checked by the API.
+  -o, --output TEXT               Optional flag to print the response as a
+                                  json object or store the response as json
+                                  file.Example `-o json` or `-o
+                                  path=./data.json`
+  --help                          Show this message and exit.
+```

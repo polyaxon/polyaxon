@@ -1,0 +1,148 @@
+---
+title: "Sidecar container setup"
+description: "Polyaxon sidecar is a helper container that collects outputs, artifacts, and metadata about the main container."
+---
+
+## V1PolyaxonSidecarContainer
+
+```python
+polyaxon._auxiliaries.sidecar.V1PolyaxonSidecarContainer()
+```
+
+
+Polyaxon sidecar is a helper container that collects outputs, artifacts,
+and metadata about the main container.
+
+Polyaxon CE and Polyaxon Agent are deployed with default values for the sidecar container,
+however if you need to control or update one or several aspects
+of how the sidecar container that gets injected, this guide walks through the possible options.
+
+- __Args__:
+  - __image__: str, optional.
+  - __image_tag__: str, optional.
+  - __image_pull_policy__: str, optional.
+  - __resources__: V1ResourceRequirements, optional.
+  - __sleep_interval__: int, optional.
+  - __sync_interval__: int, optional.
+  - __monitor_logs__: bool, optional.
+  - __monitor_spec__: bool, optional.
+
+## YAML usage
+
+```yaml
+sidecar:
+  image: polyaxon/polyaxon-sidecar
+  imageTag: v1.x
+  imagePullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+  sleepInterval: 5
+  syncInterval: 60
+  monitorLogs: true
+  monitorSpec: true
+```
+
+## Fields
+
+### image
+
+The container image to use.
+
+```yaml
+sidecar:
+  image: polyaxon/polyaxon-sidecar
+```
+
+### imageTag
+
+The container image tag to use.
+
+```yaml
+sidecar:
+  imageTag: dev
+```
+
+### imagePullPolicy
+
+The image pull policy to use, it must be a valid policy supported by Kubernetes.
+
+```yaml
+sidecar:
+  imagePullPolicy: Always
+```
+
+### resources
+
+The resources requirements to allocate to the container.
+
+```yaml
+sidecar:
+  resources:
+    memory: "64Mi"
+    cpu: "50m"
+```
+
+### sleepInterval
+
+The interval between two consecutive checks, default 10s.
+
+> **N.B.1**: It's possible to alter this behaviour on per operation level
+> using the sidecar plugin.
+
+> **N.B.2**: be careful of the trade-off between a large sleep interval and a short interval,
+> you don't want the sidecar to overwhelm the API and Kubernetes API,
+> and you don't want also the sidecar to penalize your workload with additional latency.
+
+```yaml
+sidecar:
+  sleepInterval: 5
+```
+
+### syncInterval
+
+The interval between two consecutive archiving checks. default 10s.
+
+> **N.B.1**: It's possible to alter this behaviour on per operation level
+> using the sidecar plugin.
+
+> **N.B.2**: Only changed files since a previous check are synced.
+
+> **N.B.3**: If you don't need to access intermediate artifacts while the workload is running,
+> you might set this field to a high value, or `-1` to only trigger
+> this behavior when the workload is done.
+
+```yaml
+sidecar:
+  syncInterval: 5
+```
+
+### monitorLogs
+
+Whether or not to monitor the logs, default `true`.
+
+```yaml
+sidecar:
+  monitorLogs: true
+```
+
+### monitorSpec
+
+Whether or not to monitor the spec, default `true`.
+
+```yaml
+sidecar:
+  monitorSpec: true
+```
+
+### noConnections
+
+Whether to prevent mounting connections and context volumes to sidecars, default `None` (false).
+
+```yaml
+sidecar:
+  noConnections: true
+```
+
+

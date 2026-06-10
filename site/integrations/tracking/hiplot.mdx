@@ -1,0 +1,29 @@
+---
+title: Hiplot
+description: "HiPlot is a lightweight interactive visualization tool to help AI researchers discover correlations and patterns in high-dimensional data using parallel plots and other graphical ways to represent information."
+ogImage: /images/integrations/hiplot.png
+---
+
+Polyaxon comes with a [Hiplot](https://facebookresearch.github.io/hiplot/index.html) integration to analyze multiple experiments.
+
+## Tracking
+
+You can track hyperparameter and metrics of your experiments using [Polyaxon's tracking module](/docs/tracking/tracking/module).
+
+## In notebooks
+
+You can use the module [MultiRunPlot](/docs/tracking/visualizations/programmatic/#hiplot) which requires hiplot to create interactive parallel coordinates inside a notebook or jupyter lab.
+
+## Example
+
+```python
+from polyaxon.client import RunClient
+
+client = RunClient()
+exp = client.get_runs_as_hiplot(query="metrics.loss:<0.1")
+exp.display()
+```
+
+![run-dashboards-hiplot1](/images/dashboard/runs/programmatic-hiplot1.png)
+
+![run-dashboards-hiplot2](/images/dashboard/runs/programmatic-hiplot2.png)

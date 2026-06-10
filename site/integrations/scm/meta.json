@@ -1,0 +1,8 @@
+{
+  "title": "Git Providers",
+  "pages": [
+    "scm-bitbucket",
+    "scm-github",
+    "scm-gitlab"
+  ]
+}

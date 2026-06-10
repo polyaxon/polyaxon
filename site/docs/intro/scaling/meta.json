@@ -1,0 +1,7 @@
+{
+  "pages": [
+    "distributed-training",
+    "hyperparameter-tuning",
+    "mapping"
+  ]
+}

@@ -1,0 +1,36 @@
+---
+title: "Reproducibility Concepts"
+description: "Polyaxon makes your experiments reproducible, portable, and repeatable while being language and framework agnostic."
+---
+
+Reproducibility is a challenging problem in Machine Learning, it's the concept of being able to recreate a machine learning workflow or experiment and reach the same results.
+
+Polyaxon makes your experiments reproducible, portable, and repeatable while being language and framework agnostic.
+
+### Packaging Format
+
+Every operation in Polyaxon is authored using a powerful specification and packaging format `Polyaxonfile`.
+
+Polyaxonfile is a specification for packaging dependencies, inputs, outputs, artifacts, environments, and runtime of an operation to schedule on Kubernetes.
+
+<blockquote className="light">
+Please refer to [Polyaxonfile specification](/docs/scheduling/specification/overview/) for more details.
+</blockquote>
+
+### Tracking
+
+Polyaxon comes with a built-in extensive tracking system. You can log information for source code, parameters, data, metrics, tags, and logs using Polyaxon APIs or clients.
+<blockquote className="light">
+Please refer to [the tracking API](/docs/tracking/tracking/overview/) for more details.
+</blockquote>
+
+### Lineage
+
+Every operation scheduled with Polyaxon will be auto-documented with lineage information about its inputs and outputs, statuses, metrics, hyperparams, source code, data, visualizations, artifacts, and resources used in each experiment.
+
+Polyaxon provides a dashboard and a CLI to see the full history at a glance, including when, who, and where,
+as well as an advanced insight and comparison of experiments based on results, hyperparams, versions of training data, and source code.
+
+<blockquote className="light">
+Please refer to [the runs dashboard](/docs/tracking/runs-dashboard/overview/) for more details.
+</blockquote>

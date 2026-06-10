@@ -1,0 +1,82 @@
+---
+title: "Release notes for v2.9"
+description: "Polyaxon release notes, migrations, and deprecation notes for v2.9.x."
+author: Polyaxon
+---
+> **N.B.**: If you are upgrading from polyaxon v1.x, please check the [v2 release notes](/docs/releases/2-0/) and the [migration guide](/docs/resources/migration/#migration-from-v1x-to-v2y).
+
+## V2.9.4
+
+### Core
+
+ * **Enhancement**: Add `run_relative_outputs_path` to the globals context.
+
+### UI
+
+ * **Enhancement**: Do not poll backend when the window is not active.
+
+## V2.9.3
+
+### Agent
+
+ * **Fix**: Regression in stopping runs not changing status to stopped if the run is not found.
+
+### UI
+
+ * **Enhancement**: Always scroll by default to the last log line when going to the logs tab.
+ * **Enhancement**: Consolidate agent table UI to show both admin and user view mode.
+ * **Enhancement**: Use `deploy` tab instead of `token` tab for agents and use a deployment config section instead of a modal.
+ * **Enhancement**: Show agents logs and statuses for admin users as well.
+ * **Enhancement**: Add agent status to the overview tab and show the tab to all users.
+ * **Enhancement**: Show action in view mode for queues in agent's queues tab.
+ * **Enhancement**: Improve several UI components.
+ * **Fix**: Fullscreen for multi-run dataframe events.
+ * **Fix**: Regression in edit description in the flyout.
+
+### Commercial
+
+ * **Enhancement**: Use strict permissions for agent token APIs.
+
+## V2.9.2
+
+### Core
+
+ * **Fix**: Installation issues.
+
+## V2.9.1
+
+### UI
+
+ * **Enhancement**: Optimized the widget events renderer logic.
+ * **Enhancement**: Optimized most expensive data processing functions for text, html, and dataframe events.
+ * **Enhancement**: Use large dataframe by default for rendering html, text, and other dataframe data.
+ * **Enhancement**: Implement viewport-based lazy loading for dashboard widgets and resources charts.
+ * **Enhancement**: Add progressive loading for dashboard widgets and resource charts to dramatically improve initial page load performance.
+ * **Enhancement**: Only widgets visible in the viewport are rendered immediately, with smart preloading for upcoming content.
+
+## V2.9.0
+
+### Core
+
+ * **Enhancement**: Update fs backend versions.
+ * **Fix**: Regression in service installation.
+
+### UI
+
+ * **New**: Add image, video, audio, text, html, and dataframe multi-run widgets to visualize multiple runs at the same time.
+ * **New**: Data table widget for rendering multi-step events in addition to the per-step slider widget for:
+   * audio events.
+   * video events.
+   * image events.
+   * histogram events.
+ * **New**: Add logs and resources view to quickly check health of agent pods.
+ * **New**: Add step control to dashboards and sections to allow controlling multiple widgets at the same time.
+ * **Fix**: Issue with visualizing CSV/Dataframe events.
+ * **Fix**: Issue with slider widgets jumping when hovering.
+ * **Fix**: Issue when the section changes the x-axis, the widget would not update.
+ * **Fix**: Issue when the section changes the smoothness, the widget would not update.
+
+### Commercial
+
+ * **Enhancement**: Add possibility to save searches on the global runs table.
+ * **Enhancement**: Add possibility to save custom analytics searches.

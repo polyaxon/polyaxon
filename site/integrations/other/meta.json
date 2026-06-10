@@ -1,0 +1,16 @@
+{
+  "title": "Other",
+  "pages": [
+    "aws-cli",
+    "aws-lambda",
+    "azure-cli",
+    "azure-ml",
+    "cli-with-argparse",
+    "cli-with-click",
+    "cli-with-python-fire",
+    "custom-integration",
+    "datadog",
+    "gcloud-cli",
+    "segment"
+  ]
+}

@@ -1,0 +1,64 @@
+---
+title: "Release notes for v2.14"
+description: "Polyaxon release notes, migrations, and deprecation notes for v2.14.x."
+author: Polyaxon
+---
+> **N.B.**: If you are upgrading from polyaxon v1.x, please check the [v2 release notes](/docs/releases/2-0/) and the [migration guide](/docs/resources/migration/#migration-from-v1x-to-v2y).
+
+## V2.14.1
+
+### Core
+
+ * **Enhancement**: Improve project deletion to avoid locking the database in cascade queries.
+
+### Charts
+
+ * **Fix**: Issue in template context in `serviceAccountImagePullSecrets` and `additionalNamespaces` range loop.
+
+### UI
+
+ * **Enhancement**: Clean up charts and graphs logic.
+
+### Commercial
+
+ * **Enhancement**: Add possibility to archive/restore agents and queues.
+ * **Enhancement**: Improve agent/queue deletion to avoid locking the database in cascade queries.
+ * **Enhancement**: Improve project deletion to avoid locking the database in cascade queries.
+ * **Enhancement**: Improve errors messages when resolving agents and queues for runs.
+
+## V2.14.0
+
+### Core
+
+ * **Enhancement**: Add cron to check for out-of-sync runs.
+ * **Enhancement**: Always update the "last update" field in runs when the status is changed.
+ * **Enhancement**: Add heartbeat cleanup for runs stuck in warning states.
+ * **Enhancement**: Add heartbeat cron to fail runs stuck with pending uploads that were never completed.
+ * **Enhancement**: Stop children runs when bulk archiving DAG/Matrix runs and include controller children in archive/restore.
+
+### Sidecar
+
+ * **Enhancement**: Add guard to prevent sending 0 "since_last" to the k8s logs APIs, which causes the sidecar to crash in some k8s versions.
+
+### UI
+
+ * **New**: Add scalar chart.
+ * **New**: Add table chart.
+ * **New**: Add violin chart.
+ * **New**: Add boxplot chart.
+ * **New**: Add sync cursor to allow comparing across charts.
+ * **New**: Make brush selection in charts to be shared across charts.
+ * **New**: Improve visualization of multiple runs in the compare dashboard.
+ * **New**: Add support for regex based search of widgets in dashboards.
+ * **New**: Add new stats table.
+ * **New**: Allow customizing the tooltips with table of params/metrics.
+ * **Enhancement**: Improve rendering and performance of charts.
+ * **Enhancement**: Allow switching to data inspection for scalar, curve, bar, violin, and boxplot charts.
+ * **Enhancement**: Make calls to the lineages lighter and faster.
+ * **Fix**: Issue in compare dashboards not loading all artifacts lineages, which results in missing sections
+
+### Commercial
+
+ * **Enhancement**: Improve promoting dashboard and searches by introducing a new visibility level.
+ * **Enhancement**: Consolidated dashboard and search tables directly in the dropdown and remove confusing sidebar links.
+ * **Security**: Fix CVE issues.

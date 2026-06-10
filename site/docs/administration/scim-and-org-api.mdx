@@ -1,0 +1,100 @@
+---
+title: Organization Management API
+sidebarTitle: Organization API
+description: Polyaxon is open and meant to be extended via custom workflows and integrations. You can use these endpoints to automate project, team, and user management on your Polyaxon organization.
+---
+
+# Organization Management API
+
+<AvailabilityBanner
+  availability={{
+    hobby: "not-available",
+    core: "not-available",
+    pro: "not-available",
+    enterprise: "full",
+    selfHosted: "ee",
+  }}
+/>
+
+Polyaxon provides API endpoints to manage organizations, members, teams, projects, and service accounts programmatically. These endpoints can be used to automate user provisioning, project management, and access control (see [RBAC docs](/docs/administration/rbac)).
+
+<Callout type="info">
+
+If you self-host Polyaxon, you can use the [Instance Management API](/setup/administration/instance-management-api) to administer organizations across an instance.
+
+</Callout>
+
+## Authentication
+
+Authenticate with the API using an API token or a service account token. Tokens can be created in the Polyaxon UI or via the CLI.
+
+```bash
+# Using an API token
+curl -H "Authorization: token <your-token>" \
+  https://your-polyaxon-domain.com/api/v1/orgs/<org>/members
+
+# Using the CLI
+polyaxon config set --token <your-token>
+```
+
+## Organization Management
+
+The following API routes are available for managing organizations:
+
+### Members
+
+- `GET /api/v1/orgs/{owner}/members` — List organization members
+- `POST /api/v1/orgs/{owner}/members` — Invite a member to the organization
+- `GET /api/v1/orgs/{owner}/members/{username}` — Get member details
+- `PUT /api/v1/orgs/{owner}/members/{username}` — Update member role
+- `DELETE /api/v1/orgs/{owner}/members/{username}` — Remove a member
+
+### Teams
+
+- `GET /api/v1/orgs/{owner}/teams` — List teams
+- `POST /api/v1/orgs/{owner}/teams` — Create a team
+- `GET /api/v1/orgs/{owner}/teams/{team}` — Get team details
+- `PUT /api/v1/orgs/{owner}/teams/{team}` — Update a team
+- `DELETE /api/v1/orgs/{owner}/teams/{team}` — Delete a team
+- `GET /api/v1/orgs/{owner}/teams/{team}/members` — List team members
+- `POST /api/v1/orgs/{owner}/teams/{team}/members` — Add a team member
+- `DELETE /api/v1/orgs/{owner}/teams/{team}/members/{username}` — Remove a team member
+
+### Projects
+
+- `GET /api/v1/orgs/{owner}/projects` — List projects
+- `POST /api/v1/orgs/{owner}/projects` — Create a project
+- `GET /api/v1/{owner}/{project}` — Get project details
+- `PUT /api/v1/{owner}/{project}` — Update a project
+- `DELETE /api/v1/{owner}/{project}` — Delete a project
+
+### Service Accounts
+
+- `GET /api/v1/orgs/{owner}/sa` — List service accounts
+- `POST /api/v1/orgs/{owner}/sa` — Create a service account
+- `GET /api/v1/orgs/{owner}/sa/{sa}` — Get service account details
+- `PUT /api/v1/orgs/{owner}/sa/{sa}` — Update a service account
+- `DELETE /api/v1/orgs/{owner}/sa/{sa}` — Delete a service account
+- `POST /api/v1/orgs/{owner}/sa/{sa}/tokens` — Create a service account token
+- `DELETE /api/v1/orgs/{owner}/sa/{sa}/tokens/{token}` — Delete a service account token
+
+See the [API Reference](https://api.reference.polyaxon.com) for full details on request/response formats.
+
+## User Provisioning
+
+Polyaxon supports automated user provisioning through its organization management API. Combined with [SSO](/docs/administration/authentication-and-sso), you can automate the full user lifecycle:
+
+1. **Invite users** via the members API with a specific role.
+2. **Assign users to teams** to grant access to the relevant projects.
+3. **Update roles** as users change teams or responsibilities.
+4. **Remove users** when they leave.
+
+### Okta Integration
+
+When using Okta as your identity provider, you can automate user provisioning by combining Okta SSO with Polyaxon's API:
+
+1. **Configure SSO**: Set up [Okta SAML2 or OIDC authentication](/docs/administration/authentication-and-sso#sso) for Polyaxon.
+2. **Enable team sync**: Polyaxon can automatically sync Okta groups to Polyaxon teams, keeping team membership in sync without manual management.
+3. **Automate provisioning**: Use Okta's lifecycle management workflows to call Polyaxon's member and team APIs to provision and deprovision users automatically.
+
+See the [Authentication & SSO docs](/docs/administration/authentication-and-sso) for details on configuring Okta.

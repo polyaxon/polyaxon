@@ -1,0 +1,104 @@
+---
+title: "Mapping specification"
+description: "Mapping for running a component over a specific set of arguments dynamically and for executing the runs in parallel."
+---
+
+## V1Mapping
+
+```python
+polyaxon._flow.matrix.mapping.V1Mapping()
+```
+
+
+Mapping is a flexible way for dynamically executing a component sequentially or in parallel
+based on a list of parameter combinations.
+
+- __Args__:
+  - __kind__: str, should be equal `mapping`
+  - __values__: List[Dict]
+  - __concurrency__: int, optional
+  - __early_stopping__: List[[EarlyStopping](/docs/orchestration/helpers/early-stopping)], optional
+
+## YAML usage
+
+```yaml
+matrix:
+  kind: mapping
+  values:
+  concurrency:
+  earlyStopping:
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import V1Mapping, V1FailureEarlyStopping
+mapping = V1Mapping(
+    values=[{...}, {...}, ...],
+    concurrency=4,
+    early_stopping=[V1FailureEarlyStopping(...)]
+)
+```
+
+## Fields
+
+### kind
+
+The kind signals to the CLI, client, and other tools that this matrix is mapping.
+
+If you are using the python client to create the mapping,
+this field is not required and is set by default.
+
+```yaml
+matrix:
+  kind: mapping
+```
+
+### values
+
+A List of dictionaries (key/value objects) that will be used to pass
+those dictionaries as params to each execution.
+
+```yaml
+matrix:
+  values:
+    - lr: 0.001
+      dropout: 0.1
+    - lr: 0.01
+      dropout: 0.2
+    - lr: 0.1
+      dropout: 0.3
+```
+
+### concurrency
+
+An optional value to set the number of concurrent operations.
+
+<blockquote className="light">
+This value only makes sense if less or equal to the total number of possible runs.
+</blockquote>
+
+```yaml
+matrix:
+  concurrency: 2
+```
+
+For more details about concurrency management,
+please check the [concurrency section](/docs/orchestration/helpers/concurrency/).
+
+### earlyStopping
+
+A list of early stopping conditions to check for terminating
+all operations managed by the pipeline.
+If one of the early stopping conditions is met,
+a signal will be sent to terminate all running and pending operations.
+
+```yaml
+matrix:
+  earlyStopping: ...
+```
+
+For more details please check the
+[early stopping section](/docs/orchestration/helpers/early-stopping/).
+
+

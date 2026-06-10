@@ -1,0 +1,15 @@
+{
+  "title": "Python Library",
+  "pages": [
+    "overview",
+    "instantiation",
+    "exception-handling",
+    "reading-polyaxonfiles",
+    "no-op",
+    "offline",
+    "polyaxon-client",
+    "organization-client",
+    "project-client",
+    "run-client"
+  ]
+}

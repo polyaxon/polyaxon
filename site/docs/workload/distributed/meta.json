@@ -1,0 +1,11 @@
+{
+  "title": "Distributed Jobs",
+  "pages": [
+    "overview",
+    "tf-jobs",
+    "pytorch-jobs",
+    "mpi-jobs",
+    "kubeflow-replica",
+    "kubeflow-scheduling-policy"
+  ]
+}

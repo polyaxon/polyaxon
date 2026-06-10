@@ -1,0 +1,104 @@
+---
+title: "Release notes for v1.10"
+description: "Polyaxon release notes, migrations, and deprecation notes for v1.10.x."
+author: Polyaxon
+---
+## v1.10.1
+
+### Core
+
+ * **Enhancement**: Bulk actions improvement.
+
+### UI
+
+ * **Enhancement**: Changing layout direction should not reset pagination.
+ * **Enhancement**: Add missing limit/offset fields based on the table's configuration to the `joins` section in the multi-run downstream action modal, to avoid accidentally starting an operation that joins a large number of operations.
+ * **Enhancement**: Update comparison table correctly on bulk delete/archive/restore.
+ * **Fix**: Several UI typos.
+
+### Deployment & Setup
+
+ * **Enhancement**: Add possibility to provide custom node-scheduling configuration for celery workers.
+
+### House Keeping
+
+ * **Enhancement**: Upgrade packages with CVE issues.
+
+### Commercial
+
+ * **New**: Allow filtering activity logs.
+ * **New**: Allow downloading the activity logs archive.
+ * **New**: Add project archives(trash) settings to review member's deletion and permanently delete runs.
+ * **New**: Add bulk archive/restore runs.
+ * **Enhancement**: Allow users with `member` role to archive and restore runs.
+ * **Enhancement**: Improve security of OAuth-based SSO.
+ * **Fix**: Issue with stopping archived operations.
+ * **Fix**: Permission issues that did not allow admins to view organization analytics and activities.
+
+## v1.10.0
+
+### Agent
+
+ * **Enhancement**: Several performance enhancements.
+
+### CLI
+
+ * **Enhancement**: `as_arg` Should only convert bool parameters to `--PARAM` if the `isFlag` is defined to keep consistent behavior between using the `{{ PARAM }}` and `{{ params.PARAM.as_arg }}`.
+
+### Core
+
+ * **Enhancement**: Add support for delayed validation to all types to allow using jinja operations in params.
+ * **Enhancement**: Improve `Query` manager to allow `params`/`inputs` to use full comparison operators.
+ * **Enhancement**: Improve `Query` manager to be handle other datetime formats.
+ * **Enhancement**: Improve `Query` manager to detect if it should filter by a date instead of a datetime.
+ * **Enhancement**: Add handling for passing the token via the client config.
+
+### Streams
+
+ * **Enhancement**: Improve exceptions handling and APIs speed.
+
+### UI
+
+ * **New**: Allow multiple dashboard layouts in the comparison table:
+   * Allow fixed and vertical layouts.
+   * Allow to hide/show the comparison table when the visualizations mode is enabled.
+ * **New**: Add quick filters based on agents, queues, and projects.
+ * **New**: Allow to filter based on humanized dates and add filters for datetimes.
+ * **New**: Allow to filter based on resources (Memory/CPU/GPU/Custom) and cost.
+ * **New**: Allow multi-section dashboards.
+ * **New**: Allow to drag and drop widgets and sections in dashboards.
+ * **Enhancement**: Make search configuration durable using URL query params.
+ * **Enhancement**: Make dashboard configuration durable using URL query params.
+ * **Enhancement**: Preserve dashboard configuration when changing runs in flyout mode.
+ * **Enhancement**: Preserve dashboard configuration going from flyout mode to full screen mode.
+ * **Enhancement**: Improve dashboards in comparison table.
+ * **Enhancement**: Improve log streaming and the log viewer rendering speed.
+ * **Enhancement**: Improve download CSV functionality to allow downloading the complete values in a query.
+ * **Enhancement**: Improve scrolling behavior in all pages.
+ * **Enhancement**: Improve tooltip delay usage in comparison table.
+ * **Enhancement**: Remove bookmark button in CE and other UI cleanups.
+ * **Enhancement**: Remove unused statuses conditions from the statuses dropdown in the search section.
+ * **Enhancement**: Make first column sticky in the comparison table.
+ * **Fix**: Logs viewer scrollbar adding an extra horizontal scrolling.
+ * **Fix**: Projects header dropdown in Polyaxon CE.
+
+### Deployment & Setup
+
+ * **Enhancement**: Deactivate `compressedLogs` by default.
+
+### House Keeping
+
+ * **Enhancement**: Upgrade base images and remove info issues.
+
+### Commercial
+
+ * **New**: Add an initial version of resources aware queues.
+   * This feature should allow setting a new restriction on the queue concurrency based on CPU/GPU/TPU/Memory... of the runs attached to it.
+ * **New**: Add an initial version of cost aware queues.
+   * This feature should allow setting a new restriction on the queue concurrency based on the cost of the runs attached to it.
+ * **New**: Allow to assign cost estimation to operations.
+ * **New**: Allow full filtering capabilities in analytics.
+ * **Enhancement**: Update agent controller to schedule nested pipelines lazily.
+ * **Enhancement**: Separate concurrency limits of parent pipelines and nested pipelines to avoid deadlocks.
+ * **Enhancement**: Show concurrency usage in pricing page.
+ * **Enhancement**: Add resources(Memory/CPU/GPU/Custom) and cost as table columns.

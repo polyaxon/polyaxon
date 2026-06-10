@@ -1,0 +1,87 @@
+---
+title: "RayCluster"
+description: "A toolkit to run Ray applications on Kubernetes."
+ogImage: /images/integrations/ray.png
+---
+
+Polyaxon allows to schedule clusters via kuberay natively.
+
+## Deploy the RayCluster operator
+
+Before you can use the raycluster runtime, you need to make sure that RayCluster operator and the CRD (custom resource definition)
+are deployed in your cluster.
+
+## Enable the operator
+
+To be able to schedule distributed jobs with the RayCluster operator, you need to enable the operator in your deployment config.
+
+> You need to enable the operator in Polyaxon CE deployment or Polyaxon Agent deployment:
+
+```yaml
+operators:
+  raycluster: true
+```
+
+## Create a component with the raycluster runtime
+
+Once you have the RayCluster operator running on a Kubernetes namespace managed by Polyaxon,
+you can check the specification for creating components with the raycluster runtime:
+
+```bash
+version: 1.1
+kind: component
+run:
+  kind: raycluster
+  ...
+```
+
+For more details about the specification for creating raycluster runtime, please check please check this
+[section](/docs/workload/clusters/ray-clusters/).
+
+## Run the distributed job
+
+
+Running components with the raycluster runtime is similar to running any other component:
+
+```bash
+polyaxon run -f manifest.yaml -P ...
+```
+
+## View a running operation on the dashboard
+
+After running an operation with this component, you can view it on the Dashboard:
+
+```bash
+polyaxon ops dashboard
+```
+
+or
+
+```bash
+polyaxon ops dashboard -p [project-name] -uid [run-uuid] -y
+```
+
+## Stop a running operation
+
+To stop a running operation with this component:
+
+```bash
+polyaxon ops stop
+```
+
+or
+
+```bash
+polyaxon ops stop -p [project-name] -uid [run-uuid]
+```
+
+## Run the job using the Python client
+
+To run this component using Polyaxon Client:
+
+```python
+from polyaxon.client import RunClient
+
+client = RunClient(...)
+client.create_from_polyaxonfile(polyaxonfile="path/to/file", ...)
+```

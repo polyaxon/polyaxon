@@ -1,0 +1,30 @@
+---
+title: Amazon ECR
+description: "Amazon Elastic Container Registry (ECR) is a fully-managed Docker container registry that makes it easy for developers to store, manage, and deploy Docker container images."
+ogImage: /images/integrations/ecr.png
+---
+
+You can use your docker images hosted on [Amazon Elastic Container Registry (ECR)](https://aws.amazon.com/ecr/).
+
+## Overview
+
+You can use your public images without the need to set any configuration.
+In order to push private images to ECR, you need to grant the build access.
+
+## Kaniko
+
+In order to push docker images to ECR, please follow this [guide](https://github.com/GoogleContainerTools/kaniko#pushing-to-amazon-ecr) for configuring a registry to use with Kaniko.
+
+If you decide to use the secret and config-map approach, your connection should be:
+
+```yaml
+connections:
+  - name: docker-registry
+    kind: registry
+    description: "aws docker repository"
+    schema:
+      url: aws_account_id.dkr.ecr.region.amazonaws.com
+    secret:
+      name: aws-secret
+      mountPath: /root/.aws/
+```

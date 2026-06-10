@@ -1,0 +1,10 @@
+{
+  "title": "Scheduling Presets",
+  "pages": [
+    "overview",
+    "organizing-workload",
+    "machines-catalog",
+    "services-timeout",
+    "workload-security-context"
+  ]
+}

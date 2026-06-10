@@ -1,0 +1,15 @@
+{
+  "title": "Runs Dashboard",
+  "pages": [
+    "overview",
+    "comparison",
+    "timeline",
+    "graph",
+    "info",
+    "logs",
+    "monitoring",
+    "lineage",
+    "artifacts",
+    "dashboards"
+  ]
+}

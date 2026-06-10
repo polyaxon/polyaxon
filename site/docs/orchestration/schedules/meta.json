@@ -1,0 +1,9 @@
+{
+  "title": "Schedules",
+  "pages": [
+    "overview",
+    "cron",
+    "interval",
+    "datetime"
+  ]
+}

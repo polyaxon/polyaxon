@@ -1,0 +1,35 @@
+---
+title: Spend Alerts
+sidebarTitle: Spend Alerts
+description: Get notified when your organization's spend exceeds predefined thresholds to better manage your Polyaxon Cloud costs.
+---
+
+# Spend Alerts
+
+<AvailabilityBanner
+  availability={{
+    hobby: "not-available",
+    core: "full",
+    pro: "full",
+    enterprise: "full",
+    selfHosted: "not-available",
+  }}
+/>
+
+Configure spend alerts to receive notifications when your organization's spending exceeds a predefined threshold. This helps you monitor costs and take action before unexpected charges occur.
+
+Navigate to your organization settings and the **Billing** tab to configure spend alerts.
+
+<Frame className="my-10" fullWidth>
+  ![Configure spend alerts in Polyaxon](/images/docs/spend-alerts.png)
+</Frame>
+
+## How it works
+
+Spend alerts monitor your organization's total spending on Polyaxon Cloud. You can set custom thresholds based on compute usage or monetary amount and receive notifications when spending crosses these limits.
+
+**Threshold types:** Alerts can be configured based on total spend or compute hours consumed across all agents and clusters.
+
+**Monitoring frequency:** Organization usage is checked periodically to ensure timely notifications.
+
+**Notifications:** Alerts are sent to all organization members with **Owner** or **Billing** roles. Each configured alert triggers at most once per billing cycle to avoid notification fatigue.

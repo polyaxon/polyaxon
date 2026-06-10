@@ -1,0 +1,34 @@
+---
+title: Artifacts on Persistent Volume Claim
+description: The PersistentVolume subsystem provides an API for users and administrators that abstracts details of how storage is provided from how it is consumed.
+ogImage: /images/integrations/pvc.png
+---
+
+You can use one or multiple PVCs(Persistent Volume Claim) to store logs, job outputs, and experiment artifacts.
+
+## Define or create a PVC
+
+You need to define or create a PVC in the same namespace as Polyaxon CE or Polyaxon Agent.
+
+Under the same namespace where you are deploying Polyaxon, e.g. `polyaxon`, create a PVC using kubectl
+
+```bash
+kubectl create -f data-pvc.yaml -n polyaxon
+```
+
+> **Tip**: Please visit the Kubernetes documentation to learn about [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+
+## Now you can use this PVC as an artifacts store
+
+```yaml
+artifactsStore:
+  name: artifacts-pvc
+  kind: volume_claim
+  schema:
+    mountPath: /plx-data
+    volumeClaim: polyaxon-pvc-data
+```
+
+## Update/Install Polyaxon CE or Polyaxon Agent deployment
+
+You can [deploy/upgrade](/setup/) your Polyaxon CE or Polyaxon Agent deployment with access to the PVC.

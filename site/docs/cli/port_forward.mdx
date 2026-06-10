@@ -1,0 +1,24 @@
+---
+title: "Port_forward CLI Reference"
+description: "Polyaxonfile Command Line Interface Specification - Port_forward CLI Reference."
+---
+
+### port-forward
+
+```bash
+Usage: polyaxon port-forward [OPTIONS]
+
+  If you deploy Polyaxon using ClusterIP, you can use this command to access
+  the gateway through `localhost:port`.
+
+Options:
+  -p, --port INTEGER          The port to expose the gateway, default to 8000
+  -n, --namespace TEXT        The namespace used for deploying Polyaxon,
+                              default polyaxon.
+  -t, --deployment-type TEXT  Deployment type.
+  -r, --release-name TEXT     The release name used for deploying Polyaxon,
+                              default polyaxon.
+  -s, --service TEXT          The service to forward, default 'gateway'.
+  -add, --address TEXT        The host address.
+  --help                      Show this message and exit.
+```

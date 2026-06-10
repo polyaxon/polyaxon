@@ -1,0 +1,41 @@
+---
+title: "Release notes for v1.20"
+description: "Polyaxon release notes, migrations, and deprecation notes for v1.20.x."
+author: Polyaxon
+---
+## V1.20.0
+
+### Core
+
+ * **Enhancement**: Improve sanitization process for pod level attributes (node_selector, host_pid, ...)
+ * **Enhancement**: Improve distinct logic for count queries.
+ * **Enhancement**: Update stale requirements.
+ * **Enhancement**: Make client more robust to intermittent API issues.
+ * **Enhancement**: Improve retry logic.
+
+### Sidecar
+
+ * **Enhancement**: Improve file system retry logic on rate limiting.
+ * **Enhancement**: Improve file system logic to prevent throttling from various backends (S3, Minio, NFS, ...).
+ * **Enhancement**: Improve file system to be more robust to intermittent API issues.
+ * **Enhancement**: Introduce batching for artifacts deletion and update logic.
+
+### UI
+
+ * **Enhancement**: Improve logs rendering.
+ * **Enhancement**: Introduce several performance improvements.
+
+### Docs
+
+ * **Fix**: Several typos.
+
+### Deployment
+
+ * **Enhancement**: Improve speed of several core components.
+ * **Enhancement**: Upgrade Python to v3.10 for core component images.
+ * **Security**: Fix CVE issues.
+
+### Commercial
+
+ * **Enhancement**: Improve cloud infrastructure speed and response time for several APIs.
+ * **Enhancement**: Adjust priority tasks on scheduler to reduce race condition issues detected in DAGs.

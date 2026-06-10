@@ -1,0 +1,20 @@
+{
+  "title": "Integrations",
+  "pages": [
+    "index",
+    "tracking",
+    "artifacts",
+    "data-stores",
+    "operators",
+    "services",
+    "containers",
+    "scm",
+    "registries",
+    "notifications",
+    "ide",
+    "setup",
+    "automation",
+    "sso",
+    "other"
+  ]
+}

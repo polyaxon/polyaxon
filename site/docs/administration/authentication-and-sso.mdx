@@ -1,0 +1,60 @@
+---
+title: Authentication & SSO
+sidebarTitle: Authentication & SSO
+description: Overview of authentication and Single Sign-On (SSO) methods in Polyaxon
+---
+
+# Authentication & SSO
+
+Polyaxon supports several authentication methods including username/password, OAuth2 social logins, and enterprise SSO via SAML2 and OAuth2/OIDC.
+
+<Callout type="info">
+
+For more details on authorization, please refer to the [RBAC docs](/docs/administration/rbac).
+
+</Callout>
+
+<Callout type="info">
+
+For self-hosted SSO configuration, please refer to the [Self-hosted Authentication and SSO guide](/setup/security/authentication-and-sso).
+
+</Callout>
+
+## Email/Password authentication
+
+By default, Polyaxon uses email and password authentication. Polyaxon enforces standard password complexity requirements.
+
+If you signed up with a social login, you can add a password via the "reset password" link in the login page.
+
+## OAuth2 Social Logins
+
+Polyaxon supports OAuth2 social logins with the following providers:
+
+- GitHub
+- GitLab
+- Bitbucket
+- Google
+
+## Enterprise SSO [#sso]
+
+<AvailabilityBanner
+  availability={{
+    hobby: "not-available",
+    core: "not-available",
+    pro: "not-available",
+    enterprise: "full",
+    selfHosted: "ee",
+  }}
+/>
+
+Polyaxon supports enterprise SSO through:
+
+- **SAML2**: For providers like Okta, Azure AD (Entra ID), OneLogin, and other SAML2-compliant identity providers.
+- **OAuth2/OIDC**: For providers like Okta, Keycloak, and other OAuth2/OIDC-compliant identity providers.
+
+Details:
+
+- **Migration:** Existing users who signed up with an email/password or social logins are automatically migrated to the Enterprise SSO provider once it is set up.
+- **Authorization:** By default, users must be invited to an organization through the UI (settings > members). Optionally, you can enable auto-join to allow users authenticated via SSO to automatically join the organization.
+- **Team sync:** Polyaxon can automatically sync teams from your identity provider (e.g. Okta groups) to Polyaxon teams, keeping team membership in sync without manual management.
+- **Signing in:** Users are redirected to the configured identity provider to authenticate.

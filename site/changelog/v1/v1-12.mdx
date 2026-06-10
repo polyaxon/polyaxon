@@ -1,0 +1,164 @@
+---
+title: "Release notes for v1.12"
+description: "Polyaxon release notes, migrations, and deprecation notes for v1.12.x."
+author: Polyaxon
+---
+> **Important**: If you are using ingress for exposing the gateway, make sure to check if you need to add `pathType: ImplementationSpecific` (for example, this is required for GCP ingress)
+
+## v1.12.3
+
+### Stream/Sidecar/Initializer
+
+ * **Fix**: Issue with `Minio/Ceph` artifacts store backend.
+
+## v1.12.2
+
+### Stream/Initializer
+
+ * **Fix**: Regression in `GCS` artifacts store backend.
+
+### Tracking
+
+ * **Enhancement**: Remove per CPU tracking and report a global value only. **Please run: "pip install -U polyaxon" in your container build**.
+ * **Fix**: Versioned artifact tracking, should use `step or versioned flag` instead of `step and versioned flag`.
+ * **Fix**: Manual system event lineage tracking.
+
+### UI
+
+ * **Enhancement**: Add search, sorting, and pagination to the artifacts lineage table.
+ * **Enhancement**: Add support for force re-fetch to the artifacts tab.
+
+
+### CLI
+
+ * **Fix**: Typo in completion command.
+
+### Core
+
+  * **Enhancement**: Improve resolution logic of versioned entities.
+
+### Commercial
+
+* **Enhancement**: Add `locked` indicator to runs with model versions.
+
+## v1.12.1
+
+> This patch release was deleted.
+
+## v1.12.0
+
+### Agent
+
+ * **Security**: Fix security issues.
+ * **Enhancement**: Several enhancements based on core, streams, and sidecar.
+
+### CLI
+
+ * **New**: Make CLI compatible with `click>=8`.
+ * **Enhancement**: Improve CLI debug/verbose mode to show more information.
+ * **Enhancement**: Improve CLI parser to validate slugs like project names to avoid silent 405 errors when a user uses `-p` instead of `-P` to pass params.
+ * **Enhancement**: Improve CLI errors to show more information than `Error message: ('Connection broken: IncompleteRead(0 bytes read, 23 more expected)', IncompleteRead(0 bytes read, 23 more expected))`.
+ * **Enhancement**: Improve the create command for hub (component, version) to correctly use the current configured owner instead of `polyaxon`.
+ * **Enhancement**: Improve cache flag: `polyaxon run --cache=y/yes/t/true/1` or `polyaxon run --cache=n/no/f/false/0`.
+ * **Deprecation**: Deprecate `polyaxon run --nocache` flag in favor of `polyaxon run --cache=t/f`.
+
+### Specification
+
+ * **New**: Add `to_env` to simplify exposing an IO or a param to an environment variable automatically.
+ * **New**: Add model version init loader.
+
+### Core
+
+ * **New**: Add reservoir sampling for events logging and/or streaming.
+ * **New**: Add support for date and datetime ranges for hyperparam generation.
+ * **Enhancement**: Improve compiler to not pass `isApproved` to children operations in DAG and Matrix polyaxonfiles.
+ * **Enhancement**: Improve update statuses API with force flag to prevent automated process from overriding a final status.
+ * **Enhancement**: Relax the datetime equality operator to not check seconds/milliseconds.
+ * **Enhancement**: Improve compiler to respect the patch strategy of the the override config requested in restart/resume.
+ * **Fix**: Issue with restarted runs containing updated container args getting merged with values from previous args.
+
+### Sidecar
+
+ * **Fix**: Issue with race condition in collecting related runs' artifacts(impacts tracking in notebooks).
+
+### Tracking
+
+ * **New**: Add summary lineage tracking for system resources.
+
+### UI
+
+ * **New**: Add compare view.
+ * **New**: Add diff-mode when comparing runs.
+ * **New**: Add changes-mode to show the delta between values based on a baseline when comparing runs.
+ * **New**: Allow filtering by values when clicking on a table cell.
+ * **Enhancement**: Show button to view raw artifacts in read-only mode.
+ * **Enhancement**: Improve comparison table in fullscreen mode to correctly render the artifacts/modals/actions/...
+ * **Enhancement**: Only show layout selection when both table and events dashboard are selected.
+ * **Enhancement**: Rename "Current token" to "Default token".
+ * **Enhancement**: Add line numbers to code/text files in artifacts viewer.
+ * **Enhancement**: Improve suggestions for cpu and memory filters.
+ * **Enhancement**: Improve value suggestions.
+ * **Enhancement**: Show `approve selection` multi-action button if one or multiple selected runs are pending approval.
+ * **Enhancement**: Improve user's profile dropdown.
+ * **Enhancement**: Add `reset` button to the `dashboards` tab to reset the dashboard configuration.
+ * **Enhancement**: Add pending flags filter dropdown.
+ * **Enhancement**: Show `my bookmarks` filter as a pin.
+ * **Enhancement**: Allow sorting by hidden columns in the grid table.
+ * **Enhancement**: Increase the real estate of the events dashboard in the fixed layout by minimizing the control buttons of the runs table while resizing.
+ * **Enhancement**: Add quick flag to filter for runs related to model versions.
+ * **Enhancement**: Improve rendering of memory values in table and quotas.
+ * **Enhancement**: Improve several icons.
+ * **Fix**: Issue in logs viewer truncating results when using the search bar.
+ * **Fix**: Issue with filter search losing focus when the suggestions dropdown appears.
+ * **Fix**: Issue in the users filter dropdown's state.
+ * **Fix**: Issue with datetime humanized values and milliseconds formatting in duration analytics.
+ * **Fix**: Issue some style issues.
+
+### Docs
+
+ * **Enhancement**: Add backfill scheduling guide.
+ * **Enhancement**: Add cpu and memory conditions to the query language docs.
+ * **Fix**: Several typos.
+
+### Hub
+
+ * **Enhancement**: Update Tensorboard's default container image to `2.4.2`.
+
+### Deployment & Setup
+
+ * **Enhancement**: Update Helm chart's ingress resource to support v1 API.
+ * **Enhancement**: Drop support for deprecated beta APIs for CRD and ingress.
+ * **Security**: Upgrade base image to remove all critical vulnerabilities.
+ * **Security**: Upgrade gosu to disallow insecure setuid installations.
+
+### Commercial
+
+ * **New**: Allow subscribing to the business plan on the monthly cycle.
+ * **New**: Add all runs tab to view and manage cross-project runs, this tab is available to users with the admin role or higher.
+ * **New**: Add tags management.
+ * **New**: Analytics configurations and views:
+   * Add total runs breakdown by users, projects, agents, and queues.
+   * Add cost and resources breakdown by users, projects, agents, and queues.
+   * Add cost and resources consumption over time.
+   * Add total(sum) of resources consumption and durations over time.
+   * Add Active users over time.
+   * Add cost and resources consumption stats.
+   * Add most active users in a time range.
+   * Add most active projects in a time range.
+   * Add most used components in a time range.
+ * **New**: Projects management functionalities:
+   * Improve promotions of runs to model registry to register new releases/versions.
+   * Simplify linking projects to model registry.
+   * Allow transferring runs from one project to another.
+   * Allow editing searches directly from the dropdown.
+   * Allow editing dashboards directly from the dropdown.
+ * **Enhancement**: Improve bookmark logic.
+ * **Enhancement**: Improve archive logic.
+ * **Enhancement**: Improve model registry and versions loading and updates.
+ * **Enhancement**: Improve operations cache layer.
+ * **Enhancement**: Improve operations cache specification to allow users to select sections to be used for the state calculation (init, connections, containers).
+ * **Enhancement**: Improve operations cache proxy.
+ * **Enhancement**: Add cleanup for orphan pipelines, i.e. this happens when a user deletes all runs in a pipeline without deleting the pipeline itself.
+ * **Enhancement**: Improve compiler to automatically convert matrix params to context only if they are not defined in the Inputs/Outputs.
+ * **Enhancement**: Automatically assign `stopped` status to a pipeline if all runs under it are stopped.
+ * **Fix**: Regression in schedules.

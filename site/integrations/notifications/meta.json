@@ -1,0 +1,16 @@
+{
+  "title": "Notifications",
+  "pages": [
+    "amazon-ses",
+    "discord",
+    "gmail",
+    "hipchat",
+    "mailgun",
+    "mattermost",
+    "pagerduty",
+    "sendgrid",
+    "slack",
+    "webhooks",
+    "zapier"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Registry",
+  "pages": [
+    "overview",
+    "component-hub",
+    "model-registry",
+    "artifacts-versioning",
+    "prompt-management"
+  ]
+}

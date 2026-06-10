@@ -1,0 +1,11 @@
+{
+  "title": "SSO",
+  "pages": [
+    "sso-bitbucket",
+    "sso-github",
+    "sso-gitlab",
+    "sso-google",
+    "sso-okta",
+    "sso-saml"
+  ]
+}

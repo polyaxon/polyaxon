@@ -1,0 +1,18 @@
+---
+title: How do I track LLM cost and tokens in Polyaxon?
+tags: [observability]
+---
+
+# How to track LLM Cost and Tokens in Polyaxon
+
+You can track the cost and token usage for any large language model (LLM) and endpoint in Polyaxon. There are two main ways to do this:
+
+1. Automatic calculation by Polyaxon: For [supported models](/docs/model-usage-and-cost#infer), Polyaxon can infer the cost. This requires you to use the correct model names. We currently support OpenAI and Anthropic models out of the box. Refer to the _Models_ tab in Polyaxon for the exact model names.
+
+2. Explicit cost and token ingestion: You can [ingest](/docs/model-usage-and-cost#infer) the cost and token counts for your LLM calls that you already track with Polyaxon. Some model providers return the cost and tokens as part of the response payload. You can pass these back to Polyaxon. Token counts are automatically captured across our [native integrations](/integrations), such as OpenAI SDK, LangChain, LlamaIndex, and others.
+
+For more information and examples, please see the [cost and tokens in Polyaxon](/docs/model-usage-and-cost) documentation.
+
+import GitHubStarCTA from "@/components-mdx/github-cta.mdx";
+
+<GitHubStarCTA />

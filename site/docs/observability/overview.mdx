@@ -1,0 +1,86 @@
+---
+title: "LLM Observability & Application Tracing (Open Source)"
+description: "Open source application tracing and observability for LLM apps. Capture traces, monitor latency, track costs, and debug issues across OpenAI, LangChain, LlamaIndex, and more."
+---
+
+# Observability & Application Tracing
+
+Because AI is inherently non-deterministic, debugging your application without any observability tool is more like guesswork.
+Well-implemented observability gives you the tools to understand what's happening inside your application and why.
+
+The core of this is **application tracing** — structured logs of every request that capture the exact prompt sent, the model's response, token usage, latency, and any tools or retrieval steps in between.
+
+Polyaxon captures all of this for you as you build. Here's an example of a trace in the Polyaxon UI:
+
+<Frame fullWidth>
+  <img
+    src="/images/docs/tracing-overview.png"
+    alt="Example of a trace showing nested observations: an initial model call, multiple tool executions, and a final summarization step. Each observation includes timing, inputs, outputs, and cost information."
+  />
+</Frame>
+
+<Callout type="info" emoji="🎥">
+
+[**Watch this walkthrough**](/watch-demo?tab=observability) of Polyaxon Observability and how to integrate it with your application.
+
+</Callout>
+
+## Getting Started
+
+Start by [setting up your first trace](/docs/observability/get-started).
+
+Take a moment to understand the core concepts of tracing in Polyaxon: [traces, sessions, and observations](/docs/observability/data-model).
+
+Once you're up and running, you can start adding on more functionality to your traces. We recommend starting with the following:
+
+- [Group traces into sessions for multi-turn applications](/docs/observability/features/sessions)
+- [Split traces into environments for different stages of your application](/docs/observability/features/environments)
+- [Add attributes to your traces so you can filter them in the future](/docs/observability/features/tags)
+- [Use custom trace IDs for distributed tracing](/docs/observability/features/trace-ids-and-distributed-tracing)
+- [Track costs and token usage](/docs/observability/features/token-and-cost-tracking)
+
+Already know what you want? Take a look under _Features_ for guides on specific topics.
+
+## FAQ
+
+<details>
+  <summary>What is the difference between observability and tracing?</summary>
+  **Observability** is the broader capability of understanding the internal
+  state of your system from its outputs. It encompasses tracing, metrics, and
+  logging. **Tracing** is a specific observability technique that records the
+  flow of a request through your system, preserving causal relationships between
+  operations. In the context of LLM applications, tracing is the most important
+  observability tool because it captures the full context of each request —
+  prompts, responses, tool calls, and their relationships.
+</details>
+
+<details>
+  <summary>What is application tracing?</summary>
+  Application tracing records the complete lifecycle of a request as it flows
+  through your system. Each trace captures every operation — LLM calls,
+  retrieval steps, tool executions, and custom logic — along with timing,
+  inputs, outputs, and metadata. This gives you full visibility into what
+  happened during each request, enabling debugging, performance optimization,
+  and quality monitoring.
+</details>
+
+<details>
+  <summary>How does Polyaxon compare to other tracing solutions?</summary>
+  Polyaxon is purpose-built for LLM applications, which means it natively
+  understands LLM-specific concepts like token usage, model parameters,
+  prompt/completion pairs, and evaluation scores. Unlike general-purpose APM
+  tools, Polyaxon provides features specific to AI engineering: [LLM-as-a-Judge
+  evaluation](/docs/evaluation/evaluation-methods/llm-as-a-judge), [prompt
+  management](/docs/prompt-management/overview), [experiments and
+  datasets](/docs/evaluation/experiments/datasets), and [custom
+  dashboards](/docs/metrics/features/custom-dashboards). It's also [open
+  source](/setup) and can be self-hosted.
+</details>
+
+<details>
+  <summary>Does Polyaxon add latency to my application?</summary>
+  No. Polyaxon SDKs send tracing data asynchronously in the background. Trace
+  events are queued locally and flushed in batches, so your application's
+  response time is not affected. See [queuing and
+  batching](/docs/observability/features/queuing-batching) for details.
+</details>

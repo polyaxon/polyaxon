@@ -1,0 +1,63 @@
+---
+title: Observability & Error Tracking
+description: Configure observability, error tracking, and monitoring for your self-hosted Polyaxon deployment.
+sidebarTitle: "Observability"
+---
+
+# Observability & Error Tracking
+
+Polyaxon supports integrations for monitoring the health and performance of your self-hosted deployment.
+
+## Health Checks
+
+All Polyaxon components expose health check endpoints for liveness and readiness probes. See the [health check documentation](/setup/platform/health-readiness-endpoints) for details.
+
+## Error Tracking via Sentry
+
+Polyaxon can send error reports to [Sentry](https://sentry.io) for both the server-side components and the CLI. This helps you monitor application errors, exceptions, and performance in production.
+
+### Server-side Configuration
+
+Configure Sentry for the Polyaxon API, scheduler, and background workers by setting the `errorsOptions` in your deployment config:
+
+```yaml
+errorsOptions:
+  platform_dsn: "https://<your-sentry-dsn>"
+  sample_rate: 0.1          # Traces sample rate (0 to 1)
+  enable_logs: false         # Send log events to Sentry
+  ignore_exceptions: []      # List of exception types to ignore
+```
+
+The server-side integration includes Django, Celery, and Redis instrumentation automatically.
+
+### CLI Configuration
+
+The CLI can also report errors to Sentry via the log handler configuration returned by the Polyaxon API. This is configured server-side and distributed to CLI clients automatically.
+
+## Infrastructure Monitoring
+
+Polyaxon integrates with several monitoring and observability tools. Since Polyaxon runs on Kubernetes, standard infrastructure monitoring tools can observe all Polyaxon components (API, scheduler, agent, gateway) alongside the rest of your cluster.
+
+- **[Datadog](https://www.datadoghq.com/)** — Use the Datadog Agent with Kubernetes integration to collect metrics, logs, and traces from Polyaxon pods. Datadog's autodiscovery automatically detects and monitors Polyaxon containers.
+- **[Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/)** — Scrape Kubernetes metrics from Polyaxon pods and build custom dashboards. Use kube-state-metrics and node-exporter for cluster-level monitoring.
+- **[New Relic](https://newrelic.com/)** — Deploy the New Relic Kubernetes integration to monitor Polyaxon pod health, resource consumption, and performance.
+- **Cloud-native tools** — AWS CloudWatch, GCP Cloud Monitoring, or Azure Monitor can collect metrics and logs from Polyaxon pods running on managed Kubernetes services.
+
+See the [integrations](/integrations/) section for the full list of supported tools and setup guides.
+
+## Logging
+
+Polyaxon components output structured logs to stdout/stderr, which can be collected by any log aggregation system (e.g. Fluentd, Filebeat, Promtail, Datadog Agent, CloudWatch Logs).
+
+For Kubernetes deployments, logs are available via:
+
+```bash
+# View API logs
+kubectl logs -n polyaxon -l app.kubernetes.io/name=polyaxon-api
+
+# View scheduler logs
+kubectl logs -n polyaxon -l app.kubernetes.io/name=polyaxon-scheduler
+
+# View agent logs
+kubectl logs -n polyaxon -l app.kubernetes.io/name=polyaxon-agent
+```

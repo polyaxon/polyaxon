@@ -1,0 +1,16 @@
+{
+  "title": "Self-Hosting",
+  "pages": [
+    "index",
+    "platform",
+    "agents",
+    "connections",
+    "auxiliaries",
+    "deployment-strategies",
+    "cli",
+    "license-key",
+    "troubleshooting-and-faq",
+    "security",
+    "upgrade"
+  ]
+}

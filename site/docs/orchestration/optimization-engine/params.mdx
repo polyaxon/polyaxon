@@ -1,0 +1,473 @@
+---
+title: "HyperParams Specification"
+description: "Hyperparameters Tuning Section - Polyaxonfile Specification Sections."
+---
+
+## V1HpChoice
+
+```python
+polyaxon._flow.matrix.params.V1HpChoice()
+```
+
+
+`Choice` picks a value from a of list values.
+
+```yaml
+params:
+  paramTest:
+    kind: choice
+    value: [1, 2, 3, 4, 5]
+```
+
+```python
+from polyaxon.schemas import V1HpChoice
+param_test = V1HpChoice(value=[1, 2, 3, 4, 5])
+```
+
+
+
+----
+
+## V1HpPChoice
+
+```python
+polyaxon._flow.matrix.params.V1HpPChoice()
+```
+
+
+`PChoice` picks a value with a probability from a list of
+[(value, probability), (value, probability), ...].
+
+```yaml
+params:
+  paramTest:
+    kind: pchoice
+    value: [(1, 0.1), (2, 0.1), (3, 0.8)]
+```
+
+```python
+from polyaxon.schemas import V1HpPChoice
+param_test = V1HpPChoice(value=[("A", 0.1), ("B", 0.1), ("C", 0.8)])
+```
+
+
+
+----
+
+## V1HpDateRange
+
+```python
+polyaxon._flow.matrix.params.V1HpDateRange()
+```
+
+
+`DateRange` picks a value from a generated list of values using `[start, stop, step]`,
+you can pass values in these forms:
+  * `["2019-06-24", "2019-06-25", 3600 * 24]`
+  * `{start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 1}`
+
+**Step (frequency)**: represents a timedelta in days.
+
+```yaml
+params:
+  paramTest:
+    kind: daterange
+    value: ["2019-06-22", "2019-07-25", 1]
+```
+
+```python
+from polyaxon.schemas import V1HpDateRange
+param_test = V1HpDateRange(value=["2019-06-22", "2019-06-25", 2])
+```
+
+
+
+----
+
+## V1HpDateTimeRange
+
+```python
+polyaxon._flow.matrix.params.V1HpDateTimeRange()
+```
+
+
+`DateTimeRange` picks a value from a generated list of values using `[start, stop, step]`,
+you can pass values in these forms:
+  * `["2019-06-24T21:20:07+02:00", "2019-06-25T21:20:07+02:00", 3600]`
+  * `{start: "2019-06-24 00:00", stop: "2019-06-28 00:00", step: 3600 * 4}`
+
+**Step (frequency)**: represents a timedelta in seconds.
+
+```yaml
+params:
+  paramTest:
+    kind: datetimerange
+    value: ["2019-06-22 21:00", "2019-06-25 21:00", 3600]
+```
+
+```python
+from polyaxon.schemas import V1HpDateTimeRange
+param_test = V1HpDateTimeRange(value=["2019-06-22 21:00", "2019-06-25 21:00", 3600])
+```
+
+
+
+----
+
+## V1HpRange
+
+```python
+polyaxon._flow.matrix.params.V1HpRange()
+```
+
+
+`Range` picks a value from a generated list of values using `[start, stop, step]`,
+you can pass values in these forms:
+  * [1, 10, 2]
+  * `{start: 1, stop: 10, step: 2}`
+  * '1:10:2'
+
+```yaml
+params:
+  paramTest:
+    kind: range
+    value: [1, 10, 2]
+```
+
+```python
+from polyaxon.schemas import V1HpRange
+param_test = V1HpRange(value=[1, 10, 2])
+```
+
+
+
+----
+
+## V1HpLinSpace
+
+```python
+polyaxon._flow.matrix.params.V1HpLinSpace()
+```
+
+
+`LinSpace` picks a value from a generated list of steps from start to stop spaced evenly
+on a linear scale `[start, stop, step]`, you can pass values in these forms:
+  * [1, 10, 20]
+  * `{start: 1, stop: 10, num: 20}`
+  * '1:10:20'
+
+```yaml
+params:
+  paramTest:
+    kind: linspace
+    value: [1, 10, 20]
+```
+
+```python
+from polyaxon.schemas import V1HpLinSpace
+param_test = V1HpLinSpace(value=[1, 10, 20])
+```
+
+
+
+----
+
+## V1HpLogSpace
+
+```python
+polyaxon._flow.matrix.params.V1HpLogSpace()
+```
+
+
+`LogSpace` picks a value from a generated list of steps from start to stop spaced evenly
+on a log scale `[start, stop, step]` or `[start, stop, step, base]`,
+where `base` is optional with 10 as default value,
+you can pass values in these forms:
+  * [1, 10, 20]
+  * [1, 10, 20, 2]
+  * `{start: 1, stop: 10, num: 20}`
+  * `{start: 1, stop: 10, num: 20, base: 2}`
+  * '1:10:20:2'
+
+```yaml
+params:
+  paramTest:
+    kind: logspace
+    value: [1, 10, 20]
+```
+
+```python
+from polyaxon.schemas import V1HpLogSpace
+param_test = V1HpLinSpace(value=[1, 10, 20])
+```
+
+
+
+----
+
+## V1HpGeomSpace
+
+```python
+polyaxon._flow.matrix.params.V1HpGeomSpace()
+```
+
+
+`GeomSpace` picks a value from a generated list of steps from start to stop spaced evenly
+on a geometric progression `[start, stop, step]`, you can pass values in these forms:
+  * [1, 10, 20]
+  * `{start: 1, stop: 10, num: 20}`
+  * '1:10:20'
+
+```yaml
+params:
+  paramTest:
+    kind: geomspace
+    value: [1, 10, 20]
+```
+
+```python
+from polyaxon.schemas import V1HpGeomSpace
+param_test = V1HpGeomSpace(value=[1, 10, 20])
+```
+
+
+
+----
+
+## V1HpUniform
+
+```python
+polyaxon._flow.matrix.params.V1HpUniform()
+```
+
+
+`Uniform` draws samples from a uniform distribution over the half-open
+interval `[low, high)`, you can pass values in these forms:
+  * 0:1
+  * [0, 1]
+  * `{'low': 0, 'high': 1}`
+
+```yaml
+params:
+  paramTest:
+    kind: uniform
+    value: [0, 1]
+```
+
+```python
+from polyaxon.schemas import V1HpUniform
+param_test = V1HpUniform(value=[0, 1])
+```
+
+
+
+----
+
+## V1HpQUniform
+
+```python
+polyaxon._flow.matrix.params.V1HpQUniform()
+```
+
+
+`QUniform` samples from a quantized uniform distribution over `[low, high]`
+(`round(uniform(low, high) / q) * q`),
+you can pass values in these forms:
+  * 0:1:0.1
+  * [0, 1, 0.1]
+  * `{'low': 0, 'high': 1, 'q': 0.1}`
+
+
+```yaml
+params:
+  paramTest:
+    kind: quniform
+    value: [0, 1, 0.1]
+```
+
+```python
+from polyaxon.schemas import V1HpQUniform
+param_test = V1HpQUniform(value=[0, 1, 0.1])
+```
+
+
+
+----
+
+## V1HpLogUniform
+
+```python
+polyaxon._flow.matrix.params.V1HpLogUniform()
+```
+
+
+`LogUniform` samples from a log uniform distribution over`[low, high]`,
+you can pass values in these forms:
+  * 0:1
+  * [0, 1]
+  * `{'low': 0, 'high': 1}`
+
+
+```yaml
+params:
+  paramTest:
+    kind: loguniform
+    value: [0, 1]
+```
+
+```python
+from polyaxon.schemas import V1HpLogUniform
+param_test = V1HpLogUniform(value=[0, 1])
+```
+
+
+
+----
+
+## V1HpQLogUniform
+
+```python
+polyaxon._flow.matrix.params.V1HpQLogUniform()
+```
+
+
+`LogUniform` samples from a log uniform distribution over`[low, high]`,
+you can pass values in these forms:
+  * 0:1:0.1
+  * [0, 1, 0.1]
+  * `{'low': 0, 'high': 1, 'q': 0.1}`
+
+
+```yaml
+params:
+  paramTest:
+    kind: qloguniform
+    value: [0, 1, 0.1]
+```
+
+```python
+from polyaxon.schemas import V1HpQLogUniform
+param_test = V1HpQLogUniform(value=[0, 1, 0.1])
+```
+
+
+
+----
+
+## V1HpNormal
+
+```python
+polyaxon._flow.matrix.params.V1HpNormal()
+```
+
+
+`Normal` draws random samples from a normal (Gaussian) distribution defined by
+`[loc, scale]`, you can pass values in these forms:
+  * 0:1
+  * [0, 1]
+  * `{'loc': 0, 'scale': 1}`
+
+
+```yaml
+params:
+  paramTest:
+    kind: normal
+    value: [0, 1]
+```
+
+```python
+from polyaxon.schemas import V1HpNormal
+param_test = V1HpNormal(value=[0, 1])
+```
+
+
+
+----
+
+## V1HpQNormal
+
+```python
+polyaxon._flow.matrix.params.V1HpQNormal()
+```
+
+
+`QNormal` draws random samples from a quantized normal (Gaussian) distribution defined by
+`[loc, scale]`, you can pass values in these forms:
+  * 0:1:0.1
+  * [0, 1, 0.1]
+  * `{'loc': 0, 'scale': 1, 'q': 0.1}`
+
+
+```yaml
+params:
+  paramTest:
+    kind: qnormal
+    value: [0, 1, 0.1]
+```
+
+```python
+from polyaxon.schemas import V1HpQNormal
+param_test = V1HpNormal(value=[0, 1, 0.1])
+```
+
+
+
+----
+
+## V1HpLogNormal
+
+```python
+polyaxon._flow.matrix.params.V1HpLogNormal()
+```
+
+
+`LogNormal` draws random samples from a log normal (Gaussian) distribution defined by
+`[loc, scale]`, you can pass values in these forms:
+  * 0:1
+  * [0, 1]
+  * `{'loc': 0, 'scale': 1}`
+
+
+```yaml
+params:
+  paramTest:
+    kind: lognormal
+    value: [0, 1]
+```
+
+```python
+from polyaxon.schemas import V1HpLogNormal
+param_test = V1HpLogNormal(value=[0, 1])
+```
+
+
+
+----
+
+## V1HpQLogNormal
+
+```python
+polyaxon._flow.matrix.params.V1HpQLogNormal()
+```
+
+
+`QLogNormal` draws random samples from a log normal (Gaussian) distribution defined by
+`[loc, scale]`, you can pass values in these forms:
+  * 0:1:0.1
+  * [0, 1, 0.1]
+  * `{'loc': 0, 'scale': 1, 'q': 0.1}`
+
+
+```yaml
+params:
+  paramTest:
+    kind: qlognormal
+    value: [0, 1, 0.1]
+```
+
+```python
+from polyaxon.schemas import V1HpQLogNormal
+param_test = V1HpQLogNormal(value=[0, 1])
+```
+
+

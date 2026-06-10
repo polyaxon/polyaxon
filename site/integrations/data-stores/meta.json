@@ -1,0 +1,14 @@
+{
+  "title": "Data Stores",
+  "pages": [
+    "data-on-azure",
+    "data-on-ceph",
+    "data-on-gcs",
+    "data-on-host-path",
+    "data-on-minio",
+    "data-on-nfs-provisioner",
+    "data-on-nfs",
+    "data-on-pvc",
+    "data-on-s3"
+  ]
+}

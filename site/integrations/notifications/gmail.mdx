@@ -1,0 +1,27 @@
+---
+title: Gmail
+description: "Gmail is email that's intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access."
+ogImage: /images/integrations/gmail.png
+---
+
+Get email notifications when an experiment, a job, or a build is finished using Gmail so that your team stays in sync.
+
+> For production deployments with recommend using other outgoing email services
+
+## Create a Gmail to use for sending emails to your team members
+
+In order to use [Gmail](https://gmail.com) to receive email notifications from Polyaxon,
+you should create an account in Gmail.
+
+## Add your Email notification using GMail to Polyaxon deployment config
+
+Now you can set the email section using your Gmail's information:
+
+```yaml
+email:
+  host: "smtp.gmail.com"
+  port: 587
+  useTls: true
+  hostUser: "foobar@gmail.com"
+  hostPassword: "123456"
+```

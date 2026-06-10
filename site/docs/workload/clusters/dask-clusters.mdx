@@ -1,0 +1,67 @@
+---
+title: "Dask-Cluster Specification"
+description: "Dask-Cluster provides an interface to run Dask clusters on Kubernetes."
+---
+
+## V1DaskCluster
+
+```python
+polyaxon._flow.run.dask.dask.V1DaskCluster()
+```
+
+
+Dask cluster specification for running distributed workloads.
+[Dask cluster](https://kubernetes.dask.org/en/latest/).
+
+Creates a Dask cluster with scheduler and worker replicas.
+Platform automatically handles service, health checks, and dashboard configuration.
+
+- __Args__:
+  - __kind__: str, should be equal `daskcluster`
+  - __worker__: V1DaskReplica, optional - Worker replica specification
+  - __scheduler__: V1DaskReplica, optional - Scheduler replica specification
+  - __min_replicas__: int, optional - Minimum number of workers for autoscaling
+  - __max_replicas__: int, optional - Maximum number of workers for autoscaling
+
+## YAML usage
+
+```yaml
+run:
+  kind: daskcluster
+  worker:
+    replicas: 3
+    container:
+      image: daskdev/dask:latest
+      resources:
+        requests:
+          memory: 2Gi
+          cpu: 1
+  scheduler:
+    container:
+      image: daskdev/dask:latest
+      resources:
+        requests:
+          memory: 1Gi
+          cpu: 1
+```
+
+## Autoscaling
+
+Enable autoscaling by setting `minReplicas` and `maxReplicas`.
+When both are set, a DaskAutoscaler resource will be created.
+
+```yaml
+run:
+  kind: daskcluster
+  minReplicas: 1
+  maxReplicas: 10
+  worker:
+    replicas: 2
+    container:
+      image: daskdev/dask:latest
+  scheduler:
+    container:
+      image: daskdev/dask:latest
+```
+
+

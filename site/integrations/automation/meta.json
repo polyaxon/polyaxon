@@ -1,0 +1,9 @@
+{
+  "title": "Automation",
+  "pages": [
+    "argo",
+    "github-action",
+    "jenkins",
+    "kafka"
+  ]
+}

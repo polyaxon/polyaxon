@@ -1,0 +1,87 @@
+---
+title: "Interactive Access"
+description: "Use tmux, sandbox, and SSH plugins to access running service containers."
+---
+
+Polyaxon service runs can expose interactive development capabilities through three independent plugins:
+
+| Plugin | Primary use | CLI entry point |
+| --- | --- | --- |
+| `plugins.tmux` | Reconnectable UI and `polyaxon ops shell` sessions | `polyaxon ops shell` |
+| `plugins.sandbox` | Programmatic exec, background commands, filesystem, and PTY access | `polyaxon sandbox ...` |
+| `plugins.ssh` | Native SSH clients, IDEs, SFTP, SCP, and rsync | `polyaxon ssh ...` |
+
+`plugins.sandbox` and `plugins.ssh` are supported on `kind: service` runs in this version. `plugins.tmux` does not require a service port and can be used for reconnectable shell sessions.
+
+## Enable plugins
+
+```yaml
+kind: component
+version: 1.1
+name: dev-service
+
+plugins:
+  tmux: true
+  sandbox: true
+  ssh: true
+
+run:
+  kind: service
+  container:
+    image: python:3.11
+    command: ["sleep", "infinity"]
+```
+
+Use only the plugins required by the workflow. For example, a browser shell only needs `tmux`; SDK-driven execution needs `sandbox`; IDE access needs `ssh`.
+
+## Reconnectable shell
+
+`plugins.tmux` ships a static `tmux` binary into the user container. When enabled, the UI shell and CLI shell attach to a persistent terminal session:
+
+```bash
+polyaxon ops shell -p owner/project -uid <run-uuid>
+```
+
+If the browser, websocket, or local terminal disconnects, reconnecting opens the same tmux session.
+
+## Sandbox commands
+
+`plugins.sandbox` enables sandbox health checks, command execution, background process logs, file transfer, and PTY sessions:
+
+```bash
+polyaxon sandbox ping -p owner/project -uid <run-uuid>
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
+polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- sh -lc 'echo ok'
+polyaxon sandbox upload -p owner/project -uid <run-uuid> ./local.txt /tmp/local.txt
+polyaxon sandbox download -p owner/project -uid <run-uuid> /tmp/local.txt ./downloaded.txt
+polyaxon sandbox shell -p owner/project -uid <run-uuid>
+```
+
+For detached commands, keep the returned execution id and read logs later:
+
+```bash
+EXEC_ID=$(polyaxon sandbox exec -p owner/project -uid <run-uuid> --detach -- sh -lc 'python train.py')
+polyaxon sandbox logs -p owner/project -uid <run-uuid> "$EXEC_ID"
+```
+
+## SSH access
+
+`plugins.ssh` starts an SSH daemon in the service container and lets local SSH tooling connect through Polyaxon:
+
+```bash
+polyaxon ssh setup -p owner/project -uid <run-uuid>
+polyaxon ssh connect -p owner/project -uid <run-uuid>
+```
+
+To use a standard SSH client or an IDE, print an SSH config block and add it to your SSH config:
+
+```bash
+polyaxon ssh config -p owner/project -uid <run-uuid>
+ssh polyaxon-<run-uuid>
+```
+
+The SSH command supports regular SSH options after `--`:
+
+```bash
+polyaxon ssh connect -p owner/project -uid <run-uuid> -- -L 8888:127.0.0.1:8888 -N
+```

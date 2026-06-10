@@ -1,0 +1,9 @@
+{
+  "title": "Security",
+  "pages": [
+    "overview",
+    "networking",
+    "[RBAC ↗ (main docs)](/docs/rbac)",
+    "[Data Retention ↗ (main docs)](/docs/data-retention)"
+  ]
+}

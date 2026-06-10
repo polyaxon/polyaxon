@@ -1,0 +1,35 @@
+---
+title: Enterprise License Key (self-hosted)
+description: Learn how to activate a license key for your self-hosted Polyaxon deployment.
+label: "Version: v3"
+---
+
+# Enterprise License Key
+
+All core Polyaxon features and APIs are available in Polyaxon CE without any limits.
+
+When running Polyaxon self-hosted, you use the same deployment infrastructure as Polyaxon Cloud. There are no scalability limitations between the different versions.
+
+Some additional Enterprise features require a license key:
+
+- [Project-level RBAC Roles](/docs/rbac)
+- [Data Retention Policies](/docs/data-retention)
+- [Audit Logs](/changelog/2025-01-21-audit-logs)
+- [UI Customization](/setup/administration/ui-customization)
+- [Organization Creators](/setup/administration/organization-creators)
+- [Org Management API and SCIM](/docs/administration/scim-and-org-api)
+- [Instance Management API](/setup/administration/instance-management-api)
+
+See [pricing page](/pricing-self-host) for more details on Polyaxon Enterprise.
+
+## Activating a License Key
+
+After purchasing a license key, you can activate it by adding the `organizationKey` field to your Polyaxon deployment chart:
+
+```yaml
+organizationKey: <your-license-key>
+```
+
+## Questions?
+
+If you have any questions about licensing, please [contact us](/support).

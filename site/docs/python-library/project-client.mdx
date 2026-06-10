@@ -1,0 +1,1167 @@
+---
+title: "Project Client Reference"
+description: "The project client allows to communicate with project APIs."
+---
+
+## ProjectClient
+
+```python
+polyaxon._client.project.ProjectClient(owner=None, project=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+```
+
+
+ProjectClient is a client to communicate with Polyaxon projects endpoints.
+
+If no values are passed to this class,
+Polyaxon will try to resolve the owner and project from the environment:
+ * If you have a configured CLI, Polyaxon will use the configuration of the cli.
+ * If you have a cached project using the CLI,
+   the client will default to that cached project unless you override the values.
+ * If you use this client in the context of a job or a service managed by Polyaxon,
+   a configuration will be available to resolve the values based on that run.
+
+If you intend to create a new project instance or to list projects,
+only the `owner` parameter is required.
+
+Team Scoping:
+
+  Projects can be scoped to a specific team within an organization by providing
+  the owner in the format "owner/team". When a team is specified, the project
+  will be created under that team using the team projects API.
+
+  - __Examples__:
+
+```python
+ProjectClient(owner="my-org", project="my-project")              # Organization project
+ProjectClient(owner="my-org/engineering", project="my-project")  # Team project
+```
+
+- __Properties__:
+  - __project__: str.
+  - __owner__: str.
+  - __team__: str.
+  - __project_data__: V1Project.
+
+- __Args__:
+  - __owner__: str, optional, the owner is the username or
+    the organization name owning this project.
+    Can be specified as "owner" for organization scope or "owner/team"
+    for team-scoped projects.
+  - __project__: str, optional, project name.
+  - __client__: [PolyaxonClient](/docs/python-library/polyaxon-client/), optional,
+    an instance of a configured client, if not passed,
+    a new instance will be created based on the available environment.
+  - __is_offline__: bool, optional,
+    To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+  - __no_op__: bool, optional,
+    To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
+
+- __Raises__:
+  - __PolyaxonClientException__: If no owner is passed and Polyaxon cannot
+  resolve an owner from the environment.
+
+
+
+----
+
+### refresh_data
+
+
+```python
+refresh_data(self)
+```
+
+
+
+Fetches the project data from the api.
+
+
+----
+
+### create
+
+
+```python
+create(self, data)
+```
+
+
+
+Creates a new project based on the data passed.
+
+[Project API](/docs/api/#operation/CreateProject)
+
+- __Args__:
+  - __data__: dict or V1Project, required.
+
+- __Returns__:
+  V1Project, project instance from the response.
+
+
+
+----
+
+### list
+
+
+```python
+list(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists projects under the current owner.
+
+[Project API](/docs/api/#operation/ListProjects)
+
+- __Args__:
+  - __query__: str, optional, query filters, please refer to
+           [Project PQL](/docs/query-language/projects/#query)
+  - __sort__: str, optional, fields to order by, please refer to
+           [Project PQL](/docs/query-language/projects/#sort)
+  - __limit__: int, optional, limit of projects to return.
+  - __offset__: int, optional, offset pages to paginate projects.
+
+- __Returns__:
+  List[V1Project], list of project instances.
+
+
+
+----
+
+### delete
+
+
+```python
+delete(self)
+```
+
+
+
+Deletes project based on the current owner and project.
+
+
+----
+
+### update
+
+
+```python
+update(self, data)
+```
+
+
+
+Updates a project based on the data passed.
+
+[Project API](/docs/api/#operation/PatchProject)
+
+- __Args__:
+  - __data__: Dict or V1Project, required.
+
+- __Returns__:
+  V1Project, project instance from the response.
+
+
+
+----
+
+### list_runs
+
+
+```python
+list_runs(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists runs under the current owner/project.
+
+[Run API](/docs/api/#operation/ListRuns)
+
+- __Args__:
+  - __query__: str, optional, query filters, please refer to
+        [Run PQL](/docs/query-language/runs/#query)
+  - __sort__: str, optional, fields to order by, please refer to
+        [Run PQL](/docs/query-language/runs/#sort)
+  - __limit__: int, optional, limit of runs to return.
+  - __offset__: int, optional, offset pages to paginate runs.
+
+- __Returns__:
+  List[V1Run], list of run instances.
+
+
+
+----
+
+### transfer_runs
+
+
+```python
+transfer_runs(self, uuids, to_project)
+```
+
+
+
+Transfers multiple runs to another project under the same owner/organization.
+
+[Run API](/docs/api/#operation/TransferRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to transfer.
+  - __to_project__: str, required, the destination project to transfer the runs to.
+
+
+
+----
+
+### approve_runs
+
+
+```python
+approve_runs(self, uuids)
+```
+
+
+
+Approves multiple runs in the project.
+
+[Run API](/docs/api/#operation/ApproveRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to approve.
+
+
+
+----
+
+### archive_runs
+
+
+```python
+archive_runs(self, uuids)
+```
+
+
+
+Archives multiple runs in the project.
+
+[Run API](/docs/api/#operation/ArchiveRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to archive.
+
+
+
+----
+
+### restore_runs
+
+
+```python
+restore_runs(self, uuids)
+```
+
+
+
+Restores multiple runs in the project.
+
+[Run API](/docs/api/#operation/RestoreRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to restore.
+
+
+
+----
+
+### delete_runs
+
+
+```python
+delete_runs(self, uuids)
+```
+
+
+
+Deletes multiple runs in the project.
+
+[Run API](/docs/api/#operation/DeleteRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to delete.
+
+
+
+----
+
+### stop_runs
+
+
+```python
+stop_runs(self, uuids)
+```
+
+
+
+Stops multiple runs in the project.
+
+[Run API](/docs/api/#operation/StopRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to stop.
+
+
+
+----
+
+### skip_runs
+
+
+```python
+skip_runs(self, uuids)
+```
+
+
+
+Skips multiple runs in the project.
+
+[Run API](/docs/api/#operation/SkipRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to skip.
+
+
+
+----
+
+### invalidate_runs
+
+
+```python
+invalidate_runs(self, uuids)
+```
+
+
+
+Invalidates multiple runs in the project.
+
+[Run API](/docs/api/#operation/InvalidateRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to invalidate.
+
+
+
+----
+
+### bookmark_runs
+
+
+```python
+bookmark_runs(self, uuids)
+```
+
+
+
+Bookmarks multiple runs in the project.
+
+[Run API](/docs/api/#operation/BookmarkRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to bookmark.
+
+
+
+----
+
+### tag_runs
+
+
+```python
+tag_runs(self, uuids, tags)
+```
+
+
+
+Tags multiple runs in the project.
+
+[Run API](/docs/api/#operation/TagRuns)
+
+- __Args__:
+  - __data__: Dict, required, must include 'uuids' and 'tags' fields.
+
+
+
+----
+
+### list_component_versions
+
+
+```python
+list_component_versions(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists component versions under the current owner/project.
+
+[Project API](/docs/api/#operation/ListProjectVersions)
+
+- __Args__:
+  - __query__: str, optional, query filters, please refer to
+        [Project Version PQL](/docs/query-language/project-versions/#query)
+  - __sort__: str, optional, fields to order by, please refer to
+        [Project Version PQL](/docs/query-language/project-versions/#sort)
+  - __limit__: int, optional, limit of project versions to return.
+  - __offset__: int, optional, offset pages to paginate project versions.
+
+- __Returns__:
+  List[V1ProjectVersion], list of component versions.
+
+
+
+----
+
+### get_component_version
+
+
+```python
+get_component_version(self, version)
+```
+
+
+
+Gets a component version under the current owner/project.
+
+[Project API](/docs/api/#operation/GetVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+
+- __Returns__:
+  V1ProjectVersion, component version.
+
+
+
+----
+
+### create_component_version
+
+
+```python
+create_component_version(self, data)
+```
+
+
+
+Creates a component version based on the data passed.
+
+[Project API](/docs/api/#operation/CreateVersion)
+
+- __Args__:
+  - __data__: Dict or V1ProjectVersion, required.
+
+- __Returns__:
+  V1ProjectVersion, component version.
+
+
+
+----
+
+### patch_component_version
+
+
+```python
+patch_component_version(self, version, data)
+```
+
+
+
+Updates a component version based on the data passed.
+
+[Project API](/docs/api/#operation/PatchVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __data__: Dict or V1ProjectVersion, required.
+
+- __Returns__:
+  V1ProjectVersion, component version.
+
+
+
+----
+
+### register_component_version
+
+
+```python
+register_component_version(self, version, description=None, tags=None, content=None, run=None, force=False)
+```
+
+
+
+Creates or Updates a component version based on the data passed.
+
+- __Args__:
+  - __version__: str, optional, the version name/tag.
+  - __description__: str, optional, the version description.
+  - __tags__: str or List[str], optional.
+  - __content__: str or dict, optional, content/metadata (JSON object) of the version.
+  - __run__: str, optional, a uuid reference to the run.
+  - __force__: bool, optional, to force push, i.e. update if exists.
+
+- __Returns__:
+  V1ProjectVersion, component version.
+
+
+
+----
+
+### copy_component_version
+
+
+```python
+copy_component_version(self, version, to_project=None, name=None, description=None, tags=None, content=None, force=False)
+```
+
+
+
+Copies the component version to the same project or to a destination project.
+
+If `to_project` is provided,
+the version will be copied to the destination project under the same owner/organization.
+
+If `name` is provided the version will be copied with the new name,
+otherwise the copied version will be have a suffix `-copy`.
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __to_project__: str, optional, the destination project to copy the version to.
+  - __name__: str, optional, the name to use for registering the copied version,
+        default value is the original version's name with `-copy` prefix.
+  - __description__: str, optional, the version description,
+        default value is the original version's description.
+  - __tags__: str or List[str], optional, the version description,
+        default value is the original version's description.
+  - __content__: str or dict, optional, content/metadata (JSON object) of the version,
+        default value is the original version's content.
+  - __force__: bool, optional, to force push, i.e. update if exists.
+
+
+
+----
+
+### transfer_component_version
+
+
+```python
+transfer_component_version(self, version, to_project)
+```
+
+
+
+Transfers the component version to a project under the same owner/organization.
+
+[Run API](/docs/api/#operation/TransferVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __to_project__: str, required, the destination project to transfer the version to.
+
+
+
+----
+
+### delete_component_version
+
+
+```python
+delete_component_version(self, version)
+```
+
+
+
+Deletes a component version under the current owner/project.
+
+[Project API](/docs/api/#operation/DeleteVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+
+
+
+----
+
+### stage_component_version
+
+
+```python
+stage_component_version(self, version, stage, reason=None, message=None, last_transition_time=None, last_update_time=None)
+```
+
+
+
+Creates a new a component version stage.
+
+[Project API](/docs/api/#operation/CreateVersionStage)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __stage__: str, a valid [Stages](/docs/scheduling/specification/lifecycle/) value.
+  - __reason__: str, optional, reason or service issuing the status change.
+  - __message__: str, optional, message to log with this status.
+  - __last_transition_time__: datetime, default `now`.
+  - __last_update_time__: datetime, default `now`.
+
+
+
+----
+
+### pull_component_version
+
+
+```python
+pull_component_version(self, version, path)
+```
+
+
+
+Packages and downloads the component version to a local path.
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __path__: str, local path where to persist the metadata and artifacts.
+
+
+
+----
+
+### list_model_versions
+
+
+```python
+list_model_versions(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists model versions under the current owner/project.
+
+[Project API](/docs/api/#operation/ListProjectVersions)
+
+- __Args__:
+  - __query__: str, optional, query filters, please refer to
+        [Project Version PQL](/docs/query-language/project-versions/#query)
+  - __sort__: str, optional, fields to order by, please refer to
+        [Project Version PQL](/docs/query-language/project-versions/#sort)
+  - __limit__: int, optional, limit of project versions to return.
+  - __offset__: int, optional, offset pages to paginate project versions.
+
+- __Returns__:
+  List[V1ProjectVersion], list of model versions.
+
+
+
+----
+
+### get_model_version
+
+
+```python
+get_model_version(self, version)
+```
+
+
+
+Gets a model version under the current owner/project.
+
+[Project API](/docs/api/#operation/GetVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+
+- __Returns__:
+  V1ProjectVersion, model version.
+
+
+
+----
+
+### create_model_version
+
+
+```python
+create_model_version(self, data)
+```
+
+
+
+Creates a model version based on the data passed.
+
+[Project API](/docs/api/#operation/CreateVersion)
+
+- __Args__:
+  - __data__: Dict or V1ProjectVersion, required.
+
+- __Returns__:
+  V1ProjectVersion, model version.
+
+
+
+----
+
+### patch_model_version
+
+
+```python
+patch_model_version(self, version, data)
+```
+
+
+
+Updates a model version based on the data passed.
+
+[Project API](/docs/api/#operation/PatchVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __data__: Dict or V1ProjectVersion, required.
+
+- __Returns__:
+  V1ProjectVersion, model version.
+
+
+
+----
+
+### register_model_version
+
+
+```python
+register_model_version(self, version, description=None, tags=None, content=None, run=None, connection=None, artifacts=None, force=False)
+```
+
+
+
+Create or Update a model version based on the data passed.
+
+- __Args__:
+  - __version__: str, optional, the version name/tag.
+  - __description__: str, optional, the version description.
+  - __tags__: str or List[str], optional.
+  - __content__: str or dict, optional, content/metadata (JSON object) of the version.
+  - __run__: str, optional, a uuid reference to the run.
+  - __connection__: str, optional, a uuid reference to a connection.
+  - __artifacts__: List[str], optional, list of artifacts to highlight(requires passing a run)
+  - __force__: bool, optional, to force push, i.e. update if exists.
+
+- __Returns__:
+  V1ProjectVersion, model version.
+
+
+
+----
+
+### copy_model_version
+
+
+```python
+copy_model_version(self, version, to_project=None, name=None, description=None, tags=None, content=None, force=False)
+```
+
+
+
+Copies the model version to the same project or to a destination project.
+
+If `to_project` is provided,
+the version will be copied to the destination project under the same owner/organization.
+
+If `name` is provided the version will be copied with the new name,
+otherwise the copied version will be have a suffix `-copy`.
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __to_project__: str, optional, the destination project to copy the version to.
+  - __name__: str, optional, the name to use for registering the copied version,
+        default value is the original version's name with `-copy` prefix.
+  - __description__: str, optional, the version description,
+        default value is the original version's description.
+  - __tags__: str or List[str], optional, the version description,
+        default value is the original version's description.
+  - __content__: str or dict, optional, content/metadata (JSON object) of the version,
+        default value is the original version's content.
+  - __force__: bool, optional, to force push, i.e. update if exists.
+
+
+
+----
+
+### transfer_model_version
+
+
+```python
+transfer_model_version(self, version, to_project)
+```
+
+
+
+Transfers the model version to a project under the same owner/organization.
+
+[Run API](/docs/api/#operation/TransferVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __to_project__: str, required, the destination project to transfer the version to.
+
+
+
+----
+
+### delete_model_version
+
+
+```python
+delete_model_version(self, version)
+```
+
+
+
+Deletes a model version under the current owner/project.
+
+[Project API](/docs/api/#operation/DeleteVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+
+
+
+----
+
+### stage_model_version
+
+
+```python
+stage_model_version(self, version, stage, reason=None, message=None, last_transition_time=None, last_update_time=None)
+```
+
+
+
+Creates a new a model version stage.
+
+[Project API](/docs/api/#operation/CreateVersionStage)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __stage__: str, a valid [Stages](/docs/scheduling/specification/lifecycle/) value.
+  - __reason__: str, optional, reason or service issuing the status change.
+  - __message__: str, optional, message to log with this status.
+  - __last_transition_time__: datetime, default `now`.
+  - __last_update_time__: datetime, default `now`.
+
+
+
+----
+
+### pull_model_version
+
+
+```python
+pull_model_version(self, version, path, download_artifacts=True)
+```
+
+
+
+Packages and downloads the model version to a local path.
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __path__: str, local path where to persist the metadata and artifacts.
+  - __download_artifacts__: bool, optional, to download the artifacts based on linked lineage.
+
+
+
+----
+
+### list_artifact_versions
+
+
+```python
+list_artifact_versions(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists artifact versions under the current owner/project.
+
+[Project API](/docs/api/#operation/ListProjectVersions)
+
+- __Args__:
+  - __query__: str, optional, query filters, please refer to
+        [Project Version PQL](/docs/query-language/project-versions/#query)
+  - __sort__: str, optional, fields to order by, please refer to
+        [Project Version PQL](/docs/query-language/project-versions/#sort)
+  - __limit__: int, optional, limit of project versions to return.
+  - __offset__: int, optional, offset pages to paginate project versions.
+
+- __Returns__:
+  List[V1ProjectVersion], list of artifact versions.
+
+
+
+----
+
+### get_artifact_version
+
+
+```python
+get_artifact_version(self, version)
+```
+
+
+
+Gets an artifact version under the current owner/project.
+
+[Project API](/docs/api/#operation/GetVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+
+- __Returns__:
+  V1ProjectVersion, artifact version.
+
+
+
+----
+
+### create_artifact_version
+
+
+```python
+create_artifact_version(self, data)
+```
+
+
+
+Creates an artifact version based on the data passed.
+
+[Project API](/docs/api/#operation/CreateVersion)
+
+- __Args__:
+  - __data__: Dict or V1ProjectVersion, required.
+
+- __Returns__:
+  V1ProjectVersion, artifact version.
+
+
+
+----
+
+### patch_artifact_version
+
+
+```python
+patch_artifact_version(self, version, data)
+```
+
+
+
+Updates an artifact version based on the data passed.
+
+[Project API](/docs/api/#operation/PatchVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __data__: Dict or V1ProjectVersion, required.
+
+- __Returns__:
+  V1ProjectVersion, artifact version.
+
+
+
+----
+
+### register_artifact_version
+
+
+```python
+register_artifact_version(self, version, description=None, tags=None, content=None, run=None, connection=None, artifacts=None, force=False)
+```
+
+
+
+Create or Update an artifact version based on the data passed.
+
+- __Args__:
+  - __version__: str, optional, the version name/tag.
+  - __description__: str, optional, the version description.
+  - __tags__: str or List[str], optional.
+  - __content__: str or dict, optional, content/metadata (JSON object) of the version.
+  - __run__: str, optional, a uuid reference to the run.
+  - __connection__: str, optional, a uuid reference to a connection.
+  - __artifacts__: List[str], optional, list of artifacts to highlight(requires passing a run)
+  - __force__: bool, optional, to force push, i.e. update if exists.
+
+- __Returns__:
+  V1ProjectVersion, artifact version.
+
+
+
+----
+
+### copy_artifact_version
+
+
+```python
+copy_artifact_version(self, version, to_project=None, name=None, description=None, tags=None, content=None, force=False)
+```
+
+
+
+Copies the artifact version to the same project or to a destination project.
+
+If `to_project` is provided,
+the version will be copied to the destination project under the same owner/organization.
+
+If `name` is provided the version will be copied with the new name,
+otherwise the copied version will be have a suffix `-copy`.
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __to_project__: str, optional, the destination project to copy the version to.
+  - __name__: str, optional, the name to use for registering the copied version,
+        default value is the original version's name with `-copy` prefix.
+  - __description__: str, optional, the version description,
+        default value is the original version's description.
+  - __tags__: str or List[str], optional, the version description,
+        default value is the original version's description.
+  - __content__: str or dict, optional, content/metadata (JSON object) of the version,
+        default value is the original version's content.
+  - __force__: bool, optional, to force push, i.e. update if exists.
+
+
+
+----
+
+### transfer_artifact_version
+
+
+```python
+transfer_artifact_version(self, version, to_project)
+```
+
+
+
+Transfers the artifact version to a project under the same owner/organization.
+
+[Run API](/docs/api/#operation/TransferVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __to_project__: str, required, the destination project to transfer the version to.
+
+
+
+----
+
+### delete_artifact_version
+
+
+```python
+delete_artifact_version(self, version)
+```
+
+
+
+Deletes an artifact version under the current owner/project.
+
+[Project API](/docs/api/#operation/DeleteVersion)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+
+
+
+----
+
+### stage_artifact_version
+
+
+```python
+stage_artifact_version(self, version, stage, reason=None, message=None, last_transition_time=None, last_update_time=None)
+```
+
+
+
+Creates a new an artifact version stage.
+
+[Project API](/docs/api/#operation/CreateVersionStage)
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __stage__: str, a valid [Stages](/docs/scheduling/specification/lifecycle/) value.
+  - __reason__: str, optional, reason or service issuing the status change.
+  - __message__: str, optional, message to log with this status.
+  - __last_transition_time__: datetime, default `now`.
+  - __last_update_time__: datetime, default `now`.
+
+
+
+----
+
+### pull_artifact_version
+
+
+```python
+pull_artifact_version(self, version, path, download_artifacts=True)
+```
+
+
+
+Packages and downloads the artifact version to a local path.
+
+- __Args__:
+  - __version__: str, required, the version name/tag.
+  - __path__: str, local path where to persist the metadata and artifacts.
+  - __download_artifacts__: bool, optional, to download the artifacts based on linked lineage.
+
+
+
+----
+
+### persist_version
+
+
+```python
+persist_version(self, path)
+```
+
+
+
+Persists a version to a local path.
+
+- __Args__:
+  - __config__: V1ProjectVersion, the version config to persist.
+  - __path__: str, the path where to persist the version config.
+
+
+
+----
+
+### download_artifacts_for_version
+
+
+```python
+download_artifacts_for_version(self, path)
+```
+
+
+
+Collects and downloads all artifacts and assets linked to a version.
+
+- __Args__:
+  - __config__: V1ProjectVersion, the version config to download the artifacts for.
+  - __path__: str, the path where to persist the artifacts and assets.
+
+

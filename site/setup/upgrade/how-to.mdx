@@ -1,0 +1,58 @@
+---
+title: How to upgrade a self-hosted Polyaxon deployment
+description: Use this guide to keep your Polyaxon deployment up to date. Updates between minor/patch versions can be applied automatically. For major versions, please refer to the migration guides.
+label: "Version: v3"
+sidebarTitle: "How to Upgrade"
+---
+
+# Upgrading a Self-Hosted Polyaxon Deployment
+
+Polyaxon evolves quickly ([changelog](/changelog)) and keeping your deployment up to date is key to benefit from security, performance, and feature updates.
+
+The Polyaxon versioning and upgrade process is optimized for minimal complexity and disruption.
+If you ever experience any issues, please create an [issue on GitHub](https://github.com/polyaxon/polyaxon/issues) or contact the maintainers ([support](/support)).
+
+## How to upgrade
+
+<Callout type="info">
+
+It is recommended to be familiar with our [versioning](/setup/upgrade/versioning) policy before upgrading existing deployments.
+
+</Callout>
+
+### Minor/Patch Versions
+
+Updates within a major version are designed to be non-disruptive and are automatically applied.
+On start of the application, all migrations are automatically applied to the databases.
+
+You can automatically use the latest version of a major release by using `polyaxon/polyaxon-SERVICE:x.y.z` as the image tags in your deployment.
+
+To update deployments, follow the update section in our deployment guides:
+
+- [Kubernetes (Helm)](/setup/platform/overview)
+
+### Major Versions
+
+If you upgrade between major versions, please follow our migration guides:
+
+- [v2.x.x to v3.x.x](/setup/upgrade/upgrade-guides/upgrade-v2-to-v3)
+- [v1.x.x to v2.x.x](/setup/upgrade/upgrade-guides/upgrade-v1-to-v2)
+- [v0.x.x to v1.x.x](/setup/upgrade/upgrade-guides/upgrade-v0-to-v1)
+
+## Release Notes
+
+Subscribe to our mailing list to get notified about new releases and new major versions.
+
+import { ProductUpdateSignup } from "@/components/productUpdateSignup";
+
+<ProductUpdateSignup source="self-host upgrade" className="my-3 max-w-sm" />
+
+You can also watch the [GitHub releases](https://github.com/polyaxon/polyaxon/releases) for information about the changes in each version.
+
+<span>_Watch the repository on GitHub to get notified about new releases_</span>
+
+## Support
+
+If you experience any issues, please create an [issue on GitHub](https://github.com/polyaxon/polyaxon/issues) or consider other [support options](/support) as part of our Enterprise offering.
+
+Alternatively, you may consider using [Polyaxon Cloud](/docs/deployment/cloud), which is a fully managed version of Polyaxon. If you have questions, learn more about its security and privacy [here](/security).

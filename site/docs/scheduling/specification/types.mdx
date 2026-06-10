@@ -1,0 +1,792 @@
+---
+title: "Types Specification"
+description: "Each Component may have its own inputs and outputs. The inputs and outputs describe the expected parameters to pass to the component and their types. In the context of a DAG, inputs and outputs types are used to validate the flow of information going from one operation to another."
+---
+
+Polyaxon exposes several types for defining inputs and outputs. Some of these types are composite types, 
+this section outlines the definition of the composite types.
+
+## possible types
+
+    * ANY: "any"
+    * INT: "int"
+    * FLOAT: "float"
+    * BOOL: "bool"
+    * STR: "str"
+    * DICT: "dict"
+    * DICT_OF_DICTS: "dict_of_dicts"
+    * URI: "uri"
+    * AUTH: "auth"
+    * LIST: "list"
+    * GCS: "gcs"
+    * S3: "s3"
+    * WASB: "wasb"
+    * DOCKERFILE: "dockerfile"
+    * GIT: "git"
+    * IMAGE: "image"
+    * EVENT: "event"
+    * ARTIFACTS: "artifacts"
+    * PATH: "path"
+    * METRIC: "metric"
+    * METADATA: "metadata"
+    * DATE: "date"
+    * DATETIME: "datetime" 
+
+## V1ArtifactsType
+
+```python
+polyaxon._schemas.types.artifacts.V1ArtifactsType()
+```
+
+
+Artifacts type allows to easily pass
+the files and directories to initialize as a single parameter.
+
+If used as an input type, Polyaxon can resolve several connections (blob storage and volumes)
+and will turn this input type into an initializer with logic to download/provide
+the requested files and/or directories into a context for your jobs and operations.
+
+
+- __Args__:
+  - __files__: Union[List[str], List[[str, str]], optional,
+    list of file subpaths or a list of [path from, path to].
+  - __dirs__: Union[List[str], List[[str, str]], optional,
+    list of directory subpaths or a list of [path from, path to].
+
+### YAML usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```yaml
+inputs:
+  - name: some-file-names
+    type: artifacts
+  - name: tensorboard-log-dir
+    type: artifacts
+  - name: dataset1
+    type: artifacts
+```
+
+The params usage
+
+```yaml
+params:
+  some-file-names: {value: {files: ["file1", "/path/to/file2"]}}
+  custom-file-paths: {value: {files: [["file1", "to/this/path/file1"], "/path/to/file2"]}}
+  tensorboard-log-dir: {value: {dirs: ["/tensorboard-logs"]}, connection: "foo", toInit: True}
+  dataset1: {value: {value: {dirs: ["/"]}, connection: "s3-dataset", toInit: True}
+```
+
+The first param will be just a list of files definition that
+the user should know how to handle in their program.
+
+The second param, Polyaxon will load only that directory path from connection "foo".
+This connection could be any a bucket or a volume.
+
+In the third param, `dataset1` will be resolved automatically because
+Polyaxon knows about that connection and that it's of type S3.
+It will load all data in that S3 bucket before starting the experiment.
+
+### Usage in initializers
+
+```yaml
+version:  1.1
+kind: component
+run:
+  kind: job
+  init:
+  - artifacts:
+      files: ["file1", "/path/to/file2"]
+  - artifacts:
+      files: [["file1", "to/this/path/file1"], "/path/to/file2"]
+  - artifacts:
+      dirs: ["/tensorboard-logs"]
+    connection: foo
+  - artifacts:
+      dirs: ["/"]
+    connection: s3-datase
+
+  container:
+    ...
+```
+
+### Python usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1IO
+inputs = [
+    V1IO(
+        name="some-file-names",
+        type=types.ARTIFACTS,
+    ),
+    V1IO(
+        name="tensorboard-log-dir",
+        type=types.ARTIFACTS,
+    ),
+    V1IO(
+        name="dataset1",
+        type=types.ARTIFACTS,
+    )
+]
+```
+
+The params usage
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1Param
+params = {
+    "test1": V1Param(value=types.V1ArtifactsType(files=["file1", "/path/to/file2"])),
+    "test2": V1Param(
+        value=types.V1ArtifactsType(dirs=["/tensorboard-logs"]),
+        connection="foo",
+        to_init=True
+    ),
+    "test3": V1Param(
+        value=types.V1ArtifactsType(dirs=["/"]),
+        connection="s3-dataset",
+        to_init=True
+    ),
+}
+```
+
+### Usage in initializers
+
+```python
+from polyaxon.schemas import V1Component, V1Init, V1Job
+from polyaxon.types import V1ArtifactsType
+from polyaxon import k8s
+component = V1Component(
+    run=V1Job(
+       init=[
+            V1Init(
+                artifacts=V1ArtifactsType(files=["file1", "/path/to/file2"])
+            ),
+            V1Init(
+                artifacts=V1ArtifactsType(dirs=["/tensorboard-logs"]),
+                connection="foo"
+            ),
+            V1Init(
+                artifacts=V1ArtifactsType(dirs=["/"]),
+                connection="s3-dataset"
+            ),
+       ],
+       container=k8s.V1Container(...)
+    )
+)
+```
+
+
+
+----
+
+## V1GitType
+
+```python
+polyaxon._schemas.types.git.V1GitType()
+```
+
+
+Git type allows you to pass a git repo as a parameter.
+
+If used as an input type, Polyaxon can resolve several git connections
+and will turn this input type into an initializer with logic to clone
+the repo with support for branches and commits,
+the requested repo will be exposed as a context for your jobs and operations.
+
+- __Args__:
+  - __url__: str, optional.
+  - __revision__: str, optional.
+  - __flags__: List[str], optional
+
+### YAML usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```yaml
+inputs:
+  - name: test1
+    type: git
+  - name: test2
+    type: git
+```
+
+The params usage
+
+```yaml
+params:
+  test1: {value: {"url": "https://github.com/tensorflow/models"}}
+  test2: {value: {revision: "branchA"}, connection: "my-git-connection"}
+  test3: {
+    value: {flags: ["--recursive", "-c http.sslVerify=false"]},
+    connection: "my-git-connection",
+  }
+```
+
+### Usage in initializers
+
+```yaml
+version:  1.1
+kind: component
+run:
+  kind: job
+  init:
+  - git: {"url": "https://github.com/tensorflow/models"}
+  - git:
+      revision: branchA
+    connection: my-git-connection
+  - git:
+      flags: ["--recursive", "-c http.sslVerify=false"]
+    connection: my-git-connection
+  ...
+```
+
+### Python usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1IO
+inputs = [
+    V1IO(
+        name="test1",
+        type=types.GIT,
+    ),
+    V1IO(
+        name="test2",
+        type=types.GIT,
+    ),
+]
+```
+
+The params usage
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1Param
+params = {
+    "test1": V1Param(
+        value=types.V1GitType(url="https://github.com/tensorflow/models")
+    ),
+    "test2": V1Param(
+        value=types.V1GitType(revision="branchA"),
+        connection="my-git-connection",
+    ),
+}
+```
+
+### Usage in initializers
+```python
+from polyaxon.schemas import V1Component, V1Init, V1Job
+from polyaxon.types import V1GitType
+from polyaxon import k8s
+component = V1Component(
+    run=V1Job(
+       init=[
+            V1Init(
+              git=V1GitType(url="https://github.com/tensorflow/models"),
+            ),
+            V1Init(
+              git=V1GitType(revision="branchA"),
+              connection="my-git-connection",
+            ),
+       ],
+       container=k8s.V1Container(...)
+    )
+)
+```
+
+
+
+----
+
+## GcsPath
+
+```python
+clipped.types.gcs.GcsPath(url)
+```
+
+
+----
+
+## S3Path
+
+```python
+clipped.types.s3.S3Path(url)
+```
+
+
+----
+
+## WasbPath
+
+```python
+clipped.types.wasb.WasbPath(url)
+```
+
+
+----
+
+## V1FileType
+
+```python
+polyaxon._schemas.types.file.V1FileType()
+```
+
+
+File type.
+
+This type allows to easily construct a file content without
+the need to clone repo or download a from an external location.
+It exposes a very simple interface for generating a file or a script
+that can be used by your containers.
+
+- __Args__:
+  - __content__: str
+  - __filename__: str, optional
+  - __kind__: str, optional
+  - __chmod__: str, optional
+
+### YAML usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```yaml
+inputs:
+  - name: test1
+    type: file
+  - name: test2
+    type: file
+```
+
+The params usage
+
+```yaml
+params:
+  test1:
+    value:
+      filename: script.sh
+      chmod: +x
+      content: |
+        #!/usr/bin/env bash
+
+        echo 'This is a test.' | wc -w
+  test2:
+    value:
+      filename: script.py
+      content: |
+        print("hello world")
+
+```
+
+### Usage in initializers
+
+```yaml
+ ```yaml
+version:  1.1
+kind: component
+run:
+  kind: job
+  init:
+  - file:
+      filename: script.sh
+      chmod: +x
+      content: |
+        #!/usr/bin/env bash
+
+        echo 'This is a test.' | wc -w
+  - file:
+      filename: script.py
+      content: |
+        print("hello world")
+    ...
+```
+
+### Python usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1IO
+inputs = [
+    V1IO(
+        name="test1",
+        type=types.FILE,
+    ),
+]
+```
+
+The params usage
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1Param
+
+params = {
+    "test1": V1Param(
+        value=types.V1FileType(
+            filename="script.sh",
+            chmod="+x",
+            content="#!/usr/bin/env bash
+echo 'This is a test.' | wc -w",
+        )
+    ),
+}
+```
+
+### Usage in initializers
+
+```python
+from polyaxon.schemas import V1Component, V1Init, V1Job
+from polyaxon.types import V1FileType
+from polyaxon import k8s
+component = V1Component(
+    run=V1Job(
+       init=[
+            V1Init(
+                file=V1FileType(
+                    filename="script.sh",
+                    chmod="+x",
+                    content="#!/usr/bin/env bash
+echo 'This is a test.' | wc -w",
+                )
+            ),
+       ],
+       container=k8s.V1Container(...)
+    )
+)
+```
+
+### Fields
+  * filename: an optional filename.
+  * content: the content of the file or script.
+  * chmod: Custom permission for the generated file.
+  * kind: artifact kind, default to `file`.
+
+
+
+----
+
+## V1DockerfileType
+
+```python
+polyaxon._schemas.types.dockerfile.V1DockerfileType()
+```
+
+
+Dockerfile type.
+
+This type allows to easily construct a dockerfile without
+the need to clone repo or download a file. It exposes a very simple interface for generating
+a dockerfile to build your container.
+
+- __Args__:
+  - __image__: str
+  - __env__: Dict, optional
+  - __path__: List[str], optional
+  - __copy__: Union[List[str], List[[str, str]], optional
+  - __post_run_copy__: Union[List[str], List[[str, str]], optional
+  - __run__: List[str], optional
+  - __lang_env__: str, optional
+  - __uid__: str, optional
+  - __gid__: str, optional
+  - __username__: str, optional, default 'polyaxon'
+  - __filename__: str, optional
+  - __workdir__: str, optional
+  - __workdir_path__: str, optional
+  - __shell__: str, optional
+
+### YAML usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```yaml
+inputs:
+  - name: test1
+    type: dockerfile
+```
+
+The params usage
+
+```yaml
+params:
+  test1:
+    value:
+      image: test
+      run: ["pip install package1"]
+      env: {'KEY1': 'en_US.UTF-8', 'KEY2':2}
+```
+
+### Usage in initializers
+
+```yaml
+ ```yaml
+version:  1.1
+kind: component
+run:
+  kind: job
+  init:
+  - dockerfile:
+      image: test
+      run: ["pip install package1"]
+      env: {'KEY1': 'en_US.UTF-8', 'KEY2':2}
+    ...
+```
+
+### Python usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1IO
+inputs = [
+    V1IO(
+        name="test1",
+        type=types.DOCKERFILE,
+    ),
+]
+```
+
+The params usage
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1Param
+params = {
+    "test1": V1Param(
+        value=types.V1DockerfileType(
+            image="test:version",
+            run=["pip install package1"],
+            env={'KEY1': 'en_US.UTF-8', 'KEY2':2}
+        )
+    ),
+}
+```
+
+### Usage in initializers
+
+```python
+from polyaxon.schemas import V1Component, V1Init, V1Job
+from polyaxon.types import V1DockerfileType
+from polyaxon import k8s
+component = V1Component(
+    run=V1Job(
+       init=[
+            V1Init(
+                dockerfile=V1DockerfileType(
+                    image="test",
+                    run=["pip install package1"],
+                    env={'KEY1': 'en_US.UTF-8', 'KEY2':2},
+                )
+            ),
+       ],
+       container=k8s.V1Container(...)
+    )
+)
+```
+
+### Fields
+  * image: the base image to use, is will exposed as `FROM` command in the dockerfile.
+  * env: environment variables dictionary that will be exposed as `ENV` sections.
+  * path: list of paths to be added to your `PATH` environment variable.
+  * copy: a list a copy commands that will be exposed as list of COPY commands. You can pass a
+  Union[List[str], List[[str, str]], if a str is passed it will be placed under the workdir,
+  if [str, str] is passed the path will be placed under the second string.
+  * postRunCopy: Similar to the copy section,
+  the COPY commands will be placed after RUN commands.
+  This could be very useful to leverage any cached commands before copying new artifacts.
+  * run: a list a run commands that will be exposed as list of RUN commands.
+  * langEnv: if passed it will expose these environment variable: ENV LC_ALL, LANG, LANGUAGE
+  * uid and gid: will create a new user based on these 2 values.
+  * username: an optional name to use for the uid/gid, default is 'polyaxon' user.
+  * filename: an optional name for your dockerfile, default is Dockerfile.
+  **N.B.** this is not a path, if you need to generate the dockerfile on a custom path,
+  you will need to set the path key on the init container definition.
+  * workdir: the WORKDIR for your dockerfile, default is `/code`
+  * workdirPath: the local workdir to copy to the docker container.
+  * shell: shell type environment variable, default `/bin/bash`.
+
+### Example
+
+```yaml
+image: image:tag
+env:
+  KEY1: value1
+  KEY2: value2
+path:
+- module/add/to/path
+copy:
+- copy/local/requirements.txt
+- [copy/.cache/dir, /destination]
+run:
+- pip install ...
+- mv foo bar
+postRunCopy:
+- copy/local/path
+- [copy/local/path, /path/to/user/in/container]
+langEnv: en_US.UTF-8
+uid: 2222
+gid: 1111
+filename: Dockerfile2
+workdir: ../my-code
+```
+
+
+
+----
+
+## Uri
+
+```python
+clipped.types.uri.Uri(url)
+```
+
+
+----
+
+## V1TensorboardType
+
+```python
+polyaxon._schemas.types.tensorboard.V1TensorboardType()
+```
+
+
+Tensorboard type.
+
+This type allows to initialize Tensorboard logs foe one or multiple operations.
+
+- __Args__:
+  - __port__: int
+  - __uuids__: List[str]
+  - __use_names__: bool, optional
+  - __path_prefix__: str, optional
+  - __plugins__: List[str]
+
+### YAML usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```yaml
+inputs:
+  - name: tensorboard_content
+    type: tensorboard
+```
+
+The params usage
+
+```yaml
+params:
+  tensorboard_content:
+    value:
+      port: 6006
+      uuids: "d1410a914d18457589b91926d8c23db4,56f1a7f20f1d4f7f9e1a108b3c6b6031"
+      useNames: true
+```
+
+### Usage in initializers
+
+```yaml
+ ```yaml
+version:  1.1
+kind: component
+run:
+  kind: service
+  init:
+  - tensorboard:
+      uuids: "{{uuids}}"
+      port: "{{globals.ports[0]}}"
+      pathPrefix: "{{globals.base_url}}"
+      useNames: true
+      plugins: "tensorboard-plugin-profile"
+```
+
+### Python usage
+
+### Usage in IO and params definition
+
+The inputs definition
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1IO
+inputs = [
+    V1IO(
+        name="tensorboard_content",
+        type=types.TENSORBOARD,
+    ),
+]
+```
+
+The params usage
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1Param
+
+params = {
+    "test1": V1Param(
+        value=types.V1TensorboardType(
+            port=6006,
+            uuids="d1410a914d18457589b91926d8c23db4,56f1a7f20f1d4f7f9e1a108b3c6b6031",
+            use_names=True,
+        )
+    ),
+}
+```
+
+### Usage in initializers
+
+```python
+from polyaxon.schemas import V1Component, V1Init, V1Job
+from polyaxon.types import V1FileType
+from polyaxon import k8s
+component = V1Component(
+    run=V1Job(
+       init=[
+            V1Init(
+                file=V1TensorboardType(
+                    uuids="{{uuids}}",
+                    port="{{globals.ports[0]}}",
+                    path_prefix="{{globals.base_url}}",
+                    use_names=True,
+                    plugins="tensorboard-plugin-profile",
+                )
+            ),
+       ],
+       container=k8s.V1Container(...)
+    )
+)
+```
+
+### Fields
+  * port: port to expose the tensorboard service.
+  * uuids: comma separated list of operation's uuids to load the tensorboard logs from.
+  * useNames: an optional flag to initialize the paths under the operation's names.
+  * pathPrefix: an optional path prefix to use for exposing the service.
+  * plugins: an optional comma separated list of plugins to install before starting the tensorboard service.
+
+

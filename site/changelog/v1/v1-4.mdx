@@ -1,0 +1,195 @@
+---
+title: "Release notes for v1.4"
+description: "Polyaxon release notes, migrations, and deprecation notes for v1.4.x."
+author: Polyaxon
+---
+## v1.4.6
+
+> **Note**: Release for Polyaxon Agent.
+
+### Core
+
+ * **Enhancement**: Add proper support for git flags via a new experimental fetch that works with token and ssh connections:
+   * adding `--experimental-fetch` to the list of flags will trigger this behavior, e.g. `{revision: SHA/branch, flags: [--experimental-fetch, --depth 1, --recurse-submodules]}`
+ * **Enhancement**: Remove default `--recurse-submodules` flag and allow users to pass that via the `flags` key.
+ * **Fix**: Custom schema deserialization.
+
+### Agent
+
+ * **Fix**: Issue with a mutation in the Agent state and configuration.
+ * **Enhancement**: Improve conversion errors in the agent process.
+
+## v1.4.5
+
+> **Note**: Release for Polyaxon CLI, Agent, and Cloud.
+
+### CLI
+
+ * **Fix**: Issue with 403 errors when accessing private component hub on cloud or on different EE installation.
+ * **Fix**: Logout docstring.
+
+### UI
+
+ * **Enhancement**: Improve performance of several pages.
+
+### Deployment & Setup
+
+ * **Enhancement**: Update base images with critical security issues.
+
+### Core
+
+ * **Fix**: Update git initializer flags serialization.
+
+### Commercial
+
+ * **Enhancement**: Improve compiler throughput by optimizing several resolution steps.
+ * **Enhancement**: Improve operation's cache and include component versions in the state calculation.
+ * **Fix**: Issue compiling pipelines without valid inputs.
+ * **Fix**: Issue with cloning a dag run raising "not authorized error" for organization with automation enabled.
+
+## v1.4.4
+
+### CLI
+
+ * **Fix**: Regression in DAGs collection of components, issue with path/hub refs.
+ * **Fix**: Issue with `argFormat` should not be parsed to preserve the formatting for children operations when the `matrix` section is used.
+
+### House Keeping
+
+ * **Enhancement**: Fix some flaky tests in core library.
+
+### Commercial
+
+ * **Enhancement**: Add indicator to non-expiring tokens to reduce users' confusion in the tokens page.
+ * **Enhancement**: Allow to set custom expiration for tokens.
+ * **Enhancement**: Show token's `started_at` information as well.
+ * **Enhancement**: Improve public read permissions to disable viewing non-essential resources.
+ * **Enhancement**: Invited outsiders will not be able to see queues, presets, connections and other org level information anymore.
+ * **Fix**: Token creation issues in some browsers.
+
+## v1.4.3
+
+### Core
+
+ * **Enhancement**: Relax parsing of float types, allow passing and converting `int` values to `float` without requiring a `.`.
+ * **Fix**: Detection of Polyaxon library's version and logging.
+
+### UI
+
+ * **Enhancement**: Add pagination, search, and sorting for the inputs/outputs tables on the run's overview page.
+ * **Enhancement**: Add show raw content button on inputs/outputs table to view the content as Json and to be able to copy the content.
+ * **Enhancement**: Add better rendering of the `env.json` output file.
+ * **Enhancement**: Add better rendering for `.json` files in the artifacts tab.
+ * **Enhancement**: Allow to render and create ReadMe content on runs, projects, components, and models.
+ * **Fix**: Issue with wrong padding that triggers a horizontal scroll in the run overview page.
+ * **Fix**: Regression that hides the settings and edit buttons on projects in Polyaxon CE.
+
+## v1.4.2
+
+### CLI
+
+ * **Fix**: Regression in one of the error messages, a formatting issue raises an exception when checking the project cache.
+
+### Core
+
+ * **Enhancement**: Render the correct uri in notifications.
+ * **Enhancement**: Improve scheduler processing time and memory consumption.
+ * **Fix**: Issue with custom `argFormat` not respected when the IOType is Boolean, the default flag format was prioritized.
+
+### UI
+
+ * **Enhancement**: Strengthen security around iframes and logged HTML elements.
+ * **Enhancement**: Show spinner for `running` status.
+ * **Fix**: UI typo `unhealthu` -> `unhealthy`.
+
+## v1.4.1
+
+### CLI
+
+ * **Fix**: Public hub resolution for non cloud deployments.
+
+### Core
+
+ * **Fix**: Regression in notifier.
+
+### Setup
+
+ * **Enhancement**: Remove unused env var`SCRIPT_NAME`.
+
+## v1.4.0
+
+### CLI
+
+ * **New**: `polyaxon ops upload` and `polyaxon run -u` are generally available.
+ * **New**: Add component hub CLI commands.
+ * **New**: Add model registry CLI commands.
+ * **Enhancement**: `polyaxon config show` replaces `polyaxon config -l` for consistency with other sub-commands.
+    It also shows a global view about cli, client, and the current user configuration.
+ * **Enhancement**: Improve local project loading.
+ * **Enhancement**: Always show warning about `.polyaxon` cache when `polyaxon init` is used.
+ * **Enhancement**: Add missing `tags` to the project update command.
+ * **Fix**: Some CLI commands' error messages.
+
+### Specification
+
+ * **New**: Add optional plugin flag `externalHost` to tell Polyaxon to connect auxiliaries and/or the main container to the gateway via the external host instead of the internal resolution.
+
+### Core
+
+ * **Breaking**: Remove deprecated `POLYAXON_API_HOST` and only use `POLYAXON_HOST`.
+   * Operations with Polyaxon library `< 1.1.8` will not be able to resolve the api correctly.
+ * **New**: Add component hub client.
+ * **New**: Add model registry client.
+ * **New**: Enable providing custom git config params/flags for git repository connections.
+ * **Enhancement**: Make `IfNotPresent` the default `imagePullPolicy` for all containers and auxiliaries.
+ * **Enhancement**: Standardize names max length to 128.
+ * **Enhancement**: Standardize status and stage max length to 16.
+ * **Enhancement**: Abstract catalog tables.
+ * **Enhancement**: Relax blacklist names.
+ * **Enhancement**: Several memory consumption improvements.
+ * **Fix**: Issue with IO defined with names that overrides the context's top level namespaces, the CLI/Compiler will show a validation error instead of leaving the operation in created state.
+ * **Fix**: Issue with notifier using localhost instead of the correct host address.
+ * **Fix**: Issue with notifier using `None (UUID)` where it should use the `UUID` only when the name is None.
+
+### Tracking
+
+ * **Enhancement**: Improve `log_env` to allow custom env content to be passed by the user, and track lineage information as well.
+ * **Enhancement**: Polyaxon tracking will start reporting a flag `has_metrics` in addition to `has_events`.
+
+### UI
+
+ * **Security**: Upgrade several packages with security issues.
+ * **Enhancement**: Remove some packages not used anymore.
+ * **Enhancement**: Add expired indicator to the members' table for stale and invalid invitations.
+ * **Enhancement**: Use hover pointer for the bookmark/unbookmark buttons.
+ * **Enhancement**: Add support for custom base url other than `/`.
+ * **Enhancement**: Add entity kinds to breadcrumbs.
+ * **Enhancement**: Add entity kinds to all info pages.
+ * **Enhancement**: Consolidate usage of some icons.
+ * **Enhancement**: Add selected item to settings pages to preload a specific item.
+ * **Enhancement**: Add search and sort for projects, models, components, versions, searches, dashboards on UI.
+ * **Enhancement**: Enable sorting entities on stage/status fields.
+ * **Enhancement**: Improve spacing between header buttons by making a consistent spacing across all views.
+ * **Enhancement**: Display 4 charts by defaults on the dashboards view, and let the user add further charts manually or based on a saved view.
+ * **Enhancement**: Add better error handling to several pages.
+ * **Enhancement**: Disable organization renaming from UI.
+ * **Enhancement**: Add 2 more quick flag filters, `has_metrics` and `has_tensorboard`.
+ * **Enhancement**: Allow to force a final status when an operation is stopping.
+ * **Enhancement**: Add env tracking lineage to the UI.
+ * **Fix**: Issue with the header's entity dropdown removing the settings buttons on organizations and projects.
+ * **Fix**: Issue with chart widgets lose focus in Chrome with plotly.
+ * **Fix**: Issue with reverse theming for logs in Safari breaking borders.
+ * **Fix**: Issue with logs keep refreshing when an operation is done and there are no logs.
+
+### Deployment & Setup
+
+ * **Enhancement**: Update Helm chart values with a new key `ui.baseUrl` to provide a custom base url, default is `/`.
+ * **Enhancement**: Set the default timeout for the syncdb to 15min.
+ * **Fix**: Some tpl problems.
+
+### Commercial
+
+ * **Enhancement**: Enable access to component hub to all organizations and remove the beta status.
+ * **Enhancement**: Enable access to model registry to all organizations in public beta.
+ * **Enhancement**: Enable defaults settings on all plans.
+ * **Enhancement**: Improve several queries by introducing some new indices.

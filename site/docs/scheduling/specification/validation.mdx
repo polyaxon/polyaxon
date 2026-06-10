@@ -1,0 +1,159 @@
+---
+title: "Validation Specification"
+description: "Validation specification for inputs and outputs."
+---
+
+## V1Validation
+
+```python
+polyaxon._flow.io.io.V1Validation()
+```
+
+
+Validation is used to validate inputs/outputs.
+
+Validation is defined as a set of predicates, each one of the predicates that must be satisfied.
+
+- __Args__:
+  - __delay__: bool, optional
+  - __gt__: int, optional
+  - __ge__: int, optional
+  - __lt__: int, optional
+  - __le__: int, optional
+  - __multiple_of__: int, optional
+  - __min_items__: int, optional
+  - __max_digits__: int, optional
+  - __decimal_places__: int, optional
+  - __regex__: str, optional
+  - __min_length__: int, optional
+  - __max_length__: int, optional
+  - __keys__: List[str], optional
+  - __contains_keys__: List[str], optional
+  - __excludes_keys__: List[str], optional
+  - __contains__: List[str], optional
+  - __excludes__: List[str], optional
+  - __options__: List[str], optional
+
+## YAML usage
+
+```yaml
+inputs:
+  - name: loss
+    type: str
+    validation:
+      options: [MeanSquaredError, MeanAbsoluteError]
+  - name: learning_rate
+    type: float
+    validation:
+      gt: 0.001
+      lt: 0.5
+outputs:
+  - name: accuracy
+    type: float
+    validation:
+      ge: 0.5
+  - name: outputs-path
+    type: path
+    validation:
+      regex: "^s3://(?P<bucket>[a-z0-9-.]{3,63})/(?P<key>.+)$"
+```
+
+## Python usage
+
+```python
+from polyaxon import types
+from polyaxon.schemas import V1IO
+from polyaxon._flow.io import V1Validation
+inputs = [
+    V1IO(
+        name="loss",
+        type='str',
+        validation=V1Validation(options=["MeanSquaredError", "MeanAbsoluteError"])
+    ),
+    V1IO(
+        name="learning_rate",
+        type='float',
+        validation=V1Validation(gt=0.001, lt=0.5)
+    )
+]
+outputs = [
+    V1IO(
+        name="accuracy",
+        type='float',
+        validation=V1Validation(ge=0.5)
+    ),
+    V1IO(
+        name="outputs-path",
+        type=types.PATH,
+        validation=V1Validation(regex="^s3://(?P<bucket>[a-z0-9-.]{3,63})/(?P<key>.+)$")
+    )
+]
+```
+
+## Validation
+
+### Delay
+
+To instruct the parser to only validate the input/output at compilation or resolution time:
+
+```yaml
+inputs:
+  - name: learning_rate
+    description: A short description about this input
+    type: float
+    value: 1.1
+    validation:
+      delay: true
+```
+
+This flag is enabled by default for outputs, since they can only be
+resolved after or during the run. To request validation at compilation time for outputs,
+you need to set this flag to `False`.
+
+### Validators
+
+#### Numerical Constraints
+
+> these constraints are also applied item wise for lists and for dict values
+
+* gt - greater than
+* lt - less than
+* ge - greater than or equal to
+* le - less than or equal to
+* multipleOf - a multiple of the given number
+
+#### Decimal Constraints
+
+> these constraints are also applied item wise for lists and for dict values
+
+* minDigits - minimum number of digits
+* maxDigits - maximum number of digits
+* decimalPlaces - maximum number of decimal places
+
+#### String Constraints
+
+> these constraints are also applied item wise for lists and for dict values
+
+* regex - a regex pattern
+* minLength - minimum length
+* maxLength - maximum length
+
+#### Generic Constraints
+
+> these constraints are also applied item wise for lists and for dict values
+
+* contains - a list of values that must be present
+* excludes - a list of values that must not be present
+* options - a list of values that must be present
+
+#### Dict Constraints
+* keys - a list of keys that must be present in the dict
+* containsKeys - a list of keys that must be present in the dict
+* excludesKeys - a list of keys that must not be present in the dict
+
+#### Items Constraints
+
+* minItems - minimum number of items
+* maxItems - maximum number of items
+
+

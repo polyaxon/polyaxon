@@ -1,0 +1,165 @@
+---
+title: "TF-Job Specification"
+description: "Kubeflow TF-Job provides an interface to train distributed experiments with TensorFlow."
+---
+
+## V1TFJob
+
+```python
+polyaxon._flow.run.kubeflow.tf_job.V1TFJob()
+```
+
+
+Kubeflow TF-Job provides an interface to train distributed experiments with TensorFlow.
+
+- __Args__:
+  - __kind__: str, should be equal `tfjob`
+  - __clean_pod_policy__: str, one of [`All`, `Running`, `None`]
+  - __scheduling_policy__: [V1SchedulingPolicy](/docs/workload/distributed/kubeflow-scheduling-policy/), optional  
+  - __enable_dynamic_worker__: boolean
+  - __chief__: [V1KFReplica](/docs/workload/distributed/kubeflow-replica/), optional
+  - __ps__: [V1KFReplica](/docs/workload/distributed/kubeflow-replica/), optional
+  - __worker__: [V1KFReplica](/docs/workload/distributed/kubeflow-replica/), optional
+  - __evaluator__: [V1KFReplica](/docs/workload/distributed/kubeflow-replica/), optional
+
+## YAML usage
+
+```yaml
+run:
+  kind: tfjob
+  cleanPodPolicy:
+  schedulingPolicy:
+  enableDynamicWorker:
+  chief:
+  ps:
+  worker:
+  evaluator:
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import V1KFReplica, V1TFJob
+tf_job = V1TFJob(
+    clean_pod_policy='All',
+    chief=V1KFReplica(...),
+    ps=V1KFReplica(...),
+    worker=V1KFReplica(...),
+    evaluator=V1KFReplica(...),
+)
+```
+
+## Fields
+
+### kind
+
+The kind signals to the CLI, client, and other tools that this component's runtime is a tfjob.
+
+If you are using the python client to create the runtime,
+this field is not required and is set by default.
+
+```yaml
+run:
+  kind: tfjob
+```
+
+### cleanPodPolicy
+
+Controls the deletion of pods when a job terminates.
+The policy can be one of the following values: [`All`, `Running`, `None`]
+
+
+```yaml
+run:
+  kind: tfjob
+  cleanPodPolicy: 'All'
+ ...
+```
+
+### schedulingPolicy
+
+SchedulingPolicy encapsulates various scheduling policies of the distributed training
+job, for example `minAvailable` for gang-scheduling.
+
+
+```yaml
+run:
+  kind: tfjob
+  schedulingPolicy:
+    ...
+ ...
+```
+
+### enableDynamicWorker
+
+Flag to enable dynamic worker.
+
+
+```yaml
+run:
+  kind: tfjob
+  enableDynamicWorker: true
+    ...
+ ...
+```
+
+### chief
+
+The chief is responsible for orchestrating training and performing
+tasks like checkpointing the model.
+
+```yaml
+run:
+  kind: tfjob
+  chief:
+    replicas: 1
+    container:
+      ...
+ ...
+```
+
+### ps
+
+The ps are parameter servers; these servers provide a distributed data store
+for the model parameters.
+
+```yaml
+run:
+  kind: tfjob
+  ps:
+    replicas: 2
+    container:
+      ...
+ ...
+```
+
+### worker
+
+The workers do the actual work of training the model. In some cases,
+worker 0 might also act as the chief.
+
+```yaml
+run:
+  kind: tfjob
+  worker:
+    replicas: 2
+    container:
+      ...
+ ...
+```
+
+### evaluator
+
+The evaluators can be used to compute evaluation metrics as the model is trained.
+
+```yaml
+run:
+  kind: tfjob
+  evaluator:
+    replicas: 1
+    container:
+      ...
+ ...
+```
+
+

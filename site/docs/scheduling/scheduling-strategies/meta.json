@@ -1,0 +1,19 @@
+{
+  "title": "Scheduling Strategies",
+  "pages": [
+    "overview",
+    "node-scheduling",
+    "resources-scheduling",
+    "queues",
+    "concurrency-management",
+    "resume-restart",
+    "conditional-scheduling",
+    "backfills",
+    "manual-approval",
+    "operations-caching",
+    "external-scheduling",
+    "handling-termination",
+    "managing-priority",
+    "estimating-cost"
+  ]
+}

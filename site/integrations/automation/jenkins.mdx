@@ -1,0 +1,29 @@
+---
+title: Jenkins
+description: "Jenkins is an open-source automation server, Jenkins provides hundreds of plugins to support building, deploying and automating workflows."
+ogImage: /images/integrations/jenkins.png
+---
+
+You can easily use Polyaxon in your Jenkins pipelines.
+
+Starting with Jenkins Pipeline versions 2.5 and higher, Jenkins Pipeline has built-in support for interacting with Docker from within a Jenkinsfile.
+
+## Polyaxon as a Jenkins Pipeline stage
+
+
+```json
+pipeline {
+    agent {
+        docker { image 'polyaxon:polyaxon-cli:1.x.x' }
+    }
+    stages {
+        stage('Submit') {
+            steps {
+                sh 'polyaxon run -f path/to/polyaxonfile'
+            }
+        }
+    }
+}
+```
+
+> **Tip**: Polyaxon provides a native [DAG](/docs/orchestration/) runtime for managing your operations dependencies in a simple and efficient way.

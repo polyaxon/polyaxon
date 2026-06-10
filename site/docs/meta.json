@@ -1,0 +1,33 @@
+{
+  "title": "Docs",
+  "pages": [
+    "index",
+    "intro",
+    "---Products---",
+    "scheduling",
+    "workload",
+    "tracking",
+    "observability",
+    "orchestration",
+    "evaluation",
+    "automation",
+    "registry",
+    "---Platform---",
+    "administration",
+    "editions",
+    "---CLI & API Refs---",
+    "cli-and-api-refs",
+    "cli",
+    "python-library",
+    "query-language",
+    "api",
+    "webhooks",
+    "---More---",
+    "resources",
+    "references",
+    "glossary",
+    "roadmap",
+    "[Security Docs ↗](/security)",
+    "[Support ↗](/support)"
+  ]
+}

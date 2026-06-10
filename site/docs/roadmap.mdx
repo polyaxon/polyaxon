@@ -1,0 +1,79 @@
+---
+title: Polyaxon Roadmap
+description: Sneak peak into upcoming new features and changes in Polyaxon. This page is updated regularly.
+---
+
+# Polyaxon Roadmap
+
+Polyaxon is [open source](/open-source) and we want to be fully transparent what we're working on and what's next. This roadmap is a living document and we'll update it as we make progress.
+
+<Callout type="info">
+  **Your feedback is highly appreciated**. Feel like something is missing? Add
+  new [ideas on GitHub](/ideas) or vote on existing ones. Both are a great way
+  to contribute to Polyaxon and help us understand what is important to you.
+</Callout>
+
+## Released
+
+10 most recent [changelog](/changelog) items:
+
+import ChangelogList from "@/components/home/ChangelogList";
+
+<ChangelogList />
+
+import { ProductUpdateSignup } from "@/components/productUpdateSignup";
+
+<Callout type="info">
+
+Subscribe to our mailing list to get occasional email updates about new features.
+
+<ProductUpdateSignup source="self-host guide" className="my-3 max-w-sm" />
+
+</Callout>
+
+## Active Development
+
+### GenAI
+
+- All-in-one integrated platform that helps enhance your Agent & GenAI applications with end-to-end observability, evaluations, AI gateway, prompt management & optimization and tracking.
+
+### Agent Sandbox
+
+- A new environment to test and debug agents in a more intuitive way, with features like step-by-step execution, state inspection, and performance profiling.
+
+### Agent and LLM Observability
+
+- We are working on a a fully OpenTelemetry-compatible LLM observability solution for your ai application and agents. It captures the inputs, outputs, and metadata associated with each intermediate step of a request, enabling you to easily pinpoint the source of bugs and unexpected behaviors.
+
+### Evals
+
+- Add evaluation and monitoring capabilities to systematically measure, improve, and maintain the quality of your GenAI applications throughout their lifecycle from development through production.
+
+
+### Comments
+
+Allow users to add comment to all objects in Polyaxon (runs, models, artifacts, traces, spans, observations, scores, etc.) to increase collaboration and knowledge sharing across teams.
+
+### UI/UX
+
+- Improve onboarding experience
+- Improve core screens, especially for new and non-technical users
+- Increase UI performance for large dashboards.
+
+## Feature requests and bug reports
+
+The best way to support Polyaxon is to share your feedback, report bugs, and upvote on ideas suggested by others.
+
+### Feature requests
+
+import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
+
+<GhDiscussionsPreview filterCategory="Ideas" itemsPerPage={10} />
+
+### Bug reports
+
+import { Bug } from "lucide-react";
+
+<Cards num={2}>
+  <Card href="/issues" title="Bugs (GitHub Issues)" arrow icon={<Bug />} />
+</Cards>

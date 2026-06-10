@@ -1,0 +1,22 @@
+{
+  "title": "Administration",
+  "pages": [
+    "overview",
+    "organizations",
+    "projects",
+    "---Auth---",
+    "authentication-and-sso",
+    "rbac",
+    "scim-and-org-api",
+    "---Security---",
+    "audit-logs",
+    "data-deletion",
+    "data-retention",
+    "[Security Docs ↗](/security)",
+    "---Configuration---",
+    "spend-alerts",
+    "---Misc---",
+    "billable-units",
+    "troubleshooting-and-faq"
+  ]
+}

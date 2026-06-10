@@ -1,0 +1,24 @@
+---
+title: SendGrid
+description: "SendGrid is a cloud-based SMTP provider that acts as an email delivery engine, allowing you to send email without the cost and complexity of maintaining your own email servers."
+ogImage: /images/integrations/sendgrid.jpg
+---
+
+Get email notifications when an experiment, a job, or a build is finished using Sendgrid so that your team stays in sync.
+
+## Start by creating a Sendgrid account
+
+[Sendgrid](https://sendgrid.com/solutions/smtp-service/) makes it easy to set up an smtp email service.
+
+## Add your Email notification using Sendgrid to Polyaxon deployment config
+
+Now you can set the email section using your Sendgrid's information:
+
+```yaml
+email:
+  host: "smtp.sendgrid.net"
+  port: 587
+  useTls: true
+  hostUser: "sendgrid_username"
+  hostPassword: "123456"
+```

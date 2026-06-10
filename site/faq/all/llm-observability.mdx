@@ -1,0 +1,53 @@
+---
+title: What is LLM Observability & Monitoring?
+description: Explore Polyaxon’s LLM observability guide to monitor AI pipelines, debug workflows, and optimize performance—essential developer tools for real-time insights.
+tags: [article]
+---
+
+# What is LLM Observability and LLM Monitoring?
+
+As large language models (LLMs) continue to transform the landscape of AI and software development, understanding their behavior and performance becomes crucial. This is where **LLM observability** and **LLM monitoring** come into play. Observability refers to the ability to monitor and understand the internal states of an LLM application through its outputs, helping developers ensure these systems operate effectively and efficiently.
+
+## Why Do We Need LLM Observability?
+
+### The Complexities of LLM Deployment
+
+Deploying LLMs is not a straightforward task. It comes with a whole set of unique challenges that differ significantly from traditional software development. Many valuable LLM apps rely on **complex, repeated, chained, or agentic calls** to a foundation model. This intricate control flow can make debugging challenging, as it is not always easy to pinpoint the root cause of an issue. This is where observability really shines.
+
+### Handling Non-Deterministic Outputs
+
+Another hurdle is the **unpredictable nature of LLMs**. Unlike traditional software, where outputs can be tested against expected results, LLMs generate variable outputs. This makes it difficult to consistently assess quality. Developers need innovative ways to evaluate and monitor the quality of LLM outputs, especially as models evolve and change outside of the user's control. This is where **LLM analytics** becomes essential.
+
+### Dealing with Mixed Intent
+
+LLM applications, especially those involving conversation, often contend with **widely varying inputs and user intents**. This poses a significant challenge for teams developing and testing these applications, as real-world users often have different goals than expected. Therefore, understanding user behavior and managing unexpected inputs become essential components of LLM observability.
+
+## What Makes Up LLM Observability?
+
+### Monitoring and Tracing
+
+Monitoring involves keeping an eye on the performance and behavior of LLM apps in real-time. Key metrics include **latency, throughput, and error rates** to ensure everything runs smoothly. Tracing, on the other hand, captures detailed execution paths within the application. By tracing the flow of requests and responses, developers can identify bottlenecks and errors, gaining insights into how different components interact.
+
+### Metrics and Evaluation
+
+To evaluate the quality of LLM outputs, developers need to define and track relevant metrics. These could include **model-based evaluations, user feedback, and manual labeling**. By collecting and analyzing these metrics, developers can monitor quality over time, understand user interactions, and refine their models accordingly. This helps in making informed decisions about model updates and deployments.
+
+### Real-World Context Analysis
+
+Understanding user behavior and intent is crucial for LLM applications. Observability enables developers to classify and analyze user inputs, helping them adapt their applications to real-world contexts. This involves gathering insights into **user behavior, preferences, and pain points**, ultimately improving the overall user experience.
+
+## How Polyaxon Makes LLM Observability Easy
+
+Let's talk about **[Polyaxon](/)**, the open-source LLM engineering platform designed to tackle the challenges of LLM observability. Polyaxon is **model and framework agnostic**, making it easy to integrate with various LLM applications.
+
+Polyaxon’s features enable teams to capture the full context of an LLM application, from inference and embedding retrieval to API usage. **[Client SDKs](/docs/python-library/overview)** and integrations simplify tracking interactions with internal systems, allowing developers to pinpoint problems quickly. For more details on how to get started with SDKs, check out the [Polyaxon SDK documentation](/integrations).
+
+Polyaxon also simplifies quality evaluation by letting users attach scores to production traces and monitor quality over time. You can learn more about how to evaluate and monitor application quality [here](/docs/evaluation/overview). Plus, its ability to classify inputs and analyze user behavior provides valuable insights into user interactions, helping teams iterate on their applications effectively.
+
+One of the best parts? Polyaxon is **incrementally adoptable**, so you can start with a single integration and expand to full tracing of complex chains and agents as needed. Check out the [documentation](/docs/) for more on getting started with integrations.
+
+**LLM observability** and **LLM monitoring** are essential for keeping LLM applications running smoothly and effectively. With **Polyaxon**, developers have a powerful tool to collaboratively debug, analyze, and iterate on their LLM projects, making it a valuable asset in the ever-evolving world of AI and machine learning.
+
+import GitHubStarCTA from "@/components-mdx/github-cta.mdx";
+
+<GitHubStarCTA />

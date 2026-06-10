@@ -1,0 +1,99 @@
+---
+title: Deploy Polyaxon
+description: Deploy Polyaxon - This guide shows you how to deploy open-source ML tracking, LLM observability, and smart container workload management with Docker, Kubernetes, or VMs on your own infrastructure.
+label: "Version: v3"
+---
+
+# Deploy Polyaxon
+
+<Callout type="info">
+  Looking for a managed solution? Consider [Polyaxon
+  Cloud](https://cloud.polyaxon.com) maintained by the Polyaxon team.
+</Callout>
+
+Polyaxon is open source and can be self-hosted using Docker.
+This section contains guides for different deployment scenarios.
+Some add-on features require a [license key](/setup/license-key).
+
+When self-hosting Polyaxon, you run the same infrastructure that powers Polyaxon Cloud. Read ["Why Polyaxon?"](/why) to learn more about why this is important to us.
+
+## Deployment Options [#deployment-options]
+
+### Polyaxon Cloud
+
+[Polyaxon Cloud](https://cloud.polyaxon.com) is a fully managed version of Polyaxon that is hosted and maintained by the Polyaxon team.
+Generally, it is the easiest and fastest way to get started with Polyaxon at affordable [pricing](/pricing).
+
+### Low-scale deployments
+
+You can run a small scale deployment of Polyaxon with minimal infrastructure requirements. This is ideal for testing, proof of concepts, and small teams:
+ * by installing directly the system using pip or uv.
+ * by running Polyaxon on a VM or locally using Docker Compose.
+
+This deployment option is for using tracking and observability features only, it lacks high-availability, scaling capabilities, and backup functionality.
+
+### Production-scale deployments
+
+For production and high-availability deployments, we recommend one of the following options:
+
+- [Kubernetes (Helm)](/setup/platform/overview)
+
+## Architecture
+
+Polyaxon only depends on open source components and can be deployed locally, on cloud infrastructure, or on-premises.
+
+import ArchitectureDiagram from "@/components-mdx/architecture-diagram-v3.mdx";
+
+<ArchitectureDiagram />
+
+import ArchitectureDescription from "@/components-mdx/architecture-description-v3.mdx";
+
+<ArchitectureDescription />
+
+## Optimized for performance, reliability, and uptime
+
+Polyaxon self-hosted is optimized for production environments. It is the exact same codebase as Polyaxon Cloud, just deployed on your own infrastructure. The Polyaxon team serves thousands of teams with Polyaxon Cloud with high availability ([status page](https://status.polyaxon.com)) and performance.
+
+Some of the optimizations include:
+
+- **Asynchronous scheduling**: Operations are compiled and validated by the Compiler, then placed in queues managed by Agents. The Scheduler coordinates with Agents asynchronously via Redis/RabbitMQ, ensuring high spikes in submission load do not block the API or lead to timeouts.
+- **Agent-based execution**: Agents deployed on Kubernetes clusters poll the control plane for work and manage workloads locally via the Operator. This decoupled architecture enables multi-cluster deployments and complete isolation between the control plane and execution environments.
+- **Caching of API keys and tokens**: API keys and agent tokens are cached in Redis. The database is not hit on every API call and unauthorized requests can be rejected with very low resource usage.
+- **Artifacts in object storage**: All artifacts, logs, and model files are stored directly in S3/GCS/Azure/NFS. Large files are uploaded directly from the client SDKs to the configured artifacts store, keeping the API lightweight.
+- **Horizontal scalability**: API, Scheduler, and Worker components can be independently scaled with replicas. Celery workers support configurable concurrency and prefetch settings for fine-tuned throughput.
+- **Recoverability of events**: All incoming tracking events and metadata are persisted in PostgreSQL with transactional guarantees. Artifacts are written to object storage first, ensuring data is not lost even if individual components are temporarily unavailable.
+- **Background migrations**: Long-running migrations that are required by an upgrade but not blocking for regular operations are offloaded to a background job. This reduces downtime during upgrades.
+
+If you have any feedback or questions regarding the architecture, please reach out to us.
+
+## Features
+
+Polyaxon supports many configuration options and self-hosted features.
+For more details, please refer to the [configuration guide](/setup/configuration).
+
+import SelfHostFeatures from "@/components-mdx/self-host-features.mdx";
+
+<SelfHostFeatures />
+
+## Subscribe to updates
+
+import { ProductUpdateSignup } from "@/components/productUpdateSignup";
+
+Release notes are published on [GitHub](https://github.com/polyaxon/polyaxon/releases). Polyaxon uses tagged semver releases ([versioning policy](/setup/upgrade/versioning)).
+
+You can subscribe to our mailing list to get notified about new releases and new major versions.
+
+<ProductUpdateSignup source="self-host" className="mt-3 mb-3 max-w-sm" />
+
+You can also watch the GitHub releases to get notified about new releases:
+
+<Frame className="max-w-md block">
+  ![Polyaxon
+  releases](https://static.polyaxon.com/docs-legacy-gifs/github-watch-changelog.gif)
+</Frame>
+
+## Support
+
+import SelfHostHelpFooter from "@/components-mdx/self-host-help-footer.mdx";
+
+<SelfHostHelpFooter />

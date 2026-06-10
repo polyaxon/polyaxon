@@ -1,0 +1,20 @@
+{
+  "title": "Specification",
+  "pages": [
+    "overview",
+    "component",
+    "operation",
+    "environment",
+    "termination",
+    "io",
+    "validation",
+    "params",
+    "mount",
+    "plugins",
+    "init",
+    "sidecars",
+    "template",
+    "types",
+    "lifecycle"
+  ]
+}

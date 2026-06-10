@@ -1,0 +1,126 @@
+---
+title: "PyTorch-Job Specification"
+description: "Kubeflow PyTorch-Job provides an interface to train distributed experiments with PyTorch."
+---
+
+## V1PytorchJob
+
+```python
+polyaxon._flow.run.kubeflow.pytorch_job.V1PytorchJob()
+```
+
+
+Kubeflow Pytorch-Job provides an interface to train distributed experiments with Pytorch.
+
+- __Args__:
+  - __kind__: str, should be equal `pytorchjob`
+  - __clean_pod_policy__: str, one of [`All`, `Running`, `None`]
+  - __scheduling_policy__: [V1SchedulingPolicy](/docs/workload/distributed/kubeflow-scheduling-policy/), optional  
+  - __master__: [V1KFReplica](/docs/workload/distributed/kubeflow-replica/), optional
+  - __worker__: [V1KFReplica](/docs/workload/distributed/kubeflow-replica/), optional
+
+## YAML usage
+
+```yaml
+run:
+  kind: pytorchjob
+  cleanPodPolicy:
+  schedulingPolicy:
+  master:
+  worker:
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import V1KFReplica, V1PytorchJob
+pytorch_job = V1PytorchJob(
+    clean_pod_policy='All',
+    master=V1KFReplica(...),
+    worker=V1KFReplica(...),
+)
+```
+
+## Fields
+
+### kind
+
+The kind signals to the CLI, client, and other tools that this
+component's runtime is a pytorchjob.
+
+If you are using the python client to create the runtime,
+this field is not required and is set by default.
+
+```yaml
+run:
+  kind: pytorchjob
+```
+
+### cleanPodPolicy
+
+Controls the deletion of pods when a job terminates.
+The policy can be one of the following values: [`All`, `Running`, `None`]
+
+
+```yaml
+run:
+  kind: pytorchjob
+  cleanPodPolicy: 'All'
+ ...
+```
+
+### schedulingPolicy
+
+SchedulingPolicy encapsulates various scheduling policies of the distributed training
+job, for example `minAvailable` for gang-scheduling.
+
+
+```yaml
+run:
+  kind: pytorchjob
+  schedulingPolicy:
+    ...
+ ...
+```
+
+### elasticPolicy
+
+ElasticPolicy encapsulates various policies for elastic distributed training job.
+
+```yaml
+run:
+  kind: pytorchjob
+  elasticPolicy:
+    ...
+ ...
+```
+
+### master
+
+The master replica in the distributed PytorchJob
+
+```yaml
+run:
+  kind: pytorchjob
+  master:
+    replicas: 1
+    container:
+      ...
+ ...
+```
+
+### worker
+
+The workers do the actual work of training the model.
+
+```yaml
+run:
+  kind: pytorchjob
+  worker:
+    replicas: 3
+    container:
+      ...
+ ...
+```
+
+

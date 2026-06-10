@@ -1,0 +1,115 @@
+---
+title: "Admin CLI Reference"
+description: "Polyaxonfile Command Line Interface Specification - Admin CLI Reference."
+---
+
+### admin
+
+```bash
+Usage: polyaxon admin [OPTIONS] COMMAND [ARGS]...
+
+  Commands for admin management.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  clean-ops  clean-ops command.
+  dashboard  Open dashboard in browser.
+  deploy     Deploy polyaxon.
+  teardown   Teardown a polyaxon deployment given a config file.
+  upgrade    Upgrade a Polyaxon deployment.
+```
+
+---
+
+### admin deploy
+
+```bash
+Usage: polyaxon admin deploy [OPTIONS]
+
+  Deploy polyaxon.
+
+Options:
+  -f, --file PATH             The polyaxon deployment config file(s) to check.
+  -t, --deployment-type TEXT  Deployment type.
+  --manager-path PATH         The path of the deployment manager, e.g. local
+                              chart.
+  --check                     Check if deployment file and other requirements
+                              are met.
+  --dry-run                   Dry run the configuration and generate a
+                              debuggable output.
+  --help                      Show this message and exit.
+```
+
+---
+
+### admin upgrade
+
+```bash
+Usage: polyaxon admin upgrade [OPTIONS]
+
+  Upgrade a Polyaxon deployment.
+
+Options:
+  -f, --file PATH             The polyaxon deployment config file(s) to check.
+  -t, --deployment-type TEXT  Deployment type.
+  --manager-path PATH         The path of the deployment manager, e.g. local
+                              chart.
+  --check                     Check if deployment file and other requirements
+                              are met.
+  --dry-run                   Dry run the configuration and generate a
+                              debuggable output.
+  --help                      Show this message and exit.
+```
+
+---
+
+### admin teardown
+
+```bash
+Usage: polyaxon admin teardown [OPTIONS]
+
+  Teardown a polyaxon deployment given a config file.
+
+Options:
+  -f, --file PATH      The polyaxon deployment config file(s) to check.
+  --manager-path PATH  The path of the deployment manager, e.g. local chart.
+  -y, --yes            Automatic yes to prompts. Assume "yes" as answer to all
+                       prompts and run non-interactively.
+  --help               Show this message and exit.
+```
+
+---
+
+### admin dashboard
+
+```bash
+Usage: polyaxon admin dashboard [OPTIONS]
+
+  Open dashboard in browser.
+
+Options:
+  -y, --yes  Automatic yes to prompts. Assume "yes" as answer to all prompts
+             and run non-interactively.
+  --url      Print the url of the dashboard.
+  --help     Show this message and exit.
+```
+
+---
+
+### admin clean-ops
+
+```bash
+Usage: polyaxon admin clean-ops [OPTIONS]
+
+  clean-ops command.
+
+Options:
+  -n, --namespace TEXT
+  --in-cluster
+  -d, --delete
+  -uids, -ids, --uuids TEXT  List of uuid of operations to clean/delete (comma
+                             separated values).
+  --help                     Show this message and exit.
+```

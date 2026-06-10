@@ -1,0 +1,18 @@
+---
+title: "Logs show warning in containers: running as root"
+tags: [api]
+---
+
+# Logs show warning in containers: running as root
+
+By default, all containers are running with root user, but you can set a security context to change this behavior.
+
+If you are seeing a message like:
+
+<blockquote className="info">
+ * you are running uWSGI as root !!! (use the --uid flag)
+<br/>
+ * Running a worker with superuser privileges
+</blockquote>
+
+You can change this behavior by setting a [security context](/setup/platform/common-reference/#security-context).

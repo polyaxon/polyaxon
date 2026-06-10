@@ -1,0 +1,10 @@
+{
+  "title": "Auxiliaries",
+  "pages": [
+    "overview",
+    "init",
+    "sidecar",
+    "cleaner",
+    "notifier"
+  ]
+}

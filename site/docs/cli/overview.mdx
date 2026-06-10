@@ -1,0 +1,126 @@
+---
+title: "Overview"
+description: "Polyaxon Command Line Interface Specification. Interact with Polyaxon from the command line. Manage operations, projects, and workflows from your terminal."
+---
+
+## Overview
+
+Polyaxon CLI is a tool and a client to interact with Polyaxon API, it allows you to manage your cluster, projects, experiments, artifacts, model registry, and more without leaving your development environment.
+This section has several common guides on how to configure and use the CLI followed by several reference pages for each command.
+
+## Installation
+
+To install it simply run:
+
+```bash
+pip install -U polyaxon
+```
+
+## Authentication
+
+```bash
+# Configure the CLI to connect to your Polyaxon instance
+polyaxon config set --host https://your-polyaxon-domain.com --token <your-token>
+
+# Or login interactively
+polyaxon login -u <username> -p <password>
+```
+
+## Help
+
+To list all commands and get information about Polyaxon CLI, you can run the following
+
+```bash
+polyaxon --help
+```
+
+To get help for any Polyaxon CLI Command, you can run the following
+
+```bash
+polyaxon command --help
+```
+
+Some commands have sub-commands, you can also get help for these sub-commands by running
+
+```bash
+polyaxon command sub-command --help
+```
+
+## Deprecated behavior
+
+Polyaxon used to pass a context between commands and subcommands, e.g.
+
+```bash
+polyaxon ops -p PROJECT -uid UID get --more-args
+```
+
+This behavior was confusing and the help command did not show the complete information about running a specific command.
+We deprecated this behavior in favor of putting all arguments in front of the last sub-command, e.g.
+
+```bash
+polyaxon ops get -p PROJECT -uid UID --more-args
+```
+
+## Common Commands
+
+### Operations
+
+```bash
+# Submit an operation
+polyaxon run -f polyaxonfile.yaml
+
+# List operations in a project
+polyaxon ops ls -p <project>
+
+# Get operation details
+polyaxon ops get -p <project> -uid <run_uuid>
+
+# View logs
+polyaxon ops logs -p <project> -uid <run_uuid>
+
+# Stop an operation
+polyaxon ops stop -p <project> -uid <run_uuid>
+```
+
+### Projects
+
+```bash
+# Create a project
+polyaxon project create --name <project>
+
+# List projects
+polyaxon project ls
+
+# Initialize a project in the current directory
+polyaxon init <project>
+```
+
+### Artifacts and Models
+
+```bash
+# Upload artifacts
+polyaxon ops artifacts -p <project> -uid <run_uuid> --upload --path-to <local_path>
+
+# List model versions
+polyaxon models ls -p <project>
+```
+
+## What it can do
+
+The CLI covers the full Polyaxon API surface, including:
+
+- **Operations**: Submit, monitor, stop, and manage runs (jobs, services, DAGs, matrix)
+- **Projects**: Create, list, and configure projects
+- **Artifacts**: Upload and download artifacts and datasets
+- **Model Registry**: Manage model versions and promote across stages
+- **Component Hub**: Browse and use reusable components
+- **Configuration**: Manage connections, presets, agents, and queues
+
+See the full [API Reference](https://api.reference.polyaxon.com) for details.
+
+## Why use it
+
+- **Script your workflows.** Automate repetitive tasks like submitting experiments, exporting artifacts, or promoting models in CI/CD pipelines.
+- **Faster than the UI for quick lookups.** Check operation status, tail logs, or list runs in seconds.
+- **Works with Polyaxonfiles.** Define operations in YAML and submit them directly from the CLI.
+

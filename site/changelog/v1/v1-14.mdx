@@ -1,0 +1,119 @@
+---
+title: "Release notes for v1.14"
+description: "Polyaxon release notes, migrations, and deprecation notes for v1.14.x."
+author: Polyaxon
+---
+## V1.14.3
+
+### Streams & Agent
+
+ * **Fix**: Issue with sampling does not preserve series order.
+ * **Security**: Update some packages with CVE and security issues.
+ * **Enhancement**: Improve upload logic when streams service is configured with multiple replicas.
+
+
+### Core
+
+ * **Fix**: Issue with unit sanitization and prevent compiler from raising an error.
+
+### UI
+
+ * **Security**: Update some packages with CVE and security issues.
+ * **Enhancement**: Improve logs viewer to better handle long log lines.
+ * **Enhancement**: Add missing `id` / `uid` / `uuid` from the search suggestions.
+ * **Enhancement**: Issue with new dashboard sections minimized by default.
+
+### Commercial
+
+ * **Enhancement**: Improve Tags API and UI.
+
+## V1.14.2
+
+### Agent
+
+ * **Enhancement**: Auto-cleaning.
+
+### Specification
+
+ * **New**: Add possibility to set `replicas` and `isExternal` on services.
+   * replicas: Optional value to provision more than a single replica for the service.
+   * external: A flag to signal to Polyaxon that this service should not go through Polyaxon's auth.
+ * **Enhancement**: Delay compilation of the init section until the full context is resolved.
+
+### Core
+
+ * **Security**: Update some packages with CVE and security issues.
+
+### Commercial
+
+ * **Enhancement**: Improve tags API and stats.
+ * **Fix**: Issue with queue saturation when only the concurrency limit is set.
+ * **Fix**: Issue that minimizes new sections that loads all events for a specific.
+
+## V1.14.1
+
+### Deployment & Setup
+
+ * **Enhancement**: Expose per-service node scheduling (node selector, affinity, and tolerations).
+ * **Enhancement**: Add `operations/finalizers` to the operator service account's apiGroups.
+ * **Enhancement**: Add configuration for `cleaner` and `notifier` auxiliary containers to Helm chart values.
+
+### Docs
+
+ * **Enhancement**: Improve model registry to reflect the new projects structure.
+ * **Enhancement**: Add section to show users how they can configure a project's features to only host component, model, or artifact versions, e.g [tensorboard](https://cloud.polyaxon.com/ui/polyaxon/tensorboard).
+
+### UI
+
+ * **Enhancement**: Update the graph view to allow drag-based panning and scroll based zooming.
+ * **Fix**: Regression in agent > connections tab changing the state and breaking the UI.
+
+### Commercial
+
+ * **Enhancement**: Improve roles selection dropdown to reduce confusion:
+   * Only allow inviting a billing role from the billing seats table.
+   * Do not show the `viewer` role on `Starter` and `Platform` plans, and only allow adding a user with `viewer` role using the read-only seats.
+   * Enable a free `billing` seat on the `Platform` plan.
+ * **Enhancement**: Add button to transfer a component/model/artifact version to a different project or to create a new project to host the new version.
+ * **Enhancement**: Add button to clone a component/mode/artifact version.
+ * **Enhancement**: Add button to automatically redirect to the runs table filtered by the component version.
+ * **Enhancement**: Show latest runs by component version and their status, i.e. `project/version: √ √ √ x x √`.
+ * **Enhancement**: Improve artifact/model version form to show relevant artifacts and add button to show all.
+ * **Enhancement**: Add process to detect distressed or out-of-sync operations and logic to fix the issues.
+ * **Enhancement**: Add process to check schedules without pending or active operations.
+ * **Enhancement**: Improve agents manager to schedule recurrent rescans or operation checks.
+
+## v1.14.0
+
+### CLI
+
+ * **New**: Improve CLI commands for registered components `polyaxon components --help`, models `polyaxon models --help`, and artifacts `polyaxon artifacts --help`.
+ * **Enhancement**: Add `--output/-o` to `polyaxon run ...`, `polyaxon ops get ...`, and `polyaxon ops ls ...` to print the response.
+   * `polyaxon ... -o json` or `polyaxon ... -o path=./path/data.json`
+
+### Specification
+
+ * **New**: Add `modelRef` and `artifactRef` initializers.
+
+### Core
+
+ * **New**: Add model/component/artifact versions to `ProjectClient`.
+ * **Enhancement**: Use name as the default project field instead of uuid.
+
+### UI
+
+ * **Enhancement**: Add handling for up/down/enter keys in the search suggestions.
+ * **Enhancement**: Do not show delete buttons on the run's artifacts tab when the run is promoted.
+ * **Enhancement**: Add open/fold all to lineage tables.
+ * **Fix**: Regression in the run's logs not filtering results when changing the search query.
+ * **Fix**: Regression in the run's actions dropdown in the table not showing `restart` and `resume` buttons.
+
+### Commercial
+
+ * **New**: Add queue saturation; a progress bar that displays the percentage used by the total concurrency or quota limit.
+ * **New**: Add project level artifacts/datasets versioning.
+ * **New**: Simplify components and models by providing the functionality within each project.
+ * **New**: Automatically collect project components and track their versions:
+   * Allows filtering all runs that use the same component.
+ * **Enhancement**: Simplify promoting runs to a model or artifact version.
+ * **Enhancement**: Allow to register the component used by a runs a component version to be used with `--hub` or `hubRef:`.

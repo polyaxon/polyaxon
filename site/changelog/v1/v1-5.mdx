@@ -1,0 +1,208 @@
+---
+title: "Release notes for v1.5"
+description: "Polyaxon release notes, migrations, and deprecation notes for v1.5.x."
+author: Polyaxon
+---
+## v1.5.4
+
+### CLI
+
+ * **Enhancement**: Allow CE users to list public components and their versions.
+
+### UI
+
+ * **Enhancement**: Update logs viewer to better handle logs from main containers in TFJob and PytorchJob.
+ * **Enhancement**: Use subdued color for stopped status.
+ * **Enhancement**: Use custom titles for all pages.
+
+### Docs
+
+ * **Enhancement**: Improve several guides and fix several issues.
+ * **Enhancement**: Reorganize quick-start.
+
+### Commercial
+
+ * **Enhancement**: Several enhancements.
+ * **Enhancement**: Enable basic activities and analytics in all plans.
+
+## v1.5.3
+
+### CLI
+
+ * **Enhancement**: Add logic to publish `polyaxon-cli:latest` docker image to the release pipeline.
+
+### Core
+
+ * **Enhancement**: Improve container's sanitization.
+ * **Fix**: Remove errors interceptions for API/Healthz/Streams.
+
+### Operator
+
+ * **Enhancement**: Add `MaxConcurrentReconciles` option to allow concurrent reconciles, default is 1.
+ * **Enhancement**: Improve condition transition and update time reporting.
+ * **Enhancement**: Add handling for issues with init containers.
+ * **Fix**: Issue with unschedulable operations not reported correctly.
+ * **Fix**: Issue with pod errors not detected correctly.
+ * **Fix**: Issue with pending, error, warning phases not reconciled correctly.
+ * **Fix**: Issue with unsupported type error when a generic error is raised.
+
+### Deployment & Setup
+
+ * **Enhancement**: Expose `operator.maxConcurrentReconciles` Helm option with default value 1.
+
+### Commercial
+
+ * **Enhancement**: Do not show edit button to users without edit rights.
+
+## v1.5.2
+
+### Core
+
+ * **New**: Add new wait time field:
+   * Wait time is the duration from the time a run is created until it starts, it includes creation, compilation, queueing, and scheduling.
+   * wait time + run duration represent the total lifecycle of a run.
+   * Add possibility to filter and sort by wait time.
+ * **Enhancement**: Improve resume and restart status reasons.
+ * **Enhancement**: Ensure unique init container names.
+
+### UI
+
+ * **New**: Add pipeline progress to the run overview page.
+ * **New**: Show wait time on the run overview page and the comparison table.
+ * **New**: Add clones lineage tab.
+ * **Enhancement**: Consolidate all pipeline related information (children runtimes, concurrency, progress, ...) in a new overview section.
+ * **Enhancement**: Improve run's overview page.
+ * **Enhancement**: Hide project panels' shortcuts on mobile and small screens.
+ * **Enhancement**: Move filter buttons' icons to the left side to have consistent UX.
+ * **Fix**: Regression when resuming runs; the modal does not close.
+ * **Fix**: Regression with column switches for inputs/outputs not displayed immediately.
+ * **Fix**: Some rendering issues.
+
+## Docs
+
+ * **Enhancement**: Typos and several improvements.
+
+### Agent
+
+ * **Enhancement**: Improve exp backoff when queue state is full.
+
+### Commercial
+
+ * **Enhancement**: Significant improvements to reduce wait time and operation processing.
+ * **Fix**: Regression when resuming a run when it's part of a pipeline.
+
+## v1.5.1
+
+### Core
+
+ * **Enhancement**: Improve type checking and allow compatible types.
+ * **Enhancement**: Allow opting out of type checks by using the type `ANY`.
+ * **Enhancement**: Add check for last transition time when saving status conditions and respect chronology.
+ * **Enhancement**: Consolidate statuses reason.
+ * **Enhancement**: Add exception handling for non compiler errors.
+ * **Fix**: Regression in init artifacts container for mount paths.
+ * **Fix**: Bug with `container.env`. Values containing `int` are casted. e.g. `value: "1"`.
+ * **Fix**: Bug with `any` type parsing.
+
+### UI
+
+ * **Enhancement**: Add cursor pointer for statuses and stages.
+
+### Docs
+
+ * **New**: Add new how-tos section to document recurrent use-cases and frequent questions about leveraging Kubernetes abstractions in Polyaxon.
+ * **New**: Add new guide about conditional scheduling.
+ * **New**: Add new guide about manual/human approval.
+ * **New**: Add new guide about operations caching.
+ * **New**: Add new guide about concurrency management.
+ * **New**: Add new guide about external invocation.
+ * **New**: Add new guide about manual volume, secrets, and configmaps mounting.
+ * **New**: Add new guide about service accounts usage.
+ * **New**: Add new guide about security context usage.
+ * **New**: Add more information about the compiler and variables resolution in the context section.
+ * **Fix**: Typos.
+
+### Agent
+
+ * **Fix** Move scheduled status logging to the agent controller.
+
+### Commercial
+
+ * **Enhancement**: Allow requesting all inputs, outputs, artifacts as dictionaries without specifying values by keys.
+ * **Enhancement**: Improve handling of unexpected compilation errors, and set the operation to failed to notify the user.
+
+## v1.5.0
+
+### Core
+
+ * **Enhancement**: Allow to specify path from and path to in the init artifacts specification.
+ * **Enhancement**: Improve restart with copy mode, the artifacts are now initialized under the new run.
+ * **Enhancement**: Improve several APIs response time.
+ * **Enhancement**: Allow passing variables to the concurrency key in matrix algorithms and dag.
+ * **Enhancement**: Add `uuid` type parser and validator to the V1IO.
+ * **Enhancement**: Improve mount path for artifacts connections in init containers.
+ * **Enhancement**: Remove restriction on parameters with `contextOnly` and `toInit`.
+ * **Enhancement**: Use `-R` instead of `-r` for recursive copy, a regression was introduced when the base image was updated.
+ * **Fix**: Issue in init container logs when the artifacts are coming from the default artifacts store.
+ * **Fix**: Typos in protos files.
+
+### UI
+
+ * **Enhancement**: Use ellipsis, `...`, when a filter is very long.
+ * **Enhancement**: Improve the overview headers to use a smaller fonts for titles/names to not break the page when the entity name is long.
+ * **Enhancement**: The comparison table shows a list of default columns based on the kind, for instance it will include the concurrency and runtime for Matrix runs.
+ * **Enhancement**: Improve edit filter by adding a spaces after `:` and between operators like `|` and `~`.
+ * **Enhancement**: Improve and consolidate tables padding.
+ * **Fix**: Issue with search input not allowing spaces.
+
+### Operator
+
+ * **Enhancement**: Upgrade operator:
+   * Use latest stable apimachinery.
+   * Use latest stable k8s client-go.
+   * Use latest stable controller-runtime.
+
+### Hub
+
+ * **Enhancement**: Add new Tensorboard version with upstream lineage.
+ * **Enhancement**: Add new Tensorboard version with performance based join.
+ * **Enhancement**: Move notification component to component hub.
+ * **Enhancement**: Improve Slack notifier to send extra information, such as inputs, outputs, and custom information.
+
+### House Keeping
+
+ * **Enhancement**: Upgrade go version.
+
+### Docs
+
+ * **Enhancement**: Move context docs to a separate section.
+ * **Fix**: Typos.
+
+### Commercial
+
+ * **New**: Add `Join` and `JoinParam` specifications. As opposed to the `matrix` section which allows to parallelize operations using hyperparameter tuning or mapping, the `joins` section allows:
+   * to filter, aggregate, and annotate inputs/outputs/artifacts from multiple or parallel upstream runs based on query/sort/limit/offset specification.
+   * to initialize an operation with all artifacts from several upstream runs dynamically.
+ * **New**: Implement logic for internal `events`. Users can now run full event based workflows, and in future iterations, it will be possible to start operations based on external events and internal alerts.
+ * **New**: Implement logic for `hooks`. Hooks can be used:
+   * to send webhooks
+   * to send notifications and alerts to slack, discord, github, ...
+   * to integrate with external systems
+   * to initiate a test/eval operation after training.
+   * ...
+ * **New**: Add new lineage tabs for: connections, actions & hooks, upstream/downstream runs.
+ * **Enhancement**: Expose namespace and artifacts store connection used on the run overview page.
+ * **Enhancement**: Allow filtering runs by the artifacts store connection name used.
+ * **Enhancement**: Use `globals.*` for requesting `uuid`, `name`, `status` and other general values from upstream operations, similar to normal operation context to have more consistent interface.
+ * **Enhancement**: Add several heartbeat processes to clean distressed pipelines and runs.
+ * **Enhancement**: Improve auditing and activity logs.
+ * **Enhancement**: Optimize events access to the database.
+ * **Enhancement**: Mark operations with false conditions as `skipped` instead of `failed`.
+ * **Enhancement**: Improve the run edge collection logic to conserve metadata, types, and reference.
+ * **Enhancement**: Improve the agent controller's querying logic and traversal speed.
+ * **Enhancement**: Improve schedules reconciliation by flagging all runs on schedule to avoid race conditions.
+ * **Enhancement**: Improve connections compilation.
+ * **Fix**: Issue with pipelines getting two final states (`stopped` and then `succeeded`).
+ * **Fix**: Issue with agent controller not scheduling DAGs and Matrix when a schedule is attached.
+ * **Fix**: Issue when a schedule is attached to a matrix, the metadata is missing and the matrix icon not showing in the sidebar.
+ * **Fix**: Issue with schedule not stopping properly and keep scheduling new runs.

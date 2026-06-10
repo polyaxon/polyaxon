@@ -1,0 +1,15 @@
+{
+  "title": "Operators",
+  "pages": [
+    "daskcluster",
+    "horovod",
+    "kfserving",
+    "kubeflow",
+    "mpijob",
+    "mxnetjob",
+    "pytorchjob",
+    "rapids",
+    "raycluster",
+    "tfjob"
+  ]
+}

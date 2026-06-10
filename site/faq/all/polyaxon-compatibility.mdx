@@ -1,0 +1,25 @@
+---
+title: What is Polyaxon compatibility check?
+tags: [api]
+---
+
+# What is Polyaxon compatibility check?
+
+Polyaxon will periodically communicate with a remote compatibility server.
+This is utilized for a couple of things, primarily:
+
+ * Check the compatibility version API
+ * Getting information about the current version of Polyaxon
+ * Retrieving important system notices
+
+The following information is reported:
+
+ * A unique installation ID
+ * The version of Polyaxon deployed
+
+With that said, you can disable the compatibility check with the following setting:
+
+```yaml
+intervals:
+  compatibilityCheck: -1
+```

@@ -1,0 +1,10 @@
+{
+  "title": "Workload",
+  "pages": [
+    "overview",
+    "jobs",
+    "services",
+    "distributed",
+    "clusters"
+  ]
+}

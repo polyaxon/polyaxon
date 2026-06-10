@@ -1,0 +1,310 @@
+---
+title: "Lifecycle Specification"
+description: "Every run in Polyaxon follows the same lifecycle state machine, each run has a status at any given time."
+---
+
+## V1Statuses
+
+```python
+polyaxon._schemas.lifecycle.V1Statuses()
+```
+
+
+Status is the information that represents the current state of a run.
+
+By examining a run status and/or the history of its statuses,
+you can learn what stage the run is at, and what stages are left.
+
+The supported statuses by Polyaxon.
+
+- __Enum__:
+  - __CREATED__: "created"
+  - __ON_SCHEDULE__: "on_schedule"
+  - __RESUMING__: "resuming"
+  - __WARNING__: "warning"
+  - __UNSCHEDULABLE__: "unschedulable"
+  - __COMPILED__: "compiled"
+  - __QUEUED__: "queued"
+  - __SCHEDULED__: "scheduled"
+  - __STARTING__: "starting"
+  - __RUNNING__: "running"
+  - __SUCCEEDED__: "succeeded"
+  - __FAILED__: "failed"
+  - __UPSTREAM_FAILED__: "upstream_failed"
+  - __STOPPING__: "stopping"
+  - __STOPPED__: "stopped"
+  - __SKIPPED__: "skipped"
+  - __RETRYING__: "retrying"
+  - __UNKNOWN__: "unknown"
+
+
+
+----
+
+## StatusColor
+
+```python
+polyaxon._schemas.lifecycle.StatusColor()
+```
+
+
+The statuses colors.
+
+- __Enum__:
+  - __GREEN__: #1aaa55
+  - __RED__: #aa310f
+  - __BLUE__: #2e77aa
+  - __YELLOW__: #aa9e4a
+  - __GREY__: #485563
+
+
+
+----
+
+## LifeCycle
+
+```python
+polyaxon._schemas.lifecycle.LifeCycle()
+```
+
+
+The Run LifeCycle is state machine for status transition.
+
+
+----
+
+### can_check_heartbeat
+
+
+```python
+can_check_heartbeat(cls, status)
+```
+
+
+
+Checks if a run with this status is in a state that allows to check for a heartbeat.
+
+
+----
+
+### is_unschedulable
+
+
+```python
+is_unschedulable(cls, status)
+```
+
+
+
+Checks if a run with this status is unschedulable.
+
+
+----
+
+### is_warning
+
+
+```python
+is_warning(cls, status)
+```
+
+
+
+Checks if a run with this status is in a warning status.
+
+
+----
+
+### is_pending
+
+
+```python
+is_pending(cls, status)
+```
+
+
+
+Checks if a run with this status is in one of the pending(not compiled or queued yet) statuses.
+
+
+----
+
+### is_compiled
+
+
+```python
+is_compiled(cls, status)
+```
+
+
+
+Checks if a run with this status is compiled.
+
+
+----
+
+### is_compilable
+
+
+```python
+is_compilable(cls, status)
+```
+
+
+
+Checks if a run with this status is compilable.
+
+
+----
+
+### is_queued
+
+
+```python
+is_queued(cls, status)
+```
+
+
+
+Checks if a run with this status is queued.
+
+
+----
+
+### is_starting
+
+
+```python
+is_starting(cls, status)
+```
+
+
+
+Checks if a run with this status is starting.
+
+
+----
+
+### is_running
+
+
+```python
+is_running(cls, status)
+```
+
+
+
+Checks if a run with this status is running.
+
+
+----
+
+### is_k8s_stoppable
+
+
+```python
+is_k8s_stoppable(cls, status)
+```
+
+
+
+Checks if a run with this status is scheduled on k8s and is stoppable.
+
+
+----
+
+### is_stoppable
+
+
+```python
+is_stoppable(cls, status)
+```
+
+
+
+Checks if a run with this status is stoppable.
+
+
+----
+
+### is_stopping
+
+
+```python
+is_stopping(cls, status)
+```
+
+
+
+Checks if a run with this status is stopping.
+
+
+----
+
+### is_done
+
+
+```python
+is_done(cls, status, progressing=False)
+```
+
+
+
+Checks if a run with this status is done.
+
+
+----
+
+### failed
+
+
+```python
+failed(cls, status)
+```
+
+
+
+Checks if a run with this status is failed.
+
+
+----
+
+### succeeded
+
+
+```python
+succeeded(cls, status)
+```
+
+
+
+Checks if a run with this status is succeeded.
+
+
+----
+
+### stopped
+
+
+```python
+stopped(cls, status)
+```
+
+
+
+Checks if a run with this status is stopped.
+
+
+----
+
+### skipped
+
+
+```python
+skipped(cls, status)
+```
+
+
+
+Checks if a run with this status is skipped.
+

@@ -1,0 +1,26 @@
+{
+  "title": "Services",
+  "pages": [
+    "airflow",
+    "celery",
+    "commuter",
+    "dash",
+    "elastic-stack",
+    "istio",
+    "jupyterlab",
+    "kafka",
+    "notebook",
+    "papermill",
+    "prometheus",
+    "rstudio",
+    "sagemaker",
+    "serving-with-fastapi",
+    "serving-with-flask",
+    "streamlit",
+    "tensorboard",
+    "tensorflow-serving",
+    "tensorrt",
+    "tfx",
+    "vscode"
+  ]
+}

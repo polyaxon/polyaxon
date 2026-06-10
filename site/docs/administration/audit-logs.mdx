@@ -1,0 +1,123 @@
+---
+title: Audit Logs
+description: Comprehensive audit logging in Polyaxon tracks all system activities with detailed state capture and user attribution for enterprise security and compliance requirements.
+sidebarTitle: Audit Logs
+---
+
+# Audit Logs
+
+<AvailabilityBanner
+  availability={{
+    hobby: "not-available",
+    platform: "not-available",
+    teams: "not-available",
+    enterprise: "full",
+    selfHosted: "ee",
+  }}
+/>
+
+Polyaxon's audit logging system provides tracking of all system activities, capturing detailed information about who performed what actions, when they occurred, and what changes were made.
+This feature is essential for enterprise security, compliance requirements, and incident investigation.
+
+## What are Audit Logs?
+
+Audit logs are immutable records of all significant activities within your Polyaxon organization and projects.
+They capture:
+
+- **Who**: User or API token that performed the action
+- **What**: The specific action taken (create, update, delete)
+- **When**: Precise timestamp of the action
+- **Where**: Organization and project context
+- **Details**: Complete before/after state for modifications
+
+These logs provide a complete audit trail for security monitoring, compliance reporting, and forensic analysis.
+
+## Viewing Audit Logs
+
+The audit log viewer is available in the Enterprise Edition.
+
+### Access Control
+
+- Available to users with `auditLogs:read` permission
+- Available to organization owners and admins
+- Available to team admins for team-specific logs
+- Available to project owners and admins for project-specific logs
+- Controlled through Polyaxon's [role-based access control](/docs/administration/rbac) system
+
+### Filtering and Navigation
+
+- **Time-based filtering**: View logs for specific time periods
+- **Organization filtering**: Focus on specific organization activities
+- **Project filtering**: Focus on specific project activities
+- **Actor filtering**: Filter by specific users or API tokens
+- **Action filtering**: Filter by specific actions (e.g. create, update, delete)
+- **Pagination**: Efficient browsing of large audit trails
+
+## Exporting Audit Logs
+
+You can export audit logs directly from the UI to analyze your data externally or create backups.
+
+**How to use:**
+
+- Navigate to your audit logs table
+- Click the export button on the top right
+
+## Event Types and Data Capture
+
+### Auditable Resources
+
+Polyaxon tracks specific actions across all system resources.
+The following table shows the resource types and actions that are logged:
+
+| Resource                    | Actions                          |
+| --------------------------- | -------------------------------- |
+| **Organization**            | create, delete, update           |
+| **Organization Membership** | create, delete, update           |
+| **Project**                 | create, delete, update           |
+| **Project Membership**      | create, delete, update           |
+| **Operation**               | create, stop, delete, approve, skip |
+| **Agent**                   | create, delete, update           |
+| **Queue**                   | create, delete, update           |
+| **Preset**                  | create, delete, update           |
+| **Connection**              | create, delete, update           |
+| **Component Hub**           | create, delete, update           |
+| **Model Registry**          | create, delete, update           |
+| **Model Version**           | create, delete, update, promote  |
+| **Artifact Version**        | create, delete, update           |
+| **API Token**               | create, delete, update           |
+| **Service Account**         | create, delete, update           |
+| **Team**                    | create, delete, update           |
+| **Team Membership**         | create, delete, update           |
+
+### State Capture
+
+For update operations, Polyaxon captures:
+
+- **Before State**: Complete resource state prior to modification
+- **After State**: Complete resource state after modification
+
+States are stored as JSON, providing full context for any modifications made to your data.
+
+### User Attribution
+
+#### Identity Sources
+
+Audit logs distinguish between different types of actors:
+
+- **User Actions** (`USER` type): Actions performed by authenticated users through the web interface or CLI
+- **API Token Actions** (`TOKEN` type): Programmatic actions via API tokens or service accounts
+
+#### Context Information
+
+Each entry includes:
+
+- **User ID**: For user-initiated actions
+- **Token ID**: For programmatic actions
+- **Organization ID**: Organizational context
+- **Role Context**: User's organizational and project roles at the time of action
+
+## GitHub Discussions
+
+import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
+
+<GhDiscussionsPreview labels={["feat-audit-logs"]} />

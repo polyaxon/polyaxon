@@ -1,0 +1,29 @@
+---
+title: Statsd
+description: Statsd is daemon for easy but powerful stats aggregation.
+ogImage: /images/integrations/statsd.png
+---
+
+Polyaxon provides an abstraction called ‘metrics’ which is used for internal monitoring, generally timings and various counters.
+The default backend `noop` simply discards them.
+
+This guide will help you set up a statsd backend to sends these metrics.
+
+## Using the default Helm metrics deployment
+
+Polyaxon provides a built-in statsd exporter in the Helm chart that can be enabled, the backend will be configured automatically.
+
+```yaml
+metrics:
+  enabled: true
+```
+
+## Using a custom backend
+
+```yaml
+externalServices:
+  metrics:
+    enabled: true
+    backend: statsd
+    options: {host: host, port: 8125}
+```

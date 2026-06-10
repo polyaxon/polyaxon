@@ -1,0 +1,32 @@
+---
+title: MemoryStore for Redis on GCP
+description: "Cloud MemoryStore Fully-managed in-memory data store service for Redis"
+ogImage: /images/integrations/memorystore.png
+---
+
+This integration is about using [Cloud MemoryStore for Redis](https://cloud.google.com/memorystore/docs/redis/) for Polyaxon.
+
+
+## Pre-requisites
+
+A valid GCP Subscription.
+
+
+## Create a Cloud MemoryStore
+
+Create a [MemoryStore instance](https://console.cloud.google.com/memorystore)
+
+
+## Update polyaxon deployment
+
+Update your config deployment file and upgrade.
+
+```yaml
+redis:
+  enabled: false
+
+externalServices:
+  redis:
+    host: "10.0.16.3"
+```
+

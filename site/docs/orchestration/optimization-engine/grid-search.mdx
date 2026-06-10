@@ -1,0 +1,180 @@
+---
+title: "Grid Search"
+description: "Grid Search is essentially an exhaustive search through a manually specified set of hyperparameters."
+---
+
+![grid](/images/references/optimization-engine/grid-search.png)
+
+## V1GridSearch
+
+```python
+polyaxon._flow.matrix.grid_search.V1GridSearch()
+```
+
+
+Grid search is essentially an exhaustive search through a manually
+specified set of hyperparameters.
+
+User can possibly limit the number of experiments and not traverse the whole
+search space created by providing `numRuns`.
+
+Grid search does not allow the use of distributions,
+and requires that all values of the params definition to
+be [discrete values](/docs/orchestration/optimization-engine/params/#discrete-values).
+
+- __Args__:
+  - __kind__: str, should be equal `grid`
+  - __params__: List[Dict[str, [params](/docs/orchestration/optimization-engine/params/#discrete-values)]]  
+  - __concurrency__: int, optional
+  - __num_runs__: int, optional
+  - __early_stopping__: List[[EarlyStopping](/docs/orchestration/helpers/early-stopping)], optional
+
+## YAML usage
+
+```yaml
+matrix:
+  kind: grid
+  concurrency:
+  params:
+  numRuns:
+  earlyStopping:
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import (
+    V1GridSearch, V1HpLogSpace, V1HpChoice, V1FailureEarlyStopping, V1MetricEarlyStopping
+)
+matrix = V1GridSearch(
+  concurrency=2,
+  params={"param1": V1HpLogSpace(...), "param2": V1HpChoice(...), ... },
+  num_runs=5
+  early_stopping=[V1FailureEarlyStopping(...), V1MetricEarlyStopping(...)]
+)
+```
+
+## Fields
+
+### kind
+
+The kind signals to the CLI, client, and other tools that this matrix is a grid search.
+
+If you are using the python client to create the mapping,
+this field is not required and is set by default.
+
+```yaml
+matrix:
+  kind: grid
+```
+
+### concurrency
+
+An optional value to set the number of concurrent operations.
+
+<blockquote className="light">
+This value only makes sense if less or equal to the total number of possible runs.
+</blockquote>
+
+```yaml
+matrix:
+  kind: grid
+  concurrency: 2
+```
+
+For more details about concurrency management,
+please check the [concurrency section](/docs/orchestration/helpers/concurrency/).
+
+### params
+
+A dictionary of `key -> value generator`
+to generate the parameters.
+
+Gird search can only use
+[discrete value](/docs/orchestration/optimization-engine/params/#discrete-values).
+
+> The parameters generated will be validated against
+> the component's inputs/outputs definition to check that the values
+> can be passed and have valid types.
+
+```yaml
+matrix:
+  kind: grid
+  params:
+    param1:
+       kind: ...
+       value: ...
+    param2:
+       kind: ...
+       value: ...
+```
+
+
+### numRuns
+
+Maximum number of runs to start based on the search space defined.
+
+```yaml
+matrix:
+  kind: grid
+  numRuns: 5
+```
+
+### earlyStopping
+
+A list of early stopping conditions to check for terminating
+all operations managed by the pipeline.
+If one of the early stopping conditions is met,
+a signal will be sent to terminate all running and pending operations.
+
+```yaml
+matrix:
+  kind: grid
+  earlyStopping: ...
+```
+
+For more details please check the
+[early stopping section](/docs/orchestration/helpers/early-stopping/).
+
+## Example
+
+This example will define 10 experiments based on the cartesian product
+of `lr` and `dropout` possible values.
+
+```yaml
+version: 1.1
+kind: operation
+matrix:
+  kind: grid
+  concurrency: 2
+  params:
+    lr:
+      kind: logspace
+      value: 0.01:0.1:5
+    dropout:
+      kind: choice
+      value: [0.2, 0.5]
+   early_stopping:
+     - metric: accuracy
+       value: 0.9
+       optimization: maximize
+     - metric: loss
+       value: 0.05
+       optimization: minimize
+component:
+  inputs:
+    - name: batch_size
+      type: int
+      isOptional: true
+      value: 128
+    - name: lr
+      type: float
+    - name: dropout
+      type: float
+  container:
+    image: image:latest
+    command: [python3, train.py]
+    args: ["--batch-size={{ batch_size }}", "--lr={{ lr }}", "--dropout={{ dropout }}"]
+```
+
+

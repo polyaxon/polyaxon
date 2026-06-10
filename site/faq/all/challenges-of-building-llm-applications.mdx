@@ -1,0 +1,22 @@
+---
+title: What are the common challenges of building LLM applications?
+description: LLM Applications are different from traditional software engineering. This page explains the challenges and how Polyaxon helps.
+tags: [article]
+---
+
+# What are the common challenges of building LLM applications?
+
+In implementing popular LLM use cases – such as retrieval augmented generation, agents using internal tools & APIs, or background extraction/classification jobs – developers face a unique set of challenges that is different from traditional software engineering:
+
+**Tracing & Control Flow**: Many valuable LLM apps rely on complex, repeated, chained or agentic calls to a foundation model. This makes debugging these applications hard as it is difficult to pinpoint the root cause of an issue in an extended control flow.
+
+_With Polyaxon_, it is simple to capture the full context of an LLM application. Our client SDKs and integrations are model and framework agnostic and able to capture the full context of an execution. Users commonly track LLM inference, embedding retrieval, API usage and any other interaction with internal systems that helps pinpoint problems. Users of frameworks such as LangChain benefit from automated instrumentation, otherwise the SDKs offer an ergonomic way to define the steps to be tracked by Polyaxon.
+
+**Output quality**: In traditional software engineering, developers are used to testing for the absence of exceptions and compliance with test cases. LLM-based applications are non-deterministic and there rarely is a hard-and-fast standard to assess quality. Understanding the quality of an application, especially at scale, and what 'good' evaluation looks like is a main challenge. This problem is accelerated by changes to hosted models that are outside of the user's control.
+
+_With Polyaxon_, users can attach scores to production traces (or even sub-steps of them) to move closer to measuring quality. Depending on the use case, these can be based on model-based evaluations, user feedback, manual labeling or other e.g. implicit data signals. These metrics can then be used to monitor quality over time, by specific users, and versions/releases of the application when wanting to understand the impact of changes deployed to production.
+
+**Mixed intent**: Many LLM apps do not tightly constrain user input. Conversational and agentic applications often contend with wildly varying inputs and user intent.
+This poses a challenge: teams build and test their app with their own mental model but real world users often have different goals and lead to many surprising and unexpected results.
+
+_With Polyaxon_, users can classify inputs as part of their application and ingest this additional context to later analyze their users behavior in-depth.

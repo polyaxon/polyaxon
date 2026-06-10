@@ -1,0 +1,113 @@
+---
+title: Polyaxon Documentation
+description: Polyaxon is an open source ML & AI platform for experiment tracking, workflow orchestration, and model management on Kubernetes.
+---
+
+# Polyaxon Overview
+
+Polyaxon is an **open-source ML & AI platform** ([GitHub](https://github.com/polyaxon)) that helps teams build, train, and deploy machine learning models at scale. All platform features are natively integrated to accelerate the development workflow. Polyaxon is open, self-hostable, and extensible ([_why polyaxon?_](/why)).
+
+import { FeatureOverview } from "@/components/FeatureOverview";
+import {
+  TextQuote,
+  GitPullRequestArrow,
+  ThumbsUp,
+  FlaskConical,
+} from "lucide-react";
+
+<FeatureOverview />
+
+## Experiment Tracking [#tracking]
+
+[Experiment Tracking](/docs/tracking) captures every detail of your ML experiments — hyperparameters, metrics, code versions, data lineage, and output artifacts. Compare runs side-by-side and visualize training curves in real time.
+
+- Log metrics, parameters, and artifacts with the Python SDK
+- Compare and visualize runs with built-in dashboards
+- Track data lineage and code versions for full reproducibility
+- Built-in support for TensorBoard, Plotly, and custom visualizations
+
+import TrackingOverview from "@/components-mdx/tracking-overview-gifs.mdx";
+
+<div className="h-6" />
+<TrackingOverview />
+
+## Orchestration [#orchestration]
+
+[Orchestration](/docs/orchestration) lets you compose multi-step ML workflows with DAGs, run hyperparameter sweeps, and schedule recurring pipelines — all with a declarative YAML specification.
+
+- Build DAGs with the [flow engine](/docs/orchestration) for multi-step pipelines
+- Run hyperparameter optimization with grid, random, Bayesian, and [Hyperband](/docs/orchestration) strategies
+- Schedule recurring jobs with cron, interval, or datetime triggers
+- Chain operations with hooks and events for automation
+
+import OrchestrationOverview from "@/components-mdx/evaluation-overview-gifs.mdx";
+
+<div className="h-6" />
+<OrchestrationOverview />
+
+## Model Registry [#registry]
+
+[Model Registry](/docs/registry) provides a centralized catalog for versioning, staging, and promoting models and artifacts across your ML lifecycle.
+
+- Version and promote models through staging, production, and archived stages
+- Share reusable components via the [Component Hub](/docs/registry)
+- Track artifact versions with full lineage back to training runs
+
+import RegistryOverview from "@/components-mdx/prompt-overview-gifs.mdx";
+
+<div className="h-6" />
+<RegistryOverview />
+
+## Where to start?
+
+Setting up the full ML workflow — from experiment tracking through orchestration and model management — requires some time. This guide is meant to help you figure out what is most important for your use case.
+
+## Quickstarts
+
+Get up and running with Polyaxon in minutes. Choose the path that best fits your current needs:
+
+<Cards num={1}>
+  <Card
+    icon={<TextQuote size="24" />}
+    title="Quick Start Guide"
+    href="/docs/intro/quick-start"
+    arrow
+  />
+  <Card
+    icon={<GitPullRequestArrow size="24" />}
+    title="Setup Polyaxon"
+    href="/setup"
+    arrow
+  />
+  <Card
+    icon={<ThumbsUp size="24" />}
+    title="Explore Integrations"
+    href="/integrations"
+    arrow
+  />
+</Cards>
+
+## Why Polyaxon?
+
+- **Open source:** Fully open source with public API for custom integrations
+- **Kubernetes native:** Runs on any Kubernetes cluster with GPU support
+- **Python SDK:** Native Python client for tracking, managing runs, and API access
+- **100+ integrations:** Works with PyTorch, TensorFlow, Keras, Scikit-learn, and many more
+- **Distributed training:** Built-in support for Horovod, PyTorch DDP, TensorFlow, and MPI
+- **Full platform:** Suite of tools for the complete ML lifecycle from experimentation to deployment
+
+## Community & Contact
+
+We actively develop Polyaxon in [open source](/open-source) together with our community:
+
+- Contribute and vote on the Polyaxon [roadmap](/docs/roadmap).
+- Ask questions on [GitHub Discussions](/gh-support) or private [support channels](/support).
+- Report bugs via [GitHub Issues](/issue).
+- Chat with the community on [Discord](/discord).
+- [Why people choose Polyaxon?](/why)
+
+Polyaxon evolves quickly, check out the [changelog](/changelog) for the latest updates. Subscribe to the **mailing list** to get notified about new major features:
+
+import { ProductUpdateSignup } from "@/components/productUpdateSignup";
+
+<ProductUpdateSignup source="polyaxon.com/docs" className="mt-4" />

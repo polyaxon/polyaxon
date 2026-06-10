@@ -1,0 +1,170 @@
+---
+title: "Ray-Cluster Specification"
+description: "Ray-Cluster provides an interface to run Ray clusters on Kubernetes."
+---
+
+## V1RayCluster
+
+```python
+polyaxon._flow.run.ray.ray.V1RayCluster()
+```
+
+
+Ray clusters are used to run Ray applications on Kubernetes.
+
+[Ray](https://www.ray.io/) Ray is an open-source unified compute framework that makes
+it easy to scale AI and Python workloads,
+from reinforcement learning to deep learning to tuning, and model serving.
+
+- __Args__:
+  - __kind__: str, should be equal `raycluster`
+  - __entrypoint__: str, optional
+  - __runtime_env__: Dict, optional
+  - __metadata__: int, Dict, optional
+  - __ray_version__: str, optional
+  - __head__: [V1RayReplica](/docs/workload/clusters/ray-replica/), optional
+  - __workers__: Dict[str, [V1RayReplica](/docs/workload/clusters/ray-replica/)], optional
+  - __enable_in_tree_autoscaling__: bool, optional
+  - __autoscaler_options__: [V1RayAutoscalerOptions](/docs/workload/clusters/ray-clusters/), optional
+
+
+## YAML usage
+
+```yaml
+run:
+  kind: raycluster
+  entrypoint:
+  runtimeEnv:
+  metadata:
+  rayVersion:
+  head:
+  workers:
+  enableInTreeAutoscaling:
+  autoscalerOptions:
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import V1Environment, V1Init, V1RayCluster, V1RayReplica
+ray_cluster = V1RayCluster(
+    connections=["connection-name1"],
+    volumes=[k8s.V1Volume(...)],
+    ray_version="2.5.0",
+    head=V1RayReplica(...),
+    worker=V1RayReplica(...),
+    enable_in_tree_autoscaling=True,
+)
+```
+
+## Fields
+
+### kind
+
+The kind signals to the CLI, client, and other tools that this component's runtime is a cluster.
+
+If you are using the python client to create the runtime,
+this field is not required and is set by default.
+
+```yaml
+run:
+  kind: raycluster
+```
+
+### entrypoint
+
+The entrypoint command for this cluster.
+
+```yaml
+run:
+  kind: raycluster
+  entrypoint: python train.py
+```
+
+### runtimeEnv
+
+The runtime environment for this cluster.
+
+```yaml
+run:
+  kind: raycluster
+  runtimeEnv:
+    pip: ["requests==2.26.0", "pendulum==2.1.2"]
+    env_vars: {"counter_name": "test_counter"}
+```
+
+### rayVersion
+
+The version of Ray the application uses.
+
+```yaml
+run:
+  kind: raycluster
+  rayVersion: 2.5.0
+  ...
+```
+
+### head
+
+Ray head replica specification
+
+```yaml
+run:
+  kind: raycluster
+  head:
+    rayStartParams:
+      dashboard-host: '0.0.0.0'
+    container:
+    ...
+  ...
+```
+
+### workers
+
+List of worker replica specifications
+
+```yaml
+run:
+  kind: raycluster
+  workers:
+    small-group:
+      replicas: 1
+      minReplicas: 1
+      maxReplicas: 5
+    ...
+  ...
+```
+
+### enableInTreeAutoscaling
+
+Enable the KubeRay in-tree autoscaler for automatic worker scaling.
+When enabled, the Ray autoscaler will automatically scale workers based on workload demands.
+
+> **Note**: The `idleTimeoutSeconds` for the autoscaler is derived from `termination.culling.timeout`.
+
+```yaml
+run:
+  kind: raycluster
+  enableInTreeAutoscaling: true
+  workers:
+    gpu-workers:
+      minReplicas: 0
+      maxReplicas: 10
+  ...
+```
+
+### autoscalerOptions
+
+Optional configuration for the Ray autoscaler behavior.
+
+```yaml
+run:
+  kind: raycluster
+  enableInTreeAutoscaling: true
+  autoscalerOptions:
+    upscalingMode: Default
+    imagePullPolicy: IfNotPresent
+  ...
+```
+
+

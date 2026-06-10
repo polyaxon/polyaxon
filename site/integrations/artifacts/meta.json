@@ -1,0 +1,13 @@
+{
+  "title": "Artifacts",
+  "pages": [
+    "artifacts-on-azure",
+    "artifacts-on-gcs",
+    "artifacts-on-host-path",
+    "artifacts-on-minio",
+    "artifacts-on-nfs-provisioner",
+    "artifacts-on-nfs",
+    "artifacts-on-pvc",
+    "artifacts-on-s3"
+  ]
+}

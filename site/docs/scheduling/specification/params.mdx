@@ -1,0 +1,259 @@
+---
+title: "Params Specification"
+description: "Params can provide values to inputs/outputs."
+---
+
+## V1Param
+
+```python
+polyaxon._flow.params.params.V1Param()
+```
+
+
+Params can provide values to inputs/outputs.
+
+Params can be passed in several ways
+ * literal values that the user sets manually.
+ * a reference from a previous run, in which case
+   Polyaxon will validate during the compilation time if the user who initiated the run
+   has access to that organization/project/run.
+ * a reference from an upstream operation in the context of a DAG.
+
+
+When a param is passed from the CLI or directly in the YAML/Python specification,
+it will be validated against the [inputs/outputs](/docs/scheduling/specification/io/)
+defined in the [component](/docs/scheduling/specification/component/)
+
+- __Args__:
+  - __value__: any
+  - __ref__: str, optional
+  - __context_only__: bool, optional
+  - __connection__: str, optional
+  - __to_init__: bool, optional
+  - __to_env__: str, optional
+
+## YAML usage
+
+Polyaxon supports two syntaxes for defining params: **short-form** and **full-form**.
+
+### Short-form syntax
+
+> **N.B**: Requires Polyaxon CLI version `>= 2.13`
+
+For simple literal values, you can use the concise short-form syntax:
+
+```yaml
+params:
+  loss: MeanSquaredError
+  preprocess: true
+  accuracy: 0.1
+  batch_size: 32
+  layers: [64, 128, 256]
+  config:
+    optimizer: adam
+    lr: 0.001
+```
+
+### Full-form syntax
+
+The full-form syntax is required when using advanced features like `ref`, `toInit`, `toEnv`, `connection`, or `contextOnly`:
+
+```yaml
+params:
+  loss:
+    value: MeanSquaredError
+  preprocess:
+    value: true
+  accuracy:
+    value: 0.1
+  outputs_path:
+    ref: ops.upstream-job1
+    value: outputs.images_path
+```
+
+You can mix both syntaxes in the same params section:
+
+```yaml
+params:
+  # Short-form for simple values
+  batch_size: 32
+  learning_rate: 0.001
+  # Full-form when using refs or other options
+  upstream_output:
+    ref: ops.training
+    value: outputs.model_path
+  data_path:
+    value: /data/train
+    toInit: true
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import V1Param
+params = {
+    "loss": V1Param(value="MeanSquaredError"),
+    "preprocess": V1Param(value=True),
+    "accuracy": V1Param(value=0.1),
+    "outputs-path": V1Param(ref="ops.upstream_job1", value="outputs.images_path")
+}
+```
+
+## Fields
+
+### value
+
+The value to pass, if no `ref` is passed then it corresponds to a literal value,
+and will be validated eagerly.
+Otherwise it will be a future validation during the compilation time.
+
+```yaml
+params:
+  loss:
+    value: MeanSquaredError
+  learning_rate:
+    value: 0.001
+```
+
+The value could be coming from the [context](/docs/scheduling/context/), for example:
+
+```yaml
+params:
+  current_project:
+    value: {{globals.project_name}}
+  current_run:
+    value: {{globals.uuid}}
+  fully_resolved_artifacts_path:
+    value: {{globals.run_artifacts_path}}
+  fully_resolved_artifacts_outputs_path:
+    value: {{globals.run_outputs_path}}
+```
+
+Resolving values from the IO (inputs/outputs) of the reference:
+
+```yaml
+  specific_input:
+    value: {{inputs.input_name}}
+  specific_outputs:
+    value: {{outputs.output_name}}
+  all_inputs_dict:
+    value: {{inputs}}
+  all_outputs_dict:
+    value: {{outputs}}
+  specific_input:
+    value: {{inputs.input_name}}
+  specific_outputs:
+    value: {{outputs.output_name}}
+```
+
+Resolving paths from the artifacts and lineages of the reference:
+
+```yaml
+  run_artifacts_subpath_without_context:
+    value: {{artifacts}}
+  run_artifacts_outputs_subpath_without_context:
+    value: {{artifacts.outputs}}
+  run_path_of_lineage:
+    value: {{artifacts.lineage_name}}
+  run_tensorboard_path_from_lineage:
+    value: {{artifacts.tensorboard}}
+  run_tensorboard_path_from_lineage:
+    value: {{artifacts.tensorboard}}
+```
+
+Resolving artifacts manually from the reference based on the
+[ArtifactsType](/docs/scheduling/specification/types/#v1artifactstype)
+
+```yaml
+  files_and_dirs:
+    value:
+      - files: ["subpath/file1", "another/subpath/file2.ext"]
+      - dirs: ["subpath/dir1", "another/subpath/dir2"]
+```
+
+> **Note**: the difference between using `artifacts.lineage_name`
+> and [ArtifactsType](/docs/scheduling/specification/types/#v1artifactstype),
+> is that the former will only expose the path based on any lineage logged during the runtime,
+> the later is a manual way of selecting specific files and dirs.
+
+### ref
+
+Ref corresponds to a reference of an object.
+
+A reference could be a previous run in the database or
+an operation in DAG that has not been executed yet.
+
+```yaml
+params:
+  loss:
+    value: outputs.loss
+    ref: ops.upstream-job-1
+```
+
+```yaml
+params:
+  loss:
+    value: outputs.loss
+    ref: runs.fcc462d764104eb698d3cca509f34154
+```
+
+### contextOnly
+
+A flag to signal to Polyaxon that this param should not be validated
+against the inputs/outputs, and it's only used to resolve some
+information and inject it into the context.
+
+```yaml
+params:
+  convolutions:
+    contextOnly: true
+    value:
+      conv1:
+         kernels: [32, 32]
+         size: [2, 2]
+         strides: [1, 1]
+      conv2:
+         kernels: [64, 64]
+         size: [2, 2]
+         strides: [1, 1]
+```
+
+Polyaxon will not check if this param was required by an input/output,
+and will inject it automatically in the context to be used.
+You can use for example `{{ convolutions.conv1 }}` in the specification.
+
+### connection
+
+A connection to use with the parameter.
+if the initial Input/Output definition has a predefined connection and this connection
+is provided, it will override the that value and will be added to the context.
+
+### toInit
+
+if True the param will be converted to an init container.
+
+For example, to initialize some artifacts without using the
+[init section](/docs/scheduling/specification/init/), you can use `toInit` to turn an artifacts value
+or git value to an init container:
+
+```yaml
+  files_and_dirs:
+    toInit: true
+    value:
+      - files: ["subpath/file1", "another/subpath/file2.ext"]
+      - dirs: ["subpath/dir1", "another/subpath/dir2"]
+```
+
+### toEnv
+
+> **N.B**: Requires Polyaxon CLI and Polyaxon Agent/CE version `>= 1.12`
+
+If passed, it will be converted automatically to an environment variable.
+
+```yaml
+param1:
+  toEnv: ENV_VAR_NAME_TO_USE
+  value: "some value"
+```
+
+

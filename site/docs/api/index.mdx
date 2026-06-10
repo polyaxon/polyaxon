@@ -1,0 +1,128 @@
+---
+title: Overview
+seoTitle: API Reference
+description: All Polyaxon data and features are available via the API. Follow this guide to get started.
+---
+
+# API Reference
+
+Use this reference to inspect Polyaxon REST endpoints, authentication, path and query parameters, request bodies, and response schemas.
+
+> The pages in this section are generated from `static/polyaxon_sdk.swagger.json` and grouped by API area.
+
+## Public API
+
+Polyaxon is open and meant to be extended via custom workflows and integrations. All Polyaxon data and features are available via the API.
+
+<Tabs items={["Path", "Cloud"]}>
+
+<Tab>
+
+```
+/api/v1
+```
+
+</Tab>
+<Tab>
+
+```
+https://cloud.polyaxon.com/api/v1
+```
+
+</Tab>
+</Tabs>
+
+<Callout type="info">
+
+There are 3 different groups of APIs:
+
+- This page → Project-level APIs: manage operations, artifacts, model versions, and project configuration
+- [Organization-level APIs](/docs/administration/scim-and-org-api): manage members, teams, service accounts, and permissions
+- [Instance Management API](/setup/administration/instance-management-api): administer organizations on self-hosted installations
+
+</Callout>
+
+## Authentication
+
+Authenticate with the API using an API token passed via the `Authorization` header.
+Tokens can be created from the Polyaxon UI (user settings) or via the CLI.
+
+```bash
+curl -H "Authorization: token <your-token>" \
+  https://cloud.polyaxon.com/api/v1/orgs/<org>/projects
+```
+
+## Access via SDKs
+
+The Polyaxon [Python library](/docs/python-library/overview) and [JS/TS SDK](https://js.reference.polyaxon.com) provide typed wrappers around the REST API.
+
+<LangTabs items={["Python SDK", "JS/TS SDK"]}>
+<Tab>
+
+```python
+from polyaxon.client import PolyaxonClient
+
+client = PolyaxonClient()
+
+# List operations in a project
+runs = client.runs_v1.list_runs("owner", "project")
+
+# Get a specific operation
+run = client.runs_v1.get_run("owner", "project", "run_uuid")
+
+# List model versions
+models = client.project_model_v1.list_versions("owner", "project")
+```
+
+</Tab>
+
+<Tab>
+
+```ts
+import { PolyaxonClient } from "@polyaxon/client";
+
+const client = new PolyaxonClient();
+
+// List operations in a project
+const runs = await client.runsV1.listRuns("owner", "project");
+
+// Get a specific operation
+const run = await client.runsV1.getRun("owner", "project", "run_uuid");
+```
+
+</Tab>
+</LangTabs>
+
+## API Resources
+
+The API provides endpoints for managing all Polyaxon resources:
+
+- **Operations** — Create, list, get, stop, delete, and manage runs (jobs, services, DAGs, matrix)
+- **Artifacts** — Upload, download, and manage artifacts and lineage
+- **Model Registry** — Manage models, versions, and stages
+- **Component Hub** — Browse and manage reusable components
+- **Projects** — Create, configure, and manage projects
+- **Organizations** — Manage members, teams, and settings
+- **Agents & Queues** — Configure agents, queues, and presets
+- **Searches & Dashboards** — Manage saved searches and custom dashboards
+
+See the full [API Reference](https://api.reference.polyaxon.com) for details.
+
+## Alternatives
+
+You can also access data via:
+
+- [UI](/docs/cli/export-data) — Batch exports from the Polyaxon UI
+- [CLI](/docs/cli/overview) — Full CLI for managing Polyaxon resources from the terminal
+
+## FAQ
+
+import { FaqPreview } from "@/components/faq/FaqPreview";
+
+<FaqPreview tags={["platform"]} />
+
+## GitHub Discussions
+
+import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
+
+<GhDiscussionsPreview labels={["feat-api"]} />

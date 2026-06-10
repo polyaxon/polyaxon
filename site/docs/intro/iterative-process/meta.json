@@ -1,0 +1,10 @@
+{
+  "pages": [
+    "iterate-in-notebooks",
+    "iterate-with-cli-local-code",
+    "iterate-with-cli-git-code",
+    "iterate-with-presets",
+    "iterate-programmatically",
+    "iterate-with-inline-scripts"
+  ]
+}

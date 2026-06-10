@@ -1,0 +1,11 @@
+{
+  "title": "Connections",
+  "pages": [
+    "overview",
+    "specification",
+    "artifacts",
+    "registry",
+    "git",
+    "ssh"
+  ]
+}

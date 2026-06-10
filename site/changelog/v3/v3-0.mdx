@@ -1,0 +1,33 @@
+---
+title: "Release notes for v3.0"
+description: "Polyaxon release notes, migrations, and deprecation notes for v3.0.x."
+author: Polyaxon
+---
+## V3.0.0 [WIP]
+
+### Core
+
+ * **New**: Add new sandbox interface to allow running agent and AI-generated code in dynamically defined sandboxes.
+ * **Enhancement**: Extract schedules to be a first-class concept in the system.
+
+### Infra
+
+ * **Enhancement**: Move from redis to valkey and use official chart.
+
+### UI
+
+ * **New**: Add markdown, summary, lineage, and performance widgets.
+ * **New**: Improve visualization of multiple runs in the compare dashboard.
+ * **Enhancement**: Improve rendering and performance of charts.
+ * **Enhancement**: Allow visualizing multiple images (index range) at the same time.
+ * **Enhancement**: Do not render large artifacts and provide preview button.
+ * **Enhancement**: Simplify switching to data view in metrics widgets.
+
+### Commercial
+
+ * **New**: Add new notifications/alerts/events layer to the clients to allow sending mid-run events to external systems.
+ * **New**: Add automations to create a monitoring of conditions and events and trigger actions.
+ * **New**: Add control plane level integrations.
+ * **New**: Add in-platform notifications center to view and manage notifications and alerts.
+ * **New**: Improve scheduler and allow to trigger runs based on schedules and events.
+ * **New**: Add support for custom notifications and alerts.

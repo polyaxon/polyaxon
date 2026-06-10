@@ -1,0 +1,14 @@
+---
+title: Intermittent 502 and 504 network errors in self-hosted Polyaxon
+tags: [self-hosting]
+---
+
+# Intermittent 502 and 504 network errors in self-hosted Polyaxon
+
+If you are experiencing intermittent 502 and 504 network errors, this is likely related to your Loadbalancer and keep-alive configuration.
+It is recommended to have the keep-alive of a server set to a higher value than the idle timeout on a Loadbalancer.
+
+As an example, the AWS Application Loadbalancer has a default idle timeout of 60 seconds.
+If your service closes a connection after 45 seconds, the Loadbalancer will attempt to reuse the connection which it still believes to be alive which will result in a 502 error.
+
+Hence, we recommend that you configure `KEEP_ALIVE_TIMEOUT` on the Polyaxon Web container to be at least 5 seconds higher than your Loadbalancer idle timeout.

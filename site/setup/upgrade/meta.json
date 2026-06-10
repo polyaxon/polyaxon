@@ -1,0 +1,9 @@
+{
+  "title": "Upgrade",
+  "pages": [
+    "how-to",
+    "versioning",
+    "upgrade-guides",
+    "release-notes"
+  ]
+}

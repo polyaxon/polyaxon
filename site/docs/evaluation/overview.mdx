@@ -1,0 +1,34 @@
+---
+title: Evaluation of LLM Applications
+description: With Polyaxon you can capture all your LLM evaluations in one place. You can combine a variety of different evaluation metrics like model-based evaluations (LLM-as-a-Judge), human annotations or fully custom evaluation workflows via API/SDKs. This allows you to measure quality, tonality, factual accuracy, completeness, and other dimensions of your LLM application.
+---
+
+# Evaluation Overview
+
+Evals give you a repeatable check of your LLM application's behavior. You **replace guesswork with data**.
+
+They also help you **catch regressions before you ship a change**. You tweak a prompt to handle an edge case, run your eval, and immediately see if it affected the behavior of your application in unintended ways.
+
+<Callout type="info" emoji="🎥">
+
+[**Watch this walkthrough**](/watch-demo?tab=evaluation) of Polyaxon Evaluation and how to use it to improve your LLM application.
+
+</Callout>
+
+## Getting Started
+
+If you're new to LLM evaluation, start by exploring the [Concepts](/docs/evaluation/core-concepts) page. There's a lot to uncover, and going through the concepts before diving in will speed up your learning curve.
+
+Once you know what you want to do, you can:
+
+- [Create a dataset](/docs/evaluation/experiments/datasets) to measure your LLM application's performance consistently
+- [Run an experiment](/docs/evaluation/core-concepts#experiments) get an overview of how your application is doing
+- [Set up a live evaluator](/docs/evaluation/evaluation-methods/llm-as-a-judge) to monitor your live traces
+
+Looking for something specific? Take a look under _Evaluation Methods_ and _Experiments_ for guides on specific topics.
+
+## GitHub Discussions
+
+import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
+
+<GhDiscussionsPreview labels={["feat-scores"]} />

@@ -1,0 +1,62 @@
+---
+title: "Exact datetime Schedules"
+description: "Exact datetime schedules to trigger components at a specific time."
+---
+
+## V1DateTimeSchedule
+
+```python
+polyaxon._flow.schedules.datetime.V1DateTimeSchedule()
+```
+
+
+Date schedule is an interface to kick a component execution at a specific time.
+
+- __Args__:
+  - __kind__: str, should be equal to `datetime`
+  - __start_at__: datetime, required
+
+## YAML usage
+
+```yaml
+schedule:
+  kind:
+  startAt:
+```
+
+## Python usage
+
+```python
+from datetime import datetime
+from polyaxon.schemas import V1DateTimeSchedule
+schedule = V1DateTimeSchedule(
+  start_at=datetime(...),
+)
+```
+
+## Fields
+
+### kind
+
+The kind signals to the CLI, client, and other tools that this schedule
+is a datetime schedule.
+
+If you are using the python client to create the schedule,
+this field is not required and is set by default.
+
+```yaml
+run:
+  kind: datetime
+```
+
+### startAt
+
+Optional field to set the start time for kicking the first execution,
+all following executions will be relative to this time.
+
+```yaml
+run:
+  startAt: "2019-06-24T21:20:07+00:00"
+```
+
+

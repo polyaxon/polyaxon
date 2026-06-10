@@ -1,0 +1,50 @@
+---
+title: "Polyaxon Client Reference"
+description: "Polyaxon client is the base client with logic to pass config and token to other specific clients."
+---
+
+## PolyaxonClient
+
+```python
+polyaxon._client.client.PolyaxonClient(token=None, is_async=None, is_internal=False)
+```
+
+
+Auto-configurable and high-level base client that abstract
+the need to set a configuration for each service.
+
+PolyaxonClient comes with logic
+to pass config and token to other specific clients.
+
+If no values are passed to this class,
+Polyaxon will try to resolve the configuration from the environment:
+ * If you have a configured CLI, Polyaxon will use the configuration of the cli.
+ * If you use this client in the context of a job or a service managed by Polyaxon,
+   a configuration will be available.
+
+- __Args__:
+  - __config__: ClientConfig, optional, Instance of a ClientConfig.
+  - __token__: str, optional, the token to use for authenticating the clients,
+      if the user is already logged in using the CLI, it will automatically use that token.
+      Using the client inside a job/service scheduled with Polyaxon will have access to the
+      token of the user who started the run if the `auth` context is enabled.
+
+You can access specific low level clients:
+
+```python
+client = PolyaxonClient()
+
+client.projects_v1
+client.runs_v1
+client.auth_v1
+client.users_v1
+client.agents_v1
+client.connections_v1
+client.organizations_v1
+```
+
+If you are interacting with a run or with a project, we suggest that you check:
+ * [RunClient](/docs/python-library/run-client/)
+ * [ProjectClient](/docs/python-library/project-client/)
+
+

@@ -1,0 +1,1417 @@
+---
+title: "Tracking Module"
+description: "Tracking module is an extension of Polyaxon client with tracking capabilities for logging parameters, code versions, metrics, and outputs when running your machine learning code, both on a Polyaxon deployment or on a different platform/environment."
+---
+
+### init
+
+
+```python
+tracking.init(owner=None, project=None, run_uuid=None, client=None, track_code=True, track_env=True, track_logs=True, refresh_data=False, artifacts_path=None, collect_artifacts=None, collect_resources=None, is_offline=None, is_new=None, name=None, description=None, tags=None)
+```
+
+
+
+Tracking module is similar to the tracking client without the need to create a run instance.
+
+The tracking module allows you to call all tracking methods directly from the top level module.
+
+This could be very convenient especially if you are running in-cluster experiments:
+
+```python
+from polyaxon import tracking
+
+tracking.init()
+...
+tracking.log_metrics(step=1, loss=0.09, accuracy=0.75)
+...
+tracking.log_metrics(step=1, loss=0.02, accuracy=0.85)
+...
+```
+
+> A global `TRACKING_RUN` will be set on the module.
+
+
+- __Args__:
+  - __owner__: str, optional, the owner is the username or
+        the organization name owning this project.
+  - __project__: str, optional, project name owning the run(s).
+  - __run_uuid__: str, optional, run uuid.
+  - __client__: [PolyaxonClient](/docs/python-library/polyaxon-client/), optional,
+        an instance of a configured client, if not passed,
+        a new instance will be created based on the available environment.
+  - __track_code__: bool, optional, default True, to track code version.
+        Polyaxon will try to track information about any repo
+        configured in the context where this client is instantiated.
+  - __track_env__: bool, optional, default True, to track information about the environment.
+  - __track_logs__: bool, optional, default True, to track logs for manually managed runs.
+  - __refresh_data__: bool, optional, default False, to refresh the run data at instantiation.
+  - __refresh_data__: bool, optional, default False, to instruct the run to resume,
+        only useful when the run is not managed by Polyaxon.
+  - __artifacts_path__: str, optional, for in-cluster runs it will be set automatically.
+  - __collect_artifacts__: bool, optional,
+        similar to the env var flag `POLYAXON_COLLECT_ARTIFACTS`, this env var is `True`
+        by default for managed runs and is controlled by the plugins section.
+  - __collect_resources__: bool, optional,
+        similar to the env var flag `POLYAXON_COLLECT_RESOURCES`, this env var is `True`
+        by default for managed runs and is controlled by the plugins section.
+  - __is_offline__: bool, optional,
+        To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+  - __is_new__: bool, optional,
+        Force the creation of a new run instead of trying to discover a cached run or
+        refreshing an instance from the env var
+  - __name__: str, optional,
+        When `is_new` or `is_offline` is set to true, a new instance is created and
+        you can initialize that new run with a name.
+  - __description__: str, optional,
+        When `is_new` or `is_offline` is set to true, a new instance is created and
+        you can initialize that new run with a description.
+  - __tags__: str or List[str], optional,
+        When `is_new` or `is_offline` is set to true, a new instance is created and
+        you can initialize that new run with tags.
+
+- __Raises__:
+  - __PolyaxonClientException__: If no owner and/or project are passed and Polyaxon cannot
+        resolve the values from the environment.
+
+
+
+----
+
+### get_or_create_run
+
+
+```python
+tracking.get_or_create_run(tracking_run=None)
+```
+
+
+
+Get or create a new tracking run.
+
+It tries to create a new instance, for in-cluster runs, this will work automatically.
+
+This is used inside some Polyaxon callbacks, you should use `init` instead.
+
+
+
+----
+
+### get_tensorboard_path
+
+
+```python
+tracking.get_tensorboard_path(rel_path='tensorboard', use_store_path=False)
+```
+
+
+
+Returns a tensorboard path for this run relative to the outputs path.
+
+If `use_store_path` is enabled, the path returned will be relative to the artifacts
+store path and not Polyaxon's context. Please note that,
+the library will not ensure that the path exists when this flag is set to true.
+
+- __Args__:
+  - __rel_path__: str, optional, default "tensorboard",
+        the relative path to the `outputs` context.
+  - __use_store_path__: bool, default False.
+- __Returns__:
+  str, outputs_path/rel_path
+
+
+
+----
+
+### get_outputs_path
+
+
+```python
+tracking.get_outputs_path(rel_path=None, ensure_path=True, is_dir=False, use_store_path=False)
+```
+
+
+
+Get the absolute outputs path of the specified artifact in the currently active run.
+
+If `rel_path` is specified, the outputs artifact root path of the currently active
+run will be returned: `root_run_artifacts_path/outputs/rel_path`.
+If `rel_path` is not specified, the current root artifacts path configured
+for this instance will be returned: `root_run_artifacts_path/outputs`.
+
+If `ensure_path` is provided, the path will be created. By default the path will
+be created until the last part of the `rel_path` argument,
+if `is_dir` is True, the complete `rel_path` is created.
+
+
+If `use_store_path` is enabled, the path returned will be relative to the artifacts
+store path and not Polyaxon's context. Please note that,
+the library will not ensure that the path exists when this flag is set to true.
+
+- __Args__:
+  - __rel_path__: str, optional.
+  - __ensure_path__: bool, optional, default True.
+  - __is_dir__: bool, optional, default False.
+  - __use_store_path__: bool, default False.
+- __Returns__:
+  str, outputs_path
+
+
+
+----
+
+### get_artifacts_path
+
+
+```python
+tracking.get_artifacts_path(rel_path=None, ensure_path=False, is_dir=False, use_store_path=False)
+```
+
+
+
+Get the absolute path of the specified artifact in the currently active run.
+
+If `rel_path` is specified, the artifact root path of the currently active
+run will be returned: `root_run_artifacts_path/rel_path`.
+If `rel_path` is not specified, the current root artifacts path configured
+for this instance will be returned: `root_run_artifacts_path`.
+
+If `ensure_path` is provided, the path will be created. By default the path will
+be created until the last part of the `rel_path` argument,
+if `is_dir` is True, the complete `rel_path` is created.
+
+If `use_store_path` is enabled, the path returned will be relative to the artifacts
+store path and not Polyaxon's context. Please note that,
+the library will not ensure that the path exists when this flag is set to true.
+
+- __Args__:
+  - __rel_path__: str, optional.
+  - __ensure_path__: bool, optional, default True.
+  - __is_dir__: bool, optional, default False.
+  - __use_store_path__: bool, default False.
+- __Returns__:
+  str, artifacts_path
+
+
+
+----
+
+### log_metric
+
+
+```python
+tracking.log_metric(name, value, step=None, timestamp=None)
+```
+
+
+
+Logs a metric datapoint.
+
+```python
+log_metric(name="loss", value=0.01, step=10)
+```
+
+> **Note**: It's very important to log `step` as one of your metrics
+> if you want to compare experiments on the dashboard
+> and use the steps in x-axis instead of timestamps.
+
+> **Note**: To log multiple metrics at once you can use `log_metrics`.
+
+- __Args__:
+  - __name__: str, metric name
+  - __value__: float, metric value
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_metrics
+
+
+```python
+tracking.log_metrics(step=None, timestamp=None)
+```
+
+
+
+Logs multiple metrics.
+
+```python
+log_metrics(step=123, loss=0.023, accuracy=0.91)
+```
+
+> **Note**: It's very important to log `step` as one of your metrics
+> if you want to compare experiments on the dashboard
+> and use the steps in x-axis instead of timestamps.
+
+- __Args__:
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __metrics__: kwargs, key=value
+
+
+
+----
+
+### log_image
+
+
+```python
+tracking.log_image(data, name=None, step=None, timestamp=None, rescale=1, dataformats='CHW', ext=None)
+```
+
+
+
+Logs an image.
+
+```python
+log_image(data="path/to/image.png", step=10)
+log_image(data=np_array, name="generated_image", step=10)
+```
+
+- __Args__:
+  - __data__: str or numpy.array, a file path or numpy array
+  - __name__: str,
+        name of the image, if a path is passed this can be optional
+        and the name of the file will be used
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __rescale__: int, optional
+  - __dataformats__: str, optional
+  - __ext__: str, optional, default extension to use, note that if you pass a
+        file polyaxon will automatically guess the extension
+
+
+
+----
+
+### log_image_with_boxes
+
+
+```python
+tracking.log_image_with_boxes(tensor_image, tensor_boxes, name=None, step=None, timestamp=None, rescale=1, dataformats='CHW')
+```
+
+
+
+Logs an image with bounding boxes.
+
+```python
+log_image_with_boxes(
+    name="my_image",
+    tensor_image=np.arange(np.prod((3, 32, 32)), dtype=float).reshape((3, 32, 32)),
+    tensor_boxes=np.array([[10, 10, 40, 40]]),
+)
+```
+
+- __Args__:
+  - __tensor_image__: numpy.array or str: Image data or file name
+  - __tensor_boxes__: numpy.array or str:
+        Box data (for detected objects) box should be represented as [x1, y1, x2, y2]
+  - __name__: str, name of the image
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __rescale__: int, optional
+  - __dataformats__: str, optional
+
+
+
+----
+
+### log_mpl_image
+
+
+```python
+tracking.log_mpl_image(data, name=None, close=True, step=None, timestamp=None)
+```
+
+
+
+Logs a matplotlib image.
+
+```python
+log_mpl_image(name="figure", data=figure, step=1, close=False)
+```
+
+- __Args__:
+  - __data__: matplotlib.pyplot.figure or List[matplotlib.pyplot.figure]
+  - __name__: sre, optional, name
+  - __close__: bool, optional, default True
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_video
+
+
+```python
+tracking.log_video(data, name=None, fps=4, step=None, timestamp=None, content_type=None)
+```
+
+
+
+Logs a video.
+
+```python
+log_video("path/to/my_video1"),
+log_video(
+    name="my_vide2",
+    data=np.arange(np.prod((4, 3, 1, 8, 8)), dtype=float).reshape((4, 3, 1, 8, 8))
+)
+```
+
+- __Args__:
+  - __data__: video data or str.
+  - __name__: str, optional, if data is a filepath the name will be the name of the file
+  - __fps__: int, optional, frames per second
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __content_type__: str, optional, default "gif"
+
+
+
+----
+
+### log_audio
+
+
+```python
+tracking.log_audio(data, name=None, sample_rate=44100, step=None, timestamp=None, content_type=None)
+```
+
+
+
+Logs a audio.
+
+```python
+log_audio("path/to/my_audio1"),
+log_audio(name="my_audio2", data=np.arange(np.prod((42,)), dtype=float).reshape((42,)))
+```
+
+- __Args__:
+  - __data__: str or audio data
+  - __name__: str, optional, if data is a filepath the name will be the name of the file
+  - __sample_rate__: int, optional, sample rate in Hz
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __content_type__: str, optional, default "wav"
+
+
+
+----
+
+### log_text
+
+
+```python
+tracking.log_text(name, text, step=None, timestamp=None)
+```
+
+
+
+Logs a text.
+
+```python
+log_text(name="text", text="value")
+```
+
+- __Args__:
+  - __name__: str, name
+  - __text__: str, text value
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_html
+
+
+```python
+tracking.log_html(name, html, step=None, timestamp=None)
+```
+
+
+
+Logs an html.
+
+```python
+log_html(name="text", html="<p>value</p>")
+```
+
+- __Args__:
+  - __name__: str, name
+  - __html__: str, text value
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_np_histogram
+
+
+```python
+tracking.log_np_histogram(name, values, counts, step=None, timestamp=None)
+```
+
+
+
+Logs a numpy histogram.
+
+```python
+values, counts = np.histogram(np.random.randint(255, size=(1000,)))
+log_np_histogram(name="histo1", values=values, counts=counts, step=1)
+```
+
+- __Args__:
+  - __name__: str, name
+  - __values__: np.array
+  - __counts__: np.array
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_histogram
+
+
+```python
+tracking.log_histogram(name, values, bins, max_bins=None, step=None, timestamp=None)
+```
+
+
+
+Logs a histogram.
+
+```python
+log_histogram(
+    name="histo",
+    values=np.arange(np.prod((1024,)), dtype=float).reshape((1024,)),
+    bins="auto",
+    step=1
+)
+```
+
+- __Args__:
+  - __name__: str, name
+  - __values__: np.array
+  - __bins__: int or str
+  - __max_bins__: int, optional
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_model
+
+
+```python
+tracking.log_model(path, name=None, framework=None, summary=None, step=None, timestamp=None, rel_path=None, skip_hash_calculation=False)
+```
+
+
+
+Logs a model or a versioned model if a step value is provided.
+
+This method will:
+ * save the model
+ * several versions of the model and create an event file if the step is provided.
+
+> **Note 1**: This method does a couple of things:
+>  * It moves the model under the outputs or the assets directory if the step is provided
+>  * If the step is provided it creates an event file
+>  * It creates a lineage reference to the model or to the event file if the step is provided
+
+> **Note 2**: If you need to have more control over where the model should be saved and
+> only record a lineage information of that path you can use `log_model_ref`.
+
+- __Args__:
+  - __path__: str, path to the model to log.
+  - __name__: str, name to give to the model.
+  - __framework__: str, optional ,name of the framework.
+  - __summary__: Dict, optional, key, value information about the model.
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __rel_path__: str, relative path where to store the model.
+  - __skip_hash_calculation__: optional, flag to instruct the client to skip hash calculation.
+
+
+
+----
+
+### log_dataframe
+
+
+```python
+tracking.log_dataframe(df, name, content_type='csv', step=None, timestamp=None)
+```
+
+
+
+Logs a dataframe.
+
+- __Args__:
+  - __df__: the dataframe to save
+  - __name__: str, optional, if not provided the name of the file will be used.
+  - __content_type__: str, optional, csv or html.
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_artifact
+
+
+```python
+tracking.log_artifact(path, name=None, kind=None, summary=None, step=None, timestamp=None, rel_path=None, skip_hash_calculation=False)
+```
+
+
+
+Logs a generic artifact or a versioned generic artifact if a step value is provided.
+
+This method will:
+ * save the artifact
+ * several versions of the artifact and create an event file if the step is provided.
+
+> **Note 1**: This method does a couple things:
+>  * It moves the artifact under the outputs or the assets directory if the step is provided
+>  * If the step is provided it creates an event file
+>  * It creates a lineage reference to the artifact or to the event file if the step is provided
+
+> **Note 2**: If you need to have more control over where the artifact should be saved and
+> only record a lineage information of that path you can use `log_artifact_ref`.
+
+- __Args__:
+  - __path__: str, path to the artifact.
+  - __name__: str, optional, if not provided the name of the file will be used.
+  - __kind__: optional, str
+  - __summary__: Dict, optional,
+        additional summary information to log about data in the lineage table.
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __rel_path__: str, relative path where to store the artifacts.
+  - __skip_hash_calculation__: optional, flag to instruct the client to skip hash calculation
+
+
+
+----
+
+### log_roc_auc_curve
+
+
+```python
+tracking.log_roc_auc_curve(name, fpr, tpr, auc=None, step=None, timestamp=None)
+```
+
+
+
+Logs ROC/AUC curve. This method expects an already processed values.
+
+```python
+log_roc_auc_curve("roc_value", fpr, tpr, auc=0.6, step=1)
+```
+- __Args__:
+  - __name__: str, name of the curve
+  - __fpr__: List[float] or numpy.array, false positive rate
+  - __tpr__: List[float] or numpy.array, true positive rate
+  - __auc__: float, optional, calculated area under curve
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_sklearn_roc_auc_curve
+
+
+```python
+tracking.log_sklearn_roc_auc_curve(name, y_preds, y_targets, step=None, timestamp=None, is_multi_class=False)
+```
+
+
+
+Calculates and logs ROC/AUC curve using sklearn.
+
+```python
+log_sklearn_roc_auc_curve("roc_value", y_preds, y_targets, step=10)
+```
+
+If you are logging a multi-class roc curve, you should set
+`is_multi_class=True` to allow persisting curves for all classes.
+
+- __Args__:
+  - __name__: str, name of the curve
+  - __y_preds__: List[float] or numpy.array
+  - __y_targets__: List[float] or numpy.array
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __is_multi_class__: bool, optional
+
+
+
+----
+
+### log_pr_curve
+
+
+```python
+tracking.log_pr_curve(name, precision, recall, average_precision=None, step=None, timestamp=None)
+```
+
+
+
+Logs PR curve. This method expects an already processed values.
+
+```python
+log_pr_curve("pr_value", precision, recall, step=10)
+```
+
+- __Args__:
+  - __name__: str, name of the curve
+  - __y_preds__: List[float] or numpy.array
+  - __y_targets__: List[float] or numpy.array
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_sklearn_pr_curve
+
+
+```python
+tracking.log_sklearn_pr_curve(name, y_preds, y_targets, step=None, timestamp=None, is_multi_class=False)
+```
+
+
+
+Calculates and logs PR curve using sklearn.
+
+```python
+log_sklearn_pr_curve("pr_value", y_preds, y_targets, step=10)
+```
+
+If you are logging a multi-class roc curve, you should set
+`is_multi_class=True` to allow persisting curves for all classes.
+
+- __Args__:
+  - __name__: str, name of the event
+  - __y_preds__: List[float] or numpy.array
+  - __y_targets__: List[float] or numpy.array
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __is_multi_class__: bool, optional
+
+
+
+----
+
+### log_curve
+
+
+```python
+tracking.log_curve(name, x, y, annotation=None, step=None, timestamp=None)
+```
+
+
+
+Logs a custom curve.
+
+```python
+log_curve("pr_value", x, y, annotation="more=info", step=10)
+```
+
+- __Args__:
+  - __name__: str, name of the curve
+  - __x__: List[float] or numpy.array
+  - __y__: List[float] or numpy.array
+  - __annotation__: str, optional
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_confusion_matrix
+
+
+```python
+tracking.log_confusion_matrix(name, x, y, z=None, step=None, timestamp=None)
+```
+
+
+
+Logs a custom curve.
+
+```python
+z = [[0.1, 0.3, 0.5, 0.2],
+     [1.0, 0.8, 0.6, 0.1],
+     [0.1, 0.3, 0.6, 0.9],
+     [0.6, 0.4, 0.2, 0.2]]
+
+x = ['healthy', 'multiple diseases', 'rust', 'scab']
+y = ['healthy', 'multiple diseases', 'rust', 'scab']
+log_confusion_matrix("confusion_test", x, y, z, step=11)
+```
+
+- __Args__:
+  - __name__: str, name of the curve
+  - __x__: List[float] or List[str] or numpy.array
+  - __x__: List[float] or List[str] or numpy.array
+  - __z__: List[List[float]] or List[List[str]] or numpy.array
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_plotly_chart
+
+
+```python
+tracking.log_plotly_chart(name, figure, step=None, timestamp=None)
+```
+
+
+
+Logs a plotly chart/figure.
+
+- __Args__:
+  - __name__: str, name of the figure
+  - __figure__: plotly.figure
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_bokeh_chart
+
+
+```python
+tracking.log_bokeh_chart(name, figure, step=None, timestamp=None)
+```
+
+
+
+Logs a bokeh chart/figure.
+
+- __Args__:
+  - __name__: str, name of the figure
+  - __figure__: bokeh.figure
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_altair_chart
+
+
+```python
+tracking.log_altair_chart(name, figure, step=None, timestamp=None)
+```
+
+
+
+Logs a vega/altair chart/figure.
+
+- __Args__:
+  - __name__: str, name of the figure
+  - __figure__: figure
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+
+
+
+----
+
+### log_mpl_plotly_chart
+
+
+```python
+tracking.log_mpl_plotly_chart(name, figure, step=None, timestamp=None, close=True, fallback_to_image=True)
+```
+
+
+
+Logs a matplotlib figure to plotly figure.
+
+- __Args__:
+  - __name__: str, name of the figure
+  - __figure__: figure
+  - __step__: int, optional
+  - __timestamp__: datetime, optional
+  - __close__: bool, optional, default True
+  - __fallback_to_image__: bool, optional, default True
+
+
+
+----
+
+### set_description
+
+
+```python
+tracking.set_description(description, async_req=True)
+```
+
+
+
+Sets a new description for the current run.
+
+- __Args__:
+  - __description__: str, the description to set.
+  - __async_req__: bool, optional, default: False, execute request asynchronously.
+
+
+
+----
+
+### set_name
+
+
+```python
+tracking.set_name(name, async_req=True)
+```
+
+
+
+Sets a new name for the current run.
+
+- __Args__:
+  - __name__: str, the name to set.
+  - __async_req__: bool, optional, default: False, execute request asynchronously.
+
+
+
+----
+
+### log_status
+
+
+```python
+tracking.log_status(status, reason=None, message=None, last_transition_time=None, last_update_time=None)
+```
+
+
+
+Logs a new run status.
+
+<blockquote className="info">
+- __<strong>Note</strong>__: If you are executing a managed run, you don't need to call this method manually.
+This method is only useful for manual runs outside of Polyaxon.
+</blockquote>
+
+N.B you will probably use one of the simpler methods:
+  * log_succeeded
+  * log_stopped
+  * log_failed
+  * start
+  * end
+
+[Run API](/docs/api/#operation/CreateRunStatus)
+
+- __Args__:
+  - __status__: str, a valid [Statuses](/docs/scheduling/specification/lifecycle/) value.
+  - __reason__: str, optional, reason or service issuing the status change.
+  - __message__: str, optional, message to log with this status.
+  - __last_transition_time__: datetime, default `now`.
+  - __last_update_time__: datetime, default `now`.
+
+
+
+----
+
+### log_inputs
+
+
+```python
+tracking.log_inputs(reset=False, async_req=True)
+```
+
+
+
+Logs or resets new inputs/params for the current run.
+
+
+> **Note**: If you are starting a run from the CLI/UI
+> polyaxon will track all inputs from the Polyaxonfile,
+> so you generally don't need to set them manually.
+> But you can always add or reset these params/inputs once your code starts running.
+
+- __Args__:
+  - __reset__: bool, optional, if True, it will reset the whole inputs state.
+        Note that Polyaxon will automatically populate the inputs based
+        on the Polyaxonfile inputs definition and params passed.
+  - __async_req__: bool, optional, default: False, execute request asynchronously.
+  - __inputs__: **kwargs, e.g. param1=value1, param2=value2, ...
+
+
+
+----
+
+### log_outputs
+
+
+```python
+tracking.log_outputs(reset=False, async_req=True)
+```
+
+
+
+Logs a new outputs/results for the current run.
+
+
+- __Args__:
+  - __reset__: bool, optional, if True, it will reset the whole outputs state.
+        Note that Polyaxon will automatically populate some outputs based
+        on the Polyaxonfile outputs definition and params passed.
+  - __async_req__: bool, optional, default: False, execute request asynchronously.
+  - __outputs__: **kwargs, e.g. output1=value1, metric2=value2, ...
+
+
+
+----
+
+### log_tags
+
+
+```python
+tracking.log_tags(tags, reset=False, async_req=True)
+```
+
+
+
+Logs new tags for the current run.
+
+- __Args__:
+  - __tags__: str or List[str], tag or tags to log.
+  - __reset__: bool, optional, if True, it will reset the whole tags state.
+        Note that Polyaxon will automatically populate the tags based
+        on the Polyaxonfile.
+  - __async_req__: bool, optional, default: False, execute request asynchronously.
+
+
+
+----
+
+### log_meta
+
+
+```python
+tracking.log_meta(reset=False, async_req=True)
+```
+
+
+
+Logs meta_info for the current run.
+
+> **Note**: Use carefully! The meta information is used by
+> Polyaxon internally to perform several information.
+
+Polyaxon Client already uses this method to log information
+about several events and artifacts, Polyaxon API/Scheduler uses
+this information to set meta information about the run.
+
+An example use case for this method is to update the concurrency
+of a pipeline to increase/decrease the initial value:
+```python
+from polyaxon.client import RunClient
+client = RunClient()
+client.log_meta(concurrency=5)
+```
+
+- __Args__:
+  - __reset__: bool, optional, if True, it will reset the whole meta info state.
+  - __async_req__: bool, optional, default: False, execute request asynchronously.
+  - __meta__: **kwargs, e.g. concurrency=10, has_flag=True, ...
+
+
+
+----
+
+### log_progress
+
+
+```python
+tracking.log_progress(value)
+```
+
+
+
+Logs the progress of the run.
+
+In offline
+
+- __Args__:
+  - __value__: float, a value between 0 and 1 representing the percentage of run's progress.
+
+
+
+----
+
+### log_succeeded
+
+
+```python
+tracking.log_succeeded(reason=None, message='Operation has succeeded')
+```
+
+
+
+Sets the current run to `succeeded` status.
+
+<blockquote className="info">
+- __<strong>Note</strong>__: If you are executing a managed run,
+you don't need to call this method manually.
+This method is only useful for manual runs outside of Polyaxon.
+</blockquote>
+
+
+
+----
+
+### log_stopped
+
+
+```python
+tracking.log_stopped(reason=None, message='Operation is stopped')
+```
+
+
+
+Sets the current run to `stopped` status.
+
+<blockquote className="info">
+- __<strong>Note</strong>__: If you are executing a managed run,
+you don't need to call this method manually.
+This method is only useful for manual runs outside of Polyaxon.
+</blockquote>
+
+
+
+----
+
+### log_failed
+
+
+```python
+tracking.log_failed(reason=None, message=None)
+```
+
+
+
+Sets the current run to `failed` status.
+
+<blockquote className="info">
+- __<strong>Note</strong>__: If you are executing a managed run, you don't need to call this method manually.
+This method is only useful for manual runs outside of Polyaxon.
+</blockquote>
+
+- __Args__:
+  - __reason__: str, optional, reason or service issuing the status change.
+  - __message__: str, optional, message to log with this status.
+
+
+
+----
+
+### end
+
+
+```python
+tracking.end()
+```
+
+
+
+Manually end a run and trigger post done logic (artifacts and lineage collection).
+
+
+----
+
+### log_model_ref
+
+
+```python
+tracking.log_model_ref(path, name=None, framework=None, summary=None, is_input=False, rel_path=None, skip_hash_calculation=False)
+```
+
+
+
+Logs model reference.
+
+ > **Note**: The difference between this method and the `log_model`
+ > is that this one does not copy or move the asset, it only registers a lineage reference.
+ > If you need the model asset to be on the `artifacts_path` or the `outputs_path`
+ > you have to copy it manually using a relative path to
+ > `self.get_artifacts_path` or `self.get_outputs_path`.
+
+ ```python
+# Get outputs artifact path
+asset_path = tracking.get_outputs_path("model/model_data.h5")
+with open(asset_path, "w") as f:
+    f.write("Artifact content.")
+# Log reference to the lineage table
+# Name of the artifact will default to model_data
+tracking.log_model_ref(path=asset_path)
+```
+
+- __Args__:
+  - __path__: str, filepath, the name is extracted from the filepath.
+  - __name__: str, if the name is passed it will be used instead of the filename from the path.
+  - __framework__: str, optional, name of the framework.
+  - __summary__: Dict, optional, additional summary information to log about data
+        in the lineage table.
+  - __is_input__: bool, if the file reference is an input or outputs.
+  - __rel_path__: str, optional relative path to the run artifacts path.
+  - __skip_hash_calculation__: optional, flag to instruct the client to skip hash calculation.
+
+
+
+----
+
+### log_code_ref
+
+
+```python
+tracking.log_code_ref(code_ref=None, is_input=True)
+```
+
+
+
+Logs code reference as a
+lineage information with the code_ref dictionary in the summary field.
+
+- __Args__:
+  - __code_ref__: dict, optional, if not provided,
+        Polyaxon will detect the code reference from the git repo in the current path.
+  - __is_input__: bool, if the code reference is an input or outputs.
+
+
+
+----
+
+### log_data_ref
+
+
+```python
+tracking.log_data_ref(name, hash=None, path=None, content=None, summary=None, is_input=True, skip_hash_calculation=False)
+```
+
+
+
+Logs data reference.
+
+- __Args__:
+  - __name__: str, name of the data.
+  - __hash__: str, optional, default = None, the hash version of the data,
+        if not provided it will be calculated based on the data in the content.
+  - __path__: str, optional, path of where the data is coming from.
+  - __summary__: Dict, optional, additional summary information to log about data
+        in the lineage table.
+  - __is_input__: bool, optional, if the data reference is an input or outputs.
+  - __content__: optional, if the data content is passed, polyaxon will calculate the hash.
+  - __skip_hash_calculation__: optional, flag to instruct the client to skip hash calculation.
+
+
+
+----
+
+### log_file_ref
+
+
+```python
+tracking.log_file_ref(path, name=None, hash=None, content=None, summary=None, is_input=False, rel_path=None, skip_hash_calculation=False)
+```
+
+
+
+Logs file reference.
+
+- __Args__:
+  - __path__: str, filepath, the name is extracted from the filepath.
+  - __name__: str, if the name is passed it will be used instead of the filename from the path.
+  - __hash__: str, optional, default = None, the hash version of the file,
+        if not provided it will be calculated based on the file content.
+  - __content__: the file content.
+  - __summary__: Dict, optional, additional summary information to log about data
+        in the lineage table.
+  - __is_input__: bool, if the file reference is an input or outputs.
+  - __rel_path__: str, optional relative path to the run artifacts path.
+  - __skip_hash_calculation__: optional, flag to instruct the client to skip hash calculation.
+
+
+
+----
+
+### log_dir_ref
+
+
+```python
+tracking.log_dir_ref(path, name=None, hash=None, summary=None, is_input=False, rel_path=None, skip_hash_calculation=False)
+```
+
+
+
+Logs dir reference.
+
+- __Args__:
+  - __path__: str, dir path, the name is extracted from the path.
+  - __name__: str, if the name is passed it will be used instead of the dirname from the path.
+  - __hash__: str, optional, default = None, the hash version of the file,
+        if not provided it will be calculated based on the file content.
+  - __summary__: Dict, optional, additional summary information to log about data
+        in the lineage table.
+  - __is_input__: bool, if the dir reference is an input or outputs.
+  - __rel_path__: str, optional relative path to the run artifacts path.
+  - __skip_hash_calculation__: optional, flag to instruct the client to skip hash calculation.
+
+
+
+----
+
+### log_artifact_lineage
+
+
+```python
+tracking.log_artifact_lineage(body)
+```
+
+
+
+Logs an artifact lineage.
+
+> **Note**: This method can be used to log manual lineage objects, it is used internally
+> to log model/file/artifact/code refs
+
+- __Args__:
+  - __body__: dict or List[dict] or V1RunArtifact or List[V1RunArtifact], body of the lineage.
+  - __async_req__: bool, optional, default: False, execute request asynchronously.
+
+
+
+----
+
+### log_env
+
+
+```python
+tracking.log_env(rel_path=None, content=None)
+```
+
+
+
+Logs information about the environment.
+
+Called automatically if track_env is set to True.
+
+Can be called manually, and can accept a custom content as a form of a dictionary.
+
+- __Args__:
+  - __rel_path__: str, optional, default "env.json".
+  - __content__: Dict, optional, default to current system information.
+
+
+
+----
+
+### set_artifacts_path
+
+
+```python
+tracking.set_artifacts_path(artifacts_path, is_related=False)
+```
+
+
+
+Sets the root artifacts_path.
+
+> **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
+> Be careful, this method is called automatically. Polyaxon has some processes
+> to automatically sync your run's artifacts and outputs.
+
+- __Args__:
+  - __artifacts_path__: str, optional
+  - __is_related__: bool, optional,
+        To create multiple runs in-cluster in a notebook or a vscode session.
+
+
+
+----
+
+### set_run_event_logger
+
+
+```python
+tracking.set_run_event_logger()
+```
+
+
+
+Sets an event logger.
+
+> **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
+> Be careful, this method is called automatically. Polyaxon has some processes
+> to automatically sync your run's artifacts and outputs.
+
+
+
+----
+
+### set_run_resource_logger
+
+
+```python
+tracking.set_run_resource_logger()
+```
+
+
+
+Sets an resources logger.
+
+> **Note**: Both `in-cluster` and `offline` modes will call this method automatically.
+> Be careful, this method is called automatically. Polyaxon has some processes
+> to automatically sync your run's artifacts and outputs.
+
+
+
+----
+
+### sync_events_summaries
+
+
+```python
+tracking.sync_events_summaries(last_check, events_path)
+```
+
+
+
+Syncs all tracked events and auto-generates summaries and lineage data.
+
+> **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
+> automatically, so you should not call this method manually.
+
+

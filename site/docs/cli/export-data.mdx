@@ -1,0 +1,51 @@
+---
+title: Export Data
+sidebarTitle: Export Data
+description: Export your Polyaxon data from the UI for analysis, reporting, and integration with external tools.
+---
+
+# Export Data Options
+
+Export your Polyaxon data for analysis, reporting, model comparison, or integration with external tools.
+
+Most tables in Polyaxon support batch exports, including operations, metrics, model versions, and audit logs. All filters applied to the table will be applied to the export.
+
+Custom column configuration in the frontend does not affect the exported data — all columns are always exported.
+
+Available export formats:
+
+- CSV
+- JSON
+
+{/* ![Export data from UI](/images/docs/export-from-ui.png) */}
+
+## Pull Commands via CLI
+
+The Polyaxon CLI provides `pull` commands to download data locally for offline analysis, backup, or migration.
+
+```bash
+# Pull operation data (logs, artifacts, metrics)
+polyaxon ops pull -p <project> -uid <run_uuid> --path <local_path>
+
+# Pull all operations matching a query
+polyaxon ops pull -p <project> --query "status:succeeded" --path <local_path>
+
+# Pull model versions
+polyaxon models pull -p <project> --path <local_path>
+
+# Pull a specific model version
+polyaxon models pull -p <project> -ver <version> --path <local_path>
+
+# Pull component versions
+polyaxon components pull -p <project> --path <local_path>
+
+# Pull artifact versions
+polyaxon artifacts pull -p <project> --path <local_path>
+```
+
+## Alternatives
+
+You can also export data via:
+
+- [SDKs/API](/docs/api) — Programmatic access using Polyaxon SDKs or API
+- [CLI](/docs/cli/overview) — Full CLI reference for managing Polyaxon resources

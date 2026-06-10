@@ -1,0 +1,48 @@
+---
+title: Transactional Emails (self-hosted)
+description: Learn how to configure transactional emails for your self-hosted Polyaxon deployment.
+label: "Version: v3"
+sidebarTitle: "Transactional Emails"
+---
+
+# Transactional Email
+
+Optionally, you can configure an SMTP server to send transactional emails.
+These are used for password resets, organization invitations, and notifications.
+
+## Helm Chart Configuration
+
+Enable email in your `config.yaml`:
+
+```yaml
+email:
+  enabled: true
+  host: "smtp.example.com"
+  port: 587
+  useTls: true
+  from: "noreply@example.com"
+  subjectPrefix: "[Polyaxon]"
+  hostUser: "apikey"
+  hostPassword: "your-smtp-password"
+  # backend: "django.core.mail.backends.smtp.EmailBackend"  # default
+```
+
+## Environment Variables
+
+If you are not using the Helm chart (e.g. Docker Compose), you can configure email via environment variables on the API containers:
+
+| Variable                       | Description                                                        | Default          |
+| ------------------------------ | ------------------------------------------------------------------ | ---------------- |
+| `POLYAXON_EMAIL_HOST`          | SMTP server hostname.                                              | `localhost`      |
+| `POLYAXON_EMAIL_PORT`          | SMTP server port.                                                  | `25`             |
+| `POLYAXON_EMAIL_USE_TLS`       | Whether to use TLS for the SMTP connection.                        | `false`          |
+| `POLYAXON_EMAIL_HOST_USER`     | Username for SMTP authentication.                                  | `""`             |
+| `POLYAXON_EMAIL_HOST_PASSWORD` | Password for SMTP authentication.                                  | `""`             |
+| `POLYAXON_EMAIL_FROM`          | From address for outgoing email.                                   | `<Polyaxon>`     |
+| `POLYAXON_EMAIL_SUBJECT_PREFIX`| Prefix added to all email subjects.                                | `[Polyaxon]`     |
+| `POLYAXON_EMAIL_BACKEND`       | Django email backend class. Override for custom backends.          | SMTP (default)   |
+
+## FAQ
+
+- **Which SMTP service to use?** Use a reputable transactional email service to ensure delivery. If you do not have a preferred provider, try [Resend](https://resend.com/) or [Postmark](https://postmarkapp.com/). Most cloud providers also offer SMTP services (e.g. AWS SES, GCP).
+- **Can I use my private inbox?** No, private inboxes (like Gmail) are generally not recommended and difficult to configure correctly.

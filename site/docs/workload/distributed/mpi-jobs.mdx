@@ -1,0 +1,129 @@
+---
+title: "MPI-Job Specification"
+description: "Kubeflow MPI-Job provides an interface to train distributed experiments with MPI."
+---
+
+## V1MPIJob
+
+```python
+polyaxon._flow.run.kubeflow.mpi_job.V1MPIJob()
+```
+
+
+Kubeflow MPI-Job provides an interface to train distributed experiments with MPI.
+
+- __Args__:
+  - __kind__: str, should be equal `mpijob`
+  - __clean_pod_policy__: str, one of [`All`, `Running`, `None`]
+  - __scheduling_policy__: [V1SchedulingPolicy](/docs/workload/distributed/kubeflow-scheduling-policy/), optional  
+  - __slots_per_worker__: int, optional
+  - __launcher__: [V1KFReplica](/docs/workload/distributed/kubeflow-replica/), optional
+  - __worker__: [V1KFReplica](/docs/workload/distributed/kubeflow-replica/), optional
+
+## YAML usage
+
+```yaml
+run:
+  kind: mpijob
+  cleanPodPolicy:
+  schedulingPolicy:
+  slotsPerWorker:
+  launcher:
+  worker:
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import V1KFReplica, V1MPIJob
+mpi_job = V1MPIJob(
+    clean_pod_policy='All',
+    launcher=V1KFReplica(...),
+    worker=V1KFReplica(...),
+)
+```
+
+## Fields
+
+### kind
+
+The kind signals to the CLI, client, and other tools that this
+component's runtime is a mpijob.
+
+If you are using the python client to create the runtime,
+this field is not required and is set by default.
+
+```yaml
+run:
+  kind: mpijob
+```
+
+### cleanPodPolicy
+
+Controls the deletion of pods when a job terminates.
+The policy can be one of the following values: [`All`, `Running`, `None`]
+
+
+```yaml
+run:
+  kind: mpijob
+  cleanPodPolicy: 'All'
+ ...
+```
+
+### schedulingPolicy
+
+SchedulingPolicy encapsulates various scheduling policies of the distributed training
+job, for example `minAvailable` for gang-scheduling.
+
+
+```yaml
+run:
+  kind: mpijob
+  schedulingPolicy:
+    ...
+ ...
+```
+
+ ### slotsPerWorker
+
+Specifies the number of slots per worker used in hostfile.
+Defaults to `1`.
+
+
+```yaml
+run:
+  kind: mpijob
+  slotsPerWorker: 2
+ ...
+```
+
+### launcher
+
+The launcher replica in the distributed mpijob, automatica
+
+```yaml
+run:
+  kind: mpijob
+  master:
+    replicas: 1
+    container:
+      ...
+ ...
+```
+
+### worker
+
+The workers do the actual work of training the model.
+
+```yaml
+run:
+  kind: mpijob
+  worker:
+    replicas: 3
+    container:
+      ...
+ ...
+```
+
+

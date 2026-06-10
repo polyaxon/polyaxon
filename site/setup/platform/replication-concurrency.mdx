@@ -1,0 +1,130 @@
+---
+title: "Replication & Concurrency"
+description: "Polyaxon supports scaling of its services (API and workers) in a horizontal way using replication, and the user can increase the workers' concurrency for higher throughput."
+---
+
+Polyaxon supports scaling of its services (API and workers) in a horizontal way using replication, and the user can increase the workers' concurrency for higher throughput.
+
+## Component Overview
+
+| Component      | Role                                         | Scalable |
+| -------------- | -------------------------------------------- | -------- |
+| **Gateway**    | API server, reverse proxy, artifact streaming | Yes      |
+| **Scheduler**  | Operation scheduling and lifecycle management | Yes      |
+| **Compiler**   | Polyaxonfile compilation and validation       | Yes      |
+| **Worker**     | Background tasks (notifications, cleanup)     | Yes      |
+| **Beat**       | Periodic task scheduling (single instance)    | No       |
+| **Agent**      | Kubernetes workload management                | No       |
+| **Operator**   | CRD controller for operations                 | No       |
+
+## Default Resource Requirements
+
+| Component      | CPU Request | CPU Limit | Memory Request | Memory Limit |
+| -------------- | ----------- | --------- | -------------- | ------------ |
+| **Gateway**    | 1000m       | 6000m     | 2000Mi         | 8000Mi       |
+| **Scheduler**  | 200m        | 650m      | 200Mi          | 1000Mi       |
+| **Compiler**   | 200m        | 400m      | 200Mi          | 600Mi        |
+| **Worker**     | 200m        | 400m      | 200Mi          | 600Mi        |
+| **Agent**      | 100m        | 500m      | 100Mi          | 2000Mi       |
+| **Beat**       | 50m         | 160m      | 128Mi          | 256Mi        |
+| **Operator**   | 100m        | 200m      | 50Mi           | 256Mi        |
+
+These are the defaults from the Helm chart. Adjust based on your workload.
+
+## Services Replication
+
+To replicate the platform or one of the services (API or workers),
+you just need to modify the `replicas` field of that service you want to scale horizontally.
+
+> There's an hpa for horizontal pod auto-scaling that can be enabled for all services
+
+## Gateway
+
+```yaml
+gateway:
+  replicas: 3
+```
+
+The gateway also supports a `concurrency` setting that controls the base number of worker processes per pod, and `perCore` multiplies it by the number of available CPU cores:
+
+```yaml
+gateway:
+  concurrency: 2
+  perCore: true
+```
+
+For example, with `concurrency: 2` and `perCore: true` on a 4-core node, the gateway runs 8 worker processes per pod.
+
+## Scheduler
+
+```yaml
+scheduler:
+  replicas: 3
+```
+
+## Compiler
+
+```yaml
+compiler:
+  replicas: 2
+```
+
+## Worker
+
+```yaml
+worker:
+  replicas: 3
+```
+
+## Concurrency
+
+Replication might be easier to scale Polyaxon, but it comes at a memory cost, as it's not always efficient,
+Polyaxon provides a way to scale its services' concurrency as well,
+the rule of thumb is to set the concurrency of the worker you wish to scale to the number of cores available.
+This will allow to reduce the memory footprint on your cluster and allow the worker to consume more events/tasks.
+
+For example you may want to increase the concurrency of the scheduler:
+
+```yaml
+scheduler:
+  replicas: 2
+  concurrency: 10
+worker:
+  replicas: 2
+  concurrency: 5
+```
+
+This will create 2 replicas for the scheduler, with 10 concurrent processes each.
+
+## Operator
+
+Increasing the operator's concurrent reconciles:
+
+```yaml
+operator:
+  maxConcurrentReconciles: 16  # default: 8
+```
+
+## Scaling Recommendations
+
+### Small (up to 50 concurrent operations)
+
+Use defaults. A single replica of each component is sufficient.
+
+### Medium (50-500 concurrent operations)
+
+- Gateway: 2-3 replicas
+- Scheduler: 2 replicas
+- External [PostgreSQL](/setup/platform/postgresql-ha) with persistence
+- External [Redis](/setup/platform/redis-ha)
+
+### Large (500+ concurrent operations)
+
+- Gateway: 3+ replicas
+- Scheduler: 3+ replicas
+- Compiler: 2+ replicas
+- Worker: 2+ replicas
+- External [PostgreSQL](/setup/platform/postgresql-ha) (high-availability)
+- External [Redis](/setup/platform/redis-ha)
+- Dedicated node pools for control plane components
+- Consider [multi-namespace](/setup/deployment-strategies/strategies) or [multi-cluster](/setup/deployment-strategies/strategies) deployment strategies

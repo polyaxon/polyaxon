@@ -1,0 +1,45 @@
+---
+title: Networking (self-hosted)
+description: Learn how to configure networking for your self-hosted Polyaxon deployment. Polyaxon can be run without internet access.
+label: "Version: v3"
+sidebarTitle: "Networking"
+---
+
+# Networking
+
+Polyaxon can be deployed in a VPC or on-premises in high-security environments. This guide covers the networking requirements and considerations.
+
+Architecture diagram (from [architecture overview](/setup#architecture)):
+
+import ArchitectureDiagram from "@/components-mdx/architecture-diagram-v3.mdx";
+
+<ArchitectureDiagram />
+
+## Network Exposure & Service Configuration
+
+Only the Polyaxon API/Gateway service needs to be accessible by users, the CLI, and SDKs.
+This can optionally be placed behind a firewall, proxy, or VPN.
+
+A network load balancer is typically used to expose the gateway service and handle SSL termination ([docs](/setup/platform/encryption)).
+
+Polyaxon is designed to be exposed publicly as a web service.
+This is penetration tested and secure by design as the Polyaxon Team runs the same containers for the managed Polyaxon Cloud offering.
+See [security documentation](/security) of Polyaxon Cloud for more details.
+
+## Internal Connectivity
+
+The following internal connections are required within the cluster:
+
+  * The **API and scheduler** services need access to the PostgreSQL database and the cache (Redis or RabbitMQ).
+  * The **Polyaxon Agent** needs access to the Kubernetes API server to create and manage workloads.
+  * The **Agent and workloads** need access to the configured artifacts store (e.g. S3, GCS, Azure Blob Storage, or a local/NFS volume).
+  * When using a [multi-namespace](/setup/deployment-strategies/strategies#multi-namespace-deployment) or [multi-cluster](/setup/deployment-strategies/strategies#multi-cluster-deployment) setup, each agent needs network connectivity back to the control plane API.
+
+## Internet Access
+
+Polyaxon does not require internet access and can run fully air-gapped.
+
+Internet access is only needed if you want to:
+
+  * Pull container images from public registries (can be mirrored to a private registry instead).
+  * Use Polyaxon's version update check, which queries the Polyaxon API for new releases. If internet access is not available, this check fails gracefully.

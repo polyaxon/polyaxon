@@ -1,0 +1,254 @@
+---
+title: "Release notes for v2.0"
+description: "Polyaxon release notes, migrations, and deprecation notes for v2.0.x."
+author: Polyaxon
+---
+> **N.B.**: If you are upgrading from polyaxon v1.x, please check the [migration guide](/docs/resources/migration/#migration-from-v1x-to-v2y).
+
+## V2.0.6
+
+### Deployment
+
+ * *Enhancement*: Allow customizing the concurrency/workers of the streams and server pods.
+ * *Enhancement*: Allow disabling concurrency per core for the streams and server pods.
+
+### Core
+
+ * *Enhancement*: Enable continuous monitoring of logs and specs to prevent complete loss in case of preemption or unhandled crashes.
+ * *Enhancement*: Update fs backend versions.
+ * **Security**: Fix CVE issues.
+
+### Sidecar
+
+ * *Enhancement*: Update sidecar logic to use save temp logs as non csv format.
+
+## V2.0.5
+
+### Operator
+
+ * *Enhancement*: Use latest sdk version.
+
+### Sidecar
+
+ * *Fix*: Issue with local file system session closing.
+
+## V2.0.4
+
+ * Same release as v2.0.3 but with a new version number to avoid confusion with the corrupted release.
+
+## V2.0.3 [corrupted]
+
+### Core
+
+ * *Fix*: Regression in git initializer.
+
+### Commercial
+
+ * **Fix**: Regression in email sending.
+ * **Security**: Fix CVE issues.
+
+## V2.0.2
+
+### Core
+
+ * *Fix*: Issue with validation and patching for host connection schemas and git connection schemas.
+ * *Fix*: Regression in some docstrings.
+
+### Agent
+
+ * *Fix*: Issue with converter raising error during connection resolution for git connections.
+
+## V2.0.1
+
+### Core
+ * **Enhancement**: Fix artifact tree proto definition.
+ * **Enhancement**: Update version of packages.
+ * **Security**: Fix CVE issues.
+
+### Deployment
+ * **Enhancement**: Update health and probe checks for all deployments.
+ * **Enhancement**: Improve deployment process.
+
+### Commercial
+ * **Enhancement**: Improve packaging of commercial components.
+ * **Fix**: Regression with deeply nested graphs/matrices not correctly stopped on deletion.
+ * **Fix**: Issue with cloud viewable cross project items.
+ * **Security**: Fix CVE issues.
+
+## V2.0.0
+
+### CLI
+
+ * **Beta**: Command to start new local sandbox `plx sandbox`.
+ * **Beta**: Remove `eager` mode in favor of `local` mode.
+ * **New**: Command to render local run package based on path `plx ops dashboard --offline --path path/to/offline -uid UUID`.
+ * **New**: New environment variable `expot POLYAXON_HOME=path/to/context` or config setting `polyaxon config set --home=path/to/context` to allow configuring multiple contexts for managing global configurations.
+ * **Enhancement**: Improve `plx ops restart/resume` with a new `--recompile` flag to allow passing a full polyaxonfile specification instead of an override.
+ * **Enhancement**: Allow resuming and overriding the operation's name, desc, and tags.
+ * **Enhancement**: Improve CLI errors handling and printing.
+ * **Enhancement**: Improve logging to simplify debugging and detecting issues.
+ * **Enhancement**: Improve cli `plx run -w` and `plx ops statuses --watch` to print the correct timestamps.
+ * **Enhancement**: Improve cli `plx ops` commands with offline flag to consume persisted runs.
+ * **Enhancement**: Improve cli `plx admin` deploy and upgrade commands.
+ * **Fix**: Issue with `plx ops run -l` and `plx ops logs` for distributed runs.
+
+### Core
+
+ * **Deprecate**: `isList`, users should use `List[...]` instead. **no breaking changes**.
+ * **Deprecate**: `options`, users should use `validation` instead. **no breaking changes**.
+ * **Beta**: Add basic `async` client.
+ * **New**: Expose full type hints on polyaxonfile specification inputs/outputs definition.
+ * **New**: Add new `set_readme` method on run client.
+ * **New**: Add new `viewer` mode that allows writing, reading, and interacting with persisted runs.
+ * **New**: Add logic to support multiports for services.
+ * **New**: Allow to manually add upstream/downstream runs to track custom pipelines/traces.
+ * **New**: Add logic to skip runs in DAGs/Matrices.
+ * **New**: Add actors information to stages/statuses manually set by a user.
+ * **New**: Automatically pass down uploaded artifacts to runs in a pipeline (Matrix/DAG/Schedule).
+ * **Breaking**: Drop support for all python versions below 3.7.
+ * **Enhancement**: Make all libraries compatible with Python 3.11.
+ * **Enhancement**: Rework the schema and validation layer based on `pydantic`.
+ * **Enhancement**: Improve typing and type hints.
+ * **Enhancement**: Add validation and auto-truncation for container names to prevent issues with Kubernetes 63 characters limit.
+ * **Enhancement**: Increase artifact's name length to allow longer names.
+ * **Enhancement**: Make logs collection internal.
+ * **Enhancement**: Improve deprecation and warning logic.
+ * **Enhancement**: Update file system backends (GCS, Azure, S3, Minio, NFS, ...).
+ * **Enhancement**: Improve compatibility logic and warning about CLI versions ahead of server versions.
+ * **Enhancement**: Improve inspection to include services definitions.
+ * **Enhancement**: Speed up events loading, saving, and streaming logic.
+ * **Enhancement**: Improve artifact deletion for runs managed manually.
+ * **Enhancement**: Add support for `base` in log space generator, default base is `10`.
+ * **Enhancement**: Move sdk inside main package and remove unneeded dependency.
+ * **Enhancement**: Improve fs watcher and avoid duplicate memory loading of mappings.
+ * **Enhancement**: Add `is_requested` indicator to `ParamSpec`.
+ * **Enhancement**: Improve validation for mapping values context reference.
+ * **Enhancement**: Add check for additional fields for bulk insertion.
+ * **Enhancement**: Migrate `is_managed` to `managed_by` to allow more flexible runs management.
+ * **Enhancement**: Improve deletion of non managed runs to ensure that artifacts are cleaned from the artifacts store.
+ * **Enhancement**: Add auto-collecting of operation specification.
+ * **Enhancement**: Improve query manager with default filters.
+ * **Enhancement**: Update projects with stats and last update based on the last runs creation.
+ * **Fix**: Issue with params not updated with resume override config.
+ * **Fix**: Issue to avoid nesting folders when updating an uploaded files/directories.
+ * **Fix**: Issue with `acquisition_function` with new scipy versions.
+
+### Agent
+
+ * **New**: Allow multi-namespace management.
+ * **New**: Add support for managing multiple artifacts stores using a single deployment.
+ * **New**: Add support for multi-connections management and mounting of multiple volumes to upload and download artifacts to and from connections other than the artifacts store.
+ * **Beta**: Expose Dask runtime to all distributions.
+ * **Beta**: Expose Ray runtime to all distributions.
+
+### Tracking
+
+ * **Beta**: Add LangChain tracking callback.
+ * **New**: Expose `set_readme` method on tracking module.
+ * **New**: Expose `update` method on tracking module.
+ * **Enhancement**: Update PytorchLightning tracking callback.
+ * **Enhancement**: Improve debugging experience by showing more informative logs when API returns 403/401 errors.
+ * **Enhancement**: When logging a final state for a non-managed operation, the tracking module should automatically collect and end the operation without the need to manually call `.end()`.
+ * **Enhancement**: Upgrade pynvml's version for GPU tracking.
+ * **Enhancement**: Improve log processing and streaming for run managed manually.
+ * **Enhancement**: Improve tensor/array sanitization.
+ * **Enhancement**: Add support for Pandas-2.0 tracking.
+ * **Enhancement**: Fix PytorchLightning tracking callback.
+
+### UI
+
+ * **Beta**: Add traces/spans visualization.
+ * **New**: Add possibility to inspect runs for finished operations to better debug errors.
+ * **New**: Add button to skip runs.
+ * **New**: Show actors set on stages/statuses.
+ * **Enhancement**: Add teams filter to projects, runs, models, artifacts, components table.
+ * **Enhancement**: Add stages filter to models, artifacts, components table.
+ * **Enhancement**: Improve `restart/resume` override config or full polyaxonfile specification.
+ * **Enhancement**: Allow resuming and overriding the operation's name, desc, and tags.
+ * **Enhancement**: Improve UX by adding accordions to the inspection sections and containers.
+ * **Enhancement**: Rename runs' "artifacts" tab to "files" to reduce confusion.
+ * **Enhancement**: Show all containers logs by default.
+ * **Enhancement**: Add global step and smoothing management on dashboard level.
+ * **Enhancement**: Rename run's sidebar artifacts tab to files.
+ * **Enhancement**: Improve logs streaming for manually managed runs.
+ * **Enhancement**: Improve managed by metadata.
+ * **Enhancement**: Update visualization packages: plotly, bokeh, vega/altair.
+ * **Enhancement**: Update vendor packages
+ * **Enhancement**: Improve graph view rendering.
+ * **Enhancement**: Allow hiding sub-paths in the graph view.
+ * **Enhancement**: Speed up loading and rendering.
+ * **Enhancement**: Add a note to the concurrency update modal to explain the behavior when increasing or decreasing the concurrency of a pipeline or a matrix.
+ * **Enhancement**: Add a note to runs transfer modal to prevent transferring active runs.
+ * **Enhancement**: Improve collapse/expand logic to freeze the sidebar without an additional click.
+ * **Enhancement**: Remove the unintuitive lock/unlock button in the sidebar and automatically remember user's choice.
+ * **Enhancement**: Improve hovered/selected nodes in graphs.
+ * **Enhancement**: Improve performance of runs pages.
+ * **Enhancement**: Improve performance of activity-logs pages.
+ * **Enhancement**: Improve performance of analytics pages.
+ * **Enhancement**: Improve UI for dates filters.
+ * **Enhancement**: Add support for jsonl format in files viewer.
+ * **Enhancement**: Add switch between json/yaml in IO raw viewer.
+ * **Enhancement**: Add switch between json/yaml for model/artifact version content
+ * **Fix**: Edge hover color for ops in warning status.
+ * **Fix**: Issue reloading the table after a multi-run deletion when the runs count is less than 10.
+ * **Fix**: Regression in fullscreen visualizations.
+ * **Fix**: Regression in color selector for multirun comparison.
+
+### Operator
+
+ * **New**: Update go version to 1.19 and kubebuilder version to 3.9.0.
+ * **Beta**: Add support for PaddlePaddle operator.
+ * **Beta**: Add support for Ray operator.
+ * **Beta**: Add support for Dask operator.
+ * **Enhancement**: Update training operator to latest version.
+ * **Enhancement**: Better handling of distributed training jobs.
+ * **Enhancement**: Improve reconciliation logic.
+ * **Fix**: Issue with race conditions.
+
+### Docs
+
+ * **New**: New guide to get started with the local sandbox server.
+ * **New**: New deployment guides using:
+   * pip
+   * Docker
+   * Docker compose
+   * Kubernetes
+
+### Deployment
+
+ * **Breaking**: Remove `compressedLogs` on agent config section.
+ * **New**: Add support for agent based deployment in the community edition (CE) to support:
+   * Batch deletion
+   * Batch stopping
+   * Better cleaning of resources
+ * **Beta**: Add new sandbox debugger for running and visualizing on a local machine without any docker requirement.
+ * **Beta**: Allow rendering a local run package based on the offline flag or pulled using the CLI.
+ * **New**: Upgrade platform chart dependency to use postgres/redis/rabbitmq from bitnami.
+ * **New**: Refactor database connector to allow using Postgres and SQLite.
+ * **New**: Refactor proxies to use a single service to expose Gateway, API, and streams endpoint.
+ * **New**: Allow deployment and configuring multiple Polyaxon deployments and gateway accesses.
+ * **Enhancement**: Allow passing custom labels, annotations, priorityClassName to the Helm charts.
+ * **Enhancement**: Improve speed of several core components.
+ * **Enhancement**: Upgrade Python to v3.11 for core component images.
+ * **Enhancement**: Cleanup charts repository and remove all deprecated packages.
+ * **Security**: Fix CVE issues.
+
+### Commercial
+  * **New**: Project and organization info pages redesign.
+  * **New**: Add team filters.
+  * **New**: Add organization level (cross-projects) artifact/component/model versions view similar to organization runs.
+  * **New**: Add control for archive deletion interval per organization and per project.
+  * **New**: Add stats for the number of runs, artifacts, and models per project and per organization.
+  * **New**: Add logic to show active contributors per run, model, artifact, project and per organization.
+  * **Enhancement**: Improve deletion logic.
+  * **Enhancement**: Improve runs table speed and performance.
+  * **Enhancement**: Improve resuming or restarting an operation that is part of a pipeline.
+  * **Enhancement**: Improve cleanup hooks.
+  * **Enhancement**: Add stats calculation and caching for projects and organizations.
+  * **Enhancement**: Make histograms the default analytics view.
+  * **Enhancement**: Improve archive and deletion logic.
+  * **Enhancement**: Always set updated_at on archive/restore logic.
+  * **Enhancement**: Add organization settings to customize archives deletion interval.
+  * **Enhancement**: Add project settings to customize archives deletion interval.
+  * **Fix**: Issue with transferring pipeline or matrix runs between projects.
+  * **Security**: Fix CVE issues.

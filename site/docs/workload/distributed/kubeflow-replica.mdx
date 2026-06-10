@@ -1,0 +1,201 @@
+---
+title: "Kubeflow-Replica Specification"
+description: "Kubeflow-Replica provides an interface to define a replica for TFJob/MPIJob/PytorchJob."
+---
+
+## V1KFReplica
+
+```python
+polyaxon._flow.run.kubeflow.replica.V1KFReplica()
+```
+
+
+Kubeflow-Replica provides an interface to define a replica for
+TFJob/MPIJob/PytorchJob.
+
+- __Args__:
+  - __replicas__: int
+  - __environment__: [V1Environment](/docs/scheduling/specification/environment/), optional
+  - __connections__: List[str], optional
+  - __volumes__: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
+    optional
+  - __init__: List[[V1Init](/docs/scheduling/specification/init/)], optional
+  - __sidecars__: List[[sidecar containers](/docs/scheduling/specification/sidecars/)],
+    optional
+  - __container__: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
+
+## YAML usage
+
+```yaml
+worker:
+  replicas: 2
+  environment:
+  connections:
+  volumes:
+  init:
+  sidecars:
+  container:
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import V1Environment, V1Init, V1KFReplica
+from polyaxon import k8s
+replica = V1KFReplica(
+    replicas=2,
+    environment=V1Environment(...),
+    connections=["connection-name1"],
+    volumes=[k8s.V1Volume(...)],
+    init=[V1Init(...)],
+    sidecars=[k8s.V1Container(...)],
+    container=k8s.V1Container(...),
+)
+```
+
+## Fields
+
+### replicas
+
+The number of processes of this replica type.
+
+```yaml
+worker:
+  replicas: 2
+```
+
+### environment
+
+Optional [environment section](/docs/scheduling/specification/environment/),
+it provides a way to inject pod related information.
+
+```yaml
+worker:
+  environment:
+    labels:
+       key1: "label1"
+       key2: "label2"
+     annotations:
+       key1: "value1"
+       key2: "value2"
+     nodeSelector:
+       node_label: node_value
+     ...
+ ...
+```
+
+### connections
+
+A list of [connection names](/setup/connections/) to resolve for the job.
+
+<blockquote className="light">
+If you are referencing a connection it must be configured.
+All referenced connections will be checked:
+
+ * If they are accessible in the context of the project of this run
+
+ * If the user running the operation can have access to those connections
+</blockquote>
+
+After checks, the connections will be resolved and inject any volumes, secrets, configMaps,
+environment variables for your main container to function correctly.
+
+```yaml
+worker:
+  connections: [connection1, connection2]
+```
+
+### volumes
+
+A list of [Kubernetes Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
+to resolve and mount for your jobs.
+
+This is an advanced use-case where configuring a connection is not an option.
+
+When you add a volume you need to mount it manually to your container(s).
+
+```yaml
+worker:
+  volumes:
+    - name: volume1
+      persistentVolumeClaim:
+        claimName: pvc1
+  ...
+  container:
+    name: myapp-container
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo custom init container']
+    volumeMounts:
+    - name: volume1
+      mountPath: /mnt/vol/path
+```
+
+### init
+
+A list of [init handlers and containers](/docs/scheduling/specification/init/)
+to resolve for the job.
+
+<blockquote className="light">
+If you are referencing a connection it must be configured.
+All referenced connections will be checked:
+
+ * If they are accessible in the context of the project of this run
+
+ * If the user running the operation can have access to those connections
+</blockquote>
+
+```yaml
+worker:
+  init:
+    - artifacts:
+        dirs: ["path/on/the/default/artifacts/store"]
+    - connection: gcs-large-datasets
+      artifacts:
+        dirs: ["data"]
+      container:
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+    - container:
+      name: myapp-container
+      image: busybox:1.28
+      command: ['sh', '-c', 'echo custom init container']
+```
+
+### sidecars
+
+
+A list of [sidecar containers](/docs/scheduling/specification/sidecars/)
+that will be used as sidecars.
+
+```yaml
+worker:
+  sidecars:
+    - name: sidecar2
+      image: busybox:1.28
+      command: ['sh', '-c', 'echo sidecar2']
+    - name: sidecar1
+      image: busybox:1.28
+      command: ['sh', '-c', 'echo sidecar1']
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "500m"
+```
+
+### container
+
+The [main Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
+that will run your experiment training or data processing logic.
+
+```yaml
+worker:
+  init:
+    - connection: my-code-repo
+  container:
+    name: tensorflow:2.1
+    command: ["python", "/plx-context/artifacts/my-code-repo/model.py"]
+```
+
+

@@ -1,0 +1,22 @@
+---
+title: "Kubeflow Scheduling Scheduling Policy Specification"
+description: "Kubeflow scheduling policy provides an interface to define a scheduling logic for TFJob/MPIJob/PytorchJob."
+---
+
+## V1SchedulingPolicy
+
+```python
+polyaxon._flow.run.kubeflow.scheduling_policy.V1SchedulingPolicy()
+```
+
+
+Scheduling policy for Kubeflow distributed runs.
+
+- __Args__:
+  - __min_available__: int, optional
+  - __queue__: str, optional
+  - __min_resources__: int, optional
+  - __priority_class__: str, optional
+  - __schedule_timeout_seconds__: int, optional
+
+

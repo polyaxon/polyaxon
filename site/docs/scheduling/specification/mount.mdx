@@ -1,0 +1,44 @@
+---
+title: "Mount Specification"
+description: "Mount specification for mapping paths."
+---
+
+## V1Mount
+
+```python
+polyaxon._schemas.types.mounts.V1Mount()
+```
+
+
+Mount specification for mapping local paths to run paths.
+
+Mounts are used by the CLI to upload local files or directories when
+submitting an operation. A mount can be declared as an object with `from`
+and `to` fields, or as a shorthand string in the form `from:to`. If `to`
+is omitted, the source path is used as the destination.
+
+- __Args__:
+  - __path_from__: str, optional, source path on the local machine.
+  - __path_to__: str, optional, destination path in the run context.
+
+## YAML usage
+
+```yaml
+mount:
+  - from: ./src
+    to: /workspace/src
+  - ./requirements.txt:/workspace/requirements.txt
+  - ./config.yaml
+```
+
+## Python usage
+
+```python
+from polyaxon._schemas.types.mounts import V1Mount
+mount = [
+    V1Mount(path_from="./src", path_to="/workspace/src"),
+    V1Mount(path_from="./requirements.txt", path_to="/workspace/requirements.txt"),
+]
+```
+
+

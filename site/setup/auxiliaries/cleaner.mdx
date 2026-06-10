@@ -1,0 +1,146 @@
+---
+title: "Cleaner job setup"
+description: "Polyaxon cleaner is a helper job that gets scheduled to clean artifacts when a run is deleted."
+---
+
+## V1PolyaxonCleaner
+
+```python
+polyaxon._auxiliaries.cleaner.V1PolyaxonCleaner()
+```
+
+
+Polyaxon cleaner is a helper job that gets scheduled to clean artifacts when a run is deleted.
+
+Polyaxon CE and Polyaxon Agent are deployed with default values for the cleaner,
+however if you need to control or update one or several aspects
+of how the cleaner is scheduled, this guide walks through the possible options.
+
+- __Args__:
+  - __image__: str, optional.
+  - __image_tag__: str, optional.
+  - __image_pull_policy__: str, optional.
+  - __resources__: V1ResourceRequirements, optional.
+  - __node_selector__: Dict, optional
+  - __affinity__: V1Affinity, optional
+  - __tolerations__: List[V1Toleration], optional
+  - __image_pull_secrets__: List[str]
+
+## YAML usage
+
+```yaml
+cleaner:
+  image: polyaxon/polyaxon-init
+  imageTag: v1.x
+  imagePullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+  nodeSelector:
+    foo: bar
+```
+
+## Fields
+
+### image
+
+The container image to use.
+
+```yaml
+cleaner:
+  image: polyaxon/polyaxon-init
+```
+
+### imageTag
+
+The container image tag to use.
+
+```yaml
+cleaner:
+  imageTag: dev
+```
+
+### imagePullPolicy
+
+The image pull policy to use, it must be a valid policy supported by Kubernetes.
+
+```yaml
+cleaner:
+  imagePullPolicy: Always
+```
+
+### resources
+
+The resources requirements to allocate to the container.
+
+```yaml
+cleaner:
+  resources:
+    memory: "64Mi"
+    cpu: "50m"
+```
+
+### nodeSelector
+
+From [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector)  
+
+> nodeSelector is the simplest recommended form of node selection constraint.
+> nodeSelector is a field of PodSpec. It specifies a map of key-value pairs.
+> For the pod to be eligible to run on a node, the node must have each of
+> the indicated key-value pairs as labels (it can have additional labels as well).
+> The most common usage is one key-value pair.
+
+```yaml
+cleaner:
+  nodeSelector:
+    node_label: node_value
+```
+
+### affinity
+
+From [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity)  
+
+> The affinity/anti-affinity feature, greatly expands the types of constraints you can express.
+
+The affinity to use for scheduling the job.
+
+```yaml
+cleaner:
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        ...
+```
+
+
+### tolerations
+
+From [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)  
+
+> Tolerations are applied to pods, and allow (but do not require)
+> the pods to schedule onto nodes with matching taints.
+
+```yaml
+cleaner:
+  tolerations:
+    - key: "key"
+      operator: "Exists"
+      effect: "NoSchedule"
+```
+
+### imagePullSecrets
+
+From [Kubernetes docs](https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod)  
+
+> ImagePullSecrets is a list of references to secrets in the same namespace
+> to use for pulling any images in pods that reference this ServiceAccount.
+> ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod,
+> but ImagePullSecrets are only accessed by the kubelet.
+
+```yaml
+cleaner:
+  imagePullSecrets: ['secret1', 'secret2']
+```
+
+

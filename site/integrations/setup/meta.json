@@ -1,0 +1,17 @@
+{
+  "title": "Setup",
+  "pages": [
+    "istio",
+    "jaeger",
+    "letsencrypt",
+    "memorystore-redis-on-gcp",
+    "newrelic",
+    "nginx",
+    "postgres-ha-on-azure",
+    "postgres-ha-on-gcp",
+    "postgres-ha-on-redshift",
+    "prometheus",
+    "sentry",
+    "statsd"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Container Registries",
+  "pages": [
+    "acr",
+    "dockerhub",
+    "ecr",
+    "gcr",
+    "in-cluster-registry",
+    "private-docker-registry"
+  ]
+}

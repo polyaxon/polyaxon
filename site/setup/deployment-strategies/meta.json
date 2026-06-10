@@ -1,0 +1,10 @@
+{
+  "title": "Deployment Strategies",
+  "pages": [
+    "overview",
+    "best-practices",
+    "strategies",
+    "scaling",
+    "multiarch"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Platform",
+  "pages": [
+    "overview",
+    "community-edition",
+    "enterprise-control-plane",
+    "common-reference",
+    "---Advanced---",
+    "postgresql-ha",
+    "rabbitmq-ha",
+    "redis-ha",
+    "replication-concurrency",
+    "broker",
+    "celery",
+    "root-user",
+    "encryption",
+    "health-readiness-endpoints",
+    "observability",
+    "transactional-emails",
+    "sso"
+  ]
+}

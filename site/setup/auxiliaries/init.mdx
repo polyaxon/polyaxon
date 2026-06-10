@@ -1,0 +1,85 @@
+---
+title: "Init container setup"
+description: "Polyaxon init is a helper container that initialize the environment required for the main container to function correctly."
+---
+
+## V1PolyaxonInitContainer
+
+```python
+polyaxon._auxiliaries.init.V1PolyaxonInitContainer()
+```
+
+
+Polyaxon init is a helper container that initialize the environment
+required for the main container to function correctly.
+
+Polyaxon CE and Polyaxon Agent are deployed with default values for the init container,
+however if you need to control or update one or several aspects
+of how the init container that gets injected, this guide walks through the possible options.
+
+- __Args__:
+  - __image__: str, optional.
+  - __image_tag__: str, optional.
+  - __image_pull_policy__: str, optional.
+  - __resources__: V1ResourceRequirements, optional.
+
+## YAML usage
+
+```yaml
+init:
+  image: polyaxon/polyaxon-sidecar
+  imageTag: v1.x
+  imagePullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+```
+
+## Fields
+
+### image
+
+The container image to use.
+
+```yaml
+init:
+  image: polyaxon/polyaxon-sidecar
+```
+
+### imageTag
+
+The container image tag to use.
+
+```yaml
+init:
+  imageTag: dev
+```
+
+### imagePullPolicy
+
+The image pull policy to use, it must be a valid policy supported by Kubernetes.
+
+```yaml
+init:
+  imagePullPolicy: Always
+```
+
+### resources
+
+The resources requirements to allocate to the container.
+
+```yaml
+init:
+  resources:
+    memory: "64Mi"
+    cpu: "50m"
+```
+
+> **N.B.1**: Resources are applied to all instances of
+> the init container within the same pod.
+
+> **N.B.2**: It's possible to alter this behaviour on per operation level
+> using the init section.
+
+

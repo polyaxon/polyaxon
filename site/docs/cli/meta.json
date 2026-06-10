@@ -1,0 +1,33 @@
+{
+  "title": "CLI",
+  "pages": [
+    "overview",
+    "reconfiguration",
+    "authentication",
+    "cache",
+    "ignore",
+    "artifacts-upload",
+    "artifacts-download",
+    "export-data",
+    "customize-git-preset",
+    "run-with-different-names",
+    "restart-with-different-names",
+    "auth",
+    "admin",
+    "check",
+    "config",
+    "project",
+    "run",
+    "ops",
+    "sandbox",
+    "ssh",
+    "components",
+    "models",
+    "artifacts",
+    "dashboard",
+    "port_forward",
+    "init",
+    "completion",
+    "version"
+  ]
+}

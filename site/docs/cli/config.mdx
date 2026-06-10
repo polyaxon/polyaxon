@@ -1,0 +1,100 @@
+---
+title: "Config CLI Reference"
+description: "Polyaxonfile Command Line Interface Specification - Config CLI Reference."
+---
+
+### config
+
+```bash
+Usage: polyaxon config [OPTIONS] COMMAND [ARGS]...
+
+  Set and get the global configurations.
+
+Options:
+  -l, --list  Deprecated, please use `polyaxon config show`.
+  --help      Show this message and exit.
+
+Commands:
+  get    Get the specific keys from the global configuration.
+  purge  Purge the global config values.
+  set    Set the global config values.
+  show   Show the current cli, client, and user configs.
+```
+
+---
+
+### config show
+
+```bash
+Usage: polyaxon config show [OPTIONS]
+
+  Show the current cli, client, and user configs.
+
+Options:
+  --help  Show this message and exit.
+```
+
+---
+
+### config get
+
+```bash
+Usage: polyaxon config get [OPTIONS] [KEYS]...
+
+  Get the specific keys from the global configuration.
+
+  Examples:
+
+  $ polyaxon config get home host verify-ssl
+
+Options:
+  --help  Show this message and exit.
+```
+
+---
+
+### config set
+
+```bash
+Usage: polyaxon config set [OPTIONS]
+
+  Set the global config values.
+
+  Examples:
+
+  $ polyaxon config set --home=/tmp/.polyaxon
+
+  $ polyaxon config set --home=
+
+  $ polyaxon config set --host=localhost
+
+Options:
+  --debug BOOLEAN                 To set the verbosity of the client.
+  --host TEXT                     To set the server endpoint.
+  --no-api BOOLEAN                To disable any API call.
+  --verify-ssl BOOLEAN            To set whether or not to verify the SSL
+                                  certificate.
+  --home PATH                     To set POLYAXON_HOME to specify the context
+                                  where the CLI/Client reads/writes global
+                                  configuration.
+  --owner PATH                    To set current organization or team space.
+  --disable-errors-reporting BOOLEAN
+                                  To set the disable errors reporting.
+  --no-purge                      To reconfigure the host without purging auth
+                                  and other config options.
+  --help                          Show this message and exit.
+```
+
+---
+
+### config purge
+
+```bash
+Usage: polyaxon config purge [OPTIONS]
+
+  Purge the global config values.
+
+Options:
+  --cache-only  To purge the cache only.
+  --help        Show this message and exit.
+```

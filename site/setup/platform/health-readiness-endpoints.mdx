@@ -1,0 +1,75 @@
+---
+title: Health and Readiness Check Endpoints
+description: Monitor the health and readiness of your Polyaxon self-hosted deployment
+sidebarTitle: "Health and Readiness Check"
+---
+
+# Health and Readiness Check Endpoints
+
+Polyaxon provides health check endpoints for all components. These endpoints are used by Kubernetes liveness and readiness probes, load balancers, and monitoring tools.
+
+## Overview
+
+| Component       | Endpoint    | Type               | Purpose                                              |
+| --------------- | ----------- | ------------------ | ---------------------------------------------------- |
+| **API/Gateway** | `/healthz/` | HTTP               | Check if the API service is healthy and ready         |
+| **Scheduler**   | `healthz`   | exec (entrypoint)  | Check if the scheduler process is healthy             |
+| **Compiler**    | `healthz`   | exec (entrypoint)  | Check if the compiler process is healthy              |
+| **Agent**       | `healthz`   | exec (entrypoint)  | Check if the agent process is healthy                 |
+
+## API/Gateway Health Check
+
+The API/Gateway exposes an HTTP health endpoint at `/healthz/`. This is used for both liveness and readiness probes in Kubernetes.
+
+```bash
+curl http://localhost:8000/healthz/
+```
+
+**Response Codes:**
+
+- `200 OK` — Service is healthy and ready to receive traffic
+- `503 Service Unavailable` — Service is not functioning
+
+The Helm chart configures both liveness and readiness probes on this endpoint by default:
+
+```yaml
+livenessProbe:
+  httpGet:
+    path: /healthz/
+    port: 80
+  initialDelaySeconds: 20
+  periodSeconds: 20
+  failureThreshold: 10
+
+readinessProbe:
+  httpGet:
+    path: /healthz/
+    port: 80
+  initialDelaySeconds: 20
+  periodSeconds: 20
+  failureThreshold: 10
+```
+
+## Background Services Health Checks
+
+The scheduler, compiler, and agent use exec-based health checks that run the `healthz` command via the container entrypoint:
+
+```yaml
+livenessProbe:
+  exec:
+    command: ["/bin/bash", "./entrypoint.sh", "healthz"]
+  initialDelaySeconds: 20
+  periodSeconds: 20
+  failureThreshold: 10
+
+readinessProbe:
+  exec:
+    command: ["/bin/bash", "./entrypoint.sh", "healthz"]
+  initialDelaySeconds: 20
+  periodSeconds: 20
+  failureThreshold: 10
+```
+
+## Customization
+
+You can override the probe settings in your Helm `config.yaml`. See the [common Helm reference](/setup/platform/common-reference/) for all available options.

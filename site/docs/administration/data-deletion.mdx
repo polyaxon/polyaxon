@@ -1,0 +1,161 @@
+---
+title: Data Deletion
+description: Delete data from Polyaxon
+sidebarTitle: Data Deletion
+---
+
+# Data Deletion
+
+There may be cases where you want to remove data from Polyaxon, such as failed or test operations, user data for PII compliance, or an entire project.
+
+You can delete data from Polyaxon by:
+
+- Deleting individual operations (runs);
+- Deleting a batch of operations;
+- Deleting operations matching a query filter;
+- Deleting a project and all its data;
+- Deleting an organization; or
+- Deleting a user account.
+
+## Deleting Operations
+
+Deleting an operation removes all associated data including logs, artifacts, events, and metrics.
+
+### Single Operation
+
+<LangTabs items={["UI", "CLI", "API"]}>
+
+<Tab>
+
+To delete a single operation, open its detail view and click the `Delete` button.
+Confirm that you want to delete the operation.
+
+<Frame className="my-10" fullWidth>
+  ![Delete a single trace](/images/docs/delete-single-trace.png)
+</Frame>
+
+</Tab>
+
+<Tab>
+
+```bash
+polyaxon ops delete -p <project> -uid <run_uuid>
+```
+
+</Tab>
+
+<Tab>
+
+```
+DELETE /api/v1/{owner}/{project}/runs/{uuid}
+```
+
+</Tab>
+
+</LangTabs>
+
+### Batch of Operations
+
+<LangTabs items={["UI"]}>
+
+<Tab>
+
+To delete a batch of operations, select them in the runs table and choose `Delete` from the `Actions` dropdown.
+
+<Frame className="my-10" fullWidth>
+  ![Delete a batch of traces](/images/docs/delete-trace-batch.png)
+</Frame>
+
+</Tab>
+
+</LangTabs>
+
+### Delete by Query
+
+<LangTabs items={["UI", "CLI"]}>
+
+<Tab>
+
+To delete all operations matching a filter, configure your desired filter in the runs table.
+Select all items and choose `Delete` from the `Actions` dropdown.
+
+<Frame className="my-10" fullWidth>
+  ![Delete traces by query](/images/docs/delete-filtered-traces.png)
+</Frame>
+
+</Tab>
+
+<Tab>
+
+```bash
+polyaxon ops delete -p <project> --query "status:failed"
+```
+
+</Tab>
+
+</LangTabs>
+
+## Deleting a Project
+
+<LangTabs items={["UI", "CLI"]}>
+
+<Tab>
+
+To delete a project, navigate to the project settings and scroll to the `Danger Zone` section.
+Confirm that you want to delete your project.
+
+{/* ![Delete a project](/images/docs/delete-project.png) */}
+
+</Tab>
+
+<Tab>
+
+```bash
+polyaxon project delete -p <project>
+```
+
+</Tab>
+
+</LangTabs>
+
+<Callout type="warning">
+  Deleting a project is irreversible. All operations, artifacts, and associated data will be permanently removed.
+</Callout>
+
+## Deleting an Organization
+
+<LangTabs items={["UI"]}>
+
+<Tab>
+
+To delete an organization, navigate to the organization settings and scroll to the `Danger Zone` section.
+All projects must be deleted before the organization can be removed.
+The organization and all associated data will be permanently deleted.
+
+{/* ![Delete an organization](/images/docs/delete-organization.png) */}
+
+</Tab>
+
+</LangTabs>
+
+## Deleting a User Account (Cloud)
+
+<LangTabs items={["UI"]}>
+
+<Tab>
+
+Users can delete their own account from the Account Settings page.
+
+If you are the sole owner of an organization, you must first transfer ownership to another user or delete the organization before you can delete your account.
+
+<Frame className="my-10">
+  ![Delete user account](/images/docs/delete-account-settings.png)
+</Frame>
+
+</Tab>
+
+</LangTabs>
+
+## Deleting a User Account (Self-Hosted)
+
+Organization owners can remove users from the organization settings. For complete account deletion on self-hosted instances, remove the corresponding user record from the database.
