@@ -1,15 +1,6 @@
 {
   "pages": [
     "welcome",
-    "quick-start",
-    "iterative-process",
-    "passing-params",
-    "scaling",
-    "query-metadata-artifacts",
-    "tensorboard",
-    "automation",
-    "serving",
-    "builds",
     "information",
     "concepts"
   ]

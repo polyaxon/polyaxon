@@ -31,14 +31,14 @@ If you deployed Polyaxon with S3/GCS/Volume artifacts store, you can also point 
 polyaxon run --hub tensorboard:single-run-storepath -P uuid=UUID -w
 ```
 
-> **Note**: This component version will not work with Azure or other artifacts store backend, because Tensorboard does not load the outputs natively from those services.   
+> **Note**: This component version will not work with Azure or other artifacts store backend, because Tensorboard does not load the outputs natively from those services.
 
 ## Start Tensorboard from the UI
 
 If you are using Polyaxon Cloud or Polyaxon EE, you can perform the same actions using the UI.
 Polyaxon tracks runs that have Tensorboard as one of their artifacts and shows a button to start or resume a Tensorboard service for those runs.
 
-![ui-tensorboard](/images/dashboard/runs/start-ui-tensorboard.png) 
+![ui-tensorboard](/images/dashboard/runs/start-ui-tensorboard.png)
 
 Running the Tensorboard:
 

@@ -3,16 +3,16 @@ title: "Iterate with Presets"
 description: "Using presets to improve the process of using git and code upload - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 ---
 
-> **Note**: This is an advanced use-case that you might want to skip for now and come back to later. 
+> **Note**: This is an advanced use-case that you might want to skip for now and come back to later.
 
 We previously learned how to configure the CLI to iterate with:
- * [local code](/docs/intro/iterative-process/iterate-with-cli-local-code/)
- * [git repo](/docs/intro/iterative-process/iterate-with-cli-git-code/)
+ * [local code](/docs/guides/iterative-process/iterate-with-cli-local-code/)
+ * [git repo](/docs/guides/iterative-process/iterate-with-cli-git-code/)
 
 In both guides, we had to adjust the polyaxonfile to fit a specific workflow.
-Often, users will probably need to use both workflows to iterate on their experiments, for quick changes they will need to upload code directly before starting a run, 
-and after committing the changes they will need to trigger based on the git repo, 
-finally, they might need to have the manifest compatible with a fork of their main repo or a repo that is named differently.    
+Often, users will probably need to use both workflows to iterate on their experiments, for quick changes they will need to upload code directly before starting a run,
+and after committing the changes they will need to trigger based on the git repo,
+finally, they might need to have the manifest compatible with a fork of their main repo or a repo that is named differently.
 
 In this guide, we will learn how to improve our polyaxonfile to adapt it to different situations with presets.
 
@@ -63,9 +63,9 @@ You can view this file under `presets/`, we also have other files under that fol
 
 If we try to execute this component, it will fail, since the container cannot resolve the file `model.py`.
 
-We can additionally make this manifest fail fast at the CLI level, in other terms, 
-we can prevent users from attempting to submit this file, wait for the operation to be scheduled, 
-and then check the logs to find out that the container is missing the code. 
+We can additionally make this manifest fail fast at the CLI level, in other terms,
+we can prevent users from attempting to submit this file, wait for the operation to be scheduled,
+and then check the logs to find out that the container is missing the code.
 Polyaxon's specification has a section called `template` that we can add to any polyaxonfile to prevent running it without proper initialization:
 
 ```yaml
@@ -97,7 +97,7 @@ runPatch:
 
 In this subsection we will run `presets/polyaxonfile.yaml` with `presets/git-workingdir-preset.yaml` and the `--git-preset` flag:
 
-In this case we will use both the [git-preset integration](/docs/intro/iterative-process/iterate-with-cli-git-code/) 
+In this case we will use both the [git-preset integration](/docs/guides/iterative-process/iterate-with-cli-git-code/)
 if set, and supplement the main component with the additional section that resolves the path to `model.py` from the initialized code:
 
 ```bash
@@ -132,9 +132,9 @@ runPatch:
 
 ## More presets
 
-In this guide we only extracted the logic for initializing/uploading the code and for setting the `workingDir`, but presets are a very powerful feature in Polyaxon, 
+In this guide we only extracted the logic for initializing/uploading the code and for setting the `workingDir`, but presets are a very powerful feature in Polyaxon,
 it allows users to define several reusable configurations, e.g. complex node selectors, resources requirements, ...
 
-You can check the folder [helpers](https://github.com/polyaxon/polyaxon-quick-start/tree/master/helpers) which contains additional preset examples. 
+You can check the folder [helpers](https://github.com/polyaxon/polyaxon-quick-start/tree/master/helpers) which contains additional preset examples.
 
-> For mode details about using presets please check the [scheduling presets guide](/docs/scheduling/scheduling-presets/) 
+> For mode details about using presets please check the [scheduling presets guide](/docs/scheduling/scheduling-presets/)

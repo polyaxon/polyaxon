@@ -81,7 +81,7 @@ To pass `test 1` and `test 2` to our program without invoking the CLI multiple t
 polyaxon run -f echo.yaml -HP message='choice:["test 1","test 2"]'
 ```
 
-This command will automatically create a [grid search](/docs/intro/scaling/hyperparameter-tuning/#grid-search) with the following matrix configuration:
+This command will automatically create a [grid search](/docs/guides/scaling/hyperparameter-tuning/#grid-search) with the following matrix configuration:
 
 ```yaml
 matrix:
@@ -101,7 +101,7 @@ You can configure those options via CLI as well by passing the following extra a
 
 The CLI arg `-HP` is a nice way to avoid creating configuration files when iterating, however if you are to create a complex operation with multiple inputs/outputs and complex matrix definition,
 we suggest that you use a proper Polyaxonfile.
-See the intro for the hyperparameter tuning in this [section](/docs/intro/scaling/hyperparameter-tuning/) and the [optimization engine reference](/docs/orchestration/optimization-engine/).
+See the intro for the hyperparameter tuning in this [section](/docs/guides/scaling/hyperparameter-tuning/) and the [optimization engine reference](/docs/orchestration/optimization-engine/).
 
 ## Creating a custom program
 
@@ -127,8 +127,8 @@ if __name__ == '__main__':
     print(args.message)
 ```
 
-We can adjust our previous polyaxonfile to run this python program, in order to avoid [uploading code](/docs/intro/iterative-process/iterate-in-notebooks/) or [cloning a repo](/docs/intro/iterative-process/iterate-with-cli-git-code/),
-we will pass the python code [inline](/docs/intro/iterative-process/iterate-with-inline-scripts/):
+We can adjust our previous polyaxonfile to run this python program, in order to avoid [uploading code](/docs/guides/iterative-process/iterate-in-notebooks/) or [cloning a repo](/docs/guides/iterative-process/iterate-with-cli-git-code/),
+we will pass the python code [inline](/docs/guides/iterative-process/iterate-with-inline-scripts/):
 
 Let's save this changes under `echo.yaml`:
 
@@ -230,7 +230,7 @@ In that case we could have used the `--upload/-u` flag to upload the code necess
 polyaxon run -u -f echo.yaml -P message="test 1" -l
 ```
 
-> **Note**: You can learn more about how to iterate with upload, git, and inline scripts in the [iterative process introduction section](/docs/intro/iterative-process/iterate-in-notebooks/).
+> **Note**: You can learn more about how to iterate with upload, git, and inline scripts in the [iterative process introduction section](/docs/guides/iterative-process/iterate-in-notebooks/).
 
 ## Multiple params
 

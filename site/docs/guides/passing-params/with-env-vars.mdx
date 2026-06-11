@@ -7,7 +7,7 @@ Passing parameters as environment variables requires that you set the proper han
 
 ## Overview
 
-Oftentimes you will need to expose an input or a context meta data as an environment variable, 
+Oftentimes you will need to expose an input or a context meta data as an environment variable,
 in some other situations you might want to skip creating a CLI to run a program and handle the logic based on the environment variables exposed in the system.
 
 Polyaxon exposes the full [Kubernetes container specification](https://kubernetes.io/docs/concepts/containers/), which means that you can leverage the `env` sub-section to expose environment variables:
@@ -42,7 +42,7 @@ run:
 
           if __name__ == '__main__':
               print(os.environ.get("INPUT_MESSAGE", "Default message"))
-              
+
         filename: echo.py
   container:
     image: polyaxon/polyaxon-quick-start
@@ -87,7 +87,7 @@ inputs:
   toEnv: INPUT_MESSAGE  # <----
 ```
 
-`toEnv` is also available on the params specification, in case the component does not define if the IO should expose the value to an env var, 
+`toEnv` is also available on the params specification, in case the component does not define if the IO should expose the value to an env var,
 or in case a param is used as context only:
 
 ```yaml

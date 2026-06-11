@@ -40,17 +40,17 @@ run:
     image: polyaxon/polyaxon-quick-start
     workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
     command: [python3, model.py]
-```   
+```
 
 ## Initialize the project
 
-Instead of hard-coding an init section like in the previous sections of this quick-start tutorial, 
+Instead of hard-coding an init section like in the previous sections of this quick-start tutorial,
 we will initialize this local path with a git integration that we can use to integrate automatically with our polyaxonfiles.
 
-The [init](/docs/cli/init/) command accepts both a `--git-connection` and `--git-url`. If you are using a private git repo, 
+The [init](/docs/cli/init/) command accepts both a `--git-connection` and `--git-url`. If you are using a private git repo,
 you will need to configure a [git connection](/setup/connections/git/) and redeploy Polyaxon first.
 
-> To initialize the folder with a private repo you need a valid `--git-connection`, you can additionally override the default git repo of that connection by providing the `--git-url` argument. 
+> To initialize the folder with a private repo you need a valid `--git-connection`, you can additionally override the default git repo of that connection by providing the `--git-url` argument.
 
 In the context of this tutorial, we are using a public github repo that does not require a git connection, so we will initialize this folder with a `git-url` only.
 
@@ -60,12 +60,12 @@ polyaxon init -p quick-start --git-url https://github.com/polyaxon/polyaxon-quic
 
 ## Scheduling experiments after every commit
 
-In the previous section of this tutorial we were using a hard-coded git initializer, the git initializer did not have any fixed revision, 
-which means that every time we submit a job, Polyaxon will pull the latest commit from the remote repo, the commit could be made by us or by another user. 
+In the previous section of this tutorial we were using a hard-coded git initializer, the git initializer did not have any fixed revision,
+which means that every time we submit a job, Polyaxon will pull the latest commit from the remote repo, the commit could be made by us or by another user.
 By initializing a local folder we can now run operations based on changes made by us, because the CLI will patch the polyaxonfile with a code version before submitting new operations:
 
 ```bash
-git commit -am "Update" 
+git commit -am "Update"
 git push origin master
 polyaxon run -f simple.yaml --git-preset
 ```

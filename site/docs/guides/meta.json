@@ -1,6 +1,15 @@
 {
   "title": "Guides",
   "pages": [
-    "sandboxes"
+    "quick-start",
+    "sandboxes",
+    "iterative-process",
+    "passing-params",
+    "scaling",
+    "query-metadata-artifacts",
+    "tensorboard",
+    "automation",
+    "serving",
+    "builds"
   ]
 }

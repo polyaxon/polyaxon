@@ -11,15 +11,15 @@ Before we perform any search, we will first query the runs in our current projec
 polyaxon ops ls [-p PROJECT_NAME]
 ```
 
-This command will show us the current runs inside our project. 
+This command will show us the current runs inside our project.
 Note that by default the CLI will show a table of `20` runs and will automatically show to paginate the full history.
 
-We can filter the results based on a specific metric. 
+We can filter the results based on a specific metric.
 The flags `--query/-q`, `--sort/-s`, `--offset/-off`, and `--limit/-l` allows to restrict the list based on the query specification, order by fields, and to limit or offset the results.
 
 ```bash
 polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3
-``` 
+```
 
 You may notice that the list does not show important columns like metrics or params, we can add `-io` flag to show all inputs and outputs:
 
@@ -30,14 +30,14 @@ polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metric
 Now we have way too many columns, we can do better by providing what columns to show using `--columns/-c`, e.g. `-c "column1, column2, ..."`, for instance let's just show the `uuid`, `learning_rate`, `loss` and `accuracy`.
 
 ```bash
-polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3 -io -c "uuid,in.learning_rate,out.loss,out.accuracy" 
+polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3 -io -c "uuid,in.learning_rate,out.loss,out.accuracy"
 ```
 
 ## Persisting the search results to a CSV file
 
 We can save the search above to a CSV file by adding the flag `--to-csv`.
 
-For example we can save the full table: 
+For example we can save the full table:
 
 ```bash
 polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3 -io --to-csv
@@ -46,12 +46,12 @@ polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metric
 Or the filtered table:
 
 ```bash
-polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3 -io -c "uuid,in.learning_rate,out.loss,out.accuracy" --to-csv 
+polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3 -io -c "uuid,in.learning_rate,out.loss,out.accuracy" --to-csv
 ```
 
-## Getting more information about the runs 
+## Getting more information about the runs
 
-In order to view and explore the top runs, we can query information about a specific run using the `-uid`, 
+In order to view and explore the top runs, we can query information about a specific run using the `-uid`,
 for example if the first run has uuid value `8aac02e3a62a4f0aaa257c59da5eab80` we can query the run's information with CLI:
 
 ```bash
@@ -60,7 +60,7 @@ polyaxon ops get -uid 8aac02e3a62a4f0aaa257c59da5eab80 [-p PROJECT_NAME]
 
 ## Downloading artifacts for single runs
 
-Polyaxon provides a command `artifacts` to download the assets stored in run. 
+Polyaxon provides a command `artifacts` to download the assets stored in run.
 Note that you can add `[-p/--project PROJECT_NAME] [--path-to/--path PATH]` to the following commands to specify the project and path where the artifacts should be stored.
 
  * All artifacts
@@ -68,7 +68,7 @@ Note that you can add `[-p/--project PROJECT_NAME] [--path-to/--path PATH]` to t
 ```bash
 polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80
 ```
-  
+
  * Specific file(s) based on a path using `-f/--file`
 
 ```bash
@@ -82,13 +82,13 @@ polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80 -d "outputs/path/di
 ```
 
  * Specific artifacts based on the lineage reference name using `-l-name/--lineage-name`
- 
+
 ```bash
 polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80 -l-name image-example -l-name debug-csv-file
 ```
 
 * Specific artifacts based on the lineage reference kind using `-l-kind/--lineage-kind`
- 
+
 ```bash
 polyaxon ops artifacts -uid 8aac02e3a62a4f0aaa257c59da5eab80 -l-kind model -l-kind env
 ```
@@ -117,4 +117,3 @@ Instead of pulling data for each run, we can using the same query specification 
 ```bash
 polyaxon ops pull -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3
 ```
-
