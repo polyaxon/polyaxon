@@ -1,0 +1,9 @@
+{
+  "title": "Sandbox",
+  "pages": [
+    "client",
+    "process",
+    "fs",
+    "pty"
+  ]
+}

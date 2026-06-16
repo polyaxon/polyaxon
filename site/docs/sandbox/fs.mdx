@@ -1,0 +1,423 @@
+---
+title: "Sandbox Filesystem Reference"
+description: "The fs sub-client allows to read, write, transfer, and manage files inside the sandbox."
+---
+
+The filesystem sub-client is accessed via `client.fs` on a
+[SandboxClient](/docs/sandbox/client/) instance.
+
+All remote paths must be absolute POSIX paths; relative paths are rejected
+client-side before any network I/O. File modes serialize as octal strings,
+e.g. `0o644` becomes `"0644"`.
+
+### read
+
+
+```python
+fs.read(path, offset=0, length=None, timeout=None)
+```
+
+
+
+Reads one page of bytes from a remote file.
+
+This exposes the server paging contract directly. Use `read_bytes`,
+`read_text`, or `iter_bytes` for higher-level reads.
+
+- __Example__:
+```python
+result = client.fs.read("/tmp/data.bin", offset=0, length=1024)
+print(result.data, result.next_offset, result.eof)
+```
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __offset__: int, optional, byte offset to read from.
+  - __length__: int, optional, max bytes to return in this page.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+
+- __Returns__:
+  FsReadResult, with `data` bytes, `next_offset`, and `eof`.
+
+- __Raises__:
+  - __ValueError__: If the path is not absolute or arguments are invalid.
+  - __PolyaxonClientException__: If the request fails.
+
+
+
+----
+
+### write
+
+
+```python
+fs.write(path, data, mode=420, create=True, append=False, timeout=None)
+```
+
+
+
+Writes bytes to a remote file in a single request.
+
+Use `upload_file` for chunked transfers of local files.
+
+- __Example__:
+```python
+result = client.fs.write("/tmp/hello.txt", b"hello\n")
+print(result.path, result.bytes_written, result.created)
+```
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __data__: str or bytes, the content to write.
+  - __mode__: int, optional, file mode if the file is created,
+        - __default__: `0o644`.
+  - __create__: bool, optional, create the file if it does not exist,
+        - __default__: True.
+  - __append__: bool, optional, append instead of overwrite,
+        - __default__: False.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+
+- __Returns__:
+  FsWriteResult, with `path`, `bytes_written`, and `created`.
+
+- __Raises__:
+  - __ValueError__: If the path is not absolute.
+  - __PolyaxonClientException__: If the request fails.
+
+
+
+----
+
+### read_bytes
+
+
+```python
+fs.read_bytes(path, offset=0, length=None, chunk_size=65536, timeout=None)
+```
+
+
+
+Reads a remote file into memory as bytes.
+
+This buffers the requested range in memory. Use `iter_bytes` for
+large files.
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __offset__: int, optional, byte offset to start from.
+  - __length__: int, optional, max bytes to read, default: until EOF.
+  - __chunk_size__: int, optional, bytes per request, default: 64KiB.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+
+- __Returns__:
+  bytes
+
+
+
+----
+
+### write_bytes
+
+
+```python
+fs.write_bytes(path, data, mode=420, create=True, append=False, timeout=None)
+```
+
+
+
+Writes bytes to a remote file. Alias of `write`.
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __data__: str or bytes, the content to write.
+  - __mode__: int, optional, file mode if the file is created,
+        - __default__: `0o644`.
+  - __create__: bool, optional, create the file if it does not exist,
+        - __default__: True.
+  - __append__: bool, optional, append instead of overwrite,
+        - __default__: False.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+
+- __Returns__:
+  FsWriteResult, with `path`, `bytes_written`, and `created`.
+
+
+
+----
+
+### read_text
+
+
+```python
+fs.read_text(path, offset=0, length=None, chunk_size=65536, encoding='utf-8', errors='strict', timeout=None)
+```
+
+
+
+Reads a remote file and decodes it as text.
+
+This buffers the requested range in memory. Use `read` for explicit
+chunked reads.
+
+- __Example__:
+```python
+print(client.fs.read_text("/tmp/hello.txt"))
+```
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __offset__: int, optional, byte offset to start from.
+  - __length__: int, optional, max bytes to read, default: until EOF.
+  - __chunk_size__: int, optional, bytes per request, default: 64KiB.
+  - __encoding__: str, optional, text encoding, default: `utf-8`.
+  - __errors__: str, optional, decoding error handling, default: `strict`.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+
+- __Returns__:
+  str
+
+
+
+----
+
+### write_text
+
+
+```python
+fs.write_text(path, data, mode=420, create=True, append=False, encoding='utf-8', errors='strict', timeout=None)
+```
+
+
+
+Encodes a string and writes it to a remote file.
+
+- __Example__:
+```python
+client.fs.write_text("/tmp/hello.txt", "hello\n")
+```
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __data__: str, the text to write.
+  - __mode__: int, optional, file mode if the file is created,
+        - __default__: `0o644`.
+  - __create__: bool, optional, create the file if it does not exist,
+        - __default__: True.
+  - __append__: bool, optional, append instead of overwrite,
+        - __default__: False.
+  - __encoding__: str, optional, text encoding, default: `utf-8`.
+  - __errors__: str, optional, encoding error handling, default: `strict`.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+
+- __Returns__:
+  FsWriteResult, with `path`, `bytes_written`, and `created`.
+
+- __Raises__:
+  - __TypeError__: If data is not a string.
+
+
+
+----
+
+### iter_bytes
+
+
+```python
+fs.iter_bytes(path, offset=0, length=None, chunk_size=65536, timeout=None)
+```
+
+
+
+Iterates over a remote file's content in chunks.
+
+This is the lower-memory option for large files.
+
+- __Example__:
+```python
+for chunk in client.fs.iter_bytes("/tmp/data.bin", chunk_size=1024):
+    process(chunk)
+```
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __offset__: int, optional, byte offset to start from.
+  - __length__: int, optional, max bytes to read, default: until EOF.
+  - __chunk_size__: int, optional, bytes per request, default: 64KiB.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+
+- __Yields__:
+  bytes, file content chunks.
+
+- __Raises__:
+  - __ValueError__: If the path is not absolute or arguments are invalid.
+  - __PolyaxonClientException__: If the server returns non-advancing
+        offsets.
+
+
+
+----
+
+### download_file
+
+
+```python
+fs.download_file(path, local_path, offset=0, length=None, chunk_size=65536, timeout=None, create_parents=True)
+```
+
+
+
+Downloads a remote file to a local path.
+
+The local write uses a `.part` file followed by `os.replace`, so the
+local destination is never left partially written. This makes no
+statement about remote-side atomicity.
+
+- __Example__:
+```python
+client.fs.download_file("/tmp/results.json", "results.json")
+```
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __local_path__: str or Path, the local destination.
+  - __offset__: int, optional, remote byte offset to start from.
+  - __length__: int, optional, max bytes to download, default: until EOF.
+  - __chunk_size__: int, optional, bytes per request, default: 64KiB.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+  - __create_parents__: bool, optional, create local parent directories,
+        - __default__: True.
+
+- __Returns__:
+  str, the local destination path.
+
+
+
+----
+
+### upload_file
+
+
+```python
+fs.upload_file(local_path, path, mode=420, create=True, chunk_size=65536, timeout=None)
+```
+
+
+
+Uploads a local file to a remote sandbox path.
+
+Uploads are chunked but not remote-atomic: a mid-upload failure may
+leave a partial remote file. Concurrent uploads to the same remote
+path are unsupported. The mode only applies if the remote file is
+created.
+
+- __Example__:
+```python
+client.fs.upload_file("data.csv", "/tmp/data.csv")
+```
+
+- __Args__:
+  - __local_path__: str or Path, the local file to upload.
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __mode__: int, optional, file mode if the remote file is created,
+        - __default__: `0o644`.
+  - __create__: bool, optional, create the remote file if it does not
+        exist, default: True.
+  - __chunk_size__: int, optional, bytes per request, default: 64KiB.
+  - __timeout__: int, optional, client-side request timeout in seconds.
+
+- __Returns__:
+  FsWriteResult, with `path`, `bytes_written`, and `created`.
+
+
+
+----
+
+### ls
+
+
+```python
+fs.ls(path, recursive=None, max_entries=None)
+```
+
+
+
+Lists a remote directory.
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __recursive__: bool, optional, list entries recursively.
+  - __max_entries__: int, optional, max entries to return.
+
+- __Returns__:
+  V1FsListResult, with `path`, `entries`, and `truncated`.
+
+
+
+----
+
+### mkdir
+
+
+```python
+fs.mkdir(path, parents=False, mode=493)
+```
+
+
+
+Creates a remote directory.
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __parents__: bool, optional, create parent directories as needed,
+        - __default__: False.
+  - __mode__: int, optional, directory mode, default: `0o755`.
+
+- __Returns__:
+  V1FsPathResult, with the created `path`.
+
+
+
+----
+
+### rm
+
+
+```python
+fs.rm(path, recursive=False)
+```
+
+
+
+Removes a remote file or directory.
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+  - __recursive__: bool, optional, remove directories recursively,
+        - __default__: False.
+
+- __Returns__:
+  V1FsPathResult, with the removed `path`.
+
+
+
+----
+
+### stat
+
+
+```python
+fs.stat(path)
+```
+
+
+
+Fetches metadata for a remote file or directory.
+
+- __Args__:
+  - __path__: str, an absolute POSIX path on the sandbox.
+
+- __Returns__:
+  V1FsStatResult, with `path`, `type`, `size`, `mtime`, `mode`,
+        `uid`, `gid`, `symlink_target`.
+
+

@@ -21,6 +21,7 @@
     "polyaxonfile",
     "cli",
     "python-library",
+    "sandbox",
     "query-language",
     "api",
     "webhooks",
