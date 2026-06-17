@@ -42,7 +42,7 @@ Project owners and admins can override it in the Project Settings.
 </Callout>
 
 <Frame className="my-10" fullWidth>
-  ![Configure data retention in Polyaxon](/images/docs/data-retention.png)
+  ![Configure data retention in Polyaxon](/images/docs/administration/data-retention.png)
 </Frame>
 
 Retention can also be configured via the [API](/docs/references).
@@ -70,7 +70,7 @@ Activity logs (audit logs, system events) have a retention period determined by 
 
 To use the Data Retention feature in a self-hosted environment, Polyaxon needs delete permissions on the configured artifacts store:
 
-- **S3**: Grant `s3:DeleteObject` to the Polyaxon IAM role on the configured buckets (see [artifacts connections](/setup/connections/artifacts)).
+- **S3**: Grant `s3:DeleteObject` to the Polyaxon IAM role on the configured buckets (see [artifacts connections](/docs/setup/connections/artifacts)).
 - **GCS**: Grant `storage.objects.delete` permission on the configured buckets.
 - **Azure Blob Storage**: Grant the `Storage Blob Data Contributor` role on the configured containers.
 

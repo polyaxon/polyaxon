@@ -115,8 +115,8 @@ Use defaults. A single replica of each component is sufficient.
 
 - Gateway: 2-3 replicas
 - Scheduler: 2 replicas
-- External [PostgreSQL](/setup/platform/postgresql-ha) with persistence
-- External [Redis](/setup/platform/redis-ha)
+- External [PostgreSQL](/docs/setup/platform/postgresql-ha) with persistence
+- External [Redis](/docs/setup/platform/redis-ha)
 
 ### Large (500+ concurrent operations)
 
@@ -124,7 +124,7 @@ Use defaults. A single replica of each component is sufficient.
 - Scheduler: 3+ replicas
 - Compiler: 2+ replicas
 - Worker: 2+ replicas
-- External [PostgreSQL](/setup/platform/postgresql-ha) (high-availability)
-- External [Redis](/setup/platform/redis-ha)
+- External [PostgreSQL](/docs/setup/platform/postgresql-ha) (high-availability)
+- External [Redis](/docs/setup/platform/redis-ha)
 - Dedicated node pools for control plane components
-- Consider [multi-namespace](/setup/deployment-strategies/strategies) or [multi-cluster](/setup/deployment-strategies/strategies) deployment strategies
+- Consider [multi-namespace](/docs/setup/deployment-strategies/strategies) or [multi-cluster](/docs/setup/deployment-strategies/strategies) deployment strategies

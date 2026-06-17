@@ -6,16 +6,16 @@ description: "This is a guide to assist you through the process of setting up a 
 If you are here, we assume that you have a Kubernetes cluster and [Helm](https://helm.sh/docs/intro/install/) setup.
 
 This section includes guides to deploy:
- * Polyaxon [Community Edition](/setup/platform/community-edition/).
- * Polyaxon [Enterprise Edition Control Plane](/setup/platform/enterprise-control-plane/).
+ * Polyaxon [Community Edition](/docs/setup/platform/community-edition/).
+ * Polyaxon [Enterprise Edition Control Plane](/docs/setup/platform/enterprise-control-plane/).
 
-Both deployments share some [common Helm options](/setup/platform/common-reference/).
+Both deployments share some [common Helm options](/docs/setup/platform/common-reference/).
 
 This guide is a reference with commands to deploy, upgrade, and teardown a cluster.
 
 Please consider reading the other configuration sections to have a deeper knowledge about how to configure and customize Polyaxon to fit your needs.
 
-If you are deploying Polyaxon in production mode, you should take some time to read about some [best practices](/setup/deployment-strategies/best-practices/) when deploying Polyaxon.
+If you are deploying Polyaxon in production mode, you should take some time to read about some [best practices](/docs/setup/deployment-strategies/best-practices/) when deploying Polyaxon.
 
 > **Tip**: The full list of the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
 
@@ -35,7 +35,7 @@ If you would like to use a different value, you must keep in mind to update the 
 ## Configuration
 
 This section will help you create a configuration file to deploy Polyaxon.
-Polyaxon ships with [default values](/setup/platform/common-reference/), however and depending on your use case
+Polyaxon ships with [default values](/docs/setup/platform/common-reference/), however and depending on your use case
 you may need to override some of these values.
 To do so, you need to create a configuration file and we recommend to save it somewhere safe so that you can reuse it in the future.
 
@@ -144,7 +144,7 @@ NOTES: ...
 
 These notes are important for setting the CLI, and getting access to the dashboard.
 
-Next step you need the [Polyaxon CLI installed](/setup/cli/), and you need to configure
+Next step you need the [Polyaxon CLI installed](/docs/setup/cli/), and you need to configure
 the host and the ports based on these notes.
 
 ## Port forward
