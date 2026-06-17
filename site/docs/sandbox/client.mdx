@@ -22,9 +22,9 @@ polyaxon._client.sandbox.SandboxClient(owner=None, project=None, run_uuid=None, 
 SandboxClient is a client to interact with a run's sandbox service.
 
 The sandbox service exposes process execution, filesystem access, and
-interactive PTY sessions inside the run's main container. The client
-requires a valid owner, project, and run uuid, and resolves the run's
-namespace lazily on the first call.
+interactive PTY sessions inside the run's main container. Sandbox operations
+require a valid owner, project, and run uuid. To create a new sandbox-enabled
+service run, initialize the client with owner/project and call `create()`.
 
 If no values are passed to this class,
 Polyaxon will try to resolve the owner, project, and run uuid from the environment:
@@ -74,7 +74,7 @@ print(result.exit_code, result.stdout)
     To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
 
 - __Raises__:
-  - __PolyaxonClientException__: If the owner, project, and/or run uuid are not passed
+  - __PolyaxonClientException__: If the owner and/or project are not passed
     and Polyaxon cannot resolve the values from the environment.
 
 

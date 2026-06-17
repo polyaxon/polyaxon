@@ -16,8 +16,13 @@
     "---Platform---",
     "administration",
     "editions",
-    "---Reference---",
-    "cli-and-api-refs",
+    "---More---",
+    "resources",
+    "glossary",
+    "roadmap",
+    "[Security Docs ↗](/security)",
+    "[Support ↗](/support)",
+    "references",
     "polyaxonfile",
     "cli",
     "python-library",
@@ -25,12 +30,10 @@
     "query-language",
     "api",
     "webhooks",
-    "---More---",
-    "resources",
-    "references",
-    "glossary",
-    "roadmap",
-    "[Security Docs ↗](/security)",
-    "[Support ↗](/support)"
+    "[Typescript SDK ↗](https://github.com/polyaxon/sdks/tree/master/ts)",
+    "[JS SDK ↗](https://github.com/polyaxon/sdks/tree/master/js)",
+    "[GO SDK ↗](https://github.com/polyaxon/sdks/tree/master/go)",
+    "[Python SDK ↗](https://github.com/polyaxon/sdks/tree/master/python)",
+    "[Java SDK ↗](https://github.com/polyaxon/sdks/tree/master/java)"
   ]
 }
