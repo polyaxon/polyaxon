@@ -33,7 +33,7 @@ the name is based on the project name and the run's uuid, i.e. `project:build-uu
   - __namespace__: str, optional
   - __presets__: List[str], optional
   - __cache__: [V1Cache](/docs/orchestration/helpers/cache/), optional
-  - __params__: Dict[str, [V1Param](/docs/polyaxonfile/specification/params/)], optional
+  - __params__: Dict[str, [V1Param](/docs/references/polyaxonfile/specification/params/)], optional
   - __run_patch__: Dict, optional
   - __patch_strategy__: str, optional, defaults to post_merge
 
@@ -152,7 +152,7 @@ operation:
 
 ### params
 
-The [params](/docs/polyaxonfile/specification/params/) to pass if the handler requires extra params,
+The [params](/docs/references/polyaxonfile/specification/params/) to pass if the handler requires extra params,
 they will be validated against the inputs/outputs.
 If a parameter is passed and the component does not define a corresponding inputs/outputs,
 a validation error will be raised unless the param has the `contextOnly` flag enabled.

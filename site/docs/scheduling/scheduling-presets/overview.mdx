@@ -5,14 +5,14 @@ description: "A feature for injecting certain information into operations at com
 
 ## Overview
 
-Scheduling presets is a feature for injecting certain information into operations at compilation time to extract repetitive configuration for node scheduling, resources requirements and definition, connections, 
+Scheduling presets is a feature for injecting certain information into operations at compilation time to extract repetitive configuration for node scheduling, resources requirements and definition, connections,
 but also for queue routing and access level control.
 
 ## Why using a preset
 
 It's possible to set for each operation an
-[environment section](/docs/polyaxonfile/specification/environment/), a [queue](/docs/polyaxonfile/specification/operation/#queue), a [container resources requirements](https://kubernetes.io/docs/concepts/containers/),
-a [termination](/docs/polyaxonfile/specification/termination/). But oftentimes, you might want to reuse some or all of these options
+[environment section](/docs/references/polyaxonfile/specification/environment/), a [queue](/docs/references/polyaxonfile/specification/operation/#queue), a [container resources requirements](https://kubernetes.io/docs/concepts/containers/),
+a [termination](/docs/references/polyaxonfile/specification/termination/). But oftentimes, you might want to reuse some or all of these options
 and apply them to a certain type of operations.
 
 One way to achieve such workflow is to push as many configuration sections as possible to the components, but this is not always possible and it's not recommended,
@@ -22,7 +22,7 @@ Polyaxon provides a concept called `Presets`, that you can use to package severa
 
 ## Defining presets
 
-Presets use all sections that the [operation specification](/docs/polyaxonfile/specification/operation/) offers, except for sections that define the component runtime, i.e.:
+Presets use all sections that the [operation specification](/docs/references/polyaxonfile/specification/operation/) offers, except for sections that define the component runtime, i.e.:
  * hubRef
  * dagRef
  * urlRef
@@ -47,12 +47,12 @@ There are two ways to define and save presets:
 ### Presets using Polyaxonfiles
 
 You can define a preset similar to any other Polyaxonfile that contain an operation.
-Presets can help define scheduling and environment configurations that you can share with 
+Presets can help define scheduling and environment configurations that you can share with
 the rest of your team to reduce the amount of boilerplate in your main Polyaxonfiles. Let's look at some example of presets.
 
  * **Preset for node scheduling**
 
-In order to leverage several node groups that can be used for scheduling your operations you can create several presets, 
+In order to leverage several node groups that can be used for scheduling your operations you can create several presets,
 e.g. `experiments.yaml`, `gpu_experiments.yaml`, `data_loaders.yaml`, `build_jobs.yaml` instead of setting an `environment` section on each component or operation.
 Each one of these files can define the node labels, annotations, tolerations and affinities,
 
@@ -64,7 +64,7 @@ runPatch:
     nodeSelector:
       node_label: gpu-experiments
 ```
- 
+
 you can commit these files with your git projects, and other users in your cluster don't have to learn how to request GPUs in their jobs or go through the same steps to define the environment section,
 they can just use the override argument:
 
@@ -85,7 +85,7 @@ Polyaxon will extend the main operation with all sections defined in `gpu_experi
 Note that `isPreset: true` is optional, anything that comes after the main component/operation using the override argument `-f` will be considered a preset even if it does not contain the `isPreset` flag.
 
  * **Preset for defining resources requirements**
- 
+
 You can also define presets to extract information about resources requirements, for example you might define `small_instance.yaml`, `medium_instance.yaml`, and `large_instance.yaml`.
 The content of these presets can contain information about resources requests and limits, for instance the `large_instance.yaml`
 
@@ -119,9 +119,9 @@ Polyaxon will follow the order of these presets and will patch the main operatio
 <blockquote className="commercial">This is part of our commercial offering.</blockquote>
 
 If you have access to Polyaxon Cloud or Polyaxon EE you can also save these presets on the organization level.
-You can additionally set the default preset on your organization or on a project level using Polyaxon UI, 
-such preset will be applied to all operations in the organization or the project where it's set.    
+You can additionally set the default preset on your organization or on a project level using Polyaxon UI,
+such preset will be applied to all operations in the organization or the project where it's set.
 
-Users can just reference the presets in their [operations specification](/docs/polyaxonfile/specification/operation/#presets) or using the CLI/Client `polyaxon run ... --presets=preset1,preset2`
+Users can just reference the presets in their [operations specification](/docs/references/polyaxonfile/specification/operation/#presets) or using the CLI/Client `polyaxon run ... --presets=preset1,preset2`
 
 In order to create and manage scheduling presets, please check the [management section for more details](/docs/administration/organizations/presets/)

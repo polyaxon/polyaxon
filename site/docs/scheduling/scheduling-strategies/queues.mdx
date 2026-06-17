@@ -37,7 +37,7 @@ In that case, if a queue is created with the default configuration it will be us
  * Concurrency: By default, each queue is created with the maximum concurrency limit, unless the user sets a concurrency limit [-1, ...].
 
  * Priority: By default, each queue is created with the highest priority, unless the user sets a priority level [-1, ...].
- 
+
  * Quota: By default, each queues is created without any quota and allows any amount of resources.
 
 > To manage queues please check the [management section](/docs/administration/organizations/queues/)
@@ -47,9 +47,9 @@ In that case, if a queue is created with the default configuration it will be us
 When a user runs an independent operation, Polyaxon will automatically start compiling and resolving that operation and will put it on the queue defined in the operation,
 if no queue is defined in the operation, the default queue assigned to the project will be used.
 
-> To define a queue on the [component](/docs/polyaxonfile/specification/component/#queue),
-> on the [operation](/docs/polyaxonfile/specification/operation/#queue),
-> using the [CLI's](/docs/cli/run/) `--queue` flag, or using the [client's create methods](/docs/python-library/run-client/#create)
+> To define a queue on the [component](/docs/references/polyaxonfile/specification/component/#queue),
+> on the [operation](/docs/references/polyaxonfile/specification/operation/#queue),
+> using the [CLI's](/docs/references/cli/run/) `--queue` flag, or using the [client's create methods](/docs/references/python-library/run-client/#create)
 
 If a user runs a workflow with concurrency defined, e.g. parallel executions, DAGs, hyperparameter optimization,
 Polyaxon will use the right algorithm for generating any dynamic operations
@@ -83,7 +83,7 @@ Setting the organization's default queue:
 
 Setting a project's default queue:
 
-![default-project-preset](/images/dashboard/queues/default-project-queue.png) 
+![default-project-preset](/images/dashboard/queues/default-project-queue.png)
 
 Restricting queues accessible by a project:
 

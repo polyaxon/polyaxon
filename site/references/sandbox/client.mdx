@@ -1,0 +1,197 @@
+---
+title: "Sandbox Client Reference"
+sidebarTitle: "Client"
+description: "The sandbox client allows to execute commands, access the filesystem, and attach PTY sessions inside a run's container."
+---
+
+The sandbox client communicates with a sandbox-enabled run through the streams proxy.
+It requires a valid owner, project, and run uuid, and uses the normal Polyaxon client auth path.
+
+The functionality is split into sub-clients:
+
+ * [process](/docs/references/sandbox/process/): one-shot, streaming, and background command execution.
+ * [fs](/docs/references/sandbox/fs/): filesystem reads, writes, transfers, and management.
+ * [pty](/docs/references/sandbox/pty/): interactive PTY sessions over WebSocket.
+
+## SandboxClient
+
+```python
+polyaxon._client.sandbox.SandboxClient(owner=None, project=None, run_uuid=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+```
+
+
+SandboxClient is a client to interact with a run's sandbox service.
+
+The sandbox service exposes process execution, filesystem access, and
+interactive PTY sessions inside the run's main container. Sandbox operations
+require a valid owner, project, and run uuid. To create a new sandbox-enabled
+service run, initialize the client with owner/project and call `create()`.
+
+If no values are passed to this class,
+Polyaxon will try to resolve the owner, project, and run uuid from the environment:
+ * If you have a configured CLI, Polyaxon will use the configuration of the cli.
+ * If you have a cached run using the CLI,
+   the client will default to that cached run unless you override the values.
+ * If you use this client in the context of a job or a service managed by Polyaxon,
+   a configuration will be available to resolve the values based on that run.
+
+The functionality is split into sub-clients:
+ * `process`: one-shot, streaming, and background command execution.
+ * `fs`: filesystem reads, writes, transfers, and management.
+ * `pty`: interactive PTY sessions over WebSocket.
+
+- __Example__:
+```python
+from polyaxon.client import SandboxClient
+client = SandboxClient(owner="acme", project="proj", run_uuid=run_uuid)
+client.ping()
+result = client.process.exec(command=["python", "-V"])
+print(result.exit_code, result.stdout)
+```
+
+- __Properties__:
+  - __project__: str.
+  - __owner__: str.
+  - __run_uuid__: str.
+  - __run_data__: V1Run.
+  - __namespace__: str.
+  - __settings__: V1RunSettings.
+  - __client__: [PolyaxonClient](/docs/references/python-library/polyaxon-client/)
+  - __process__: the process execution sub-client.
+  - __fs__: the filesystem sub-client.
+  - __pty__: the PTY sub-client.
+
+- __Args__:
+  - __owner__: str, optional, the owner is the username or
+    the organization name owning this project.
+  - __project__: str, optional, project name owning the run(s).
+  - __run_uuid__: str, optional, run uuid.
+  - __client__: [PolyaxonClient](/docs/references/python-library/polyaxon-client/), optional,
+    an instance of a configured client, if not passed,
+    a new instance will be created based on the available environment.
+  - __is_offline__: bool, optional,
+    To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+  - __no_op__: bool, optional,
+    To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
+
+- __Raises__:
+  - __PolyaxonClientException__: If the owner and/or project are not passed
+    and Polyaxon cannot resolve the values from the environment.
+
+
+
+----
+
+## AsyncSandboxClient
+
+```python
+polyaxon._client.sandbox.AsyncSandboxClient(owner=None, project=None, run_uuid=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+```
+
+
+AsyncSandboxClient is the async variant of the
+[SandboxClient](/docs/references/sandbox/client/#sandboxclient).
+
+It exposes the same API surface with coroutine methods and async iterators:
+ * `process.exec_stream` returns an async context manager / async iterator.
+ * Background exec handles expose awaitable methods and `async for` log iteration.
+ * `pty.attach` returns an async WebSocket client.
+
+- __Example__:
+```python
+from polyaxon.client import AsyncSandboxClient
+client = AsyncSandboxClient(owner="acme", project="proj", run_uuid=run_uuid)
+result = await client.process.exec(command=["python", "-V"])
+```
+
+
+
+----
+
+### create
+
+
+```python
+client.create(name=None, description=None, tags=None, content=None, managed_by=None, is_managed=None, pending=None, meta_info=None)
+```
+
+
+
+Creates a new sandbox-enabled service run.
+
+A sandbox is not a separate Polyaxon resource. This method creates a
+regular `kind: service` run with `plugins.sandbox` enabled, then mutates
+this client to point at the returned run. After creation, the same
+client can use `process`, `fs`, and `pty`.
+
+If `content` is not provided, the method builds a minimal service
+operation with `plugins.sandbox: true`. If `content` is provided, it
+must be inline service operation content so the client can verify the
+run kind and merge the sandbox plugin before submission.
+
+- __Example__:
+```python
+from polyaxon.client import SandboxClient
+client = SandboxClient(owner="acme", project="proj")
+run = client.create(name="debug-sandbox")
+result = client.process.exec(command=["python", "-V"])
+```
+
+- __Args__:
+  - __name__: str, optional, run name.
+  - __description__: str, optional, run description.
+  - __tags__: str or List[str], optional, list of tags.
+  - __content__: str or Dict or V1Operation, optional, inline service operation
+        content. When provided, it must define a service component.
+  - __is_managed__: bool, flag to create a managed run.
+  - __managed_by__: ManagedBy, optional, service that manages the operation.
+  - __pending__: str, optional, pending state.
+  - __meta_info__: dict, optional, meta info to create the run with.
+
+- __Returns__:
+  V1Run, run instance from the response.
+
+
+
+----
+
+### ping
+
+
+```python
+client.ping()
+```
+
+
+
+Checks that the sandbox service is reachable and healthy.
+
+- __Example__:
+```python
+response = client.ping()
+print(response.status, response.version)
+```
+
+- __Returns__:
+  V1PingResponse, with `status`, `version`, `uptime_ms`,
+        `last_activity`, `execs_running`, `ptys_running`, `ptys_attached`.
+
+
+
+----
+
+### get_namespace
+
+
+```python
+client.get_namespace()
+```
+
+
+
+Fetches the run namespace.
+
+- __Returns__:
+  str, the namespace where the run is scheduled.
+
+

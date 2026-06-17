@@ -1,0 +1,161 @@
+---
+title: "Project CLI Reference"
+sidebarTitle: "Project"
+description: "Polyaxonfile Command Line Interface Specification - Project CLI Reference."
+---
+
+### project
+
+```bash
+Usage: polyaxon project [OPTIONS] COMMAND [ARGS]...
+
+  Commands for projects.
+
+Options:
+  -p, --project TEXT  The project name, e.g. 'mnist' or 'acme/mnist'.
+  --help              Show this message and exit.
+
+Commands:
+  create     Create a new project.
+  dashboard  Open this project's dashboard details in browser.
+  delete     Delete project.
+  get        Get info for current project, by project_name, or...
+  ls         List projects.
+  update     Update project.
+```
+
+---
+
+### project create
+
+```bash
+Usage: polyaxon project create [OPTIONS]
+
+  Create a new project.
+
+  Uses /docs/references/cli/cache/#caching
+
+  Examples:
+
+  $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
+
+  $ polyaxon project create --name=owner/name --description="Project Description"
+
+Options:
+  -n, --name TEXT     The project name, e.g. 'mnist' or 'acme/mnist'.
+  --description TEXT  Description of the project.
+  --tags TEXT         Tags of the project (comma separated values).
+  --public            Set the visibility of the project to public.
+  --init              Initialize the project after creation.
+  --help              Show this message and exit.
+```
+
+---
+
+### project ls
+
+```bash
+Usage: polyaxon project ls [OPTIONS]
+
+  List projects.
+
+  Uses /docs/references/cli/cache/#caching
+
+Options:
+  -o, --owner TEXT  Name of the owner/namespace, if not provided it will
+                    default to the namespace of the current user.
+  -q, --query TEXT  To filter the projects based on this query spec.
+  -s, --sort TEXT   To order the projects based on the sort spec.
+  --limit INTEGER   To limit the list of projects.
+  --offset INTEGER  To offset the list of projects.
+  --help            Show this message and exit.
+```
+
+---
+
+### project get
+
+```bash
+Usage: polyaxon project get [OPTIONS]
+
+  Get info for current project, by project_name, or owner/project_name.
+
+  Uses /docs/references/cli/cache/#caching
+
+  Examples:
+
+  To get current project:
+
+  $ polyaxon project get
+
+  To get a project by name
+
+  $ polyaxon project get -p owner/project
+
+Options:
+  -p, --project TEXT  The project name, e.g. 'mnist' or 'acme/mnist'.
+  --help              Show this message and exit.
+```
+
+---
+
+### project delete
+
+```bash
+Usage: polyaxon project delete [OPTIONS]
+
+  Delete project.
+
+  Uses /docs/references/cli/cache/#caching
+
+Options:
+  -p, --project TEXT  The project name, e.g. 'mnist' or 'acme/mnist'.
+  -y, --yes           Automatic yes to prompts. Assume "yes" as answer to all
+                      prompts and run non-interactively.
+  --help              Show this message and exit.
+```
+
+---
+
+### project update
+
+```bash
+Usage: polyaxon project update [OPTIONS]
+
+  Update project.
+
+  Uses /docs/references/cli/cache/#caching
+
+  Examples:
+
+  $ polyaxon project update foobar --description="Image Classification with DL using TensorFlow"
+
+  $ polyaxon project update mike1/foobar --description="Image Classification with DL using TensorFlow"
+
+  $ polyaxon update --tags="foo, bar"
+
+Options:
+  -p, --project TEXT  The project name, e.g. 'mnist' or 'acme/mnist'.
+  -n, --name TEXT     Name of the project, must be unique for the same user.
+  --description TEXT  Description of the project.
+  --tags TEXT         Tags of the project (comma separated values).
+  --private BOOLEAN   Set the visibility of the project to private/public.
+  --help              Show this message and exit.
+```
+
+---
+
+### project dashboard
+
+```bash
+Usage: polyaxon project dashboard [OPTIONS]
+
+  Open this project's dashboard details in browser.
+
+Options:
+  -p, --project TEXT  The project name, e.g. 'mnist' or 'acme/mnist'.
+  -y, --yes           Automatic yes to prompts. Assume "yes" as answer to all
+                      prompts and run non-interactively.
+  --url               Print the url of the dashboard for this project.
+  --help              Show this message and exit.
+```

@@ -1,0 +1,34 @@
+---
+title: "Overview"
+description: "Reference documentation for Polyaxonfile manifests, specification sections, and runtime context."
+---
+
+# Overview
+
+Polyaxonfiles are the declarative manifests used to define reusable components and executable operations. They describe what should run, which inputs and outputs are expected, which environment should be used, and how runtime values are resolved before execution.
+
+Use this reference when you need the exact schema, available fields, supported types, and context variables used by Polyaxon during compilation.
+
+## Specification
+
+The [specification](/docs/references/polyaxonfile/specification/overview/) defines the sections that make up a Polyaxonfile, including components, operations, inputs and outputs, parameters, environments, mounts, plugins, lifecycle values, and validation rules.
+
+Start here when you are authoring or reviewing a manifest:
+
+- [Component](/docs/references/polyaxonfile/specification/component/)
+- [Operation](/docs/references/polyaxonfile/specification/operation/)
+- [Inputs and outputs](/docs/references/polyaxonfile/specification/io/)
+- [Parameters](/docs/references/polyaxonfile/specification/params/)
+- [Environment](/docs/references/polyaxonfile/specification/environment/)
+
+## Context
+
+The [context](/docs/references/polyaxonfile/context/overview/) explains how Polyaxon resolves runtime values with Jinja expressions. It covers global run metadata, user-provided params, connection schemas, and references from upstream runs.
+
+Use the context reference when you need to inject dynamic values such as project metadata, params, artifacts, or connection information into a Polyaxonfile.
+
+## Related Docs
+
+- [Scheduling](/docs/scheduling/overview/) explains how workloads are routed through queues, presets, resources, approvals, and Kubernetes entities.
+- [Workloads](/docs/workload/overview/) explains the job, service, distributed, and cluster workload types that Polyaxonfiles can run.
+- [CLI](/docs/references/cli/overview/) explains how to validate and submit Polyaxonfiles from the command line.

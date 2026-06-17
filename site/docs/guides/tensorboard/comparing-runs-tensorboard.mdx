@@ -19,7 +19,7 @@ polyaxon ops ls [-p PROJECT_NAME]
 ```
 
 This command will show all runs created under a specific project, it will also show both service, job, dag, and matrix runs, and it will provide a mechanism for paginating the records.
-We can reduce the information in this list by providing a [query](/docs/query-language/) similar to the UI.
+We can reduce the information in this list by providing a [query](/docs/references/query-language/overview/) similar to the UI.
 
 ```bash
 polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 5

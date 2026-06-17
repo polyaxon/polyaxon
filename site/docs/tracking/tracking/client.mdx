@@ -29,14 +29,14 @@ You can always access the `self.client` to execute more APIs.
   - __run_data__: V1Run.
   - __status__: str.
   - __namespace__: str.
-  - __client__: [PolyaxonClient](/docs/python-library/polyaxon-client/)
+  - __client__: [PolyaxonClient](/docs/references/python-library/polyaxon-client/)
 
 - __Args__:
   - __owner__: str, optional,
     the owner is the username or the organization name owning this project.
   - __project__: str, optional, project name owning the run(s).
   - __run_uuid__: str, optional, run uuid.
-  - __client__: [PolyaxonClient](/docs/python-library/polyaxon-client/), optional,
+  - __client__: [PolyaxonClient](/docs/references/python-library/polyaxon-client/), optional,
     an instance of a configured client, if not passed,
     a new instance will be created based on the available environment.
   - __track_code__: bool, optional, default True, to track code version.
@@ -911,10 +911,10 @@ N.B you will probably use one of the simpler methods:
   * start
   * end
 
-[Run API](/docs/api/#operation/CreateRunStatus)
+[Run API](/docs/references/api/#operation/CreateRunStatus)
 
 - __Args__:
-  - __status__: str, a valid [Statuses](/docs/polyaxonfile/specification/lifecycle/) value.
+  - __status__: str, a valid [Statuses](/docs/references/polyaxonfile/specification/lifecycle/) value.
   - __reason__: str, optional, reason or service issuing the status change.
   - __message__: str, optional, message to log with this status.
   - __last_transition_time__: datetime, default `now`.

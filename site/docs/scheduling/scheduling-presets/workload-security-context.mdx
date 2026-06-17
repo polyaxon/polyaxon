@@ -5,12 +5,12 @@ description: "Setting a default workload security context using presets."
 
 ## Overview
 
-By default, Polyaxon operations run without a security context, and pods run as root. 
+By default, Polyaxon operations run without a security context, and pods run as root.
 Sometimes you might even need to run pods with privileged security, for examples the `dockerizer` component.
 
 ## Defining a security context preset
 
-If you need to configure a security context for your jobs and services, you can use the [environment.SecurityContext](/docs/polyaxonfile/specification/environment/#securitycontext) section:
+If you need to configure a security context for your jobs and services, you can use the [environment.SecurityContext](/docs/references/polyaxonfile/specification/environment/#securitycontext) section:
 
 ```yaml
 runPatch:
@@ -45,4 +45,4 @@ Setting the organization's default preset:
 
 Setting a project's default preset:
 
-![default-project-preset](/images/dashboard/presets/default-project-preset.png) 
+![default-project-preset](/images/dashboard/presets/default-project-preset.png)

@@ -1,0 +1,189 @@
+---
+title: "Sandbox PTY Reference"
+sidebarTitle: "PTY"
+description: "The pty sub-client allows to create and attach interactive PTY sessions inside the sandbox."
+---
+
+The PTY sub-client is accessed via `client.pty` on a
+[SandboxClient](/docs/references/sandbox/client/) instance.
+
+Attached sessions communicate over WebSocket: binary frames are raw PTY
+output, text frames are JSON control events.
+
+### create
+
+
+```python
+pty.create(command=None, env=None, workdir=None, cols=80, rows=24, tag=None)
+```
+
+
+
+Creates a new PTY session.
+
+- __Example__:
+```python
+pty = client.pty.create(command=["sh"], cols=80, rows=24)
+print(pty.pty_id, pty.state)
+```
+
+- __Args__:
+  - __command__: List[str], optional, the command to run in the PTY,
+        - __default__: the server's default shell.
+  - __env__: Dict[str, str], optional, environment variables to set.
+  - __workdir__: str, optional, working directory for the session.
+  - __cols__: int, optional, terminal columns, default: 80.
+  - __rows__: int, optional, terminal rows, default: 24.
+  - __tag__: str, optional, a label to filter sessions in `list`.
+
+- __Returns__:
+  V1Pty, with `pty_id`, `pid`, `state`, `attached`, `cols`,
+        `rows`, `tag`, and activity timestamps.
+
+
+
+----
+
+### list
+
+
+```python
+pty.list(tag=None)
+```
+
+
+
+Lists PTY sessions.
+
+- __Args__:
+  - __tag__: str, optional, only return sessions created with this tag.
+
+- __Returns__:
+  V1PtyList, with `sessions`, a list of V1Pty.
+
+
+
+----
+
+### get
+
+
+```python
+pty.get(id)
+```
+
+
+
+Fetches a PTY session by id.
+
+- __Args__:
+  - __id__: str, the PTY session id.
+
+- __Returns__:
+  V1Pty
+
+
+
+----
+
+### delete
+
+
+```python
+pty.delete(id)
+```
+
+
+
+Terminates and deletes a PTY session.
+
+- __Args__:
+  - __id__: str, the PTY session id.
+
+
+
+----
+
+### resize
+
+
+```python
+pty.resize(id, cols, rows)
+```
+
+
+
+Resizes a PTY session's terminal.
+
+- __Args__:
+  - __id__: str, the PTY session id.
+  - __cols__: int, terminal columns.
+  - __rows__: int, terminal rows.
+
+
+
+----
+
+### signal
+
+
+```python
+pty.signal(id, signal)
+```
+
+
+
+Sends a signal to a PTY session's process.
+
+- __Args__:
+  - __id__: str, the PTY session id.
+  - __signal__: str, the signal name, e.g. `SIGTERM` or `SIGKILL`.
+
+
+
+----
+
+### attach
+
+
+```python
+pty.attach(id, replay_bytes=None, timeout=None)
+```
+
+
+
+Attaches to a PTY session over WebSocket.
+
+The initial `attached` control event is consumed before this method
+returns; a bad initial frame closes the socket and raises.
+
+The returned client is a context manager and exposes:
+ * `send_stdin(data)`: sends bytes to the PTY's stdin.
+ * `recv()`: receives the next frame, bytes for raw PTY output,
+   dicts for JSON control events.
+ * `resize(cols, rows)`: resizes the terminal.
+ * `signal(signal)` / `kill(signal="SIGTERM")`: signals the process.
+ * `attached_event`: the initial attached control event.
+ * `close()`: closes the WebSocket.
+
+- __Example__:
+```python
+pty = client.pty.create(command=["sh"])
+with client.pty.attach(pty.pty_id, replay_bytes=1024) as ws:
+    ws.send_stdin(b"echo ready\n")
+    frame = ws.recv()
+```
+
+- __Args__:
+  - __id__: str, the PTY session id.
+  - __replay_bytes__: int, optional, bytes of recent output to replay
+        on attach.
+  - __timeout__: int, optional, connection timeout in seconds.
+
+- __Returns__:
+  SandboxPtyWSClient, a connected PTY WebSocket client.
+
+- __Raises__:
+  - __PolyaxonClientException__: If the attach handshake fails.
+
+

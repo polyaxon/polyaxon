@@ -1,0 +1,26 @@
+---
+title: "Projects Query Syntax"
+sidebarTitle: "Projects"
+description: "Polyaxon Projects Query Syntax Specification for Projects."
+---
+
+## Query
+
+field                           | condition
+--------------------------------|------------------
+`name`                          | [string condition](/docs/references/query-language/overview/#query-with-string-condition)
+`description`                   | [string condition](/docs/references/query-language/overview/#query-with-string-condition)
+`created_at`                    | [datetime condition](/docs/references/query-language/overview/#query-with-datetime-condition)
+`updated_at`                    | [datetime condition](/docs/references/query-language/overview/#query-with-datetime-condition)
+`owner`                         | [string condition](/docs/references/query-language/overview/#query-with-string-condition)
+`tags`                          | [value condition](/docs/references/query-language/overview/#query-with-value-condition)
+
+
+## Sort
+
+field:
+
+ * `created_at`
+ * `updated_at`
+ * `name`
+ * `owner`

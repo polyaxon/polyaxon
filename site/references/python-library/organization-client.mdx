@@ -1,0 +1,673 @@
+---
+title: "Organization Client Reference"
+description: "The organization client allows to communicate with organization APIs."
+---
+
+## OrganizationClient
+
+```python
+polyaxon._client.organization.OrganizationClient(owner=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+```
+
+
+OrganizationClient is a client to communicate with Polyaxon organizations endpoints.
+
+If no values are passed to this class,
+Polyaxon will try to resolve the owner from the environment:
+ * If you have a configured CLI, Polyaxon will use the configuration of the cli.
+ * If you use this client in the context of a job or a service managed by Polyaxon,
+   a configuration will be available to resolve the values based on that run.
+
+Team Scoping (Using as a Team Client):
+  This client can be used as a **Team Client** by providing the owner in the
+  format "owner/team". When a team is specified, all applicable methods will
+  operate within that team's scope rather than organization-wide.
+
+  Team-scoped methods include:
+  * Runs: list_runs, get_run, approve_runs, archive_runs, restore_runs,
+     delete_runs, stop_runs, skip_runs, invalidate_runs, bookmark_runs,
+     tag_runs, transfer_runs
+  * Versions: list_versions, list_component_versions, list_model_versions,
+     list_artifact_versions
+  * Artifacts: list_runs_artifacts_lineage
+
+  - __Examples__:
+  ```python
+# Organization-wide operations
+org_client = OrganizationClient(owner="my-org")
+org_client.list_runs()  # All runs across the organization
+org_client.list_model_versions()  # All model versions across the organization
+# Team-scoped operations (effectively a "Team Client")
+team_client = OrganizationClient(owner="my-org/engineering")
+team_client.list_runs()  # Only runs within the engineering team
+team_client.list_model_versions()  # Only model versions within the team
+  ```
+
+- __Properties__:
+  - __owner__: str.
+  - __team__: str.
+  - __organization_data__: V1Organization.
+
+- __Args__:
+  - __owner__: str, optional, the owner is the username or the organization name.
+      Can be specified as "owner" for organization-wide scope or "owner/team"
+      for team-scoped operations.
+  - __client__: [PolyaxonClient](/docs/references/python-library/polyaxon-client/), optional,
+    an instance of a configured client, if not passed,
+    a new instance will be created based on the available environment.
+  - __is_offline__: bool, optional,
+    To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
+  - __no_op__: bool, optional,
+    To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
+
+- __Raises__:
+  - __PolyaxonClientException__: If no owner is passed and Polyaxon cannot
+  resolve an owner from the environment.
+
+
+
+----
+
+### refresh_data
+
+
+```python
+refresh_data(self)
+```
+
+
+
+Fetches the organization data from the api.
+
+
+----
+
+### list
+
+
+```python
+list(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists organizations.
+
+[Organization API](/docs/references/api/#operation/ListOrganizations)
+
+- __Args__:
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of organizations to return.
+  - __offset__: int, optional, offset pages to paginate organizations.
+
+- __Returns__:
+  V1ListOrganizationsResponse, list of organization instances.
+
+
+
+----
+
+### list_members
+
+
+```python
+list_members(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists organization members.
+
+[Organization API](/docs/references/api/#operation/ListOrganizationMembers)
+
+- __Args__:
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of members to return.
+  - __offset__: int, optional, offset pages to paginate members.
+
+- __Returns__:
+  V1ListOrganizationMembersResponse, list of organization member instances.
+
+
+
+----
+
+### get_member
+
+
+```python
+get_member(self, user)
+```
+
+
+
+Gets an organization member.
+
+[Organization API](/docs/references/api/#operation/GetOrganizationMember)
+
+- __Args__:
+  - __user__: str, required, the username of the member.
+
+- __Returns__:
+  V1OrganizationMember, organization member instance.
+
+
+
+----
+
+### create_member
+
+
+```python
+create_member(self, data, email=None)
+```
+
+
+
+Creates a new organization member.
+
+[Organization API](/docs/references/api/#operation/CreateOrganizationMember)
+
+- __Args__:
+  - __data__: Dict or V1OrganizationMember, required.
+  - __email__: str, optional, email of the member to invite.
+
+- __Returns__:
+  V1OrganizationMember, organization member instance from the response.
+
+
+
+----
+
+### update_member
+
+
+```python
+update_member(self, user, data)
+```
+
+
+
+Updates an organization member based on the data passed.
+
+[Organization API](/docs/references/api/#operation/UpdateOrganizationMember)
+
+- __Args__:
+  - __user__: str, required, the username of the member.
+  - __data__: Dict or V1OrganizationMember, required.
+
+- __Returns__:
+  V1OrganizationMember, organization member instance from the response.
+
+
+
+----
+
+### patch_member
+
+
+```python
+patch_member(self, user, data)
+```
+
+
+
+Patches an organization member based on the data passed.
+
+[Organization API](/docs/references/api/#operation/PatchOrganizationMember)
+
+- __Args__:
+  - __user__: str, required, the username of the member.
+  - __data__: Dict or V1OrganizationMember, required.
+
+- __Returns__:
+  V1OrganizationMember, organization member instance from the response.
+
+
+
+----
+
+### delete_member
+
+
+```python
+delete_member(self, user)
+```
+
+
+
+Deletes an organization member.
+
+[Organization API](/docs/references/api/#operation/DeleteOrganizationMember)
+
+- __Args__:
+  - __user__: str, required, the username of the member.
+
+
+
+----
+
+### list_teams
+
+
+```python
+list_teams(self, query=None, sort=None, limit=None, offset=None, bookmarks=False, mode=None)
+```
+
+
+
+Lists teams in the organization.
+
+[Teams API](/docs/references/api/#operation/ListTeams)
+
+- __Args__:
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of teams to return.
+  - __offset__: int, optional, offset pages to paginate teams.
+  - __bookmarks__: bool, optional, filter by bookmarks.
+  - __mode__: str, optional, mode of the search.
+- __Returns__:
+  V1ListTeamsResponse, list of team instances.
+
+
+
+----
+
+### list_runs
+
+
+```python
+list_runs(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists runs across all projects in the organization or team.
+
+[Organization API](/docs/references/api/#operation/GetOrganizationRuns)
+[Team API](/docs/references/api/#operation/GetTeamRuns)
+
+- __Args__:
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of runs to return.
+  - __offset__: int, optional, offset pages to paginate runs.
+
+- __Returns__:
+  V1ListRunsResponse, list of run instances.
+
+
+
+----
+
+### get_run
+
+
+```python
+get_run(self, uuid)
+```
+
+
+
+Gets a run by uuid from the organization or team.
+
+[Organization API](/docs/references/api/#operation/GetOrganizationRun)
+[Team API](/docs/references/api/#operation/GetTeamRun)
+
+- __Args__:
+  - __uuid__: str, required, the run uuid.
+
+- __Returns__:
+  V1Run, run instance.
+
+
+
+----
+
+### approve_runs
+
+
+```python
+approve_runs(self, uuids)
+```
+
+
+
+Approves multiple runs in the organization.
+
+[Organization API](/docs/references/api/#operation/ApproveOrganizationRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to approve.
+
+
+
+----
+
+### archive_runs
+
+
+```python
+archive_runs(self, uuids)
+```
+
+
+
+Archives multiple runs in the organization.
+
+[Organization API](/docs/references/api/#operation/ArchiveOrganizationRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to archive.
+
+
+
+----
+
+### restore_runs
+
+
+```python
+restore_runs(self, uuids)
+```
+
+
+
+Restores multiple runs in the organization.
+
+[Organization API](/docs/references/api/#operation/RestoreOrganizationRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to restore.
+
+
+
+----
+
+### delete_runs
+
+
+```python
+delete_runs(self, uuids)
+```
+
+
+
+Deletes multiple runs in the organization or team.
+
+[Organization API](/docs/references/api/#operation/DeleteOrganizationRuns)
+[Team API](/docs/references/api/#operation/DeleteTeamRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to delete.
+
+
+
+----
+
+### stop_runs
+
+
+```python
+stop_runs(self, uuids)
+```
+
+
+
+Stops multiple runs in the organization or team.
+
+[Organization API](/docs/references/api/#operation/StopOrganizationRuns)
+[Team API](/docs/references/api/#operation/StopTeamRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to stop.
+
+
+
+----
+
+### skip_runs
+
+
+```python
+skip_runs(self, uuids)
+```
+
+
+
+Skips multiple runs in the organization.
+
+[Organization API](/docs/references/api/#operation/SkipOrganizationRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to skip.
+
+
+
+----
+
+### invalidate_runs
+
+
+```python
+invalidate_runs(self, uuids)
+```
+
+
+
+Invalidates multiple runs in the organization or team.
+
+[Organization API](/docs/references/api/#operation/InvalidateOrganizationRuns)
+[Team API](/docs/references/api/#operation/InvalidateTeamRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to invalidate.
+
+
+
+----
+
+### bookmark_runs
+
+
+```python
+bookmark_runs(self, uuids)
+```
+
+
+
+Bookmarks multiple runs in the organization.
+
+[Organization API](/docs/references/api/#operation/BookmarkOrganizationRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to bookmark.
+
+
+
+----
+
+### tag_runs
+
+
+```python
+tag_runs(self, uuids, tags)
+```
+
+
+
+Tags multiple runs in the organization.
+
+[Organization API](/docs/references/api/#operation/TagOrganizationRuns)
+
+- __Args__:
+  - __data__: Dict, required, must include 'uuids' and 'tags' fields.
+
+
+
+----
+
+### transfer_runs
+
+
+```python
+transfer_runs(self, uuids, to_project)
+```
+
+
+
+Transfers multiple runs to another project in the organization.
+
+[Organization API](/docs/references/api/#operation/TransferOrganizationRuns)
+
+- __Args__:
+  - __uuids__: List[str] or V1Uuids, required, list of run uuids to transfer.
+  - __to_project__: str, required, the destination project to transfer the runs to.
+
+
+
+----
+
+### list_versions
+
+
+```python
+list_versions(self, kind, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists project versions across all projects in the organization or team.
+
+This is a generic function that lists versions of a specific kind
+across all projects in the organization or team:
+  * component versions
+  * model versions
+  * artifact versions
+
+[Organization API](/docs/references/api/#operation/GetOrganizationVersions)
+[Team API](/docs/references/api/#operation/GetTeamVersions)
+
+- __Args__:
+  - __kind__: V1ProjectVersionKind, kind of the project version.
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of versions to return.
+  - __offset__: int, optional, offset pages to paginate versions.
+
+- __Returns__:
+  V1ListProjectVersionsResponse, list of project versions across all projects.
+
+
+
+----
+
+### list_component_versions
+
+
+```python
+list_component_versions(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists component versions across all projects in the organization or team.
+
+[Organization API](/docs/references/api/#operation/GetOrganizationVersions)
+[Team API](/docs/references/api/#operation/GetTeamVersions)
+
+- __Args__:
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of versions to return.
+  - __offset__: int, optional, offset pages to paginate versions.
+
+- __Returns__:
+  V1ListProjectVersionsResponse, list of component versions.
+
+
+
+----
+
+### list_model_versions
+
+
+```python
+list_model_versions(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists model versions across all projects in the organization or team.
+
+[Organization API](/docs/references/api/#operation/GetOrganizationVersions)
+[Team API](/docs/references/api/#operation/GetTeamVersions)
+
+- __Args__:
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of versions to return.
+  - __offset__: int, optional, offset pages to paginate versions.
+
+- __Returns__:
+  V1ListProjectVersionsResponse, list of model versions.
+
+
+
+----
+
+### list_artifact_versions
+
+
+```python
+list_artifact_versions(self, query=None, sort=None, limit=None, offset=None)
+```
+
+
+
+Lists artifact versions across all projects in the organization or team.
+
+[Organization API](/docs/references/api/#operation/GetOrganizationVersions)
+[Team API](/docs/references/api/#operation/GetTeamVersions)
+
+- __Args__:
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of versions to return.
+  - __offset__: int, optional, offset pages to paginate versions.
+
+- __Returns__:
+  V1ListProjectVersionsResponse, list of artifact versions.
+
+
+
+----
+
+### list_runs_artifacts_lineage
+
+
+```python
+list_runs_artifacts_lineage(self, name=None, query=None, sort=None, limit=None, offset=None, bookmarks=False, mode=None)
+```
+
+
+
+Lists artifact lineage for runs across all projects in the organization.
+
+[Organization API](/docs/references/api/#operation/GetOrganizationRunsArtifactsLineage)
+
+- __Args__:
+  - __name__: str, optional, entity name filter.
+  - __query__: str, optional, query filters
+  - __sort__: str, optional, fields to order by
+  - __limit__: int, optional, limit of artifacts to return.
+  - __offset__: int, optional, offset pages to paginate artifacts.
+  - __bookmarks__: bool, optional, filter by bookmarks.
+  - __mode__: str, optional, mode of the search.
+
+- __Returns__:
+  V1ListRunArtifactsResponse, list of run artifacts with lineage info.
+

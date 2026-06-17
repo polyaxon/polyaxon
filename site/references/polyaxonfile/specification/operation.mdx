@@ -1,0 +1,507 @@
+---
+title: "Operation Specification"
+description: "An operation is how Polyaxon executes a component by passing parameters, connections, and a run environment."
+---
+
+## V1Operation
+
+```python
+polyaxon._flow.operations.operation.V1Operation()
+```
+
+
+An operation is how Polyaxon executes a component by passing parameters,
+connections, and a run environment.
+
+With an operation users can:
+ * Pass the parameters for required inputs or override the default values of optional inputs.
+ * Patch the definition of the component to set environments, initializers, and resources.
+ * Set termination logic and retries.
+ * Set trigger logic to start a component in a pipeline context.
+ * Parallelize or map the component over a matrix of parameters.
+ * Put an operation on a schedule.
+ * Subscribe a component to events to trigger executions automatically.
+
+After resolution and compilation, Polyaxon will prepare an executable
+that will be scheduled on Kubernetes:
+
+![polyaxonfile operation](../../../../content/images/references/specification/operation.png)
+
+- __Args__:
+  - __version__: str
+  - __kind__: str, should be equal to `operation`
+  - __patch_strategy__: str, optional, defaults to post_merge
+  - __is_preset__: bool, optional
+  - __is_approved__: bool, optional
+  - __name__: str, optional
+  - __description__: str, optional
+  - __tags__: List[str], optional
+  - __presets__: str, optional
+  - __queue__: str, optional
+  - __namespace__: str, optional
+  - __cache__: [V1Cache](/docs/orchestration/helpers/cache/), optional
+  - __termination__: [V1Termination](/docs/references/polyaxonfile/specification/termination/), optional
+  - __plugins__: [V1Plugins](/docs/references/polyaxonfile/specification/plugins/), optional
+  - __params__: Dict[str, [V1Param](/docs/references/polyaxonfile/specification/params/)], optional
+  - __schedule__: Union[[V1CronSchedule](/docs/orchestration/schedules/cron/), [V1IntervalSchedule](/docs/orchestration/schedules/interval/), [V1DateTimeSchedule](/docs/orchestration/schedules/datetime/)], optional  
+  - __events__: List[[V1EventTrigger](/docs/orchestration/events/)], optional
+  - __mount__: List[[V1Mount](/docs/references/polyaxonfile/specification/mount/)], optional
+  - __build__: [V1Build](/docs/orchestration/builds/), optional
+  - __hooks__: List[[V1Hook](/docs/orchestration/hooks/)], optional
+  - __matrix__: Union[[V1Mapping](/docs/orchestration/mapping/), [V1GridSearch](/docs/orchestration/optimization-engine/grid-search/), [V1RandomSearch](/docs/orchestration/optimization-engine/random-search/), [V1Hyperband](/docs/orchestration/optimization-engine/hyperband/), [V1Bayes](/docs/orchestration/optimization-engine/bayesian-optimization/), [V1Hyperopt](/docs/orchestration/optimization-engine/hyperopt/), [V1Iterative](/docs/orchestration/optimization-engine/iterative/)], optional  
+  - __joins__: List[[V1Join](/docs/orchestration/joins/)], optional
+  - __dependencies__: [dependencies](/docs/orchestration/flow-engine/flow-dependencies/#dependencies), optional  
+  - __trigger__: [trigger](/docs/orchestration/flow-engine/flow-dependencies/#trigger), optional
+  - __conditions__: [conditions](/docs/scheduling/scheduling-strategies/conditional-scheduling/#conditional-scheduling), optional  
+  - __skip_on_upstream_skip__: [skip_on_upstream_skip](/docs/orchestration/flow-engine/flow-dependencies/#skiponupstreamskip), optional  
+  - __run_patch__: Dict, optional
+  - __hub_ref__: str, optional
+  - __dag_ref__: str, optional
+  - __url_ref__: str, optional
+  - __path_ref__: str, optional
+  - __component__: [V1Component](/docs/references/polyaxonfile/specification/component/), optional
+  - __template__: [V1Template](/docs/references/polyaxonfile/specification/template/), optional
+
+## YAML usage
+
+```yaml
+operation:
+  version: 1.1
+  kind: operation
+  patchStrategy:
+  isPreset:
+  isApproved:
+  name:
+  description:
+  tags:
+  presets:
+  queue:
+  namespace:
+  cache:
+  termination:
+  plugins:
+  events:
+  actions:
+  hooks:
+  params:
+  mount:
+  build:
+  runPatch:
+  hubRef:
+  dagRef:
+  pathRef:
+  component:
+  template:
+```
+
+## Python usage
+
+```python
+from polyaxon.schemas import (
+    V1Build, V1Cache, V1Component, V1Hook, V1Param, V1Plugins, V1Operation, V1Termination
+)
+from polyaxon.schemas import V1PatchStrategy
+operation = V1Operation(
+    patch_strategy=V1PatchStrategy.REPLACE,
+    name="test",
+    description="test",
+    tags=["test"],
+    presets=["test"],
+    queue="test",
+    namespace="test",
+    cache=V1Cache(...),
+    termination=V1Termination(...),
+    plugins=V1Plugins(...),
+    events=["event-ref1", "event-ref2"],
+    hooks=[V1Hook(...)],
+    outputs={"param1": V1Param(...), ...},
+    mount=[V1Mount(...)],
+    build=V1Build(...),
+    component=V1Component(...),
+)
+```
+
+## Fields
+
+### version
+
+The polyaxon specification version to use to validate the operation.
+
+```yaml
+operation:
+  version: 1.1
+```
+
+### kind
+
+The kind signals to the CLI, client, and other tools that this is an operation.
+
+If you are using the python client to create an operation,
+this field is not required and is set by default.
+
+```yaml
+operation:
+  kind: component
+```
+
+### patchStrategy
+
+Defines how the compiler should handle keys that are defined on the component,
+or how to merge multiple presets when using the override behavior `-f`.
+
+There are four strategies:
+ * `replace`: replaces all keys with new values if provided.
+ * `isnull`: only applies new values if the keys have empty/None values.
+ * `post_merge`: applies deep merge where newer values are applied last.
+ * `pre_merge`: applies deep merge where newer values are applied first.
+
+### isPreset
+
+This is a flag to tell if this operation must be validated or
+is only a preset that will be used with the override behavior to inject extra information
+to the main operation specification.
+
+For instance a user might want to define a scheduling
+behavior that applies to several operations.
+One way to do that is to set the environment section on every operation.
+But sometimes the same scheduling behavior makes sense for several operations and components.
+In that case, the user can define an operation preset to extract that logic:
+
+```yaml
+isPreset: true
+runPatch:
+  environment:
+    nodeSelector:
+      node_label: node_value
+```
+
+and use the override behavior to inject that section dynamically:
+
+```bash
+polyaxon run -f component -f scheduling-preset.yaml
+```
+
+> **Note**: Please check this
+> [in-depth section about presets](/docs/scheduling/scheduling-presets/).
+
+### name
+
+The name to use for this operation run,
+if provided, it will override the component's name otherwise
+the name of the component will be used if it exists.
+
+```yaml
+operation:
+  name: test
+```
+
+### description
+
+The description to use for this operation run,
+if provided, it will override the component's description otherwise
+the description of the component will be used if it exists.
+
+```yaml
+operation:
+  description: test
+```
+
+### tags
+
+The tags to use for this operation run,
+if provided, it will override the component's tags otherwise
+the tags of the component will be used if it exists.
+
+```yaml
+operation:
+  tags: [test]
+```
+
+### presets
+
+The [presets](/docs/administration/organizations/presets/) to use for this operation run,
+if provided, it will override the component's presets otherwise
+the presets of the component will be used if it exists.
+
+```yaml
+operation:
+  presets: [test]
+```
+
+### queue
+
+The [queue](/docs/scheduling/scheduling-strategies/queues/) to use for this operation run,
+if provided, it will override the component's queue otherwise
+the queue of the component will be used if it exists.
+
+```yaml
+operation:
+  queue: agent-name/queue-name
+```
+
+If the agent name is not specified, Polyaxon will resolve the name of the queue
+based on the default agent.
+
+```yaml
+operation:
+  queue: queue-name
+```
+
+### namespace
+
+> **Note**: Please note that this field is only available in some commercial editions.
+
+The namespace to use for this operation run,
+if provided, it will override the component's namespace otherwise
+the namesace of the component will be used if it exists or
+it will default to the agent's namespace.
+
+```yaml
+operation:
+  namespace: polyaxon
+```
+
+### cache
+
+The [cache](/docs/orchestration/helpers/cache/) to use for this operation run,
+if provided, it will override the component's cache otherwise
+the cache of the component will be used if it exists.
+
+```yaml
+operation:
+  cache:
+    disable: false
+    ttl: 100
+```
+
+### termination
+
+The [termination](/docs/references/polyaxonfile/specification/termination/) to use for this operation run,
+if provided, it will override the component's termination otherwise
+the termination of the component will be used if it exists.
+
+```yaml
+operation:
+  termination:
+    maxRetries: 2
+```
+
+### plugins
+
+The [plugins](/docs/references/polyaxonfile/specification/plugins/) to use for this operation run,
+if provided, it will override the component's plugins otherwise
+the plugins of the component will be used if it exists.
+
+```yaml
+operation:
+  name: debug
+  ...
+  plugins:
+    auth: false
+    collectLogs: false
+  ...
+```
+
+### params
+
+The [params](/docs/references/polyaxonfile/specification/params/)  to pass to the component,
+they will be validated against the inputs/outputs.
+If a parameter is passed and the component does not define a corresponding inputs/outputs,
+a validation error will be raised unless the param has the `contextOnly` flag enabled.
+
+```yaml
+operation:
+  params:
+    param1: {value: 1.1}
+    param2: {value: test}
+    param3: {ref: ops.upstream-operation, value: outputs.metric}
+  ...
+```
+
+### mount
+
+> **Note**: ver 2.13+. Please check [V1Mount](/docs/references/polyaxonfile/specification/mount/) for more details.
+
+This section defines a list of mounts to be used for this operation.
+Mounts can be defined either as strings or as full objects.
+```yaml
+operation:
+  ...
+  mount:
+    - /path/in/host:/path/in/container  # defined as string
+    - path_from: /path/in/host          # defined as object
+      path_to: /path/in/container
+  ...
+```
+
+### build
+
+> **Note**: Please check [V1Build](/docs/orchestration/builds/) for more details.
+
+This section defines if this operation should build a container before starting the main logic.
+If the build section is provided, Polyaxon will set the main operation to a pending state
+until the build is done and then it will use the resulting docker image
+for starting the main container.
+
+```yaml
+operation:
+  ...
+  build:
+    hubRef: kaniko
+  ...
+```
+
+### runPatch
+
+The run patch provides a way to override information about the component's run section,
+for example the container's resources or the environment section.
+
+The run patch is a dictionary that can modify most of the runtime information and
+will be resolved against the corresponding run kind:
+
+ * [V1Job](/docs/workload/jobs/): for running batch jobs, model training experiments, data processing jobs, ...  
+ * [V1Service](/docs/workload/services/): for running tensorboards, notebooks, streamlit, custom services or an API.  
+ * [V1TFJob](/docs/workload/distributed/tf-jobs/): for running distributed Tensorflow training job.  
+ * [V1PytorchJob](/docs/workload/distributed/pytorch-jobs/): for running distributed Pytorch training job.  
+ * [V1MPIJob](/docs/workload/distributed/mpi-jobs/): for running distributed MPI job.  
+ * [V1RayCluster](/docs/workload/clusters/ray-clusters/): for running a Ray cluster.
+ * [V1DaskCluster](/docs/workload/clusters/dask-clusters/): for running a Dask cluster.
+ * [V1Dag](/docs/orchestration/flow-engine/specification/): for running a DAG/workflow.
+
+For example, if we define a generic component for running Jupyter Notebook:
+
+```yaml
+version: 1.1
+kind: component
+name: notebook
+run:
+  kind: service
+  ports: [8888]
+  container:
+    image: "jupyter/tensorflow-notebook"
+    command: ["jupyter", "lab"]
+    args: [
+      "--no-browser",
+      "--ip=0.0.0.0",
+      "--port={{globals.ports[0]}}",
+      "--allow-root",
+      "--NotebookApp.allow_origin=*",
+      "--NotebookApp.trust_xheaders=True",
+      "--NotebookApp.token=",
+      "--NotebookApp.base_url={{globals.base_url}}",
+      "--LabApp.base_url={{globals.base_url}}"
+    ]
+```
+
+This component is generic, and does not define resources requirements,
+if for instance this component is hosted on github and you don't
+want to modify the component while at the same time you want to request a GPU for the notebook,
+you can patch the run:
+
+```yaml
+version: 1.1
+kind: operation
+urlRef: https://raw.githubusercontent.com/org/repo/master/components/notebook.yaml
+runPatch:
+  container:
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+```
+
+By applying a run patch you can effectively share components while having
+full control over customizable details.
+
+### hubRef
+
+Polyaxon provides a [Component Hub](/docs/registry/component-hub/)
+for hosting versioned components with an access control system to improve
+the productivity of your team.
+
+To run a component hosted on Polyaxon Component Hub, you can use `hubRef`
+
+```yaml
+version: 1.1
+kind: operation
+hubRef: myComponent:v1.1
+...
+```
+
+### dagRef
+
+If you are building a dag and you have a component that can be used by several operations,
+you can define a component and reuse it in all operations using `dagRef`.
+Please check Polyaxon automation's [flow engine section](/docs/orchestration/flow-engine/)
+for more details.
+
+### urlRef
+
+You can host your components on an accessible url, e.g github,
+and reference those components without downloading the data manually.
+
+```yaml
+version: 1.1
+kind: operation
+urlRef: https://raw.githubusercontent.com/org/repo/master/components/my-component.yaml
+...
+```
+
+> Please note that you can only use this reference when using the CLI tool.
+
+### pathRef
+
+In many situations, components can be placed in different folders within a project, e.g.
+data-processing, data-exploration, ml-modeling, ...
+
+You can define operations without the need to change
+the directory by referencing a path to that component:
+
+```yaml
+version: 1.1
+kind: operation
+pathRef: ../data-processing/component-clean.yaml
+...
+```
+
+> Please note that you can only use this reference when using the CLI tool.
+
+### component
+
+If you are still in the development phase or if you are building a
+singleton operation that can be executed in a unique way, you can define
+the component inline inside the operation:
+
+```yaml
+version: 1.1
+kind: operation
+component:
+  run:
+     kind: job
+     container:
+       image: foo:latest
+       command: train --lr=0.01
+...
+```
+
+### isApproved
+
+This is a flag to trigger human validation before queuing and scheduling an operation.
+the default behavior is `True` even when the field is not set, i.e. no validation is required.
+To require a human validation prior to scheduling an operation,
+you can set this field to `False`.
+
+```yaml
+isApproved: false
+```
+
+### Cost
+
+A field to define the cost of running the operation, the value is a float and should map to a
+convention of a cost estimation in your team or
+it can map directly to the cost of using the environment where the operation is running.
+
+```yaml
+cost: 2.2
+```
+
+

@@ -26,7 +26,7 @@ To override the complete behavior users can provide their own component.
   - __hub_ref__: str
   - __queue__: List[str], optional
   - __presets__: List[str], optional
-  - __params__: Dict[str, [V1Param](/docs/polyaxonfile/specification/params/)], optional
+  - __params__: Dict[str, [V1Param](/docs/references/polyaxonfile/specification/params/)], optional
 
 ## YAML usage
 
@@ -104,7 +104,7 @@ tuner:
 
 ### params
 
-The [params](/docs/polyaxonfile/specification/params/) to pass if the handler requires extra params,
+The [params](/docs/references/polyaxonfile/specification/params/) to pass if the handler requires extra params,
 they will be validated against the inputs/outputs.
 If a parameter is passed and the component does not define a corresponding inputs/outputs,
 a validation error will be raised unless the param has the `contextOnly` flag enabled.

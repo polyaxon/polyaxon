@@ -40,7 +40,7 @@ container = k8s.V1Container(
 ```
 
 If the cluster has multiple node pools with different GPU types,
-you can specify the GPU type by using a node selector in the [environment section](/docs/polyaxonfile/specification/environment/), e.g. GKE:
+you can specify the GPU type by using a node selector in the [environment section](/docs/references/polyaxonfile/specification/environment/), e.g. GKE:
 
 ```yaml
 environment:
@@ -78,7 +78,7 @@ container = k8s.V1Container(
 
 To use [TPUs](https://cloud.google.com/tpu/docs/kubernetes-engine-setup) for your Polyaxon workload on GKE,
 you just need to set the TPU limits/requests on the container resources section, similar to Kubernetes,
-additionally you need to set the required annotations on the [environment section](/docs/polyaxonfile/specification/environment/).
+additionally you need to set the required annotations on the [environment section](/docs/references/polyaxonfile/specification/environment/).
 
 ```yaml
 environment:

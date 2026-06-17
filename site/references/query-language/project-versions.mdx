@@ -1,0 +1,30 @@
+---
+title: "Project Versions (component/model/artifact) Query Syntax"
+sidebarTitle: "Project Versions"
+description: "Polyaxon Query Syntax Specification for Project Versions."
+---
+
+## Query
+
+field                           | condition
+--------------------------------|------------------
+`id` or `uuid`                  | [string condition](/docs/references/query-language/overview/#query-with-value-condition)
+`name`                          | [string condition](/docs/references/query-language/overview/#query-with-string-condition)
+`description`                   | [string condition](/docs/references/query-language/overview/#query-with-string-condition)
+`created_at`                    | [datetime condition](/docs/references/query-language/overview/#query-with-datetime-condition)
+`updated_at`                    | [datetime condition](/docs/references/query-language/overview/#query-with-datetime-condition)
+`tags`                          | [value condition](/docs/references/query-language/overview/#query-with-value-condition)
+`kind`                          | [value condition](/docs/references/query-language/overview/#query-with-value-condition)
+`stage`                         | [value condition](/docs/references/query-language/overview/#query-with-value-condition)
+`state`                         | [value condition](/docs/references/query-language/overview/#query-with-value-condition)
+
+
+## Sort
+
+field:
+
+ * `created_at`
+ * `updated_at`
+ * `kind`
+ * `stage`
+ * `state`

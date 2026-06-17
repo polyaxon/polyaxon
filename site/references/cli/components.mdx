@@ -1,0 +1,380 @@
+---
+title: "Components CLI Reference"
+sidebarTitle: "Components"
+description: "Polyaxonfile Command Line Interface Specification - Components CLI Reference."
+---
+
+### components
+
+```bash
+Usage: polyaxon components [OPTIONS] COMMAND [ARGS]...
+
+  Commands for managing components.
+
+Options:
+  -p, --project TEXT    The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT  The component version, e.g. 'v1.3.4' or 'rc1' or
+                        'latest'.
+  --help                Show this message and exit.
+
+Commands:
+  copy       Copy a component version.
+  dashboard  Open this component version's dashboard details in browser.
+  delete     Delete component version.
+  get        Get info for a component version by name, name & version,...
+  ls         List component versions by project or owner/project.
+  pull       Package and download a component version or multiple...
+  push       Push local packaged component version or multiple component...
+  register   Register a new component version.
+  stage      Update stage for a component version.
+  stages     List stages information for a component version by name,...
+  transfer   Transfer the version to a destination project under the same...
+  update     Update component version.
+```
+
+---
+
+### components ls
+
+```bash
+Usage: polyaxon components ls [OPTIONS]
+
+  List component versions by project or owner/project.
+
+  Examples:
+
+  $ polyaxon components ls -p=kaniko
+
+  $ polyaxon components ls -p=acme/kaniko
+
+Options:
+  -p, --project TEXT  The project name, e.g. 'mnist' or 'acme/mnist'.
+  -q, --query TEXT    To filter the component versions based on this query
+                      spec.
+  -s, --sort TEXT     To order the component versions based on the sort spec.
+  --limit INTEGER     To limit the list of component versions.
+  --offset INTEGER    To offset the list of component versions.
+  --help              Show this message and exit.
+```
+
+---
+
+### components register
+
+```bash
+Usage: polyaxon components register [OPTIONS]
+
+  Register a new component version. If the name corresponds to an existing
+  component version, it will raise an error or it will update the version if
+  `--force` is provided.
+
+  Examples:
+
+  $ polyaxon components register -f polyaxonfile.yaml
+
+  $ polyaxon components register -f polyaxonfile.yaml --project=kaniko --description="..."
+
+  $ polyaxon components register -f polyaxonfile.yaml -p kaniko -ver latest
+
+  $ polyaxon components register -f polyaxonfile.yaml -p owner/name -ver v1 --tags="tag1,tag2"
+
+Options:
+  -f, --file PATH       The component spec version to register.
+  -p, --project TEXT    The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT  The component version, e.g. 'v1.3.4' or 'rc1' or
+                        'latest'.
+  --description TEXT    Description of the version.
+  --tags TEXT           Tags of the version (comma separated values).
+  --force               Flag to force register if the version already exists.
+  --help                Show this message and exit.
+```
+
+---
+
+### components copy
+
+```bash
+Usage: polyaxon components copy [OPTIONS]
+
+  Copy a component version. If the name corresponds to an existing component
+  version, it will raise an error or it will update the version if `--force`
+  is provided.
+
+  Examples:
+
+  $ polyaxon components copy --version=version-name --to-project dest-project
+
+  $ polyaxon components copy --project=kaniko -to dest-project --force
+
+  $ polyaxon components copy -p kaniko -ver latest
+
+  $ polyaxon components copy -p owner/name -ver v1 --tags="tag1,tag2" --name new-v1
+
+Options:
+  -p, --project TEXT      The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT    The component version, e.g. 'v1.3.4' or 'rc1' or
+                          'latest'.
+  -to, --to-project TEXT  The project to transfer the version to.
+  -n, --name TEXT         Name of the component version, must be unique within
+                          a project.
+  --description TEXT      Optional new description of the version.
+  --tags TEXT             Optional new tags of the version (comma separated
+                          values).
+  --force                 Flag to force copy if the version already exists.
+  --help                  Show this message and exit.
+```
+
+---
+
+### components get
+
+```bash
+Usage: polyaxon components get [OPTIONS]
+
+  Get info for a component version by name, name & version, owner/name & tag.
+
+  Examples:
+
+  $ polyaxon components get  // returns `latest` in current project
+
+  $ polyaxon components get --project=my-project --version=test-version
+
+  $ polyaxon components get -p owner/my-project -ver rc12
+
+Options:
+  -p, --project TEXT    The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT  The component version, e.g. 'v1.3.4' or 'rc1' or
+                        'latest'.
+  --help                Show this message and exit.
+```
+
+---
+
+### components stages
+
+```bash
+Usage: polyaxon components stages [OPTIONS]
+
+  List stages information for a component version by name, name & version,
+  owner/name & tag.
+
+  Examples:
+
+  $ polyaxon components stages // returns `latest` in current project
+
+  $ polyaxon components stages --project=my-project --version=test-version
+
+  $ polyaxon components stages -p owner/my-project -ver rc12
+
+Options:
+  -p, --project TEXT    The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT  The component version, e.g. 'v1.3.4' or 'rc1' or
+                        'latest'.
+  --help                Show this message and exit.
+```
+
+---
+
+### components delete
+
+```bash
+Usage: polyaxon components delete [OPTIONS]
+
+  Delete component version.
+
+  Examples:
+
+  $ polyaxon components delete  // delete `latest` in current project
+
+  $ polyaxon components delete --project=my-project --version=test-version
+
+  $ polyaxon components get -p owner/my-project -ver rc12
+
+Options:
+  -p, --project TEXT    The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT  The component version, e.g. 'v1.3.4' or 'rc1' or
+                        'latest'.
+  -y, --yes             Automatic yes to prompts. Assume "yes" as answer to
+                        all prompts and run non-interactively.
+  --help                Show this message and exit.
+```
+
+---
+
+### components update
+
+```bash
+Usage: polyaxon components update [OPTIONS]
+
+  Update component version.
+
+  Uses /docs/references/cli/cache/#caching
+
+  Examples:
+
+  $ polyaxon components update --version=foobar --description="..."
+
+  $ polyaxon components update -p mike1/foobar -ver current-name --name=new-name
+
+  $ polyaxon components update --tags="foo, bar"
+
+Options:
+  -p, --project TEXT    The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT  The component version, e.g. 'v1.3.4' or 'rc1' or
+                        'latest'.
+  -n, --name TEXT       Name of the component version, must be unique within a
+                        project.
+  --description TEXT    Description of the component version.
+  --tags TEXT           Tags of the component version (comma separated
+                        values).
+  --help                Show this message and exit.
+```
+
+---
+
+### components stage
+
+```bash
+Usage: polyaxon components stage [OPTIONS]
+
+  Update stage for a component version.
+
+  Uses /docs/references/cli/cache/#caching
+
+  Examples:
+
+  $ polyaxon components stage -ver rc12 -to production
+
+  $ polyaxon components stage -p acme/foobar -ver rc12 --to=staging --reason GithubAction --message="Use carefully!"
+
+Options:
+  -p, --project TEXT              The project name, e.g. 'mnist' or
+                                  'acme/mnist'.
+  -ver, --version TEXT            The component version, e.g. 'v1.3.4' or
+                                  'rc1' or 'latest'.
+  -to, --to [testing|staging|production|disabled]
+                                  Stage to transition to.
+  --reason TEXT                   Reason or service to set with this stage
+                                  change. Default: UserStageUpdate, e.g.
+                                  CustomAlertTrigger.
+  --message TEXT                  Additional information to set with this
+                                  stage change.
+  --help                          Show this message and exit.
+```
+
+---
+
+### components transfer
+
+```bash
+Usage: polyaxon components transfer [OPTIONS]
+
+  Transfer the version to a destination project under the same
+  owner/organization.
+
+  Uses /docs/references/cli/cache/#caching
+
+  Examples:
+
+  $ polyaxon components transfer -ver rc12 -to dest-project
+
+  $ polyaxon components transfer -p acme/foobar -ver rc12 --to-project=dest-project
+
+Options:
+  -p, --project TEXT      The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT    The component version, e.g. 'v1.3.4' or 'rc1' or
+                          'latest'.
+  -to, --to-project TEXT  The project to transfer the version to.
+  --help                  Show this message and exit.
+```
+
+---
+
+### components pull
+
+```bash
+Usage: polyaxon components pull [OPTIONS]
+
+  Package and download a component version or multiple component versions to a
+  local path.
+
+  Uses /docs/references/cli/cache/#caching
+
+  Examples:
+
+  $ polyaxon components pull -ver rc12
+
+  $ polyaxon components pull -p acme/foobar -q "stage: production, name: %-v1%"
+
+  $ polyaxon components pull -p acme/foobar -a --path /tmp/versions
+
+Options:
+  -p, --project TEXT      The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT    The component version, e.g. 'v1.3.4' or 'rc1' or
+                          'latest'.
+  -a, --all-versions      To pull all versions.
+  -q, --query TEXT        To filter the versions based on a query spec.
+  -l, --limit INTEGER     To limit the list of runs.
+  -off, --offset INTEGER  To offset the list of runs.
+  --path, --path-to PATH  Optional path where the component versions are
+                          persisted, default value is taken from the env var:
+                          `POLYAXON_OFFLINE_ROOT`.
+  --help                  Show this message and exit.
+```
+
+---
+
+### components push
+
+```bash
+Usage: polyaxon components push [OPTIONS]
+
+  Push local packaged component version or multiple component versions to a
+  remove server.
+
+  Uses /docs/references/cli/cache/#caching
+
+  Examples:
+
+  $ polyaxon components push -ver rc12
+
+  $ polyaxon components push -p acme/foobar --path /tmp/versions
+
+  $ polyaxon components pull -p acme/foobar -a --path /tmp/versions
+
+Options:
+  -p, --project TEXT        The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT      The component version, e.g. 'v1.3.4' or 'rc1' or
+                            'latest'.
+  -a, --all-versions        To push all versions.
+  -c, --clean               To clean the version(s) local data after syncing.
+  --path, --path-from PATH  Optional path where the component versions are
+                            persisted, default value is taken from the env
+                            var: `POLYAXON_OFFLINE_ROOT`.
+  --reset-project           Optional, to ignore the owner/project of the local
+                            version and use the owner/project provided or
+                            resolved from the current project.
+  --force                   Flag to force register if the version already
+                            exists.
+  --help                    Show this message and exit.
+```
+
+---
+
+### components dashboard
+
+```bash
+Usage: polyaxon components dashboard [OPTIONS]
+
+  Open this component version's dashboard details in browser.
+
+Options:
+  -p, --project TEXT    The project name, e.g. 'mnist' or 'acme/mnist'.
+  -ver, --version TEXT  The component version, e.g. 'v1.3.4' or 'rc1' or
+                        'latest'.
+  -y, --yes             Automatic yes to prompts. Assume "yes" as answer to
+                        all prompts and run non-interactively.
+  --url                 Print the url of the dashboard for this component
+                        version.
+  --help                Show this message and exit.
+```
