@@ -1,0 +1,152 @@
+---
+title: "Machine Learning Lifecycle"
+description: "Polyaxon enables organizations to manage the whole Machine Learning Lifecycle."
+---
+
+Machine learning work rarely moves in a clean straight line. Teams move back and
+forth between data access, exploration, training, review, model packaging,
+deployment, and monitoring. A useful platform has to preserve context across
+those steps instead of treating each one as a separate tool problem.
+
+Polyaxon provides a single place to run workloads, track what happened, compare
+results, manage artifacts and models, and automate repeatable workflows.
+
+## Data Access
+
+The lifecycle starts with controlled access to code, data, credentials,
+containers, and artifact stores. Polyaxon lets administrators define
+[connections](/docs/setup/connections/) for Git repositories, registries,
+object stores, databases, secrets, and other systems.
+
+Runs reference those connections by name. Users do not need to copy credentials
+into notebooks, scripts, or container images, and platform teams can control who
+can use each connection through project and organization permissions.
+
+This matters because data access is usually where reproducibility starts to
+fail. If two people train against different buckets, credentials, branches, or
+mount paths, their results are already hard to compare.
+
+## Data Exploration
+
+Early exploration often happens in notebooks, shells, or small scripts. Polyaxon
+supports that work through [services](/docs/workload/services/), notebooks,
+interactive apps, and sandbox-style workflows that run inside the same managed
+environment as the rest of the platform.
+
+Exploration can use the same images, queues, secrets, datasets, and artifact
+paths that later jobs use. Outputs that are worth keeping can be logged as
+artifacts instead of staying trapped in a local notebook directory.
+
+The goal is not to ban notebooks. The goal is to make exploratory work easier to
+turn into repeatable jobs when a result becomes useful.
+
+## Experimentation
+
+Experiments are the core loop: change code, data, parameters, or runtime
+settings, then measure the result. Polyaxon tracks experiments as runs with
+metadata, logs, metrics, parameters, code references, inputs, outputs, and
+artifacts.
+
+You can launch experiments from the UI, CLI, API, or SDK. Training code can use
+the [tracking API](/docs/tracking/tracking/overview/) to log metrics and files,
+while in-cluster runs automatically capture useful execution context.
+
+This gives teams a shared record of what was tried. A failed run, an average
+run, and a strong candidate all carry information if they are searchable and
+comparable.
+
+## Scaling
+
+Once an experiment works, the pressure moves to scale: more data, larger
+models, more trials, multiple GPUs, distributed training, or many parallel
+variants. Polyaxon schedules workloads on Kubernetes and supports jobs,
+services, DAGs, distributed jobs, and matrix executions.
+
+The [optimization engine](/docs/orchestration/optimization-engine/) can run grid
+search, random search, Bayesian optimization, Hyperband, Hyperopt, and custom
+iterative processes. Queues, presets, concurrency controls, caching, and early
+stopping help teams use shared compute without letting one workflow consume the
+cluster blindly.
+
+Scaling should not require a new tracking system or a new way to package work.
+The same run model applies whether the workload is a small CPU job or a large
+parallel sweep.
+
+## Tracking
+
+Tracking turns each run into a record that can be inspected later. Polyaxon can
+capture parameters, metrics, code versions, duration, environment details,
+statuses, logs, artifacts, resource usage, and lineage.
+
+The [runs dashboard](/docs/tracking/runs-dashboard/overview/) lets teams filter,
+sort, compare, and inspect runs across a project. It also supports native and
+custom visualizations, including TensorBoard and common media artifacts.
+
+Good tracking removes a common waste pattern: asking which script, commit,
+dataset, environment, and command produced a result after the person who ran it
+has moved on.
+
+## Insights
+
+Insights come from comparing runs, not just logging them. Teams need to find the
+best candidates, understand failed attempts, inspect metric curves, compare
+hyperparameters, and review artifacts without rebuilding the context manually.
+
+Polyaxon keeps experiment results, lineage, visualizations, logs, and artifacts
+attached to runs and projects. Searches, dashboards, tags, and comparisons make
+it possible to review work across many experiments instead of treating each run
+as an isolated event.
+
+This is also where collaboration becomes concrete. A project manager, data
+scientist, ML engineer, and platform engineer can look at the same run history
+and talk about the same evidence.
+
+## Model Management
+
+Promising runs need a path into model management. Polyaxon lets teams promote
+runs and artifacts into the [model registry](/docs/registry/model-registry/)
+and [artifact versioning](/docs/registry/artifacts-versioning/) workflows.
+
+Model versions can carry stage information, metadata, metrics, artifacts, and
+lineage back to the run that produced them. This makes it easier to answer basic
+release questions: which training run produced this model, which artifacts were
+used, what metrics justified promotion, and who changed the model stage.
+
+Polyaxon stays packaging-agnostic. Teams can register models produced by
+different frameworks while keeping versioning, access control, and lifecycle
+metadata in one place.
+
+## Compliance
+
+Compliance in machine learning is mostly about control and evidence: who had
+access, what changed, which data and artifacts were used, and whether a result
+can be explained later.
+
+Polyaxon supports this through [RBAC](/docs/administration/rbac/), project and
+organization permissions, connection-level access control, reproducible
+[Polyaxonfile](/docs/references/polyaxonfile/specification/overview/)
+definitions, lineage, and audit-oriented metadata.
+
+Enterprise deployments can also use [audit logs](/docs/administration/audit-logs/)
+and [data retention](/docs/administration/data-retention/) controls to manage
+operational and regulatory requirements. These controls do not make a team
+compliant by themselves, but they give teams the records and guardrails needed
+to support internal review.
+
+## Automation
+
+The later stages of the lifecycle should not depend on people remembering every
+manual step. Polyaxon provides orchestration tools for DAGs, schedules, hooks,
+events, mapping, and hyperparameter optimization.
+
+The [flow engine](/docs/orchestration/flow-engine/) can connect preparation,
+training, evaluation, packaging, and validation steps into repeatable pipelines.
+[Schedules](/docs/orchestration/schedules/) can run recurring workflows, and
+[hooks](/docs/orchestration/hooks/) can trigger follow-up actions when runs
+finish.
+
+Automation is useful when a process is understood well enough to repeat. It can
+run nightly training, refresh evaluation jobs, start downstream scoring, notify
+teams, or promote candidates through review workflows. The practical test is
+simple: if a human is repeating the same runbook every week, it is probably a
+candidate for automation.

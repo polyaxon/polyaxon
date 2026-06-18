@@ -2,8 +2,9 @@
   "title": "Resources",
   "pages": [
     "machine-learning-lifecycle",
-    "machine-learning-personas",
-    "machine-learning-usecases",
+    "ai-agent-lifecycle",
+    "ai-ml-personas",
+    "ai-ml-use-cases",
     "one-platform",
     "vision"
   ]

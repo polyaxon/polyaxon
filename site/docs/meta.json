@@ -2,7 +2,6 @@
   "title": "Docs",
   "pages": [
     "index",
-    "intro",
     "---Guides---",
     "...guides",
     "---Products---",
@@ -16,9 +15,6 @@
     "---Platform---",
     "administration",
     "editions",
-    "---More---",
-    "resources",
-    "glossary",
-    "roadmap"
+    "more"
   ]
 }

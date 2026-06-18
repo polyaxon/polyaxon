@@ -1,8 +1,0 @@
-{
-  "title": "Release Notes",
-  "pages": [
-    "[Server ↗](https://github.com/polyaxon/polyaxon/releases)",
-    "[Python SDK ↗](https://github.com/polyaxon/polyaxon-python/releases)",
-    "[JS/TS SDK ↗](https://github.com/polyaxon/polyaxon-js/releases)"
-  ]
-}

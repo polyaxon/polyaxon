@@ -1,0 +1,146 @@
+---
+title: "One Platform"
+description: "Polyaxon gives teams one platform for machine learning systems, LLM applications, and AI agents across tracking, orchestration, evaluation, observability, registries, and governance."
+---
+
+## One platform
+
+AI and ML work breaks down when every stage lives in a different tool. Training
+runs sit in one system, traces in another, prompts in a spreadsheet, models in a
+registry, evals in notebooks, and access policy somewhere else. The team can
+still ship, but every review starts by reconstructing context.
+
+Polyaxon gives teams one platform for the
+[machine learning lifecycle](/docs/more/resources/machine-learning-lifecycle/) and
+the [AI agent lifecycle](/docs/more/resources/ai-agent-lifecycle/). It connects
+execution, tracking, observability, evaluation, registries, automation, and
+governance without forcing every team to rebuild the same glue code.
+
+The point is not to pretend one product replaces every database, model provider,
+warehouse, vector store, or deployment target. The point is to keep the evidence
+connected while the work moves across those systems.
+
+## One project context
+
+Projects are where work becomes reviewable. A project can hold runs, services,
+artifacts, traces, prompts, evaluations, dashboards, model versions, access
+settings, and operational metadata.
+
+That matters because AI work is rarely explained by one object. A production
+answer may depend on an application version, prompt version, retrieval context,
+tool call, model provider, and evaluator. A model release may depend on a
+training run, data version, artifacts, metrics, and approval history.
+
+Polyaxon keeps these records close enough that a team can answer the basic
+questions: what changed, who changed it, what ran, what passed, what failed,
+and what is running now.
+
+## One execution layer
+
+ML and AI teams need to run many kinds of work: training jobs, evaluation jobs,
+batch scoring, notebooks, services, dashboards, DAGs, scheduled workflows, and
+agent validation jobs.
+
+Polyaxon schedules that work on Kubernetes using jobs, services, queues,
+agents, presets, DAGs, schedules, hooks, and matrix executions. Teams can use
+the [orchestration](/docs/orchestration/overview/) layer to move from manual
+experiments to repeatable workflows without replacing the runtime model.
+
+This gives platform teams one execution surface to secure, route, scale, and
+observe, while giving application teams enough flexibility to run different
+frameworks, languages, images, and tools.
+
+## One tracking and observability layer
+
+Traditional ML systems need experiment tracking: parameters, metrics, code
+versions, artifacts, logs, resources, and lineage. LLM applications and agents
+need observability: traces, sessions, observations, prompts, completions, tool
+calls, latency, token usage, and cost.
+
+Polyaxon supports both. The [tracking API](/docs/tracking/tracking/overview/)
+captures the context around model development and workload execution.
+[Observability](/docs/observability/overview/) captures what happens inside LLM
+requests and multi-step agents.
+
+This is where one platform pays for itself. A team can debug across the boundary
+between model work, application code, prompts, retrieval, and production
+behavior instead of arguing from partial logs.
+
+## One evaluation layer
+
+Evaluation is not one thing. A training run may need validation metrics and
+model comparison. An LLM application may need fixed datasets, human annotations,
+LLM-as-judge scores, custom scorers, and live evaluators over production traces.
+
+Polyaxon [Evaluation](/docs/evaluation/overview/) gives teams a shared place to
+run and review those checks. Evaluation results can connect back to prompts,
+traces, datasets, runs, and release decisions.
+
+The goal is simple: stop treating a good demo as proof. Ship changes with a
+record of what was tested, where the system improved, and where it still fails.
+
+## One registry and versioning model
+
+AI and ML systems have many release objects. Models, artifacts, reusable
+components, prompts, datasets, labels, and deployment stages all need versions
+and metadata.
+
+Polyaxon provides registries for [models](/docs/registry/model-registry/),
+artifacts, components, and [prompts](/docs/prompt-management/overview). Teams
+can promote candidates, label versions by environment, preserve lineage, and
+connect registry entries to the runs, traces, and evaluations that justify
+them.
+
+Versioning is not paperwork. It is how a team answers "what is live?" without
+guessing.
+
+## One governance layer
+
+The same platform that runs workloads and records behavior also needs to control
+access. Teams need to decide who can run jobs, use credentials, view traces,
+change prompts, promote models, manage agents, and inspect audit history.
+
+Polyaxon supports governance with [RBAC](/docs/administration/rbac/), project
+and organization permissions, service accounts, managed connections, audit logs,
+and data retention controls.
+
+Governance is easier when policy is attached to the same projects, runs,
+traces, prompts, and registry entries that teams already use. Otherwise policy
+becomes a document everyone agrees with and nobody can enforce.
+
+## One deployment and operations model
+
+Running many small internal platforms is expensive in the least glamorous way:
+more upgrades, more databases, more access systems, more backup plans, more
+network rules, more half-owned integrations.
+
+Polyaxon gives teams one platform to deploy, secure, scale, back up, monitor,
+and upgrade. It can run close to the compute and data through agents while
+preserving a shared control plane for organization, project, and lifecycle
+state.
+
+This reduces platform sprawl without forcing teams into one model framework,
+one provider, one serving stack, or one data system.
+
+## One interface for many roles
+
+The people involved in AI and ML work do not need the same view. Data
+scientists need runs and metrics. AI application engineers need traces. Domain
+owners need prompts and examples. QA teams need evaluations. Platform engineers
+need queues and agents. Security teams need access and audit records.
+
+Polyaxon gives these [personas](/docs/more/resources/ai-ml-personas/) different
+surfaces over the same underlying work. That is the useful version of "one
+platform": shared context, not one generic screen for everyone.
+
+## What one platform does not mean
+
+One platform does not mean one tool owns all code, data, infrastructure, model
+providers, vector stores, warehouses, serving systems, and business apps. That
+would be fantasy architecture.
+
+It means the lifecycle has one place where evidence is collected and connected.
+Teams can still use the right storage system, model provider, framework, and
+deployment target for each [use case](/docs/more/resources/ai-ml-use-cases/). The
+platform keeps the work understandable after the system becomes too large for
+one person to hold in their head.

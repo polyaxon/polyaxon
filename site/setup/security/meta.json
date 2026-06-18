@@ -3,7 +3,7 @@
   "pages": [
     "overview",
     "networking",
-    "[RBAC ↗ (main docs)](/docs/administration/rbac)",
-    "[Data Retention ↗ (main docs)](/docs/administration/data-retention)"
+    "[RBAC ↗](/docs/administration/rbac)",
+    "[Data Retention ↗](/docs/administration/data-retention)"
   ]
 }

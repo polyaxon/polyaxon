@@ -1,0 +1,172 @@
+---
+title: "AI and ML Personas"
+description: "Polyaxon helps the teams involved in machine learning and AI agent lifecycles work from shared evidence."
+---
+
+Machine learning systems and AI agents are not built by one role. Even small
+teams split the work across model development, application code, data access,
+evaluation, infrastructure, release management, and governance.
+
+The failure modes are different, but the coordination problem is the same. A
+model candidate, prompt version, retrieval change, dataset update, trace, or
+evaluation result has to be understandable by more than the person who created
+it.
+
+Polyaxon gives these roles a shared place to run work, track context, compare
+results, manage versions, and review production behavior across the
+[machine learning lifecycle](/docs/more/resources/machine-learning-lifecycle/) and
+the [AI agent lifecycle](/docs/more/resources/ai-agent-lifecycle/).
+
+## Data scientists and ML engineers
+
+Data scientists and ML engineers own the model development loop. They explore
+data, design experiments, train models, compare metrics, debug failures, and
+decide which candidates deserve review.
+
+They need reproducible runs, searchable experiment history, artifact lineage,
+metric comparisons, visualizations, and a path from training output to model
+version. Polyaxon supports that work through
+[tracking](/docs/tracking/tracking/overview/), the
+[runs dashboard](/docs/tracking/runs-dashboard/overview/),
+[orchestration](/docs/orchestration/overview/), and the
+[model registry](/docs/registry/model-registry/).
+
+The practical problem is not just "train a better model." It is knowing which
+code, data, parameters, environment, and artifacts produced the result everyone
+is discussing.
+
+## AI application engineers
+
+AI application engineers own the behavior around the model. For LLM systems and
+agents, that means prompt retrieval, model calls, tool schemas, routing,
+fallbacks, streaming, latency, retries, and integration with the product.
+
+They need traces that show what happened inside a request: prompts, context,
+model responses, tool calls, token usage, latency, costs, errors, and final
+outputs. Polyaxon [Observability](/docs/observability/overview/) provides that
+debugging surface for LLM applications and multi-step agents.
+
+This role sits at an awkward boundary. The bug may be in code, a prompt, a
+retriever, a tool permission, an upstream API, or the model choice. Without
+traces, every failure turns into a guessing session.
+
+## Data and context engineers
+
+Data and context engineers own the inputs that models and agents rely on. In ML
+workflows, that includes datasets, feature pipelines, storage, transforms, and
+artifact paths. In AI agent workflows, it also includes retrieval indexes,
+document chunks, metadata filters, context templates, and data freshness.
+
+They need controlled access to data stores, repeatable processing jobs, lineage,
+and enough metadata to explain why a model or agent saw a specific input.
+Polyaxon connections, jobs, DAGs, artifacts, and lineage records help keep that
+context attached to the work that used it.
+
+Bad data and bad context often look like model failures from the outside. This
+role keeps teams honest about where the failure actually started.
+
+## Prompt and domain owners
+
+Prompt and domain owners understand the task language, business rules, examples,
+edge cases, and acceptable answers. They may be product managers, support leads,
+analysts, clinicians, lawyers, operations specialists, or other subject-matter
+experts.
+
+They need prompt changes to be reviewable without requiring a full code
+deployment for every text edit. Polyaxon
+[Prompt Management](/docs/prompt-management/overview) lets teams version,
+label, retrieve, and connect prompts to traces and evaluation results.
+
+Prompt work should not be a private document pasted into code. If a prompt
+changes production behavior, the team needs to know which version changed, why
+it changed, and what evidence supported the change.
+
+## Evaluation and QA teams
+
+Evaluation and QA teams own the checks that stop demos from being mistaken for
+readiness. They define test cases, review outputs, maintain eval datasets,
+interpret scores, and watch for regressions.
+
+For ML systems, this may include validation metrics, benchmark datasets, model
+comparison, and artifact review. For AI agents, it may include human
+annotations, custom scorers, LLM-as-judge workflows, live evaluators, and
+trace-based regression cases. Polyaxon
+[Evaluation](/docs/evaluation/overview/) gives these checks a shared place to
+run and review.
+
+The hard part is not creating one score. The hard part is making the score mean
+something when the prompt, model, retrieval path, or user behavior changes.
+
+## Platform and DevOps engineers
+
+Platform and DevOps engineers own the execution layer. They keep clusters,
+agents, queues, presets, secrets, connections, images, networking, and storage
+working for the teams building models and AI applications.
+
+They need workload visibility, resource controls, queue management, access
+boundaries, and enough operational data to debug failures without reading every
+team's code. Polyaxon schedules jobs and services on Kubernetes, manages
+agents and queues, and keeps runtime context attached to runs.
+
+This role is where vague platform requests become hard limits: GPU supply,
+network policies, storage permissions, failed images, bad secrets, and runaway
+costs.
+
+## Product managers and team leads
+
+Product managers and team leads own prioritization and tradeoffs. They decide
+which use cases matter, what counts as acceptable behavior, which regressions
+block release, and where engineering time should go next.
+
+They need shared evidence instead of screenshots and Slack summaries. Runs,
+dashboards, traces, evaluations, model versions, prompt versions, and release
+metadata let them review progress without forcing every technical detail into a
+meeting.
+
+Their job is not to micromanage experiments. Their job is to make sure the team
+is solving the right problem and can explain the release decision afterward.
+
+## Release and operations managers
+
+Release and operations managers own the path from candidate to production. For
+ML, that can mean promoting a model version, validating artifacts, running
+batch scoring, or deploying an internal service. For AI agents, it can mean
+promoting prompt versions, changing model routes, enabling tools, or rolling
+out a new evaluator.
+
+They need a record of what changed, who approved it, which checks passed, and
+what should happen if production behavior gets worse. Polyaxon model versions,
+prompt labels, traces, evaluations, and orchestration hooks provide the raw
+material for that release record.
+
+Production work is mostly boring until it is not. The boring records are what
+make incidents survivable.
+
+## Security, compliance, and administrators
+
+Security, compliance, and administrators own access, policy, and auditability.
+They need to know who can run workloads, use credentials, view data, change
+prompts, promote models, inspect traces, and manage organization resources.
+
+Polyaxon supports this work with [RBAC](/docs/administration/rbac/), project
+and organization permissions, managed connections, service accounts,
+[audit logs](/docs/administration/audit-logs/), and
+[data retention](/docs/administration/data-retention/) controls.
+
+These controls do not replace internal policy. They make policy enforceable
+enough that the platform does not depend on everyone remembering the rules.
+
+## Executives
+
+Executives need the shortest honest view of progress, risk, cost, and adoption.
+They do not need to inspect every run or trace, but they do need to know which
+teams are shipping, which systems are blocked, where spend is going, and where
+quality or compliance risk is increasing.
+
+For ML and AI agent work, this means portfolio visibility across projects,
+models, prompts, evaluations, traces, incidents, and operational costs. Polyaxon
+keeps the underlying evidence in one platform so high-level reporting can be
+based on real work instead of status theater.
+
+The executive view should be blunt: what changed, what worked, what failed,
+what is risky, and what decision is needed.

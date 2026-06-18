@@ -1,0 +1,180 @@
+---
+title: "AI and ML Use Cases"
+description: "Polyaxon supports machine learning systems, LLM applications, and AI agents across development, evaluation, and production operations."
+---
+
+AI and ML use cases fall into two broad lifecycles. Traditional machine
+learning work focuses on training, tuning, packaging, and operating models. AI
+agent work focuses on prompts, context, tools, evaluations, traces, and
+production behavior.
+
+The line between them is blurry in real products. A fraud system may use a
+trained model, rules, retrieval, and an LLM explanation step. A support agent
+may use search, classification, tool calls, and human review. The useful
+question is not whether the system is "ML" or "AI." The useful question is what
+must be tracked, evaluated, versioned, and operated.
+
+Polyaxon helps teams manage the work behind these use cases across the
+[machine learning lifecycle](/docs/more/resources/machine-learning-lifecycle/) and
+the [AI agent lifecycle](/docs/more/resources/ai-agent-lifecycle/).
+
+## Prediction and forecasting
+
+Prediction systems estimate what is likely to happen next. Common examples
+include demand forecasting, churn prediction, risk scoring, fraud detection,
+maintenance prediction, anomaly detection, price forecasting, and capacity
+planning.
+
+These systems usually need repeatable training jobs, data lineage, experiment
+tracking, model comparison, scheduled retraining, and clear promotion rules.
+Polyaxon helps teams run those workflows on shared infrastructure, compare
+candidates, preserve artifacts, and keep a record of which model version was
+trained from which data and code.
+
+The hard part is often not building the first model. It is keeping the model
+fresh, explaining why a forecast changed, and knowing whether a new candidate is
+actually better than the current production version.
+
+## Computer vision and multimodal systems
+
+Vision systems classify, detect, segment, search, and inspect visual data. Use
+cases include defect detection, medical image analysis, visual search, face
+detection, document understanding, image tagging, video search, safety
+monitoring, and multimodal retrieval.
+
+These workflows often produce large artifacts: datasets, labels, embeddings,
+model checkpoints, prediction samples, visualizations, and evaluation reports.
+They also tend to be sensitive to data versioning and annotation quality.
+
+Polyaxon gives teams a place to run training and evaluation jobs, track metrics,
+store artifacts, compare model candidates, and connect model versions back to
+the runs that produced them.
+
+## Recommendation and personalization
+
+Recommendation systems rank products, content, offers, search results, and next
+best actions. They are common in commerce, media, finance, learning platforms,
+internal tools, and customer engagement systems.
+
+These systems combine model quality with product tradeoffs. A ranking model may
+improve offline metrics while hurting diversity, fairness, latency, revenue, or
+user trust. Teams need experiment history, evaluation artifacts, deployment
+metadata, and monitoring signals to make those tradeoffs visible.
+
+Polyaxon supports the training, comparison, versioning, and operational review
+needed to move recommendation work from experiments to managed releases.
+
+## Natural language and content intelligence
+
+Natural language systems classify text, extract entities, summarize documents,
+translate content, detect spam, route tickets, generate content, and power
+semantic search.
+
+Some of these systems use trained models. Others use LLMs, embeddings, prompts,
+retrieval, or a mix of several methods. The lifecycle depends on the behavior
+being shipped: a text classifier needs labeled data and model evaluation; a
+summarization app needs prompt versions, traces, examples, and quality review.
+
+Polyaxon can support both paths: ML tracking and orchestration for trained
+models, and prompt management, evaluation, and observability for LLM-backed
+applications.
+
+## LLM assistants and copilots
+
+LLM assistants help users ask questions, draft content, analyze records, write
+code, summarize cases, or complete domain-specific tasks. Examples include
+support assistants, internal knowledge assistants, analyst copilots, engineering
+copilots, legal review assistants, and clinical documentation helpers.
+
+These systems need more than a chat interface. Teams need prompt versions,
+retrieval context, traces, evaluations, cost tracking, latency tracking,
+feedback loops, and release controls.
+
+Polyaxon [Prompt Management](/docs/prompt-management/overview),
+[Evaluation](/docs/evaluation/overview/), and
+[Observability](/docs/observability/overview/) help teams understand which
+prompt, model, context, and application path produced a given answer.
+
+## Retrieval and knowledge workflows
+
+Retrieval workflows connect users or agents to private knowledge. They include
+enterprise search, document question answering, policy lookup, research review,
+customer history lookup, case review, and internal knowledge bases.
+
+Bad retrieval is one of the easiest ways to get bad LLM behavior. The model may
+answer confidently because the context was stale, incomplete, duplicated, badly
+chunked, or filtered incorrectly.
+
+Teams need to track retrieval inputs and outputs: source documents, chunks,
+scores, filters, query rewrites, context templates, and the final prompt sent to
+the model. Polyaxon traces and evaluations give teams a way to debug those
+paths instead of blaming every failure on "hallucination."
+
+## AI agents and tool automation
+
+AI agents take actions. They call APIs, query systems, create tickets, update
+records, run checks, draft responses, triage requests, or coordinate multi-step
+workflows.
+
+The risk profile changes when the system can act. Teams need tool permissions,
+input validation, trace history, approval paths, failure handling, cost limits,
+and tests for common and dangerous paths.
+
+Polyaxon helps teams trace tool calls, evaluate agent behavior, compare
+variants, and automate repeatable validation with orchestration. The point is
+not to make every workflow autonomous. The point is to know which parts are safe
+to automate and which parts still need a human in the loop.
+
+## Evaluation and observability use cases
+
+Some use cases are about operating AI systems rather than building one model or
+agent. Teams need to compare prompts and models, run regression tests, monitor
+live traces, inspect failures, track cost and latency, and build datasets from
+production behavior.
+
+Polyaxon supports these operational workflows with traces, sessions,
+observations, prompt links, evaluation datasets, experiments, human annotations,
+LLM-as-judge workflows, and custom scores.
+
+This is where AI work becomes less theatrical. A demo shows what can happen
+once. Evaluation and observability show what keeps happening.
+
+## Industry examples
+
+Finance teams use AI and ML for fraud detection, credit risk, market signals,
+document review, customer support, compliance workflows, and analyst copilots.
+
+Insurance teams use these systems for claims triage, fraud detection, damage
+classification, risk prediction, policy lookup, underwriting assistance, and
+customer communication.
+
+Healthcare and life sciences teams use AI and ML for imaging analysis, clinical
+documentation, trial operations, patient risk prediction, drug discovery,
+literature review, and administrative automation.
+
+Retail and consumer teams use models and agents for recommendations, search,
+demand forecasting, inventory planning, pricing, campaign analysis, support,
+and content workflows.
+
+Manufacturing, energy, and mobility teams use these systems for predictive
+maintenance, anomaly detection, quality inspection, fleet optimization, demand
+prediction, safety workflows, and operational assistants.
+
+Public sector, education, and internal enterprise teams use AI and ML for
+document search, case triage, knowledge assistants, translation, summarization,
+analytics, and workflow automation.
+
+## Choosing the right starting point
+
+Start with a use case where the inputs are available, the users are known, the
+success criteria are reviewable, and the failure cost is understood. If nobody
+can say what a good output looks like, the team is not ready to automate it.
+
+For ML systems, a good starting point usually has historical data, a measurable
+target, and a clear decision that will use the model output. For AI agents, a
+good starting point has a bounded task, known tools, examples of good and bad
+answers, and a safe fallback when the agent is uncertain.
+
+"We need an agent" is not a use case. It is a procurement hallucination. Start
+with the job the system must do, then decide whether the right solution is a
+model, an LLM workflow, an agent, a rule, a dashboard, or nothing at all.

@@ -1,0 +1,131 @@
+---
+title: "Vision"
+description: "Polyaxon's vision is one operational platform for machine learning systems, LLM applications, and AI agents."
+---
+
+## Vision
+
+Polyaxon's goal is to give teams one operational platform for machine learning
+systems, LLM applications, and AI agents.
+
+That means a [single platform](/docs/more/resources/one-platform/) where teams can
+run work, track evidence, evaluate behavior, observe production systems, manage
+versions, and govern access across the
+[machine learning lifecycle](/docs/more/resources/machine-learning-lifecycle/) and
+the [AI agent lifecycle](/docs/more/resources/ai-agent-lifecycle/).
+
+AI work should not be restricted to companies that can afford to stitch together
+an internal platform from scratch. It should be possible for teams in every
+[industry](/docs/more/resources/ai-ml-use-cases/) to build useful systems without
+turning operations into a permanent integration project.
+
+## The problem
+
+AI and ML teams lose time because context is split across too many places.
+Training runs live in experiment trackers. Prompts live in code or documents.
+Traces live in observability tools. Evaluation results live in notebooks.
+Models and artifacts live in registries. Access policy lives somewhere else.
+
+That fragmentation makes review harder than it needs to be. A team should be
+able to answer basic questions without running a forensic investigation:
+
+- Which data, code, prompt, model, tool, or index produced this behavior?
+- Which tests or evaluations passed before release?
+- Which version is running now?
+- Who had access, who changed it, and what happened afterward?
+- What should we fix next?
+
+The problem is not a lack of tools. The problem is that the tools do not share
+enough evidence.
+
+## What we are building
+
+Polyaxon connects the work behind AI and ML systems: workloads, runs, artifacts,
+models, prompts, traces, evaluations, dashboards, automations, permissions, and
+audit history.
+
+For machine learning teams, this means reproducible training, experiment
+tracking, orchestration, model management, artifact lineage, and scheduled
+workflows.
+
+For LLM and agent teams, this means prompt management, application tracing,
+evaluation datasets, live evaluators, tool-call visibility, cost and latency
+tracking, and release evidence.
+
+For the broader organization, this means different
+[personas](/docs/more/resources/ai-ml-personas/) can work from the same operational
+record without needing the same interface or the same level of technical detail.
+
+## Product principles
+
+Polyaxon is open and self-hostable. Teams should be able to run the platform
+near their compute, data, models, and policies.
+
+Polyaxon is Kubernetes-native. AI and ML work needs real execution control:
+jobs, services, queues, agents, schedules, DAGs, resources, and secrets.
+
+Polyaxon favors evidence over demos. A good demo is cheap. A release needs
+tracked inputs, outputs, versions, evaluations, traces, and review history.
+
+Polyaxon integrates with existing systems. One platform does not mean one tool
+owns every model provider, data warehouse, vector store, serving stack, or
+business application.
+
+Polyaxon attaches governance to the work. RBAC, connections, audit logs,
+retention, and service accounts should be part of the lifecycle, not a separate
+spreadsheet.
+
+Polyaxon gives different roles different views. Data scientists, AI application
+engineers, QA teams, platform engineers, domain owners, release managers, and
+executives do not need the same screen. They do need the same evidence.
+
+## Short term
+
+In the short term, we are focused on making the core lifecycle easier to adopt
+and review:
+
+- Better [tracking](/docs/tracking/tracking/overview/) and run comparison for
+  ML work.
+- Stronger [orchestration](/docs/orchestration/overview/) for jobs, services,
+  schedules, DAGs, and repeatable workflows.
+- Clearer model, artifact, component, and
+  [prompt](/docs/prompt-management/overview) versioning.
+- Better [observability](/docs/observability/overview/) for LLM applications
+  and agents.
+- More useful [evaluation](/docs/evaluation/overview/) workflows for datasets,
+  experiments, human review, custom scores, and live evaluators.
+- Documentation that explains how the platform fits real
+  [use cases](/docs/more/resources/ai-ml-use-cases/) instead of only listing
+  features.
+
+## Long term
+
+Long term, we want Polyaxon to make AI operations less manual and less fragile.
+
+That means stronger automation around evaluations, releases, alerts, retraining,
+reindexing, approvals, rollback, and incident review. It also means better
+lifecycle intelligence: surfacing stale models, risky prompt changes, failing
+evals, expensive traces, weak coverage, and operational drift before they become
+production incidents.
+
+We also want better executive and cross-team visibility. Leaders should be able
+to see which projects are moving, which systems are risky, where cost is going,
+and which releases need decisions without inventing a reporting process outside
+the platform.
+
+The long-term product should make technical work easier to inspect without
+flattening it into fake simplicity. AI systems are complicated. The platform
+should preserve that complexity where it matters and hide it where it does not.
+
+## What we will not do
+
+We will not pretend one product should own all code, data, infrastructure,
+model providers, vector stores, warehouses, serving systems, and business apps.
+
+We will not sell "agents" as a strategy. An agent is an implementation choice.
+The strategy is the job the system must do, the evidence that it works, and the
+controls that keep it safe when it does not.
+
+We will not optimize for feature checklists at the cost of lifecycle coherence.
+The work is to make AI and ML systems easier to build, inspect, operate, and
+govern.

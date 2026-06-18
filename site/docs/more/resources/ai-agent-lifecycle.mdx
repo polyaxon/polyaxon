@@ -1,0 +1,161 @@
+---
+title: "AI Agent Lifecycle"
+description: "Polyaxon helps teams build, evaluate, trace, and improve LLM applications and agents."
+---
+
+AI agents and LLM applications fail in different ways than traditional software.
+The code can be correct while the answer is wrong. A prompt change can improve
+one path and break another. A retrieval step can return stale context. A tool
+call can succeed and still produce a bad user outcome.
+
+The lifecycle has to account for that. Teams need a way to manage prompts,
+context, tools, evaluations, traces, releases, and feedback without losing the
+chain of evidence between them.
+
+## Application design
+
+Start with the task, not the model. Define what the agent is allowed to do, who
+uses it, what a good answer looks like, and which failures are unacceptable.
+
+This includes practical constraints: latency, cost, model provider, data access,
+tool permissions, escalation paths, and what the system should do when it does
+not know enough. A chat assistant, coding agent, retrieval workflow, and support
+triage system all need different boundaries.
+
+Polyaxon gives teams a place to connect this application context to later
+traces, evaluations, prompts, and operational data instead of scattering it
+across tickets and notebooks.
+
+## Prompt and context management
+
+Prompts are application logic. They should not be trapped in source code or
+changed without a record of what happened. Polyaxon
+[Prompt Management](/docs/prompt-management/overview) lets teams store,
+version, label, and retrieve prompts from one place.
+
+This makes prompt iteration easier to review. Teams can compare prompt versions,
+promote a version between environments, and link prompt versions to traces and
+evaluation results.
+
+Context needs the same discipline. System instructions, examples, retrieval
+templates, tool descriptions, and output formats all affect behavior. If those
+inputs change, the team needs to know which production behavior came from which
+version.
+
+## Data, retrieval, and tools
+
+Most useful agents depend on external context. They call retrieval systems,
+databases, internal APIs, search indexes, and business tools. That makes the
+agent lifecycle partly an integration lifecycle.
+
+Teams need to know which data sources were available, which tools were called,
+what arguments were passed, what came back, and whether the agent had permission
+to access that system. Credentials should live in managed connections and
+secrets, not in prompts, scripts, notebooks, or local config files.
+
+For retrieval workflows, record enough context to debug bad answers: query
+rewrites, selected documents, scores, chunks, filters, and the final context
+sent to the model. Without that, "the model hallucinated" becomes a lazy
+diagnosis for retrieval bugs.
+
+## Experimentation
+
+LLM experimentation is rarely a single variable problem. A change can involve a
+prompt, model, temperature, retrieval strategy, chunking logic, tool schema, or
+post-processing step.
+
+Polyaxon helps teams compare variants by keeping inputs, outputs, metadata,
+scores, traces, and artifacts attached to the work being tested. Experiments can
+run against fixed datasets or against sampled production traces.
+
+The important rule is simple: compare variants against the same cases whenever
+possible. Otherwise teams end up arguing from anecdotes, which is a terrible
+way to ship agents.
+
+## Evaluation
+
+Evaluations turn agent behavior into something teams can review. Polyaxon
+[Evaluation](/docs/evaluation/overview) supports datasets, experiments, human
+annotations, custom scores, and LLM-as-judge workflows.
+
+Offline evals are useful before release. They check prompt changes, model
+switches, retrieval changes, and tool changes against known examples. Live
+evaluators are useful after release, where real traffic exposes cases that test
+sets missed.
+
+No eval suite is perfect. The point is to catch regressions early, make quality
+tradeoffs explicit, and stop treating one impressive demo as evidence that the
+agent is ready.
+
+## Observability
+
+Once an agent is running, traces become the main debugging surface. Polyaxon
+[Observability](/docs/observability/overview) captures traces, sessions, and
+observations for LLM calls, retrieval steps, tool executions, custom logic,
+latency, token usage, and cost.
+
+A trace should answer the basic questions: what did the user ask, which prompt
+and context were sent, which model answered, which tools ran, how long each step
+took, what it cost, and where the failure started.
+
+This is especially important for multi-step agents. The final answer may be
+wrong because the first retrieval query was bad, the third tool call returned an
+empty result, or a summarization step discarded the useful detail.
+
+## Release management
+
+Agent releases are more than code releases. A release can be a new prompt,
+model, retrieval index, tool definition, evaluator, routing rule, or fallback
+policy.
+
+Teams need a release process that connects those changes to evidence. Which
+evals passed? Which traces were reviewed? Which prompt version is active in
+production? What changed since the last known good behavior?
+
+Polyaxon prompt labels, environments, traces, evaluations, and project metadata
+help teams promote changes with a record instead of relying on memory.
+
+## Feedback and iteration
+
+Production feedback is where the test set gets corrected. Users find ambiguous
+requests, missing context, broken tools, slow paths, and policy gaps that did
+not appear during development.
+
+Useful feedback loops connect production traces to follow-up work. A bad answer
+can become a dataset example. A repeated failure can become an evaluator. A
+slow tool path can become an engineering task. A confusing prompt can become a
+new prompt version.
+
+The lifecycle works when production behavior improves the next development
+cycle instead of disappearing into support tickets.
+
+## Governance
+
+Agents can expose data, call tools, spend money, and make decisions that affect
+users. Governance is the boring part until it is suddenly the only part anyone
+cares about.
+
+Polyaxon supports governance with [RBAC](/docs/administration/rbac/), project
+and organization permissions, prompt versioning, trace history, audit-oriented
+metadata, [audit logs](/docs/administration/audit-logs/), and
+[data retention](/docs/administration/data-retention/) controls.
+
+Teams still need their own policies for data handling, human review, approval
+flows, and incident response. Polyaxon provides the operational records and
+controls those policies need.
+
+## Automation
+
+Automation should come after the team understands the workflow. Good candidates
+include scheduled eval runs, live evaluators, alerts on cost or quality changes,
+reindexing jobs, regression checks before prompt promotion, and follow-up runs
+after failed traces.
+
+Polyaxon orchestration can connect these steps with
+[DAGs](/docs/orchestration/flow-engine/), [schedules](/docs/orchestration/schedules/),
+and [hooks](/docs/orchestration/hooks/). The same platform can run evaluation
+jobs, collect outputs, preserve artifacts, and trigger the next step.
+
+The test is blunt: if the team repeats the same manual review or validation
+every week, automate it. If the process is still changing every day, keep it
+manual until the shape stops moving.

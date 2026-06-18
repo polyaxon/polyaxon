@@ -1,0 +1,13 @@
+{
+  "title": "More",
+  "defaultOpen": true,
+  "pages": [
+    "about",
+    "features",
+    "architecture",
+    "concepts",
+    "resources",
+    "glossary",
+    "roadmap"
+  ]
+}
