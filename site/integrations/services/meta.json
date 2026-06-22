@@ -16,6 +16,7 @@
     "sagemaker",
     "serving-with-fastapi",
     "serving-with-flask",
+    "sglang",
     "streamlit",
     "tensorboard",
     "tensorflow-serving",

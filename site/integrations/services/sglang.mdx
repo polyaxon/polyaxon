@@ -1,0 +1,137 @@
+---
+title: SGLang
+description: "SGLang is a serving framework for fast large language model and vision language model inference."
+ogImage: /images/integrations/sglang.png
+---
+
+Polyaxon can schedule SGLang as a GPU-backed service and expose its OpenAI-compatible API through the service URL.
+
+This guide uses the verified SGLang recipe for [GLM-5.2 on H200 with FP8, low-latency mode, and a single node](https://docs.sglang.io/cookbook/autoregressive/GLM/GLM-5.2#hw=h200&variant=default&quant=fp8&strategy=low-latency&nodes=single).
+
+## Overview
+
+The linked SGLang recipe runs `zai-org/GLM-5.2-FP8` with tensor parallelism across 8 H200 GPUs and enables EAGLE/MTP speculative decoding for lower latency.
+
+Use this integration when you want to:
+
+ * run an OpenAI-compatible model endpoint on your own Kubernetes GPU nodes,
+ * keep model serving runs tracked and controlled by Polyaxon,
+ * expose the endpoint through the Polyaxon service abstraction.
+
+## Polyaxon component
+
+The following component keeps the SGLang H200/FP8/low-latency flags intact and exposes the server on port `30000`.
+
+```yaml
+version: 1.1
+kind: component
+name: sglang-glm-5-2
+tags: ["sglang", "glm", "llm-serving"]
+run:
+  kind: service
+  ports: [30000]
+  rewritePath: true
+  container:
+    image: lmsysorg/sglang:latest
+    command: ["python3", "-m", "sglang.launch_server"]
+    args:
+      - "--model-path"
+      - "zai-org/GLM-5.2-FP8"
+      - "--tp"
+      - "8"
+      - "--speculative-algorithm"
+      - "EAGLE"
+      - "--speculative-num-steps"
+      - "5"
+      - "--speculative-eagle-topk"
+      - "1"
+      - "--speculative-num-draft-tokens"
+      - "6"
+      - "--mem-fraction-static"
+      - "0.8"
+      - "--cuda-graph-max-bs"
+      - "32"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "30000"
+    resources:
+      limits:
+        nvidia.com/gpu: "8"
+```
+
+If your cluster has dedicated H200 nodes, add an `environment.nodeSelector` or preset matching your H200 pool. GPU SKU labels are cluster-specific, so use the labels configured by your Kubernetes provider or platform team.
+
+For production, use a model cache backed by local NVMe or a persistent volume. Repeatedly pulling a large checkpoint from shared storage or over the network can dominate service startup time.
+
+## GLM parsers
+
+SGLang exposes optional parser flags for GLM reasoning and tool calls:
+
+```yaml
+    args:
+      - "--reasoning-parser"
+      - "glm45"
+      - "--tool-call-parser"
+      - "glm47"
+```
+
+Add those flags to the component if your clients need structured reasoning or tool call fields. Otherwise, keep the base recipe unchanged.
+
+## Scheduling the service
+
+Save the component as `sglang-glm-5-2.yaml` and run:
+
+```bash
+polyaxon run -f sglang-glm-5-2.yaml
+```
+
+To get the service URL:
+
+```bash
+polyaxon ops service --external --url
+```
+
+## Calling the endpoint
+
+SGLang exposes an OpenAI-compatible `/v1/chat/completions` endpoint:
+
+```bash
+curl HOST:PORT/v1/chat/completions \
+  --request POST \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "zai-org/GLM-5.2-FP8",
+    "messages": [
+      {"role": "user", "content": "Hello"}
+    ]
+  }'
+```
+
+For Polyaxon EE or Polyaxon Cloud services protected by Polyaxon auth, include a valid token:
+
+```bash
+curl HOST:PORT/v1/chat/completions \
+  --request POST \
+  --header "Authorization: token AUTH_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "zai-org/GLM-5.2-FP8",
+    "messages": [
+      {"role": "user", "content": "Hello"}
+    ]
+  }'
+```
+
+If you expose the service without Polyaxon auth or place it behind a compatible gateway, standard OpenAI-compatible clients can point their `base_url` to `HOST:PORT/v1`.
+
+## Tuning notes
+
+The example is intentionally scoped to the SGLang H200/FP8/low-latency/single-node recipe:
+
+ * `--tp 8` maps the model across 8 GPUs.
+ * `--speculative-algorithm EAGLE` with `5-1-6` is the low-latency MTP setting from the recipe.
+ * `--mem-fraction-static 0.8` leaves memory headroom instead of trying to fill the GPU to the edge.
+ * `--cuda-graph-max-bs 32` targets latency, not maximum throughput.
+
+For higher throughput, use the SGLang recipe selector and change the Polyaxon component deliberately. The balanced and high-throughput recipes add different batching, DP-attention, and MoE communication choices.

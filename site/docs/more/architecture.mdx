@@ -1,77 +1,116 @@
 ---
 title: "Architecture"
-description: "Polyaxon is structured as a modern, decoupled, micro-services oriented platform. Discover how things fit together at Polyaxon."
+description: "Polyaxon is a decoupled, control-plane/execution-plane platform for running, tracking, and governing ML and AI workloads on Kubernetes."
 ---
 
-## Core Architecture
+## Overview
 
-Polyaxon is structured as a modern, decoupled, micro-service oriented architecture.
+Polyaxon is a decoupled platform split into two planes:
 
+- A **control plane** that holds state, exposes the API, compiles and schedules
+  operations, and serves the UI, logs, and artifacts.
+- An **execution plane** of one or more Kubernetes clusters where **Agents** run
+  the actual workloads.
 
-1. **A robust core JSON API**
-2. **An Asynchronous, customizable, and scalable scheduler**
-3. **An extensive tracking API**
-4. **An event/action oriented interface**
-5. **A pipeline engine capable of authoring workflows as directed acyclic graphs (DAGs)**
-6. **An optimization engine to search automatically and concurrently for the best hyperparameters in a search space based on state of the art algorithms**
-7. **A CI system to trigger experiments/hyperparameter tuning/pipelines automatically based on some event and track their execution and report results to users**
+The two planes communicate asynchronously, so submission spikes never block the
+API, and a single control plane can drive workloads across multiple clusters,
+namespaces, and resource pools.
 
-These components work together to make every Polyaxon deployment function smoothly,
-but because they're decoupled there's plenty of room for customization.
+import ArchitectureDiagram from "@/components-mdx/architecture-diagram-v3.mdx";
 
-In fact, users can decide for example to deploy only the core and using an external tracking service, or replace the built-in scheduler, pipeline, and optimization engine with other platforms.
+<ArchitectureDiagram />
 
+## Control plane
 
-## How things fit together
+The control plane is the stateful core. It runs independently of where
+workloads execute.
 
-![Polyaxon Architecture](/images/concepts/architecture/polyaxon_architecture.png)
+- **Gateway** — the entry point for all platform traffic: API requests, reverse
+  proxying, artifact streaming, service access, sandbox routes, and the AI
+  gateway for LLM calls. It keeps user-facing access separate from the agents
+  and Kubernetes resources that execute the work.
+- **API** — a self-consuming RESTful JSON API that backs the UI, CLI, SDKs,
+  generated clients, and webhooks. Every surface goes through the same API.
+- **Compiler** — validates and compiles operations (Polyaxonfiles) into
+  concrete runtime specs, resolves inputs, outputs, connections, and
+  dependencies, and places work in queues.
+- **Scheduler** — coordinates queued work with Agents asynchronously over Redis.
+  Submission load is absorbed by the queue instead of blocking the API.
+- **Workers** — Celery workers handle background tasks: event handling,
+  notifications, automation, cleanup, and migrations, with configurable
+  concurrency and prefetch.
+- **Streams** — serve logs and artifacts. Large files move directly between the
+  client SDKs and object storage, keeping the API lightweight.
 
-Polyaxon relies on several components to function smoothly:
+## Execution plane
 
- * Postgres database
- * redis
- * rabbitmq
- * connections: docker registries, artifacts stores, git connections, ...
+- **Agents** — deployed on each Kubernetes cluster. They poll the control plane
+  for work and manage workloads locally, so the control plane never needs direct
+  access to the execution clusters. This is what enables multi-cluster
+  deployments and isolation between the two planes.
+- **Operator** — a Kubernetes operator that reconciles Polyaxon operations into
+  the underlying Kubernetes resources (jobs, services, distributed and Kubeflow
+  operator workloads) and reports status back.
 
-Polyaxon schedules your workload to Kubernetes, so you will need:
+Queues, presets, namespaces, resource requests, node placement, service
+accounts, and security context decide where each workload runs and what it can
+access.
 
- * Kubernetes cluster(s) for deploying one or several Polyaxon Agents
+## State and dependencies
 
+Polyaxon depends only on open source components:
 
-## Polyaxon platform
+- **PostgreSQL** — operations, tracking events, and metadata, with transactional
+  guarantees.
+- **Redis** — caching (including API keys and agent tokens, so the database is
+  not hit on every call) and the Celery broker and result backend.
+- **Object storage** — S3, GCS, Azure Blob, or NFS for artifacts, logs, and
+  model files.
+- **Connections** — container registries, artifact stores, Git providers,
+  secrets, and other external systems wired in through connection objects.
 
-In order to understand how Polyaxon can help you organize your workflow,
-you need to understand how Polyaxon abstract the best practices of data science job.
+## Interfaces
 
-![Polyaxon platform](/images/concepts/architecture/polyaxon_platform.png)
+Polyaxon runs in the cloud or on-premise and is reachable from:
 
-Polyaxon runs both in the cloud and on-premise, and provides access via:
+- The dashboard (UI).
+- The command line interface.
+- SDKs and generated clients targeting the API.
+- Webhooks and the REST API for headless and automated use.
 
- * Polyaxon command line interface
- * Polyaxon dashboard
- * Polyaxon SDKs targeting the Polyaxon API
- * Polyaxon Webhooks
+These interfaces share the same API and platform logic — notebooks, CI jobs,
+local terminals, internal dashboards, and production services all drive the same
+operations.
 
+## What Polyaxon manages
 
-These interfaces hide the powerful abstractions provided by the Polyaxon architecture.
-When a machine learning engineer or a data scientist schedules a job or an experiment,
-Polyaxon relies on Kubernetes for:
+On top of Kubernetes — which handles cluster resources (CPU, GPU, TPU, memory),
+repeatable deployments, and scaling — Polyaxon does the heavy lifting of:
 
- * Managing the resources of your cluster (Memory, CPU, GPU, TPU, ...)
- * Creating easy, repeatable, portable deployments
- * Scaling up and down as needed
+- Exposing a rich runtime: jobs, services, distributed and Kubeflow operator
+  workloads, notebooks, dashboards, and sandboxes.
+- Scheduling operations and resolving dependencies between them.
+- Automation through a flow engine (DAGs) and an optimization engine
+  (hyperparameter search).
+- An AI gateway for LLM traffic, with provider routing, credentials, and usage
+  tracking.
+- Building container images for workloads.
+- Validating and authorizing access to resources, connections, and namespaces.
+- Monitoring statuses and resource usage, and streaming logs.
+- Tracking code versions, params, metrics, configs, artifacts, and tags.
+- Application tracing and evaluations for LLM applications and agents.
+- Versioning models, artifacts, components, and prompts in registries.
+- Driving insights, comparisons, and analytics across runs.
 
-Polyaxon does the heavy lifting of:
+## Decoupled by design
 
- * Exposing a rich runtime including jobs, services, distributed jobs
- * Scheduling operations
- * Automation with a flow engine and an optimization engine
- * Resolving dependencies between operations
- * Validating and authorizing access to resources, connections, namespaces
- * Creating docker images
- * Monitoring the statuses and resources
- * Streaming logs
- * Tracking code version, params, logs, configurations, and tags
- * Reporting metrics and outputs and other results to the user
- * Driving insights, knowledge, and analytics about your experiments
- * Exposing a rich workspace based on Notebooks, Streamlit, VSCode, ...
+Because the components are decoupled, there is room for customization. Teams can
+deploy only the core and use an external tracking service, or replace the
+built-in scheduler, flow engine, or optimization engine with other platforms.
+The event/action interface lets you alter internal behavior — for example,
+building your own scheduler.
+
+For deployment, scaling, and the performance and reliability internals of each
+component, see the [deployment guide](/docs/setup) and
+[platform setup](/docs/setup/platform/overview). For the full capability list,
+see [features](/docs/more/features).

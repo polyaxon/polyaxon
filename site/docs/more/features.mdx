@@ -1,39 +1,38 @@
 ---
 title: "Features"
-description: "Polyaxon comes with powerful features built directly into the core software which are customizable and extensible to suit your needs."
+description: "Polyaxon gives teams one platform to run, automate, observe, evaluate, version, and govern machine learning systems, LLM applications, and AI agents."
 ---
 
-![polyaxonfile architecture](/images/references/specification/features.png)
+Polyaxon connects the operational work behind AI and ML systems: workloads,
+runs, sandboxes, LLM gateway traffic, traces, evaluations, artifacts, prompts,
+models, automation, permissions, and audit history.
 
-Polyaxon comes with powerful features built directly into the core software which can be customized and configured based on the needs of each individual deployment.
+It keeps that work inspectable after it leaves a notebook or laptop.
 
-Here's a quick overview of the core features you'll probably be interested in as you're getting started. This isn't an exhaustive list, just some highlights.
+## One platform
 
+Polyaxon gives teams one place to run work, collect evidence, and review what
+happened. A project can hold training runs, services, traces, prompts,
+evaluations, dashboards, artifacts, model versions, access settings, and
+operational metadata.
 
-## Powerful workspace
+AI systems rarely fail in one layer: a bad answer might come from a prompt
+change, retrieval issue, model provider, tool call, stale index, weak
+evaluation, or deployment mismatch. Keeping these records together lets teams
+debug across layers without stitching context from separate tools.
 
-Polyaxon provides a powerful and interactive workspace including:
+Learn more in [One platform](/docs/more/resources/one-platform/) and
+[Vision](/docs/more/resources/vision/).
 
-- A command line interface
-- SDKs and clients
-- An extensive tracking API
-- A dashboard with visualizations and advanced insights
-- Lineage and provenance tracking
-- Possibility to create custom dashboards and visualizations
-- Advanced query & search interface
-- Uniform logs management and streaming for all operations
-- Jupyter Notebook & Jupyter Lab integration
-- Matplotlib, Plotly, Bokeh, Altair, and Vega integrations
-- Tensorboard integration
-- VSCode integration
-- Streamlit, Voila, Papermill, Commuter integrations
-- Native Kubeflow scheduling
-- Celery executor
-- Built-in logic for building containers
-- Customizable interface
-- Unlimited scalability options
-- Auto-management of artifacts and lineage tracking
-- CI system for automating the training of your experiment based on different types of triggers.
+## Developer interfaces
+
+Polyaxon is usable from the UI, CLI, SDKs, generated clients, webhooks, and the
+REST API. Teams can run it as a regular product for data scientists and AI
+engineers, or use it headlessly from internal tools and automation.
+
+The same operations can be created, inspected, resumed, stopped, promoted, and
+queried from any interface. Notebooks, CI jobs, local terminals, internal
+dashboards, and production services share the same platform logic.
 
 ## Reproducible results
 
@@ -46,70 +45,230 @@ Polyaxon makes your experiments reproducible, portable, and repeatable while bei
 - Advanced insights and comparison of experiments based on results, hyperparams, versions of training data and source code.
 
 
-## Developer-friendly API
+## Workspace and dashboards
 
-At its core, Polyaxon is a self-consuming, RESTful JSON API with decoupled clients and front-end.
-We provide lots of tooling to improve data scientists work, but at the end of the day it's **Just JSON**️,
-so if you want to use Polyaxon completely headless and write your own frontend or clients... you can!
+The workspace gives users the daily surfaces around runs and projects: run
+tables, search, query filters, sorting, comparison views, logs, artifacts,
+lineage, metadata, dashboards, and visualizations.
 
-Equally, Polyaxon is heavily designed for performance and scalability with replication and concurrency.
+Polyaxon tracks and renders common ML outputs such as metrics, charts, images,
+HTML, audio, video, notebooks, model files, and arbitrary artifacts. Teams can
+use native visualizations, TensorBoard, custom dashboards, or libraries such as
+Plotly, Bokeh, Altair, Vega, and Matplotlib.
 
+See the [runs dashboard](/docs/tracking/runs-dashboard/overview/) and
+[visualizations](/docs/tracking/visualizations/overview/).
 
-## Massive scale
+## Workloads and runtimes
 
-You can easily scale Polyaxon API and scheduler horizontally, and with Polyaxon agents you can scale your workload over multiple namespaces and clusters.
+Polyaxon can run jobs, services, notebooks, TensorBoard instances, Streamlit and
+other internal apps, batch scoring jobs, distributed training, Ray workloads,
+Dask workloads, and Kubeflow operator workloads.
 
+Jobs handle batch work such as training, data processing, evaluation, and
+scoring. Services handle long-running work such as notebooks, dashboards, model
+APIs, development environments, and sandbox sessions. Distributed and cluster
+runtimes cover larger training and compute jobs without changing the project
+record around the work.
 
-## Built-in Flow engine
+See [jobs](/docs/workload/jobs/overview/), [services](/docs/workload/services/overview/),
+[distributed workloads](/docs/workload/distributed/overview/), and
+[clusters](/docs/workload/clusters/overview/).
 
-Polyaxon exposes a flow engine that enables users to author workflows and DAGs with well-thought-out features:
- * Queueing
- * Routing
- * Caching
- * Concurrency and parallelism
- * Native integration with team management, ACL, and RBAC rules
- * Native support for ML workload: Kubeflow Operators, Hyperparameter tuning, Ray jobs, Dask Jobs...
+## Sandboxes
 
+Sandboxes give engineers and agents an interactive execution surface inside
+Polyaxon-managed workloads. A sandbox-enabled run can expose command execution,
+interactive shells, file transfer, background process logs, SSH access,
+notebooks, and runtime debugging while keeping compute, credentials, artifacts,
+permissions, and auditability inside Polyaxon.
 
-## Built-in Optimization engine
+Use sandboxes to inspect a live environment, run commands against the same image
+and connections as the workload, iterate on code in-cluster, automate runtime
+actions from the CLI, or attach local tools through SSH.
 
-Polyaxon exposes an ensemble of hyperparameter tuning algorithms that can effectively optimize any model.
+Start with the [sandboxes guide](/docs/guides/sandboxes/overview/).
 
-Our optimization engine is based on open-source tools, and can intelligently choose the best parameters for your problem by balancing exploration and exploitation of your parameter search space to obtain high-performing results.
+## Platform automation
 
-With the robust scheduling provided by the platform, you can fully leverage and maximize your cluster resources and compute infrastructure,
-to run a high number of parallel jobs and optimize experiments across up to thousands of workers.
+Polyaxon automation is a platform-level feature set for reacting to time,
+internal state, and external systems. It covers notifications, automated
+actions, event ingestion, external triggers, cron and interval schedules, and
+follow-up work kicked off from run, project, or organization events.
 
-## Components, Plugins, & integrations
+Use platform automation when work should happen because something happened: a
+run finished, an evaluator failed, a webhook arrived, a spend threshold was
+crossed, or a schedule tick fired.
 
-Polyaxon components can be developed by anyone, we share some generic components in an open-source public hub,
-and we welcome users to contribute more components.
+See [events](/docs/orchestration/events/overview/),
+[schedules](/docs/orchestration/schedules/overview/),
+[scheduled runs](/docs/guides/automation/running-on-schedule/), and
+[hooks](/docs/guides/automation/executing-hooks/).
 
-And since Polyaxon's core is open-source, built as a JSON API, has webhooks, and gives you full control over your container workload:
-It essentially integrates with absolutely everything.
-Some things are easier than others, but almost anything is possible with a little scripting.
+## Built-in flow engine
 
-You can browse our [directory of integrations](/integrations/) with instructions, or build any custom integration yourself.
+Polyaxon includes a flow engine for authoring workflows, DAGs, and multi-step
+ML and AI processes. It handles:
 
-Polyaxon provides an event based abstraction to alter the internal work, and so you can build your own scheduler for example.
+- Queueing and routing.
+- Caching, retries, and restart behavior.
+- Concurrency and parallel execution.
+- Triggers and conditions inside workflows.
+- Dependencies across jobs, services, distributed workloads, tuning runs, Ray,
+  Dask, and Kubeflow operator workloads.
+- Integration with projects, teams, ACL, RBAC, queues, presets, lineage, and
+  artifacts.
 
-## Roles & permissions
+The flow engine lets teams move from one-off runs to repeatable workflows
+without switching execution systems.
 
-Deploy Polyaxon with sensible user roles and permissions from the start.
+See [flow engine](/docs/orchestration/flow-engine/overview/),
+[orchestration](/docs/orchestration/overview/), and
+[DAG automation](/docs/guides/automation/automation-dag/).
 
-- **Outsiders:** Outsider is a person who isn't explicitly a member of your organization, but who has Read, Write, or Admin permissions to one or more projects in your organization.
-- **Viewers:** Viewers can view experiments/jobs/services, as well as view most other data within the organization.
-- **Members:** Members can view and act on experiments/jobs/services, as well as view most other data within the organization.
-- **Admins:** Admin privileges on any teams of which they\'re a member. They can create new teams and projects, as well as remove teams and projects which they are already admin of.
-- **Managers:** Gains admin access on all teams as well as the ability to add and remove members.
-- **Billing:** Can see/edit billing information and subscription details only.
-- **Owners:** Gains full permission across the organization. Can manage members as well as perform catastrophic operations such as removing the organization.
+## Builds
 
-Polyaxon also comes with a concept called `Team` that allows you to promote a user role on specific teams,
-e.g. an organization wide viewer can have the member or admin role on a specific team.
-All projects that authorize that team will give the additional permissions to that user with the global viewer role.
+Polyaxon can build containers for workloads using Dockerfiles, custom build
+contexts, build steps, init steps, and registry connections. Builds are normal
+operations, so they can use queues, resources, logs, artifacts, statuses, and
+permissions instead of living in a separate script.
 
-## Queuing & Scheduling
+See [builds](/docs/orchestration/builds/overview/).
 
-Polyaxon supports several scheduling strategies based on node management and queues routing.
-Queues in Polyaxon provides an abstraction to manage how your resources can be accessed, every queue has a priority and a concurrency limit.
+## Components and integrations
+
+Components package reusable logic with typed inputs and outputs. They can be
+used directly, composed into DAGs, attached as hooks, scheduled, shared across
+teams, or versioned in a public or private hub.
+
+Integrations connect workloads to artifact stores, Git repositories, container
+registries, notification systems, secrets, service accounts, and external
+systems through connections, webhooks, API calls, and components.
+
+See [component hub](/docs/registry/component-hub/overview/) and
+[integrations](/integrations/).
+
+## Built-in optimization engine
+
+Polyaxon includes an optimization engine for parameter search and tuning. It
+supports grid search, random search, Bayesian optimization, Hyperband,
+Hyperopt-backed search, iterative tuning loops, and parallel sweeps.
+
+Optimization runs use the same scheduler as other workloads: queues, routing,
+resources, concurrency limits, caching, early stopping, lineage, artifacts, and
+metrics, so search jobs are governed like any other platform work.
+
+See the [optimization engine](/docs/orchestration/optimization-engine/overview/),
+[hyperparameter tuning](/docs/guides/scaling/hyperparameter-tuning/), and
+[matrix mapping](/docs/guides/scaling/mapping/).
+
+## AI gateway for LLMs
+
+Polyaxon's AI gateway gives applications and agents a managed path for LLM
+calls. It supports two modes: a normalized provider interface for
+provider-agnostic streaming, and a passthrough proxy for native SDKs such as
+OpenAI-compatible and Anthropic clients.
+
+The gateway centralizes provider credentials, key rotation, cooldowns after
+provider errors, model listing, request IDs, usage tracking, and organization
+policy. Applications can call a Polyaxon endpoint instead of carrying provider
+keys directly, while traces, evaluations, cost, latency, prompts, and model
+usage stay connected to the same project record.
+
+This also gives platform teams a place to add model aliases, provider routing,
+fallbacks, rate limits, and guardrails without rewriting every application.
+
+## Tracing and observability
+
+Polyaxon supports two related observability problems.
+
+Application tracing records what happens inside LLM applications and agents:
+requests, sessions, observations, prompts, completions, tool calls, retrieval
+steps, token usage, latency, cost, metadata, and errors. This gives application
+teams enough context to debug behavior, compare versions, and connect traces to
+evaluation results. Gateway-mediated LLM calls can feed the same usage and
+request context instead of living as separate provider logs.
+
+Platform observability covers the health of the Polyaxon deployment itself:
+gateway, scheduler, workers, agents, logs, health checks, infrastructure
+metrics, and error tracking integrations.
+
+See [application tracing](/docs/observability/overview/) and
+[platform observability](/docs/setup/platform/observability/).
+
+## Evaluation and alerts
+
+Polyaxon evaluations help teams test LLM applications and agents with datasets,
+human review, model-based scoring, custom metrics, and live evaluators over
+production traces.
+
+Evaluations run before release and continue after it: teams can watch for
+regressions, expensive traces, latency problems, failed scores, and usage
+changes. Polyaxon also supports operational alerts such as spend thresholds,
+and events can trigger follow-up operations when internal or external
+conditions are met.
+
+See [evaluations](/docs/evaluation/overview/) and
+[events](/docs/orchestration/events/overview/).
+
+## Tracking and reproducibility
+
+The tracking API records parameters, metrics, code versions, artifacts, logs,
+resources, metadata, tags, statuses, exceptions, lineage, and run history.
+Polyaxonfiles define the runtime shape of work: dependencies, inputs, outputs,
+artifacts, environments, connections, build steps, init steps, and the operation
+to schedule.
+
+This gives ML teams a reproducible record of how an experiment, job, service,
+pipeline, or evaluation ran. It also gives reviewers the evidence they need to
+compare runs, inspect outputs, and understand what changed.
+
+See [tracking](/docs/tracking/tracking/overview/), [runs dashboard](/docs/tracking/runs-dashboard/overview/),
+and [visualizations](/docs/tracking/visualizations/overview/).
+
+## Registries and versioning
+
+Polyaxon provides registries for models, artifacts, components, and prompts.
+Teams can version release objects, attach metadata, manage labels, preserve
+lineage, and connect registry entries to the runs, traces, and evaluations that
+justify them.
+
+Versioning answers what is live, what changed, who changed it, and what
+evidence supported the change.
+
+See [registry](/docs/registry/overview/), [model registry](/docs/registry/model-registry/overview/),
+[artifact versioning](/docs/registry/artifacts-versioning/overview/), and
+[prompt management](/docs/registry/prompt-management/overview/).
+
+## Scheduling and scale
+
+Polyaxon schedules jobs, services, distributed workloads, notebooks, dashboards,
+DAGs, matrix runs, and sandbox sessions on Kubernetes. Queues, concurrency
+limits, priorities, presets, resource requests, GPU settings, node placement,
+manual approvals, routing rules, caching, retries, backfills, restarts, and
+termination policies control execution.
+
+Platform teams can scale the gateway, scheduler, compiler, workers, and backing
+services while keeping agents close to the clusters where workloads run. Agents
+can route work across namespaces, clusters, and resource pools without forcing
+users to handle Kubernetes details in every operation.
+
+See [scheduling](/docs/scheduling/overview/), [queues](/docs/scheduling/scheduling-strategies/queues/),
+[concurrency](/docs/scheduling/scheduling-strategies/concurrency-management/),
+and [replication](/docs/setup/platform/replication-concurrency/).
+
+## Governance
+
+Polyaxon attaches governance to the same projects, workloads, traces, prompts,
+models, artifacts, and evaluations teams already use. Organizations can manage
+members, teams, projects, service accounts, connections, presets, RBAC, audit
+logs, data retention, billing, and access policies.
+
+Access control, audit history, and policy stay attached to the runs, traces,
+prompts, and models they apply to, so it stays clear who can run jobs, use
+credentials, view traces, change prompts, promote models, or inspect audit
+history.
+
+See [administration](/docs/administration/overview/), [RBAC](/docs/administration/rbac/),
+[audit logs](/docs/administration/audit-logs/), and
+[data retention](/docs/administration/data-retention/).
