@@ -1,0 +1,147 @@
+---
+title: Unsloth Tracking
+description: "Unsloth is a framework for faster LLM fine-tuning. Polyaxon tracks Unsloth runs through the Hugging Face trainer callback or the tracking API."
+ogImage: /images/integrations/unsloth.png
+---
+
+Polyaxon can track Unsloth fine-tuning jobs like any other Python training run.
+Unsloth does not need a dedicated Polyaxon callback: when your training script uses
+Hugging Face `Trainer` or TRL `SFTTrainer`, use Polyaxon's Hugging Face callback.
+For custom loops, use the tracking API directly.
+
+Use this integration to:
+
+ * track Unsloth training metrics in Polyaxon,
+ * record training arguments and run metadata,
+ * keep stdout, stderr, resources, and artifacts attached to the run,
+ * log LoRA adapters or merged model outputs as model artifacts.
+
+For scheduling the GPU job itself, see the [Unsloth fine-tuning integration](/integrations/other/unsloth-finetuning/).
+
+## Setup
+
+Install Polyaxon and Unsloth in the training environment:
+
+```bash
+pip install polyaxon unsloth
+```
+
+For repeatable cluster runs, bake those dependencies into the container image instead
+of installing them at startup.
+
+## Initialize tracking
+
+Initialize Polyaxon at the start of the script:
+
+```python
+from polyaxon import tracking
+
+tracking.init()
+tracking.log_inputs(
+    model_name="unsloth/Llama-3.2-1B-Instruct",
+    dataset_name="yahma/alpaca-cleaned",
+    max_seq_length=2048,
+    load_in_4bit=True,
+)
+```
+
+## Trainer callback
+
+Unsloth commonly fine-tunes models through TRL's `SFTTrainer`, which follows the
+Hugging Face trainer callback interface.
+
+```python
+from polyaxon.tracking.contrib.hugging_face import PolyaxonCallback
+from transformers import TrainingArguments
+from trl import SFTTrainer
+
+training_args = TrainingArguments(
+    per_device_train_batch_size=2,
+    gradient_accumulation_steps=4,
+    max_steps=60,
+    learning_rate=2e-4,
+    logging_steps=1,
+    output_dir=tracking.get_outputs_path("trainer"),
+    report_to="none",
+)
+
+trainer = SFTTrainer(
+    model=model,
+    tokenizer=tokenizer,
+    train_dataset=dataset,
+    dataset_text_field="text",
+    max_seq_length=2048,
+    args=training_args,
+    callbacks=[PolyaxonCallback()],
+)
+
+trainer.train()
+```
+
+The callback logs numeric trainer metrics with the current global step and records
+the sanitized training arguments as run inputs.
+
+## Log adapters and merged models
+
+Save the LoRA adapter under the Polyaxon outputs path and log it as a model
+reference:
+
+```python
+adapter_dir = tracking.get_outputs_path("lora-adapter")
+model.save_pretrained(adapter_dir)
+tokenizer.save_pretrained(adapter_dir)
+
+tracking.log_model_ref(
+    path=adapter_dir,
+    name="lora-adapter",
+    framework="unsloth",
+)
+```
+
+If your script also exports a merged model, log that output separately:
+
+```python
+merged_dir = tracking.get_outputs_path("merged-model")
+model.save_pretrained_merged(
+    merged_dir,
+    tokenizer,
+    save_method="merged_16bit",
+)
+
+tracking.log_model_ref(
+    path=merged_dir,
+    name="merged-model",
+    framework="unsloth",
+)
+```
+
+Keep adapter and merged model artifacts separate. Merged checkpoints are much
+larger and should usually be produced only when the downstream serving or registry
+workflow needs them.
+
+## Manual logging
+
+If you are not using a trainer callback, log metrics directly:
+
+```python
+from polyaxon import tracking
+
+tracking.init()
+
+for step, metrics in enumerate(train()):
+    tracking.log_metrics(
+        loss=float(metrics["loss"]),
+        learning_rate=float(metrics["learning_rate"]),
+        step=step,
+    )
+```
+
+You can also log extra files created during training:
+
+```python
+tracking.log_artifact_ref(
+    path=tracking.get_outputs_path("eval_results.json"),
+    kind=tracking.V1ArtifactKind.FILE,
+    name="eval-results",
+)
+```

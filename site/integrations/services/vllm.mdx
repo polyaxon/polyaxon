@@ -1,0 +1,163 @@
+---
+title: vLLM
+description: "vLLM is a high-throughput LLM serving engine with an OpenAI-compatible API. Polyaxon can schedule vLLM as a GPU-backed service."
+ogImage: /images/integrations/vllm_icon.svg
+---
+
+Polyaxon can schedule vLLM as a GPU-backed service and expose its OpenAI-compatible
+API through the Polyaxon service URL.
+
+Use this integration when you want to:
+
+ * run an OpenAI-compatible model endpoint on your own Kubernetes GPU nodes,
+ * keep model serving jobs controlled by Polyaxon,
+ * tune vLLM serving flags as typed Polyaxon inputs,
+ * expose the endpoint through Polyaxon's service abstraction.
+
+If you want RunPod to host and scale the vLLM endpoint for you, use the
+[RunPod Serverless vLLM guide](https://docs.runpod.io/serverless/vllm/get-started)
+and treat the resulting endpoint as an external OpenAI-compatible service.
+
+## Polyaxon component
+
+The following component runs the official vLLM OpenAI server image on port `8000`.
+It exposes the model name and the main serving knobs as Polyaxon inputs.
+
+```yaml
+version: 1.1
+kind: component
+name: vllm-openai
+tags: ["vllm", "llm-serving", "openai-compatible"]
+inputs:
+- name: model
+  type: str
+  isOptional: true
+  value: NousResearch/Meta-Llama-3-8B-Instruct
+- name: tensor_parallel_size
+  type: int
+  isOptional: true
+  value: 1
+- name: max_model_len
+  type: int
+  isOptional: true
+  value: 8192
+- name: dtype
+  type: str
+  isOptional: true
+  value: auto
+- name: gpu_memory_utilization
+  type: float
+  isOptional: true
+  value: 0.9
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+  container:
+    image: vllm/vllm-openai:latest
+    command: ["vllm", "serve"]
+    args:
+    - "{{ model }}"
+    - "--host"
+    - "0.0.0.0"
+    - "--port"
+    - "8000"
+    - "--tensor-parallel-size"
+    - "{{ tensor_parallel_size }}"
+    - "--max-model-len"
+    - "{{ max_model_len }}"
+    - "--dtype"
+    - "{{ dtype }}"
+    - "--gpu-memory-utilization"
+    - "{{ gpu_memory_utilization }}"
+    resources:
+      limits:
+        nvidia.com/gpu: "1"
+```
+
+For private Hugging Face models, inject `HF_TOKEN` through a Polyaxon connection or
+Kubernetes secret. Do not hard-code tokens in the component.
+
+If `tensor_parallel_size` is greater than `1`, increase the GPU limit to the same
+number and schedule the service on nodes that can provide those GPUs to one pod.
+
+## Scheduling the service
+
+Save the component as `vllm-openai.yaml` and run:
+
+```bash
+polyaxon run -f vllm-openai.yaml
+```
+
+Override the model or serving settings with `-P`:
+
+```bash
+polyaxon run -f vllm-openai.yaml \
+  -P model=Qwen/Qwen2.5-7B-Instruct \
+  -P max_model_len=32768 \
+  -P gpu_memory_utilization=0.92
+```
+
+To get the external service URL:
+
+```bash
+polyaxon ops service --external --url
+```
+
+## Calling the endpoint
+
+vLLM exposes an OpenAI-compatible `/v1/chat/completions` endpoint:
+
+```bash
+curl HOST:PORT/v1/chat/completions \
+  --request POST \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "messages": [
+      {"role": "user", "content": "Hello"}
+    ]
+  }'
+```
+
+For Polyaxon EE or Polyaxon Cloud services protected by Polyaxon auth, include a
+valid token:
+
+```bash
+curl HOST:PORT/v1/chat/completions \
+  --request POST \
+  --header "Authorization: token AUTH_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "messages": [
+      {"role": "user", "content": "Hello"}
+    ]
+  }'
+```
+
+OpenAI-compatible clients can point their `base_url` to `HOST:PORT/v1`.
+
+## RunPod Serverless
+
+RunPod Serverless vLLM is a different deployment shape: RunPod owns the serverless
+endpoint and worker lifecycle, and Polyaxon does not schedule the vLLM process.
+Use it when you want a provider-managed inference endpoint instead of a service
+running on your Polyaxon cluster.
+
+Follow the [RunPod vLLM get started guide](https://docs.runpod.io/serverless/vllm/get-started)
+to create the endpoint and copy the endpoint URL and API key from RunPod. In your
+Polyaxon jobs or services, configure OpenAI-compatible clients with that RunPod
+base URL and store the RunPod API key in a secret or connection.
+
+## Tuning notes
+
+The example is intentionally small enough to adapt:
+
+ * `tensor_parallel_size` maps one model replica across multiple GPUs.
+ * `max_model_len` changes KV cache requirements quickly; raise it only when the model and GPU memory can support it.
+ * `gpu_memory_utilization` controls how aggressively vLLM reserves GPU memory.
+ * Model downloads should use a cache backed by local NVMe or persistent storage for repeated service starts.
+
+For production traffic, pin the vLLM image version instead of using `latest`, set
+explicit model revisions, and size the service with load tests rather than guesses.

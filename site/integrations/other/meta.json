@@ -11,6 +11,7 @@
     "custom-integration",
     "datadog",
     "gcloud-cli",
-    "segment"
+    "segment",
+    "unsloth-finetuning"
   ]
 }

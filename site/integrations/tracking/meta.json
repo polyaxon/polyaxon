@@ -9,6 +9,7 @@
     "tracking-bokeh",
     "tracking-fastai",
     "tracking-hugging-face",
+    "tracking-unsloth",
     "tracking-ignite",
     "tracking-keras",
     "tracking-lightgbm",
