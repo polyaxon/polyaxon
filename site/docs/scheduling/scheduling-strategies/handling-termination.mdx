@@ -177,6 +177,7 @@ termination:
       - action: Ignore
         onPodConditions:
           - type: DisruptionTarget
+            status: "'True'"
 ```
 
 ### Available Actions
@@ -220,7 +221,7 @@ podFailurePolicy:
     - action: Ignore
       onPodConditions:
         - type: DisruptionTarget
-          status: "True"  # Optional, defaults to "True"
+          status: "'True'"
 ```
 
 The most useful condition is `DisruptionTarget` which allows you to ignore failures caused by involuntary disruptions like preemption or eviction.
@@ -237,6 +238,7 @@ termination:
       - action: Ignore
         onPodConditions:
           - type: DisruptionTarget
+            status: "'True'"
 ```
 
 **Fail fast on invalid configuration:**
@@ -286,6 +288,7 @@ termination:
       - action: Ignore
         onPodConditions:
           - type: DisruptionTarget
+            status: "'True'"
 ```
 
 ### How it works

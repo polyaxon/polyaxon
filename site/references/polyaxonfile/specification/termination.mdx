@@ -39,6 +39,7 @@ termination:
       - action: Ignore
         onPodConditions:
           - type: DisruptionTarget
+            status: "'True'"
 ```
 
 ## Python usage
@@ -89,7 +90,7 @@ they finish for sanity check or debugging.
 
 The ttl field allows you to leverage the TTL controller provided by some primitives,
 for example the
-[ttlSecondsAfterFinished](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically), 
+[ttlSecondsAfterFinished](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically),
 from the Job controller.
 Polyaxon has helpers for resources that don't have a built-in TTL mechanism, such as services,
 so that you can have a uniform definition for all of your operations.
@@ -104,7 +105,7 @@ termination:
 
 Sometimes you might stop an operation after a certain time, timeout lets you define how
 long before Polyaxon decides to stop that operation, this is the equivalent of Kubernetes Jobs
-[activeDeadlineSeconds](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#job-termination-and-cleanup)  
+[activeDeadlineSeconds](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#job-termination-and-cleanup)
 but you can use this field for all runtimes, for instance you might want to stop a
 tensorboard after 12 hours, this way you don't have to actively look for running tensorboards.
 Timeout is also how you can enforce SLAs (Service Level Agreements),
@@ -206,6 +207,7 @@ termination:
       - action: Ignore
         onPodConditions:
           - type: DisruptionTarget
+            status: "'True'"
 ```
 
 Available actions:
@@ -216,5 +218,4 @@ Available actions:
 
 See [Kubernetes Pod Failure Policy](https://kubernetes.io/docs/tasks/job/pod-failure-policy/)
 for more details.
-
 
