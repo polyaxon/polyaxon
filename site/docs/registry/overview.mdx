@@ -1,56 +1,41 @@
 ---
 title: "Overview"
-description: "Polyaxon UI is a tool for managing organizations, teams, projects, agents, runs..."
+description: "Version, promote, and share models, artifacts, components, prompts, and datasets with Polyaxon registries."
 ---
 
-## Organizations Management UI
+import RegistryOverview from "@/components-mdx/prompt-overview-gifs.mdx";
 
- * Managing organizations, teams, members, projects.
- * Managing agents and queues.
- * Setting permissions and authorizations.
- * Monitoring agents and runs.
- * Profiling runs and connections' access.
+# Registry
 
-## Projects Management UI
+Polyaxon registries organize reusable ML assets across teams. Use them to version and promote models and artifacts, publish components, and preserve lineage back to the runs that produced them.
 
- * Managing project access and restrictions.
- * Organizing and monitoring runs.
- * Auditing activities and profiling workloads.
-
-## Runs dashboard
-
- * Dashboarding capabilities and collaboration.
- * Native visualizations.
- * Custom visualizations with Plotly, Bokeh, Vega.
- * Powerful rendering engine with automatic handling for code files, html, audio, video, ...
- * Lineage view.
- * Flexible comparison table for hyperparameters and metrics with built-in search, query, sort, limit to navigate millions of runs.
- * Native integration with the tracking API.
- * Automate your process from training to deriving insights from results.
- * Collaborative by design.
+<div className="h-6" />
+<RegistryOverview />
 
 ## Component Hub
 
-Polyaxon Component Hub is a product for managing versioned components, each component can:
- * Have multiple versions.
- * Can be published publicly or privately within your organization.
- * Can define team level permissions.
+Use the [Component Hub](/docs/registry/component-hub/overview) to manage reusable, versioned components. Components can:
+
+- Have multiple versions.
+- Be published publicly or privately within your organization.
+- Define team-level permissions.
 
 ## Model Registry
 
-Polyaxon Model Registry is a models store and a system that provides:
- * APIs and a UI.
- * It can be used with your teams' configuration and access control settings to enable collaborative model management.
- * Logging and lineage using the experimentation feature.
- * Versioning.
- * Deploying as an internal tool or as a test API using the service abstraction.
- * Agnostic to the model packaging format.
- * Integrations with your favorite serving technologies.
+Use the [Model Registry](/docs/registry/model-registry/overview) to manage model versions collaboratively. It provides:
+
+- APIs and a UI.
+- Team configuration and access controls.
+- Logging and lineage through experiment tracking.
+- Versioning and lifecycle stages.
+- Deployment as an internal tool or test API using services.
+- Support for any model packaging format and serving technology.
 
 ## Artifacts Versioning
 
-Polyaxon Artifacts Versioning is a system to promote runs and version assets, it provides:
- * APIs and a UI.
- * Possibility to attach additional summary and information about the assets.
- * Lineage and locking of the runs generating the data and artifacts versions.
- * Can define team level permissions.
+Use [Artifacts Versioning](/docs/registry/artifacts-versioning/overview) to promote runs and version reusable assets. It provides:
+
+- APIs and a UI.
+- Summaries and metadata for each asset version.
+- Lineage and locking for the runs that generate data and artifacts.
+- Team-level permissions.

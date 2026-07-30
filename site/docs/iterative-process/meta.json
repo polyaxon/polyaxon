@@ -7,7 +7,6 @@
     "iterate-with-inline-scripts",
     "iterate-in-notebooks",
     "iterate-programmatically",
-    "iterate-with-presets",
-    "passing-params"
+    "iterate-with-presets"
   ]
 }

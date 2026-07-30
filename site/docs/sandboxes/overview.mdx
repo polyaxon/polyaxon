@@ -3,11 +3,16 @@ title: "Overview"
 description: "Launch and use sandbox-enabled Polyaxon runs for interactive development, command execution, file access, SSH, notebooks, and debugging."
 ---
 
-# Overview
+import SandboxOverview from "@/components-mdx/sandbox-overview-gifs.mdx";
+
+# Sandboxes
 
 Sandboxes give engineers and agents an interactive execution surface inside Polyaxon-managed workloads. A sandbox-enabled run can expose command execution, a persistent shell, file transfer, background process logs, and SSH access while keeping compute, permissions, artifacts, and auditability inside Polyaxon.
 
 Use sandboxes when you need to inspect a live environment, run commands against the same image and connections as your workload, iterate on code in-cluster, or automate runtime actions from the CLI.
+
+<div className="h-6" />
+<SandboxOverview />
 
 ## Where Sandboxes Fit
 

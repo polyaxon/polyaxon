@@ -6,6 +6,7 @@
     "---Workflows---",
     "sandboxes",
     "iterative-process",
+    "passing-params",
     "tracking",
     "scheduling",
     "scaling",
