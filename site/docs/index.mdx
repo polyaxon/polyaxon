@@ -8,21 +8,13 @@ description: Polyaxon is an open source ML & AI platform for experiment tracking
 Polyaxon is an **open-source ML & AI platform** ([GitHub](https://github.com/polyaxon)) that helps teams build, train, and deploy machine learning models at scale. All platform features are natively integrated to accelerate the development workflow. Polyaxon is open, self-hostable, and extensible ([_why polyaxon?_](/#why-polyaxon)).
 
 import { FeatureOverview } from "@/components/FeatureOverview";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Braces, HardDriveDownload, Milestone, Plug } from "lucide-react";
 
 <Cards num={2} className="my-8 lg:grid-cols-4" aria-label="Quickstarts">
   <Card
     className="min-h-[140px] flex-col items-start justify-between gap-5 rounded-lg border border-line-structure bg-surface-1 p-5 shadow-none transition-colors hover:border-line-cta/50 hover:bg-surface-2 [&>div]:w-full"
-    iconClassName="size-12 border-0 bg-transparent p-0 shadow-none group-hover:border-transparent [&_img]:size-11 [&_img]:object-contain"
-    icon={
-      <Image
-        src="/images/icons/guides.svg"
-        alt=""
-        width={48}
-        height={48}
-      />
-    }
+    iconClassName="size-12 border-0 bg-transparent p-0 shadow-none group-hover:border-transparent [&_svg]:!size-10 [&_svg]:!stroke-[1.5]"
+    icon={<Milestone className="size-10 text-docs-icon-quick-start" strokeWidth={1.5} aria-hidden="true" />}
     title={
       <span className="flex w-full items-center justify-between gap-2">
         Quick Start
@@ -34,15 +26,8 @@ import { ArrowRight } from "lucide-react";
   />
   <Card
     className="min-h-[140px] flex-col items-start justify-between gap-5 rounded-lg border border-line-structure bg-surface-1 p-5 shadow-none transition-colors hover:border-line-cta/50 hover:bg-surface-2 [&>div]:w-full"
-    iconClassName="size-12 border-0 bg-transparent p-0 shadow-none group-hover:border-transparent [&_img]:size-11 [&_img]:object-contain"
-    icon={
-      <Image
-        src="/images/docs/landing/core.svg"
-        alt=""
-        width={48}
-        height={48}
-      />
-    }
+    iconClassName="size-12 border-0 bg-transparent p-0 shadow-none group-hover:border-transparent [&_svg]:!size-10 [&_svg]:!stroke-[1.5]"
+    icon={<Braces className="size-10 text-docs-icon-reference" strokeWidth={1.5} aria-hidden="true" />}
     title={
       <span className="flex w-full items-center justify-between gap-2">
         Reference
@@ -54,15 +39,8 @@ import { ArrowRight } from "lucide-react";
   />
   <Card
     className="min-h-[140px] flex-col items-start justify-between gap-5 rounded-lg border border-line-structure bg-surface-1 p-5 shadow-none transition-colors hover:border-line-cta/50 hover:bg-surface-2 [&>div]:w-full"
-    iconClassName="size-12 border-0 bg-transparent p-0 shadow-none group-hover:border-transparent [&_img]:size-11 [&_img]:object-contain"
-    icon={
-      <Image
-        src="/images/icons/setup.svg"
-        alt=""
-        width={48}
-        height={48}
-      />
-    }
+    iconClassName="size-12 border-0 bg-transparent p-0 shadow-none group-hover:border-transparent [&_svg]:!size-10 [&_svg]:!stroke-[1.5]"
+    icon={<HardDriveDownload className="size-10 text-docs-icon-setup" strokeWidth={1.5} aria-hidden="true" />}
     title={
       <span className="flex w-full items-center justify-between gap-2">
         Setup
@@ -74,15 +52,8 @@ import { ArrowRight } from "lucide-react";
   />
   <Card
     className="min-h-[140px] flex-col items-start justify-between gap-5 rounded-lg border border-line-structure bg-surface-1 p-5 shadow-none transition-colors hover:border-line-cta/50 hover:bg-surface-2 [&>div]:w-full"
-    iconClassName="size-12 border-0 bg-transparent p-0 shadow-none group-hover:border-transparent [&_img]:size-11 [&_img]:object-contain"
-    icon={
-      <Image
-        src="/images/icons/integrations.svg"
-        alt=""
-        width={48}
-        height={48}
-      />
-    }
+    iconClassName="size-12 border-0 bg-transparent p-0 shadow-none group-hover:border-transparent [&_svg]:!size-10 [&_svg]:!stroke-[1.5]"
+    icon={<Plug className="size-10 text-docs-icon-integrations" strokeWidth={1.5} aria-hidden="true" />}
     title={
       <span className="flex w-full items-center justify-between gap-2">
         Integrations
