@@ -1,6 +1,7 @@
 ---
 title: "Quick Start"
 description: "Start a sandbox-enabled run and connect to it with the Polyaxon CLI."
+label: "v1.16+"
 ---
 
 # Quick Start
@@ -37,13 +38,15 @@ run:
     command: ["sleep", "infinity"]
 ```
 
+The examples in this section use `/workspace` as scratch space. It lives in the container filesystem and may be lost when the run is stopped or replaced. Save durable results to the run's outputs path before cleanup.
+
 ## Start the Run
 
 ```bash
 polyaxon run -f sandbox.yaml -p owner/project
 ```
 
-When the run starts, copy its UUID from the command output or from the run page.
+Copy the run UUID from the command output or run page, then wait until the run reaches `running`. `sandbox ping` does not wait for service readiness; if it fails during startup, wait and retry.
 
 ## Check Sandbox Health
 
@@ -84,3 +87,4 @@ polyaxon ops stop -p owner/project -uid <run-uuid>
 ```
 
 For exact command options, see the [sandbox CLI reference](/docs/references/cli/sandbox/).
+

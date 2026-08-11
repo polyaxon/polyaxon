@@ -1,6 +1,7 @@
 ---
 title: "Configure Environments"
 description: "Choose images, commands, packages, environment variables, and presets for sandbox-enabled runs."
+label: "v1.16+"
 ---
 
 # Configure Environments
@@ -33,7 +34,41 @@ Promote repeated package changes into a Docker image or preset once the workflow
 
 ## Set Environment Values
 
-Use the Polyaxonfile [environment specification](/docs/references/polyaxonfile/specification/environment/) and presets for environment variables, node selectors, service accounts, security context, and Kubernetes-specific options.
+Set environment variables under `run.container.env`:
+
+```yaml
+run:
+  kind: service
+  container:
+    image: python:3.11
+    env:
+      - name: EDITOR
+        value: vim
+    command: ["sleep", "infinity"]
+```
+
+For temporary values in an interactive shell:
+
+```bash
+polyaxon ops shell -p owner/project -uid <run-uuid>
+export EDITOR=vim
+export DEBUG=1
+```
+
+These values belong to that shell. With `plugins.tmux` enabled, they remain available when you detach and reconnect to the same session. They disappear when the shell exits, the pod restarts, or the run stops, and they do not affect separate `polyaxon sandbox exec` commands. Use `run.container.env` for values that every process needs or that should be reproducible.
+
+For a value needed by one command, prefix the remote command with `env`:
+
+```bash
+polyaxon sandbox exec \
+  -p owner/project \
+  -uid <run-uuid> \
+  -- env EDITOR=vim printenv EDITOR
+```
+
+The CLI has no `--env` option. This value is available only to that command and its child processes.
+
+Use the Polyaxonfile [environment specification](/docs/references/polyaxonfile/specification/environment/) for pod settings such as node selectors, service accounts, security contexts, and DNS. Presets can supply these settings.
 
 ## Use Presets
 

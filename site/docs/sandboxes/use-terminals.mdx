@@ -1,20 +1,21 @@
 ---
 title: "Use Terminals"
 description: "Choose between sandbox shells, tmux sessions, and SSH terminals for interactive work."
+label: "v1.16+"
 ---
 
 # Use Terminals
 
-Polyaxon supports several terminal workflows for sandbox-enabled runs. Pick the smallest access mode that fits the task.
+Polyaxon supports several terminal workflows for service runs. Pick the smallest access mode that fits the task.
 
 ## Terminal Options
 
-| Access mode | Best for | Command |
-| --- | --- | --- |
-| Sandbox shell | Quick interactive shell access through Polyaxon | `polyaxon sandbox shell` |
-| Sandbox exec | One-off or scripted commands | `polyaxon sandbox exec` |
-| tmux shell | Reconnectable terminal sessions | `polyaxon ops shell` |
-| SSH | IDEs, native terminal tooling, tunnels, SFTP, SCP, rsync | `polyaxon ssh connect` |
+| Access mode | Enable | Best for | Command |
+| --- | --- | --- | --- |
+| Sandbox shell | `plugins.sandbox` | Quick interactive shell access through Polyaxon | `polyaxon sandbox shell` |
+| Sandbox exec | `plugins.sandbox` | One-off or scripted commands | `polyaxon sandbox exec` |
+| tmux shell | `plugins.tmux` | Reconnectable terminal sessions | `polyaxon ops shell` |
+| SSH | `plugins.ssh` | IDEs, native terminal tooling, tunnels, SFTP, SCP, and rsync when the image includes it | `polyaxon ssh connect` |
 
 ## One-Off Commands
 
@@ -64,3 +65,11 @@ Attach with:
 ```bash
 polyaxon ops shell -p owner/project -uid <run-uuid>
 ```
+
+At a shell prompt, detach without ending the shell:
+
+```bash
+/opt/polyaxon/bin/tmux detach-client
+```
+
+The default keyboard shortcut is `Ctrl+B`, release both keys, then press lowercase `d`. On macOS, use Control (`⌃`), not Command (`⌘`). Do not type `exit` when you intend to detach: exiting the last tmux pane destroys the session, and the next `polyaxon ops shell` starts a new shell without its exported variables.

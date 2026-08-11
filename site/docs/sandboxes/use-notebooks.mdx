@@ -1,6 +1,7 @@
 ---
 title: "Use Notebooks"
 description: "Run notebook services as sandbox-enabled Polyaxon workloads."
+label: "v1.16+"
 ---
 
 # Use Notebooks
@@ -28,8 +29,6 @@ name: notebook-sandbox
 
 plugins:
   sandbox: true
-  ssh: true
-  tmux: true
 
 run:
   kind: service
@@ -39,6 +38,8 @@ run:
     image: jupyter/scipy-notebook
     command: ["start-notebook.py"]
 ```
+
+Add `plugins.ssh: true` only for native SSH or IDE access, and `plugins.tmux: true` only for reconnectable `polyaxon ops shell` sessions.
 
 ## Common Workflow
 
@@ -52,3 +53,4 @@ run:
 ## Track Experiments from a Notebook
 
 When the notebook runs in-cluster, Polyaxon can resolve project and run context automatically. See [tracking in notebooks](/docs/references/python-library/in-notebooks/) for tracking examples.
+

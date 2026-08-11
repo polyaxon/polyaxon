@@ -1,19 +1,20 @@
 ---
-title: "Quick Start: Schedule an experiment"
-sidebarTitle: "Schedule a run"
-description: "Schedule a TensorFlow experiment on Kubernetes, inspect the managed run, and open TensorBoard."
+title: "Quick Start: Train a model"
+sidebarTitle: "Train a model"
+description: "Train a TensorFlow model on Kubernetes, inspect the managed run, and open TensorBoard."
 ---
 
-Let’s look at an example of how you can use Polyaxon for running deep learning experiments.
+You have tracked and scheduled the simulator, then used its managed environment interactively. Now use the same project to train a TensorFlow model and inspect its TensorBoard data.
 
-This page reuses the `quick-start` project from [Create a project](/docs/quick-start/#create-a-project). If you have not created it yet, complete that section before continuing. This page assumes that Polyaxon and its execution agent are already running.
+This page reuses the `quick-start` project from the [Create a project](/docs/quick-start/#create-a-project) section in Track an experiment.
+If you have not created it yet, complete that section before continuing. This page assumes that Polyaxon and its execution agent are already running.
 
 This example uses a [public GitHub repo](https://github.com/polyaxon/polyaxon-quick-start)
 for hosting the project and the Polyaxonfile manifests. Similar results can be achieved using a local folder or other platforms, e.g. GitLab or Bitbucket.
 
-## Start an experiment
+## Train the model
 
-Let's run a first experiment:
+Start the TensorFlow experiment:
 
 ```bash
 polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
@@ -58,9 +59,9 @@ Please check the [runs dashboard](/docs/tracking/runs-dashboard/) and the
 
 ## Congratulations
 
-You've trained your first managed experiment with Polyaxon, visualized the results in TensorBoard, and tracked metrics with two `polyaxon run` commands.
+You've trained a TensorFlow model with Polyaxon, inspected its tracked metrics, and visualized its results with TensorBoard.
 
-Behind the scene a couple of things have happened:
+Behind the scenes, a few things happened:
 
  * You synced your GitHub project and used the last commit.
  * You ran a container with a custom image and a custom command to train a model.

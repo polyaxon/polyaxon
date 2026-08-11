@@ -1,34 +1,40 @@
 ---
 title: "Persist Outputs"
 description: "Keep useful files, logs, metrics, and code changes after a sandbox session ends."
+label: "v1.16+"
 ---
 
 # Persist Outputs
 
-Interactive sessions are useful for discovery, but the container filesystem is not the right long-term storage layer. Save anything important before stopping or replacing a sandbox run.
+Interactive sessions are useful for discovery, but the container filesystem is not the right long-term storage layer. Save anything important before stopping or replacing the service run.
 
 ## Persist Artifacts
 
-Write generated files to a configured artifact path or log them with the tracking library:
+Write generated files to the run's outputs path and log them with the tracking library:
 
 ```python
+from pathlib import Path
+
 from polyaxon import tracking
 from polyaxon.schemas import V1ArtifactKind
 
 tracking.init()
 report_path = tracking.get_outputs_path("reports/evaluation.json")
-# Write the report to report_path from your code.
+Path(report_path).write_text('{"accuracy": 0.91}\n', encoding="utf-8")
 tracking.log_artifact_ref(
     path=report_path,
     kind=V1ArtifactKind.FILE,
     name="evaluation-report",
 )
-tracking.end()
 ```
+
+`get_outputs_path()` writes into the run's synced outputs directory. `log_artifact_ref()` records artifact metadata; it does not copy an arbitrary file into the artifact store.
 
 See [tracking artifacts](/docs/tracking/logging/artifacts/) for artifact logging patterns.
 
-## Download Small Files
+## Download Scratch Files
+
+If you followed the quick start, use sandbox download when a file is still in `/workspace` rather than the synced outputs directory. Otherwise, replace the source with an existing absolute path in the running container:
 
 ```bash
 polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/report.json ./report.json
@@ -39,8 +45,8 @@ polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/report.jso
 If the sandbox produced code changes that should live beyond the session, push them to a Git branch using a scoped credential:
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git status
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git push origin HEAD
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git -C /workspace/repo status
+polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git -C /workspace/repo push origin HEAD
 ```
 
 ## Preserve Reproducibility
@@ -51,3 +57,4 @@ When a manual session discovers a useful fix, move the change into a reproducibl
 - Dependencies in an image or lockfile.
 - Runtime settings in a Polyaxonfile or preset.
 - Results in artifacts, metrics, or model registry entries.
+

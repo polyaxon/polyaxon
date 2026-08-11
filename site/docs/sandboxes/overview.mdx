@@ -1,13 +1,14 @@
 ---
 title: "Overview"
 description: "Launch and use sandbox-enabled Polyaxon runs for interactive development, command execution, file access, SSH, notebooks, and debugging."
+label: "v1.16+"
 ---
 
 import SandboxOverview from "@/components-mdx/sandbox-overview-gifs.mdx";
 
 # Sandboxes
 
-Sandboxes give engineers and agents an interactive execution surface inside Polyaxon-managed workloads. A sandbox-enabled run can expose command execution, a persistent shell, file transfer, background process logs, and SSH access while keeping compute, permissions, artifacts, and auditability inside Polyaxon.
+Polyaxon's sandbox plugin exposes process, filesystem, and PTY access inside the main container of a running service. It does not create a separate workload kind or isolation boundary: the image, container user, mounts, connections, and network policy remain those of the service run.
 
 Use sandboxes when you need to inspect a live environment, run commands against the same image and connections as your workload, iterate on code in-cluster, or automate runtime actions from the CLI.
 
@@ -29,7 +30,7 @@ Sandbox-enabled runs can support:
 
 - Health checks with `polyaxon sandbox ping`.
 - One-off commands with `polyaxon sandbox exec`.
-- Detached background commands with `polyaxon sandbox logs`.
+- Detached commands with `polyaxon sandbox exec --detach`, with output read through `polyaxon sandbox logs`.
 - Interactive shells with `polyaxon sandbox shell`.
 - File upload, download, and directory listing.
 - SSH access for local terminals, IDEs, SFTP, SCP, and tunnels.
@@ -37,12 +38,12 @@ Sandbox-enabled runs can support:
 
 ## Typical Workflow
 
-1. Start a service run with the sandbox, SSH, or tmux plugins enabled.
+1. Start a service run with the access plugins required by your workflow (sandbox, SSH, or tmux).
 2. Wait until the run reaches a running state.
 3. Connect with the CLI, SSH, or a notebook service.
 4. Inspect files, run commands, install temporary packages, or debug runtime state.
-5. Persist useful outputs to an artifact path or commit code changes back to a Git remote.
-6. Stop the sandbox when the session is done.
+5. Persist useful outputs to the run's outputs path or commit code changes back to a Git remote.
+6. Stop the service run when the session is done.
 
 ## Minimal Polyaxonfile
 
@@ -53,14 +54,12 @@ name: sandbox-dev
 
 plugins:
   sandbox: true
-  ssh: true
-  tmux: true
 
 run:
   kind: service
   container:
     image: python:3.11
-    command: ["sleep", "infinity"]
+    command: ["sh", "-lc", "mkdir -p /workspace && exec sleep infinity"]
 ```
 
-This creates a long-running service container that can accept sandbox commands, SSH connections, and reconnectable shell sessions.
+This creates a regular long-running service with sandbox process and file access. Add `plugins.ssh: true` for native SSH access or `plugins.tmux: true` for reconnectable `polyaxon ops shell` sessions. These plugins add capabilities to the service; they do not create a separate sandbox workload.

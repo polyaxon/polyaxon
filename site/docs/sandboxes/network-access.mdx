@@ -1,6 +1,7 @@
 ---
 title: "Network Access"
 description: "Understand service ports, SSH tunnels, and outbound access for sandbox-enabled runs."
+label: "v1.16+"
 ---
 
 # Network Access
@@ -9,7 +10,7 @@ Sandbox network behavior depends on the underlying service run, agent configurat
 
 ## Service Ports
 
-Declare ports for services that expose HTTP applications such as notebooks, dashboards, or custom apps:
+Declare `run.ports` for services that expose HTTP applications such as notebooks, dashboards, or custom apps. Sandbox and SSH plugin ports are injected automatically; do not add them to this list:
 
 ```yaml
 run:
@@ -25,7 +26,7 @@ For service workload details, see [services](/docs/references/polyaxonfile/runti
 
 ## SSH Tunnels
 
-Use SSH tunnels when a local tool needs access to a port inside the sandbox:
+Use SSH tunnels when a local tool needs access to a service port. The run must have `plugins.ssh: true`:
 
 ```bash
 polyaxon ssh connect -p owner/project -uid <run-uuid> -- -L 8888:127.0.0.1:8888 -N
@@ -38,3 +39,4 @@ Outbound network access is controlled by your cluster, agent, and network polici
 ## Access Model
 
 Polyaxon routes sandbox and SSH access through authenticated project permissions. Do not expose debug services directly unless your deployment and security policy allow it.
+

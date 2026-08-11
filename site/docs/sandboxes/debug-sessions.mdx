@@ -1,6 +1,7 @@
 ---
 title: "Debug Sessions"
 description: "Debug sandbox-enabled runs using health checks, logs, file inspection, and scheduling diagnostics."
+label: "v1.16+"
 ---
 
 # Debug Sessions
@@ -33,7 +34,13 @@ Use run logs for container startup issues:
 polyaxon ops logs -p owner/project -uid <run-uuid>
 ```
 
-Use sandbox logs for detached sandbox commands:
+Start a detached sandbox command and keep the execution ID returned by the CLI:
+
+```bash
+polyaxon sandbox exec -p owner/project -uid <run-uuid> --detach -- python scripts/check.py
+```
+
+Read that process's logs later:
 
 ```bash
 polyaxon sandbox logs -p owner/project -uid <run-uuid> <exec-id>
@@ -55,4 +62,5 @@ polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
 - Use a long-running service command such as `sleep infinity` for development sessions.
 - Route the run to a queue that supports services and the requested resources.
 - Move credentials into Polyaxon connections instead of the container image.
-- Stop stale sandbox runs that are holding scarce resources.
+- Stop stale sandbox-enabled service runs that are holding scarce resources.
+

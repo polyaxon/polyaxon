@@ -1,11 +1,12 @@
 ---
 title: "Manage Files and Artifacts"
 description: "List, upload, download, and preserve files from sandbox-enabled runs."
+label: "v1.16+"
 ---
 
 # Manage Files and Artifacts
 
-Sandbox file commands are designed for inspecting and moving files during an interactive session. Use artifact stores for durable outputs that should be retained after the run stops.
+Sandbox file commands inspect and transfer files in the running container. The [quick start](/docs/sandboxes/quick-start/) creates `/workspace` as scratch space; uploading a file there does not add it to Polyaxon's artifact store.
 
 ## List Files
 
@@ -33,12 +34,13 @@ polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/results.js
 
 ## Preserve Outputs
 
-Files stored only in the container filesystem may disappear when the run is stopped or replaced. For results that should survive the session, write them to a configured artifact path or log them with Polyaxon's tracking APIs.
+Files under `/workspace` may disappear when the run is stopped or replaced. For durable results, write them under the path returned by `tracking.get_outputs_path()`. Polyaxon syncs that run output directory to the configured artifact store.
 
 For tracking artifacts from Python code, see [tracking artifacts](/docs/tracking/logging/artifacts/).
 
 ## File Transfer Guidance
 
 - Use sandbox upload and download for small targeted files.
-- Use SSH-based tools such as SFTP, SCP, or rsync for larger interactive transfer workflows.
-- Use artifact stores for durable model files, reports, checkpoints, and generated datasets.
+- Use SSH-based tools such as SFTP or SCP for larger interactive transfer workflows. You can also use rsync when the container image includes it.
+- Use `tracking.get_outputs_path()` for model files, reports, checkpoints, and generated datasets that Polyaxon should retain.
+

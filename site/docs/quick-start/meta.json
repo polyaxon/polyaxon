@@ -2,6 +2,7 @@
   "title": "Quick Start",
   "pages": [
     "overview",
+    "interactive-development",
     "schedule",
     "components",
     "operations",

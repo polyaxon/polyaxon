@@ -1,0 +1,129 @@
+---
+title: "Quick Start: Interactive development"
+sidebarTitle: "Interactive development"
+description: "Start a persistent simulator workbench and access it with a reconnectable shell, sandbox commands, and SSH."
+label: "v1.16+"
+---
+
+You have run the simulator locally and as a managed operation. Now start a long-running service with the same simulator and work inside it interactively.
+
+This page reuses the `quick-start` project from [Create a project](/docs/quick-start/#create-a-project). If you have not created it yet, complete that section before continuing.
+
+The workbench enables three independent access methods:
+
+- `tmux` provides a reconnectable shell through `polyaxon ops shell`.
+- `sandbox` provides health checks, one-off commands, file transfer, and interactive shell access.
+- `ssh` connects native terminals, IDEs, and other SSH tools.
+
+This tour enables all three plugins so you can try them. In your own components, enable only the access methods you need. The service continues to consume resources until you stop it.
+
+## Start the workbench
+
+Start the simulator workbench in the same `quick-start` project:
+
+```bash
+polyaxon run \
+  -p quick-start \
+  --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/tracking/simulator-workbench.yaml
+```
+
+Keep the run UUID printed by the command. `polyaxon ops shell` below waits for the run to reach `running`; sandbox and SSH commands expect the service to be ready.
+
+## Open a reconnectable shell
+
+Connect to the workbench:
+
+```bash
+polyaxon ops shell -p quick-start -uid RUN_UUID
+```
+
+The workbench enables the `tmux` plugin, so this command attaches to a persistent shell session. Set two values inside the shell:
+
+```bash
+export SIM_EPOCHS=20
+export SIM_LEARNING_RATE=0.003
+```
+
+At a shell prompt, you can detach without relying on a keyboard shortcut:
+
+```bash
+/opt/polyaxon/bin/tmux detach-client
+```
+
+The keyboard shortcut is `Ctrl+B`, release both keys, then press lowercase `d`. On macOS, use Control (`⌃`), not Command (`⌘`). Reconnect by running the same command:
+
+```bash
+polyaxon ops shell -p quick-start -uid RUN_UUID
+```
+
+You return to the same shell process, so the values are still available:
+
+```bash
+echo "$SIM_EPOCHS"
+echo "$SIM_LEARNING_RATE"
+```
+
+The session survives a local terminal or network disconnect. It does not survive stopping the run or replacing its pod.
+
+## Run the simulator from the shell
+
+From the reconnected shell, run the simulator again:
+
+```bash
+python3 tracking/simulate_dl_experiment.py \
+  --epochs="$SIM_EPOCHS" \
+  --seed=42 \
+  --batch-size=64 \
+  --learning-rate="$SIM_LEARNING_RATE"
+```
+
+Because the script is running inside a managed operation, its events are attached to the workbench run. The following `exit` intentionally ends the shell. If it is the last tmux pane, it also destroys the session; use detach instead when you want to preserve shell state.
+
+```bash
+exit
+```
+
+## Run sandbox commands
+
+Check that the sandbox endpoint is ready:
+
+```bash
+polyaxon sandbox ping -p quick-start -uid RUN_UUID
+```
+
+Run a command in the same container without opening another interactive shell:
+
+```bash
+polyaxon sandbox exec -p quick-start -uid RUN_UUID -- \
+  python3 -c "import numpy, matplotlib; print(numpy.__version__, matplotlib.__version__)"
+```
+
+Each sandbox command starts a separate process, so it does not inherit variables exported only inside the `tmux` shell. The sandbox also supports interactive shells, background commands, and file transfer. See the [sandbox quick start](/docs/sandboxes/quick-start/) for the full workflow.
+
+## Connect with SSH
+
+SSH is optional. Use it when you want a native terminal, an SSH-based IDE, or standard file-transfer tools:
+
+```bash
+polyaxon ssh setup -p quick-start -uid RUN_UUID
+polyaxon ssh connect -p quick-start -uid RUN_UUID
+```
+
+SSH requires a local OpenSSH client and can be restricted by your cluster's security policy. See [Connect with SSH](/docs/sandboxes/connect-with-ssh/) for SSH configuration, IDE, file-transfer, and tunnel examples.
+
+## Stop the workbench
+
+Disconnecting does not stop the service. Stop it when you finish:
+
+```bash
+polyaxon ops stop -p quick-start -uid RUN_UUID --yes
+```
+
+You have now used the same managed environment in three ways: a reconnectable terminal for exploratory work, sandbox commands for health checks and one-off execution, and SSH for native development tools.
+
+For more detail, see [Use terminals](/docs/sandboxes/use-terminals/), the [interactive access reference](/docs/references/polyaxonfile/runtimes/services/interactive-access/), and the [`ops shell` CLI reference](/docs/references/cli/ops/#ops-shell).
+
+## Next: train a model
+
+Continue to [Train a TensorFlow model](/docs/quick-start/schedule/) to replace the simulator with a Fashion-MNIST training job and inspect its TensorBoard data.
+

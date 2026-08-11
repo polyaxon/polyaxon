@@ -1,6 +1,7 @@
 ---
 title: "Resources and GPUs"
 description: "Request CPU, memory, GPUs, queues, and node placement for sandbox-enabled runs."
+label: "v1.16+"
 ---
 
 # Resources and GPUs
@@ -19,7 +20,25 @@ See [queues](/docs/scheduling/scheduling-strategies/queues/) for scheduling beha
 
 ## Request Resources
 
-Resource requests and limits are defined through the workload environment, presets, or cluster policies. For reusable sandbox profiles, prefer presets:
+Set CPU, memory, and accelerator requests under `run.container.resources`. Presets and cluster policies can patch or constrain these values:
+
+```yaml
+run:
+  kind: service
+  container:
+    image: python:3.11
+    resources:
+      requests:
+        cpu: "1"
+        memory: 2Gi
+      limits:
+        cpu: "2"
+        memory: 4Gi
+        nvidia.com/gpu: "1"
+    command: ["sleep", "infinity"]
+```
+
+For reusable sandbox profiles, prefer presets:
 
 ```bash
 polyaxon run -f sandbox.yaml -p owner/project --presets gpu-dev
@@ -38,3 +57,4 @@ Use timeouts and culling presets for long-running interactive services:
 - [Service timeouts](/docs/scheduling/scheduling-presets/services-timeout/)
 - [Cost estimation](/docs/scheduling/scheduling-strategies/estimating-cost/)
 - [Spend alerts](/docs/administration/spend-alerts/)
+

@@ -1,6 +1,7 @@
 ---
 title: "Interactive Access"
 description: "Use tmux, sandbox, and SSH plugins to access running service containers."
+label: "v1.16+"
 ---
 
 Polyaxon service runs can expose interactive development capabilities through three independent plugins:
@@ -9,7 +10,7 @@ Polyaxon service runs can expose interactive development capabilities through th
 | --- | --- | --- |
 | `plugins.tmux` | Reconnectable UI and `polyaxon ops shell` sessions | `polyaxon ops shell` |
 | `plugins.sandbox` | Programmatic exec, background commands, filesystem, and PTY access | `polyaxon sandbox ...` |
-| `plugins.ssh` | Native SSH clients, IDEs, SFTP, SCP, and rsync | `polyaxon ssh ...` |
+| `plugins.ssh` | Native SSH clients, IDEs, SFTP, SCP, and rsync when the image includes it | `polyaxon ssh ...` |
 
 `plugins.sandbox` and `plugins.ssh` are supported on `kind: service` runs in this version. `plugins.tmux` does not require a service port and can be used for reconnectable shell sessions.
 
