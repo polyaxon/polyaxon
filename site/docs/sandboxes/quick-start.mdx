@@ -6,14 +6,13 @@ label: "v1.16+"
 
 # Quick Start
 
-This guide starts a minimal sandbox-enabled service and runs commands inside it from your local terminal.
+This guide continues from [Create a project](/docs/quick-start/create-project/) and starts a sandbox-enabled service in the same `quick-start` project. Run these commands from the working directory created there.
 
 ## Prerequisites
 
 Before you start, make sure you have:
 
-- Access to a Polyaxon project.
-- A configured [Polyaxon CLI](/docs/setup/cli/).
+- The `quick-start` project and initialized working directory from [Create a project](/docs/quick-start/create-project/).
 - A queue or agent that can run service workloads.
 - Sandbox support enabled by your Polyaxon deployment or agent administrator.
 
@@ -33,58 +32,78 @@ plugins:
 
 run:
   kind: service
+  volumes:
+    - name: workspace
+      emptyDir: {}
   container:
     image: python:3.11
+    workingDir: /workspace
     command: ["sleep", "infinity"]
+    volumeMounts:
+      - name: workspace
+        mountPath: /workspace
 ```
 
-The examples in this section use `/workspace` as scratch space. It lives in the container filesystem and may be lost when the run is stopped or replaced. Save durable results to the run's outputs path before cleanup.
+The `emptyDir` volume creates `/workspace` as writable scratch space for the lifetime of the pod. Its contents are lost when the pod is replaced. Save durable results to the run's outputs path before cleanup.
 
 ## Start the Run
 
 ```bash
-polyaxon run -f sandbox.yaml -p owner/project
+polyaxon run -p quick-start -f sandbox.yaml
 ```
 
-Copy the run UUID from the command output or run page, then wait until the run reaches `running`. `sandbox ping` does not wait for service readiness; if it fails during startup, wait and retry.
+Copy the run UUID from the command output into a variable in your local terminal:
+
+```bash
+export RUN_UUID=PASTE_RUN_UUID_HERE
+```
+
+The commands below reuse this variable. Wait until the run reaches `running`; `sandbox ping` does not wait for service readiness, so retry if the service is still starting.
+
+<Callout type="info">
+
+This section passes `-p quick-start` explicitly. You can omit it while working from the directory initialized in [Create a project](/docs/quick-start/create-project/#initialize-the-directory).
+
+</Callout>
 
 ## Check Sandbox Health
 
 ```bash
-polyaxon sandbox ping -p owner/project -uid <run-uuid>
+polyaxon sandbox ping -p quick-start -uid $RUN_UUID
 ```
 
 ## Execute a Command
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
 ```
 
 Stream command output when the command may take longer:
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- sh -lc 'python -V && pwd'
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- sh -lc 'python -V && pwd'
 ```
 
 ## Open an Interactive Shell
 
 ```bash
-polyaxon sandbox shell -p owner/project -uid <run-uuid>
+polyaxon sandbox shell -p quick-start -uid $RUN_UUID
 ```
 
 If `plugins.tmux` is enabled, you can also attach to a reconnectable terminal session:
 
 ```bash
-polyaxon ops shell -p owner/project -uid <run-uuid>
+polyaxon ops shell -p quick-start -uid $RUN_UUID
 ```
 
-## Stop the Run
+## Keep or Stop the Run
 
-Stop the run when you are done to release CPU, memory, and GPU resources:
+Keep the service running while you work through the remaining sandbox guides. When you are finished, stop it to release CPU, memory, and GPU resources:
 
 ```bash
-polyaxon ops stop -p owner/project -uid <run-uuid>
+polyaxon ops stop -p quick-start -uid $RUN_UUID
 ```
 
 For exact command options, see the [sandbox CLI reference](/docs/references/cli/sandbox/).
 
+Next, continue to [Connect with SSH](/docs/sandboxes/connect-with-ssh/).

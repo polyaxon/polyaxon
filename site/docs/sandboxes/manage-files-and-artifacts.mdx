@@ -8,28 +8,30 @@ label: "v1.16+"
 
 Sandbox file commands inspect and transfer files in the running container. The [quick start](/docs/sandboxes/quick-start/) creates `/workspace` as scratch space; uploading a file there does not add it to Polyaxon's artifact store.
 
+This page uses the `quick-start` project and `RUN_UUID` variable established by that guide.
+
 ## List Files
 
 ```bash
-polyaxon sandbox ls -p owner/project -uid <run-uuid> /workspace
+polyaxon sandbox ls -p quick-start -uid $RUN_UUID /workspace
 ```
 
 List recursively when needed:
 
 ```bash
-polyaxon sandbox ls -p owner/project -uid <run-uuid> /workspace --recursive
+polyaxon sandbox ls -p quick-start -uid $RUN_UUID /workspace --recursive
 ```
 
 ## Upload Files
 
 ```bash
-polyaxon sandbox upload -p owner/project -uid <run-uuid> ./local.txt /workspace/local.txt
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID ./local.txt /workspace/local.txt
 ```
 
 ## Download Files
 
 ```bash
-polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/results.json ./results.json
+polyaxon sandbox download -p quick-start -uid $RUN_UUID /workspace/results.json ./results.json
 ```
 
 ## Preserve Outputs
@@ -43,4 +45,3 @@ For tracking artifacts from Python code, see [tracking artifacts](/docs/tracking
 - Use sandbox upload and download for small targeted files.
 - Use SSH-based tools such as SFTP or SCP for larger interactive transfer workflows. You can also use rsync when the container image includes it.
 - Use `tracking.get_outputs_path()` for model files, reports, checkpoints, and generated datasets that Polyaxon should retain.
-

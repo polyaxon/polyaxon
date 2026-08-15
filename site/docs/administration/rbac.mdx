@@ -267,11 +267,12 @@ During this process, no data will be lost. All project settings, operations, art
 
 <AvailabilityBanner
   availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "not-available",
-    enterprise: "full",
-    selfHosted: "ee",
+    cloudPlatform: "not-available",
+    cloudTeams: "full",
+    cloudEnterprise: "full",
+    selfHostedCommunity: "not-available",
+    selfHostedBusiness: "full",
+    selfHostedEnterprise: "full",
   }}
 />
 
@@ -283,11 +284,12 @@ If a team-level role provides a higher scope than the user's organization-level 
 
 <AvailabilityBanner
   availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "not-available",
-    enterprise: "full",
-    selfHosted: "ee",
+    cloudPlatform: "not-available",
+    cloudTeams: "full",
+    cloudEnterprise: "full",
+    selfHostedCommunity: "not-available",
+    selfHostedBusiness: "full",
+    selfHostedEnterprise: "full",
   }}
 />
 
@@ -296,9 +298,3 @@ Users by default inherit the role of the organization they are part of. For more
 If a project-level role is assigned, it will override the organization-level role for that project.
 
 If you want to give a user access to only certain projects within an organization, you can set their role to `Outsider` on the organization level and then assign them a role on the project level or through a team.
-
-## GitHub Discussions
-
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-rbac"]} />

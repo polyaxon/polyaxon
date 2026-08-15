@@ -11,8 +11,14 @@ If you did not see the previous section of this tutorial, start with [Schedule a
 Before creating new experiments, let's first try to understand what happened when we executed this command:
 
 ```bash
-polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
+polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
 ```
+
+<Callout type="info">
+
+This guide passes `-p quick-start` explicitly. You can omit it while working from the directory initialized in [Create a project](/docs/quick-start/create-project/#initialize-the-directory).
+
+</Callout>
 
 ## The run command
 
@@ -21,15 +27,15 @@ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-sta
 The run command consumes configuration files, also called Polyaxonfile, from different sources:
 
  * From local files using the `-f` flag:
-    * `polyaxon run -f path/to/polyaxonfile.yaml`
-    * `polyaxon run -f path/to/polyaxonfile.yaml -f path/to/polyaxonfile_override.yaml`
+    * `polyaxon run -p quick-start -f path/to/polyaxonfile.yaml`
+    * `polyaxon run -p quick-start -f path/to/polyaxonfile.yaml -f path/to/polyaxonfile_override.yaml`
  * From local Python files using `--python-module` or `-pm` flag:
-    * `polyaxon run -pm path/to/pythonfile.py` in this case Polyaxon will look for a variable `main` which will contain your component.
-    * `polyaxon run -pm path/to/pythonfile.py:component-name` if you have multiple components in your Python file you can specify which one to run.
+    * `polyaxon run -p quick-start -pm path/to/pythonfile.py` in this case Polyaxon will look for a variable `main` which will contain your component.
+    * `polyaxon run -p quick-start -pm path/to/pythonfile.py:component-name` if you have multiple components in your Python file you can specify which one to run.
  * From urls using the `--url` flag:
-    * `polyaxon run --url=https://public-site.com/polyaxonfile.yaml` this is the command that we used to avoid cloning the project locally.
+    * `polyaxon run -p quick-start --url=https://public-site.com/polyaxonfile.yaml` this is the command that we used to avoid cloning the project locally.
  * From a registry `--hub` flag:
-    * `polyaxon run --hub=tensorboard:single-run` this is the command that we used to run the Tensorboard.
+    * `polyaxon run -p quick-start --hub=tensorboard:single-run` this is the command that we used to run TensorBoard.
       Oftentimes, components can be reusable and generic, some of these components are distributed in a public registry.
       Polyaxon also provides a managed registry integrated with our auth, access management, and team management abstraction.
       Please check the [Component Hub docs](/docs/registry/component-hub/).
@@ -81,7 +87,7 @@ every time we run this component, Polyaxon will clone the repo and inject it in 
 
 In a nutshell, what Polyaxon provides is a simple way to schedule and run containerized workload.
 
-> We will [come back](/docs/guides/builds/overview/) to the docker image to learn how to build containers later,
+> We will [come back](/docs/builds/overview/) to the docker image to learn how to build containers later,
 > for now let's assume that we have an image with all requirements installed
 
 ## The Container section
@@ -262,7 +268,7 @@ The required input is just for demonstration, if we try to run this component wi
 We need to pass an `epochs` param:
 
 ```bash
-polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P epochs=10 -l
+polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P epochs=10 -l
 ```
 
 The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
@@ -277,15 +283,7 @@ When you run this experiment you will notice that Polyaxon will populate the inp
 
 ## List the operations
 
-Let's check the list of experiments we've created so far:
-
-If you initialized a folder run
-
-```bash
-polyaxon ops ls
-```
-
-Otherwise, you need to run
+List the experiments created in this project:
 
 ```bash
 polyaxon ops ls -p quick-start
@@ -293,16 +291,17 @@ polyaxon ops ls -p quick-start
 
 ## Check the logs
 
-If the operation is cached you can run:
+The CLI caches the last operation you executed, so you can fetch its logs without passing a run UUID:
 
 ```bash
-polyaxon ops logs
+polyaxon ops logs -p quick-start
 ```
 
-This will return the results for the last operation you executed, otherwise, you need to pass a UUID to get the logs for a specific run:
+This returns the logs for the last operation you executed. To fetch logs for a specific run, copy its UUID into a variable first:
 
 ```bash
-polyaxon ops logs -p quick-start -uuid UUID
+export RUN_UUID=PASTE_RUN_UUID_HERE
+polyaxon ops logs -p quick-start -uuid $RUN_UUID
 ```
 
 ## Start another experiment with different params
@@ -310,7 +309,7 @@ polyaxon ops logs -p quick-start -uuid UUID
 We can start another run based on the same component, but this time we will pass some more params to modify the default inputs' values:
 
 ```bash
-polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P lr=0.005 -P epochs=8
+polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P lr=0.005 -P epochs=8
 ```
 
 

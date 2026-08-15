@@ -8,11 +8,12 @@ sidebarTitle: Audit Logs
 
 <AvailabilityBanner
   availability={{
-    hobby: "not-available",
-    platform: "not-available",
-    teams: "3 mths",
-    enterprise: "> 6 mths",
-    selfHosted: "ee",
+    cloudPlatform: "not-available",
+    cloudTeams: "3 months",
+    cloudEnterprise: "Custom",
+    selfHostedCommunity: "not-available",
+    selfHostedBusiness: "full",
+    selfHostedEnterprise: "full",
   }}
 />
 
@@ -115,9 +116,3 @@ Each entry includes:
 - **Token ID**: For programmatic actions
 - **Organization ID**: Organizational context
 - **Role Context**: User's organizational and project roles at the time of action
-
-## GitHub Discussions
-
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-audit-logs"]} />

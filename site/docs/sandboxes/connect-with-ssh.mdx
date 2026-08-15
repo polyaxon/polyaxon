@@ -8,6 +8,8 @@ label: "v1.16+"
 
 SSH access lets you use regular local developer tools against a service run with `plugins.ssh` enabled. Use it for terminal access, IDE remote development, SFTP, SCP, port forwarding, and rsync when the container image includes it.
 
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable. The component created there already enables SSH.
+
 ## Enable SSH
 
 Enable the SSH plugin on a service run:
@@ -28,7 +30,7 @@ run:
 Run setup once for the target run:
 
 ```bash
-polyaxon ssh setup -p owner/project -uid <run-uuid>
+polyaxon ssh setup -p quick-start -uid $RUN_UUID
 ```
 
 Polyaxon manages the default sandbox key and known hosts file unless you provide explicit files.
@@ -36,13 +38,13 @@ Polyaxon manages the default sandbox key and known hosts file unless you provide
 ## Connect
 
 ```bash
-polyaxon ssh connect -p owner/project -uid <run-uuid>
+polyaxon ssh connect -p quick-start -uid $RUN_UUID
 ```
 
 You can pass standard SSH options after `--`:
 
 ```bash
-polyaxon ssh connect -p owner/project -uid <run-uuid> -- -L 8888:127.0.0.1:8888 -N
+polyaxon ssh connect -p quick-start -uid $RUN_UUID -- -L 8888:127.0.0.1:8888 -N
 ```
 
 ## Use Your SSH Client
@@ -50,13 +52,13 @@ polyaxon ssh connect -p owner/project -uid <run-uuid> -- -L 8888:127.0.0.1:8888 
 Print a config block and add it to your SSH config:
 
 ```bash
-polyaxon ssh config -p owner/project -uid <run-uuid>
+polyaxon ssh config -p quick-start -uid $RUN_UUID
 ```
 
 Then connect with your local client:
 
 ```bash
-ssh polyaxon-<run-uuid>
+ssh polyaxon-$RUN_UUID
 ```
 
 The generated host can also be used by IDEs and file-transfer tools that support SSH config entries.

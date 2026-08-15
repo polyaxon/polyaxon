@@ -8,12 +8,14 @@ label: "v1.16+"
 
 Most sandbox issues fall into four groups: the run is not running, the plugin is not enabled, the user does not have access, or the container environment is missing required tools.
 
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable.
+
 ## Check Run Status
 
 Open the run page or inspect the run from the CLI:
 
 ```bash
-polyaxon ops get -p owner/project -uid <run-uuid>
+polyaxon ops get -p quick-start -uid $RUN_UUID
 ```
 
 If the run is pending, check the queue, resources, node selectors, and project limits.
@@ -21,7 +23,7 @@ If the run is pending, check the queue, resources, node selectors, and project l
 ## Check Sandbox Health
 
 ```bash
-polyaxon sandbox ping -p owner/project -uid <run-uuid>
+polyaxon sandbox ping -p quick-start -uid $RUN_UUID
 ```
 
 If the ping fails, confirm that `plugins.sandbox` is enabled and that the run is a supported service workload.
@@ -31,19 +33,19 @@ If the ping fails, confirm that `plugins.sandbox` is enabled and that the run is
 Use run logs for container startup issues:
 
 ```bash
-polyaxon ops logs -p owner/project -uid <run-uuid>
+polyaxon ops logs -p quick-start -uid $RUN_UUID
 ```
 
 Start a detached sandbox command and keep the execution ID returned by the CLI:
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> --detach -- python scripts/check.py
+EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- python scripts/check.py)
 ```
 
 Read that process's logs later:
 
 ```bash
-polyaxon sandbox logs -p owner/project -uid <run-uuid> <exec-id>
+polyaxon sandbox logs -p quick-start -uid $RUN_UUID $EXEC_ID
 ```
 
 ## Validate the Environment
@@ -51,9 +53,9 @@ polyaxon sandbox logs -p owner/project -uid <run-uuid> <exec-id>
 Run simple commands before debugging application code:
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- pwd
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- env
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- pwd
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- printenv PATH
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
 ```
 
 ## Common Fixes
@@ -63,4 +65,3 @@ polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
 - Route the run to a queue that supports services and the requested resources.
 - Move credentials into Polyaxon connections instead of the container image.
 - Stop stale sandbox-enabled service runs that are holding scarce resources.
-

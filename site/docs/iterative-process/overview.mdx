@@ -1,10 +1,10 @@
 ---
 title: "Iterative Process"
 sidebarTitle: "Overview"
-description: "Choose how to iterate on code, params, presets, and Python-driven runs."
+description: "Choose how to iterate with local code, Git repositories, inline scripts, notebooks, Python clients, and presets."
 ---
 
-Most Polyaxon work happens in loops: change code, change params, run again, inspect the result. The right loop depends on where your code lives and how much of the run you want to drive from the CLI, a notebook, or Python.
+Most Polyaxon work happens in loops: change code or configuration, run again, inspect the result. The right loop depends on where your code lives and how much of the run you want to drive from the CLI, a notebook, or Python.
 
 Use [local code uploads](/docs/iterative-process/iterate-with-cli-local-code/) when you are editing files on your machine and want Polyaxon to package the current folder for each run.
 
@@ -17,5 +17,3 @@ Use [notebook iteration](/docs/iterative-process/iterate-in-notebooks/) when you
 Use [programmatic iteration](/docs/iterative-process/iterate-programmatically/) when your loop lives in Python and you want to create runs through the client.
 
 Use [presets](/docs/iterative-process/iterate-with-presets/) when several runs share the same queues, resources, connections, or environment settings.
-
-Use [passing params](/docs/passing-params/with-args/) when you want to vary inputs without editing the component or operation definition.

@@ -1,9 +1,29 @@
 ---
 title: "Release notes for v3.0"
 description: "Polyaxon release notes, migrations, and deprecation notes for v3.0.x."
-label: WIP
+wip: true
 author: Polyaxon
 ---
+
+Polyaxon v3 is coming, it's fully backward compatible with v2, and it is a major release that introduces new features, improvements, and fixes.
+
+We are sharing the work in public before the full final release ships:
+
+- Comparing dense run views with charts, graphs, synced hover states, and tooltip diffs. (Completed)
+- Debugging live workloads with tmux sessions, sandbox execution, and better access to runtime state. (Beta)
+- Preparing governed remote access through the SSH plugin. (Beta)
+- Auto-research and auto-tuning of hyperparameters with LLMs and agentic AI. (WIP)
+- Wiring automation, hooks, and events into platform state so teams can launch evaluations, notifications, and downstream jobs when runs change. (Alpha)
+- Managed agents and single gateway endpoint for customer clusters: users can connect their Kubernetes clusters or cloud accounts to Polyaxon and manage them from our single control plane. (WIP)
+- Managed artifacts stores. (WIP)
+- Built in connections and integrations. (Alpha)
+- Incoming events from git providers, webhooks, and other external systems. (Alpha)
+- LLMs and agentic AI gateway: API, fallbacks, load balancing, retries, custom guardrail hooks, advanced evals & more. (WIP)
+- Built-in monitoring and observability for agents, jobs, and clusters. (WIP)
+- Simplified Polyaxonfile syntax and new features for running and managing workloads. (WIP)
+- Possibility to start runs without without having to define a Polyaxonfile. (WIP)
+- WarmPool: a pool of pre-warmed Sandboxes that can be quickly allocated to users, reducing the time it takes to get a new Sandbox up and running.
+
 ## V3.0.0
 
 ### Core

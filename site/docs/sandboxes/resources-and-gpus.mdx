@@ -8,12 +8,14 @@ label: "v1.16+"
 
 Sandboxes consume cluster resources for as long as the backing service run is active. Request only what the session needs and stop it when work is complete.
 
+This page reuses `sandbox.yaml` and the `quick-start` project from the [Sandbox Quick Start](/docs/sandboxes/quick-start/). Each `polyaxon run` command below starts a new service. Replace the current value of `RUN_UUID` with the new run UUID if you want to connect to it afterward.
+
 ## Select a Queue
 
 Use queues to route sandboxes to the right agent, cluster, or resource pool:
 
 ```bash
-polyaxon run -f sandbox.yaml -p owner/project -q agent-name/queue-name
+polyaxon run -p quick-start -f sandbox.yaml -q agent-name/queue-name
 ```
 
 See [queues](/docs/scheduling/scheduling-strategies/queues/) for scheduling behavior.
@@ -41,7 +43,7 @@ run:
 For reusable sandbox profiles, prefer presets:
 
 ```bash
-polyaxon run -f sandbox.yaml -p owner/project --presets gpu-dev
+polyaxon run -p quick-start -f sandbox.yaml --presets gpu-dev
 ```
 
 ## Use GPUs
@@ -56,5 +58,3 @@ Use timeouts and culling presets for long-running interactive services:
 
 - [Service timeouts](/docs/scheduling/scheduling-presets/services-timeout/)
 - [Cost estimation](/docs/scheduling/scheduling-strategies/estimating-cost/)
-- [Spend alerts](/docs/administration/spend-alerts/)
-

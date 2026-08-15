@@ -8,12 +8,20 @@ label: "v1.16+"
 
 Notebook sessions are service workloads. You can combine a notebook server with sandbox, SSH, and tmux plugins when you need both browser-based exploration and lower-level terminal access.
 
+This page uses the `quick-start` project established in [Create a project](/docs/quick-start/create-project/).
+
 ## Start from a Hub Component
 
 If your organization uses the public or organization component hub, start a notebook component and pass the queue or presets required by your cluster:
 
 ```bash
-polyaxon run --hub notebook -p owner/project
+polyaxon run -p quick-start --hub notebook
+```
+
+Copy the notebook run UUID into the same local variable used by the Sandbox Quick Start:
+
+```bash
+export RUN_UUID=PASTE_RUN_UUID_HERE
 ```
 
 See the [Jupyter Notebook integration](/integrations/services/notebook/) for notebook-specific examples.
@@ -53,4 +61,3 @@ Add `plugins.ssh: true` only for native SSH or IDE access, and `plugins.tmux: tr
 ## Track Experiments from a Notebook
 
 When the notebook runs in-cluster, Polyaxon can resolve project and run context automatically. See [tracking in notebooks](/docs/references/python-library/in-notebooks/) for tracking examples.
-

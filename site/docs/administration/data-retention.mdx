@@ -8,11 +8,12 @@ sidebarTitle: Data Retention
 
 <AvailabilityBanner
   availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "full",
-    enterprise: "full",
-    selfHosted: "ee",
+    cloudPlatform: "partial",
+    cloudTeams: "full",
+    cloudEnterprise: "full",
+    selfHostedCommunity: "not-available",
+    selfHostedBusiness: "full",
+    selfHostedEnterprise: "full",
   }}
 />
 
@@ -60,11 +61,14 @@ The retention policy applies to the archived operation and all its associated da
 
 Activity logs (audit logs, system events) have a retention period determined by your plan:
 
-| Plan       | Activity Logs Retention |
-| ---------- | ----------------------- |
-| Free       | N/A                     |
-| Team       | 3 months                |
-| Enterprise | 6 months, customizable  |
+| Plan                   | Activity Logs Retention |
+| ---------------------- | ----------------------- |
+| Cloud Platform         | N/A                     |
+| Cloud Teams            | 3 months                |
+| Cloud Enterprise       | Custom                  |
+| Self-hosted Community  | N/A                     |
+| Self-hosted Business   | Deployment-configured   |
+| Self-hosted Enterprise | Custom                  |
 
 ## Self-hosted Instances
 

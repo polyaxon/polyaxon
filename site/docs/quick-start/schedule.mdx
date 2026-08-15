@@ -6,8 +6,8 @@ description: "Train a TensorFlow model on Kubernetes, inspect the managed run, a
 
 You have tracked and scheduled the simulator, then used its managed environment interactively. Now use the same project to train a TensorFlow model and inspect its TensorBoard data.
 
-This page reuses the `quick-start` project from the [Create a project](/docs/quick-start/#create-a-project) section in Track an experiment.
-If you have not created it yet, complete that section before continuing. This page assumes that Polyaxon and its execution agent are already running.
+This page reuses the `quick-start` project and working directory from [Create a project](/docs/quick-start/create-project/).
+If you have not created and initialized it yet, complete that page before continuing. This page assumes that Polyaxon and its execution agent are already running.
 
 This example uses a [public GitHub repo](https://github.com/polyaxon/polyaxon-quick-start)
 for hosting the project and the Polyaxonfile manifests. Similar results can be achieved using a local folder or other platforms, e.g. GitLab or Bitbucket.
@@ -20,6 +20,12 @@ Start the TensorFlow experiment:
 polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
 ```
 
+<Callout type="info">
+
+This guide passes `-p quick-start` explicitly. You can omit it while working from the directory initialized in [Create a project](/docs/quick-start/create-project/#initialize-the-directory).
+
+</Callout>
+
 > For more details about this command, run `polyaxon run --help` or check the [command reference](/docs/references/cli/run/).
 
 The `-l` flag indicates that we want to stream the logs after starting the experiment.
@@ -28,14 +34,20 @@ The command creates a managed operation in the `quick-start` project. The Polyax
 
 The component clones the quick-start repository, starts the `polyaxon/polyaxon-quick-start` image, and runs `model.py`. The script trains a Fashion-MNIST classifier with TensorFlow and Keras. Its Polyaxon callback logs training metrics, while its TensorBoard callback writes event files to the run's artifacts.
 
-Keep the run UUID printed by the command. You will use it to start TensorBoard.
+Copy the training run UUID printed by the command into the same variable in your local terminal:
+
+```bash
+export RUN_UUID=PASTE_RUN_UUID_HERE
+```
+
+This replaces the workbench UUID from the previous page.
 
 ## Start TensorBoard
 
-Let's start TensorBoard to see the results, replacing `RUN_UUID` with the run's UUID:
+Start TensorBoard for the training run:
 
 ```bash
-polyaxon run -p quick-start --hub tensorboard:single-run -P uuid=RUN_UUID -w
+polyaxon run -p quick-start --hub tensorboard:single-run -P uuid=$RUN_UUID -w
 ```
 
 The `-w` flag follows the service's status changes. Once it reaches `running`, press `Ctrl+C` to return to the terminal; this does not stop TensorBoard.

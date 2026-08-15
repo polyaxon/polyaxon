@@ -20,7 +20,7 @@ Commands:
   logs      Read background exec logs.
   ls        List a sandbox directory.
   ping      Check sandbox health.
-  shell     Start an interactive shell in a sandbox run.
+  shell     Start an interactive PTY in a sandbox-enabled service.
   upload    Upload one local file to a sandbox run.
 ```
 
@@ -142,7 +142,26 @@ Options:
 ```bash
 Usage: polyaxon sandbox shell [OPTIONS]
 
-  Start an interactive shell in a sandbox run.
+  Start an interactive PTY in a sandbox-enabled service.
+
+  The run must use ``kind: service`` with ``plugins.sandbox: true``. This
+  command creates a PTY managed by the sandbox daemon and attaches to it
+  directly; it does not use Kubernetes exec.
+
+  A sandbox PTY survives a client disconnect until it exits or reaches its
+  detached-idle timeout. This command currently creates a new PTY on every
+  invocation and does not reattach to a previous session. ``--replay-bytes``
+  replays recent output from the newly created PTY when attaching; it does not
+  select or restore an earlier PTY.
+
+  The command defaults to ``sh`` and is parsed using shell-like quoting before
+  being executed directly.
+
+  Examples:
+
+  $ polyaxon sandbox shell -p acme/project -uid UUID
+
+  $ polyaxon sandbox shell -p acme/project -uid UUID --command "python -i"
 
 Options:
   -p, --project TEXT             The project name, e.g. 'mnist' or

@@ -1,7 +1,8 @@
 {
   "title": "Quick Start",
   "pages": [
-    "overview",
+    "create-project",
+    "tracking",
     "interactive-development",
     "schedule",
     "components",

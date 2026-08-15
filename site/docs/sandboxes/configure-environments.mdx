@@ -8,6 +8,8 @@ label: "v1.16+"
 
 A sandbox runs inside the container image and environment you define for the workload. The most reproducible setup is to build dependencies into the image or apply them through organization presets.
 
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project, `sandbox.yaml`, and `RUN_UUID` variable.
+
 ## Choose an Image
 
 Start with an image that already has the tools required by your workflow:
@@ -27,7 +29,7 @@ For notebook workflows, use a notebook image. For GPU workflows, use an image wi
 Temporary installs are useful while debugging:
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- pip install rich
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- pip install rich
 ```
 
 Promote repeated package changes into a Docker image or preset once the workflow stabilizes.
@@ -50,7 +52,7 @@ run:
 For temporary values in an interactive shell:
 
 ```bash
-polyaxon ops shell -p owner/project -uid <run-uuid>
+polyaxon ops shell -p quick-start -uid $RUN_UUID
 export EDITOR=vim
 export DEBUG=1
 ```
@@ -61,8 +63,8 @@ For a value needed by one command, prefix the remote command with `env`:
 
 ```bash
 polyaxon sandbox exec \
-  -p owner/project \
-  -uid <run-uuid> \
+  -p quick-start \
+  -uid $RUN_UUID \
   -- env EDITOR=vim printenv EDITOR
 ```
 
@@ -75,7 +77,9 @@ Use the Polyaxonfile [environment specification](/docs/references/polyaxonfile/s
 Presets let platform teams provide reusable defaults for queues, resources, connections, security, and environment settings:
 
 ```bash
-polyaxon run -f sandbox.yaml -p owner/project --presets dev-sandbox
+polyaxon run -p quick-start -f sandbox.yaml --presets dev-sandbox
 ```
+
+This command starts a new service. To use subsequent sandbox commands with it, replace the current value of `RUN_UUID` with the new run UUID.
 
 See [scheduling presets](/docs/scheduling/scheduling-presets/overview/) for details.

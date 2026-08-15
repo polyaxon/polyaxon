@@ -10,12 +10,14 @@ Use the CLI in shell scripts and CI jobs. Use `SandboxClient` when a Python appl
 
 Both interfaces connect to an existing Polyaxon service with `plugins.sandbox` enabled. A sandbox is a capability of that service, not a separate kind of Polyaxon resource.
 
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project, `/workspace` directory, and `RUN_UUID` variable.
+
 ## Script commands
 
 ```bash
-polyaxon sandbox ping -p owner/project -uid <run-uuid>
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
-polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- pytest tests/smoke
+polyaxon sandbox ping -p quick-start -uid $RUN_UUID
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- pytest tests/smoke
 ```
 
 ## Run background work
@@ -23,15 +25,15 @@ polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- pytest tests/
 Start a detached process and keep its execution ID:
 
 ```bash
-EXEC_ID=$(polyaxon sandbox exec -p owner/project -uid <run-uuid> --detach -- sh -lc 'python scripts/profile.py')
-polyaxon sandbox logs -p owner/project -uid <run-uuid> "$EXEC_ID"
+EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- sh -lc 'python scripts/profile.py')
+polyaxon sandbox logs -p quick-start -uid $RUN_UUID $EXEC_ID
 ```
 
 ## Move files
 
 ```bash
-polyaxon sandbox upload -p owner/project -uid <run-uuid> ./config.yaml /workspace/config.yaml
-polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/profile.json ./profile.json
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID ./config.yaml /workspace/config.yaml
+polyaxon sandbox download -p quick-start -uid $RUN_UUID /workspace/profile.json ./profile.json
 ```
 
 Remote paths are absolute paths inside the service container. Replace `/workspace` with a directory that exists in your image.
@@ -41,12 +43,14 @@ Remote paths are absolute paths inside the service container. Replace `/workspac
 Run this code from a machine where the Polyaxon client is configured. Target the service explicitly so the script does not depend on cached project or run context:
 
 ```python
+import os
+
 from polyaxon.client import SandboxClient
 
 with SandboxClient(
-    owner="acme",
-    project="demo",
-    run_uuid="RUN_UUID",
+    owner="YOUR_ORGANIZATION",
+    project="quick-start",
+    run_uuid=os.environ["RUN_UUID"],
 ) as sandbox:
     sandbox.ping()
 
@@ -79,10 +83,8 @@ This example exposes one tool, `run_command`. Every call waits for approval in t
 Set the target and an existing working directory inside the service:
 
 ```bash
-export SANDBOX_OWNER=acme
-export SANDBOX_PROJECT=demo
-export SANDBOX_RUN_UUID=RUN_UUID
-export SANDBOX_WORKDIR=/tmp
+export SANDBOX_OWNER=YOUR_ORGANIZATION
+export SANDBOX_WORKDIR=/workspace
 ```
 
 Save this as `sandbox_tool.py` on the host machine:
@@ -108,8 +110,8 @@ _client_stack = ExitStack()
 sandbox = _client_stack.enter_context(
     SandboxClient(
         owner=os.environ["SANDBOX_OWNER"],
-        project=os.environ["SANDBOX_PROJECT"],
-        run_uuid=os.environ["SANDBOX_RUN_UUID"],
+        project="quick-start",
+        run_uuid=os.environ["RUN_UUID"],
     )
 )
 atexit.register(_client_stack.close)
@@ -365,10 +367,9 @@ The model proposes a Python command. Polyaxon runs it only after approval, then 
 Stop the service when the agent finishes:
 
 ```bash
-polyaxon ops stop -p owner/project -uid <run-uuid>
+polyaxon ops stop -p quick-start -uid $RUN_UUID
 ```
 
 Container files disappear when the run is removed. Upload durable outputs to artifact storage or commit them to Git before stopping the service.
 
 `SandboxClient.create()` creates a service run but does not approve it or wait for it to become ready. This tutorial attaches to a running service so the first tool call cannot race startup.
-

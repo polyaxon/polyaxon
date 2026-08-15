@@ -1,9 +1,0 @@
-{
-  "title": "Guides",
-  "pages": [
-    "query-metadata-artifacts",
-    "tensorboard",
-    "serving",
-    "builds"
-  ]
-}

@@ -14,8 +14,14 @@ In this sections we will look at what happened when we run a component w/o param
 Let's first run this polyaxonfile:
 
 ```bash
-polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yaml
+polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yaml
 ```
+
+<Callout type="info">
+
+This guide passes `-p quick-start` explicitly. You can omit it while working from the directory initialized in [Create a project](/docs/quick-start/create-project/#initialize-the-directory).
+
+</Callout>
 
 > For more details about this command please run `polyaxon run --help`, or check the [command reference](/docs/references/cli/run/)
 

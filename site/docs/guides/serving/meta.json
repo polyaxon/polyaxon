@@ -1,9 +1,0 @@
-{
-  "pages": [
-    "preparing-model",
-    "deploying-ml-apps",
-    "serving-flask-rest-apis",
-    "serving-fastapi-rest-apis",
-    "batch-scoring"
-  ]
-}

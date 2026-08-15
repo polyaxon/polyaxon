@@ -1,21 +1,25 @@
 ---
 title: Billable Units
-description: Learn how billable units are calculated in Polyaxon.
+description: Understand how seats, clusters, and organization capacity affect Polyaxon Cloud billing.
 ---
 
 # Billable Units
 
-Polyaxon Cloud [pricing](/pricing) is based on the number of active users and the compute resources consumed per billing period.
+Polyaxon Cloud [pricing](/pricing) is based on your plan and the capacity assigned to your organization for each monthly billing period.
 
-- **Users**: The number of active users in your organization during the billing period.
-- **Compute**: The total compute hours consumed by operations (jobs, services, experiments) across all agents and clusters.
+- **Seats**: The number and type of users who can access your organization, including developer, read-only, and billing seats.
+- **Clusters**: The number of agents connecting Kubernetes clusters or namespaces to the Polyaxon control plane. Additional agents add multi-cluster or multi-namespace capacity.
+- **Concurrency**: The maximum number of runs that can execute at the same time across your connected clusters and queues.
+- **Queues and schedules**: The number of queues and active schedules available to your organization.
 
-Use our [pricing calculator](/pricing?calculatorOpen=true) to estimate your monthly costs based on your expected usage.
+Each plan includes a base capacity. You can use our [pricing calculator](/pricing?calculatorOpen=true) to estimate the monthly cost of additional concurrency, queues, schedules, or clusters.
 
-### FAQ
+## FAQ
 
 **How can I track my Polyaxon Cloud usage?** Organization owners and admins can monitor usage from the organization billing page.
 
-**What counts as an active user?** Any user who logs in or triggers an operation during the billing period.
+**What counts as a seat?** A seat grants a user access to an organization. Developer, read-only, and billing seats have different permissions and pricing.
 
-**Are self-hosted agents included?** Compute consumed on self-hosted agents connected to Polyaxon Cloud is counted toward your usage.
+**How is concurrency measured?** Concurrency is a capacity limit: it controls how many runs can execute simultaneously. It is not based on compute hours, CPU usage, or GPU usage.
+
+**How are clusters counted?** Polyaxon Agent connects a Kubernetes namespace or cluster to the Cloud control plane. Plans include a defined number of agents, and additional agents provide capacity for more clusters or namespaces.

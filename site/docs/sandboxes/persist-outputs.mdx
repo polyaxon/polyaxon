@@ -8,6 +8,8 @@ label: "v1.16+"
 
 Interactive sessions are useful for discovery, but the container filesystem is not the right long-term storage layer. Save anything important before stopping or replacing the service run.
 
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project, `/workspace` directory, and `RUN_UUID` variable.
+
 ## Persist Artifacts
 
 Write generated files to the run's outputs path and log them with the tracking library:
@@ -37,7 +39,7 @@ See [tracking artifacts](/docs/tracking/logging/artifacts/) for artifact logging
 If you followed the quick start, use sandbox download when a file is still in `/workspace` rather than the synced outputs directory. Otherwise, replace the source with an existing absolute path in the running container:
 
 ```bash
-polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/report.json ./report.json
+polyaxon sandbox download -p quick-start -uid $RUN_UUID /workspace/report.json ./report.json
 ```
 
 ## Commit Code Changes
@@ -45,8 +47,8 @@ polyaxon sandbox download -p owner/project -uid <run-uuid> /workspace/report.jso
 If the sandbox produced code changes that should live beyond the session, push them to a Git branch using a scoped credential:
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git -C /workspace/repo status
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- git -C /workspace/repo push origin HEAD
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- git -C /workspace/repo status
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- git -C /workspace/repo push origin HEAD
 ```
 
 ## Preserve Reproducibility
@@ -57,4 +59,3 @@ When a manual session discovers a useful fix, move the change into a reproducibl
 - Dependencies in an image or lockfile.
 - Runtime settings in a Polyaxonfile or preset.
 - Results in artifacts, metrics, or model registry entries.
-

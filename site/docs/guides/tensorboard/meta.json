@@ -1,8 +1,0 @@
-{
-  "pages": [
-    "single-tensorboard",
-    "comparing-runs-tensorboard",
-    "performance-based-tensorboard",
-    "path-based-tensorboard"
-  ]
-}

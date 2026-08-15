@@ -7,7 +7,7 @@ label: "v1.16+"
 
 You have run the simulator locally and as a managed operation. Now start a long-running service with the same simulator and work inside it interactively.
 
-This page reuses the `quick-start` project from [Create a project](/docs/quick-start/#create-a-project). If you have not created it yet, complete that section before continuing.
+This page reuses the `quick-start` project and working directory from [Create a project](/docs/quick-start/create-project/). If you have not created and initialized it yet, complete that page before continuing.
 
 The workbench enables three independent access methods:
 
@@ -27,14 +27,26 @@ polyaxon run \
   --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/tracking/simulator-workbench.yaml
 ```
 
-Keep the run UUID printed by the command. `polyaxon ops shell` below waits for the run to reach `running`; sandbox and SSH commands expect the service to be ready.
+<Callout type="info">
+
+This guide passes `-p quick-start` explicitly. You can omit it while working from the directory initialized in [Create a project](/docs/quick-start/create-project/#initialize-the-directory).
+
+</Callout>
+
+Copy the run UUID printed by the command into a variable in your local terminal:
+
+```bash
+export RUN_UUID=PASTE_RUN_UUID_HERE
+```
+
+The commands below reuse this variable. It is set in your local terminal and is not copied into the workbench shell or an SSH session. `polyaxon ops shell` waits for the run to reach `running`; sandbox and SSH commands expect the service to be ready.
 
 ## Open a reconnectable shell
 
 Connect to the workbench:
 
 ```bash
-polyaxon ops shell -p quick-start -uid RUN_UUID
+polyaxon ops shell -p quick-start -uid $RUN_UUID
 ```
 
 The workbench enables the `tmux` plugin, so this command attaches to a persistent shell session. Set two values inside the shell:
@@ -53,7 +65,7 @@ At a shell prompt, you can detach without relying on a keyboard shortcut:
 The keyboard shortcut is `Ctrl+B`, release both keys, then press lowercase `d`. On macOS, use Control (`⌃`), not Command (`⌘`). Reconnect by running the same command:
 
 ```bash
-polyaxon ops shell -p quick-start -uid RUN_UUID
+polyaxon ops shell -p quick-start -uid $RUN_UUID
 ```
 
 You return to the same shell process, so the values are still available:
@@ -88,13 +100,13 @@ exit
 Check that the sandbox endpoint is ready:
 
 ```bash
-polyaxon sandbox ping -p quick-start -uid RUN_UUID
+polyaxon sandbox ping -p quick-start -uid $RUN_UUID
 ```
 
 Run a command in the same container without opening another interactive shell:
 
 ```bash
-polyaxon sandbox exec -p quick-start -uid RUN_UUID -- \
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- \
   python3 -c "import numpy, matplotlib; print(numpy.__version__, matplotlib.__version__)"
 ```
 
@@ -105,8 +117,8 @@ Each sandbox command starts a separate process, so it does not inherit variables
 SSH is optional. Use it when you want a native terminal, an SSH-based IDE, or standard file-transfer tools:
 
 ```bash
-polyaxon ssh setup -p quick-start -uid RUN_UUID
-polyaxon ssh connect -p quick-start -uid RUN_UUID
+polyaxon ssh setup -p quick-start -uid $RUN_UUID
+polyaxon ssh connect -p quick-start -uid $RUN_UUID
 ```
 
 SSH requires a local OpenSSH client and can be restricted by your cluster's security policy. See [Connect with SSH](/docs/sandboxes/connect-with-ssh/) for SSH configuration, IDE, file-transfer, and tunnel examples.
@@ -116,7 +128,7 @@ SSH requires a local OpenSSH client and can be restricted by your cluster's secu
 Disconnecting does not stop the service. Stop it when you finish:
 
 ```bash
-polyaxon ops stop -p quick-start -uid RUN_UUID --yes
+polyaxon ops stop -p quick-start -uid $RUN_UUID --yes
 ```
 
 You have now used the same managed environment in three ways: a reconnectable terminal for exploratory work, sandbox commands for health checks and one-off execution, and SSH for native development tools.
@@ -126,4 +138,3 @@ For more detail, see [Use terminals](/docs/sandboxes/use-terminals/), the [inter
 ## Next: train a model
 
 Continue to [Train a TensorFlow model](/docs/quick-start/schedule/) to replace the simulator with a Fashion-MNIST training job and inspect its TensorBoard data.
-

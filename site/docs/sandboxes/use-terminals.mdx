@@ -8,6 +8,8 @@ label: "v1.16+"
 
 Polyaxon supports several terminal workflows for service runs. Pick the smallest access mode that fits the task.
 
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable. The component created there enables the sandbox, tmux, and SSH plugins.
+
 ## Terminal Options
 
 | Access mode | Enable | Best for | Command |
@@ -20,13 +22,13 @@ Polyaxon supports several terminal workflows for service runs. Pick the smallest
 ## One-Off Commands
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> -- python -V
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
 ```
 
 Use streaming for long-running commands:
 
 ```bash
-polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- sh -lc 'pip list'
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- sh -lc 'pip list'
 ```
 
 ## Detached Commands
@@ -34,19 +36,19 @@ polyaxon sandbox exec -p owner/project -uid <run-uuid> --stream -- sh -lc 'pip l
 Detached commands keep running after the CLI exits:
 
 ```bash
-EXEC_ID=$(polyaxon sandbox exec -p owner/project -uid <run-uuid> --detach -- sh -lc 'python train.py')
+EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- sh -lc 'python train.py')
 ```
 
 Read logs later:
 
 ```bash
-polyaxon sandbox logs -p owner/project -uid <run-uuid> "$EXEC_ID"
+polyaxon sandbox logs -p quick-start -uid $RUN_UUID $EXEC_ID
 ```
 
 ## Interactive Shell
 
 ```bash
-polyaxon sandbox shell -p owner/project -uid <run-uuid>
+polyaxon sandbox shell -p quick-start -uid $RUN_UUID
 ```
 
 Use this for quick inspection and short-lived debugging.
@@ -63,7 +65,7 @@ plugins:
 Attach with:
 
 ```bash
-polyaxon ops shell -p owner/project -uid <run-uuid>
+polyaxon ops shell -p quick-start -uid $RUN_UUID
 ```
 
 At a shell prompt, detach without ending the shell:

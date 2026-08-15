@@ -1,7 +1,86 @@
 ---
 title: "Passing params as dictionaries"
 sidebarTitle: "As Dictionaries"
-description: "Sometimes it's useful to have access to the full dictionary of inputs or outputs, and pass it to your programs as an argument or export it as an environment variable."
+description: "Pass structured configuration as one dictionary, or forward the inputs and outputs of another operation."
 ---
 
-Sometimes it's useful to have access to the full dictionary of inputs or outputs, and pass it to your programs as an argument or export it as an environment variable.
+Use a dictionary input when related values should travel together as one configuration object. Keep separate typed inputs when each value needs its own type, validation, UI field, or command-line override.
+
+## Pass a dictionary from the CLI
+
+The following component accepts one required dictionary named `config`. The `toEnv` setting exposes its resolved value as `TRAINING_CONFIG`:
+
+```yaml
+version: 1.1
+kind: component
+name: dictionary-config
+
+inputs:
+- name: config
+  type: dict
+  toEnv: TRAINING_CONFIG
+
+run:
+  kind: job
+  init:
+  - file:
+      filename: main.py
+      content: |
+        import json
+        import os
+
+        config = json.loads(os.environ["TRAINING_CONFIG"])
+        print(f"learning_rate={config['learning_rate']}")
+        print(f"epochs={config['epochs']}")
+  container:
+    image: python:3.11
+    workingDir: "{{ globals.artifacts_path }}"
+    command: [python3, main.py]
+```
+
+Save the component as `config.yaml`, then pass the dictionary as JSON:
+
+```bash
+polyaxon run -f config.yaml \
+  -P config='{"learning_rate":0.003,"epochs":20}' \
+  -l
+```
+
+The shell's single quotes preserve the JSON string. Polyaxon parses it as a dictionary, validates it against the `config` input, and serializes it as JSON in `TRAINING_CONFIG`. The program prints:
+
+```text
+learning_rate=0.003
+epochs=20
+```
+
+Polyaxon records `config` as one run input. Its nested keys are not separate inputs, so they cannot be compared or overridden independently. Declare `learning_rate` and `epochs` as separate inputs when you need that behavior.
+
+## Forward inputs and outputs from another operation
+
+In a DAG, a downstream operation can request the complete input or output dictionary of an upstream operation. The receiving component declares dictionary inputs:
+
+```yaml
+inputs:
+- name: training_inputs
+  type: dict
+- name: training_outputs
+  type: dict
+```
+
+The DAG operation maps the upstream contexts to those inputs:
+
+```yaml
+- name: summarize
+  dagRef: summarize-component
+  params:
+    training_inputs:
+      ref: ops.training
+      value: "{{ inputs }}"
+    training_outputs:
+      ref: ops.training
+      value: "{{ outputs }}"
+```
+
+`{{ inputs }}` and `{{ outputs }}` refer to the declared values of `ops.training`. They do not expose outputs that the current operation may produce later. The upstream operation must make an output available before a downstream operation can consume it.
+
+See [Context Params](/docs/references/polyaxonfile/context/params/) for individual and complete context references. Continue to [Pipelines & Orchestration](/docs/pipelines-automation/overview/) for complete DAG examples.

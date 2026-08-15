@@ -23,7 +23,7 @@ Deleting an operation removes all associated data including logs, artifacts, eve
 
 ### Single Operation
 
-<LangTabs items={["UI", "CLI", "API"]}>
+<LangTabs items={["UI", "CLI", "Python", "API"]}>
 
 <Tab>
 
@@ -46,6 +46,21 @@ polyaxon ops delete -p <project> -uid <run_uuid>
 
 <Tab>
 
+```python
+from polyaxon.client import RunClient
+
+run_client = RunClient(
+    owner="<owner>",
+    project="<project>",
+    run_uuid="<run_uuid>",
+)
+run_client.delete()
+```
+
+</Tab>
+
+<Tab>
+
 ```
 DELETE /api/v1/{owner}/{project}/runs/{uuid}
 ```
@@ -56,7 +71,7 @@ DELETE /api/v1/{owner}/{project}/runs/{uuid}
 
 ### Batch of Operations
 
-<LangTabs items={["UI"]}>
+<LangTabs items={["UI", "CLI", "Python", "API"]}>
 
 <Tab>
 
@@ -68,11 +83,47 @@ To delete a batch of operations, select them in the runs table and choose `Delet
 
 </Tab>
 
+<Tab>
+
+The CLI deletes one operation at a time. To delete several known UUIDs, loop over them:
+
+```bash
+for run_uuid in "<run_uuid_1>" "<run_uuid_2>"; do
+  polyaxon ops delete -p <project> --uid "$run_uuid" --yes
+done
+```
+
+</Tab>
+
+<Tab>
+
+```python
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(owner="<owner>", project="<project>")
+project_client.delete_runs(["<run_uuid_1>", "<run_uuid_2>"])
+```
+
+</Tab>
+
+<Tab>
+
+```http
+DELETE /api/v1/{owner}/{project}/runs/delete
+Content-Type: application/json
+
+{
+  "uuids": ["<run_uuid_1>", "<run_uuid_2>"]
+}
+```
+
+</Tab>
+
 </LangTabs>
 
 ### Delete by Query
 
-<LangTabs items={["UI", "CLI"]}>
+<LangTabs items={["UI", "CLI", "Python", "API"]}>
 
 <Tab>
 
@@ -87,8 +138,52 @@ Select all items and choose `Delete` from the `Actions` dropdown.
 
 <Tab>
 
+The CLI does not expose a direct query-delete option. List matching operations, then delete each returned UUID:
+
 ```bash
-polyaxon ops delete -p <project> --query "status:failed"
+polyaxon ops ls -p <project> --query "status:failed" --output json
+polyaxon ops delete -p <project> --uid <matched_run_uuid> --yes
+```
+
+</Tab>
+
+<Tab>
+
+The Python client can list matching operations and delete them in batches. Fetch from offset `0` again after each deletion because the result set shrinks:
+
+```python
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(owner="<owner>", project="<project>")
+
+while True:
+    runs = project_client.list_runs(
+        query="status:failed",
+        limit=100,
+        offset=0,
+    )
+    if not runs:
+        break
+    project_client.delete_runs([run.uuid for run in runs])
+```
+
+</Tab>
+
+<Tab>
+
+The API does not provide a direct delete-by-query endpoint. Paginate through the filtered list, then send the returned UUIDs to the batch-delete endpoint:
+
+```http
+GET /api/v1/{owner}/{project}/runs?query=status%3Afailed&limit=100&offset=0
+```
+
+```http
+DELETE /api/v1/{owner}/{project}/runs/delete
+Content-Type: application/json
+
+{
+  "uuids": ["<matched_run_uuid_1>", "<matched_run_uuid_2>"]
+}
 ```
 
 </Tab>
@@ -97,7 +192,7 @@ polyaxon ops delete -p <project> --query "status:failed"
 
 ## Deleting a Project
 
-<LangTabs items={["UI", "CLI"]}>
+<LangTabs items={["UI", "CLI", "Python", "API"]}>
 
 <Tab>
 
@@ -116,6 +211,25 @@ polyaxon project delete -p <project>
 
 </Tab>
 
+<Tab>
+
+```python
+from polyaxon.client import ProjectClient
+
+project_client = ProjectClient(owner="<owner>", project="<project>")
+project_client.delete()
+```
+
+</Tab>
+
+<Tab>
+
+```http
+DELETE /api/v1/{owner}/{project}
+```
+
+</Tab>
+
 </LangTabs>
 
 <Callout type="warning">
@@ -124,7 +238,7 @@ polyaxon project delete -p <project>
 
 ## Deleting an Organization
 
-<LangTabs items={["UI"]}>
+<LangTabs items={["UI", "Python", "API"]}>
 
 <Tab>
 
@@ -133,6 +247,25 @@ All projects must be deleted before the organization can be removed.
 The organization and all associated data will be permanently deleted.
 
 {/* ![Delete an organization](/images/docs/delete-organization.png) */}
+
+</Tab>
+
+<Tab>
+
+```python
+from polyaxon.client import PolyaxonClient
+
+client = PolyaxonClient()
+client.organizations_v1.delete_organization("<owner>")
+```
+
+</Tab>
+
+<Tab>
+
+```http
+DELETE /api/v1/orgs/{owner}
+```
 
 </Tab>
 
@@ -156,6 +289,39 @@ If you are the sole owner of an organization, you must first transfer ownership 
 
 </LangTabs>
 
+Account deletion is currently available through the Cloud UI only. The public CLI, Python client, and REST API do not expose an account-deletion operation.
+
 ## Deleting a User Account (Self-Hosted)
 
-Organization owners can remove users from the organization settings. For complete account deletion on self-hosted instances, remove the corresponding user record from the database.
+Removing a user from an organization is available through the UI, Python client, and API:
+
+<LangTabs items={["UI", "Python", "API"]}>
+
+<Tab>
+
+Organization owners can remove users from the organization members settings.
+
+</Tab>
+
+<Tab>
+
+```python
+from polyaxon.client import OrganizationClient
+
+organization_client = OrganizationClient(owner="<organization>")
+organization_client.delete_member("<username>")
+```
+
+</Tab>
+
+<Tab>
+
+```http
+DELETE /api/v1/orgs/{owner}/members/{name}
+```
+
+</Tab>
+
+</LangTabs>
+
+Removing organization membership does not delete the user's global account. Complete self-hosted account deletion is not exposed through the public CLI, Python client, or REST API; instance administrators should follow the supported administration procedure for their deployment.
