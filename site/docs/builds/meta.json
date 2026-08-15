@@ -1,0 +1,9 @@
+{
+  "pages": [
+    "overview",
+    "building-containers-init",
+    "building-containers-custom-dockerfile",
+    "building-containers-custom-context",
+    "automatic-build-process"
+  ]
+}

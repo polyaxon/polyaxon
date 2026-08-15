@@ -1,0 +1,19 @@
+---
+title: "Passing Params"
+sidebarTitle: "Overview"
+description: "Choose how resolved component inputs and outputs reach your program."
+---
+
+A component declares typed inputs and outputs. When you start a run, an operation maps values to those definitions. The `-P/--params` option lets you provide or override input values from the CLI. Polyaxon validates and records the resolved values before executing the workload.
+
+The component must also define how its container program receives those values.
+
+Use [command-line arguments](/docs/passing-params/with-args/) when your program exposes a CLI. This is the clearest starting point for most programs because the expected inputs remain explicit.
+
+Use [environment variables](/docs/passing-params/with-env-vars/) when the program already reads configuration from its environment or when you do not want to add command-line arguments.
+
+Use [input and output dictionaries](/docs/passing-params/as-dictionaries/) when the program needs the complete set of values rather than individual fields.
+
+Use the [Python library](/docs/passing-params/with-python-library/) when the program needs to read or update run inputs and outputs while it is running.
+
+These methods change how values reach your program. They do not change the component's input and output definitions. See the [params specification](/docs/references/polyaxonfile/specification/params/) for the available mappings and transformations.

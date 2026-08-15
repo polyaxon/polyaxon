@@ -1,0 +1,128 @@
+---
+title: "Quick Start: Create a project"
+sidebarTitle: "Create a project"
+description: "Connect the CLI, create the quick-start project, and initialize a local project context."
+---
+
+This quick start assumes that Polyaxon and its execution agent are already running.
+
+## Before you start
+
+You need Python and access to a Polyaxon gateway, either [Polyaxon Cloud](https://cloud.polyaxon.com) or a Community Edition deployment.
+
+Install the Polyaxon CLI, Python library, and simulator dependencies:
+
+```bash
+python3 -m pip install --upgrade polyaxon numpy pandas matplotlib
+```
+
+## Connect the CLI to your Polyaxon gateway
+
+The CLI and tracking library send requests through a Polyaxon gateway. Connect to the gateway that will host your project.
+
+For Polyaxon Cloud, configure the gateway and log in:
+
+```bash
+polyaxon config set --host=YOUR_GATEWAY_URL
+polyaxon login
+```
+
+The login command opens your token page and asks you to paste the token into the terminal.
+
+<Callout type="info">
+
+**Community Edition only:** If your gateway uses the default `ClusterIP` service, connect with:
+
+```bash
+polyaxon port-forward
+```
+
+This command exposes the gateway and configures the CLI. If your gateway is already exposed, configure its URL with `polyaxon config set --host=YOUR_GATEWAY_URL`. Community Edition does not require `polyaxon login`.
+
+</Callout>
+
+## Create a working directory
+
+Use one directory for the files downloaded and created during this guide:
+
+```bash
+mkdir polyaxon-quick-start
+cd polyaxon-quick-start
+```
+
+Starting from a new directory also avoids inheriting a local Polyaxon project context from another project.
+
+## Create the project
+
+A project groups related runs and their tracked data. Create one for this guide:
+
+```bash
+polyaxon project create \
+  --name=quick-start \
+  --description="Runs from the Polyaxon quick start" \
+  --tags=quick-start
+```
+
+Creating the project also caches it as the current global CLI project. Verify the cached project:
+
+```bash
+polyaxon project get
+```
+
+This command works without `-p quick-start` because the CLI falls back to the global project cache. If you cannot create projects in your organization, use an existing project and replace `quick-start` throughout this guide with its full `OWNER/PROJECT` name.
+
+## Understand the global cache
+
+The global cache is not tied to the current directory. Move to a new directory and query the current project again:
+
+```bash
+cd ..
+mkdir polyaxon-cache-check
+cd polyaxon-cache-check
+
+polyaxon project get
+```
+
+The command still returns `quick-start`, even though this directory has not been initialized. Both directories currently fall back to the same global project cache.
+
+Return to the quick-start directory:
+
+```bash
+cd ../polyaxon-quick-start
+```
+
+## Initialize the directory
+
+Set `quick-start` as the local project for the current directory and create an ignore file for code uploads:
+
+```bash
+polyaxon init -p quick-start --polyaxonignore
+```
+
+<Callout type="info">
+
+You could create the project and initialize this directory in one step with `polyaxon project create --name=quick-start --init`. We use `polyaxon init` separately here because you can run it at any time to associate an existing folder with an existing Polyaxon project.
+
+</Callout>
+
+Initialization writes the local project context under `.polyaxon/`. Commands run from this directory prefer that project over the global cache. Add `.polyaxon/` to `.gitignore` and `.dockerignore`; it contains local CLI state and should not be committed.
+
+The `--polyaxonignore` option creates `.polyaxonignore`. Upload commands use its patterns to exclude files and directories. This file describes the project and can normally be committed. If it is absent, Polyaxon still applies its [default ignore patterns](/docs/references/cli/ignore/).
+
+## How project context is resolved
+
+For commands that need a project, the CLI uses this order:
+
+1. The project passed with `-p` or `--project`.
+2. The project initialized in the current directory.
+3. The globally cached project.
+
+If none is available, the command asks you to provide a project. The remaining quick-start pages pass `-p quick-start` explicitly so their target is clear. You can omit it while working from the initialized directory.
+
+The simulator's `--project=quick-start` option is separate. It belongs to the example Python script and does not read the CLI project context.
+
+For the complete cache behavior, see [Understanding the CLI cache](/docs/references/cli/cache/) and the [`init` command reference](/docs/references/cli/init/).
+
+## Next: track an experiment
+
+Continue to [Track an experiment](/docs/quick-start/tracking/) to run the simulator locally and on your cluster.

@@ -1,0 +1,155 @@
+---
+title: "Quick Start: Track an experiment"
+sidebarTitle: "Track an experiment"
+description: "Run a training simulation locally and on Kubernetes, track three runs in Polyaxon, and compare their results."
+---
+
+# Track your first experiment
+
+This page reuses the `quick-start` project and working directory from [Create a project](/docs/quick-start/create-project/). Complete that page before continuing.
+
+Run two training simulations on your machine, compare them, then schedule the same simulator with the Polyaxon Agent. All three runs send their parameters, metrics, and visualizations to the same project.
+
+## Run the simulator locally
+
+Download the example:
+
+```bash
+curl -fLO https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/tracking/simulate_dl_experiment.py
+```
+
+Run a baseline experiment:
+
+```bash
+python3 simulate_dl_experiment.py \
+  --project=quick-start \
+  --run-name=baseline \
+  --epochs=20 \
+  --seed=42 \
+  --batch-size=64 \
+  --learning-rate=0.001
+```
+
+The script simulates 20 training epochs with a fixed seed. It does not train a model or need a GPU, but its loss and accuracy respond to the supplied hyperparameters. It logs:
+
+- Hyperparameters as run inputs.
+- Training, validation, and per-class metrics at each epoch.
+- Weight and gradient histograms at regular checkpoints.
+- Confusion matrices and ROC and precision-recall curves.
+- Weight distributions, gradient flow, feature activations, and loss-landscape images.
+- Progress, text snapshots, and final and best results.
+
+The full simulator logs all the event types listed above. Its basic tracking lifecycle is:
+
+```python
+from polyaxon import tracking
+
+tracking.init(project="quick-start", name="baseline", tags=["sim"])
+tracking.log_inputs(learning_rate=0.001, epochs=20)
+
+for epoch in range(20):
+    tracking.log_metrics(
+        step=epoch,
+        train_loss=0.5,
+        val_accuracy=0.8,
+    )
+
+tracking.log_outputs(best_val_accuracy=0.8)
+tracking.end()
+```
+
+The downloaded script expands this loop with per-class metrics, histograms, curves, images, progress, and text events.
+
+When the run finishes, the script prints its Polyaxon run UUID.
+
+## Inspect the run
+
+Open the project dashboard:
+
+```bash
+polyaxon project dashboard --project=quick-start --yes
+```
+
+<Callout type="info">
+
+This guide passes `--project=quick-start` explicitly. You can omit it from Polyaxon CLI commands while working from the directory initialized in [Create a project](/docs/quick-start/create-project/#initialize-the-directory). The simulator's `--project` option is still required because it belongs to the example script.
+
+</Callout>
+
+Open the run named `baseline`. Its inputs and outputs describe the experiment, while its metrics and visualizations show how training changed across epochs.
+
+<Callout type="info">
+
+To open the run directly from the CLI, list the project runs and find the UUID for `baseline`:
+
+```bash
+polyaxon ops ls -p quick-start
+```
+
+Copy the UUID into a local variable, then open its dashboard:
+
+```bash
+export RUN_UUID=PASTE_BASELINE_RUN_UUID_HERE
+polyaxon ops dashboard -p quick-start -uid $RUN_UUID --yes
+```
+
+</Callout>
+
+## Compare two local runs
+
+Run the same simulation with a higher learning rate:
+
+```bash
+python3 simulate_dl_experiment.py \
+  --project=quick-start \
+  --run-name=faster-learning-rate \
+  --epochs=20 \
+  --seed=42 \
+  --batch-size=64 \
+  --learning-rate=0.003
+```
+
+Both runs execute on your machine and use seed `42`, 20 epochs, batch size `64`, and the simulator defaults for the remaining inputs. The only changed input is the learning rate.
+
+The second run converges faster and finishes with higher validation accuracy, so the effect of the learning-rate change is visible rather than buried in random variation.
+
+Return to the project's runs table, select `baseline` and `faster-learning-rate`, then open the comparison view. See [Compare runs](/docs/tracking/runs-dashboard/comparison) for the available tables and charts.
+
+## Run the simulator on your cluster
+
+Run the faster configuration again, this time through the Polyaxon Agent:
+
+```bash
+polyaxon run \
+  -p quick-start \
+  --name=managed-faster-learning-rate \
+  --tags=sim \
+  --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/tracking/simulate.yaml \
+  -P epochs=20 \
+  -P seed=42 \
+  -P batch_size=64 \
+  -P learning_rate=0.003 \
+  -l
+```
+
+The `-l` flag streams the run's logs after it starts. The Agent schedules the simulator's container as a Kubernetes job. See the [run command reference](/docs/references/cli/run/) for more details.
+
+## Compare all three runs
+
+Return to the runs table and compare `baseline`, `faster-learning-rate`, and `managed-faster-learning-rate`.
+
+The two faster runs use the same simulator and inputs. Their loss and accuracy curves should closely match, while timing and runtime metadata can differ because one ran on your machine and the other ran on your cluster. In the three-run comparison, `baseline` shows the effect of the lower learning rate.
+
+## What you verified
+
+The `baseline` and `faster-learning-rate` runs are user-managed: the simulator ran on your machine and sent its events to Polyaxon. The `managed-faster-learning-rate` run is managed: the Agent scheduled the same simulator in a container as a Kubernetes job.
+
+This verifies your client configuration, project access, tracking calls, Agent and queue, managed execution, dashboards, and comparisons across local and managed runs.
+
+## Next: work interactively
+
+Continue to [Interactive development](/docs/quick-start/interactive-development/) to open a reconnectable shell in a managed simulator environment, run sandbox commands, and try SSH access.
+
+After that, [train a TensorFlow model](/docs/quick-start/schedule) and inspect its results with TensorBoard.
+
+For more ways to instrument local code, see the [tracking guide](/docs/tracking/logging/overview).
