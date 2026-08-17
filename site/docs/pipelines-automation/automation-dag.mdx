@@ -44,7 +44,7 @@ run:
           - 'pip3 install --no-cache-dir -U polyaxon'
           langEnv: 'en_US.UTF-8'
   - name: experiment
-    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml"
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml"
     dependencies: [build]
     params:
       learning_rate:
@@ -52,7 +52,7 @@ run:
       epochs:
         value: 10
   - name: tune
-    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml"
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml"
     params:
       upstream_loss:
         ref: ops.experiment
@@ -95,7 +95,7 @@ run:
         - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
         container:
           image: polyaxon/polyaxon-quick-start
-          workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
+          workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start/scheduling"
           command: [python3, best_models.py]
           args: ["--project={{ globals.project_name }}", "--top={{ top }}"]
 ```

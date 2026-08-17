@@ -14,7 +14,7 @@ In this sections we will look at what happened when we run a component w/o param
 Let's first run this polyaxonfile:
 
 ```bash
-polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yaml
+polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/operation.yaml
 ```
 
 <Callout type="info">
@@ -33,7 +33,7 @@ kind: operation
 params:
   optimizer: {value: sgd}
   epochs: {value: 1}
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml
 ```
 
 An operation just defines how to run a component, running this file does not require passing params using the CLI because they are defined in the polyaxonfile.
@@ -61,7 +61,7 @@ runPatch:
     resources:
       limits:
         nvidia.com/gpu: 1
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml
 ```
 
 Using the operation users can have the choice to use other resources or no resources at all. Operations allow also to patch the environment, init, sidecars ...

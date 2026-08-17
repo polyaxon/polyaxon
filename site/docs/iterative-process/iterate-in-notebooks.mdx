@@ -114,7 +114,7 @@ grid_search_config = V1GridSearch(
 suggestions = GridSearchManager(grid_search_config).get_suggestions()
 for suggestion in suggestions:
     client.create_from_url(
-        url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml",
+        url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml",
         params=suggestion)
 ```
 

@@ -5,32 +5,40 @@ description: "Iterate with Polyaxon CLI - Become familiar with the ecosystem of 
 
 > **Note**: Requires Polyaxon v1.3.3 or higher.
 
-We previously learned how to run operations with Polyaxonfiles hosted on Github using the `--url` argument.
-But during a rapid development, users will want to iterate on their code and submit operations with those changes.
+We previously learned how to run operations with Polyaxonfiles hosted on GitHub using the `--url` argument.
+During rapid development, users may want to iterate on their code and submit operations with those changes.
 
-In this sections we will learn how to initialize a local folder and run ab interactive experimentation process by uploading the code to the experiment's path on the artifacts store.
+In this section, we will learn how to initialize a local folder and run an interactive experimentation process by uploading code to the experiment's path on the artifact store.
 
 > **Note**: To integrate an external git repo with the CLI, please check the next section of this guide.
 
 ## Clone Polyaxon quick-start
 
-Head to your terminal and clone the [quick-start](https://github.com/polyaxon/polyaxon-quick-start) repo
+If you followed the Quick Start and are still in `polyaxon-basics`, return to its parent directory:
+
+```bash
+cd ..
+```
+
+Clone the [quick-start](https://github.com/polyaxon/polyaxon-quick-start) repo, then enter its `scheduling` directory:
 
 ```bash
 git clone https://github.com/polyaxon/polyaxon-quick-start.git
+cd polyaxon-quick-start/scheduling
 ```
 
-## Check the polyaxonfile for the local integration
+`polyaxon-basics` is the working directory created by the Quick Start. `polyaxon-quick-start` is the example repository used by this and later guides.
 
-Under the path `local-integration` there's a single polyaxonfile which we will use for this example, it's the same as the `simple.yaml` file that we used before under `experimentation`,
-the only difference is that this version does not include an init section.
+## Check the Polyaxonfile for the local integration
+
+Under `local-integration` there is a single Polyaxonfile for this example. It is the same as the `simple.yaml` file used earlier under `experimentation`; the only difference is that this version does not include an init section.
 
 ```yaml
 version: 1.1
 kind: component
-name: simple-experiment
-description: Minimum information to run this TF.Keras example
-tags: [examples, local-git]
+name: experiment-with-local-code
+description: Example with local code
+tags: [examples]
 run:
   kind: job
   container:
@@ -39,43 +47,39 @@ run:
     command: [python3, model.py]
 ```
 
-Another thing to notice about this polyaxonfile is that we have a different `workingDir: "{{ globals.run_artifacts_path }}/uploads"`.
-We are telling our container to use the `uploads` under the run artifacts path.
+Another thing to notice about this Polyaxonfile is the different `workingDir: "{{ globals.run_artifacts_path }}/uploads"`.
+This tells the container to use `uploads` under the run artifact path.
 
-the value `/uploads` can be any subpath you decide to upload your local code to, the default one is `uploads`.
+The value `uploads` can be any subpath where you decide to upload your local code. The default is `uploads`.
 
 ## Initialize the project
 
-Instead of hard-coding an init section like in the previous sections of this quick-start tutorial,
-we will initialize this local path to be able to leverage the CLI cache and avoid passing the project to all commands:
+Instead of hard-coding an init section as in the previous sections of this quick-start tutorial, initialize this local path to use the CLI cache and avoid passing the project to every command:
 
-```yaml
+```bash
 polyaxon init -p quick-start --polyaxonignore
 ```
 
-You will be prompted to override the current `polyaxonignore`, just say no because this example already has one,
-but in other project in order to avoid uploading all files you should have a `.polyaxonignore`.
-For instance to make the upload optimized and fast you should not upload your `.git` history, the IDE config, ...
+This creates the local project context and a `.polyaxonignore` file. Review the ignore patterns before uploading. For faster uploads, exclude files such as the `.git` history and IDE configuration. The [Create a project](/docs/quick-start/create-project/#initialize-the-directory) guide explains both files.
 
 ## Uploading and scheduling experiments
 
-In the previous section of this tutorial we were using a hard-coded git initializer, which requires a git push and a connection to handle the pull if the repo is private.
+In the previous section, we used a hard-coded Git initializer. That workflow requires a Git push and, for a private repository, a connection that can pull the code.
 
-In this section we will upload the local code instead before starting an operation:
+In this section, we upload the local code before starting an operation:
 
 ```bash
 polyaxon run -f local-integration/simple.yaml -u
 ```
 
-This will tell Polyaxon to upload anything from the current path, while respecting the `.polyaxonignore` pattern, before starting the experiment.
+This tells Polyaxon to upload the current directory, while respecting the `.polyaxonignore` patterns, before starting the experiment.
 
 ## Uploading and scheduling experiments using a different path
 
-If you want to upload the code, or any artifacts, to a different path other than the default `uploads`,
-for instance to use `code` you should do the following:
+To upload code or artifacts to a path other than the default `uploads`, for example `code`:
 
- * Change the `workingDir: "{{ globals.run_artifacts_path }}/code"` in the polyaxonfile
- * Run the upload command with a specific path: `polyaxon run -f local-integration/simple.yaml -u-to code`
+- Change the Polyaxonfile to use `workingDir: "{{ globals.run_artifacts_path }}/code"`.
+- Run the upload command with a specific path: `polyaxon run -f local-integration/simple.yaml -u-to code`.
 
 If your local folder is large, and several subpaths are not necessary, you can also use `-u-from/--upload-from`.
 
@@ -84,6 +88,6 @@ If your local folder is large, and several subpaths are not necessary, you can a
 
 ## Uploading after starting an experiment
 
-Polyaxon CLI provides a command: `polyaxon ops upload --help` which has more options that allows to upload artifacts to an already created experiment independently of its current status.
+The Polyaxon CLI also provides `polyaxon ops upload`. It can upload artifacts to an existing experiment independently of its current status. Run `polyaxon ops upload --help` to see its options.
 
-This command is helpful if you need to upload some artifacts or some code, or resume a previous operation with different artifacts.
+This command is useful when you need to upload artifacts or code after creating a run, or resume an operation with different artifacts.

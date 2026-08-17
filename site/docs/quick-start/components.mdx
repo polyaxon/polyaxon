@@ -11,7 +11,7 @@ If you did not see the previous section of this tutorial, start with [Schedule a
 Before creating new experiments, let's first try to understand what happened when we executed this command:
 
 ```bash
-polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
+polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/simple.yaml -l
 ```
 
 <Callout type="info">
@@ -60,7 +60,7 @@ run:
   - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
   container:
     image: polyaxon/polyaxon-quick-start
-    command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/model.py"]
+    command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/scheduling/model.py"]
 ```
 
 This is a simple Polyaxonfile, the file can be made simpler by removing the optional fields `name`, `description`, and `tags`,
@@ -101,13 +101,13 @@ The container section provides several options, the most important ones are:
 Generally when you use the git initializer you will need to provide the path to the git repo in the container:
 
 ```yaml
-command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/model.py"]
+command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/scheduling/model.py"]
 ```
 
 Or you can use the `workingDir`:
 
 ```yaml
-workingDir: "{{ globals.artifacts_path }} + /polyaxon-quick-start/"
+workingDir: "{{ globals.artifacts_path }} + /polyaxon-quick-start/scheduling/"
 command: [python3, "model.py"]
 ```
 
@@ -143,7 +143,7 @@ resources:
 ## Training a model
 
 Let's look now at how Polyaxon logged information and results during the experiment.
-If you open the file [model.py](https://github.com/polyaxon/polyaxon-quick-start/blob/master/model.py)
+If you open the file [model.py](https://github.com/polyaxon/polyaxon-quick-start/blob/master/scheduling/model.py)
 
 ```python
 ...
@@ -243,7 +243,7 @@ run:
   - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
   container:
     image: polyaxon/polyaxon-quick-start
-    workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start/scheduling"
     command: [python3, model.py]
     args: [
       "--conv1_size={{ conv1_size }}",
@@ -268,7 +268,7 @@ The required input is just for demonstration, if we try to run this component wi
 We need to pass an `epochs` param:
 
 ```bash
-polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P epochs=10 -l
+polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml -P epochs=10 -l
 ```
 
 The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
@@ -309,13 +309,15 @@ polyaxon ops logs -p quick-start -uuid $RUN_UUID
 We can start another run based on the same component, but this time we will pass some more params to modify the default inputs' values:
 
 ```bash
-polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P lr=0.005 -P epochs=8
+polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml -P lr=0.005 -P epochs=8
 ```
 
 
 ## Let's compare the experiments on the dashboard
 
 ![comparison-sort](/images/dashboard/comparison/sort.png)
+
+![comparison-sort](/images/dashboard/comparison/compare.png)
 
 ![comparison-many](/images/dashboard/comparison/charts-many.png)
 

@@ -31,7 +31,7 @@ matrix:
     epochs:
       kind: choice
       value: [5, 10]
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml
 ```
 
 This is an operation based on the same component used in the previous quick-start guides.
@@ -59,7 +59,7 @@ polyaxon run -f optimization/hyperparams_grid.yaml
 You can also use the CLI to run this operation without creating a Polyaxonfile:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -HP learning_rate='linspace:[0.001,0.1,5]' -HP conv_activation='choice:[0.25, 0.3]' -HP dropout='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml -HP learning_rate='linspace:[0.001,0.1,5]' -HP conv_activation='choice:[0.25, 0.3]' -HP dropout='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
 ```
 
 ## Random search
@@ -85,7 +85,7 @@ matrix:
     epochs:
       kind: choice
       value: [5, 10]
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml
 ```
 
 To run this polyaxonfile:
@@ -101,7 +101,7 @@ Random search also provides access to the continuous distributions in addition t
 You can also use the CLI to run this operation without creating a Polyaxonfile:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml --matrix-kind random --matrix-num-runs 10 -HP learning_rate='linspace:[0.001,0.1,5]' -HP conv_activation='choice:[0.25, 0.3]' -HP dropout='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml --matrix-kind random --matrix-num-runs 10 -HP learning_rate='linspace:[0.001,0.1,5]' -HP conv_activation='choice:[0.25, 0.3]' -HP dropout='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
 ```
 
 ## Learn More

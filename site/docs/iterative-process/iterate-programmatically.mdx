@@ -40,7 +40,7 @@ run:
   - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
   container:
     image: polyaxon/polyaxon-quick-start
-    command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/model.py"]
+    command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/scheduling/model.py"]
     args: [
       "--conv1_size={{ conv1_size }}",
       "--conv2_size={{ conv2_size }}",
@@ -84,7 +84,7 @@ job = V1Job(
     container=V1Container(
         image="polyaxon/polyaxon-quick-start",
         working_dir="{{ globals.artifacts_path }}",
-        command=["python3", "polyaxon-quick-start/model.py"],
+        command=["python3", "polyaxon-quick-start/scheduling/model.py"],
         args=[
             "--conv1_size={{ conv1_size }}",
             "--conv2_size={{ conv2_size }}",

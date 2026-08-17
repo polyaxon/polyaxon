@@ -95,6 +95,22 @@ polyaxon ops dashboard -p quick-start -uid $RUN_UUID --yes
 
 </Callout>
 
+The **Info** view shows the run's identity, status, and execution metadata. Your run UUID and timestamps will differ from this example.
+
+![Baseline run information and status](/images/docs/quick-start/tracking/baseline-info.png)
+
+The **Lineage** section lists the inputs recorded before the simulation and the outputs logged when it finished.
+
+![Inputs and outputs recorded for the baseline run](/images/docs/quick-start/tracking/baseline-lineage.png)
+
+Open **Dashboards** to inspect the metric history across all 20 epochs.
+
+![Metrics logged by the baseline run](/images/docs/quick-start/tracking/baseline-metrics.png)
+
+The same dashboard also renders the image events produced by the simulator, including gradient flow, weight distributions, feature activations, and the loss landscape.
+
+![Image events logged by the baseline run](/images/docs/quick-start/tracking/baseline-images.png)
+
 ## Compare two local runs
 
 Run the same simulation with a higher learning rate:
@@ -109,15 +125,31 @@ python3 simulate_dl_experiment.py \
   --learning-rate=0.003
 ```
 
-Both runs execute on your machine and use seed `42`, 20 epochs, batch size `64`, and the simulator defaults for the remaining inputs. The only changed input is the learning rate.
+Both runs execute on your machine with seed `42`, 20 epochs, batch size `64`, and the simulator defaults for the remaining inputs. The only changed input is the learning rate.
 
 The second run converges faster and finishes with higher validation accuracy, so the effect of the learning-rate change is visible rather than buried in random variation.
 
 Return to the project's runs table, select `baseline` and `faster-learning-rate`, then open the comparison view. See [Compare runs](/docs/tracking/runs-dashboard/comparison) for the available tables and charts.
 
+The runs table keeps their metadata and results side by side.
+
+![Runs table containing the two local experiments](/images/docs/quick-start/tracking/compare-two-runs-table.png)
+
+Enable heat fields to make differences in their final outputs easier to scan.
+
+![Heat fields comparing the outputs of two local runs](/images/docs/quick-start/tracking/compare-two-runs-heat-fields.png)
+
+The comparison dashboard overlays their metric histories.
+
+![Metric charts comparing two local runs](/images/docs/quick-start/tracking/compare-two-runs-metrics.png)
+
+Image comparison places the corresponding visual events from both runs next to each other.
+
+![Image events comparing two local runs](/images/docs/quick-start/tracking/compare-two-runs-images.png)
+
 ## Run the simulator on your cluster
 
-Run the faster configuration again, this time through the Polyaxon Agent:
+Run a third configuration through the Polyaxon Agent:
 
 ```bash
 polyaxon run \
@@ -126,19 +158,41 @@ polyaxon run \
   --tags=sim \
   --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/tracking/simulate.yaml \
   -P epochs=20 \
-  -P seed=42 \
-  -P batch_size=64 \
-  -P learning_rate=0.003 \
+  -P seed=17 \
+  -P batch_size=32 \
+  -P learning_rate=0.006 \
   -l
 ```
 
-The `-l` flag streams the run's logs after it starts. The Agent schedules the simulator's container as a Kubernetes job. See the [run command reference](/docs/references/cli/run/) for more details.
+The CLI creates the managed run and prints its dashboard URL. The `-l` flag then streams its logs.
+
+![Creating the managed simulator run from the CLI](/images/docs/quick-start/tracking/schedule-managed-run.png)
+
+The Agent schedules the simulator's container as a Kubernetes job. You can inspect the same logs in the run view. See the [run command reference](/docs/references/cli/run/) for more details.
+
+![Logs from the managed simulator run](/images/docs/quick-start/tracking/managed-run-logs.png)
+
+The managed run records the same event types as the local runs.
+
+![Metric dashboard for the managed simulator run](/images/docs/quick-start/tracking/managed-run-metrics.png)
 
 ## Compare all three runs
 
 Return to the runs table and compare `baseline`, `faster-learning-rate`, and `managed-faster-learning-rate`.
 
-The two faster runs use the same simulator and inputs. Their loss and accuracy curves should closely match, while timing and runtime metadata can differ because one ran on your machine and the other ran on your cluster. In the three-run comparison, `baseline` shows the effect of the lower learning rate.
+The managed run uses the same simulator with a third set of inputs: seed `17`, batch size `32`, and learning rate `0.006`. This comparison is not a local-versus-cluster performance test. It shows how Polyaxon keeps results from different configurations and execution environments in one project.
+
+Heat fields summarize the three sets of final outputs.
+
+![Heat fields comparing all three runs](/images/docs/quick-start/tracking/compare-three-runs-heat-fields.png)
+
+Metric charts show how the three training simulations evolved.
+
+![Metric charts comparing all three runs](/images/docs/quick-start/tracking/compare-three-runs-metrics.png)
+
+Image comparison applies the same side-by-side view to image events.
+
+![Image events comparing all three runs](/images/docs/quick-start/tracking/compare-three-runs-images.png)
 
 ## What you verified
 

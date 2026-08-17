@@ -4,6 +4,14 @@ description: Delete data from Polyaxon
 sidebarTitle: Data Deletion
 ---
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
 # Data Deletion
 
 There may be cases where you want to remove data from Polyaxon, such as failed or test operations, user data for PII compliance, or an entire project.
@@ -15,7 +23,7 @@ You can delete data from Polyaxon by:
 - Deleting operations matching a query filter;
 - Deleting a project and all its data;
 - Deleting an organization; or
-- Deleting a user account.
+- Removing a user from an organization.
 
 ## Deleting Operations
 
@@ -27,12 +35,45 @@ Deleting an operation removes all associated data including logs, artifacts, eve
 
 <Tab>
 
-To delete a single operation, open its detail view and click the `Delete` button.
+To delete a single operation, choose `Delete` from its actions menu in the runs table or detail view.
 Confirm that you want to delete the operation.
 
-<Frame className="my-10" fullWidth>
-  ![Delete a single trace](/images/docs/delete-single-trace.png)
-</Frame>
+<Carousel className="mx-10 my-10">
+  <CarouselContent>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Open the operation actions menu from the runs table](/images/docs/delete-single-run-from-table.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          1. Delete an operation from the runs table.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Open the operation actions menu from its detail view](/images/docs/delete-single-run-from-full-view.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          2. You can also delete it from its detail view.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Confirm deleting the operation](/images/docs/delete-single-run-confirm.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          3. Confirm that you want to delete the operation.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
 
 </Tab>
 
@@ -77,9 +118,32 @@ DELETE /api/v1/{owner}/{project}/runs/{uuid}
 
 To delete a batch of operations, select them in the runs table and choose `Delete` from the `Actions` dropdown.
 
-<Frame className="my-10" fullWidth>
-  ![Delete a batch of traces](/images/docs/delete-trace-batch.png)
-</Frame>
+<Carousel className="mx-10 my-10">
+  <CarouselContent>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Delete selected operations from the runs table](/images/docs/delete-run-batch.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          1. Select the operations and choose Delete from the Actions menu.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Confirm deleting the selected operations](/images/docs/delete-run-batch-confirm.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          2. Confirm that you want to delete the selected operations.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
 
 </Tab>
 
@@ -123,18 +187,7 @@ Content-Type: application/json
 
 ### Delete by Query
 
-<LangTabs items={["UI", "CLI", "Python", "API"]}>
-
-<Tab>
-
-To delete all operations matching a filter, configure your desired filter in the runs table.
-Select all items and choose `Delete` from the `Actions` dropdown.
-
-<Frame className="my-10" fullWidth>
-  ![Delete traces by query](/images/docs/delete-filtered-traces.png)
-</Frame>
-
-</Tab>
+<LangTabs items={["CLI", "Python", "API"]}>
 
 <Tab>
 
@@ -199,7 +252,32 @@ Content-Type: application/json
 To delete a project, navigate to the project settings and scroll to the `Danger Zone` section.
 Confirm that you want to delete your project.
 
-{/* ![Delete a project](/images/docs/delete-project.png) */}
+<Carousel className="mx-10 my-10">
+  <CarouselContent>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Delete a project from its settings](/images/docs/delete-project.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          1. Choose Delete from the project's Danger Zone.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Confirm deleting the project](/images/docs/delete-project-confirm.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          2. Confirm that you want to delete the project.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
 
 </Tab>
 
@@ -233,7 +311,7 @@ DELETE /api/v1/{owner}/{project}
 </LangTabs>
 
 <Callout type="warning">
-  Deleting a project is irreversible. All operations, artifacts, and associated data will be permanently removed.
+  Deleting a project is irreversible. All operations, artifacts, and associated data will be permanently removed. If you may need the project later, archive it instead. Archiving removes it from the active projects list without deleting its data.
 </Callout>
 
 ## Deleting an Organization
@@ -246,7 +324,32 @@ To delete an organization, navigate to the organization settings and scroll to t
 All projects must be deleted before the organization can be removed.
 The organization and all associated data will be permanently deleted.
 
-{/* ![Delete an organization](/images/docs/delete-organization.png) */}
+<Carousel className="mx-10 my-10">
+  <CarouselContent>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Delete an organization from its settings](/images/docs/delete-organization.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          1. Choose Delete from the organization's Danger Zone.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Confirm deleting the organization](/images/docs/delete-organization-confirm.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          2. Confirm that you want to delete the organization.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
 
 </Tab>
 
@@ -271,27 +374,7 @@ DELETE /api/v1/orgs/{owner}
 
 </LangTabs>
 
-## Deleting a User Account (Cloud)
-
-<LangTabs items={["UI"]}>
-
-<Tab>
-
-Users can delete their own account from the Account Settings page.
-
-If you are the sole owner of an organization, you must first transfer ownership to another user or delete the organization before you can delete your account.
-
-<Frame className="my-10">
-  ![Delete user account](/images/docs/delete-account-settings.png)
-</Frame>
-
-</Tab>
-
-</LangTabs>
-
-Account deletion is currently available through the Cloud UI only. The public CLI, Python client, and REST API do not expose an account-deletion operation.
-
-## Deleting a User Account (Self-Hosted)
+## Removing an Organization Member
 
 Removing a user from an organization is available through the UI, Python client, and API:
 
@@ -300,6 +383,33 @@ Removing a user from an organization is available through the UI, Python client,
 <Tab>
 
 Organization owners can remove users from the organization members settings.
+
+<Carousel className="mx-10 my-10">
+  <CarouselContent>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Remove a member from the organization settings](/images/docs/delete-member-settings.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          1. Choose Remove Member from the member's Actions menu.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Confirm removing the organization member](/images/docs/delete-member-settings-confirm.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          2. Confirm that you want to remove the member.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
 
 </Tab>
 
@@ -324,4 +434,4 @@ DELETE /api/v1/orgs/{owner}/members/{name}
 
 </LangTabs>
 
-Removing organization membership does not delete the user's global account. Complete self-hosted account deletion is not exposed through the public CLI, Python client, or REST API; instance administrators should follow the supported administration procedure for their deployment.
+Removing organization membership does not delete the user's global account.

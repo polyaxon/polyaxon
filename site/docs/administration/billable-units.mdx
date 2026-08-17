@@ -8,11 +8,11 @@ description: Understand how seats, clusters, and organization capacity affect Po
 Polyaxon Cloud [pricing](/pricing) is based on your plan and the capacity assigned to your organization for each monthly billing period.
 
 - **Seats**: The number and type of users who can access your organization, including developer, read-only, and billing seats.
-- **Clusters**: The number of agents connecting Kubernetes clusters or namespaces to the Polyaxon control plane. Additional agents add multi-cluster or multi-namespace capacity.
+- **Compute clusters**: The number of Kubernetes clusters or namespaces connected to the Polyaxon control plane through Polyaxon Agent. Additional compute clusters add multi-cluster or multi-namespace capacity.
 - **Concurrency**: The maximum number of runs that can execute at the same time across your connected clusters and queues.
 - **Queues and schedules**: The number of queues and active schedules available to your organization.
 
-Each plan includes a base capacity. You can use our [pricing calculator](/pricing?calculatorOpen=true) to estimate the monthly cost of additional concurrency, queues, schedules, or clusters.
+Each plan includes a base capacity. You can use our [pricing calculator](/pricing?calculatorOpen=true) to estimate the monthly cost of additional concurrency, queues, schedules, or compute clusters.
 
 ## FAQ
 
@@ -22,4 +22,4 @@ Each plan includes a base capacity. You can use our [pricing calculator](/pricin
 
 **How is concurrency measured?** Concurrency is a capacity limit: it controls how many runs can execute simultaneously. It is not based on compute hours, CPU usage, or GPU usage.
 
-**How are clusters counted?** Polyaxon Agent connects a Kubernetes namespace or cluster to the Cloud control plane. Plans include a defined number of agents, and additional agents provide capacity for more clusters or namespaces.
+**How are compute clusters counted?** Polyaxon Agent connects a Kubernetes namespace or cluster to the Cloud control plane. Plans include a defined number of compute clusters, and additional compute clusters provide capacity for more clusters or namespaces.
