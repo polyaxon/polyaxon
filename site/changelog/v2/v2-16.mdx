@@ -4,6 +4,27 @@ description: "Polyaxon release notes, migrations, and deprecation notes for v2.1
 author: Polyaxon
 ---
 
+## V2.16.3
+
+### CLI
+
+ * **Enhancement**: Infer isOptional from an input/output default value.
+ * **Enhancement**: Sanitize events names before passing them to the API.
+ * **Fix**: Issue with client utils function that displays metrics as a line chart.
+ * **Fix**: Regression with client utils function that displays hiplot chart.
+
+### Agent
+
+ * **Fix**: Issue with agent generating invalid init containers with duplicate POLYAXON_RUN_INSTANCE.
+
+### Deployment
+
+ * **Fix**: Malformed platform secrets in Helm chart.
+
+### Commercial
+
+ * **Fix**: Issue with throttle logging failure.
+
 ## V2.16.2
 
 ### Core
