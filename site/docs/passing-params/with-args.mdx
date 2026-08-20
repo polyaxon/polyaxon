@@ -13,11 +13,12 @@ it provides documentation for the expected inputs and performs checks that other
 
 Your program can be written in any language, the only requirements to use this method for passing configurations (inputs/outputs), is that you need to provide an interface to consume arguments.
 
-Let's consider the `echo` command, you can past this content directly to Polyaxon UI or you can save it under `echo.yaml`:
+Let's consider the `echo` command. This first version is available as `passing-params/args-static.yaml`:
 
 ```yaml
 version: 1.1
 kind: component
+name: static-message
 run:
   kind: job
   container:
@@ -28,7 +29,7 @@ run:
 This is a simple program that prints information, you can run it using Polyaxon CLI:
 
 ```bash
-polyaxon run -f echo.yaml -l
+polyaxon run -f passing-params/args-static.yaml -l
 ```
 
 In order to run this program with multiple values, we can keep changing the message manually or we can expose the message to print as an input and pass it as an argument:
@@ -36,6 +37,7 @@ In order to run this program with multiple values, we can keep changing the mess
 ```yaml
 version: 1.1
 kind: component
+name: message-parameter
 inputs:
 - name: message
   type: str
@@ -46,14 +48,14 @@ run:
     command: ["echo", "{{ message }}"]
 ```
 
-Now you can run multiple version of this example without changing the polyaxonfile:
+Now you can run multiple versions of this example without changing the Polyaxonfile:
 
 ```bash
-polyaxon run -f echo.yaml -P message="test 1" -l
+polyaxon run -f passing-params/args-message.yaml -P message="test 1" -l
 ```
 
 ```bash
-polyaxon run -f echo.yaml -P message="test 2" -l
+polyaxon run -f passing-params/args-message.yaml -P message="test 2" -l
 ```
 
 
@@ -79,7 +81,8 @@ another way is to use `-HP`(`--hparams`) instead of `-P`(`--params`).
 To pass `test 1` and `test 2` to our program without invoking the CLI multiple times:
 
 ```bash
-polyaxon run -f echo.yaml -HP message='choice:["test 1","test 2"]'
+polyaxon run -f passing-params/args-message.yaml \
+  -HP message='choice:["test 1","test 2"]'
 ```
 
 This command will automatically create a [grid search](/docs/scaling/hyperparameter-tuning/#grid-search) with the following matrix configuration:
@@ -104,41 +107,42 @@ The CLI arg `-HP` is a nice way to avoid creating configuration files when itera
 we suggest that you use a proper Polyaxonfile.
 See the intro for the hyperparameter tuning in this [section](/docs/scaling/hyperparameter-tuning/) and the [optimization engine reference](/docs/references/polyaxonfile/orchestration/matrix/overview/).
 
+Matrix runs can repeat a component with inputs that Polyaxon has already executed. When that happens, Polyaxon may reuse the cached result. Add `--cache=f` if you want every generated run to execute again:
+
+```bash
+polyaxon run -f passing-params/args-message.yaml \
+  -HP message='choice:["test 1","test 2"]' \
+  --cache=f
+```
+
 ## Creating a custom program
 
 Since most Polyaxon's users are data-scientists or machine learning engineers, they generally write their programs in Python, so the content of these tutorials will be in Python as well.
 
-This is a simple application that prints your inputs, in this example we will use the `argparse` package to consume the parameters,
+This is a simple application that prints your input. In this example we use the `argparse` package to consume the parameter,
 but the same logic can be used with [python-fire](https://github.com/google/python-fire), [click](https://github.com/pallets/click), or any other library of your choice.
 
 ```python
 import argparse
 
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        '--message',
-        type=str,
-        default="Default message")
-
-    args = parser.parse_args()
-
-    print(args.message)
+parser = argparse.ArgumentParser()
+parser.add_argument("--message", type=str)
+args = parser.parse_args()
+print(args.message)
 ```
 
-We can adjust our previous polyaxonfile to run this python program, in order to avoid [uploading code](/docs/iterative-process/iterate-in-notebooks/) or [cloning a repo](/docs/iterative-process/iterate-with-cli-git-code/),
-we will pass the python code [inline](/docs/iterative-process/iterate-with-inline-scripts/):
+We can adjust our previous Polyaxonfile to run this Python program. To avoid [uploading code](/docs/iterative-process/iterate-with-cli-local-code/) or [cloning a repository](/docs/iterative-process/iterate-with-cli-git-code/),
+we will pass the Python code [inline](/docs/iterative-process/iterate-with-inline-scripts/):
 
-Let's save this changes under `echo.yaml`:
+Let's save these changes under `passing-params/args-inline-python.yaml`:
 
 ```yaml
 version: 1.1
 kind: component
+name: inline-python-parameter
 inputs:
-- name: message
-  type: str
+  - name: message
+    type: str
 run:
   kind: job
   init:
@@ -146,92 +150,81 @@ run:
         content: |
           import argparse
 
-          if __name__ == '__main__':
-              parser = argparse.ArgumentParser()
-
-              parser.add_argument(
-                  '--message',
-                  type=str,
-                  default="Default message")
-
-              args = parser.parse_args()
-
-              print(args.message)
-
-        filename: echo.py
+          parser = argparse.ArgumentParser()
+          parser.add_argument("--message", type=str)
+          args = parser.parse_args()
+          print(args.message)
+        filename: message.py
   container:
-    image: polyaxon/polyaxon-quick-start
-    workingDir: "{{ globals.artifacts_path }}"
-    command: [python3, -u, echo.py]
-    args: ["{{ params.message.as_arg }}"]
+    image: python:3.11
+    workingDir: "{{ globals.run_artifacts_path }}/uploads"
+    command: [python3, message.py]
+    args: ["--message={{ message }}"]
 ```
 
 To run this example:
 
 ```bash
-polyaxon run -f echo.yaml -P message="test 1" -l
+polyaxon run -f passing-params/args-inline-python.yaml -P message="test 1" -l
 ```
 
-## Explaining as_args
+## How the argument is passed
 
-The new `echo.yaml` file is a bit more complex, and it introduced too many new concepts.
+The component passes the resolved input through its container `args`:
 
-You can notice that we are passing the params with the `args` field, you can also notice that we used `{{ params.message.as_arg }}` which is the equivalent of `--message={{ message }}`.
-
-> **Note**: For more information about params, please check the [specification section](/docs/references/polyaxonfile/specification/params/)
-
-## Explaining init
-
-For the purpose of this example, we provided our program as an init file, we could have created a directory with this structure:
-
-```
-- echo-example/
-  - echo.yaml
-  - echo.py
+```yaml
+args: ["--message={{ message }}"]
 ```
 
-Where the `echo.py` contains:
+At runtime, Polyaxon resolves `{{ message }}` and passes one argument such as `--message=test 1` to `message.py`. See the [params specification](/docs/references/polyaxonfile/specification/params/) for other ways to transform inputs.
+
+## Upload the Python file
+
+The inline example creates `message.py` during initialization. The quick-start repository also includes the same example as separate files:
+
+```
+passing-params/
+  args-python/
+    message.py
+    message.yaml
+```
+
+`passing-params/args-python/message.py` contains:
 
 ```python
 import argparse
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        '--message',
-        type=str,
-        default="Default message")
-
-    args = parser.parse_args()
-
-    print(args.message)
+parser = argparse.ArgumentParser()
+parser.add_argument("--message", type=str)
+args = parser.parse_args()
+print(args.message)
 ```
 
-And the `echo.yaml` contains:
+`passing-params/args-python/message.yaml` contains:
 
 ```yaml
 version: 1.1
 kind: component
+name: uploaded-python-parameter
 inputs:
-- name: message
-  type: str
+  - name: message
+    type: str
 run:
   kind: job
   container:
-    image: polyaxon/polyaxon-quick-start
-    workingDir: "{{ globals.run_artifacts_path }}/uploads"
-    command: [python3, -u, echo.py]
-    args: ["{{ params.message.as_arg }}"]
+    image: python:3.11
+    workingDir: "{{ globals.run_artifacts_path }}/uploads/passing-params/args-python"
+    command: [python3, message.py]
+    args: ["--message={{ message }}"]
 ```
 
-In that case we could have used the `--upload/-u` flag to upload the code necessary for running the component:
+Use `--upload/-u` to upload `message.py` with the component:
 
 ```bash
-polyaxon run -u -f echo.yaml -P message="test 1" -l
+polyaxon run -u -f passing-params/args-python/message.yaml -P message="test 1" -l
 ```
 
-> **Note**: You can learn more about how to iterate with upload, git, and inline scripts in the [iterative process introduction section](/docs/iterative-process/iterate-in-notebooks/).
+> **Note**: You can learn more about uploads, Git, and inline scripts in the [iterative process section](/docs/iterative-process/overview/).
 
 ## Multiple params
 
@@ -241,75 +234,70 @@ Let's extend the previous example to require multiple parameters:
 ```python
 import argparse
 
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        '--message1',
-        type=str,
-        default="Default message1")
-
-    parser.add_argument(
-        '--message2',
-        type=str,
-        default="Default message2")
-
-    parser.add_argument(
-        '--message3',
-        type=str,
-        default="Default message3")
-
-    args = parser.parse_args()
-
-    print(args.message1)
-    print(args.message2)
-    print(args.message3)
+parser = argparse.ArgumentParser()
+parser.add_argument("--message1", type=str)
+parser.add_argument("--message2", type=str)
+args = parser.parse_args()
+print(args.message1)
+print(args.message2)
 ```
 
-
-And the `echo.yaml` component:
+The explicit component is available as `passing-params/args-python/messages-explicit.yaml`:
 
 ```yaml
 version: 1.1
 kind: component
+name: explicit-message-parameters
 inputs:
-- name: message1
-  type: str
-- name: message2
-  type: str
-- name: message3
-  type: str
+  - name: message1
+    type: str
+  - name: message2
+    type: str
 run:
   kind: job
   container:
-    image: polyaxon/polyaxon-quick-start
-    workingDir: "{{ globals.artifacts_path }}"
-    command: [python3, -u, echo.py]
-    args: ["{{ params.message1.as_arg }}", "{{ params.message2.as_arg }}", "{{ params.message3.as_arg }}"]
+    image: python:3.11
+    workingDir: "{{ globals.run_artifacts_path }}/uploads/passing-params/args-python"
+    command: [python3, messages.py]
+    args:
+      - "--message1={{ message1 }}"
+      - "--message2={{ message2 }}"
 ```
 
-The updated component now has a longer `args` section, and based on the logic your building the args list could be longer.
-If you are running Polyaxon v1.9.1 or higher, you can request all params as args in a single line:
+Run it with the two inputs:
 
+```bash
+polyaxon run -u -f passing-params/args-python/messages-explicit.yaml \
+  -P message1="test 1" \
+  -P message2="test 2" \
+  -l
+```
+
+For a component with many inputs, `params.as_args` generates the argument list in one line. The checked-in version is `passing-params/args-python/messages-all.yaml`:
 
 ```yaml
 version: 1.1
 kind: component
+name: all-message-parameters
 inputs:
-- name: message1
-  type: str
-- name: message2
-  type: str
-- name: message3
-  type: str
+  - name: message1
+    type: str
+  - name: message2
+    type: str
 run:
   kind: job
   container:
-    image: polyaxon/polyaxon-quick-start
-    workingDir: "{{ globals.artifacts_path }}"
-    command: [python3, -u, echo.py]
+    image: python:3.11
+    workingDir: "{{ globals.run_artifacts_path }}/uploads/passing-params/args-python"
+    command: [python3, messages.py]
     args: "{{ params.as_args }}"
 ```
 
-The value `"{{ params.as_args }}"` is equivalent to `["{{ params.message1.as_arg }}", "{{ params.message2.as_arg }}", "{{ params.message3.as_arg }}"]`.
+For these two inputs, `"{{ params.as_args }}"` resolves to the same two command-line arguments used by the explicit component.
+
+```bash
+polyaxon run -u -f passing-params/args-python/messages-all.yaml \
+  -P message1="test 1" \
+  -P message2="test 2" \
+  -l
+```

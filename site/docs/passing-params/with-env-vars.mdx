@@ -20,20 +20,18 @@ Let's look at a simple program that just prints some information based on an env
 ```python
 import os
 
-if __name__ == '__main__':
-    print(os.environ.get("INPUT_MESSAGE", "Default message"))
+print(os.environ.get("MESSAGE"))
 ```
 
-In order to run this program, we can use the following polyaxonfile `echo.yaml`:
+In order to run this program, we can use the following Polyaxonfile [`passing-params/env-vars.yaml`](https://github.com/polyaxon/polyaxon-quick-start/blob/master/passing-params/env-vars.yaml):
 
 ```yaml
 version: 1.1
 kind: component
+name: environment-variable-parameter
 inputs:
-- name: message
-  type: str
-  isOptional: true
-  value: "Default message"
+  - name: message
+    type: str
 run:
   kind: job
   init:
@@ -41,27 +39,25 @@ run:
         content: |
           import os
 
-          if __name__ == '__main__':
-              print(os.environ.get("INPUT_MESSAGE", "Default message"))
-
-        filename: echo.py
+          print(os.environ.get("MESSAGE"))
+        filename: message.py
   container:
-    image: polyaxon/polyaxon-quick-start
-    workingDir: "{{ globals.artifacts_path }}"
-    command: [python3, -u, echo.py]
+    image: python:3.11
+    workingDir: "{{ globals.run_artifacts_path }}/uploads"
+    command: [python3, message.py]
     env:
-      - name: INPUT_MESSAGE
+      - name: MESSAGE
         value: "{{ message }}"
 ```
 
 Now you can run multiple version of this example:
 
 ```bash
-polyaxon run -f echo.yaml -P message="test 1" -l
+polyaxon run -f passing-params/env-vars.yaml -P message="test 1" -l
 ```
 
 ```bash
-polyaxon run -f echo.yaml -P message="test 2" -l
+polyaxon run -f passing-params/env-vars.yaml -P message="test 2" -l
 ```
 
 ## Exposing inputs/outputs to env var
@@ -73,7 +69,7 @@ Instead of manually using the configuration:
 
 ```yaml
     env:
-      - name: INPUT_MESSAGE
+      - name: MESSAGE
         value: "{{ message }}"
 ```
 
@@ -81,11 +77,9 @@ It's possible to use the specification `toEnv` to tell Polyaxon to expose the va
 
 ```yaml
 inputs:
-- name: message
-  type: str
-  isOptional: true
-  value: "Default message"
-  toEnv: INPUT_MESSAGE  # <----
+  - name: message
+    type: str
+    toEnv: MESSAGE
 ```
 
 `toEnv` is also available on the params specification, in case the component does not define if the IO should expose the value to an env var,

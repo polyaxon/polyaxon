@@ -4,6 +4,19 @@ sidebarTitle: "Overview"
 description: "Choose how resolved component inputs and outputs reach your program."
 ---
 
+## Get the examples
+
+The runnable Polyaxonfiles for this section are in the `passing-params` directory of the [Polyaxon quick-start repository](https://github.com/polyaxon/polyaxon-quick-start).
+
+If you do not already have the repository, clone it and enter its root:
+
+```bash
+git clone https://github.com/polyaxon/polyaxon-quick-start.git
+cd polyaxon-quick-start
+```
+
+The commands in this section assume that you run them from this directory. Each page also shows the relevant Polyaxonfile so you can see how the values are mapped.
+
 A component declares typed inputs and outputs. When you start a run, an operation maps values to those definitions. The `-P/--params` option lets you provide or override input values from the CLI. Polyaxon validates and records the resolved values before executing the workload.
 
 The component must also define how its container program receives those values.

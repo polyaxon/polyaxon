@@ -12,24 +12,21 @@ In this section, we will learn how to initialize a local folder and integrate it
 
 ## Open Polyaxon quick-start
 
-If you completed the previous guide, continue from the repository's `scheduling` directory:
-
-```bash
-cd git-integration
-```
+If you completed the previous guide, continue from the `polyaxon-quick-start` repository root.
 
 <Callout type="info">
 
-Starting here directly? Clone the [quick-start repository](https://github.com/polyaxon/polyaxon-quick-start) outside the `polyaxon-basics` directory, then enter the Git integration example:
+Starting here directly? Clone the [quick-start repository](https://github.com/polyaxon/polyaxon-quick-start) outside the `polyaxon-basics` directory, enter its root, and initialize that directory with the `quick-start` project:
 
 ```bash
 git clone https://github.com/polyaxon/polyaxon-quick-start.git
-cd polyaxon-quick-start/scheduling/git-integration
+cd polyaxon-quick-start
+polyaxon init -p quick-start --polyaxonignore
 ```
 
 </Callout>
 
-There is one Polyaxonfile under `git-integration`. It is the same as the `simple.yaml` file used earlier under `experimentation`; the only difference is that this version does not include an init section.
+There is one Polyaxonfile under `scheduling/git-integration`. It is the same as the `simple.yaml` file used earlier under `scheduling`; the only difference is that this version does not include an init section.
 
 ```yaml
 version: 1.1
@@ -45,7 +42,7 @@ run:
     command: [python3, model.py]
 ```
 
-## Initialize the project
+## Add a Git preset
 
 Instead of hard-coding an init section as in the previous sections of this quick-start tutorial, initialize this local path with a Git integration that the CLI can apply automatically to our Polyaxonfiles.
 
@@ -53,30 +50,45 @@ The [init](/docs/references/cli/init/) command accepts both `--git-connection` a
 
 > With a private repository, pass a valid `--git-connection`. You can also override that connection's default repository with `--git-url`.
 
-This tutorial uses a public GitHub repository that does not require a Git connection, so we initialize this folder with `--git-url` only:
+This tutorial uses a public GitHub repository that does not require a Git connection. Add its URL to the existing repository-root configuration:
 
 ```bash
-polyaxon init -p quick-start --git-url https://github.com/polyaxon/polyaxon-quick-start
+polyaxon init --git-url=https://github.com/polyaxon/polyaxon-quick-start
 ```
 
-## Scheduling experiments after every commit
+This creates `polyaxongit.yaml` in the current directory:
 
-In the previous section of this tutorial we were using a hard-coded git initializer, the git initializer did not have any fixed revision,
-which means that every time we submit a job, Polyaxon will pull the latest commit from the remote repo, the commit could be made by us or by another user.
-By initializing a local folder we can now run operations based on changes made by us, because the CLI will patch the polyaxonfile with a code version before submitting new operations:
+```yaml
+git:
+  url: https://github.com/polyaxon/polyaxon-quick-start
+```
+
+The command does not replace the project context in `.polyaxon/.project`. It adds the Git preset used by `--git-preset`. Delete `polyaxongit.yaml` when you no longer want this directory to provide that preset.
+
+## Schedule the current Git revision
+
+The Git preset detects the current revision of the repository and adds it to the operation. When using your own repository, commit and push your changes before submitting the operation so the Agent can pull that revision.
 
 ```bash
-git commit -am "Update"
-git push origin master
-polyaxon run -f simple.yaml --git-preset
+polyaxon run -f scheduling/git-integration/simple.yaml --git-preset
 ```
 
-The last command tells Polyaxon to read the Git configuration initialized in this folder, detect the latest commit, and inject it as a [preset](/docs/scheduling/scheduling-presets/).
+Each time you commit and push a new revision, the next run with `--git-preset` uses that revision. Pass `--git-revision` to select a specific commit, branch, tag, or other tree-ish instead.
+
+## Inspect the Git lineage
+
+Open the run in the UI and select `Lineage` > `Artifacts`. The code reference records the repository URL and exact commit injected by `--git-preset`:
+
+<Frame fullWidth>
+  ![Run lineage showing the Git repository and commit used by the run](/images/docs/iterative-process/local-run-git-preset.png)
+</Frame>
+
+Unlike the [local-code run](/docs/iterative-process/iterate-with-cli-local-code/#inspect-the-uploaded-code-lineage), this run records a Git commit instead of an uploaded directory.
 
 ## Scheduling experiments with specific commits or branches
 
-We can also schedule experiments with a specific git commit, a specific branch, or a valid tree-ish:
+We can also schedule experiments with a specific git commit, a specific branch, or a valid tree-ish with `--git-revision`:
 
 ```bash
-polyaxon run -f simple.yaml --git-preset --git-revision="dev"
+polyaxon run -f scheduling/git-integration/simple.yaml --git-preset --git-revision="dev"
 ```

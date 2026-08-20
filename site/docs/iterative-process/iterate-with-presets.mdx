@@ -14,7 +14,9 @@ Often, users will probably need to use both workflows to iterate on their experi
 and after committing the changes they will need to trigger based on the git repo,
 finally, they might need to have the manifest compatible with a fork of their main repo or a repo that is named differently.
 
-In this guide, we will learn how to improve our polyaxonfile to adapt it to different situations with presets.
+In this guide, we will learn how to improve our Polyaxonfile to adapt it to different situations with presets.
+
+Run the commands from the root of the `polyaxon-quick-start` repository used by the previous local-code and Git guides. If you are starting here directly, complete the [local-code setup](/docs/iterative-process/iterate-with-cli-local-code/#clone-polyaxon-quick-start) first. The Git example also uses the `polyaxongit.yaml` created in the [Git guide](/docs/iterative-process/iterate-with-cli-git-code/#add-a-git-preset).
 
 ## Remove the git initializer from the component
 
@@ -59,7 +61,7 @@ run:
     ]
 ```
 
-You can view this file under `presets/`, we also have other files under that folder that we will use with this component.
+You can view this file under `scheduling/presets/`. The same folder contains the other files used with this component.
 
 If we try to execute this component, it will fail, since the container cannot resolve the file `model.py`.
 
@@ -79,10 +81,14 @@ template:
 
 ## Using the local code preset
 
-In this subsection we will run `presets/polyaxonfile.yaml` with `presets/upload-workingdir-preset.yaml`:
+In this subsection we will run `scheduling/presets/polyaxonfile.yaml` with `scheduling/presets/upload-workingdir-preset.yaml`:
 
 ```bash
-polyaxon run -f presets/polyaxonfile.yaml -f presets/upload-workingdir-preset.yaml -u -l
+polyaxon run \
+  -f scheduling/presets/polyaxonfile.yaml \
+  -f scheduling/presets/upload-workingdir-preset.yaml \
+  -u-from scheduling \
+  -l
 ```
 
 By running this command we will supplement the main component with the additional section that resolves the path to `model.py` from the uploaded code:
@@ -95,13 +101,16 @@ runPatch:
 
 ## Using the git integration
 
-In this subsection we will run `presets/polyaxonfile.yaml` with `presets/git-workingdir-preset.yaml` and the `--git-preset` flag:
+In this subsection we will run `scheduling/presets/polyaxonfile.yaml` with `scheduling/presets/git-workingdir-preset.yaml` and the `--git-preset` flag:
 
-In this case we will use both the [git-preset integration](/docs/iterative-process/iterate-with-cli-git-code/)
-if set, and supplement the main component with the additional section that resolves the path to `model.py` from the initialized code:
+In this case we use the [Git preset configured in the previous guide](/docs/iterative-process/iterate-with-cli-git-code/#add-a-git-preset) and supplement the main component with the section that resolves the path to `model.py` from the initialized code:
 
 ```bash
-polyaxon run -f presets/polyaxonfile.yaml -f presets/git-workingdir-preset.yaml --git-preset -l
+polyaxon run \
+  -f scheduling/presets/polyaxonfile.yaml \
+  -f scheduling/presets/git-workingdir-preset.yaml \
+  --git-preset \
+  -l
 ```
 
 By running this command we will supplement the main component with the additional section that resolves the path to `model.py` from the git integration:
@@ -114,12 +123,16 @@ runPatch:
 
 ## Using the custom git preset and git workingDir
 
-In this subsection we will run `presets/polyaxonfile.yaml` with `presets/git-init.yaml` and `presets/git-workingdir-preset.yaml`:
+In this subsection we will run `scheduling/presets/polyaxonfile.yaml` with `scheduling/presets/git-init.yaml` and `scheduling/presets/git-workingdir-preset.yaml`:
 
-This is similar to the previous subsection, the only difference is that we do not use `--git-preset` but instead we provide our own `presets/git-init.yaml` file:
+This is similar to the previous subsection. The difference is that we do not use `--git-preset`; instead, we provide `scheduling/presets/git-init.yaml`:
 
 ```bash
-polyaxon run -f presets/polyaxonfile.yaml -f presets/git-workingdir-preset.yaml -f presets/git-init.yaml -l
+polyaxon run \
+  -f scheduling/presets/polyaxonfile.yaml \
+  -f scheduling/presets/git-workingdir-preset.yaml \
+  -f scheduling/presets/git-init.yaml \
+  -l
 ```
 
 By running this command we will supplement the main component with the additional section that resolves the path to `model.py` from the git preset:
@@ -135,6 +148,6 @@ runPatch:
 In this guide we only extracted the logic for initializing/uploading the code and for setting the `workingDir`, but presets are a very powerful feature in Polyaxon,
 it allows users to define several reusable configurations, e.g. complex node selectors, resources requirements, ...
 
-You can check the folder [helpers](https://github.com/polyaxon/polyaxon-quick-start/tree/master/helpers) which contains additional preset examples.
+You can check the [helpers folder](https://github.com/polyaxon/polyaxon-quick-start/tree/master/scheduling/helpers) for additional preset examples.
 
-> For mode details about using presets please check the [scheduling presets guide](/docs/scheduling/scheduling-presets/)
+> For more details about using presets, see the [scheduling presets guide](/docs/scheduling/scheduling-presets/).

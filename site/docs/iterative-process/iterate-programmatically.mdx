@@ -221,7 +221,7 @@ Polyaxon CLI can also start new executions based on Python files similar to the 
 We can start a new experiment by running the following command:
 
 ```bash
-polyaxon run -pm path/to/typed_experiment.py:component -P epochs=10 -l
+polyaxon run -pm scheduling/experimentation/typed.py:component -P epochs=10 -l
 ```
 
 You probably noticed that we passed the name of the variable `component` in `typed_experiment.py:component`.
@@ -241,7 +241,7 @@ main = V1Component(...)
 By running the following command:
 
 ```bash
-polyaxon run -pm path/to/typed_experiment.py -P epochs=10 -l
+polyaxon run -pm path/to/components.py -P epochs=10 -l
 ```
 
 Polyaxon will run the component named `main` by default. In order to run `component1` or `component2` we need to execute the following commands:

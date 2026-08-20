@@ -3,6 +3,14 @@ title: "Iterate with inline scripts"
 description: "Often, users want to just execute a script specified as a here-script (also known as a here-doc) in their operation"
 ---
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
 Sometime users may want to execute a script in their operation or to generate a file that can be used as an input for an init container or the main container without cloning a repo.
 
 
@@ -27,6 +35,49 @@ run:
 ```
 
 This example creates a file `script.py` in the init section and executes it in the main container.
+
+## Run the inline script
+
+You can submit the complete Polyaxonfile above from the UI or the CLI.
+
+### Using the UI
+
+In the `quick-start` project, open the create menu and select **New job**. Paste the Polyaxonfile into the editor, then select **Create**.
+
+<Carousel className="mx-10 my-10">
+  <CarouselContent>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Open the create menu and select New job](/images/docs/iterative-process/create-job.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          1. Open the create menu and select New job.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+    <CarouselItem>
+      <figure className="m-0">
+        <Frame className="my-0" fullWidth>
+          ![Paste the inline-script Polyaxonfile into the new job editor](/images/docs/iterative-process/job-yaml.png)
+        </Frame>
+        <figcaption className="mt-3 text-center text-sm text-text-secondary">
+          2. Paste the Polyaxonfile and create the job.
+        </figcaption>
+      </figure>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+
+### Using the CLI
+
+Save the same Polyaxonfile as `inline-script.yaml`, then run:
+
+```bash
+polyaxon run -p quick-start -f inline-script.yaml -l
+```
 
 Similar to all other init containers, we could provide a custom path where the file should be initializer:
 

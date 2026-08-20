@@ -315,13 +315,31 @@ polyaxon run -p quick-start --url=https://raw.githubusercontent.com/polyaxon/pol
 
 ## Let's compare the experiments on the dashboard
 
+Open the project's **Jobs** page. Use the column picker to display the output metrics you want to compare.
+
+![select-columns](/images/dashboard/comparison/select-columns.png)
+
+Next, add a sort field to rank the runs by a metric such as accuracy.
+
 ![comparison-sort](/images/dashboard/comparison/sort.png)
 
-![comparison-sort](/images/dashboard/comparison/compare.png)
+Add the metrics to the heat grid to make high and low values easier to spot.
 
-![comparison-many](/images/dashboard/comparison/charts-many.png)
+![comparison-heat-fields](/images/dashboard/comparison/select-heat-fields.png)
 
-And we can also start a tensorboard for multiple runs:
+The table now shows the selected metrics, sorts the runs by accuracy, and uses color to expose the differences between them.
+
+![comparison-compare](/images/dashboard/comparison/compare.png)
+
+To inspect how the metrics changed during each run, open the layout menu and select **Events**.
+
+![comparison-select-events-dashboard](/images/dashboard/comparison/select-events-dashboard.png)
+
+The Events view plots the selected runs together so you can compare their metric histories.
+
+![comparison-charts-many](/images/dashboard/comparison/charts-many.png)
+
+For a more detailed comparison, start a TensorBoard service for the runs. Polyaxon loads them into the same TensorBoard instance:
 
 ![comparison-tensorboard-compare](/images/dashboard/comparison/tensorboard-compare.png)
 

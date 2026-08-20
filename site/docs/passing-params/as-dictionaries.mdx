@@ -34,7 +34,7 @@ run:
         print(f"epochs={config['epochs']}")
   container:
     image: python:3.11
-    workingDir: "{{ globals.artifacts_path }}"
+    workingDir: "{{ globals.run_artifacts_path }}/uploads"
     command: [python3, main.py]
 ```
 
@@ -54,6 +54,8 @@ epochs=20
 ```
 
 Polyaxon records `config` as one run input. Its nested keys are not separate inputs, so they cannot be compared or overridden independently. Declare `learning_rate` and `epochs` as separate inputs when you need that behavior.
+
+The quick-start repository also contains an [argument-based dictionary example](https://github.com/polyaxon/polyaxon-quick-start/blob/master/passing-params/dictionary.yaml).
 
 ## Forward inputs and outputs from another operation
 

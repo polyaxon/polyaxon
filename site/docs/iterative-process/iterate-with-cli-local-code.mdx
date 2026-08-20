@@ -20,18 +20,18 @@ If you followed the Quick Start and are still in `polyaxon-basics`, return to it
 cd ..
 ```
 
-Clone the [quick-start](https://github.com/polyaxon/polyaxon-quick-start) repo, then enter its `scheduling` directory:
+Clone the [quick-start](https://github.com/polyaxon/polyaxon-quick-start) repo, then enter the repository root:
 
 ```bash
 git clone https://github.com/polyaxon/polyaxon-quick-start.git
-cd polyaxon-quick-start/scheduling
+cd polyaxon-quick-start
 ```
 
 `polyaxon-basics` is the working directory created by the Quick Start. `polyaxon-quick-start` is the example repository used by this and later guides.
 
 ## Check the Polyaxonfile for the local integration
 
-Under `local-integration` there is a single Polyaxonfile for this example. It is the same as the `simple.yaml` file used earlier under `experimentation`; the only difference is that this version does not include an init section.
+Under `scheduling/local-integration` there is a single Polyaxonfile for this example. It is the same as the `simple.yaml` file used earlier under `scheduling`; the only difference is that this version does not include an init section.
 
 ```yaml
 version: 1.1
@@ -54,7 +54,7 @@ The value `uploads` can be any subpath where you decide to upload your local cod
 
 ## Initialize the project
 
-Instead of hard-coding an init section as in the previous sections of this quick-start tutorial, initialize this local path to use the CLI cache and avoid passing the project to every command:
+Instead of hard-coding an init section as in the previous sections of this quick-start tutorial, initialize the repository root to use the CLI cache and avoid passing the project to every command:
 
 ```bash
 polyaxon init -p quick-start --polyaxonignore
@@ -69,17 +69,30 @@ In the previous section, we used a hard-coded Git initializer. That workflow req
 In this section, we upload the local code before starting an operation:
 
 ```bash
-polyaxon run -f local-integration/simple.yaml -u
+polyaxon run \
+  -f scheduling/local-integration/simple.yaml \
+  -u-from scheduling \
+  -l
 ```
 
 This tells Polyaxon to upload the current directory, while respecting the `.polyaxonignore` patterns, before starting the experiment.
+
+## Inspect the uploaded-code lineage
+
+Open the run in the UI and select `Lineage` > `Artifacts`. The `uploads` input is the directory packaged by `-u`:
+
+<Frame fullWidth>
+  ![Run lineage showing the uploaded local directory as an input](/images/docs/iterative-process/local-run-lineage-upload.png)
+</Frame>
+
+This run points to files uploaded from your machine. It has no Git code reference.
 
 ## Uploading and scheduling experiments using a different path
 
 To upload code or artifacts to a path other than the default `uploads`, for example `code`:
 
 - Change the Polyaxonfile to use `workingDir: "{{ globals.run_artifacts_path }}/code"`.
-- Run the upload command with a specific path: `polyaxon run -f local-integration/simple.yaml -u-to code`.
+- Run the upload command with a specific path: `polyaxon run -f scheduling/local-integration/simple.yaml -u-from scheduling -u-to code`.
 
 If your local folder is large, and several subpaths are not necessary, you can also use `-u-from/--upload-from`.
 
