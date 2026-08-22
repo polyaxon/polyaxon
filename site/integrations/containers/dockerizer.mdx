@@ -8,10 +8,10 @@ Polyaxon allows users to build container images using a native builder.
 
 ## Overview
 
-Polyaxon provides a simple component for building containers with a native builder, you can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/dockerizer/versions) for more details.
+Polyaxon provides a simple component for building containers with a native builder. You can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/dockerizer/components/) for more details.
 
 All versions of this component expect a `destination`; this is the `image:tag` that the component will push the image to.
-Since, you will need to provide auth and other information to resolve the registry, 
+Since, you will need to provide auth and other information to resolve the registry,
 you will generally need to pass a connection with the destination value:
 
 ```yaml
@@ -24,7 +24,7 @@ params:
 You can additionally customize some other aspects about this built-in component:
  * context: default is `{{ globals.artifacts_path }}`
  * nocache: default is `false`
- 
+
 Please see the [component's definition](https://cloud.polyaxon.com/ui/polyaxon/dockerizer/components/latest) for more details about the implementation.
 
 ## Setting a registry connection
@@ -33,7 +33,7 @@ Before you can use this component, you need to make sure to declare a registry c
 
 Please read this introduction to [registry connections](/docs/setup/connections/registry/) to understand the process, and this list of [registry integrations](/integrations/registries/) that you can use.
 
-## Creating containers 
+## Creating containers
 
 ### Using an init `dockerfile`
 
@@ -132,10 +132,10 @@ runPatch:
 hubRef: dockerizer
 ```
 
-Since we are setting the context to the match where the repo will be initialized, 
+Since we are setting the context to the match where the repo will be initialized,
 `Dockerizer` will look for any file called `Dockerfile` under that path, which should be populated with the code from git repo.
 
-## Queues, presets, node scheduling, custom resources, ... 
+## Queues, presets, node scheduling, custom resources, ...
 
 You can customize the queue, presets, environment section, node selector, connections, initializers, resources requirements, ...
 
@@ -157,7 +157,7 @@ runPatch:
     resources:
       requests:
         memory: 300Mi
-``` 
+```
 
 ## Forking and customizing the component
 
@@ -167,7 +167,7 @@ we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can build container using:
 
  * `polyaxon run -f my-custom-dockerizer.yaml`
- * `polyaxon run --url https://path/to/my-custom-dockerizer.yaml` 
+ * `polyaxon run --url https://path/to/my-custom-dockerizer.yaml`
 
 On Polyaxon Cloud or Polyaxon EE, you just need to add a new [component hub](/docs/registry/component-hub/).
 The end users will need to run with `org-name/dockerizer` instead of `dockerizer`:

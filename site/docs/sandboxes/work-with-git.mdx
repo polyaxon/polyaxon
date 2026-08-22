@@ -18,7 +18,7 @@ To clone into the scratch workspace after the service starts:
 
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- \
-  git clone REPOSITORY_URL /workspace/repo
+  git clone https://github.com/polyaxon/polyaxon-quick-start.git /workspace/repo
 ```
 
 ## Inspect the Repository
@@ -39,7 +39,8 @@ polyaxon sandbox shell -p quick-start -uid $RUN_UUID
 For small files or patches:
 
 ```bash
-polyaxon sandbox upload -p quick-start -uid $RUN_UUID ./train.py /workspace/repo/train.py
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
+  ./scheduling/model.py /workspace/repo/scheduling/model.py
 ```
 
 For larger repository workflows, use SSH with your local Git tooling or clone directly from inside the sandbox.

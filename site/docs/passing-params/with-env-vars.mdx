@@ -43,7 +43,7 @@ run:
         filename: message.py
   container:
     image: python:3.11
-    workingDir: "{{ globals.run_artifacts_path }}/uploads"
+    workingDir: "{{ globals.artifacts_path }}"
     command: [python3, message.py]
     env:
       - name: MESSAGE

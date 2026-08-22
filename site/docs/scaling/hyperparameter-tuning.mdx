@@ -45,13 +45,13 @@ It then generates multiple operations based on the search space and manages thei
 Running an operation with a hyperparameter tuning matrix is similar to any other operation:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_grid.yaml
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/optimization/hyperparams_grid.yaml
 ```
 
 If you have cloned the quick-start repo, you can run:
 
 ```bash
-polyaxon run -f optimization/hyperparams_grid.yaml
+polyaxon run -f scheduling/optimization/hyperparams_grid.yaml
 ```
 
 > For more details check the [grid search reference](/docs/references/polyaxonfile/orchestration/matrix/grid-search/).
@@ -59,7 +59,7 @@ polyaxon run -f optimization/hyperparams_grid.yaml
 You can also use the CLI to run this operation without creating a Polyaxonfile:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml -HP learning_rate='linspace:[0.001,0.1,5]' -HP conv_activation='choice:[0.25, 0.3]' -HP dropout='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml -HP learning_rate='linspace:[0.001,0.1,5]' -HP dropout='choice:[0.25, 0.3]' -HP conv_activation='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
 ```
 
 ## Random search
@@ -91,7 +91,7 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/s
 To run this polyaxonfile:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_random.yaml
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/optimization/hyperparams_random.yaml
 ```
 
 Random search also provides access to the continuous distributions in addition to the discrete distributions.
@@ -101,7 +101,7 @@ Random search also provides access to the continuous distributions in addition t
 You can also use the CLI to run this operation without creating a Polyaxonfile:
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml --matrix-kind random --matrix-num-runs 10 -HP learning_rate='linspace:[0.001,0.1,5]' -HP conv_activation='choice:[0.25, 0.3]' -HP dropout='choice:[relu, sigmoid]' -HP epochs='choice:[5, 10]'
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml --matrix-kind random --matrix-num-runs 10 -HP learning_rate='linspace:[0.001,0.1,5]' -HP dropout='choice:[0.25, 0.3]' -HP conv_activation='pchoice:[[relu, 0.1], [sigmoid, 0.8]]' -HP epochs='choice:[5, 10]' --matrix-concurrency=2
 ```
 
 ## Learn More
@@ -113,4 +113,4 @@ You can also learn about tools to [control caching](/docs/references/polyaxonfil
 and [concurrency](/docs/references/polyaxonfile/helpers/concurrency/) for enforcing of parallelism.
 Finally, every pipeline in Polyaxon can also define [early stopping strategies](/docs/references/polyaxonfile/helpers/early-stopping/).
 
-The repo contains more hyperparameter tuning examples in the automation folder.
+The repo contains more hyperparameter tuning examples in the `scheduling/optimization` folder.

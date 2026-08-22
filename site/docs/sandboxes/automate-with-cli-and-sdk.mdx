@@ -15,9 +15,11 @@ This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/)
 ## Script commands
 
 ```bash
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
+  ./sandbox/smoke.py /workspace/smoke.py
 polyaxon sandbox ping -p quick-start -uid $RUN_UUID
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
-polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- pytest tests/smoke
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- python /workspace/smoke.py
 ```
 
 ## Run background work
@@ -25,15 +27,19 @@ polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- pytest tests/smo
 Start a detached process and keep its execution ID:
 
 ```bash
-EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- sh -lc 'python scripts/profile.py')
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
+  ./sandbox/profile.py /workspace/profile.py
+EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- python /workspace/profile.py)
 polyaxon sandbox logs -p quick-start -uid $RUN_UUID $EXEC_ID
 ```
 
 ## Move files
 
 ```bash
-polyaxon sandbox upload -p quick-start -uid $RUN_UUID ./config.yaml /workspace/config.yaml
-polyaxon sandbox download -p quick-start -uid $RUN_UUID /workspace/profile.json ./profile.json
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
+  ./sandbox/config.yaml /workspace/config.yaml
+polyaxon sandbox download -p quick-start -uid $RUN_UUID \
+  /workspace/profile.json ./sandbox/profile.downloaded.json
 ```
 
 Remote paths are absolute paths inside the service container. Replace `/workspace` with a directory that exists in your image.

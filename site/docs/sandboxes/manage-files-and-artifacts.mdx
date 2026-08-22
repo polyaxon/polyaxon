@@ -25,13 +25,15 @@ polyaxon sandbox ls -p quick-start -uid $RUN_UUID /workspace --recursive
 ## Upload Files
 
 ```bash
-polyaxon sandbox upload -p quick-start -uid $RUN_UUID ./local.txt /workspace/local.txt
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
+  ./sandbox/local.txt /workspace/local.txt
 ```
 
 ## Download Files
 
 ```bash
-polyaxon sandbox download -p quick-start -uid $RUN_UUID /workspace/results.json ./results.json
+polyaxon sandbox download -p quick-start -uid $RUN_UUID \
+  /workspace/local.txt ./sandbox/local.downloaded.txt
 ```
 
 ## Preserve Outputs

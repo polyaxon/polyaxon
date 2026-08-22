@@ -39,7 +39,9 @@ polyaxon ops logs -p quick-start -uid $RUN_UUID
 Start a detached sandbox command and keep the execution ID returned by the CLI:
 
 ```bash
-EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- python scripts/check.py)
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
+  ./sandbox/check.py /workspace/check.py
+EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- python /workspace/check.py)
 ```
 
 Read that process's logs later:

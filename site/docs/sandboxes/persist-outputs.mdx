@@ -36,10 +36,14 @@ See [tracking artifacts](/docs/tracking/logging/artifacts/) for artifact logging
 
 ## Download Scratch Files
 
-If you followed the quick start, use sandbox download when a file is still in `/workspace` rather than the synced outputs directory. Otherwise, replace the source with an existing absolute path in the running container:
+Use sandbox download when a file is still in `/workspace` rather than the synced outputs directory. This example uploads and runs the profile fixture before downloading its output:
 
 ```bash
-polyaxon sandbox download -p quick-start -uid $RUN_UUID /workspace/report.json ./report.json
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
+  ./sandbox/profile.py /workspace/profile.py
+polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python /workspace/profile.py
+polyaxon sandbox download -p quick-start -uid $RUN_UUID \
+  /workspace/profile.json ./sandbox/profile.downloaded.json
 ```
 
 ## Commit Code Changes

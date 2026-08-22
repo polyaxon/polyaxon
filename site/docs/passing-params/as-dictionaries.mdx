@@ -34,14 +34,14 @@ run:
         print(f"epochs={config['epochs']}")
   container:
     image: python:3.11
-    workingDir: "{{ globals.run_artifacts_path }}/uploads"
+    workingDir: "{{ globals.artifacts_path }}"
     command: [python3, main.py]
 ```
 
-Save the component as `config.yaml`, then pass the dictionary as JSON:
+The component is available as `passing-params/dictionary.yaml`. Pass the dictionary as JSON:
 
 ```bash
-polyaxon run -f config.yaml \
+polyaxon run -f passing-params/dictionary.yaml \
   -P config='{"learning_rate":0.003,"epochs":20}' \
   -l
 ```
@@ -54,8 +54,6 @@ epochs=20
 ```
 
 Polyaxon records `config` as one run input. Its nested keys are not separate inputs, so they cannot be compared or overridden independently. Declare `learning_rate` and `epochs` as separate inputs when you need that behavior.
-
-The quick-start repository also contains an [argument-based dictionary example](https://github.com/polyaxon/polyaxon-quick-start/blob/master/passing-params/dictionary.yaml).
 
 ## Forward inputs and outputs from another operation
 

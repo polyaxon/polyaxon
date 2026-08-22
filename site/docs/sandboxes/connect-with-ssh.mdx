@@ -52,7 +52,7 @@ polyaxon ssh connect -p quick-start -uid $RUN_UUID -- -L 8888:127.0.0.1:8888 -N
 Print a config block and add it to your SSH config:
 
 ```bash
-polyaxon ssh config -p quick-start -uid $RUN_UUID
+polyaxon ssh config -p quick-start -uid $RUN_UUID >> ~/.ssh/config
 ```
 
 Then connect with your local client:

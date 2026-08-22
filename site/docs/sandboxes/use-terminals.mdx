@@ -36,6 +36,8 @@ polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- sh -lc 'pip list
 Detached commands keep running after the CLI exits:
 
 ```bash
+polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
+  ./sandbox/train.py /workspace/train.py
 EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- sh -lc 'python train.py')
 ```
 

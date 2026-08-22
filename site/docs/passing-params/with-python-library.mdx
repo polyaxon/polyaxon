@@ -46,7 +46,7 @@ run:
         filename: main.py
   container:
     image: polyaxon/polyaxon-quick-start
-    workingDir: "{{ globals.run_artifacts_path }}/uploads"
+    workingDir: "{{ globals.artifacts_path }}"
     command: [python3, main.py]
 ```
 
@@ -101,7 +101,7 @@ run:
         filename: main.py
   container:
     image: polyaxon/polyaxon-quick-start
-    workingDir: "{{ globals.run_artifacts_path }}/uploads"
+    workingDir: "{{ globals.artifacts_path }}"
     command: [python3, main.py]
 ```
 
