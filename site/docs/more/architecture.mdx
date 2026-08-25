@@ -9,7 +9,7 @@ Polyaxon is a decoupled platform split into two planes:
 
 - A **control plane** that holds state, exposes the API, compiles and schedules
   operations, and serves the UI, logs, and artifacts.
-- An **execution plane** of one or more Kubernetes clusters where **Agents** run
+- An **execution plane** of one or more Kubernetes clusters where **Agents (compute clusters)** run
   the actual workloads.
 
 The two planes communicate asynchronously, so submission spikes never block the

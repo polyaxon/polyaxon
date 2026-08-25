@@ -55,7 +55,7 @@ Polyaxon self-hosted is optimized for production environments. It is the exact s
 
 Some of the optimizations include:
 
-- **Asynchronous scheduling**: Operations are compiled and validated by the Compiler, then placed in queues managed by Agents. The Scheduler coordinates with Agents asynchronously via Redis/RabbitMQ, ensuring high spikes in submission load do not block the API or lead to timeouts.
+- **Asynchronous scheduling**: Operations are compiled and validated by the Compiler, then placed in queues managed by Agents (compute clusters). The Scheduler coordinates with Agents asynchronously via Redis/RabbitMQ, ensuring high spikes in submission load do not block the API or lead to timeouts.
 - **Agent-based execution**: Agents deployed on Kubernetes clusters poll the control plane for work and manage workloads locally via the Operator. This decoupled architecture enables multi-cluster deployments and complete isolation between the control plane and execution environments.
 - **Caching of API keys and tokens**: API keys and agent tokens are cached in Redis. The database is not hit on every API call and unauthorized requests can be rejected with very low resource usage.
 - **Artifacts in object storage**: All artifacts, logs, and model files are stored directly in S3/GCS/Azure/NFS. Large files are uploaded directly from the client SDKs to the configured artifacts store, keeping the API lightweight.

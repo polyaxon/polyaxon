@@ -11,7 +11,7 @@ Polyaxon provides two features to prioritize work:
 
 ## Queue Priority
 
-Polyaxon allows to define a priority on each queue. The priority of a queue dictates how fast will Polyaxon move your operations from the that queue and pass it to Kubernetes relative to other queues defined under each agent.
+Polyaxon allows to define a priority on each queue. The priority of a queue dictates how fast will Polyaxon move your operations from the that queue and pass it to Kubernetes relative to other queues defined under each agent (compute cluster).
 For example, you may want put a Notebook operation or a debug operation on a priority queue while you may want to put a large hyperparameter search on a lower priority queue.
 
 To use the queue priority feature, you need to define multiple queues with different priorities and you need to use the `queue` field to assign operations to queues.
@@ -23,4 +23,3 @@ This is useful when some operations need to acquire resources faster than others
 For example, you may want to schedule a notebook service to acquire a node before a long training job.
 
 To set Kubernetes priority on an operation, you need to set the fields [priority](/docs/references/polyaxonfile/specification/environment/#priority) and/or [priority_class_name](/docs/references/polyaxonfile/specification/environment/#priorityclassname).
-

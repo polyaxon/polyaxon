@@ -30,7 +30,7 @@ See [security documentation](/security) of Polyaxon Cloud for more details.
 The following internal connections are required within the cluster:
 
   * The **API and scheduler** services need access to the PostgreSQL database and the cache (Redis or RabbitMQ).
-  * The **Polyaxon Agent** needs access to the Kubernetes API server to create and manage workloads.
+  * The **Polyaxon Agent (compute cluster)** needs access to the Kubernetes API server to create and manage workloads.
   * The **Agent and workloads** need access to the configured artifacts store (e.g. S3, GCS, Azure Blob Storage, or a local/NFS volume).
   * When using a [multi-namespace](/docs/setup/deployment-strategies/strategies#multi-namespace-deployment) or [multi-cluster](/docs/setup/deployment-strategies/strategies#multi-cluster-deployment) setup, each agent needs network connectivity back to the control plane API.
 

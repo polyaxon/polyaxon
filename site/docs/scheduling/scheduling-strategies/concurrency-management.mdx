@@ -10,7 +10,7 @@ Polyaxon has 3 levels of concurrency and parallelism management, each level serv
 ## Global organization limit
 
 This is the highest concurrency limit you can achieve in your organization. This value depends on your subscription plan.
-Every agent created has a default queue, we configure that default queue with unlimited concurrency to allow users to maximize their plan's usage.
+Every agent (compute cluster) created has a default queue, we configure that default queue with unlimited concurrency to allow users to maximize their plan's usage.
 
 We suggest that you always leave at least a single queue with the highest priority and unlimited concurrency.
 If you are running a debug operation or need to see the results of an experiment quickly,

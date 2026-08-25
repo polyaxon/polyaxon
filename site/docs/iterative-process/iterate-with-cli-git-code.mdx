@@ -67,7 +67,7 @@ The command does not replace the project context in `.polyaxon/.project`. It add
 
 ## Schedule the current Git revision
 
-The Git preset detects the current revision of the repository and adds it to the operation. When using your own repository, commit and push your changes before submitting the operation so the Agent can pull that revision.
+The Git preset detects the current revision of the repository and adds it to the operation. When using your own repository, commit and push your changes before submitting the operation so the Agent (compute cluster) can pull that revision.
 
 ```bash
 polyaxon run -f scheduling/git-integration/simple.yaml --git-preset

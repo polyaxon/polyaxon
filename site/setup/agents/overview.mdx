@@ -1,6 +1,6 @@
 ---
-title: "Install Polyaxon Agent on Kubernetes"
-description: "This is a guide to assist you through the process of setting up a Polyaxon Agent deployment using Kubernetes."
+title: "Install Polyaxon Agent (compute cluster) on Kubernetes"
+description: "This is a guide to assist you through the process of setting up a Polyaxon Agent (compute cluster) deployment using Kubernetes."
 ---
 
 <blockquote className="commercial">This is part of our commercial offering.</blockquote>
@@ -11,11 +11,11 @@ If you are here, we assume that you have access to a Polyaxon EE Control Plane o
 
 ![polyaxon agent](/images/references/agent/agent-operator.png)
 
- * Agents interact with Polyaxon Control Plane to check the queues that they manage for operations to start, stop, or update.
+ * Agents (compute clusters) interact with Polyaxon Control Plane to check the queues that they manage for operations to start, stop, or update.
  * Agents can deploy different artifacts store and connections to ensure isolation, it's also possible to deploy similar configurations on different clusters to enable access to new resources, e.g. on-prem GPU and GKE for TPUs.
  * Agents can be used to deploy jobs / distributed jobs workload, but they can also deploy and expose services.
 
-It's important to note that Polyaxon Agent is an important piece in Polyaxon's architecture to enable complete isolation of workload and artifacts and a hybrid execution and management of resources.
+It's important to note that Polyaxon Agent (compute cluster) is an important piece in Polyaxon's architecture to enable complete isolation of workload and artifacts and a hybrid execution and management of resources.
 
 ![polyaxon agent](/images/references/agent/agent-execution.png)
 

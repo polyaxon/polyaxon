@@ -30,7 +30,7 @@ The compiler handles several use cases:
 When used in the CLI or Client, the compiler will scan manifests and ensure that all required inputs and outputs have values and that all values are compatible with their types.
 If a manifest has a DAG runtime, it will check that the graph is acyclic, that the information flowing from one operation to another is allowed and corresponds to the expected types.
 
-The full compilation (resolution and conversion) is separated into two major steps, one on the control plane and the other on the agent running on the user's cluster,
+The full compilation (resolution and conversion) is separated into two major steps, one on the control plane and the other on the agent (compute cluster) running on the user's cluster,
 this way Polyaxon Control Plane does not require access to proprietary information or secrets and provides a federation layer.
 
 In Polyaxon CE, this separation is nonexistent, and the compiler is very lightweight and runs on the API or the Scheduler.

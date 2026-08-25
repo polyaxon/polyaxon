@@ -16,7 +16,7 @@ Sometimes it's useful to combine the environment section, container resources, a
 Presets provide the abstraction to combine these notions into a simple reference.
 Let's look again at the example where we would like to expose a large instance machine to the end-users, but only allow running two instances at the same time.
 
-We first need to create a queue on the agent where we would like to expose the GPU instances. please see the [queues](/docs/administration/organizations/queues/) management section.
+We first need to create a queue on the agent (compute cluster) where we would like to expose the GPU instances. please see the [queues](/docs/administration/organizations/queues/) management section.
 After creating the queue, we can include it in the preset definition.
 
 ```yaml

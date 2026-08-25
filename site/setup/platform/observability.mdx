@@ -36,7 +36,7 @@ The CLI can also report errors to Sentry via the log handler configuration retur
 
 ## Infrastructure Monitoring
 
-Polyaxon integrates with several monitoring and observability tools. Since Polyaxon runs on Kubernetes, standard infrastructure monitoring tools can observe all Polyaxon components (API, scheduler, agent, gateway) alongside the rest of your cluster.
+Polyaxon integrates with several monitoring and observability tools. Since Polyaxon runs on Kubernetes, standard infrastructure monitoring tools can observe all Polyaxon components (API, scheduler, agent (compute cluster), gateway) alongside the rest of your cluster.
 
 - **[Datadog](https://www.datadoghq.com/)** — Use the Datadog Agent with Kubernetes integration to collect metrics, logs, and traces from Polyaxon pods. Datadog's autodiscovery automatically detects and monitors Polyaxon containers.
 - **[Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/)** — Scrape Kubernetes metrics from Polyaxon pods and build custom dashboards. Use kube-state-metrics and node-exporter for cluster-level monitoring.

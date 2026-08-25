@@ -63,7 +63,7 @@ graph TB
     subgraph Cluster["Kubernetes Cluster"]
         subgraph Node["Single Node"]
             CP["Polyaxon Control Plane"]
-            Agent["Polyaxon Agent"]
+            Agent["Polyaxon Agent (compute cluster)"]
             W1["Workload (Job/Service)"]
             W2["Workload (Job/Service)"]
             CP --> Agent
