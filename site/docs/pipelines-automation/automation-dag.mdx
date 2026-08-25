@@ -30,22 +30,8 @@ inputs:
 run:
   kind: dag
   operations:
-  - name: build
-    hubRef: dokerizer
-    params:
-      destination:
-        connection: docker-connection
-        value: polyaxon/polyaxon-quick-start
-    runPatch:
-      init:
-      - dockerfile:
-          image: "tensorflow/tensorflow:2.2.0"
-          run:
-          - 'pip3 install --no-cache-dir -U polyaxon'
-          langEnv: 'en_US.UTF-8'
   - name: experiment
     urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml"
-    dependencies: [build]
     params:
       learning_rate:
         value: 0.005
@@ -106,7 +92,7 @@ it will start a tuning job based on a random search algorithm. Finally, it will 
 The DAG itself is parameterized, we can pass different values for `max_loss` and `top`.
 
 ```bash
-polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/dags/dag.yaml -P loss=0.002 -P top=10
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/dags/dag.yaml -P max_loss=0.002 -P top=10
 ```
 
 A DAG definition is also managed internally by a pipeline, which means you can also leverage all

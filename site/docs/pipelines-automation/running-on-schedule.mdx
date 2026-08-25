@@ -15,23 +15,25 @@ The file `schedules/recurrent_training.yaml` contains an operation definition wi
 ```yaml
 version: 1.1
 kind: operation
-name: every monday check
+name: every-60-minute
 schedule:
-  kind: cron
-  cron: "0 0 * * MON"
+  kind: interval
+  frequency: 3600
+  dependsOnPast: true
 params:
-  schedule_at:
-    value: '{{ globals.schedule_at }}'
-    contextOnly: true
   optimizer: {value: sgd}
   epochs: {value: 1}
 urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/experimentation/typed.yaml
 ```
 
-This schedule is of kind `cron`, and it will start an experiment every monday.
-If you need to start this schedule at a specific date you can set the `startAt` field, and to provide a stopping condition you can provide `endAt` or `maxRuns`.
+Run this schedule:
 
-> N.B.: We are providing the `schedule_at` variable to ensure that the operations are not marked as `cache hit` and without disabling the cache.
+```bash
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/schedules/recurrent_training.yaml
+```
+
+This interval schedule starts an experiment every 60 minutes. With `dependsOnPast: true`, Polyaxon waits for the previous execution to finish before scheduling the next one.
+If you need to start this schedule at a specific date you can set the `startAt` field, and to provide a stopping condition you can provide `endAt` or `maxRuns`.
 
 It's also possible to put the complete [DAG](/docs/pipelines-automation/automation-dag/) that we created in the previous guide on schedule, similarly to this operation,
 you can add a valid schedule section, this way, not only you automate the journey of creating, training, and validating a model, but also you do it continuously,
@@ -45,11 +47,17 @@ schedule:
   kind: cron
   cron: "0 0 * * MON"
 params:
-  optimizer: { value: sgd }
-  epochs: { value: 1 }
+  max_loss: { value: 0.01 }
+  top: { value: 5 }
 cache:
   disable: true
-pathRef: ../dags/dag.yaml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/dags/dag.yaml
+```
+
+Run the scheduled DAG:
+
+```bash
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/schedules/recurrent_dag.yaml
 ```
 
 > N.B.: In this second example we are disabling the cache completely.

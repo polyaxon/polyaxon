@@ -26,6 +26,12 @@ hooks:
     connection: slack-notification
 ```
 
+Run the complete operation from `scheduling/hooks/slack-hook.yaml`:
+
+```bash
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/hooks/slack-hook.yaml
+```
+
 ## Running multiple hooks
 
 It's also possible to have multiple hooks or the same hook based on different conditions, for instance,
@@ -41,4 +47,10 @@ hooks:
   - trigger: succeeded
     hubRef: slack
     connection: slack-notification
+```
+
+Run the complete component from `scheduling/hooks/multiple-hooks.yaml`:
+
+```bash
+polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/scheduling/hooks/multiple-hooks.yaml
 ```
