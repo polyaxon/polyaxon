@@ -1,6 +1,6 @@
 ---
 title: "Quick Start"
-description: "Start a sandbox-enabled run and connect to it with the Polyaxon CLI."
+description: "Start a sandbox-enabled run and connect to it with the Python client or Polyaxon CLI."
 label: "v1.16+"
 ---
 
@@ -18,7 +18,7 @@ Before you start, make sure you have:
 
 ## Create a Sandbox Component
 
-Create a Polyaxonfile named `sandbox.yaml`:
+The quick-start repository includes `sandbox/sandbox.yaml`:
 
 ```yaml
 kind: component
@@ -48,8 +48,42 @@ The `emptyDir` volume creates `/workspace` as writable scratch space for the lif
 
 ## Start the Run
 
+The Python and CLI examples below are alternatives. Use one of them to create the run, not both.
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+Run this in a Python shell where the Polyaxon client is configured:
+
+```python
+from polyaxon.client import RunClient, SandboxClient
+from polyaxon.schemas import LifeCycle, V1Statuses
+
+run_client = RunClient(project="quick-start")
+run = run_client.create_from_polyaxonfile(
+    polyaxonfile="sandbox/sandbox.yaml",
+    approved=True,
+)
+run_client.wait_for_condition(
+    statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES,
+    print_status=True,
+)
+if run_client.status != V1Statuses.RUNNING:
+    raise RuntimeError(f"Run reached {run_client.status} before it started")
+
+run_uuid = run.uuid
+sandbox = SandboxClient(project="quick-start", run_uuid=run_uuid)
+```
+
+The remaining Python examples reuse `run_client` and `sandbox`.
+
+</Tab>
+
+<Tab>
+
 ```bash
-polyaxon run -p quick-start -f sandbox.yaml
+polyaxon run -p quick-start -f sandbox/sandbox.yaml
 ```
 
 Copy the run UUID from the command output into a variable in your local terminal:
@@ -58,7 +92,10 @@ Copy the run UUID from the command output into a variable in your local terminal
 export RUN_UUID=PASTE_RUN_UUID_HERE
 ```
 
-The commands below reuse this variable. Wait until the run reaches `running`; `sandbox ping` does not wait for service readiness, so retry if the service is still starting.
+The remaining CLI examples reuse this variable. Wait until the run reaches `running`; `sandbox ping` does not wait for service readiness, so retry if the service is still starting.
+
+</Tab>
+</Tabs>
 
 <Callout type="info">
 
@@ -68,29 +105,100 @@ This section passes `-p quick-start` explicitly. You can omit it while working f
 
 ## Check Sandbox Health
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+health = sandbox.ping()
+print(health.status, health.version)
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon sandbox ping -p quick-start -uid $RUN_UUID
 ```
 
+</Tab>
+</Tabs>
+
 ## Execute a Command
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+result = sandbox.process.exec(
+    command=["python", "-V"],
+    timeout_ms=30_000,
+)
+print(result.stdout, end="")
+print(result.stderr, end="")
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
 ```
 
+</Tab>
+</Tabs>
+
 Stream command output when the command may take longer:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+with sandbox.process.exec_stream(
+    command=["sh", "-lc", "python -V && pwd"],
+) as events:
+    for event in events:
+        print(event)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- sh -lc 'python -V && pwd'
 ```
 
+</Tab>
+</Tabs>
+
 ## Open an Interactive Shell
+
+For applications and agents, use the PTY API when you need terminal behavior. It exposes raw terminal frames, so process execution is simpler when you only need to run a command and collect its output.
+
+### Python
+
+```python
+pty = sandbox.pty.create(command=["sh"], workdir="/workspace")
+try:
+    with sandbox.pty.attach(pty.pty_id, replay_bytes=1024) as terminal:
+        terminal.send_stdin(b"python -V\n")
+        print(terminal.recv())
+finally:
+    sandbox.pty.delete(pty.pty_id)
+```
+
+### CLI
 
 ```bash
 polyaxon sandbox shell -p quick-start -uid $RUN_UUID
 ```
 
-You can also attach to a reconnectable terminal session:
+For a reconnectable terminal session, use the tmux-based CLI command:
 
 ```bash
 polyaxon ops shell -p quick-start -uid $RUN_UUID
@@ -98,12 +206,27 @@ polyaxon ops shell -p quick-start -uid $RUN_UUID
 
 ## Keep or Stop the Run
 
-Keep the service running while you work through the remaining sandbox guides. When you are finished, stop it to release CPU, memory, and GPU resources:
+Keep the service running while you work through the remaining sandbox guides. When you are finished, stop it to release CPU, memory, and GPU resources.
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+run_client.stop()
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon ops stop -p quick-start -uid $RUN_UUID
 ```
 
-For exact command options, see the [sandbox CLI reference](/docs/references/cli/sandbox/).
+</Tab>
+</Tabs>
+
+For the Python interface, see the [run client](/docs/references/python-library/run-client/), [sandbox client](/docs/references/sandbox/client/), [process](/docs/references/sandbox/process/), and [PTY](/docs/references/sandbox/pty/) references. For exact command options, see the [sandbox CLI reference](/docs/references/cli/sandbox/).
 
 Next, continue to [Connect with SSH](/docs/sandboxes/connect-with-ssh/).

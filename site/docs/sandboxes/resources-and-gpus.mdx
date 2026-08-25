@@ -8,15 +8,38 @@ label: "v1.16+"
 
 Sandboxes consume cluster resources for as long as the backing service run is active. Request only what the session needs and stop it when work is complete.
 
-This page reuses `sandbox.yaml` and the `quick-start` project from the [Sandbox Quick Start](/docs/sandboxes/quick-start/). Each `polyaxon run` command below starts a new service. Replace the current value of `RUN_UUID` with the new run UUID if you want to connect to it afterward.
+This page reuses `sandbox/sandbox.yaml` and the `quick-start` project from the [Sandbox Quick Start](/docs/sandboxes/quick-start/). Each Python or CLI run example below starts a new service. Python returns the UUID on the run object; for later CLI commands, replace the current value of `RUN_UUID` with the new run UUID.
 
 ## Select a Queue
 
 Use queues to route sandboxes to the right agent, cluster, or resource pool:
 
-```bash
-polyaxon run -p quick-start -f sandbox.yaml -q agent-name/queue-name
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+from polyaxon.client import RunClient
+
+queue_client = RunClient(project="quick-start")
+queue_run = queue_client.create_from_polyaxonfile(
+    polyaxonfile="sandbox/sandbox.yaml",
+    queue="agent-name/queue-name",
+    approved=True,
+)
+print(queue_run.uuid)
 ```
+
+</Tab>
+
+<Tab>
+
+```bash
+polyaxon run -p quick-start -f sandbox/sandbox.yaml -q agent-name/queue-name
+```
+
+</Tab>
+</Tabs>
 
 See [queues](/docs/scheduling/scheduling-strategies/queues/) for scheduling behavior.
 
@@ -42,9 +65,32 @@ run:
 
 For reusable sandbox profiles, prefer presets:
 
-```bash
-polyaxon run -p quick-start -f sandbox.yaml --presets gpu-dev
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+from polyaxon.client import RunClient
+
+gpu_client = RunClient(project="quick-start")
+gpu_run = gpu_client.create_from_polyaxonfile(
+    polyaxonfile="sandbox/sandbox.yaml",
+    presets=["gpu-dev"],
+    approved=True,
+)
+print(gpu_run.uuid)
 ```
+
+</Tab>
+
+<Tab>
+
+```bash
+polyaxon run -p quick-start -f sandbox/sandbox.yaml --presets gpu-dev
+```
+
+</Tab>
+</Tabs>
 
 ## Use GPUs
 
@@ -58,3 +104,5 @@ Use timeouts and culling presets for long-running interactive services:
 
 - [Service timeouts](/docs/scheduling/scheduling-presets/services-timeout/)
 - [Cost estimation](/docs/scheduling/scheduling-strategies/estimating-cost/)
+
+See the Python [run client reference](/docs/references/python-library/run-client/) or the [run CLI reference](/docs/references/cli/run/) for the full interfaces.

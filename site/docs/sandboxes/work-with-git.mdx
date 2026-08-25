@@ -8,7 +8,7 @@ label: "v1.16+"
 
 Sandboxes are useful for inspecting code and runtime state in the same environment that Polyaxon uses to run workloads. For reproducible work, prefer starting from a known Git commit and pushing durable changes back to a remote repository.
 
-This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project, `/workspace` directory, and `RUN_UUID` variable.
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/). The Python examples reuse its `sandbox` client; the CLI examples reuse its `quick-start` project and `RUN_UUID` variable.
 
 ## Clone Code at Startup
 
@@ -16,19 +16,67 @@ Use your normal Polyaxonfile initialization and connection patterns to clone cod
 
 To clone into the scratch workspace after the service starts:
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+result = sandbox.process.exec(
+    command=[
+        "git",
+        "clone",
+        "https://github.com/polyaxon/polyaxon-quick-start.git",
+        "/workspace/repo",
+    ],
+    timeout_ms=120_000,
+)
+print(result.stdout, end="")
+print(result.stderr, end="")
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- \
   git clone https://github.com/polyaxon/polyaxon-quick-start.git /workspace/repo
 ```
 
+</Tab>
+</Tabs>
+
 ## Inspect the Repository
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+status = sandbox.process.exec(
+    command=["git", "-C", "/workspace/repo", "status"],
+)
+print(status.stdout, end="")
+
+diff = sandbox.process.exec(
+    command=["git", "-C", "/workspace/repo", "diff"],
+)
+print(diff.stdout, end="")
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- git -C /workspace/repo status
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- git -C /workspace/repo diff
 ```
 
-Open a shell when you need an interactive Git workflow:
+</Tab>
+</Tabs>
+
+The process API is the direct choice for applications and agents. For a human interactive Git workflow, open a CLI shell:
 
 ```bash
 polyaxon sandbox shell -p quick-start -uid $RUN_UUID
@@ -38,10 +86,29 @@ polyaxon sandbox shell -p quick-start -uid $RUN_UUID
 
 For small files or patches:
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+uploaded = sandbox.fs.upload_file(
+    local_path="./scheduling/model.py",
+    path="/workspace/repo/scheduling/model.py",
+)
+print(uploaded.path, uploaded.bytes_written)
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
   ./scheduling/model.py /workspace/repo/scheduling/model.py
 ```
+
+</Tab>
+</Tabs>
 
 For larger repository workflows, use SSH with your local Git tooling or clone directly from inside the sandbox.
 
@@ -49,9 +116,36 @@ For larger repository workflows, use SSH with your local Git tooling or clone di
 
 Push changes only when the sandbox has an appropriate Git credential. In most teams, that means mounting a scoped SSH connection or using a service account with limited repository permissions.
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+status = sandbox.process.exec(
+    command=["git", "-C", "/workspace/repo", "status"],
+)
+print(status.stdout, end="")
+
+push = sandbox.process.exec(
+    command=["git", "-C", "/workspace/repo", "push", "origin", "HEAD"],
+    timeout_ms=120_000,
+)
+print(push.stdout, end="")
+print(push.stderr, end="")
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- git -C /workspace/repo status
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- git -C /workspace/repo push origin HEAD
 ```
 
+</Tab>
+</Tabs>
+
 Keep credentials in Polyaxon connections rather than baking them into images or notebooks.
+
+See the Python [process](/docs/references/sandbox/process/) and [filesystem](/docs/references/sandbox/fs/) references, or the [sandbox CLI reference](/docs/references/cli/sandbox/), for the full interfaces.

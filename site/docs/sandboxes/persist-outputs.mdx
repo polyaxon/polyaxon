@@ -8,7 +8,7 @@ label: "v1.16+"
 
 Interactive sessions are useful for discovery, but the container filesystem is not the right long-term storage layer. Save anything important before stopping or replacing the service run.
 
-This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project, `/workspace` directory, and `RUN_UUID` variable.
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/). The Python examples reuse its `sandbox` client; the CLI examples reuse its `quick-start` project, `/workspace` directory, and `RUN_UUID` variable.
 
 ## Persist Artifacts
 
@@ -32,11 +32,36 @@ tracking.log_artifact_ref(
 
 `get_outputs_path()` writes into the run's synced outputs directory. `log_artifact_ref()` records artifact metadata; it does not copy an arbitrary file into the artifact store.
 
+This code runs inside the service container and requires the Polyaxon tracking library in its image. The host-side `SandboxClient` examples below control that container remotely.
+
 See [tracking artifacts](/docs/tracking/logging/artifacts/) for artifact logging patterns.
 
 ## Download Scratch Files
 
-Use sandbox download when a file is still in `/workspace` rather than the synced outputs directory. This example uploads and runs the profile fixture before downloading its output:
+Use sandbox file transfer when a file is still in `/workspace` rather than the synced outputs directory. This example uploads and runs the profile fixture before downloading its output:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+sandbox.fs.upload_file(
+    local_path="./sandbox/profile.py",
+    path="/workspace/profile.py",
+)
+result = sandbox.process.exec(
+    command=["python", "/workspace/profile.py"],
+)
+print(result.stdout, end="")
+sandbox.fs.download_file(
+    path="/workspace/profile.json",
+    local_path="./sandbox/profile.downloaded.json",
+)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
@@ -46,14 +71,42 @@ polyaxon sandbox download -p quick-start -uid $RUN_UUID \
   /workspace/profile.json ./sandbox/profile.downloaded.json
 ```
 
+</Tab>
+</Tabs>
+
 ## Commit Code Changes
 
 If the sandbox produced code changes that should live beyond the session, push them to a Git branch using a scoped credential:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+status = sandbox.process.exec(
+    command=["git", "-C", "/workspace/repo", "status"],
+)
+print(status.stdout, end="")
+
+push = sandbox.process.exec(
+    command=["git", "-C", "/workspace/repo", "push", "origin", "HEAD"],
+    timeout_ms=120_000,
+)
+print(push.stdout, end="")
+print(push.stderr, end="")
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- git -C /workspace/repo status
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- git -C /workspace/repo push origin HEAD
 ```
+
+</Tab>
+</Tabs>
 
 ## Preserve Reproducibility
 
@@ -63,3 +116,5 @@ When a manual session discovers a useful fix, move the change into a reproducibl
 - Dependencies in an image or lockfile.
 - Runtime settings in a Polyaxonfile or preset.
 - Results in artifacts, metrics, or model registry entries.
+
+See the Python [process](/docs/references/sandbox/process/) and [filesystem](/docs/references/sandbox/fs/) references, or the [sandbox CLI reference](/docs/references/cli/sandbox/), for the full interfaces.

@@ -1,30 +1,107 @@
 ---
-title: "Automate with CLI and SDK"
-description: "Script sandbox operations with the CLI or Python client, and connect OpenAI or Claude through guarded tools."
+title: "Automate with Python and CLI"
+description: "Automate sandbox operations with the synchronous or asynchronous Python client, use equivalent CLI commands, and connect agents through guarded tools."
 label: "v1.16+"
 ---
 
-# Automate with CLI and SDK
+# Automate with Python and CLI
 
-Use the CLI in shell scripts and CI jobs. Use `SandboxClient` when a Python application or agent needs to run commands and work with files inside a live sandbox.
+Use `SandboxClient` in synchronous Python applications and `AsyncSandboxClient` in async harnesses or agents. The CLI provides the same operations for shell scripts and manual work.
 
 Both interfaces connect to an existing Polyaxon service with `plugins.sandbox` enabled. A sandbox is a capability of that service, not a separate kind of Polyaxon resource.
 
 This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project, `/workspace` directory, and `RUN_UUID` variable.
 
-## Script commands
+## Run commands
+
+The Python example binds every operation to the same project and run. The CLI tab shows the equivalent shell commands.
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+import os
+
+from polyaxon.client import SandboxClient
+
+
+with SandboxClient(
+    project="quick-start",
+    run_uuid=os.environ["RUN_UUID"],
+) as sandbox:
+    sandbox.ping()
+    sandbox.fs.upload_file(
+        "./sandbox/smoke.py",
+        "/workspace/smoke.py",
+    )
+
+    result = sandbox.process.exec(
+        command=["python", "-V"],
+        timeout_ms=30_000,
+    )
+    print(result.stdout, end="")
+    print(result.stderr, end="")
+
+    with sandbox.process.exec_stream(
+        command=["python", "/workspace/smoke.py"],
+    ) as events:
+        for event in events:
+            print(event)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
+polyaxon sandbox ping -p quick-start -uid $RUN_UUID
 polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
   ./sandbox/smoke.py /workspace/smoke.py
-polyaxon sandbox ping -p quick-start -uid $RUN_UUID
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- python /workspace/smoke.py
 ```
 
+</Tab>
+</Tabs>
+
 ## Run background work
 
 Start a detached process and keep its execution ID:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+import os
+
+from polyaxon.client import SandboxClient
+
+
+with SandboxClient(
+    project="quick-start",
+    run_uuid=os.environ["RUN_UUID"],
+) as sandbox:
+    sandbox.fs.upload_file(
+        "./sandbox/profile.py",
+        "/workspace/profile.py",
+    )
+    process = sandbox.process.exec_bg(
+        command=["python", "/workspace/profile.py"],
+    )
+    print(process.id)
+
+    for chunk in process.iter_stdout(timeout=300, interval=0.5):
+        print(chunk, end="")
+
+    status = process.wait(timeout=300)
+    print(status.state, status.exit_code)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
@@ -33,7 +110,38 @@ EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- python
 polyaxon sandbox logs -p quick-start -uid $RUN_UUID $EXEC_ID
 ```
 
+</Tab>
+</Tabs>
+
 ## Move files
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+import os
+
+from polyaxon.client import SandboxClient
+
+
+with SandboxClient(
+    project="quick-start",
+    run_uuid=os.environ["RUN_UUID"],
+) as sandbox:
+    sandbox.fs.upload_file(
+        "./sandbox/config.yaml",
+        "/workspace/config.yaml",
+    )
+    sandbox.fs.download_file(
+        "/workspace/profile.json",
+        "./sandbox/profile.downloaded.json",
+    )
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
@@ -42,37 +150,54 @@ polyaxon sandbox download -p quick-start -uid $RUN_UUID \
   /workspace/profile.json ./sandbox/profile.downloaded.json
 ```
 
+</Tab>
+</Tabs>
+
 Remote paths are absolute paths inside the service container. Replace `/workspace` with a directory that exists in your image.
 
-## Use the Python client
+## Use the async Python client
 
-Run this code from a machine where the Polyaxon client is configured. Target the service explicitly so the script does not depend on cached project or run context:
+`AsyncSandboxClient` exposes coroutine methods and async iterators for applications that already use `asyncio`. Target the service explicitly so the harness does not depend on cached project or run context:
 
 ```python
+import asyncio
 import os
 
-from polyaxon.client import SandboxClient
+from polyaxon.client import AsyncSandboxClient
 
-with SandboxClient(
-    owner="YOUR_ORGANIZATION",
-    project="quick-start",
-    run_uuid=os.environ["RUN_UUID"],
-) as sandbox:
-    sandbox.ping()
 
-    result = sandbox.process.exec(
-        command=["python", "-V"],
-        timeout_ms=30_000,
-    )
+async def main():
+    async with AsyncSandboxClient(
+        project="quick-start",
+        run_uuid=os.environ["RUN_UUID"],
+    ) as sandbox:
+        await sandbox.ping()
+        await sandbox.fs.upload_file(
+            "./sandbox/smoke.py",
+            "/workspace/smoke.py",
+        )
 
-    print(result.exit_code)
-    print(result.stdout)
-    print(result.stderr)
+        result = await sandbox.process.exec(
+            command=["python", "-V"],
+            timeout_ms=30_000,
+        )
+        print(result.stdout, end="")
+        print(result.stderr, end="")
+
+        stream = await sandbox.process.exec_stream(
+            command=["python", "/workspace/smoke.py"],
+        )
+        async with stream as events:
+            async for event in events:
+                print(event)
+
+
+asyncio.run(main())
 ```
 
 Commands must be argument lists. Polyaxon does not pass them through a shell unless you explicitly run a shell such as `sh -c`.
 
-The same client provides filesystem and terminal APIs. See the [client](/docs/references/sandbox/client/), [process](/docs/references/sandbox/process/), [filesystem](/docs/references/sandbox/fs/), and [PTY](/docs/references/sandbox/pty/) references for the full interface.
+The sync and async clients provide the same process, filesystem, and terminal APIs. See the [client](/docs/references/sandbox/client/), [process](/docs/references/sandbox/process/), [filesystem](/docs/references/sandbox/fs/), and [PTY](/docs/references/sandbox/pty/) references for the full interface.
 
 ## Drive a sandbox with an AI agent
 
@@ -89,7 +214,6 @@ This example exposes one tool, `run_command`. Every call waits for approval in t
 Set the target and an existing working directory inside the service:
 
 ```bash
-export SANDBOX_OWNER=YOUR_ORGANIZATION
 export SANDBOX_WORKDIR=/workspace
 ```
 
@@ -115,7 +239,6 @@ if not WORKDIR.startswith("/"):
 _client_stack = ExitStack()
 sandbox = _client_stack.enter_context(
     SandboxClient(
-        owner=os.environ["SANDBOX_OWNER"],
         project="quick-start",
         run_uuid=os.environ["RUN_UUID"],
     )
@@ -372,9 +495,33 @@ The model proposes a Python command. Polyaxon runs it only after approval, then 
 
 Stop the service when the agent finishes:
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+import os
+
+from polyaxon.client import RunClient
+
+
+run_client = RunClient(
+    project="quick-start",
+    run_uuid=os.environ["RUN_UUID"],
+)
+run_client.stop()
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon ops stop -p quick-start -uid $RUN_UUID
 ```
+
+</Tab>
+</Tabs>
 
 Container files disappear when the run is removed. Upload durable outputs to artifact storage or commit them to Git before stopping the service.
 

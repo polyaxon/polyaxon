@@ -8,32 +8,88 @@ label: "v1.16+"
 
 Polyaxon supports several terminal workflows for service runs. Pick the smallest access mode that fits the task.
 
-This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable. The component created there enables the sandbox, tmux, and SSH plugins.
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/). The Python examples reuse its `sandbox` client; the CLI examples reuse its `quick-start` project and `RUN_UUID` variable. The component created there enables the sandbox, tmux, and SSH plugins.
 
 ## Terminal Options
 
-| Access mode | Enable | Best for | Command |
+| Access mode | Enable | Best for | API or command |
 | --- | --- | --- | --- |
-| Sandbox shell | `plugins.sandbox` | Quick interactive shell access through Polyaxon | `polyaxon sandbox shell` |
-| Sandbox exec | `plugins.sandbox` | One-off or scripted commands | `polyaxon sandbox exec` |
+| Sandbox PTY or shell | `plugins.sandbox` | Terminal applications or quick interactive shell access | `sandbox.pty` or `polyaxon sandbox shell` |
+| Sandbox exec | `plugins.sandbox` | One-off or scripted commands | `sandbox.process` or `polyaxon sandbox exec` |
 | tmux shell | `plugins.tmux` | Reconnectable terminal sessions | `polyaxon ops shell` |
 | SSH | `plugins.ssh` | IDEs, native terminal tooling, tunnels, SFTP, SCP, and rsync when the image includes it | `polyaxon ssh connect` |
 
 ## One-Off Commands
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+result = sandbox.process.exec(command=["python", "-V"])
+print(result.stdout, end="")
+print(result.stderr, end="")
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
 ```
 
+</Tab>
+</Tabs>
+
 Use streaming for long-running commands:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+with sandbox.process.exec_stream(
+    command=["sh", "-lc", "pip list"],
+) as events:
+    for event in events:
+        print(event)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- sh -lc 'pip list'
 ```
 
+</Tab>
+</Tabs>
+
 ## Detached Commands
 
-Detached commands keep running after the CLI exits:
+Background commands keep running after the Python call returns or the CLI exits:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+sandbox.fs.upload_file(
+    local_path="./sandbox/train.py",
+    path="/workspace/train.py",
+)
+background = sandbox.process.exec_bg(
+    command=["python", "train.py"],
+    workdir="/workspace",
+)
+print(background.id)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
@@ -41,13 +97,48 @@ polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
 EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- sh -lc 'python train.py')
 ```
 
+</Tab>
+</Tabs>
+
 Read logs later:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+for chunk in background.iter_stdout(timeout=60, interval=0.5):
+    print(chunk, end="")
+status = background.wait(timeout=60)
+print(status.state, status.exit_code)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox logs -p quick-start -uid $RUN_UUID $EXEC_ID
 ```
 
+</Tab>
+</Tabs>
+
 ## Interactive Shell
+
+The Python PTY API exposes raw terminal frames for applications that implement their own terminal loop:
+
+```python
+pty = sandbox.pty.create(command=["sh"], workdir="/workspace")
+try:
+    with sandbox.pty.attach(pty.pty_id, replay_bytes=1024) as terminal:
+        terminal.send_stdin(b"pwd\n")
+        print(terminal.recv())
+finally:
+    sandbox.pty.delete(pty.pty_id)
+```
+
+For a human interactive shell, use the CLI:
 
 ```bash
 polyaxon sandbox shell -p quick-start -uid $RUN_UUID
@@ -77,3 +168,5 @@ At a shell prompt, detach without ending the shell:
 ```
 
 The default keyboard shortcut is `Ctrl+B`, release both keys, then press lowercase `d`. On macOS, use Control (`⌃`), not Command (`⌘`). Do not type `exit` when you intend to detach: exiting the last tmux pane destroys the session, and the next `polyaxon ops shell` starts a new shell without its exported variables.
+
+See the Python [process](/docs/references/sandbox/process/) and [PTY](/docs/references/sandbox/pty/) references for programmatic access. See the [sandbox CLI](/docs/references/cli/sandbox/), [operations CLI](/docs/references/cli/ops/), and [SSH CLI](/docs/references/cli/ssh/) references for interactive terminal commands.

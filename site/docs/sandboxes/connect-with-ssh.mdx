@@ -10,19 +10,33 @@ SSH access lets you use regular local developer tools against a service run with
 
 This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable. The component created there already enables SSH.
 
+## Programmatic Access
+
+The public Python client does not wrap SSH setup, local SSH clients, or port forwarding. Applications and agents should use the sandbox process and filesystem APIs when they do not need native SSH behavior:
+
+```python
+result = sandbox.process.exec(command=["pwd"])
+print(result.stdout, end="")
+
+listing = sandbox.fs.ls("/workspace")
+for entry in listing.entries or []:
+    print(entry.type, entry.name)
+```
+
+Use the SSH CLI below for native terminals, IDE connections, SSH configuration, and tunnels.
+
 ## Enable SSH
 
 Enable the SSH plugin on a service run:
 
 ```yaml
+...
 plugins:
   ssh: true
 
 run:
   kind: service
-  container:
-    image: python:3.11
-    command: ["sleep", "infinity"]
+  ...
 ```
 
 ## Prepare SSH Access
@@ -65,4 +79,4 @@ The generated host can also be used by IDEs and file-transfer tools that support
 
 ## Reference
 
-See the [SSH CLI reference](/docs/references/cli/ssh/) for all options.
+See the Python [sandbox client](/docs/references/sandbox/client/), [process](/docs/references/sandbox/process/), and [filesystem](/docs/references/sandbox/fs/) references for programmatic access. See the [SSH CLI reference](/docs/references/cli/ssh/) for native SSH options.

@@ -10,6 +10,8 @@ Sandbox network behavior depends on the underlying service run, agent configurat
 
 This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable.
 
+Applications and agents can make outbound requests through commands started with `sandbox.process`, subject to the run's network policy. The public Python sandbox client does not create local SSH tunnels.
+
 ## Service Ports
 
 Declare `run.ports` for services that expose HTTP applications such as notebooks, dashboards, or custom apps. Sandbox and SSH plugin ports are injected automatically; do not add them to this list:
@@ -24,6 +26,8 @@ run:
     command: ["start-notebook.py"]
 ```
 
+Polyaxon exposes declared HTTP ports through its authenticated service proxy. By default, the service URL uses `/services/v1/namespace/owner/project/runs/uuid` on the Polyaxon host. If the deployment is available at `polyaxon.DOMAIN.com`, the service uses that host and does not require an SSH tunnel for browser access. Use a tunnel when a local application specifically needs a local TCP port.
+
 For service workload details, see [services](/docs/references/polyaxonfile/runtimes/services/specification/).
 
 ## SSH Tunnels
@@ -34,6 +38,8 @@ Use SSH tunnels when a local tool needs access to a service port. The run must h
 polyaxon ssh connect -p quick-start -uid $RUN_UUID -- -L 8888:127.0.0.1:8888 -N
 ```
 
+The first `8888` is the local port. If that port is already in use, choose another local port, for example `-L 8890:127.0.0.1:8888`. SSH setup and local forwarding are CLI or native SSH workflows; they have no public `SandboxClient` equivalent.
+
 ## Outbound Access
 
 Outbound network access is controlled by your cluster, agent, and network policies. If a command cannot reach a package index, Git host, model provider, or data service, check with the platform team before changing the workload.
@@ -41,3 +47,5 @@ Outbound network access is controlled by your cluster, agent, and network polici
 ## Access Model
 
 Polyaxon routes sandbox and SSH access through authenticated project permissions. Do not expose debug services directly unless your deployment and security policy allow it.
+
+See the Python [process reference](/docs/references/sandbox/process/) for in-container network commands and the [SSH CLI reference](/docs/references/cli/ssh/) for local tunnels.

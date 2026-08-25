@@ -6,35 +6,107 @@ label: "v1.16+"
 
 # Manage Files and Artifacts
 
-Sandbox file commands inspect and transfer files in the running container. The [quick start](/docs/sandboxes/quick-start/) creates `/workspace` as scratch space; uploading a file there does not add it to Polyaxon's artifact store.
+Sandbox filesystem APIs and commands inspect and transfer files in the running container. The [quick start](/docs/sandboxes/quick-start/) creates `/workspace` as scratch space; uploading a file there does not add it to Polyaxon's artifact store.
 
-This page uses the `quick-start` project and `RUN_UUID` variable established by that guide.
+The Python examples reuse the `sandbox` client from that guide. The CLI examples reuse its `quick-start` project and `RUN_UUID` variable.
 
 ## List Files
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+listing = sandbox.fs.ls("/workspace")
+for entry in listing.entries or []:
+    print(entry.type, entry.name)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox ls -p quick-start -uid $RUN_UUID /workspace
 ```
 
+</Tab>
+</Tabs>
+
 List recursively when needed:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+listing = sandbox.fs.ls("/workspace", recursive=True)
+for entry in listing.entries or []:
+    print(entry.type, entry.name)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox ls -p quick-start -uid $RUN_UUID /workspace --recursive
 ```
 
+</Tab>
+</Tabs>
+
 ## Upload Files
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+uploaded = sandbox.fs.upload_file(
+    local_path="./sandbox/local.txt",
+    path="/workspace/local.txt",
+)
+print(uploaded.path, uploaded.bytes_written)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
   ./sandbox/local.txt /workspace/local.txt
 ```
 
+</Tab>
+</Tabs>
+
 ## Download Files
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+local_path = sandbox.fs.download_file(
+    path="/workspace/local.txt",
+    local_path="./sandbox/local.downloaded.txt",
+)
+print(local_path)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox download -p quick-start -uid $RUN_UUID \
   /workspace/local.txt ./sandbox/local.downloaded.txt
 ```
+
+</Tab>
+</Tabs>
 
 ## Preserve Outputs
 
@@ -44,6 +116,8 @@ For tracking artifacts from Python code, see [tracking artifacts](/docs/tracking
 
 ## File Transfer Guidance
 
-- Use sandbox upload and download for small targeted files.
+- Use `sandbox.fs` or the sandbox upload and download commands for small targeted files.
 - Use SSH-based tools such as SFTP or SCP for larger interactive transfer workflows. You can also use rsync when the container image includes it.
 - Use `tracking.get_outputs_path()` for model files, reports, checkpoints, and generated datasets that Polyaxon should retain.
+
+See the Python [filesystem reference](/docs/references/sandbox/fs/) or the [sandbox CLI reference](/docs/references/cli/sandbox/) for the full interfaces.

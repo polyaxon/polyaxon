@@ -8,23 +8,57 @@ label: "v1.16+"
 
 Most sandbox issues fall into four groups: the run is not running, the plugin is not enabled, the user does not have access, or the container environment is missing required tools.
 
-This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable.
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/). The Python examples reuse its `run_client` and `sandbox` clients; the CLI examples reuse its `quick-start` project and `RUN_UUID` variable.
 
 ## Check Run Status
 
-Open the run page or inspect the run from the CLI:
+Open the run page or inspect the run with Python or the CLI:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+run_client.refresh_data(load_conditions=True)
+print(run_client.status)
+for condition in run_client.run_data.status_conditions or []:
+    print(condition.type, condition.reason, condition.message)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon ops get -p quick-start -uid $RUN_UUID
 ```
 
+</Tab>
+</Tabs>
+
 If the run is pending, check the queue, resources, node selectors, and project limits.
 
 ## Check Sandbox Health
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+health = sandbox.ping()
+print(health.status, health.version)
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon sandbox ping -p quick-start -uid $RUN_UUID
 ```
+
+</Tab>
+</Tabs>
 
 If the ping fails, confirm that `plugins.sandbox` is enabled and that the run is a supported service workload.
 
@@ -32,11 +66,47 @@ If the ping fails, confirm that `plugins.sandbox` is enabled and that the run is
 
 Use run logs for container startup issues:
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+logs = run_client.get_logs()
+for log in logs.logs or []:
+    print(log.value)
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon ops logs -p quick-start -uid $RUN_UUID
 ```
 
-Start a detached sandbox command and keep the execution ID returned by the CLI:
+</Tab>
+</Tabs>
+
+Start a background sandbox command and keep its handle or execution ID:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+sandbox.fs.upload_file(
+    local_path="./sandbox/check.py",
+    path="/workspace/check.py",
+)
+background = sandbox.process.exec_bg(
+    command=["python", "/workspace/check.py"],
+)
+print(background.id)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
@@ -44,21 +114,60 @@ polyaxon sandbox upload -p quick-start -uid $RUN_UUID \
 EXEC_ID=$(polyaxon sandbox exec -p quick-start -uid $RUN_UUID --detach -- python /workspace/check.py)
 ```
 
+</Tab>
+</Tabs>
+
 Read that process's logs later:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+for chunk in background.iter_stdout(timeout=60, interval=0.5):
+    print(chunk, end="")
+status = background.wait(timeout=60)
+print(status.state, status.exit_code)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox logs -p quick-start -uid $RUN_UUID $EXEC_ID
 ```
 
+</Tab>
+</Tabs>
+
 ## Validate the Environment
 
 Run simple commands before debugging application code:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+for command in (["pwd"], ["printenv", "PATH"], ["python", "-V"]):
+    result = sandbox.process.exec(command=command)
+    print(result.stdout, end="")
+    print(result.stderr, end="")
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- pwd
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- printenv PATH
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
 ```
+
+</Tab>
+</Tabs>
 
 ## Common Fixes
 
@@ -67,3 +176,5 @@ polyaxon sandbox exec -p quick-start -uid $RUN_UUID -- python -V
 - Route the run to a queue that supports services and the requested resources.
 - Move credentials into Polyaxon connections instead of the container image.
 - Stop stale sandbox-enabled service runs that are holding scarce resources.
+
+See the Python [run client](/docs/references/python-library/run-client/), [process](/docs/references/sandbox/process/), and [filesystem](/docs/references/sandbox/fs/) references, or the [sandbox CLI reference](/docs/references/cli/sandbox/), for the full interfaces.

@@ -8,11 +8,31 @@ label: "v1.16+"
 
 Notebook sessions are service workloads. You can combine a notebook server with sandbox, SSH, and tmux plugins when you need both browser-based exploration and lower-level terminal access.
 
-This page uses the `quick-start` project established in [Create a project](/docs/quick-start/create-project/).
+This page uses the `quick-start` project established in [Create a project](/docs/quick-start/create-project/). The examples below show the Python client first, followed by the equivalent CLI command.
 
 ## Start from a Hub Component
 
 If your organization uses the public or organization component hub, start a notebook component and pass the queue or presets required by your cluster:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+from polyaxon.client import RunClient
+
+notebook_client = RunClient(project="quick-start")
+notebook_run = notebook_client.create_from_hub(
+    component="notebook",
+    approved=True,
+)
+run_uuid = notebook_run.uuid
+print(run_uuid)
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon run -p quick-start --hub notebook
@@ -23,6 +43,9 @@ Copy the notebook run UUID into the same local variable used by the Sandbox Quic
 ```bash
 export RUN_UUID=PASTE_RUN_UUID_HERE
 ```
+
+</Tab>
+</Tabs>
 
 See the [Jupyter Notebook integration](/integrations/services/notebook/) for notebook-specific examples.
 
@@ -53,11 +76,13 @@ Add `plugins.ssh: true` only for native SSH or IDE access, and `plugins.tmux: tr
 
 1. Start the notebook service.
 2. Open the notebook from the run page.
-3. Use `polyaxon sandbox exec` for quick checks outside the notebook kernel.
-4. Use `polyaxon sandbox upload` and `download` to move small files.
+3. Use `sandbox.process.exec()` or `polyaxon sandbox exec` for quick checks outside the notebook kernel.
+4. Use `sandbox.fs` or the sandbox upload and download commands to move small files.
 5. Use SSH when you need IDE access or port forwarding.
 6. Stop the run when the notebook is no longer active.
 
 ## Track Experiments from a Notebook
 
 When the notebook runs in-cluster, Polyaxon can resolve project and run context automatically. See [tracking in notebooks](/docs/references/python-library/in-notebooks/) for tracking examples.
+
+See the Python [run client](/docs/references/python-library/run-client/) and [sandbox client](/docs/references/sandbox/client/) references, or the [sandbox CLI reference](/docs/references/cli/sandbox/), for the full interfaces.

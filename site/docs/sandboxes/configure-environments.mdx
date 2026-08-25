@@ -8,7 +8,7 @@ label: "v1.16+"
 
 A sandbox runs inside the container image and environment you define for the workload. The most reproducible setup is to build dependencies into the image or apply them through organization presets.
 
-This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project, `sandbox.yaml`, and `RUN_UUID` variable.
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/). The Python examples reuse its `sandbox` client; the CLI examples reuse its `quick-start` project, `sandbox/sandbox.yaml`, and `RUN_UUID` variable.
 
 ## Choose an Image
 
@@ -28,9 +28,28 @@ For notebook workflows, use a notebook image. For GPU workflows, use an image wi
 
 Temporary installs are useful while debugging:
 
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+with sandbox.process.exec_stream(
+    command=["pip", "install", "rich"],
+) as events:
+    for event in events:
+        print(event)
+```
+
+</Tab>
+
+<Tab>
+
 ```bash
 polyaxon sandbox exec -p quick-start -uid $RUN_UUID --stream -- pip install rich
 ```
+
+</Tab>
+</Tabs>
 
 Promote repeated package changes into a Docker image or preset once the workflow stabilizes.
 
@@ -59,7 +78,23 @@ export DEBUG=1
 
 These values belong to that shell. With `plugins.tmux` enabled, they remain available when you detach and reconnect to the same session. They disappear when the shell exits, the pod restarts, or the run stops, and they do not affect separate `polyaxon sandbox exec` commands. Use `run.container.env` for values that every process needs or that should be reproducible.
 
-For a value needed by one command, prefix the remote command with `env`:
+For a value needed by one command, pass it through the process API or prefix the CLI's remote command with `env`:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+result = sandbox.process.exec(
+    command=["printenv", "EDITOR"],
+    env={"EDITOR": "vim"},
+)
+print(result.stdout, end="")
+```
+
+</Tab>
+
+<Tab>
 
 ```bash
 polyaxon sandbox exec \
@@ -68,7 +103,10 @@ polyaxon sandbox exec \
   -- env EDITOR=vim printenv EDITOR
 ```
 
-The CLI has no `--env` option. This value is available only to that command and its child processes.
+</Tab>
+</Tabs>
+
+The CLI has no `--env` option. In both examples, the value is available only to that command and its child processes.
 
 Use the Polyaxonfile [environment specification](/docs/references/polyaxonfile/specification/environment/) for pod settings such as node selectors, service accounts, security contexts, and DNS. Presets can supply these settings.
 
@@ -76,10 +114,33 @@ Use the Polyaxonfile [environment specification](/docs/references/polyaxonfile/s
 
 Presets let platform teams provide reusable defaults for queues, resources, connections, security, and environment settings:
 
-```bash
-polyaxon run -p quick-start -f sandbox.yaml --presets dev-sandbox
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+from polyaxon.client import RunClient
+
+preset_client = RunClient(project="quick-start")
+preset_run = preset_client.create_from_polyaxonfile(
+    polyaxonfile="sandbox/sandbox.yaml",
+    presets=["dev-sandbox"],
+    approved=True,
+)
+print(preset_run.uuid)
 ```
 
-This command starts a new service. To use subsequent sandbox commands with it, replace the current value of `RUN_UUID` with the new run UUID.
+</Tab>
 
-See [scheduling presets](/docs/scheduling/scheduling-presets/overview/) for details.
+<Tab>
+
+```bash
+polyaxon run -p quick-start -f sandbox/sandbox.yaml --presets dev-sandbox
+```
+
+</Tab>
+</Tabs>
+
+Both examples start a new service. Python returns its UUID as `preset_run.uuid`; for later CLI commands, replace the current value of `RUN_UUID` with the new run UUID.
+
+See [scheduling presets](/docs/scheduling/scheduling-presets/overview/) for details. The Python interfaces are documented in the [run client](/docs/references/python-library/run-client/) and [process](/docs/references/sandbox/process/) references.
