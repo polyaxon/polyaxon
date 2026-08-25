@@ -14,7 +14,6 @@ It also packages some required dependencies for Polyaxon:
 
  * [PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
  * [Redis](https://github.com/bitnami/charts/tree/main/bitnami/redis)
- * [RabbitMQ](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
 
 > **Note**: It's possible to provide your own managed version of each one for these dependencies.
 
@@ -531,7 +530,6 @@ Dependent charts can also have values overwritten. Preface values with
 
  * `postgresql.*`
  * `redis.*`
- * `rabbitmq.*`
 
 
 Polyaxon provides a list of options to select which nodes should be used for the core platform, for the dependencies, and for the runs.
@@ -562,10 +560,6 @@ redis:
   slave:
     nodeSelector:
       ...
-
-rabbitmq:
-  nodeSelector:
-    ...
 ```
 
 ### Tolerations
@@ -589,10 +583,6 @@ redis:
   slave:
     tolerations:
       ...
-
-rabbitmq:
-  tolerations:
-    ...
 ```
 
 ### Affinity
@@ -635,10 +625,6 @@ redis:
   slave:
     affinity:
       ...
-
-rabbitmq:
-  affinity:
-    ...
 ```
 
 ### Resources discovery

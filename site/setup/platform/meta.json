@@ -7,7 +7,6 @@
     "common-reference",
     "---Advanced---",
     "postgresql-ha",
-    "rabbitmq-ha",
     "redis-ha",
     "replication-concurrency",
     "broker",

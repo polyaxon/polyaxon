@@ -12,25 +12,12 @@ and the background workers handle saving that data.
 > By default, Polyaxon does not deploy with a broker enabled.
 
 
-## RabbitMQ
-
-If you run with a high workload, or have concerns about fitting the pending workload in memory,
-then RabbitMQ is an ideal candidate for backing Polyaxon’s asynchronous workers.
-
-```yaml
-rabbitmq:
-  enabled: true
-```
-
-You can have as much control on the RabbitMQ dependency, or you can [turn it off and provide your own instance configuration](/docs/setup/platform/postgresql-ha/).
-
-
 ## Redis
 
-Redis can be used and will work in most situations.
+Redis is the supported broker and will work in most situations.
 The primary limitation of using Redis is that all pending work must fit in memory.
 
-In order to use Redis as the broker, make sure to disable RabbitMQ (to not waste resources), and set `broker` option to redis:
+Enable the bundled Redis deployment and select it as the broker:
 
 ```yaml
 redis:

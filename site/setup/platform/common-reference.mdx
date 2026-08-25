@@ -299,7 +299,6 @@ Dependent charts can also have values overwritten. Preface values with
 
  * `postgresql.*`
  * `redis.*`
- * `rabbitmq.*`
 
 
 ### Node Selectors
@@ -348,10 +347,6 @@ redis:
   slave:
     nodeSelector:
       ...
-
-rabbitmq:
-  nodeSelector:
-    ...
 ```
 
 ### Tolerations
@@ -397,10 +392,6 @@ redis:
   slave:
     tolerations:
       ...
-
-rabbitmq:
-  tolerations:
-    ...
 ```
 
 ### Affinity
@@ -465,10 +456,6 @@ redis:
   slave:
     affinity:
       ...
-
-rabbitmq:
-  affinity:
-    ...
 ```
 
 ## IPs/Hosts White list
