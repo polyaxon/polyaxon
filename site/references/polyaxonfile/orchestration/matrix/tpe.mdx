@@ -1,24 +1,28 @@
 ---
-title: "Hyperopt"
-description: "Hyperopt is a search algorithm that is backed by the Hyperopt library to perform sequential model-based hyperparameter optimization."
+title: "TPE"
+description: "TPE uses Polyaxon's native Tree-structured Parzen Estimator to learn from completed trials and sample hyperparameter values from better-performing regions."
 ---
 
-## V1Hyperopt
+## V1TPE
 
 ```python
-polyaxon._flow.matrix.hyperopt.V1Hyperopt()
+polyaxon._flow.matrix.tpe.V1TPE()
 ```
 
 
-Hyperopt is a search algorithm that is backed by the
-[Hyperopt](http://hyperopt.github.io/hyperopt/) library
-to perform sequential model-based hyperparameter optimization.
+Configure Polyaxon's Tree-structured Parzen Estimator search.
 
-the Hyperopt integration exposes 3 algorithms: `tpe`, `rand`, `anneal`.
+TPE uses completed trials to learn which parts of the search space are more
+promising. It separates better and worse observations, fits a probability
+model for each parameter in both groups, and selects values favored by the
+better model. The first trials use random sampling to collect enough
+observations.
+
+Unlike grid and random search, later TPE suggestions depend on the metric
+history from earlier trials.
 
 - __Args__:
-  - __kind__: hyperopt
-  - __algorithm__: str, one of tpe, rand, anneal
+  - __kind__: tpe
   - __params__: List[Dict[str, [params](/docs/references/polyaxonfile/orchestration/matrix/params/#discrete-values)]]
   - __metric__: V1OptimizationMetric
   - __max_iterations__: int, optional
@@ -33,8 +37,7 @@ the Hyperopt integration exposes 3 algorithms: `tpe`, `rand`, `anneal`.
 
 ```yaml
 matrix:
-  kind: hyperopt
-  algorithm:
+  kind: tpe
   maxIterations:
   metric:
   concurrency:
@@ -49,10 +52,9 @@ matrix:
 
 ```python
 from polyaxon.schemas import (
-    V1Hyperopt, V1HpLogSpace, V1HpUniform, V1FailureEarlyStopping, V1MetricEarlyStopping
+    V1TPE, V1HpLogSpace, V1HpUniform, V1FailureEarlyStopping, V1MetricEarlyStopping
 )
-matrix = V1Hyperopt(
-  algorithm="tpe",
+matrix = V1TPE(
   num_runs=20,
   concurrency=2,
   seed=23,
@@ -66,25 +68,14 @@ matrix = V1Hyperopt(
 
 ### kind
 
-The kind signals to the CLI, client, and other tools that this matrix is hyperopt.
+The kind signals to the CLI, client, and other tools that this matrix is TPE.
 
 If you are using the python client to create the mapping,
 this field is not required and is set by default.
 
 ```yaml
 matrix:
-  kind: hyperopt
-```
-
-### algorithm
-
-The algorithm to use from the hyperopt library, the supported
-- __algorithms__: `tpe`, `rand`, `anneal`.
-
-```yaml
-matrix:
-  kind: hyperopt
-  algorithm: anneal
+  kind: tpe
 ```
 
 ### concurrency
@@ -97,7 +88,7 @@ This value only makes sense if less or equal to the total number of possible run
 
 ```yaml
 matrix:
-  kind: hyperopt
+  kind: tpe
   concurrency: 2
 ```
 
@@ -118,7 +109,7 @@ To learn about all possible
 
 ```yaml
 matrix:
-  kind: hyperopt
+  kind: tpe
   params:
     param1:
        kind: ...
@@ -134,7 +125,7 @@ Maximum number of runs to start based on the search space defined.
 
 ```yaml
 matrix:
-  kind: hyperopt
+  kind: tpe
   numRuns: 5
 ```
 
@@ -144,7 +135,7 @@ Maximum number of iterations to run the process of \-> suggestions -> training -
 
 ```yaml
 matrix:
-  kind: hyperopt
+  kind: tpe
   maxIterations: 5
 ```
 
@@ -155,7 +146,7 @@ this is the metric that you want to maximize or minimize.
 
 ```yaml
 matrix:
-  kind: hyperopt
+  kind: tpe
   metric:
     name: loss
     optimization: minimize
@@ -168,7 +159,7 @@ if you want to control the seed for the random generator, you can pass a seed.
 
  ```yaml
 matrix:
-  kind: hyperopt
+  kind: tpe
   seed: 523
 ```
 
@@ -181,21 +172,21 @@ a signal will be sent to terminate all running and pending operations.
 
 ```yaml
 matrix:
-  kind: hyperopt
+  kind: tpe
   earlyStopping: ...
 ```
 
 ### tuner
 
 The tuner reference (w/o component hub reference) to use.
-The component contains the logic for creating new suggestions based on hyperopt library,
+The component contains the native TPE logic for creating new suggestions,
 users can override this section to provide a different tuner component.
 
 ```yaml
 matrix:
-  kind: hyperopt
+  kind: tpe
   tuner:
-    hubRef: 'acme/my-hyperopt-tuner:version'
+    hubRef: 'acme/my-tpe-tuner:version'
 ```
 
 

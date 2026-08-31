@@ -6,7 +6,7 @@
     "random-search",
     "hyperband",
     "bayesian-optimization",
-    "hyperopt",
+    "tpe",
     "iterative",
     "params",
     "tuner"

@@ -27,7 +27,8 @@ the [context](/docs/references/polyaxonfile/context/overview/).
    and some hyperparameters as input and a list of metrics and artifacts as outputs.
 
 An input/output section includes a name, a description, a type to check the value passed,
-a flag to tell if the input/output is optional, and a default value if it's optional.
+and an optional default value. Declaring the `value` field, including `null`,
+implicitly makes the input/output optional.
 
 Sometimes users prefer to pass a param to the `command` or `args`
 section only if the value is not null. Polyaxon provides a way to do that using
@@ -62,7 +63,6 @@ please check the [param section](/docs/references/polyaxonfile/specification/par
 inputs:
   - name: loss
     type: str
-    isOptional: true
     value: MeanSquaredError
   - name: preprocess
     type: bool
@@ -83,7 +83,6 @@ inputs = [
         name="loss",
         type='str',
         description="Loss to use for training my model",
-        is_optional=True,
         value="MeanSquaredError"
     ),
     V1IO(
@@ -161,8 +160,7 @@ possible types include any python type hint, pydantic built-in types, and:
 
 ### value
 
-If an input is optional you should assign it a value.
-If an output is optional you can assign it a value.
+Declaring the value field, including `null`, implicitly makes the input/output optional.
 
 ```yaml
 inputs:
@@ -181,7 +179,6 @@ inputs:
   - name: learning_rate
     description: A short description about this input
     type: float
-    value: 1.1
     isOptional: true
 ```
 
