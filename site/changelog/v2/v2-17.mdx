@@ -11,3 +11,21 @@ author: Polyaxon
 
  * **Enhancement**: Reduced CLI startup overhead by about 5x in local benchmarks.
  * **Enhancement**: Improve CLI help manual and docstring for alias commands.
+ * **Fix**: Issue with cache handling for `polyaxon run`.
+
+### Core
+
+ * **Enhancement**: Replace the `hyperopt` matrix kind with Polyaxon's native `tpe` implementation and remove the Hyperopt dependency.
+
+### Agent
+
+ * **New**: Add authenticated connection checks for Kubernetes access and default artifact store read, write, and delete access.
+ * **Fix**: Keep reconciliation running after agent data collection failures and redact sensitive values from API error logs.
+
+### Deployment
+
+ * **Enhancement**: Remove RabbitMQ broker support. Redis is now the only supported scheduler broker.
+
+### UI
+
+ * **Fix**: Correct run CSV exports to include complete run metadata and columns that are absent from the first row.
