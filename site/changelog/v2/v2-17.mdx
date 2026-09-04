@@ -12,15 +12,19 @@ author: Polyaxon
  * **Enhancement**: Reduced CLI startup overhead by about 5x in local benchmarks.
  * **Enhancement**: Improve CLI help manual and docstring for alias commands.
  * **Fix**: Issue with cache handling for `polyaxon run`.
+ * **Fix**: Honor configured timeouts in synchronous and asynchronous Python SDK requests, with a 60-second default and per-request overrides.
 
 ### Core
 
  * **Enhancement**: Replace the `hyperopt` matrix kind with Polyaxon's native `tpe` implementation and remove the Hyperopt dependency.
+ * **Enhancement**: Rename `tracking_timeout` to `tracking_flush_delay` and `POLYAXON_TRACKING_TIMEOUT` to `POLYAXON_TRACKING_FLUSH_DELAY`.
 
 ### Agent
 
  * **New**: Add authenticated connection checks for Kubernetes access and default artifact store read, write, and delete access.
+ * **Enhancement**: Check connections before managed agents start syncing and report failed checks as `FAILED` with diagnostics.
  * **Fix**: Keep reconciliation running after agent data collection failures and redact sensitive values from API error logs.
+ * **Fix**: Return structured, sanitized errors when agent data collection cannot initialize the configured artifacts store.
 
 ### Deployment
 
