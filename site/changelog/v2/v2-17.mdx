@@ -13,11 +13,13 @@ author: Polyaxon
  * **Enhancement**: Improve CLI help manual and docstring for alias commands.
  * **Fix**: Issue with cache handling for `polyaxon run`.
  * **Fix**: Honor configured timeouts in synchronous and asynchronous Python SDK requests, with a 60-second default and per-request overrides.
+ * **Fix**: Always truncate and sanitize container names to avoid generating a invalid k8s name.
 
 ### Core
 
  * **Enhancement**: Replace the `hyperopt` matrix kind with Polyaxon's native `tpe` implementation and remove the Hyperopt dependency.
  * **Enhancement**: Rename `tracking_timeout` to `tracking_flush_delay` and `POLYAXON_TRACKING_TIMEOUT` to `POLYAXON_TRACKING_FLUSH_DELAY`.
+ * **Enhancement**: Update fs requirements.
 
 ### Agent
 
