@@ -11,6 +11,7 @@ author: Polyaxon
 
  * **Enhancement**: Reduced CLI startup overhead by about 5x in local benchmarks.
  * **Enhancement**: Improve CLI help manual and docstring for alias commands.
+ * **Enhancement**: Improve cache resolution and provide better visibility into the context used for resolving projects and runs.
  * **Fix**: Issue with cache handling for `polyaxon run`.
  * **Fix**: Honor configured timeouts in synchronous and asynchronous Python SDK requests, with a 60-second default and per-request overrides.
  * **Fix**: Always truncate and sanitize container names to avoid generating a invalid k8s name.
@@ -35,3 +36,8 @@ author: Polyaxon
 ### UI
 
  * **Fix**: Correct run CSV exports to include complete run metadata and columns that are absent from the first row.
+
+### Commercial
+
+ * **New**: Allow read-only seats to join teams as viewers.
+ * **Fix**: Issue with loading team permissions when opening "Members" page.
