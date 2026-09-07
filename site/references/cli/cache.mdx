@@ -59,6 +59,35 @@ This will create a local cache folder for the project and its runs.
 
 Anytime you use the cli, it will look first locally, then defaults to the global path.
 
+## Conflicting cached run context
+
+The `.project` and `.run` caches are resolved independently. For example, fetching a run from
+`acme/project-a` and then running `polyaxon init --project acme/project-b` changes the cached
+project but leaves the previous run cached. A local project can also fall back to an unrelated global run cache.
+
+When a command uses a cached run UUID, Polyaxon rejects a known owner or project mismatch
+before making the run request. The error identifies the cached run, its cache file, and the resolved target project.
+Passing only `--project` does not override the cached run UUID.
+
+To select an existing run explicitly, pass both options:
+
+```bash
+polyaxon ops logs --project OWNER/PROJECT --uid UUID
+```
+
+To update the cached context too, initialize the intended project and fetch its run:
+
+```bash
+polyaxon init --project OWNER/PROJECT
+polyaxon ops get --project OWNER/PROJECT --uid UUID
+polyaxon ops logs
+```
+
+Only known cached owner and project values are checked. Missing metadata does not itself
+cause an error, but any known conflicting value still does. An explicit UUID bypasses this cache check;
+it does not verify that the run belongs to the selected project. The server still validates the request.
+Creating or listing runs does not require using the cached UUID.
+
 ## Switching context
 
 Users don't have to change to a new project to access information about that project, and its ops.

@@ -36,6 +36,17 @@ Polyaxon will try to resolve the owner, project, and run uuid from the environme
  * If you use this client in the context of a job or a service managed by Polyaxon,
    a configuration will be available to resolve the values based on that run.
 
+When an online client uses a cached run UUID, accessing `run_uuid` raises
+`PolyaxonClientException` if the cached owner or project is known and conflicts with the client's target.
+The check happens before a request using that UUID, not during construction, so `create()` can
+still create a new sandbox run. A successful `create()` replaces the cached identity with the new run.
+This also applies to `AsyncSandboxClient`.
+
+To attach to an existing run explicitly, construct a client with `owner`, `project`, and `run_uuid`.
+Changing cache files does not update an existing client's identity.
+See [conflicting cached run context](/docs/references/cli/cache/#conflicting-cached-run-context)
+for cache recovery and the limits of this check.
+
 The functionality is split into sub-clients:
  * `process`: one-shot, streaming, and background command execution.
  * `fs`: filesystem reads, writes, transfers, and management.

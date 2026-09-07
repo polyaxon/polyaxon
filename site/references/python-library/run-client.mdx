@@ -23,6 +23,26 @@ Polyaxon will try to resolve the owner, project, and run uuid from the environme
 If you intend to create a new run instance or to list runs,
 only the `owner` and `project` parameters are required.
 
+When an online client uses a cached run UUID, it retains the cached identity resolved at construction.
+If the cached owner or project is known and conflicts with the client's target,
+accessing `run_uuid` raises `PolyaxonClientException`. Run-specific API methods access this property,
+so the check happens before their request, not during client construction.
+`create()` and `list()` do not consume the cached UUID and are not blocked by this check.
+The same behavior applies to `AsyncRunClient`.
+
+To select an existing run explicitly, pass all three values:
+
+```python
+from polyaxon.client import RunClient
+
+client = RunClient(owner="acme", project="project-b", run_uuid="RUN_UUID")
+```
+
+Changing cache files does not update an existing client's identity. Construct a new client with
+explicit values, or use `set_run_uuid()` if its owner and project already match the intended run.
+See [conflicting cached run context](/docs/references/cli/cache/#conflicting-cached-run-context)
+for cache recovery and the limits of this check.
+
 You can always access the `self.client` to execute more APIs.
 
 - __Properties__:
