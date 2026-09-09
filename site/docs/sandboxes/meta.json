@@ -3,6 +3,7 @@
   "pages": [
     "overview",
     "quick-start",
+    "connect-llms",
     "connect-with-ssh",
     "use-terminals",
     "use-notebooks",
