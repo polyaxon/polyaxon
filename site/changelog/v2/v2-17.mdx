@@ -14,6 +14,7 @@ author: Polyaxon
  * **Enhancement**: Improve cache resolution and provide better visibility into the context used for resolving projects and runs.
  * **Enhancement**: Reject cached run UUIDs when their known owner or project conflicts with the resolved target in the CLI and Python clients.
  * **Enhancement**: Add new logic for showing alias commands and avoid duplication.
+ * **Enhancement**: Preserve full UUIDs in `polyaxon ops ls`, even on narrow terminals or alongside long column values.
  * **Fix**: Issue with cache handling for `polyaxon run`.
  * **Fix**: Honor configured timeouts in synchronous and asynchronous Python SDK requests, with a 60-second default and per-request overrides.
  * **Fix**: Always truncate and sanitize container names to avoid generating a invalid k8s name.
