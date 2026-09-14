@@ -17,7 +17,7 @@ The functionality is split into sub-clients:
 ## SandboxClient
 
 ```python
-polyaxon._client.sandbox.SandboxClient(owner=None, project=None, run_uuid=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+polyaxon._client.sandbox.SandboxClient(owner=None, project=None, run_uuid=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False, *, log_context=False)
 ```
 
 
@@ -41,6 +41,14 @@ When an online client uses a cached run UUID, accessing `run_uuid` raises
 The check happens before a request using that UUID, not during construction, so `create()` can
 still create a new sandbox run. A successful `create()` replaces the cached identity with the new run.
 This also applies to `AsyncSandboxClient`.
+
+Context logging is disabled by default. Set `log_context=True` to log cached owner and
+project values with their cache paths at construction. After validation succeeds, the first
+access to a cached `run_uuid` logs its UUID and cache path once per client. Notices use INFO
+through the `polyaxon.cli` logger, or WARNING when cached run ownership metadata is incomplete.
+An explicit `run_uuid` produces no run-cache notice. Logging uses your existing configuration.
+Set `client.log_context=False` to suppress further notices; cached ownership is still checked
+on every run UUID access.
 
 To attach to an existing run explicitly, construct a client with `owner`, `project`, and `run_uuid`.
 Changing cache files does not update an existing client's identity.
@@ -85,6 +93,9 @@ print(result.exit_code, result.stdout)
     To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
   - __no_op__: bool, optional,
     To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
+  - __log_context__: bool, optional, default: False,
+    Log cached context through the Python logger.
+    Can also be changed on the client instance.
 
 - __Raises__:
   - __PolyaxonClientException__: If the owner and/or project are not passed
@@ -97,7 +108,7 @@ print(result.exit_code, result.stdout)
 ## AsyncSandboxClient
 
 ```python
-polyaxon._client.sandbox.AsyncSandboxClient(owner=None, project=None, run_uuid=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+polyaxon._client.sandbox.AsyncSandboxClient(owner=None, project=None, run_uuid=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False, *, log_context=False)
 ```
 
 
@@ -210,5 +221,3 @@ Fetches the run namespace.
 
 - __Returns__:
   str, the namespace where the run is scheduled.
-
-

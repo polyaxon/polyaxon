@@ -59,6 +59,25 @@ This will create a local cache folder for the project and its runs.
 
 Anytime you use the cli, it will look first locally, then defaults to the global path.
 
+## Displayed context
+
+Context display is disabled by default. Pass the global `--show-context` option before the command,
+or enable `--verbose` (`-v`), to show a `Context:` section on stderr when cached values are used.
+It includes the owner, project, and run (when used), with each value's source: `explicit`,
+`default`, `local cache`, or `global cache`. Cached values include the cache file path.
+
+For example, `polyaxon --show-context project get --project quick-start` with a cached owner
+can show:
+
+```text
+Context:
+ Owner   acme         global cache · /home/user/.polyaxon/.user
+ Project quick-start  explicit
+```
+
+Fully explicit commands do not show this section. JSON and streamed output stay on stdout.
+Cached-run ownership conflicts are checked whether or not `--show-context` is set.
+
 ## Conflicting cached run context
 
 The `.project` and `.run` caches are resolved independently. For example, fetching a run from
@@ -66,7 +85,8 @@ The `.project` and `.run` caches are resolved independently. For example, fetchi
 project but leaves the previous run cached. A local project can also fall back to an unrelated global run cache.
 
 When a command uses a cached run UUID, Polyaxon rejects a known owner or project mismatch
-before making the run request. The error identifies the cached run, its cache file, and the resolved target project.
+before making the run request. The error includes the cached run identity and cache source,
+the resolved project identity, and the sources of its owner and project.
 Passing only `--project` does not override the cached run UUID.
 
 To select an existing run explicitly, pass both options:

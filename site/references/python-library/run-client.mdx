@@ -6,7 +6,7 @@ description: "The run client allows to communicate with run APIs."
 ## RunClient
 
 ```python
-polyaxon._client.run.RunClient(owner=None, project=None, run_uuid=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+polyaxon._client.run.RunClient(owner=None, project=None, run_uuid=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False, *, log_context=False)
 ```
 
 
@@ -29,6 +29,14 @@ accessing `run_uuid` raises `PolyaxonClientException`. Run-specific API methods 
 so the check happens before their request, not during client construction.
 `create()` and `list()` do not consume the cached UUID and are not blocked by this check.
 The same behavior applies to `AsyncRunClient`.
+
+Context logging is disabled by default. Set `log_context=True` to log cached owner and
+project values with their cache paths at construction. After validation succeeds, the first
+access to a cached `run_uuid` logs its UUID and cache path once per client. Notices use INFO
+through the `polyaxon.cli` logger, or WARNING when cached run ownership metadata is incomplete.
+An explicit `run_uuid` produces no run-cache notice. Logging uses your existing configuration.
+Set `client.log_context=False` to suppress further notices; cached ownership is still checked
+on every run UUID access.
 
 To select an existing run explicitly, pass all three values:
 
@@ -66,6 +74,9 @@ You can always access the `self.client` to execute more APIs.
     To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
   - __no_op__: bool, optional,
     To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
+  - __log_context__: bool, optional, default: False,
+    Log cached context through the Python logger.
+    Can also be changed on the client instance.
 
 - __Raises__:
   - __PolyaxonClientException__: If no owner and/or project are passed and Polyaxon cannot
@@ -1744,5 +1755,3 @@ allows to create or Update an artifact version based on the current run.
 
 - __Returns__:
   V1ProjectVersion, artifact version.
-
-
