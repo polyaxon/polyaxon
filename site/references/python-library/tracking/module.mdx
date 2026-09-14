@@ -8,7 +8,7 @@ description: "Tracking module is an extension of Polyaxon client with tracking c
 
 
 ```python
-tracking.init(owner=None, project=None, run_uuid=None, client=None, track_code=True, track_env=True, track_logs=True, refresh_data=False, artifacts_path=None, collect_artifacts=None, collect_resources=None, is_offline=None, is_new=None, name=None, description=None, tags=None)
+tracking.init(owner=None, project=None, run_uuid=None, client=None, track_code=True, track_env=True, track_logs=True, refresh_data=False, artifacts_path=None, collect_artifacts=None, collect_resources=None, is_offline=None, is_new=None, name=None, description=None, tags=None, *, log_context=False)
 ```
 
 
@@ -31,6 +31,10 @@ tracking.log_metrics(step=1, loss=0.02, accuracy=0.85)
 ```
 
 > A global `TRACKING_RUN` will be set on the module.
+
+Set `log_context=True` on `tracking.init()` to enable the cached-context
+logging provided by [Run](/docs/references/python-library/tracking/client/).
+Logging is disabled by default and uses your existing Python logger configuration.
 
 
 - __Args__:
@@ -70,6 +74,8 @@ tracking.log_metrics(step=1, loss=0.02, accuracy=0.85)
   - __tags__: str or List[str], optional,
         When `is_new` or `is_offline` is set to true, a new instance is created and
         you can initialize that new run with tags.
+  - __log_context__: bool, optional, default: False,
+        Forward cached-context logging to the underlying Run instance.
 
 - __Raises__:
   - __PolyaxonClientException__: If no owner and/or project are passed and Polyaxon cannot
@@ -1414,5 +1420,4 @@ Syncs all tracked events and auto-generates summaries and lineage data.
 
 > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
 > automatically, so you should not call this method manually.
-
 

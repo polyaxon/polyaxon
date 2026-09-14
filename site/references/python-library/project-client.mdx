@@ -6,7 +6,7 @@ description: "The project client allows to communicate with project APIs."
 ## ProjectClient
 
 ```python
-polyaxon._client.project.ProjectClient(owner=None, project=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+polyaxon._client.project.ProjectClient(owner=None, project=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False, *, log_context=False)
 ```
 
 
@@ -22,6 +22,12 @@ Polyaxon will try to resolve the owner and project from the environment:
 
 If you intend to create a new project instance or to list projects,
 only the `owner` parameter is required.
+
+Context logging is disabled by default. Set `log_context=True` to log the
+cached owner, including team scope, and its cache path once at construction.
+Notices use INFO through the `polyaxon.cli` logger and your existing logging
+configuration. Explicit owners and the community default owner produce no
+cache-use notice. The same behavior applies to `AsyncProjectClient`.
 
 Team Scoping:
 
@@ -55,6 +61,8 @@ ProjectClient(owner="my-org/engineering", project="my-project")  # Team project
     To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
   - __no_op__: bool, optional,
     To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
+  - __log_context__: bool, optional, default: False,
+    Log cached owner and its cache path at construction through the Python logger.
 
 - __Raises__:
   - __PolyaxonClientException__: If no owner is passed and Polyaxon cannot
@@ -1163,5 +1171,4 @@ Collects and downloads all artifacts and assets linked to a version.
 - __Args__:
   - __config__: V1ProjectVersion, the version config to download the artifacts for.
   - __path__: str, the path where to persist the artifacts and assets.
-
 

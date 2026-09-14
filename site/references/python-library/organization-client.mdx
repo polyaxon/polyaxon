@@ -6,7 +6,7 @@ description: "The organization client allows to communicate with organization AP
 ## OrganizationClient
 
 ```python
-polyaxon._client.organization.OrganizationClient(owner=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False)
+polyaxon._client.organization.OrganizationClient(owner=None, client=None, is_offline=None, no_op=None, manual_exceptions_handling=False, *, log_context=False)
 ```
 
 
@@ -17,6 +17,12 @@ Polyaxon will try to resolve the owner from the environment:
  * If you have a configured CLI, Polyaxon will use the configuration of the cli.
  * If you use this client in the context of a job or a service managed by Polyaxon,
    a configuration will be available to resolve the values based on that run.
+
+Context logging is disabled by default. Set `log_context=True` to log the
+cached owner, including team scope, and its cache path once at construction.
+Notices use INFO through the `polyaxon.cli` logger and your existing logging
+configuration. Explicit owners and the community default owner produce no
+cache-use notice. The same behavior applies to `AsyncOrganizationClient`.
 
 Team Scoping (Using as a Team Client):
   This client can be used as a **Team Client** by providing the owner in the
@@ -59,6 +65,8 @@ team_client.list_model_versions()  # Only model versions within the team
     To trigger the offline mode manually instead of depending on `POLYAXON_IS_OFFLINE`.
   - __no_op__: bool, optional,
     To set the NO_OP mode manually instead of depending on `POLYAXON_NO_OP`.
+  - __log_context__: bool, optional, default: False,
+    Log cached owner and its cache path at construction through the Python logger.
 
 - __Raises__:
   - __PolyaxonClientException__: If no owner is passed and Polyaxon cannot
@@ -670,4 +678,3 @@ Lists artifact lineage for runs across all projects in the organization.
 
 - __Returns__:
   V1ListRunArtifactsResponse, list of run artifacts with lineage info.
-

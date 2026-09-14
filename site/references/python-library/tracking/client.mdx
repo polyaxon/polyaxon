@@ -7,7 +7,7 @@ description: "Tracking client is an extension of Polyaxon client with tracking c
 ## Run
 
 ```python
-traceml.tracking.run.Run(owner=None, project=None, run_uuid=None, client=None, track_code=True, track_env=True, track_logs=True, refresh_data=False, artifacts_path=None, collect_artifacts=None, collect_resources=None, is_new=None, is_offline=None, no_op=None, name=None, description=None, tags=None, auto_create=True)
+traceml.tracking.run.Run(owner=None, project=None, run_uuid=None, client=None, track_code=True, track_env=True, track_logs=True, refresh_data=False, artifacts_path=None, collect_artifacts=None, collect_resources=None, is_new=None, is_offline=None, no_op=None, name=None, description=None, tags=None, auto_create=True, *, log_context=False)
 ```
 
 
@@ -20,6 +20,16 @@ Polyaxon will try to resolve the owner, project, and run uuid from the environme
    unless you override the values.
  * If you use this client in the context of a job or a service managed by Polyaxon,
    a configuration will be available to resolve the values based on that run.
+
+Context logging is disabled by default. Set `log_context=True` to log cached
+owner and project values with their cache paths at construction. The cached
+run UUID is logged once on its first validated access, which can happen during
+tracking initialization. Notices use INFO through the `polyaxon.cli` logger,
+or WARNING when cached run ownership metadata is incomplete. An explicit
+`run_uuid` produces no run-cache notice. Logging uses your existing configuration.
+Set `run.log_context=False` to suppress later notices; cached-run validation
+remains active. See [RunClient](/docs/references/python-library/run-client/)
+for cache validation and source details.
 
 You can always access the `self.client` to execute more APIs.
 
@@ -69,6 +79,8 @@ You can always access the `self.client` to execute more APIs.
   - __tags__: str or List[str], optional,
     When `is_new` or `is_offline` is set to true, a new instance is created and
     you can initialize that new run with tags.
+  - __log_context__: bool, optional, default: False,
+    Log cached context through the Python logger, as in RunClient.
 
 - __Raises__:
   - __PolyaxonClientException__: If no owner and/or project are passed and Polyaxon cannot
@@ -1436,5 +1448,4 @@ Syncs all tracked events and auto-generates summaries and lineage data.
 
 > **Note**: Both `in-cluster` and `offline` modes will manage syncing events summaries
 > automatically, so you should not call this method manually.
-
 
