@@ -15,6 +15,9 @@ author: Polyaxon
  * **Enhancement**: Reject cached run UUIDs when their known owner or project conflicts with the resolved target in the CLI and Python clients.
  * **Enhancement**: Add new logic for showing alias commands and avoid duplication.
  * **Enhancement**: Preserve full UUIDs in `polyaxon ops ls`, even on narrow terminals or alongside long column values.
+ * **Enhancement**: Add `--symlink-mode` and `--symlink-report-limit` to directory uploads through `polyaxon ops upload`, `polyaxon run -u`, and mounts `polyaxon run -m`.
+ * **Fix**: Fail empty uploads in `run -u` and mount uploads with reason `UploadEmpty` and guidance on files, ignore rules, and symlink options. Standalone uploads skip empty selections unless `--sync-failure` is enabled.
+    * File symlinks were previously archived as links. Use `--symlink-mode resolve-safe` to upload internal target contents, `resolve-all` to include external targets, or `error` to reject links before upload.
  * **Fix**: Issue with cache handling for `polyaxon run`.
  * **Fix**: Honor configured timeouts in synchronous and asynchronous Python SDK requests, with a 60-second default and per-request overrides.
  * **Fix**: Always truncate and sanitize container names to avoid generating a invalid k8s name.
