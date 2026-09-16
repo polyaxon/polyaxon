@@ -6,6 +6,21 @@ description: "Polyaxonfile Command Line Interface Specification - Run CLI Refere
 
 ### run
 
+Directory uploads through `--upload` and mounts use `--symlink-mode skip` by default.
+File and directory symlinks are omitted with a bounded warning. Use
+`--symlink-mode resolve-safe` to upload internal target contents, or `resolve-all`
+to include external targets. `error` rejects selected links before upload.
+The options apply to each uploaded directory, including mounts from the Polyaxonfile.
+
+If filtering leaves no files in an existing directory, the run is marked failed
+with reason `UploadEmpty` and is not approved to start. The message identifies the
+source folder and suggests checking files, ignore rules, and symlink options.
+Other upload failures also mark the pending upload run failed.
+
+Previously, file symlinks were archived as links and directory symlinks were omitted
+silently. See [directory upload symlinks](/docs/references/cli/ops/#directory-upload-symlinks)
+for mode details and compatibility notes.
+
 ```bash
 Usage: polyaxon run [OPTIONS]
 
@@ -48,6 +63,10 @@ Usage: polyaxon run [OPTIONS]
 
   $ polyaxon run ... -u -u-from ./code -u-to code
 
+  Uploading internal symlink target contents
+
+  $ polyaxon run ... -u --symlink-mode resolve-safe
+
   Mounting multiple paths using -m
 
   $ polyaxon run ... -m ./src:code -m ./data:datasets -m ./models
@@ -86,6 +105,12 @@ Options:
                                   use `/`, otherwise the values should start
                                   without the separator, e.g. `uploads`,
                                   `code`, `dataset/images/values`, ...
+  --symlink-mode [resolve-safe|skip|error|resolve-all]
+                                  Symlink handling for directory uploads and
+                                  mounts. [default: skip]
+  --symlink-report-limit INTEGER RANGE
+                                  Maximum links listed per directory upload.
+                                  Use 0 for totals only. [default: 20; x>=0]
   -w, --watch                     To start statuses watch loop after
                                   scheduling the run.
   --local                         To start the run locally, with `docker`

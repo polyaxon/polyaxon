@@ -656,8 +656,40 @@ Options:
   --sync-failure                 To set the run to failed if the upload fails.
   -ag, --agent TEXT              Optional, uuid reference of an agent to use.
   --ignore-agent-host            Optional, to ignore the agent host.
+  --symlink-mode [resolve-safe|skip|error|resolve-all]
+                                 Directory symlink handling. Skipped links are
+                                 reported in a warning. [default: skip]
+  --symlink-report-limit INTEGER RANGE
+                                 Maximum links listed in a report. Use 0 for
+                                 totals only. [default: 20; x>=0]
   --help                         Show this message and exit.
 ```
+
+#### Directory upload symlinks
+
+Directory uploads skip file and directory symlinks by default and warn with the
+number skipped. The report lists up to 20 links; `--symlink-report-limit` changes
+that limit. Ignored links are excluded from the report. There is no prompt.
+
+| Mode | Behavior |
+| --- | --- |
+| `skip` (default) | Omit links, including broken links, and warn. |
+| `resolve-safe` | Upload target contents for links inside the source directory. Reject external or broken targets and directory cycles before upload. |
+| `resolve-all` | Also upload targets outside the source directory. Reject broken targets and directory cycles. |
+| `error` | Reject any selected symlink before upload. |
+
+Use `resolve-all` only when you intend to include files outside the source directory.
+Ignore rules still apply, including to internal targets when resolving links.
+
+If an existing directory has no selected files after filtering, the command reports
+that the upload was skipped and exits successfully without sending an archive.
+With `--sync-failure`, it instead marks the run failed with reason `UploadEmpty` and
+exits with an error. The message identifies the source folder and symlink mode,
+and suggests checking files, ignore rules, and symlink options. Upload errors still fail.
+
+This changes the previous default: file symlinks were archived as links, while
+directory symlinks were omitted silently. Both are now skipped with a warning.
+Uploading a single file directly retains its previous behavior.
 
 ---
 
