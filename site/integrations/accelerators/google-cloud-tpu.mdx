@@ -1,0 +1,90 @@
+---
+title: "Google Cloud TPU"
+description: "Schedule JAX, PyTorch/XLA, or supported inference workloads onto GKE TPU slices through Polyaxon."
+ogImage: /images/integrations/tpu.png
+---
+
+GKE exposes TPU chips as `google.com/tpu` and imposes topology-specific scheduling rules. Polyaxon can request that native resource, target the matching TPU pool, and keep the framework image, workload, logs, and artifacts in the same run model used for GPU jobs.
+
+See the [TPUs in GKE](https://cloud.google.com/kubernetes-engine/docs/concepts/tpus) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- A GKE Standard or Autopilot environment configured for the selected TPU version and topology.
+- A compatible JAX, PyTorch/XLA, Optimum TPU, or serving image.
+- A non-TPU pool for system workloads plus quota, storage, network, and Polyaxon Agent access.
+
+## Configuration [#run-it]
+
+### Request a TPU slice [#step-1]
+
+Select the TPU accelerator and topology exposed by GKE, then request all chips available to the pod on that slice node.
+
+```yaml
+version: 1.1
+kind: component
+name: tpu-readiness
+run:
+  kind: job
+  environment:
+    nodeSelector:
+      cloud.google.com/gke-tpu-accelerator: tpu-v5-lite-podslice
+      cloud.google.com/gke-tpu-topology: 2x2
+  container:
+    image: us-docker.pkg.dev/cloud-tpu-images/jax-ai-image/tpu:jax0.7.2-rev1
+    command: ["python", "-c"]
+    args: ["import jax; print(jax.devices())"]
+    resources:
+      requests:
+        google.com/tpu: "4"
+      limits:
+        google.com/tpu: "4"
+```
+
+TPU labels and valid chip counts depend on GKE version, TPU generation, machine type, and topology. Replace this example with the exact current values for your pool.
+
+### Submit the operation [#step-2]
+
+Run the component through the target Polyaxon project, queue, preset, and approval path.
+
+```bash
+polyaxon run -f tpu-readiness.yaml
+```
+
+### Confirm the TPU topology [#step-3]
+
+Verify JAX sees the expected devices and that pod replicas, requested chips, node topology, storage, and logs match the selected GKE configuration.
+
+```bash
+polyaxon ops dashboard
+```
+
+## Deployment checks [#production]
+
+- Pin a compatible driver, device integration, container runtime, framework image, and firmware combination.
+- Publish accelerator selection through centrally managed Polyaxon presets instead of user-specific labels.
+- Track allocatable devices, hardware health, utilization, memory, thermals, and workload failures.
+- Validate one device, one node, and multi-node communication separately before production adoption.
+- For multi-host TPU slices, validate the framework's distributed initialization and require coordinated scheduling of every expected pod.
+
+## Troubleshooting [#troubleshooting]
+
+### The resource does not appear
+
+Inspect the node driver, firmware, device integration, kubelet registration, node labels, and allocatable resources.
+
+### The container cannot access the device
+
+Verify the requested custom resource, runtime class, permissions, device mounts, and image compatibility.
+
+### Performance is unexpectedly low
+
+Check topology, NUMA placement, clocks, memory pressure, host-device transfer, communication libraries, and framework build.
+
+## References [#sources]
+
+- [TPUs in GKE](https://cloud.google.com/kubernetes-engine/docs/concepts/tpus) — Official `google.com/tpu` resource and topology scheduling behavior.
+- [Deploy TPU workloads in GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/tpus) — Current node-pool, selector, resource, and framework examples.
+- [JAX fine-tuning on GKE TPUs](https://cloud.google.com/kubernetes-engine/docs/tutorials/train-llm-tpus-gke-jax) — Google-published JAX AI image tag and TPU workload example.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

@@ -1,0 +1,70 @@
+---
+title: Kubernetes
+ogImage: /images/integrations/kubernetes.svg
+description: Connect a Kubernetes compute cluster to Polyaxon, configure queues and storage, and check GPU allocation.
+---
+
+Polyaxon runs workloads in Kubernetes namespaces. With Polyaxon Cloud or an EE control plane, install **Polyaxon Agent (compute cluster)** in the target cluster to connect its compute capacity. With Polyaxon CE, use the namespace managed by the CE deployment.
+
+## Connect the cluster [#connect-the-cluster]
+
+Create the Kubernetes cluster and node pools with your provider first. Follow the [Agent installation reference](/docs/setup/agents/overview) for the deployment configuration, credentials, Helm installation, and control-plane connection.
+
+Before enabling workloads, configure:
+
+- [Queues](/docs/scheduling/scheduling-strategies/queues) to route operations to the connected cluster and namespace.
+- [Scheduling presets](/docs/scheduling/scheduling-presets/overview) for node selectors, tolerations, and workload defaults.
+- [Connections](/docs/setup/connections/overview) for datasets, secrets, image registries, and persistent storage.
+- An [artifacts store](/docs/setup/connections/artifacts) for logs and outputs that must survive pod deletion.
+
+Choose the provider reference for its node, driver, storage, identity, and network requirements:
+
+- [Amazon EKS](/integrations/clouds/amazon-eks)
+- [Google GKE](/integrations/clouds/google-gke)
+- [CoreWeave](/integrations/clouds/coreweave)
+- [Lambda GPU Cloud](/integrations/clouds/lambda)
+- [Crusoe Cloud](/integrations/clouds/crusoe)
+- [Nebius AI Cloud](/integrations/clouds/nebius)
+
+## Check an NVIDIA GPU allocation [#gpu-visibility]
+
+This example uses the [published NVIDIA CUDA image](https://hub.docker.com/r/nvidia/cuda) and a Kubernetes device plugin exposing `nvidia.com/gpu`. Use a CUDA image compatible with the host driver. If your cluster uses Dynamic Resource Allocation, follow the allocation configuration supported by your cluster instead of this device-plugin example.
+
+Save the following component as `gpu-readiness.yaml`:
+
+```yaml
+version: 1.1
+kind: component
+name: gpu-readiness
+run:
+  kind: job
+  container:
+    image: nvidia/cuda:12.8.1-base-ubuntu22.04
+    command: ["nvidia-smi"]
+    resources:
+      limits:
+        nvidia.com/gpu: "1"
+```
+
+Submit it to your configured queue, replacing `agent-name/queue-name` with the queue shown in your Polyaxon organization:
+
+```bash
+polyaxon run -f gpu-readiness.yaml -q agent-name/queue-name
+polyaxon ops dashboard
+```
+
+Confirm that the pod runs on the intended node pool and that its logs show the allocated GPU. Keep cloud-specific placement rules in the queue's preset so this component can run on different providers.
+
+## Validate the workload requirements [#workload-validation]
+
+A successful `nvidia-smi` command checks device visibility. It does not validate storage throughput, cloud identity, application dependencies, or multi-node communication.
+
+Run a representative workload with the same data connections and output paths as your application. For distributed training, follow [NCCL and RCCL validation](/blog/validate-nccl-and-rccl). For other accelerators, use the [AMD](/integrations/accelerators/amd) or [Google Cloud TPU](/integrations/accelerators/google-cloud-tpu) integration.
+
+If the operation remains Pending, inspect the queue's capacity and the Kubernetes events for GPU availability, quotas, selectors, taints, and volume placement. If the compute cluster cannot submit operations or collect logs, check the Agent deployment, namespace permissions, network access, and control-plane connection.
+
+## References [#sources]
+
+- [Polyaxon Agent installation](/docs/setup/agents/overview)
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling)
+- [NVIDIA CUDA container](https://hub.docker.com/r/nvidia/cuda)

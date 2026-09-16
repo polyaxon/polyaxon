@@ -1,0 +1,55 @@
+---
+title: "Google GKE"
+description: "Verify a GKE GPU pool, its driver mode, placement policy, storage, networking, and workload identity through Polyaxon."
+ogImage: /images/integrations/gcp.png
+---
+
+GKE can manage the GPU node lifecycle and driver installation, while Standard clusters also support more platform-owned configurations. Polyaxon keeps the selected machine family, driver mode, topology, and identity policy in queues and presets rather than application code.
+
+See the [GPUs in GKE](https://cloud.google.com/kubernetes-engine/docs/concepts/gpus) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- Regional quota and supported GKE Standard or Autopilot capacity for the selected GPU machine family.
+- A node pool or workload class with reviewed driver mode, topology, labels, taints, and autoscaling behavior.
+- The network, GPUDirect mode, firewall rules, storage, and service account required by the workload.
+- The cluster connected to Polyaxon by installing Polyaxon Agent (compute cluster), with namespace policy, storage connections, and a queue targeting the GPU pool.
+
+## Connect the cluster [#connect-the-cluster]
+
+Follow [Connect Kubernetes to Polyaxon](/integrations/clouds/kubernetes) to install Polyaxon Agent (compute cluster), configure storage and queues, and submit the shared GPU visibility example. Use the same namespace and queue that will run your workloads.
+
+The example only checks GPU allocation and driver visibility. Validate storage, identity, and multi-node networking separately using the provider requirements below.
+
+## Provider requirements [#production]
+
+- Record whether GKE or your platform team owns driver installation and node lifecycle for each capacity class.
+- Separate general-purpose, training, and inference pools with explicit labels, taints, quotas, and Polyaxon queues.
+- Validate the driver, runtime, storage, DNS, identity, and network path after GKE or node-image upgrades.
+- Treat each GPU machine family, driver mode, and network topology as a separately validated capacity class.
+
+For distributed training, continue with [NCCL and RCCL validation](/blog/validate-nccl-and-rccl).
+
+For help choosing a provider, see [Choosing GPU infrastructure for Polyaxon](/explore/choosing-gpu-infrastructure-for-polyaxon).
+
+## Troubleshooting [#troubleshooting]
+
+### The GPU resource is missing
+
+Check whether the node pool is running, the selected GKE driver mode completed successfully, and nvidia.com/gpu appears in node capacity.
+
+### The operation lands on the wrong pool
+
+Compare the queue or preset selector with the node pool labels, taints, tolerations, and requested GPU resource.
+
+### The operation cannot access data or Google APIs
+
+Verify the Kubernetes service account, Workload Identity binding, storage connection, network policy, and required egress.
+
+## References [#sources]
+
+- [GPUs in GKE](https://cloud.google.com/kubernetes-engine/docs/concepts/gpus) — GKE GPU support, driver installation modes, scheduling behavior, and lifecycle considerations.
+- [NVIDIA CUDA container](https://hub.docker.com/r/nvidia/cuda) — Published CUDA container tags used for the GPU visibility check.
+- [GKE GPUs](https://cloud.google.com/kubernetes-engine/docs/how-to/gpus) — GPU node, driver, scheduling, and operational guidance for GKE.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

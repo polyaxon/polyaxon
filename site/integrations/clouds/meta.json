@@ -1,0 +1,12 @@
+{
+  "title": "Clouds and Kubernetes",
+  "pages": [
+    "kubernetes",
+    "amazon-eks",
+    "google-gke",
+    "coreweave",
+    "lambda",
+    "crusoe",
+    "nebius"
+  ]
+}

@@ -1,0 +1,55 @@
+---
+title: "Crusoe Cloud"
+ogImage: /images/integrations/crusoe.png
+description: "Verify a Crusoe GPU node pool, storage class, network path, and shared-responsibility boundary through Polyaxon."
+---
+
+Crusoe Managed Kubernetes uses a shared-responsibility model. Crusoe operates the underlying cloud and control plane, while your platform team still makes explicit choices for node pools, access, add-ons, storage use, workload policy, and some network configuration.
+
+See the [Crusoe Managed Kubernetes](https://docs.crusoecloud.com/orchestration/cmk/overview/) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- A Crusoe Managed Kubernetes cluster with the required GPU node pool and NVIDIA components.
+- Reviewed cluster access, network, storage class, registry, DNS, and workload identity configuration.
+- The cluster connected to Polyaxon by installing Polyaxon Agent (compute cluster), with namespace permissions and a queue or preset selecting that node pool.
+
+## Connect the cluster [#connect-the-cluster]
+
+Follow [Connect Kubernetes to Polyaxon](/integrations/clouds/kubernetes) to install Polyaxon Agent (compute cluster), configure storage and queues, and submit the shared GPU visibility example. Use the same namespace and queue that will run your workloads.
+
+The example only checks GPU allocation and driver visibility. Validate storage, identity, and multi-node networking separately using the provider requirements below.
+
+## Provider requirements [#production]
+
+- Record the owner for each item in Crusoe's shared-responsibility model before production rollout.
+- Keep cluster, node-pool, add-on, compute-cluster connection, queue, and preset configuration in version control.
+- Revalidate GPU, storage, identity, DNS, and network behavior after cluster or node-pool changes.
+- Decide whether scaling is managed through fixed node pools or an AutoClusters configuration before setting queue expectations.
+- Run a collective communication test on the exact nodes and interfaces used by distributed training.
+
+For distributed training, continue with [NCCL and RCCL validation](/blog/validate-nccl-and-rccl).
+
+For help choosing a provider, see [Choosing GPU infrastructure for Polyaxon](/explore/choosing-gpu-infrastructure-for-polyaxon).
+
+## Troubleshooting [#troubleshooting]
+
+### The GPU resource is missing
+
+Check node-pool readiness, NVIDIA component status, kubelet capacity, and whether the queue selector and tolerations match the GPU nodes.
+
+### The operation cannot mount its volume
+
+Verify the requested storage class, CSI driver state, availability-zone constraints, permissions, and whether the workload expects persistent or local storage.
+
+### The connected compute cluster cannot submit or collect logs
+
+Verify the Polyaxon Agent deployment, cluster access, namespace RBAC, network policy, registry credentials, queue routing, and control-plane connectivity.
+
+## References [#sources]
+
+- [Crusoe Managed Kubernetes](https://docs.crusoecloud.com/orchestration/cmk/overview/) — Provider documentation for creating and operating Crusoe Kubernetes clusters.
+- [NVIDIA CUDA container](https://hub.docker.com/r/nvidia/cuda) — Published CUDA container tags used for the GPU visibility check.
+- [Crusoe shared responsibility](https://docs.crusoecloud.com/orchestration/cmk/shared-responsibility/index.html) — The ownership boundary for infrastructure, control plane, nodes, access, networking, storage, add-ons, and workloads.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

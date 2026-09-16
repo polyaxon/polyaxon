@@ -1,0 +1,55 @@
+---
+title: "Nebius AI Cloud"
+description: "Verify a Nebius GPU node group, driver mode, storage, interconnect, and workload identity through Polyaxon."
+ogImage: /images/integrations/nebius.png
+---
+
+Nebius Managed Kubernetes provides the cluster foundation and optional managed GPU settings. Your platform team still selects the node-group shape, driver mode, storage, interconnect, identity, labels, taints, and scaling behavior that define each capacity class.
+
+See the [Nebius Managed Kubernetes](https://docs.nebius.com/kubernetes/) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- A Nebius Managed Kubernetes cluster with a GPU node group and reviewed NVIDIA driver installation mode.
+- The required interconnect, storage, registry, DNS, service account, labels, taints, and autoscaling configuration.
+- The cluster connected to Polyaxon by installing Polyaxon Agent (compute cluster), with namespace access and a queue or preset selecting that node group.
+
+## Connect the cluster [#connect-the-cluster]
+
+Follow [Connect Kubernetes to Polyaxon](/integrations/clouds/kubernetes) to install Polyaxon Agent (compute cluster), configure storage and queues, and submit the shared GPU visibility example. Use the same namespace and queue that will run your workloads.
+
+The example only checks GPU allocation and driver visibility. Validate storage, identity, and multi-node networking separately using the provider requirements below.
+
+## Provider requirements [#production]
+
+- Record the node-group shape, driver mode, labels, taints, storage, and interconnect as one validated capacity class.
+- Keep cluster, node-group, compute-cluster connection, queue, and preset configuration in version control.
+- Revalidate the GPU, storage, identity, DNS, and network path after node-image, driver, or cluster upgrades.
+- Run collective communication tests only on the exact node group and interfaces used by distributed workloads.
+
+For distributed training, continue with [NCCL and RCCL validation](/blog/validate-nccl-and-rccl).
+
+For help choosing a provider, see [Choosing GPU infrastructure for Polyaxon](/explore/choosing-gpu-infrastructure-for-polyaxon).
+
+## Troubleshooting [#troubleshooting]
+
+### The GPU resource is missing
+
+Check node-group readiness, the selected driver installation mode, GPU operator or device-plugin status, and nvidia.com/gpu in node capacity.
+
+### Storage or interconnect devices are unavailable
+
+Verify that the selected node group supports the requested feature, then inspect CSI or network components, topology constraints, mounts, and pod placement.
+
+### The connected compute cluster cannot submit or collect logs
+
+Verify the Polyaxon Agent deployment, namespace RBAC, service-account permissions, registry access, queue routing, network policy, and control-plane connectivity.
+
+## References [#sources]
+
+- [Nebius Managed Kubernetes](https://docs.nebius.com/kubernetes/) — Provider documentation for cluster, node group, networking, and workload configuration.
+- [NVIDIA CUDA container](https://hub.docker.com/r/nvidia/cuda) — Published CUDA container tags used for the GPU visibility check.
+- [Nebius node groups](https://docs.nebius.com/kubernetes/node-groups/manage) — Node-group sizing, labels, taints, scaling, lifecycle, and GPU settings.
+- [Nebius GPU setup](https://docs.nebius.com/kubernetes/gpu/set-up) — Supported GPU driver installation modes and configuration choices.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

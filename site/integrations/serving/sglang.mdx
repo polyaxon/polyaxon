@@ -135,3 +135,32 @@ The example is intentionally scoped to the SGLang H200/FP8/low-latency/single-no
  * `--cuda-graph-max-bs 32` targets latency, not maximum throughput.
 
 For higher throughput, use the SGLang recipe selector and change the Polyaxon component deliberately. The balanced and high-throughput recipes add different batching, DP-attention, and MoE communication choices.
+
+## Deployment checks [#production]
+
+- Pin the runtime image and model revision; warm the model cache before measuring startup or latency.
+- Keep the service private by default and add authentication, TLS, rate limits, and network policy deliberately.
+- Define readiness, liveness, timeout, graceful shutdown, and rollback behavior before production traffic.
+- Measure latency distributions, throughput, quality, errors, and accelerator memory under representative load.
+- For prefill/decode disaggregation, operate the router and worker groups as a tested multi-service topology rather than extending this single-pod starter blindly.
+
+## Troubleshooting [#troubleshooting]
+
+### The service never becomes ready
+
+Inspect model download, credentials, disk space, GPU memory, runtime flags, port binding, and readiness behavior.
+
+### Requests fail through the URL
+
+Verify the service port, rewrite-path setting, authentication header, ingress, network policy, and API path.
+
+### Latency degrades under load
+
+Measure queueing, batch settings, context length, KV cache pressure, replica saturation, and storage or network contention.
+
+## References [#sources]
+
+- [SGLang documentation](https://docs.sglang.ai/) — Current server, model, parallelism, and deployment behavior.
+- [Install SGLang with Docker](https://github.com/sgl-project/sglang/blob/main/docs/docs/get-started/install.mdx) — Published image names, release tags, and server command.
+- [Polyaxon service runtime](/docs/references/polyaxonfile/runtimes/services) — Service ports, replicas, connections, volumes, and external access.
+- [Polyaxon model serving](/docs/serving) — Patterns for deploying APIs, loading models, and operating inference workloads.

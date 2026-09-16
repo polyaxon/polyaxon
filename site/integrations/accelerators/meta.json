@@ -1,0 +1,8 @@
+{
+  "title": "Accelerators",
+  "pages": [
+    "amd",
+    "google-cloud-tpu",
+    "tenstorrent"
+  ]
+}

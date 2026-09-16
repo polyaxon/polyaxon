@@ -3,7 +3,6 @@
   "pages": [
     "daskcluster",
     "horovod",
-    "kfserving",
     "kubeflow",
     "mpijob",
     "mxnetjob",

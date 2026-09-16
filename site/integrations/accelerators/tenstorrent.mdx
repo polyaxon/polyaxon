@@ -1,0 +1,80 @@
+---
+title: "Tenstorrent"
+ogImage: /images/integrations/tenstorrent.png
+description: "Connect a Kubernetes Tenstorrent pool to Polyaxon and keep device acquisition, runtime images, HugePages, and validation explicit."
+---
+
+Tenstorrent support starts below Polyaxon: the cluster must expose healthy devices through the operator or device-integration path chosen by the platform team. Polyaxon then schedules a compatible component using a reviewed preset and records its execution.
+
+See the [Tenstorrent software documentation](https://docs.tenstorrent.com/) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- Tenstorrent hardware with supported kernel driver, firmware, HugePages or IOMMU configuration, and user-mode software.
+- A Kubernetes device integration or DRA operator selected and maintained by the platform team.
+- A validated Tenstorrent image plus a Polyaxon preset that injects the exact resource claim, mounts, labels, and security context.
+
+## Configuration [#run-it]
+
+### Use the platform-owned Tenstorrent preset [#step-1]
+
+Keep fast-moving resource-claim and device-mount details outside user components; the component declares the workload and diagnostic command.
+
+```yaml
+version: 1.1
+kind: component
+name: tenstorrent-readiness
+run:
+  kind: job
+  container:
+    image: ghcr.io/tenstorrent/tt-metal/tt-metalium-ubuntu-22.04-release-amd64:latest-rc
+    command: ["tt-smi", "-ls"]
+```
+
+Apply a platform-owned preset that injects the device claim or mounts required by your installed Tenstorrent integration. There is no universal Kubernetes resource key to put in this portable component; pin the image digest before production. Select the hardware through your configured queue and preset; no provider-specific node label is required by this example.
+
+### Submit the operation [#step-2]
+
+Run the component through the target Polyaxon project, queue, preset, and approval path.
+
+```bash
+polyaxon run -f tenstorrent-readiness.yaml
+```
+
+### Verify the device inventory [#step-3]
+
+Confirm the allocated board is visible to `tt-smi`, the runtime can execute a small framework example, and the pod uses the intended security and HugePages policy.
+
+```bash
+polyaxon ops dashboard
+```
+
+## Deployment checks [#production]
+
+- Pin a compatible driver, device integration, container runtime, framework image, and firmware combination.
+- Publish accelerator selection through centrally managed Polyaxon presets instead of user-specific labels.
+- Track allocatable devices, hardware health, utilization, memory, thermals, and workload failures.
+- Validate one device, one node, and multi-node communication separately before production adoption.
+- Version the preset with the operator, DRA API, driver, firmware, HugePages, and container-image compatibility set.
+
+## Troubleshooting [#troubleshooting]
+
+### The resource does not appear
+
+Inspect the node driver, firmware, device integration, kubelet registration, node labels, and allocatable resources.
+
+### The container cannot access the device
+
+Verify the requested custom resource, runtime class, permissions, device mounts, and image compatibility.
+
+### Performance is unexpectedly low
+
+Check topology, NUMA placement, clocks, memory pressure, host-device transfer, communication libraries, and framework build.
+
+## References [#sources]
+
+- [Tenstorrent software documentation](https://docs.tenstorrent.com/) — Official hardware, driver, system, and framework requirements.
+- [Install TT-Metalium](https://docs.tenstorrent.com/tt-metal/latest/ttnn/ttnn/installing.html) — Documented TT-Metalium release image and device-access requirements.
+- [Tenstorrent tt-smi](https://github.com/tenstorrent/tt-smi) — Primary source for device inventory and reset tooling.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

@@ -14,15 +14,9 @@
     "prometheus",
     "rstudio",
     "sagemaker",
-    "serving-with-fastapi",
-    "serving-with-flask",
-    "sglang",
     "streamlit",
     "tensorboard",
-    "tensorflow-serving",
-    "tensorrt",
     "tfx",
-    "vllm",
     "vscode"
   ]
 }

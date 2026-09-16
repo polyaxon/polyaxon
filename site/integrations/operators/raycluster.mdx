@@ -1,87 +1,159 @@
 ---
 title: "RayCluster"
-description: "A toolkit to run Ray applications on Kubernetes."
+description: "Provision a KubeRay cluster, submit a Ray entrypoint through Polyaxon, inspect the operation, and prepare the workload for production."
 ogImage: /images/integrations/ray.png
 ---
 
-Polyaxon allows to schedule clusters via kuberay natively.
+Polyaxon treats a Ray cluster as a normal operation: the platform resolves workload configuration and lifecycle policy, then KubeRay manages the head and worker pods. This guide starts with a small CPU example and shows where autoscaling, GPUs, storage, and governance fit.
 
-## Deploy the RayCluster operator
+See the [Ray on Kubernetes](https://docs.ray.io/en/latest/cluster/kubernetes/index.html) for the upstream configuration and requirements.
 
-Before you can use the raycluster runtime, you need to make sure that RayCluster operator and the CRD (custom resource definition)
-are deployed in your cluster.
+## Prerequisites [#prerequisites]
 
-## Enable the operator
+- A Kubernetes namespace managed by Polyaxon CE or a Polyaxon Agent.
+- The KubeRay operator and RayCluster custom resource definition installed in that cluster.
+- The RayCluster operator enabled in the Polyaxon deployment configuration.
+- A configured Polyaxon CLI and a project where you can create operations.
 
-To be able to schedule distributed jobs with the RayCluster operator, you need to enable the operator in your deployment config.
+## Configuration [#run-it]
 
-> You need to enable the operator in Polyaxon CE deployment or Polyaxon Agent (compute cluster) deployment:
+### Enable the RayCluster operator [#step-1]
+
+Install KubeRay and its CRDs first. Then enable the integration in the Polyaxon CE or Agent configuration that manages the target namespace.
 
 ```yaml
 operators:
   raycluster: true
 ```
 
-## Create a component with the raycluster runtime
+This is an administrator change. The integration cannot create Ray workloads until both the KubeRay CRDs and this Polyaxon setting are present.
 
-Once you have the RayCluster operator running on a Kubernetes namespace managed by Polyaxon,
-you can check the specification for creating components with the raycluster runtime:
+### Create a minimal Ray component [#step-2]
 
-```bash
+Save this as ray.yaml. The same Ray version is used in the runtime field and both container images, which avoids a common source of protocol mismatches.
+
+```yaml
 version: 1.1
 kind: component
+name: ray-square-numbers
+
 run:
   kind: raycluster
-  ...
+  rayVersion: "2.58.0"
+  entrypoint: >-
+    python -c "import ray; ray.init(); square = ray.remote(lambda x: x * x); print(ray.get([square.remote(i) for i in range(8)]))"
+  head:
+    rayStartParams:
+      dashboard-host: "0.0.0.0"
+    container:
+      image: rayproject/ray:2.58.0
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "1Gi"
+        limits:
+          cpu: "1"
+          memory: "2Gi"
+  workers:
+    cpu-workers:
+      replicas: 2
+      minReplicas: 2
+      maxReplicas: 4
+      container:
+        image: rayproject/ray:2.58.0
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "1"
+            memory: "2Gi"
 ```
 
-For more details about the specification for creating raycluster runtime, please check please check this
-[section](/docs/references/polyaxonfile/runtimes/clusters/ray-clusters/).
+For production, pin an image version or digest that your team has validated and that contains your application code and dependencies.
 
-## Run the distributed job
+### Submit the operation [#step-3]
 
-
-Running components with the raycluster runtime is similar to running any other component:
+Run the component like any other Polyaxon operation. Project defaults, queue settings, presets, connections, and approval policy can be applied through your normal submission path.
 
 ```bash
-polyaxon run -f manifest.yaml -P ...
+polyaxon run -f ray.yaml
 ```
 
-## View a running operation on the dashboard
+### Inspect the distributed run [#step-4]
 
-After running an operation with this component, you can view it on the Dashboard:
+Open the operation dashboard to follow status and replica logs. Polyaxon streams and archives logs from the cluster replicas, while KubeRay remains responsible for reconciling the Ray resources.
 
 ```bash
 polyaxon ops dashboard
 ```
 
-or
+If you are inspecting a different operation, pass its project and run UUID with the documented dashboard options.
 
-```bash
-polyaxon ops dashboard -p [project-name] -uid [run-uuid] -y
+### Turn on demand-based worker scaling [#step-5]
+
+Enable the Ray in-tree autoscaler when the workload can express demand through Ray resources and the cluster has capacity to add worker pods.
+
+```yaml
+run:
+  kind: raycluster
+  rayVersion: "2.58.0"
+  enableInTreeAutoscaling: true
+  autoscalerOptions:
+    upscalingMode: Default
+    imagePullPolicy: IfNotPresent
+  head:
+    container:
+      image: rayproject/ray:2.58.0
+  workers:
+    cpu-workers:
+      replicas: 1
+      minReplicas: 0
+      maxReplicas: 8
+      container:
+        image: rayproject/ray:2.58.0
 ```
 
-## Stop a running operation
+Ray autoscaling changes the desired worker count. Kubernetes still has to place the requested pods, so queue capacity, node selectors, quotas, and available CPU or GPUs remain part of the design.
 
-To stop a running operation with this component:
+### Stop and clean up deliberately [#step-6]
+
+Stop the Polyaxon operation when the cluster is no longer needed. Treat shutdown behavior as part of the workload contract, especially for scheduled or failure-prone jobs.
 
 ```bash
 polyaxon ops stop
 ```
 
-or
+## Deployment checks [#production]
 
-```bash
-polyaxon ops stop -p [project-name] -uid [run-uuid]
-```
+- Pin the Ray version and image digest, and keep the runtime and container versions compatible.
+- Bake application code and dependencies into an image or use a controlled, versioned initialization path.
+- Set requests and limits for the head and every worker group; add node selectors and tolerations for GPU pools.
+- Resolve datasets, object stores, secrets, and artifact locations through scoped Polyaxon connections.
+- Decide whether Ray or Polyaxon owns each retry, timeout, schedule, and cleanup boundary.
+- Validate autoscaling against real tasks and Kubernetes capacity rather than assuming pending pods will create capacity.
 
-## Run the job using the Python client
+## Troubleshooting [#troubleshooting]
 
-To run this component using Polyaxon Client:
+### The operation fails before pods are created
 
-```python
-from polyaxon.client import RunClient
+Confirm the KubeRay operator and RayCluster CRD are installed in the managed cluster and operators.raycluster is enabled.
 
-client = RunClient(...)
-client.create_from_polyaxonfile(polyaxonfile="path/to/file", ...)
-```
+### Head starts but workers do not join
+
+Check Ray version compatibility, container logs, image pull access, resource requests, and network policy between head and workers.
+
+### Worker pods remain Pending
+
+Inspect Kubernetes events, quotas, node selectors, taints, available CPU or GPUs, and any gang-scheduling policy.
+
+### Autoscaling never adds workers
+
+Verify autoscaling is enabled, tasks request Ray resources, maxReplicas is above the current count, and Kubernetes can place new pods.
+
+## References [#sources]
+
+- [Polyaxon cluster runtimes](/docs/references/polyaxonfile/runtimes/clusters) — Canonical Ray and Dask component examples and operator prerequisites.
+- [Polyaxon RayCluster specification](/docs/references/polyaxonfile/runtimes/clusters/ray-clusters) — Entrypoint, runtime environment, head, workers, and autoscaling fields.
+- [Ray on Kubernetes](https://docs.ray.io/en/latest/cluster/kubernetes/index.html) — KubeRay architecture, RayCluster, RayJob, RayService, worker groups, and autoscaling.
+- [KubeRay getting started](https://docs.ray.io/en/latest/cluster/kubernetes/getting-started.html) — Current CRDs and guidance for selecting RayCluster, RayJob, RayService, or RayCronJob.

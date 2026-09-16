@@ -1,0 +1,99 @@
+---
+title: Miles
+description: Run Miles post-training on Polyaxon with GPU scheduling, persistent model and dataset storage, and tracked operations.
+ogImage: /images/integrations/miles.png
+---
+
+[Miles](https://github.com/radixark/miles) is a reinforcement-learning framework for model post-training. It uses SGLang for rollouts and supports Megatron-LM and PyTorch FSDP2 training backends. Polyaxon schedules the workload on your compute cluster and records its configuration, status, and logs.
+
+## Prerequisites [#prerequisites]
+
+- A Kubernetes GPU node connected to Polyaxon. See [installing a Polyaxon Agent (compute cluster)](/docs/setup/agents/overview).
+- A Miles container compatible with your GPUs and drivers. The [Miles installation documentation](https://miles.radixark.com/docs/getting-started/installation) lists published NVIDIA and AMD images and their requirements.
+- Persistent storage for model weights, datasets, and training checkpoints, mounted through a [Polyaxon connection](/docs/setup/connections/overview).
+
+## Prepare the model and data [#preparation]
+
+The configuration below launches the Qwen3-4B recipe from the [Miles quick start](https://miles.radixark.com/docs/getting-started/quick-start), which uses eight GPUs on one node. Complete its downloads and Megatron checkpoint conversion before submitting training.
+
+Configure a connection named `miles-data` that mounts a writable persistent volume at `/mnt/miles`. It must contain:
+
+- `models/Qwen3-4B`: the Hugging Face model weights.
+- `models/Qwen3-4B_torch_dist`: the converted Megatron checkpoint.
+- `datasets/dapo-math-17k`: training data.
+- `datasets/aime-2024`: evaluation data.
+
+Keep both model formats. The rollout engine and trainer use different checkpoint representations. The connection is installation-specific; the component does not create it or download these files.
+
+## Run the Miles launcher [#run-it]
+
+Save this as `miles.yaml`. It uses the published `radixark/miles:latest` image and the upstream Qwen launcher. Pin an image digest containing the documented launcher before using this configuration for repeatable runs; do not update the repository or dependencies at startup.
+
+```yaml
+version: 1.1
+kind: component
+name: miles-qwen3-post-training
+plugins:
+  shm: true
+run:
+  kind: job
+  connections: [miles-data]
+  container:
+    image: radixark/miles:latest
+    workingDir: /root/miles
+    command: ["python", "scripts/run_qwen3_dense.py"]
+    args:
+    - "--model-name"
+    - "Qwen3-4B"
+    - "--num-gpus-per-node"
+    - "8"
+    - "--model-dir"
+    - "/mnt/miles/models"
+    - "--data-dir"
+    - "/mnt/miles/datasets"
+    - "--output-dir"
+    - "/mnt/miles/runs/{{ globals.uuid }}"
+    resources:
+      limits:
+        nvidia.com/gpu: "8"
+```
+
+Apply CPU and memory requests appropriate to the selected GPU node through the component or a [preset](/docs/scheduling/scheduling-presets/overview). The [shared-memory plugin](/docs/references/polyaxonfile/specification/plugins) mounts `/dev/shm`; shared memory still counts toward the pod's memory usage, so include Ray and NCCL requirements in that budget.
+
+Submit the operation and open its dashboard:
+
+```bash
+polyaxon run -f miles.yaml
+polyaxon ops dashboard
+```
+
+This is a single-node job: the Miles launcher manages a local Ray cluster inside the pod. It does not require KubeRay. See the [Miles launch-script documentation](https://miles.radixark.com/docs/user-guide/launch-script) for recipe flags and launcher behavior.
+
+## Checkpoints and run inspection [#production]
+
+The output directory includes the [Polyaxon run UUID](/docs/references/polyaxonfile/context/globals) so separate operations do not write to the same checkpoint directory. Checkpoints remain on the mounted volume. To resume in a new operation, explicitly reuse the previous output directory and a compatible configuration; a new UUID does not automatically resume a previous run.
+
+Inspect the training loss, rollout reward, evaluation results, and checkpoint files separately. Process completion alone does not establish model quality. Preserve the image digest, model and dataset revisions, and recipe settings with the run. If the recipe uses external tracking or private models, supply credentials through scoped connections.
+
+## Multi-node training with KubeRay [#multi-node]
+
+For distributed deployments, follow the [RayCluster integration](/integrations/operators/raycluster) to install KubeRay and enable Polyaxon's Ray runtime. Mount model, dataset, and checkpoint paths consistently on the head and workers, and keep the container image and Ray version aligned across replicas.
+
+The default Miles launcher stops existing Ray processes and starts a local cluster. On a KubeRay-managed cluster, use the documented `MILES_SCRIPT_EXTERNAL_RAY=1` setting and configure the launcher to submit to the existing head. Do not launch a second cluster or nest an unmodified submission script inside a Ray job. Size training and rollout allocations for the chosen recipe; adding worker pods alone does not configure Miles to use them.
+
+Validate cross-node GPU communication before training with the [NCCL and RCCL article](/blog/validate-nccl-and-rccl).
+
+## Troubleshooting [#troubleshooting]
+
+- **The pod stays Pending:** confirm that a single eligible node can supply all eight GPUs, and inspect queue capacity, quotas, taints, and placement rules.
+- **The launcher cannot find a checkpoint or dataset:** inspect the `miles-data` mount and confirm preparation completed at the paths passed to the launcher.
+- **Ray or NCCL fails during startup:** inspect worker logs, shared-memory capacity, GPU visibility, and the image's driver compatibility. For KubeRay, also check the external-Ray setting and head address.
+- **Training restarts from scratch:** verify that the output path still contains the prior checkpoints and that the new run points to it.
+
+## References [#sources]
+
+- [Miles repository](https://github.com/radixark/miles)
+- [Miles installation](https://miles.radixark.com/docs/getting-started/installation)
+- [Miles quick start](https://miles.radixark.com/docs/getting-started/quick-start)
+- [Miles launch scripts](https://miles.radixark.com/docs/user-guide/launch-script)
+- [Polyaxon RayCluster specification](/docs/references/polyaxonfile/runtimes/clusters/ray-clusters)

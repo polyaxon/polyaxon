@@ -1,0 +1,55 @@
+---
+title: "Lambda GPU Cloud"
+ogImage: /images/integrations/lambda.png
+description: "Exercise Lambda GPU, storage, networking, and namespace policy through the same Polyaxon queue production workloads will use."
+---
+
+Lambda Managed Kubernetes provides GPU nodes with the NVIDIA and network operators, storage classes, and cluster validation tooling already integrated. Your team still owns workload namespaces, access policy, storage use, and the Polyaxon queues exposed to users.
+
+See the [Lambda Managed Kubernetes](https://docs.lambda.ai/managed-kubernetes/) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- A Lambda 1-Click Cluster with Managed Kubernetes enabled and working kubectl access.
+- A reviewed namespace, RBAC policy, registry access, storage class, and data persistence plan.
+- The cluster connected to Polyaxon by installing Polyaxon Agent (compute cluster), with a queue or preset targeting the intended GPU capacity.
+
+## Connect the cluster [#connect-the-cluster]
+
+Follow [Connect Kubernetes to Polyaxon](/integrations/clouds/kubernetes) to install Polyaxon Agent (compute cluster), configure storage and queues, and submit the shared GPU visibility example. Use the same namespace and queue that will run your workloads.
+
+The example only checks GPU allocation and driver visibility. Validate storage, identity, and multi-node networking separately using the provider requirements below.
+
+## Provider requirements [#production]
+
+- Document which storage classes are persistent and which paths use local NVMe scratch space.
+- Keep namespace RBAC, compute-cluster connection settings, connections, queues, and presets in version control.
+- Run the readiness operation through the same queue and namespace production workloads use.
+- Revalidate workloads during Lambda's upgrade sign-off process before accepting a maintenance window.
+- Run a collective communication test on the exact nodes and interfaces used by distributed training.
+
+For distributed training, continue with [NCCL and RCCL validation](/blog/validate-nccl-and-rccl).
+
+For help choosing a provider, see [Choosing GPU infrastructure for Polyaxon](/explore/choosing-gpu-infrastructure-for-polyaxon).
+
+## Troubleshooting [#troubleshooting]
+
+### The operation remains Pending
+
+Compare the requested GPU count and queue selector with available Lambda nodes, then inspect taints, tolerations, quota, and autoscaling state.
+
+### Data disappears after the operation exits
+
+Confirm that outputs target a persistent storage class or external object storage rather than node-local NVMe.
+
+### The connected compute cluster cannot submit or collect logs
+
+Verify the Polyaxon Agent deployment, namespace RBAC, service account, network policy, registry access, and control-plane connectivity.
+
+## References [#sources]
+
+- [Lambda Managed Kubernetes](https://docs.lambda.ai/managed-kubernetes/) — Provider guidance for the installed GPU and network operators, storage classes, validation, and customer responsibilities.
+- [NVIDIA CUDA container](https://hub.docker.com/r/nvidia/cuda) — Published CUDA container tags used for the GPU visibility check.
+- [Lambda cluster upgrades](https://docs.lambda.ai/managed-kubernetes/cluster-upgrades/) — Upgrade responsibilities, validation, maintenance windows, and customer sign-off.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

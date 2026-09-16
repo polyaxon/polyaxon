@@ -1,87 +1,175 @@
 ---
 title: "DaskCluster"
-description: "Native Kubernetes integration for Dask."
+description: "Provision a Dask scheduler and worker group through Polyaxon, connect a client operation, add autoscaling, and prepare the cluster for production."
 ogImage: /images/integrations/dask.png
 ---
 
-Polyaxon allows to schedule dask clusters via dask-kubernetes natively.
+Polyaxon submits a DaskCluster resource through the Dask Kubernetes Operator and tracks the resulting scheduler and worker replicas as one operation. The current Polyaxon runtime provisions the cluster; your Python client runs as a separate job, service, or notebook and connects through the scheduler address.
 
-## Deploy the DaskCluster operator
+See the [Dask Kubernetes Operator](https://kubernetes.dask.org/en/latest/) for the upstream configuration and requirements.
 
-Before you can use the daskcluster runtime, you need to make sure that DaskCluster operator and the CRD (custom resource definition)
-are deployed in your cluster.
+## Prerequisites [#prerequisites]
 
-## Enable the operator
+- A Kubernetes namespace managed by Polyaxon CE or a Polyaxon Agent.
+- The Dask Kubernetes Operator and DaskCluster custom resource definition installed in that cluster.
+- The DaskCluster operator enabled in the Polyaxon deployment configuration.
+- A configured Polyaxon CLI and a project where you can create operations.
 
-To be able to schedule distributed jobs with the DaskCluster operator, you need to enable the operator in your deployment config.
+## Configuration [#run-it]
 
-> You need to enable the operator in Polyaxon CE deployment or Polyaxon Agent (compute cluster) deployment:
+### Enable the DaskCluster operator [#step-1]
+
+Install the Dask Kubernetes Operator and CRDs first. Then enable the integration in the Polyaxon CE or Agent configuration that manages the target namespace.
 
 ```yaml
 operators:
   daskcluster: true
 ```
 
-## Create a component with the daskcluster runtime
+This is an administrator change. Polyaxon cannot submit the DaskCluster resource until both sides are configured.
 
-Once you have the DaskCluster operator running on a Kubernetes namespace managed by Polyaxon,
-you can check the specification for creating components with the daskcluster runtime:
+### Define the scheduler and workers [#step-2]
 
-```bash
+Save this as dask.yaml. The scheduler and workers use the same image so their Dask and distributed protocol versions stay compatible.
+
+```yaml
 version: 1.1
 kind: component
+name: dask-cpu-cluster
+
 run:
   kind: daskcluster
-  ...
+  worker:
+    replicas: 2
+    container:
+      image: ghcr.io/dask/dask:latest
+      resources:
+        requests:
+          cpu: "1"
+          memory: "2Gi"
+        limits:
+          cpu: "2"
+          memory: "4Gi"
+  scheduler:
+    container:
+      image: ghcr.io/dask/dask:latest
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "1Gi"
+        limits:
+          cpu: "1"
+          memory: "2Gi"
 ```
 
-For more details about the specification for creating daskcluster runtime, please check please check this
-[section](/docs/references/polyaxonfile/runtimes/clusters/dask-clusters/).
+The upstream quickstart uses the latest image for convenience. Replace it with a tested version or digest before production.
 
-## Run the distributed job
+### Create the cluster operation [#step-3]
 
-
-Running components with the daskcluster runtime is similar to running any other component:
+Submit the component through your normal Polyaxon project, queue, preset, and approval path.
 
 ```bash
-polyaxon run -f manifest.yaml -P ...
+polyaxon run -f dask.yaml
 ```
 
-## View a running operation on the dashboard
+### Resolve the scheduler address [#step-4]
 
-After running an operation with this component, you can view it on the Dashboard:
+The Dask operator creates a scheduler Service for the cluster. Resolve its address from the created Kubernetes resources or your platform's exposed operation details, then pass that address to the client through a scoped environment variable or connection.
+
+```bash
+DASK_SCHEDULER_ADDRESS=tcp://<scheduler-service>:8786
+```
+
+The exact Service name depends on the resource emitted for your operation. Discover it from the running cluster instead of hard-coding an assumed name in a reusable component.
+
+### Submit work from a separate client [#step-5]
+
+Run this client inside a Polyaxon job, notebook, or service that can reach the scheduler Service. Keeping the client separate makes cluster lifetime and task submission explicit.
+
+```python
+import os
+from dask.distributed import Client
+
+client = Client(os.environ["DASK_SCHEDULER_ADDRESS"])
+
+future = client.submit(lambda value: value * value, 12)
+print(future.result())
+
+client.close()
+```
+
+Use the same tested Dask and distributed package versions in the client, scheduler, and workers.
+
+### Add worker autoscaling [#step-6]
+
+Set minimum and maximum replicas when the Dask operator should create a DaskAutoscaler for the worker group.
+
+```yaml
+run:
+  kind: daskcluster
+  minReplicas: 1
+  maxReplicas: 10
+  worker:
+    replicas: 2
+    container:
+      image: ghcr.io/dask/dask:latest
+      resources:
+        requests:
+          cpu: "1"
+          memory: "2Gi"
+        limits:
+          cpu: "2"
+          memory: "4Gi"
+  scheduler:
+    container:
+      image: ghcr.io/dask/dask:latest
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "1Gi"
+```
+
+Autoscaling changes worker replicas; Kubernetes placement still depends on available nodes, quotas, selectors, taints, and requested resources.
+
+### Inspect and stop the cluster [#step-7]
+
+Use the operation dashboard for status and replica logs, then stop the cluster operation after all clients have finished.
 
 ```bash
 polyaxon ops dashboard
-```
-
-or
-
-```bash
-polyaxon ops dashboard -p [project-name] -uid [run-uuid] -y
-```
-
-## Stop a running operation
-
-To stop a running operation with this component:
-
-```bash
 polyaxon ops stop
 ```
 
-or
+## Deployment checks [#production]
 
-```bash
-polyaxon ops stop -p [project-name] -uid [run-uuid]
-```
+- Pin compatible Dask and distributed versions in the client, scheduler, and worker images.
+- Size scheduler memory for graph metadata and worker memory for partitions, shuffles, and spill behavior.
+- Use scoped Polyaxon connections for object stores, datasets, secrets, and shared artifact locations.
+- Keep the scheduler Service private and restrict network access to approved client workloads.
+- Make the cluster owner, client owner, idle policy, retries, and shutdown sequence explicit.
+- Test autoscaling and worker loss with a production-shaped graph and realistic data movement.
 
-## Run the job using the Python client
+## Troubleshooting [#troubleshooting]
 
-To run this component using Polyaxon Client:
+### No scheduler or worker pods appear
 
-```python
-from polyaxon.client import RunClient
+Confirm the Dask operator and CRDs are installed and operators.daskcluster is enabled in the responsible Polyaxon deployment.
 
-client = RunClient(...)
-client.create_from_polyaxonfile(polyaxonfile="path/to/file", ...)
-```
+### The client cannot connect
+
+Verify the discovered scheduler Service, port 8786, namespace and DNS path, network policy, and client-to-cluster reachability.
+
+### Workers repeatedly disconnect
+
+Check package compatibility, worker memory limits, scheduler logs, network stability, health probes, and image consistency.
+
+### Workers stay Pending during scale-out
+
+Inspect Kubernetes events, quota, node capacity, selectors, taints, CPU or GPU requests, and storage constraints.
+
+## References [#sources]
+
+- [Polyaxon cluster runtimes](/docs/references/polyaxonfile/runtimes/clusters) — Canonical Dask and Ray component examples and operator prerequisites.
+- [Polyaxon DaskCluster specification](/docs/references/polyaxonfile/runtimes/clusters/dask-clusters) — Scheduler, worker, replica, resource, and autoscaling fields.
+- [Dask Kubernetes Operator](https://kubernetes.dask.org/en/latest/) — Operator installation, scheduler Service, worker groups, Python client, and GPU-capable worker patterns.
+- [Dask custom resources](https://kubernetes.dask.org/en/stable/operator_resources.html) — DaskCluster, DaskWorkerGroup, DaskJob, DaskAutoscaler, labels, annotations, and full resource shape.

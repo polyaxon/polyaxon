@@ -1,0 +1,85 @@
+---
+title: "Axolotl"
+ogImage: /images/integrations/axolotl.png
+description: "Run an Axolotl configuration as a tracked GPU workload with controlled secrets, outputs, and placement."
+---
+
+Axolotl keeps model, dataset, LoRA, trainer, and distributed settings in its own YAML. Polyaxon keeps that file and its validated image attached to the infrastructure, permissions, run history, and checkpoint lifecycle.
+
+See the [Axolotl documentation](https://docs.axolotl.ai/) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- A reviewed Axolotl configuration stored with the code revision.
+- A pinned Axolotl image compatible with the cluster driver and selected attention kernels.
+- Connections for gated models, datasets, tracking, and checkpoint storage.
+
+## Configuration [#run-it]
+
+### Wrap the Axolotl configuration [#step-1]
+
+Save the component below as `axolotl.yaml`. Configure a Polyaxon connection named `axolotl-config` that mounts your training configuration at `/workspace/axolotl.yml`. Set its `output_dir` to the persistent path supplied by the `checkpoints` connection.
+
+```yaml
+version: 1.1
+kind: component
+name: axolotl-train
+run:
+  kind: job
+  connections: [axolotl-config, hf-token, training-data, checkpoints]
+  container:
+    image: axolotlai/axolotl:0.16.1
+    command: ["axolotl", "train", "/workspace/axolotl.yml"]
+    resources:
+      requests:
+        cpu: "16"
+        memory: 96Gi
+      limits:
+        nvidia.com/gpu: "4"
+```
+
+Four GPUs are an example shape, not a universal requirement. Size the run from the chosen model, precision, context length, and Axolotl strategy. Configure the named connections for your installation; they are not created by this component. See [connections](/docs/setup/connections/overview).
+
+### Submit the operation [#step-2]
+
+Run the component through the target Polyaxon project, queue, preset, and approval path.
+
+```bash
+polyaxon run -f axolotl.yaml
+```
+
+### Inspect training and checkpoints [#step-3]
+
+Verify the resolved Axolotl config, GPU count, dataset revision, loss curve, checkpoint path, and final adapter or model artifact.
+
+```bash
+polyaxon ops dashboard
+```
+
+## Deployment checks [#production]
+
+- Pin the container image, framework versions, model revision, dataset revision, and training configuration.
+- Resolve registry, dataset, model, and tracking credentials through scoped Polyaxon connections.
+- Persist checkpoints and final artifacts outside the pod, and define resume behavior before a long run.
+- Set requests, limits, node selectors, tolerations, queue policy, timeout, and retry ownership explicitly.
+
+## Troubleshooting [#troubleshooting]
+
+### The pod remains Pending
+
+Inspect quota, queue capacity, node selectors, taints, topology, and the requested accelerator count.
+
+### The process runs out of memory
+
+Check model precision, sequence length, batch size, checkpointing, optimizer state, sharding, and actual device memory.
+
+### The run cannot read or save
+
+Verify the referenced connection, secret scope, mounted path, object-store permissions, and available storage.
+
+## References [#sources]
+
+- [Axolotl documentation](https://docs.axolotl.ai/) — Current configuration, training, multi-GPU, and dataset guidance.
+- [Axolotl Docker images](https://docs.axolotl.ai/docs/docker.html) — Published runtime images, release tags, CUDA variants, and persistent paths.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

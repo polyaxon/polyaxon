@@ -1,0 +1,83 @@
+---
+title: "NVIDIA Dynamo"
+description: "Release a DynamoGraphDeployment through a governed Polyaxon operation, then evaluate its operator-managed frontend and workers."
+ogImage: /images/integrations/nvda.png
+---
+
+On Kubernetes, NVIDIA's Dynamo operator owns the inference graph and reconciles its frontend and worker components. Polyaxon can run the controlled release and evaluation stages around that native resource while the Dynamo operator manages the graph.
+
+See the [NVIDIA Dynamo model deployment](https://docs.nvidia.com/dynamo/kubernetes/model-deployment/introduction) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- The NVIDIA GPU Operator and Dynamo Platform/operator installed in the target Kubernetes cluster.
+- A reviewed DynamoGraphDeployment manifest using the supported API version and a tested backend recipe.
+- A namespace-scoped service account allowed to manage only the required Dynamo resources.
+
+## Configuration [#run-it]
+
+### Release the Dynamo graph [#step-1]
+
+Configure a data connection named `dynamo-manifests` that mounts your reviewed DynamoGraphDeployment manifest at `/manifests/dynamo-graph.yaml`. Save the component below as `dynamo-release.yaml`. The release job applies the manifest using a namespace-scoped service account.
+
+```yaml
+version: 1.1
+kind: component
+name: release-dynamo-graph
+run:
+  kind: job
+  connections: [dynamo-manifests]
+  environment:
+    serviceAccountName: dynamo-release
+  container:
+    image: bitnami/kubectl:latest
+    command: ["kubectl", "apply", "-f", "/manifests/dynamo-graph.yaml"]
+```
+
+The release operation does not make Polyaxon the Dynamo controller. Pin the kubectl image digest, and keep cleanup and rollback as explicit release or GitOps actions with the same scoped RBAC. See [connections](/docs/setup/connections/overview) to configure the manifest mount. The kubectl image alone does not contain your manifest.
+
+### Submit the operation [#step-2]
+
+Run the component through the target Polyaxon project, queue, preset, and approval path.
+
+```bash
+polyaxon run -f dynamo-release.yaml
+```
+
+### Validate the operator-owned frontend [#step-3]
+
+Wait for the DynamoGraphDeployment to become ready, then run a separate Polyaxon evaluation or smoke-test job against its frontend service.
+
+```bash
+kubectl wait --for=condition=Ready   dynamographdeployment/model-server --timeout=20m
+```
+
+## Deployment checks [#production]
+
+- Pin the runtime image and model revision; warm the model cache before measuring startup or latency.
+- Keep the service private by default and add authentication, TLS, rate limits, and network policy deliberately.
+- Define readiness, liveness, timeout, graceful shutdown, and rollback behavior before production traffic.
+- Measure latency distributions, throughput, quality, errors, and accelerator memory under representative load.
+- Version the DGD, backend image, parallelism, routing, storage, network, and autoscaling policy as one release artifact.
+- Use Dynamo's Kubernetes-native discovery rather than carrying local etcd/NATS assumptions into the cluster deployment.
+
+## Troubleshooting [#troubleshooting]
+
+### The service never becomes ready
+
+Inspect model download, credentials, disk space, GPU memory, runtime flags, port binding, and readiness behavior.
+
+### Requests cannot reach the frontend
+
+Inspect the Service and ingress created for the Dynamo graph, endpoint authentication, network policies, and the frontend API path.
+
+### Latency degrades under load
+
+Measure queueing, batch settings, context length, KV cache pressure, replica saturation, and storage or network contention.
+
+## References [#sources]
+
+- [NVIDIA Dynamo model deployment](https://docs.nvidia.com/dynamo/kubernetes/model-deployment/introduction) — Current DynamoGraphDeployment and operator ownership model.
+- [kubectl container image](https://hub.docker.com/r/bitnami/kubectl/tags) — Published tags for the small release utility used by this operation.
+- [Polyaxon service runtime](/docs/references/polyaxonfile/runtimes/services) — Service ports, replicas, connections, volumes, and external access.
+- [Polyaxon model serving](/docs/serving) — Patterns for deploying APIs, loading models, and operating inference workloads.

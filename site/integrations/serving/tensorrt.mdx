@@ -1,0 +1,98 @@
+---
+title: TensorRT
+description: "Build a TensorRT engine from an ONNX model and benchmark GPU inference in a tracked Polyaxon job."
+ogImage: /images/integrations/tensorrt.png
+---
+
+[NVIDIA TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/latest/) compiles trained models into optimized GPU inference engines. Run engine builds and benchmarks as Polyaxon jobs to keep the source model, build settings, engine, and logs together.
+
+This integration uses `trtexec` for an ONNX image-classification model. For LLM endpoints using `trtllm-serve`, use the [TensorRT-LLM integration](/integrations/serving/tensorrt-llm).
+
+## Requirements [#requirements]
+
+- A [Kubernetes GPU cluster connected to Polyaxon](/integrations/clouds/kubernetes), with a queue that can allocate one supported NVIDIA GPU.
+- A host driver compatible with the selected TensorRT container. This example uses `nvcr.io/nvidia/tensorrt:26.08-py3`, published in [NVIDIA NGC](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorrt). It includes TensorRT 11.2.1.2 and CUDA 13.4.1; check the [container release requirements](https://docs.nvidia.com/deeplearning/frameworks/container-release-notes/) against your nodes.
+- Registry access to pull the container and outbound access to download the public ONNX model.
+- A configured [Polyaxon artifacts store](/docs/setup/connections/artifacts) to retain the engine and benchmark outputs.
+
+## Build and benchmark ResNet-50 [#build-and-benchmark]
+
+Save this component as `tensorrt.yaml`. It downloads the ResNet-50 v2 ONNX model used in [NVIDIA's engine-build tutorial](https://docs.nvidia.com/deeplearning/tensorrt/latest/getting-started/build-your-first-engine.html), builds an engine, and loads that engine for a benchmark on the same GPU.
+
+```yaml
+version: 1.1
+kind: component
+name: tensorrt-resnet50
+run:
+  kind: job
+  container:
+    image: nvcr.io/nvidia/tensorrt:26.08-py3
+    command: ["bash", "-c"]
+    args:
+    - |
+      set -euo pipefail
+      mkdir -p "{{ globals.run_outputs_path }}"
+      cd "{{ globals.run_outputs_path }}"
+
+      python3 - <<'PY'
+      import hashlib
+      from pathlib import Path
+      from urllib.request import urlretrieve
+
+      url = (
+          "https://github.com/onnx/models/raw/main/validated/"
+          "vision/classification/resnet/model/resnet50-v2-7.onnx"
+      )
+      urlretrieve(url, "resnet50.onnx")
+      digest = hashlib.sha256(Path("resnet50.onnx").read_bytes()).hexdigest()
+      Path("resnet50.sha256").write_text(digest + "\n")
+      PY
+
+      nvidia-smi > gpu.txt
+      python3 -c 'import tensorrt; print(tensorrt.__version__)' > tensorrt-version.txt
+
+      trtexec \
+        --onnx=resnet50.onnx \
+        --saveEngine=resnet50.engine \
+        --skipInference 2>&1 | tee build.log
+
+      trtexec \
+        --loadEngine=resnet50.engine \
+        --shapes=data:1x3x224x224 \
+        --duration=10 2>&1 | tee benchmark.log
+    resources:
+      requests:
+        cpu: "2"
+        memory: "4Gi"
+      limits:
+        nvidia.com/gpu: "1"
+```
+
+`data:1x3x224x224` is the input name and batch-one shape for this model. For another ONNX model, inspect its input names and configure the appropriate [dynamic-shape profiles](https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/work-with-dynamic-shapes.html).
+
+The files are written to [the run's outputs directory](/docs/references/polyaxonfile/context/globals), which Polyaxon collects into the artifacts store when artifact collection is enabled. The checksum records the model bytes used by this run. For repeatable production builds, use a versioned model artifact and pin the container digest.
+
+## Submit and inspect the run [#run]
+
+From your configured Polyaxon project, submit the component to a GPU-enabled queue. Replace `agent-name/queue-name` with the queue shown in your organization:
+
+```bash
+polyaxon run -f tensorrt.yaml -q agent-name/queue-name
+polyaxon ops dashboard
+```
+
+Inspect `build.log` for parser or engine-build errors and `benchmark.log` for inference latency and throughput. The run also retains `resnet50.engine`, the ONNX model, its checksum, the TensorRT version, and GPU details.
+
+The benchmark uses generated inputs. It checks engine execution and performance, not classification accuracy or end-to-end API latency. Compare predictions against the source model on representative images before deployment. See NVIDIA's [performance benchmarking guidance](https://docs.nvidia.com/deeplearning/tensorrt/latest/performance/benchmarking.html).
+
+## Use the engine in a service [#serving]
+
+`trtexec` exits after its build or benchmark; it does not expose an HTTP endpoint. To serve predictions, load the saved engine in an application using the [TensorRT runtime API](https://docs.nvidia.com/deeplearning/tensorrt/latest/getting-started/quick-start-runtime-tutorial.html), then deploy that application with the [Polyaxon service runtime](/docs/references/polyaxonfile/runtimes/services). Keep image preprocessing and output decoding consistent with the original model.
+
+An engine is tied to its build environment. Use compatible TensorRT versions and GPU targets, or explicitly configure and validate NVIDIA's [engine compatibility options](https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/engine-compatibility.html). Only load engines from trusted sources; serialized engines can contain executable code.
+
+## Troubleshooting [#troubleshooting]
+
+- **ONNX parsing fails:** inspect the first parser error for an unsupported operator, missing plugin, or invalid input shape. Confirm that the downloaded file is the model binary rather than an HTML error page or Git LFS pointer.
+- **CUDA initialization fails:** verify the pod's GPU allocation and check the host driver against the pinned container's CUDA requirements.
+- **The engine fails to load elsewhere:** compare the build and serving GPU, TensorRT version, and plugin libraries. Rebuild for the target environment when compatibility requirements are not met.

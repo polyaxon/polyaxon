@@ -1,0 +1,97 @@
+---
+title: "TRL"
+description: "Run an SFT or PEFT workload with explicit model, dataset, accelerator, secret, and checkpoint boundaries."
+ogImage: /images/integrations/hugging-face.png
+---
+
+TRL owns the training loop; Accelerate, FSDP, or DeepSpeed can own process distribution. Polyaxon packages that stack as a repeatable operation and keeps its configuration, logs, lineage, and artifacts together.
+
+See the [TRL CLI documentation](https://huggingface.co/docs/trl/main/clis) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- A Kubernetes GPU node compatible with the CUDA stack in the pinned TRL image.
+- A Hugging Face token connection only when the selected model or dataset is gated.
+- A Polyaxon artifacts store configured for checkpoints and the trained model.
+
+## Configuration [#run-it]
+
+### Define the TRL component [#step-1]
+
+Use TRL's published image and CLI, and expose the model and dataset as component inputs. Save the component as trl.yaml.
+
+```yaml
+version: 1.1
+kind: component
+name: trl-sft
+inputs:
+- name: model
+  type: str
+  value: Qwen/Qwen2.5-0.5B
+- name: dataset
+  type: str
+  value: trl-lib/Capybara
+run:
+  kind: job
+  container:
+    image: huggingface/trl:1.9.2
+    command: ["trl", "sft"]
+    args:
+    - "--model_name_or_path"
+    - "{{ model }}"
+    - "--dataset_name"
+    - "{{ dataset }}"
+    - "--output_dir"
+    - "{{ globals.run_outputs_path }}/qwen2.5-0.5b-sft"
+    resources:
+      limits:
+        nvidia.com/gpu: "1"
+```
+
+This uses Hugging Face's published TRL image and the public model and dataset from its CLI example. Pin the image digest and model and dataset revisions before production.
+
+### Submit the operation [#step-2]
+
+Run the component through the target Polyaxon project, queue, preset, and approval path.
+
+```bash
+polyaxon run -f trl.yaml
+```
+
+### Compare the resolved training run [#step-3]
+
+Confirm the image, revisions, parameters, accelerator allocation, logs, checkpoints, and evaluation metrics before scaling out.
+
+```bash
+polyaxon ops dashboard
+```
+
+## Deployment checks [#production]
+
+- Pin the container image, framework versions, model revision, dataset revision, and training configuration.
+- Resolve registry, dataset, model, and tracking credentials through scoped Polyaxon connections.
+- Persist checkpoints and final artifacts outside the pod, and define resume behavior before a long run.
+- Set requests, limits, node selectors, tolerations, queue policy, timeout, and retry ownership explicitly.
+- For multi-node training, choose one distribution owner—such as the PyTorchJob operator or a framework launcher—and validate rendezvous and checkpoint recovery.
+
+## Troubleshooting [#troubleshooting]
+
+### The pod remains Pending
+
+Inspect quota, queue capacity, node selectors, taints, topology, and the requested accelerator count.
+
+### The process runs out of memory
+
+Check model precision, sequence length, batch size, checkpointing, optimizer state, sharding, and actual device memory.
+
+### The run cannot read or save
+
+Verify the referenced connection, secret scope, mounted path, object-store permissions, and available storage.
+
+## References [#sources]
+
+- [TRL CLI documentation](https://huggingface.co/docs/trl/main/clis) — Official SFT command and example model, dataset, and output arguments.
+- [Hugging Face TRL container](https://hub.docker.com/r/huggingface/trl/tags) — Published image tags, including the pinned version used in this example.
+- [Polyaxon run outputs path](/docs/references/polyaxonfile/context/globals) — Runtime context path used to persist the trained model with the operation's outputs.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

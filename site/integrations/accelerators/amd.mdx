@@ -1,0 +1,83 @@
+---
+title: "AMD GPUs"
+description: "Expose AMD GPUs through Kubernetes, target them with Polyaxon presets, and validate ROCm before training or inference."
+ogImage: /images/integrations/amd.png
+---
+
+The AMD device plugin makes GPUs schedulable as `amd.com/gpu`; ROCm and the workload image determine whether an allocated device is actually usable. Polyaxon keeps the hardware request, placement, image, and run evidence together.
+
+See the [AMD Kubernetes device plugin](https://instinct.docs.amd.com/projects/k8s-device-plugin/en/latest/) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- ROCm-capable AMD GPUs with supported host drivers and firmware.
+- The AMD GPU device plugin exposing `amd.com/gpu` on the Kubernetes nodes.
+- A tested ROCm framework image and an AMD-specific Polyaxon queue or preset.
+
+## Configuration [#run-it]
+
+### Request an AMD GPU [#step-1]
+
+Target the AMD pool and request the resource name published by the official Kubernetes device plugin.
+
+```yaml
+version: 1.1
+kind: component
+name: amd-gpu-readiness
+run:
+  kind: job
+  container:
+    image: rocm/pytorch:rocm7.14.1_ubuntu24.04_py3.12_pytorch_release_2.12.0
+    command: ["python", "-c"]
+    args: ["import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name())"]
+    resources:
+      limits:
+        amd.com/gpu: "1"
+```
+
+ROCm exposes accelerators through PyTorch's `torch.cuda` API for compatibility; that name does not mean the workload is using CUDA. Select the hardware through your configured queue and preset; no provider-specific node label is required by this example.
+
+### Submit the operation [#step-2]
+
+Run the component through the target Polyaxon project, queue, preset, and approval path.
+
+```bash
+polyaxon run -f amd-readiness.yaml
+```
+
+### Verify the ROCm execution path [#step-3]
+
+Confirm the pod lands on the AMD pool, receives one device, loads the expected framework build, and emits logs and artifacts normally.
+
+```bash
+polyaxon ops dashboard
+```
+
+## Deployment checks [#production]
+
+- Pin a compatible driver, device integration, container runtime, framework image, and firmware combination.
+- Publish accelerator selection through centrally managed Polyaxon presets instead of user-specific labels.
+- Track allocatable devices, hardware health, utilization, memory, thermals, and workload failures.
+- Validate one device, one node, and multi-node communication separately before production adoption.
+- Run RCCL tests before enabling multi-node AMD workloads and keep CUDA and ROCm images in separate presets.
+
+## Troubleshooting [#troubleshooting]
+
+### The resource does not appear
+
+Inspect the node driver, firmware, device integration, kubelet registration, node labels, and allocatable resources.
+
+### The container cannot access the device
+
+Verify the requested custom resource, runtime class, permissions, device mounts, and image compatibility.
+
+### Performance is unexpectedly low
+
+Check topology, NUMA placement, clocks, memory pressure, host-device transfer, communication libraries, and framework build.
+
+## References [#sources]
+
+- [AMD Kubernetes device plugin](https://instinct.docs.amd.com/projects/k8s-device-plugin/en/latest/) — Official installation, `amd.com/gpu` resource, node labels, and verification guidance.
+- [AMD ROCm PyTorch images](https://hub.docker.com/r/rocm/pytorch/tags) — AMD-published image tags for matching ROCm, Ubuntu, Python, and PyTorch versions.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

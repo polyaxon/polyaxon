@@ -1,0 +1,57 @@
+---
+title: "Amazon EKS"
+description: "Check GPU allocation, EFA, storage, DNS, and pod identity through the same Polyaxon queue production workloads will use."
+ogImage: /images/integrations/aws.png
+---
+
+Amazon EKS supports several GPU operating models. EKS Auto Mode manages more of the node lifecycle and accelerator stack, while managed node groups and self-managed Karpenter leave more choices with the platform team. Polyaxon connects after that boundary is defined and keeps workload policy in queues and presets.
+
+See the [Amazon EKS AI/ML compute](https://docs.aws.amazon.com/eks/latest/userguide/ml-node-pools.html) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- A documented EKS compute model: Auto Mode, managed node groups, or self-managed Karpenter.
+- GPU nodes using a compatible accelerated AMI and one reviewed NVIDIA DRA driver or device-plugin path.
+- EFA-capable instances and an advertised EFA resource when the workload requires multi-node communication.
+- The cluster connected to Polyaxon by installing Polyaxon Agent (compute cluster), with a queue, storage connection, and pod identity configured for the workload namespace.
+
+## Connect the cluster [#connect-the-cluster]
+
+Follow [Connect Kubernetes to Polyaxon](/integrations/clouds/kubernetes) to install Polyaxon Agent (compute cluster), configure storage and queues, and submit the shared GPU visibility example. Use the same namespace and queue that will run your workloads.
+
+The example only checks GPU allocation and driver visibility. Validate storage, identity, and multi-node networking separately using the provider requirements below.
+
+## Provider requirements [#production]
+
+- Record whether AWS or your platform team owns the node lifecycle, AMI, GPU device layer, EFA integration, and interruption handling.
+- Treat each instance family, AMI, GPU allocation mechanism, and network topology as a separately validated capacity class.
+- Keep node selectors, tolerations, identity, and capacity type in platform-owned queues and presets rather than application components.
+- Test interruption and node rotation behavior before placing long-running training or stateful inference on reclaimable capacity.
+- Run NCCL tests across the intended EFA topology before accepting a distributed-training queue.
+
+For distributed training, continue with [NCCL and RCCL validation](/blog/validate-nccl-and-rccl).
+
+For help choosing a provider, see [Choosing GPU infrastructure for Polyaxon](/explore/choosing-gpu-infrastructure-for-polyaxon).
+
+## Troubleshooting [#troubleshooting]
+
+### The GPU resource is missing
+
+Confirm the node uses the intended accelerated AMI and that exactly one supported NVIDIA DRA driver or device plugin is active for that capacity model.
+
+### EFA is unavailable
+
+Verify the instance type, attached interfaces, security group, placement, RDMA libraries, and the EFA DRA driver or device plugin used by the pool.
+
+### The connected compute cluster cannot submit workloads
+
+Verify the Polyaxon Agent deployment, cluster registration, namespace access, pod identity, queue routing, and control-plane connectivity.
+
+## References [#sources]
+
+- [Amazon EKS AI/ML compute](https://docs.aws.amazon.com/eks/latest/userguide/ml-node-pools.html) — Operational ownership differences between EKS Auto Mode and self-managed Karpenter.
+- [NVIDIA CUDA container](https://hub.docker.com/r/nvidia/cuda) — Published CUDA container tags used for the GPU visibility check.
+- [NVIDIA devices on Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/device-management-nvidia-dra-device-plugin.html) — Accelerated AMIs, DRA, device-plugin choices, GPU resources, and topology considerations.
+- [AWS Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) — Supported instance, networking, libfabric, and device guidance.
+- [Polyaxon job runtime](/docs/references/polyaxonfile/runtimes/jobs) — Job containers, resources, connections, initialization, and lifecycle settings.
+- [Polyaxon resource scheduling](/docs/scheduling/scheduling-strategies/resources-scheduling) — Kubernetes requests, limits, custom resources, queues, and placement controls.

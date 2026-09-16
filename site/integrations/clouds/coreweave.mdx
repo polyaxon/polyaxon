@@ -1,0 +1,54 @@
+---
+title: CoreWeave
+description: Connect CoreWeave Kubernetes Service to Polyaxon and configure GPU placement, storage, container images, and distributed networking.
+ogImage: /images/integrations/crwv.png
+---
+
+[CoreWeave Kubernetes Service (CKS)](https://docs.coreweave.com/products/cks) runs Kubernetes on bare-metal compute nodes. Connect a CKS cluster to Polyaxon to run training jobs, notebooks, and model servers on that capacity, with Polyaxon managing workload configuration, queues, logs, and artifacts.
+
+## Connect the cluster [#connect-the-cluster]
+
+Start with an existing CKS cluster and the GPU node pools your workloads need. Configure [CKS access and kubeconfig](https://docs.coreweave.com/products/cks/auth-access/managed-auth/kubeconfig) for the administrator installing Polyaxon. Keep the kubeconfig private; it contains an API access token.
+
+For Polyaxon Cloud or an EE control plane, follow the [Polyaxon Agent (compute cluster) installation reference](/docs/setup/agents/overview). The Agent runs inside CKS and connects that cluster to your Polyaxon organization. Polyaxon does not create the CKS cluster or purchase CoreWeave capacity.
+
+Use [Connect Kubernetes to Polyaxon](/integrations/clouds/kubernetes) for the shared queue, storage, and GPU-allocation setup. Then apply the CKS-specific configuration below.
+
+## Select GPU capacity [#gpu-placement]
+
+Inspect the node pools and the labels actually present in your cluster:
+
+```bash
+kubectl get nodepools
+kubectl get nodes -L node.coreweave.cloud/type,gpu.nvidia.com/class,gpu.nvidia.com/model
+```
+
+CoreWeave documents `node.coreweave.cloud/type` for selecting an instance type and `gpu.nvidia.com/class` or `gpu.nvidia.com/model` for GPU selection. Use the values returned by your cluster. See [CKS node-pool management](https://docs.coreweave.com/products/cks/nodes/manage).
+
+Put the placement rules in a [Polyaxon scheduling preset](/docs/scheduling/scheduling-presets/overview) associated with the appropriate queue. Workload components still declare their CPU, memory, and GPU requirements; the preset selects suitable nodes.
+
+If you use [CoreWeave Spot capacity](https://docs.coreweave.com/platform/capacity-plans), account for preemption. Use a separate queue for interruption-tolerant jobs and verify that training resumes from a persisted checkpoint. A Polyaxon queue does not reserve provider capacity.
+
+## Keep the managed GPU components [#gpu-components]
+
+CKS manages the NVIDIA GPU Operator and its device plugin. Do not install a second GPU Operator as part of the Polyaxon deployment: CoreWeave explicitly lists that configuration as unsupported. Check the [CKS cluster components reference](https://docs.coreweave.com/products/cks/reference/cluster-components) when choosing CUDA-compatible images or investigating missing GPU resources.
+
+## Configure persistent storage [#storage]
+
+CKS nodes boot from a clean operating-system image. Keep datasets, checkpoints, and outputs on persistent storage, not the container filesystem or a node-local path you expect to survive replacement. See the [CKS node model](https://docs.coreweave.com/products/cks).
+
+- For filesystem access, provision a PVC using the storage classes available in CKS and expose it through a [Polyaxon volume-claim connection](/integrations/data-stores/data-on-pvc). Check the namespace, access mode, and mount permissions.
+- [CoreWeave AI Object Storage](https://docs.coreweave.com/products/storage/object-storage) provides an S3-compatible API. Follow the [Polyaxon S3 connection reference](/integrations/data-stores/data-on-s3) with the CoreWeave endpoint, bucket, and credentials. Verify access from the workload namespace before submitting training jobs.
+- Configure the [Polyaxon artifacts store](/docs/setup/connections/artifacts) for run logs and outputs independently of any application checkpoint path.
+
+## Pin container images [#container-images]
+
+CKS uses a regional image proxy that caches manifests as well as layers. Reusing a mutable tag can therefore start an older image. Use a new immutable tag for each build, or pin the image by digest; do not rely on changing `latest`. CoreWeave explains this behavior in its [cluster image-proxy documentation](https://docs.coreweave.com/products/cks/clusters/introduction).
+
+## Validate multi-node networking [#distributed-networking]
+
+A successful GPU-allocation check does not establish that distributed communication works. CoreWeave's InfiniBand and RoCE configurations have different device-attachment and network-plugin requirements. Follow the [CoreWeave NCCL configuration reference](https://docs.coreweave.com/products/networking/hpc-interconnect/nccl-configuration-reference) for your cluster's fabric, then use [NCCL and RCCL validation on Polyaxon](/blog/validate-nccl-and-rccl) with the same nodes, image, and preset as the intended workload.
+
+Keep the container image and NCCL network-plugin configuration consistent across ranks. If communication hangs or falls back to an unexpected transport, compare each rank's NCCL logs and check the RDMA devices exposed to its container before changing training code.
+
+For a comparison with other GPU clouds, see [Choosing GPU infrastructure for Polyaxon](/explore/choosing-gpu-infrastructure-for-polyaxon).

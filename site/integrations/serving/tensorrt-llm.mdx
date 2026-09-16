@@ -1,0 +1,87 @@
+---
+title: "TensorRT-LLM"
+description: "Track engine preparation and run `trtllm-serve` as a GPU-backed Polyaxon service with explicit topology and cache policy."
+ogImage: /images/integrations/tensorrt.png
+---
+
+TensorRT-LLM performance depends on a tightly matched model, engine or PyTorch backend, container, CUDA stack, precision, and GPU topology. Polyaxon keeps those choices attached to the service and its benchmark operations.
+
+See the [TensorRT-LLM documentation](https://nvidia.github.io/TensorRT-LLM/) for the upstream configuration and requirements.
+
+## Prerequisites [#prerequisites]
+
+- A TensorRT-LLM container compatible with the model, GPU architecture, CUDA driver, and selected backend.
+- Enough cache disk and accelerator memory for the model and KV cache.
+- A separate engine-build operation when the selected deployment does not use the PyTorch backend directly.
+
+## Configuration [#run-it]
+
+### Define the TensorRT-LLM service [#step-1]
+
+Keep runtime flags and GPU topology in the Polyaxon component; treat any engine build as a versioned upstream artifact.
+
+```yaml
+version: 1.1
+kind: component
+name: tensorrt-llm-server
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+  connections: [hf-token, model-cache]
+  container:
+    image: nvcr.io/nvidia/tensorrt-llm/release:1.3.0rc7
+    command: ["trtllm-serve"]
+    args: ["TinyLlama/TinyLlama-1.1B-Chat-v1.0"]
+    resources:
+      limits:
+        nvidia.com/gpu: "1"
+```
+
+This is NVIDIA's documented quick-start model and published runtime image. Pin the image digest and choose a larger model only after checking its build and hardware requirements.
+
+### Submit the operation [#step-2]
+
+Run the component through the target Polyaxon project, queue, preset, and approval path.
+
+```bash
+polyaxon run -f tensorrt-llm.yaml
+```
+
+### Validate the served model [#step-3]
+
+Probe model discovery and then compare latency, throughput, memory, and quality against the exact runtime revision.
+
+```bash
+SERVICE_URL=$(polyaxon ops service --external --url)
+curl "$SERVICE_URL/v1/models"
+```
+
+## Deployment checks [#production]
+
+- Pin the runtime image and model revision; warm the model cache before measuring startup or latency.
+- Keep the service private by default and add authentication, TLS, rate limits, and network policy deliberately.
+- Define readiness, liveness, timeout, graceful shutdown, and rollback behavior before production traffic.
+- Measure latency distributions, throughput, quality, errors, and accelerator memory under representative load.
+- When using serialized engines, record their build inputs and compatibility alongside the engine artifact; do not treat an engine as portable across unmatched GPUs or software stacks.
+
+## Troubleshooting [#troubleshooting]
+
+### The service never becomes ready
+
+Inspect model download, credentials, disk space, GPU memory, runtime flags, port binding, and readiness behavior.
+
+### Requests fail through the URL
+
+Verify the service port, rewrite-path setting, authentication header, ingress, network policy, and API path.
+
+### Latency degrades under load
+
+Measure queueing, batch settings, context length, KV cache pressure, replica saturation, and storage or network contention.
+
+## References [#sources]
+
+- [TensorRT-LLM documentation](https://nvidia.github.io/TensorRT-LLM/) — Current serving, backend, engine, model, and deployment guidance.
+- [TensorRT-LLM quick start](https://nvidia.github.io/TensorRT-LLM/1.3.0rc7/quick-start-guide.html) — Published NGC image, TinyLlama example, and `trtllm-serve` command used here.
+- [Polyaxon service runtime](/docs/references/polyaxonfile/runtimes/services) — Service ports, replicas, connections, volumes, and external access.
+- [Polyaxon model serving](/docs/serving) — Patterns for deploying APIs, loading models, and operating inference workloads.
