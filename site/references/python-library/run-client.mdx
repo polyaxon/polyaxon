@@ -753,7 +753,7 @@ Uploads a single artifact to the run's artifacts store path.
 
 
 ```python
-upload_artifacts(self, files, path='', overwrite=True, relative_to=None, agent=None, ignore_agent_host=False, ignore_store=None)
+upload_artifacts(self, files, path='', overwrite=True, relative_to=None, agent=None, ignore_agent_host=False, ignore_store=None, dereference=False, recursive=True)
 ```
 
 
@@ -769,8 +769,10 @@ Uploads multiple artifacts to the run's artifacts store path.
   - __agent__: str, optional, uuid reference of an agent to use.
   - __ignore_agent_host__: bool, optional, flag to ignore agent host
   - __ignore_store__: bool, optional, flag to ignore the ignore store and upload all files under the dirpath.
+  - __dereference__: bool, materialize symlink targets in the archive. Defaults to `False`.
+  - __recursive__: bool, include directory descendants. Defaults to `True`. Directory uploads disable archive recursion after selecting files with their ignore and symlink policies.
 - __Returns__:
-  str.
+  Upload response.
 
 
 
@@ -780,7 +782,7 @@ Uploads multiple artifacts to the run's artifacts store path.
 
 
 ```python
-upload_artifacts_dir(self, dirpath, path='', overwrite=True, relative_to=None, agent=None, ignore_agent_host=False, ignore_store=None)
+upload_artifacts_dir(self, dirpath, path='', overwrite=True, relative_to=None, agent=None, ignore_agent_host=False, ignore_store=None, symlink_mode='skip', symlink_report_limit=20)
 ```
 
 
@@ -789,6 +791,32 @@ Uploads a full directory to the run's artifacts store path.
 
 > This function crawls all files to upload and uses `upload_artifacts`,
 > it also respects `.polyaxonignore` file if it exists or the default ignore pattern.
+
+The default `skip` mode omits file and directory symlinks and warns with a bounded
+report. `resolve-safe` uploads target contents only within `dirpath`; `resolve-all`
+also includes external targets. Both resolving modes reject broken targets and
+directory cycles. `error` rejects any selected symlink before upload. The API never
+prompts. Ignored links are excluded before applying the mode.
+
+This changes the previous default, which archived file symlinks as links and omitted
+directory symlinks silently. Direct single-file uploads and the default archive
+behavior of `upload_artifacts` are unchanged.
+
+When an existing directory has no selected files, the method returns
+`UPLOAD_SKIPPED` without making an upload request. Import this result from
+`polyaxon.client` and compare it by identity:
+
+```python
+from polyaxon.client import UPLOAD_SKIPPED
+
+result = client.upload_artifacts_dir("./code")
+if result is UPLOAD_SKIPPED:
+    print("No files selected; upload skipped.")
+```
+
+The method does not update the run status. The CLI treats this result as a failure
+with reason `UploadEmpty` when `--sync-failure` is enabled, including for `run -u`
+and mount uploads. Otherwise, it reports a skipped upload.
 
 - __Args__:
   - __dirpath__: str, the dirpath to upload.
@@ -799,8 +827,10 @@ Uploads a full directory to the run's artifacts store path.
   - __agent__: str, optional, uuid reference of an agent to use.
   - __ignore_agent_host__: bool, optional, flag to ignore agent host
   - __ignore_store__: bool, optional, flag to ignore the ignore store and upload all files under the dirpath.
+  - __symlink_mode__: str, one of `skip`, `resolve-safe`, `resolve-all`, or `error`. Defaults to `skip`.
+  - __symlink_report_limit__: int, maximum links listed in a report. Defaults to 20. Use 0 for totals only.
 - __Returns__:
-  str.
+  Upload response, or `UPLOAD_SKIPPED` when an existing directory has no selected files.
 
 
 
