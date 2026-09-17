@@ -5,38 +5,163 @@ wip: true
 author: Polyaxon
 ---
 
-Polyaxon v3 is coming, it's fully backward compatible with v2, and it is a major release that introduces new features, improvements, and fixes.
+import { ReleaseProgress } from "@/components/changelog/ReleaseProgress";
+import RunWithoutPolyaxonfileExamples from "@/components-mdx/run-without-polyaxonfile-examples.mdx";
+import SimplerPolyaxonfileExample from "@/components-mdx/simpler-polyaxonfile-example.mdx";
 
-We are sharing the work in public before the full final release ships:
+# Polyaxon v3
 
-- Comparing dense run views with charts, graphs, synced hover states, and tooltip diffs. (Completed)
-- Debugging live workloads with tmux sessions, sandbox execution, and better access to runtime state. (Beta)
-- Preparing governed remote access through the SSH plugin. (Beta)
-- Auto-research and auto-tuning of hyperparameters with LLMs and agentic AI. (WIP)
-- Wiring automation, hooks, and events into platform state so teams can launch evaluations, notifications, and downstream jobs when runs change. (Alpha)
-- Managed agents and single gateway endpoint for customer clusters: users can connect their Kubernetes clusters or cloud accounts to Polyaxon and manage them from our single control plane. (WIP)
-- Managed artifacts stores. (WIP)
-- Built in connections and integrations. (Alpha)
-- Incoming events from git providers, webhooks, and other external systems. (Alpha)
-- LLMs and agentic AI gateway: API, fallbacks, load balancing, retries, custom guardrail hooks, advanced evals & more. (WIP)
-- Built-in monitoring and observability for agents, jobs, and clusters. (WIP)
-- Simplified Polyaxonfile syntax and new features for running and managing workloads. (WIP)
-- Possibility to start runs without without having to define a Polyaxonfile. (WIP)
-- WarmPool: a pool of pre-warmed Sandboxes that can be quickly allocated to users, reducing the time it takes to get a new Sandbox up and running.
-- Programmatic interface: Python & TS composable primitives to specify everything from logic to hardware to execution.
+Polyaxon v3 is coming. It is fully backward compatible with v2 and introduces new features, improvements, and fixes.
 
-## V3.0.0
+<Callout type="info" title="Shipping as we build">
+We are sharing the work in public and shipping features incrementally, without waiting for the full v3 release. Some features are already available in v2; others are in alpha, beta, or active development.
+</Callout>
 
-### Core
+## Feature progress [#feature-progress]
+
+Track each feature's maturity and first shipped version. Features can be available in v2 while they continue to mature for v3.
+
+<ReleaseProgress features={[
+  {
+    title: "Richer run comparison",
+    description: "Compare dense run views with charts, graphs, synchronized cursors, shared selections, and parameter and metric tooltips.",
+    status: "completed",
+    shipped: { version: "v2.14", href: "/changelog/v2/v2-14/" },
+    guide: { label: "Explore visualizations", href: "/docs/tracking/visualizations/overview/" },
+    images: [
+      {
+        src: "/images/docs/quick-start/tracking/compare-three-runs-heat-fields.png",
+        alt: "Color-coded heat fields comparing the final outputs of three runs in the runs table.",
+        caption: "Heat fields",
+        width: 3022,
+        height: 1652,
+      },
+      {
+        src: "/images/docs/quick-start/tracking/compare-three-runs-metrics.png",
+        alt: "Six metric charts comparing three runs with synchronized cursors and tooltips at step 19.",
+        caption: "Metric charts",
+        width: 3022,
+        height: 1652,
+      },
+      {
+        src: "/images/docs/quick-start/tracking/compare-three-runs-images.png",
+        alt: "Feature activation and loss landscape images displayed side by side for three runs.",
+        caption: "Image comparison",
+        width: 3022,
+        height: 1652,
+      },
+    ],
+  },
+  {
+    title: "Interactive debugging and sandboxes",
+    description: "Debug live workloads with sandbox command execution, file access, and interactive terminals.",
+    status: "beta",
+    shipped: { version: "v2.16", href: "/changelog/v2/v2-16/" },
+    guide: { label: "Explore sandboxes", href: "/docs/sandboxes/overview/" },
+  },
+  {
+    title: "Governed SSH access",
+    description: "Connect local terminals, IDEs, and file-transfer tools to running services through Polyaxon's authenticated SSH tunnel.",
+    status: "beta",
+    shipped: { version: "v2.16", href: "/changelog/v2/v2-16/" },
+    guide: { label: "Connect with SSH", href: "/docs/sandboxes/connect-with-ssh/" },
+  },
+  {
+    title: "Reconnectable shells with tmux",
+    description: "Enable the tmux plugin to disconnect and return to the same shell from the CLI or UI. Attach to tmux explicitly over SSH to preserve your shell across SSH disconnects. Sessions retain their working directory, variables, and running programs while the container and tmux process remain alive.",
+    status: "beta",
+    shipped: { version: "v2.16", href: "/changelog/v2/v2-16/" },
+    guide: { label: "Reconnect to your shell", href: "/blog/reconnect-to-your-polyaxon-shell/" },
+  },
+  {
+    title: "Event-driven automation",
+    description: "Connect hooks and platform events to evaluations, notifications, and downstream jobs when runs change.",
+    status: "alpha",
+  },
+  {
+    title: "Control plane integrations",
+    description: "Manage built-in connections and integrations at the control plane level.",
+    status: "alpha",
+  },
+  {
+    title: "Incoming events",
+    description: "Bring events from Git providers, webhooks, and external systems into Polyaxon workflows.",
+    status: "alpha",
+  },
+  {
+    title: "Run agent-driven research campaigns",
+    description: "Run bounded research campaigns that propose experiments, evaluate results, and retain evidence for each decision. Tune training configurations, agent prompts, or tool policies with explicit budgets and approvals. Track proposal branches, compare results against a baseline, and pause or resume across restarts. Configuration-only proposals come first, followed by isolated source experiments; numerical searches can delegate to native hyperparameter optimization.",
+    status: "development",
+  },
+  {
+    title: "Connect agents (compute clusters) without installing Polyaxon",
+    description: "Connect a Kubernetes cluster through cluster credentials or a linked cloud account, with Polyaxon hosting the agent and managing workloads remotely. No Polyaxon CRDs, operator, agent, or streams pods are installed in your cluster, so idle clusters need no resident Polyaxon pods or nodes reserved for them. Bring your own S3, GCS, or Azure artifact storage, and see connection, permission, and storage issues in agent status.",
+    status: "development",
+  },
+  {
+    title: "Managed artifact stores",
+    description: "Manage artifact storage alongside the workloads that produce it.",
+    status: "development",
+  },
+  {
+    title: "LLM and agent gateway",
+    description: "Access models through a gateway with fallbacks, load balancing, retries, custom guardrail hooks, and advanced evaluations.",
+    status: "development",
+  },
+  {
+    title: "Infrastructure observability",
+    description: "Monitor agents, jobs, and clusters with built-in monitoring and observability.",
+    status: "development",
+  },
+  {
+    title: "Connect queues to external schedulers",
+    description: "Explicitly bind Polyaxon queues to existing Kueue, Volcano, or KAI queues for native Trainer workloads. Follow runs from platform dispatch through cluster admission and scheduling, with pending reasons and scheduler messages visible in Polyaxon. View external queue usage and quotas where available, alongside Polyaxon's own concurrency, quota, and access controls.",
+    status: "development",
+  },
+  {
+    title: "Simpler Polyaxonfiles",
+    description: "Define and manage workloads with simplified Polyaxonfile syntax and new configuration features.",
+    status: "development",
+    content: <SimplerPolyaxonfileExample />,
+  },
+  {
+    title: "Run without a Polyaxonfile",
+    description: "Set the image, command, resources, mounts, and ports directly from the CLI, or start a sandbox without first writing a Polyaxonfile.",
+    status: "development",
+    content: <RunWithoutPolyaxonfileExamples />,
+  },
+  {
+    title: "Native hyperparameter optimization",
+    description: "Improve batch search with native TPE v2 and Gaussian process Bayesian optimization, benchmarked against Random and Grid search. Reuse imported evaluations without rerunning them and allocate trial budgets asynchronously with ASHA and TPE+ASHA. Versioned policies keep active studies on their original behavior, with one optimization engine for model training and agent evaluation.",
+    status: "development",
+    guide: { label: "Current hyperparameter tuning guide", href: "/docs/scaling/hyperparameter-tuning/" },
+  },
+  {
+    title: "WarmPool",
+    description: "Allocate pre-warmed sandboxes from a pool to reduce the wait for a new environment.",
+    status: "pending",
+  },
+  {
+    title: "Composable Python and TypeScript interfaces",
+    description: "Specify logic, hardware, and execution through composable programmatic primitives.",
+    status: "pending",
+  },
+]} />
+
+## V3.0.0 [#v300]
+
+These notes track work toward v3.0.0, including improvements delivered incrementally in v2. See the feature progress above for current maturity.
+
+### Core [#core]
 
  * **New**: Add new sandbox interface to allow running agent and AI-generated code in dynamically defined sandboxes.
  * **Enhancement**: Extract schedules to be a first-class concept in the system.
 
-### Infra
+### Infra [#infra]
 
- * **Enhancement**: Move from redis to valkey and use official chart.
+ * **Enhancement**: Move from Redis to Valkey and use the official chart.
 
-### UI
+### UI [#ui]
 
  * **New**: Add markdown, summary, lineage, and performance widgets.
  * **New**: Improve visualization of multiple runs in the compare dashboard.
@@ -45,11 +170,11 @@ We are sharing the work in public before the full final release ships:
  * **Enhancement**: Do not render large artifacts and provide preview button.
  * **Enhancement**: Simplify switching to data view in metrics widgets.
 
-### Commercial
+### Commercial [#commercial]
 
  * **New**: Add new notifications/alerts/events layer to the clients to allow sending mid-run events to external systems.
- * **New**: Add automations to create a monitoring of conditions and events and trigger actions.
- * **New**: Add control plane level integrations.
- * **New**: Add in-platform notifications center to view and manage notifications and alerts.
- * **New**: Improve scheduler and allow to trigger runs based on schedules and events.
+ * **New**: Add automations to monitor conditions and events and trigger actions.
+ * **New**: Add control plane integrations.
+ * **New**: Add an in-platform notification center to view and manage notifications and alerts.
+ * **New**: Improve the scheduler to trigger runs based on schedules and events.
  * **New**: Add support for custom notifications and alerts.
