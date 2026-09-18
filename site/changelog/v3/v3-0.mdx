@@ -94,6 +94,11 @@ Track each feature's maturity and first shipped version. Features can be availab
     status: "development",
   },
   {
+    title: "Choose scoped credentials for each run",
+    description: "Create personal access tokens with explicit permissions, service access, and expiration dates. Set a default token for new runs or select a specific token when submitting from the CLI or UI. Inspect token scopes and expiry, revoke access, and audit token creation and revocation. A staged rollout introduces scoped run credentials before retiring legacy token behavior as agents and CLIs are upgraded.",
+    status: "development",
+  },
+  {
     title: "Connect agents (compute clusters) without installing Polyaxon",
     description: "Connect a Kubernetes cluster through cluster credentials or a linked cloud account, with Polyaxon hosting the agent and managing workloads remotely. No Polyaxon CRDs, operator, agent, or streams pods are installed in your cluster, so idle clusters need no resident Polyaxon pods or nodes reserved for them. Bring your own S3, GCS, or Azure artifact storage, and see connection, permission, and storage issues in agent status.",
     status: "development",
