@@ -57,15 +57,29 @@ Teams have their own workspace that provides scoped access to resources. The tea
 - Access runs, artifacts, and resources scoped to the team
 - Create projects that automatically inherit team policies
 
-### Accessing team space
+### Accessing team space [#accessing-team-space]
+
+Use the workspace switcher in the search bar to move between the organization space and a team space:
+
+1. **Browse organization projects.** In the organization space, open **Search or jump to...** to find projects you can access across the organization. In this example, the active space is `acme`.
+
+   ![Project search in the acme organization space showing projects across teams](/images/dashboard/teams/organization-project-search.png)
+
+2. **Select a workspace.** Select **Workspaces** at the bottom of the search panel, then choose a team space such as `acme - language`. The organization space, `acme`, is listed alongside the available teams.
+
+   ![Workspace switcher listing the acme organization and its vision, language, and ranking teams](/images/dashboard/teams/workspace-switcher.png)
+
+3. **Browse team projects.** Open **Search** in the selected team space. Project search now shows projects scoped to that team: `text-training` and `text-evaluation` in the language team example. Select a project to open it.
+
+   ![Project search in the acme language team space showing text-training and text-evaluation](/images/dashboard/teams/team-project-search.png)
+
+To return to the organization space, open **Workspaces** and select the organization name. Switching spaces changes your browsing context; project access still depends on your permissions.
 
 You can access a team's workspace through the teams routes:
 
 - Team projects: `/ui/{org}/teams/{team}/projects`
 - Team runs: `/ui/{org}/teams/{team}/runs`
 - Team artifacts: `/ui/{org}/teams/{team}/artifacts`
-
-You can also use the workspace switcher in the search bar to switch between different team spaces.
 
 ### Creating projects via team space
 
