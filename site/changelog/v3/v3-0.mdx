@@ -1,161 +1,31 @@
 ---
-title: "Release notes for v3.0"
-description: "Polyaxon release notes, migrations, and deprecation notes for v3.0.x."
+title: "Polyaxon v3 progress and release notes"
+description: "Follow Polyaxon v3 feature maturity, see what has already shipped in v2, and read the draft v3.0.0 release notes."
 wip: true
 author: Polyaxon
 ---
 
-import { ReleaseProgress } from "@/components/changelog/ReleaseProgress";
-import RunWithoutPolyaxonfileExamples from "@/components-mdx/run-without-polyaxonfile-examples.mdx";
-import SimplerPolyaxonfileExample from "@/components-mdx/simpler-polyaxonfile-example.mdx";
+import { V3FeatureProgress } from "@/components/changelog/V3FeatureProgress";
 
-# Polyaxon v3
+# Polyaxon v3 progress
 
-Polyaxon v3 is coming. It is fully backward compatible with v2 and introduces new features, improvements, and fixes.
+Polyaxon v3 brings new ways to develop and debug agents, automate workloads, and manage infrastructure. It is fully backward compatible with v2. This page combines the [product roadmap](/docs/more/roadmap/) with the evolving v3 release notes.
 
-<Callout type="info" title="Shipping as we build">
-We are sharing the work in public and shipping features incrementally, without waiting for the full v3 release. Some features are already available in v2; others are in alpha, beta, or active development.
+<Callout type="info" title="Building toward v3">
+V3 is still in progress. We ship features incrementally, including in v2, so you can use improvements before the full release. A feature's maturity and its first shipped version are tracked separately below.
 </Callout>
+
+For example, you can already compare runs with synchronized charts in [v2.14](/changelog/v2/v2-14/) and use sandbox execution, SSH access, and reconnectable shells in [v2.16](/changelog/v2/v2-16/). The sandbox features remain in beta as they mature toward v3.
 
 ## Feature progress [#feature-progress]
 
-Track each feature's maturity and first shipped version. Features can be available in v2 while they continue to mature for v3.
+Select a status below to jump to its features. **Shipped in** links identify the first release containing a feature; alpha, beta, and development labels describe its maturity. Features without a shipped-version link should not be assumed available in a published release. Scope and maturity can change as development continues.
 
-<ReleaseProgress features={[
-  {
-    title: "Richer run comparison",
-    description: "Compare dense run views with charts, graphs, synchronized cursors, shared selections, and parameter and metric tooltips.",
-    status: "completed",
-    shipped: { version: "v2.14", href: "/changelog/v2/v2-14/" },
-    guide: { label: "Explore visualizations", href: "/docs/tracking/visualizations/overview/" },
-    images: [
-      {
-        src: "/images/docs/quick-start/tracking/compare-three-runs-heat-fields.png",
-        alt: "Color-coded heat fields comparing the final outputs of three runs in the runs table.",
-        caption: "Heat fields",
-        width: 3022,
-        height: 1652,
-      },
-      {
-        src: "/images/docs/quick-start/tracking/compare-three-runs-metrics.png",
-        alt: "Six metric charts comparing three runs with synchronized cursors and tooltips at step 19.",
-        caption: "Metric charts",
-        width: 3022,
-        height: 1652,
-      },
-      {
-        src: "/images/docs/quick-start/tracking/compare-three-runs-images.png",
-        alt: "Feature activation and loss landscape images displayed side by side for three runs.",
-        caption: "Image comparison",
-        width: 3022,
-        height: 1652,
-      },
-    ],
-  },
-  {
-    title: "Interactive debugging and sandboxes",
-    description: "Debug live workloads with sandbox command execution, file access, and interactive terminals.",
-    status: "beta",
-    shipped: { version: "v2.16", href: "/changelog/v2/v2-16/" },
-    guide: { label: "Explore sandboxes", href: "/docs/sandboxes/overview/" },
-  },
-  {
-    title: "Governed SSH access",
-    description: "Connect local terminals, IDEs, and file-transfer tools to running services through Polyaxon's authenticated SSH tunnel.",
-    status: "beta",
-    shipped: { version: "v2.16", href: "/changelog/v2/v2-16/" },
-    guide: { label: "Connect with SSH", href: "/docs/sandboxes/connect-with-ssh/" },
-  },
-  {
-    title: "Reconnectable shells with tmux",
-    description: "Enable the tmux plugin to disconnect and return to the same shell from the CLI or UI. Attach to tmux explicitly over SSH to preserve your shell across SSH disconnects. Sessions retain their working directory, variables, and running programs while the container and tmux process remain alive.",
-    status: "beta",
-    shipped: { version: "v2.16", href: "/changelog/v2/v2-16/" },
-    guide: { label: "Reconnect to your shell", href: "/blog/reconnect-to-your-polyaxon-shell/" },
-  },
-  {
-    title: "Event-driven automation",
-    description: "Connect hooks and platform events to evaluations, notifications, and downstream jobs when runs change.",
-    status: "alpha",
-  },
-  {
-    title: "Control plane integrations",
-    description: "Manage built-in connections and integrations at the control plane level.",
-    status: "alpha",
-  },
-  {
-    title: "Incoming events",
-    description: "Bring events from Git providers, webhooks, and external systems into Polyaxon workflows.",
-    status: "alpha",
-  },
-  {
-    title: "Run agent-driven research campaigns",
-    description: "Run bounded research campaigns that propose experiments, evaluate results, and retain evidence for each decision. Tune training configurations, agent prompts, or tool policies with explicit budgets and approvals. Track proposal branches, compare results against a baseline, and pause or resume across restarts. Configuration-only proposals come first, followed by isolated source experiments; numerical searches can delegate to native hyperparameter optimization.",
-    status: "development",
-  },
-  {
-    title: "Choose scoped credentials for each run",
-    description: "Create personal access tokens with explicit permissions, service access, and expiration dates. Set a default token for new runs or select a specific token when submitting from the CLI or UI. Inspect token scopes and expiry, revoke access, and audit token creation and revocation. A staged rollout introduces scoped run credentials before retiring legacy token behavior as agents and CLIs are upgraded.",
-    status: "development",
-  },
-  {
-    title: "Connect agents (compute clusters) without installing Polyaxon",
-    description: "Connect a Kubernetes cluster through cluster credentials or a linked cloud account, with Polyaxon hosting the agent and managing workloads remotely. No Polyaxon CRDs, operator, agent, or streams pods are installed in your cluster, so idle clusters need no resident Polyaxon pods or nodes reserved for them. Bring your own S3, GCS, or Azure artifact storage, and see connection, permission, and storage issues in agent status.",
-    status: "development",
-  },
-  {
-    title: "Managed artifact stores",
-    description: "Manage artifact storage alongside the workloads that produce it.",
-    status: "development",
-  },
-  {
-    title: "LLM and agent gateway",
-    description: "Access models through a gateway with fallbacks, load balancing, retries, custom guardrail hooks, and advanced evaluations.",
-    status: "development",
-  },
-  {
-    title: "Infrastructure observability",
-    description: "Monitor agents, jobs, and clusters with built-in monitoring and observability.",
-    status: "development",
-  },
-  {
-    title: "Connect queues to external schedulers",
-    description: "Explicitly bind Polyaxon queues to existing Kueue, Volcano, or KAI queues for native Trainer workloads. Follow runs from platform dispatch through cluster admission and scheduling, with pending reasons and scheduler messages visible in Polyaxon. View external queue usage and quotas where available, alongside Polyaxon's own concurrency, quota, and access controls.",
-    status: "development",
-  },
-  {
-    title: "Simpler Polyaxonfiles",
-    description: "Define and manage workloads with simplified Polyaxonfile syntax and new configuration features.",
-    status: "development",
-    content: <SimplerPolyaxonfileExample />,
-  },
-  {
-    title: "Run without a Polyaxonfile",
-    description: "Set the image, command, resources, mounts, and ports directly from the CLI, or start a sandbox without first writing a Polyaxonfile.",
-    status: "development",
-    content: <RunWithoutPolyaxonfileExamples />,
-  },
-  {
-    title: "Native hyperparameter optimization",
-    description: "Improve batch search with native TPE v2 and Gaussian process Bayesian optimization, benchmarked against Random and Grid search. Reuse imported evaluations without rerunning them and allocate trial budgets asynchronously with ASHA and TPE+ASHA. Versioned policies keep active studies on their original behavior, with one optimization engine for model training and agent evaluation.",
-    status: "development",
-    guide: { label: "Current hyperparameter tuning guide", href: "/docs/scaling/hyperparameter-tuning/" },
-  },
-  {
-    title: "WarmPool",
-    description: "Allocate pre-warmed sandboxes from a pool to reduce the wait for a new environment.",
-    status: "pending",
-  },
-  {
-    title: "Composable Python and TypeScript interfaces",
-    description: "Specify logic, hardware, and execution through composable programmatic primitives.",
-    status: "pending",
-  },
-]} />
+<V3FeatureProgress />
 
 ## V3.0.0 [#v300]
 
-These notes track work toward v3.0.0, including improvements delivered incrementally in v2. See the feature progress above for current maturity.
+**Draft release notes.** These notes collect work toward v3.0.0, including improvements delivered incrementally in v2. They are not a list of newly available features. Use the [feature tracker](#feature-progress) for maturity and shipped versions, and the [changelog](/changelog) for published releases.
 
 ### Core [#core]
 
