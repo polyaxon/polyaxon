@@ -1,0 +1,28 @@
+---
+title: "Release notes for v2.18"
+description: "Polyaxon release notes, migrations, and deprecation notes for v2.18.x."
+wip: true
+author: Polyaxon
+---
+
+## V2.18.0
+
+### CLI
+
+ * **New**: Add `--strict-params` and `--no-strict-params` to `polyaxon run` and `polyaxon check`, and `strict_params` to `check_polyaxonfile`. These set the operation policy without relaxing a strict component or changing preset precedence.
+
+### Core
+
+ * **Enhancement**: Accept undeclared params as context values by default, with or without declared IO. Add `strictParams` to components and operations for opt-in undeclared-name validation.
+ * **Fix**: Record resolved context params alongside declared inputs in `Run.inputs`, including runs with no declared inputs. Declared outputs keep their existing recording behavior.
+ * **Fix**: Handle null-valued params serialized as empty dictionaries without failing scheduler compilation with `Cannot read config_value: {}`.
+ * **Fix**: Retain `strictParams` on control-plane workflow parents for child validation, but omit it from resolved specs sent to agents for backward compatibility.
+
+### Compatibility
+
+Undeclared param names, including typos, are now accepted by default. Set `strictParams: true` to retain undeclared-name checks. In strict mode, explicitly allow extra context values with `contextOnly: true`. An explicit `contextOnly: false` requires a matching IO declaration in either mode. Declared IO types, constraints, and required-value validation still apply.
+
+Use CLI and server versions that support the 2.18 policy and compatible SDKs when submitting `strictParams`. Older CLI and server validators may reject the new field or undeclared params.
+Agents do not need to support `strictParams`; the control plane resolves it before dispatch.
+
+See the [params reference](/docs/references/polyaxonfile/specification/params/) for examples and component/operation precedence.
