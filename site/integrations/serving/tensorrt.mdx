@@ -87,7 +87,7 @@ The benchmark uses generated inputs. It checks engine execution and performance,
 
 ## Use the engine in a service [#serving]
 
-`trtexec` exits after its build or benchmark; it does not expose an HTTP endpoint. To serve predictions, load the saved engine in an application using the [TensorRT runtime API](https://docs.nvidia.com/deeplearning/tensorrt/latest/getting-started/quick-start-runtime-tutorial.html), then deploy that application with the [Polyaxon service runtime](/docs/references/polyaxonfile/runtimes/services). Keep image preprocessing and output decoding consistent with the original model.
+`trtexec` exits after its build or benchmark; it does not expose an HTTP endpoint. To serve predictions, load the saved engine in an application using the [TensorRT runtime API](https://docs.nvidia.com/deeplearning/tensorrt/latest/getting-started/quick-start-runtime-tutorial.html), then deploy that application with the [Polyaxon service runtime](/docs/references/polyaxonfile/runtimes/services/overview/). Keep image preprocessing and output decoding consistent with the original model.
 
 An engine is tied to its build environment. Use compatible TensorRT versions and GPU targets, or explicitly configure and validate NVIDIA's [engine compatibility options](https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/engine-compatibility.html). Only load engines from trusted sources; serialized engines can contain executable code.
 
