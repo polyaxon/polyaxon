@@ -22,11 +22,6 @@ The main primitives that the user will be interacting with are:
  * [Component](/docs/references/polyaxonfile/specification/component/): A discrete, repeatable, and self-contained action that defines an environment and a runtime.
  * [Operation](/docs/references/polyaxonfile/specification/operation/): This is how Polyaxon operationalizes and executes a component by passing parameters, connections, and possibly patch the run environment.
 
-Polyaxon can resolve the content of a Polyaxonfile based on 2 information:
+The `kind` field identifies a Polyaxonfile as a `component` or an `operation`.
 
- * version: this is the version of the specification file, all Polyaxon components (CLI, Clients, API, Compiler, Operation) rely on this information to know how to parse the content using the versioned schema.
-    ```yaml
-    version: 1.1
-    ...
-    ```
- * kind: this is the kind of the specification file, the possible values are `component` and `operation`.
+Starting in v2.18, `version` is optional. Polyaxon retains a supplied value but does not use it to select a parser or validation schema. Older CLI and server versions may still require `version: 1.1`.

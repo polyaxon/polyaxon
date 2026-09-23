@@ -29,7 +29,7 @@ that will be scheduled on Kubernetes:
 ![polyaxonfile operation](/images/references/specification/operation.png)
 
 - __Args__:
-  - __version__: str
+  - __version__: float, optional
   - __kind__: str, should be equal to `operation`
   - __patch_strategy__: str, optional, defaults to post_merge
   - __is_preset__: bool, optional
@@ -126,7 +126,7 @@ operation = V1Operation(
 
 ### version
 
-The polyaxon specification version to use to validate the operation.
+The optional Polyaxonfile version. Starting in v2.18, Polyaxon retains a supplied value but does not use it to select a validation schema. Older CLI and server versions may require `version: 1.1`.
 
 ```yaml
 operation:
@@ -504,5 +504,4 @@ it can map directly to the cost of using the environment where the operation is 
 ```yaml
 cost: 2.2
 ```
-
 
