@@ -10,10 +10,12 @@ author: Polyaxon
 ### CLI
 
  * **New**: Add `--strict-params` and `--no-strict-params` to `polyaxon run` and `polyaxon check`, and `strict_params` to `check_polyaxonfile`. These set the operation policy without relaxing a strict component or changing preset precedence.
+ * **Enhancement**: Warn when a Polyaxonfile supplies `version`. The field is now optional and no longer selects a validation schema.
 
 ### Core
 
  * **Enhancement**: Accept undeclared params as context values by default, with or without declared IO. Add `strictParams` to components and operations for opt-in undeclared-name validation.
+ * **Enhancement**: Accept components, operations, and compiled operations without `version`. Preserve supplied values through parsing, compilation, and run storage.
  * **Fix**: Record resolved context params alongside declared inputs in `Run.inputs`, including runs with no declared inputs. Declared outputs keep their existing recording behavior.
  * **Fix**: Handle null-valued params serialized as empty dictionaries without failing scheduler compilation with `Cannot read config_value: {}`.
  * **Fix**: Retain `strictParams` on control-plane workflow parents for child validation, but omit it from resolved specs sent to agents for backward compatibility.
@@ -24,5 +26,7 @@ Undeclared param names, including typos, are now accepted by default. Set `stric
 
 Use CLI and server versions that support the 2.18 policy and compatible SDKs when submitting `strictParams`. Older CLI and server validators may reject the new field or undeclared params.
 Agents do not need to support `strictParams`; the control plane resolves it before dispatch.
+
+Older CLI and server versions require `version: 1.1`. Keep it when targeting those versions. V2.18 accepts versioned and versionless Polyaxonfiles.
 
 See the [params reference](/docs/references/polyaxonfile/specification/params/) for examples and component/operation precedence.
