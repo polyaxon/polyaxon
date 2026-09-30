@@ -20,6 +20,10 @@ author: Polyaxon
  * **Fix**: Handle null-valued params serialized as empty dictionaries without failing scheduler compilation with `Cannot read config_value: {}`.
  * **Fix**: Retain `strictParams` on control-plane workflow parents for child validation, but omit it from resolved specs sent to agents for backward compatibility.
 
+### UI
+
+ * **Enhancement**: Improve auto-rendering of inputs/outputs in tables.
+
 ### Compatibility
 
 Undeclared param names, including typos, are now accepted by default. Set `strictParams: true` to retain undeclared-name checks. In strict mode, explicitly allow extra context values with `contextOnly: true`. An explicit `contextOnly: false` requires a matching IO declaration in either mode. Declared IO types, constraints, and required-value validation still apply.
