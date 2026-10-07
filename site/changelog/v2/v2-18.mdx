@@ -9,11 +9,14 @@ author: Polyaxon
 
 ### CLI
 
+ * **New**: Run jobs and services without a Polyaxonfile using `polyaxon run` with `--image`, `--cmd`, `--env`, `--cpu`, `--memory`, `--gpu`, `--port`, `--environment`, and `--build`.
+ * **New**: Start sandbox services with `polyaxon run --sandbox`, using inline options or an existing service Polyaxonfile.
  * **New**: Add `--strict-params` and `--no-strict-params` to `polyaxon run` and `polyaxon check`, and `strict_params` to `check_polyaxonfile`. These set the operation policy without relaxing a strict component or changing preset precedence.
  * **Enhancement**: Warn when a Polyaxonfile supplies `version`. The field is now optional and no longer selects a validation schema.
 
 ### Core
 
+ * **New**: Add root execution shortcuts to Polyaxonfiles, including `container`, `cmd`, `env`, `resources`, `ports`, `environment`, `init`, `connections`, `sidecars`, and `volumes`.
  * **Enhancement**: Accept undeclared params as context values by default, with or without declared IO. Add `strictParams` to components and operations for opt-in undeclared-name validation.
  * **Enhancement**: Accept components, operations, and compiled operations without `version`. Preserve supplied values through parsing, compilation, and run storage.
  * **Fix**: Record resolved context params alongside declared inputs in `Run.inputs`, including runs with no declared inputs. Declared outputs keep their existing recording behavior.
@@ -23,6 +26,10 @@ author: Polyaxon
 ### UI
 
  * **Enhancement**: Improve auto-rendering of inputs/outputs in tables.
+
+### Commercial
+
+ * **Fix**: Return `404` for malformed integration UUIDs on commercial endpoints, including agent endpoints, instead of failing during request handling.
 
 ### Compatibility
 
