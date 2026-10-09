@@ -13,6 +13,7 @@ author: Polyaxon
  * **New**: Start sandbox services with `polyaxon run --sandbox`, using inline options or an existing service Polyaxonfile.
  * **New**: Add `--strict-params` and `--no-strict-params` to `polyaxon run` and `polyaxon check`, and `strict_params` to `check_polyaxonfile`. These set the operation policy without relaxing a strict component or changing preset precedence.
  * **Enhancement**: Warn when a Polyaxonfile supplies `version`. The field is now optional and no longer selects a validation schema.
+ * **Fix**: Issue with Kubernetes Python client 37 breaks Polyaxonfile validation with strict Pydantic models.
 
 ### Core
 
