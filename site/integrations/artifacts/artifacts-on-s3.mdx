@@ -22,6 +22,11 @@ And optionally these keys:
  * `AWS_SECURITY_TOKEN`
  * `AWS_REGION`
 
+Because the artifacts store relies on the standard S3 environment variables, it works with Amazon S3 or any S3-compatible object storage service (for example Backblaze B2, Cloudflare R2, or MinIO). Leave `AWS_ENDPOINT_URL` unset to use the default Amazon S3 endpoint, or set it to your provider's endpoint:
+
+```bash
+AWS_ENDPOINT_URL: "https://your-s3-endpoint.example.com"
+```
 
 ## Create a secret or a config map for storing these keys
 
