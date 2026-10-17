@@ -9,11 +9,13 @@ author: Polyaxon
 
 ### CLI
 
- * **New**: Run jobs and services without a Polyaxonfile using `polyaxon run` with `--image`, `--cmd`, `--env`, `--cpu`, `--memory`, `--gpu`, `--port`, `--environment`, and `--build`.
- * **New**: Start sandbox services with `polyaxon run --sandbox`, using inline options or an existing service Polyaxonfile.
+ * **New**: Run jobs and services without a Polyaxonfile using `polyaxon run` with `--image`, `--cmd`, `--env`, `--cpu`, `--memory`, `--gpu`, and `--port`/`--ports`.
+ * **New**: Start sandbox services with `polyaxon run --sandbox`, using inline options, a Polyaxonfile without a runtime (for example only `plugins`), or an existing service Polyaxonfile.
+ * **New**: Pass the same inline options as keyword arguments to `RunClient.create`, `create_from_polyaxonfile`, `create_from_url`, `create_from_hub`, and `SandboxClient.create`, sync and async: `image`, `cmd`, `env`, `cpu`, `memory`, `gpu`, and `ports`.
  * **New**: Add `--strict-params` and `--no-strict-params` to `polyaxon run` and `polyaxon check`, and `strict_params` to `check_polyaxonfile`. These set the operation policy without relaxing a strict component or changing preset precedence.
  * **Enhancement**: Warn when a Polyaxonfile supplies `version`. The field is now optional and no longer selects a validation schema.
  * **Fix**: Issue with Kubernetes Python client 37 breaks Polyaxonfile validation with strict Pydantic models.
+ * **Fix**: `SandboxClient.create()` without content builds the same service as `polyaxon run --sandbox` and leaves `tmux` and `ssh` unset, so presets can enable them. Older servers rejected its request with "The Polyaxonfile `version` must be specified".
 
 ### Core
 
@@ -39,6 +41,6 @@ Undeclared param names, including typos, are now accepted by default. Set `stric
 Use CLI and server versions that support the 2.18 policy and compatible SDKs when submitting `strictParams`. Older CLI and server validators may reject the new field or undeclared params.
 Agents do not need to support `strictParams`; the control plane resolves it before dispatch.
 
-Older CLI and server versions require `version: 1.1`. Keep it when targeting those versions. V2.18 accepts versioned and versionless Polyaxonfiles.
+Older CLI and server versions require `version: 1.1`. Keep it when targeting those versions. V2.18 accepts versioned and versionless Polyaxonfiles. This includes `SandboxClient.create()`: on older servers, pass content with `version: 1.1`.
 
 See the [params reference](/docs/references/polyaxonfile/specification/params/) for examples and component/operation precedence.
