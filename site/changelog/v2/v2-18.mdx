@@ -25,6 +25,18 @@ author: Polyaxon
  * **Fix**: Record resolved context params alongside declared inputs in `Run.inputs`, including runs with no declared inputs. Declared outputs keep their existing recording behavior.
  * **Fix**: Handle null-valued params serialized as empty dictionaries without failing scheduler compilation with `Cannot read config_value: {}`.
  * **Fix**: Retain `strictParams` on control-plane workflow parents for child validation, but omit it from resolved specs sent to agents for backward compatibility.
+ * **Fix**: Keep Ray `rayStartParams` values as strings during compilation. Values that look like numbers, such as `num-cpus: "0"`, failed run compilation.
+
+### Operator
+
+ * **Fix**: Record job status changes that only appear on the pod, such as recovering from a startup warning to `Running`. Job pod events were mapped to a resource name that does not exist and were ignored.
+ * **Fix**: Report service pod warnings, such as `ImagePullBackOff`, within seconds instead of after the Deployment progress deadline (10 minutes by default).
+ * **Fix**: Map Dask scheduler and worker pod events to their cluster. Dask pods are owned by Deployments, so their events were ignored.
+ * **Enhancement**: Stop caching Kubernetes Events and remove unused field indexes and pod watches. The operator no longer needs `get`, `list` and `watch` permissions on events.
+
+### Deployment
+
+ * **Fix**: Enable only the TFJob, PyTorchJob and MPIJob schemes in the training operator chart. The training operator crash-looped because it enabled every scheme, including ones whose CRDs the chart no longer installs.
 
 ### UI
 
