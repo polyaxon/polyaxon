@@ -16,6 +16,7 @@ author: Polyaxon
  * **Enhancement**: Warn when a Polyaxonfile supplies `version`. The field is now optional and no longer selects a validation schema.
  * **Fix**: Issue with Kubernetes Python client 37 breaks Polyaxonfile validation with strict Pydantic models.
  * **Fix**: `SandboxClient.create()` without content builds the same service as `polyaxon run --sandbox` and leaves `tmux` and `ssh` unset, so presets can enable them. Older servers rejected its request with "The Polyaxonfile `version` must be specified".
+ * **Fix**: Send string params passed to the Python SDK as given, like `-P` values. They were read as Python literals before the declared types were known, so `"1e3"` for a `str` input arrived as `"1000.0"` and JSON text as a dict. See Compatibility.
 
 ### Core
 
@@ -26,6 +27,8 @@ author: Polyaxon
  * **Fix**: Handle null-valued params serialized as empty dictionaries without failing scheduler compilation with `Cannot read config_value: {}`.
  * **Fix**: Retain `strictParams` on control-plane workflow parents for child validation, but omit it from resolved specs sent to agents for backward compatibility.
  * **Fix**: Keep Ray `rayStartParams` values as strings during compilation. Values that look like numbers, such as `num-cpus: "0"`, failed run compilation.
+ * **Fix**: Keep items in container `command` and `args` lists as written. Values that looked like Python literals were rewritten, and `0`, `0.0` and `False`, including templated params, were dropped.
+ * **Fix**: Keep values and options of text-typed inputs and outputs (`str`, `path`, `image`, `uuid`, `List[str]`, or `isList` with those types) as written during compilation. Values that looked like Python literals were converted, such as `"0"` to `0`, `List[str]` values with numeric-looking items failed compilation, and escaped Jinja was erased.
 
 ### Operator
 
@@ -52,6 +55,15 @@ Undeclared param names, including typos, are now accepted by default. Set `stric
 
 Use CLI and server versions that support the 2.18 policy and compatible SDKs when submitting `strictParams`. Older CLI and server validators may reject the new field or undeclared params.
 Agents do not need to support `strictParams`; the control plane resolves it before dispatch.
+
+Python SDK params are sent as given: strings are no longer read as Python literals. Declared input and output types still convert them during compilation, for example `"0"` for an `int` input becomes `0`. Pass native values where you relied on the old reading:
+
+ * An untyped `"0"` stays a string until IO parsing, so operation conditions such as `{{ n == 0 }}` are false.
+ * Nested strings such as `{"k": "0"}` no longer match numeric options of `dict` or `list` inputs.
+ * Python-repr strings such as `"{'a': 1}"` fail validation. JSON strings and native dicts work.
+ * A JSON-string dict replaces a dict param from the Polyaxonfile instead of merging into it. Native dicts still merge.
+
+Text-typed inputs and outputs keep `None` as the text `"None"`, including `value: None` in YAML, `-P x=None`, and templates rendering a null value. Use YAML `null`, omit the param, or pass `None` from the SDK.
 
 Older CLI and server versions require `version: 1.1`. Keep it when targeting those versions. V2.18 accepts versioned and versionless Polyaxonfiles. This includes `SandboxClient.create()`: on older servers, pass content with `version: 1.1`.
 
