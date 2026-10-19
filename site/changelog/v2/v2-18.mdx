@@ -39,9 +39,16 @@ author: Polyaxon
  * **Fix**: Fail operations whose container image name can't be parsed (`InvalidImageName`). Kubernetes never fails these pods, so runs stayed in `Warning` with `ContainersNotReady` until stopped.
  * **Fix**: Report image pull retries as `ImagePullBackOff`. The status alternated with `ContainersNotReady` and hid the registry error.
  * **Fix**: Report jobs as `Running` only once the main container starts. A job whose pod was still pending was recorded as running.
+ * **Fix**: Handle culling for services that have no status condition yet. The reconcile panicked and was retried until a condition was recorded.
  * **Fix**: Respect `false` and `0` in operator boolean settings that default to enabled, such as `POLYAXON_SET_AGENT`. They were ignored.
  * **Fix**: Refresh condition messages while the reason stays the same. A warning kept the first message Kubernetes reported, such as an empty `containers with unready status: ` list.
+ * **Fix**: Record the time of each operator status condition. Every condition in a run's status history showed the time of the first one.
  * **Fix**: Report the main container's failure reason, such as `OOMKilled` or `Error`, for jobs that exhaust their retries instead of `BackoffLimitExceeded`.
+ * **Fix**: Report Dask clusters that can't create their scheduler or worker pods, for example over quota, as `Warning` with the Kubernetes error instead of `Running`.
+ * **Fix**: Report Dask clusters as `Running` only once the scheduler starts. The Dask operator reports `Running` as soon as the scheduler Service exists.
+ * **Fix**: Report Dask scheduler pod warnings, such as `ImagePullBackOff`, while the scheduler is not running. The cluster stayed `Starting` without a reason.
+ * **Fix**: Enforce `termination.timeout` for Dask and Ray cluster runs. The operator ignored it.
+ * **Fix**: Cull and complete services that set `termination.timeout`. Culling and main container exits could be skipped while the service was within its timeout.
  * **Enhancement**: Stop caching Kubernetes Events and remove unused field indexes and pod watches. The operator no longer needs `get`, `list` and `watch` permissions on events.
 
 ### Deployment
