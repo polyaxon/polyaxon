@@ -29,12 +29,19 @@ author: Polyaxon
  * **Fix**: Keep Ray `rayStartParams` values as strings during compilation. Values that look like numbers, such as `num-cpus: "0"`, failed run compilation.
  * **Fix**: Keep items in container `command` and `args` lists as written. Values that looked like Python literals were rewritten, and `0`, `0.0` and `False`, including templated params, were dropped.
  * **Fix**: Keep values and options of text-typed inputs and outputs (`str`, `path`, `image`, `uuid`, `List[str]`, or `isList` with those types) as written during compilation. Values that looked like Python literals were converted, such as `"0"` to `0`, `List[str]` values with numeric-looking items failed compilation, and escaped Jinja was erased.
+ * **Fix**: Random search over boolean `choice` values created runs with `None` instead of `true`/`false`.
 
 ### Operator
 
  * **Fix**: Record job status changes that only appear on the pod, such as recovering from a startup warning to `Running`. Job pod events were mapped to a resource name that does not exist and were ignored.
  * **Fix**: Report service pod warnings, such as `ImagePullBackOff`, within seconds instead of after the Deployment progress deadline (10 minutes by default).
  * **Fix**: Map Dask scheduler and worker pod events to their cluster. Dask pods are owned by Deployments, so their events were ignored.
+ * **Fix**: Fail operations whose container image name can't be parsed (`InvalidImageName`). Kubernetes never fails these pods, so runs stayed in `Warning` with `ContainersNotReady` until stopped.
+ * **Fix**: Report image pull retries as `ImagePullBackOff`. The status alternated with `ContainersNotReady` and hid the registry error.
+ * **Fix**: Report jobs as `Running` only once the main container starts. A job whose pod was still pending was recorded as running.
+ * **Fix**: Respect `false` and `0` in operator boolean settings that default to enabled, such as `POLYAXON_SET_AGENT`. They were ignored.
+ * **Fix**: Refresh condition messages while the reason stays the same. A warning kept the first message Kubernetes reported, such as an empty `containers with unready status: ` list.
+ * **Fix**: Report the main container's failure reason, such as `OOMKilled` or `Error`, for jobs that exhaust their retries instead of `BackoffLimitExceeded`.
  * **Enhancement**: Stop caching Kubernetes Events and remove unused field indexes and pod watches. The operator no longer needs `get`, `list` and `watch` permissions on events.
 
 ### Deployment
