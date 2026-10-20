@@ -15,6 +15,39 @@ Polyaxon uses [jinja](https://jinja.palletsprojects.com) to inject variables and
  * [Builtin filters](https://jinja.palletsprojects.com/en/3.0.x/templates/#builtin-filters)
  * [Types examples](https://jinja.palletsprojects.com/en/3.0.x/nativetypes/#examples)
 
+## Undefined variables
+
+Polyaxon keeps Jinja's default behavior for undefined variables. When interpolated directly,
+a missing variable or a missing key in an existing context dictionary renders as an empty string,
+without an error or warning. This also applies to misspelled names.
+
+For example, if `learning_rate` is `0.01` and `learning_rt` is undefined:
+
+```yaml
+args: ["echo learning_rate=[{{ learning_rate }}] typo=[{{ learning_rat }}]"]
+```
+
+The rendered argument is `echo learning_rate=[0.01] typo=[]`.
+Similarly, `{{ params.typo }}` renders empty when `params` exists but has no `typo` key.
+Some global keys, including `globals.run_artifacts_path` and `globals.run_outputs_path`,
+are only available when artifact collection is enabled or an artifacts store exists.
+
+Use `default` to supply a fallback, or `is defined` to handle a missing value explicitly:
+
+```jinja
+{{ optional_label | default('unlabeled') }}
+{% if optional_label is defined %}{{ optional_label }}{% else %}unlabeled{% endif %}
+```
+
+A declared optional input can be present in the context with a `None` value.
+A defined `None` value satisfies `is defined`, and `default('unlabeled')` does not replace it.
+
+Other uses of undefined values can still fail compilation. For example, accessing
+`{{ typo.x }}` when `typo` itself is undefined raises a `PolyaxonSchemaError`.
+
+`strictParams: true` rejects undeclared parameter names, except those explicitly marked
+`contextOnly: true`. It does not change template rendering or catch misspelled template references.
+
 ## Compiler
 
 Polyaxon uses a tool to compile the specification, every manifest that users submit to Polyaxon goes through several steps
