@@ -18,6 +18,12 @@ Options:
   -P, --params, --param NAME=VALUE
                                   A parameter to override the default params
                                   of the run, form -P name=value.
+  --strict-params / --no-strict-params
+                                  Set the operation's strict parameter policy.
+                                  Strict mode requires undeclared params to
+                                  set contextOnly: true. Defaults to the
+                                  specification's policy; a strict component
+                                  remains strict.
   -l, --lint                      To check the specification only without
                                   params validation.
   --help                          Show this message and exit.

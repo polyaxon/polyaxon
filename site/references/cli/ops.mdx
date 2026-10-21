@@ -631,6 +631,8 @@ Usage: polyaxon ops upload [OPTIONS]
 
   Uses /docs/references/cli/cache/#caching
 
+  Symlink handling: /docs/iterative-process/iterate-with-cli-local-code/#directory-upload-symlinks
+
   Examples:
 
   $ polyaxon ops upload -uid 8aac02e3a62a4f0aaa257c59da5eab80
@@ -640,56 +642,35 @@ Usage: polyaxon ops upload [OPTIONS]
   $ polyaxon ops upload -uid 8aac02e3a62a4f0aaa257c59da5eab80 --path-to="path/to/upload/to"
 
 Options:
-  -p, --project TEXT             The project name, e.g. 'mnist' or
-                                 'acme/mnist'.
-  -uid, -id, --uid, --uuid TEXT  The run uuid.
-  --path-from PATH               The path to upload from relative the current
-                                 location (or absolute path), Note that this
-                                 must be a valid path, or the CLI will raise
-                                 an error. Defaults to the current path.
-  --path-to TEXT                 The destination where to upload the
-                                 artifacts. If the path is '/' the root
-                                 artifacts path of the run will be used,
-                                 otherwise the values should start without the
-                                 separator, e.g. `uploads`, `code`,
-                                 `dataset/images/values`, ...
-  --sync-failure                 To set the run to failed if the upload fails.
-  -ag, --agent TEXT              Optional, uuid reference of an agent to use.
-  --ignore-agent-host            Optional, to ignore the agent host.
+  -p, --project TEXT              The project name, e.g. 'mnist' or
+                                  'acme/mnist'.
+  -uid, -id, --uid, --uuid TEXT   The run uuid.
+  --path-from PATH                The path to upload from relative the current
+                                  location (or absolute path), Note that this
+                                  must be a valid path, or the CLI will raise
+                                  an error. Defaults to the current path.
+  --path-to TEXT                  The destination where to upload the
+                                  artifacts. If the path is '/' the root
+                                  artifacts path of the run will be used,
+                                  otherwise the values should start without
+                                  the separator, e.g. `uploads`, `code`,
+                                  `dataset/images/values`, ...
+  --sync-failure                  To set the run to failed if the upload
+                                  fails.
+  -ag, --agent TEXT               Optional, uuid reference of an agent to use.
+  --ignore-agent-host             Optional, to ignore the agent host.
   --symlink-mode [resolve-safe|skip|error|resolve-all]
-                                 Directory symlink handling. Skipped links are
-                                 reported in a warning. [default: skip]
+                                  Directory uploads: resolve-safe materializes
+                                  internal targets; skip omits links; error
+                                  rejects links; resolve-all also includes
+                                  targets outside --path-from. Skipped links
+                                  are reported in a warning.  [default: skip]
   --symlink-report-limit INTEGER RANGE
-                                 Maximum links listed in a report. Use 0 for
-                                 totals only. [default: 20; x>=0]
-  --help                         Show this message and exit.
+                                  Maximum symlinks listed in a directory-
+                                  upload report. Use 0 for totals only.
+                                  [default: 20; x>=0]
+  --help                          Show this message and exit.
 ```
-
-#### Directory upload symlinks
-
-Directory uploads skip file and directory symlinks by default and warn with the
-number skipped. The report lists up to 20 links; `--symlink-report-limit` changes
-that limit. Ignored links are excluded from the report. There is no prompt.
-
-| Mode | Behavior |
-| --- | --- |
-| `skip` (default) | Omit links, including broken links, and warn. |
-| `resolve-safe` | Upload target contents for links inside the source directory. Reject external or broken targets and directory cycles before upload. |
-| `resolve-all` | Also upload targets outside the source directory. Reject broken targets and directory cycles. |
-| `error` | Reject any selected symlink before upload. |
-
-Use `resolve-all` only when you intend to include files outside the source directory.
-Ignore rules still apply, including to internal targets when resolving links.
-
-If an existing directory has no selected files after filtering, the command reports
-that the upload was skipped and exits successfully without sending an archive.
-With `--sync-failure`, it instead marks the run failed with reason `UploadEmpty` and
-exits with an error. The message identifies the source folder and symlink mode,
-and suggests checking files, ignore rules, and symlink options. Upload errors still fail.
-
-This changes the previous default: file symlinks were archived as links, while
-directory symlinks were omitted silently. Both are now skipped with a warning.
-Uploading a single file directly retains its previous behavior.
 
 ---
 

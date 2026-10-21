@@ -23,31 +23,33 @@ Polyaxon will try to resolve the owner, project, and run uuid from the environme
 If you intend to create a new run instance or to list runs,
 only the `owner` and `project` parameters are required.
 
-When an online client uses a cached run UUID, it retains the cached identity resolved at construction.
-If the cached owner or project is known and conflicts with the client's target,
-accessing `run_uuid` raises `PolyaxonClientException`. Run-specific API methods access this property,
-so the check happens before their request, not during client construction.
-`create()` and `list()` do not consume the cached UUID and are not blocked by this check.
+When an online client uses a cached run UUID, it retains the cached identity
+resolved at construction. If the cached owner or project is known and conflicts
+with the client's target, accessing `run_uuid` raises `PolyaxonClientException`.
+Run-specific API methods access this property, so the check happens before their
+request, not during client construction. `create()` and `list()` do not consume
+the cached UUID and are not blocked by this check.
 The same behavior applies to `AsyncRunClient`.
 
-Context logging is disabled by default. Set `log_context=True` to log cached owner and
-project values with their cache paths at construction. After validation succeeds, the first
-access to a cached `run_uuid` logs its UUID and cache path once per client. Notices use INFO
-through the `polyaxon.cli` logger, or WARNING when cached run ownership metadata is incomplete.
-An explicit `run_uuid` produces no run-cache notice. Logging uses your existing configuration.
-Set `client.log_context=False` to suppress further notices; cached ownership is still checked
-on every run UUID access.
+Context logging is disabled by default. Set `log_context=True` to log cached
+owner and project values with their cache paths at construction. After
+validation succeeds, the first access to a cached `run_uuid` logs its UUID
+and cache path once per client. Notices use INFO through the `polyaxon.cli`
+logger, or WARNING when cached run ownership metadata is incomplete.
+An explicit `run_uuid` produces no run-cache notice. Logging uses your
+existing configuration. Set `client.log_context=False` to suppress further
+notices; cached ownership is still checked on every run UUID access.
 
 To select an existing run explicitly, pass all three values:
 
 ```python
 from polyaxon.client import RunClient
-
 client = RunClient(owner="acme", project="project-b", run_uuid="RUN_UUID")
 ```
 
-Changing cache files does not update an existing client's identity. Construct a new client with
-explicit values, or use `set_run_uuid()` if its owner and project already match the intended run.
+Changing cache files does not update an existing client's identity. Construct a
+new client with explicit values, or use `set_run_uuid()` if its owner and project
+already match the intended run.
 See [conflicting cached run context](/docs/references/cli/cache/#conflicting-cached-run-context)
 for cache recovery and the limits of this check.
 
@@ -162,7 +164,7 @@ Updates a run based on the data passed.
 
 
 ```python
-create(self, name=None, description=None, tags=None, content=None, managed_by=None, is_managed=None, pending=None, meta_info=None)
+create(self, name=None, description=None, tags=None, content=None, managed_by=None, is_managed=None, pending=None, meta_info=None, *, image=None, cmd=None, env=None, cpu=None, memory=None, gpu=None, ports=None)
 ```
 
 
@@ -177,7 +179,13 @@ This is a generic create function, you can check other methods for creating runs
   * from url: `create_from_url`
   * from hub: `create_from_hub`
 
-> **Note**: If the `content` param is not passed, the run will be marked as non-managed.
+> **Note**: If neither `content` nor a shortcut is passed,
+> the run will be marked as non-managed.
+
+Shortcuts (`image`, `cmd`, `env`, `cpu`, `memory`, `gpu`, `ports`) are the
+`polyaxon run` inline options; only `None` omits a value. They are the final
+overlay of `content`, or the whole source without it. With shortcuts,
+a `content` string must be a YAML/JSON mapping, it is never read as a path.
 
 [Run API](/docs/references/api/#operation/CreateRun)
 
@@ -187,11 +195,23 @@ This is a generic create function, you can check other methods for creating runs
         it will override the description in the operation if provided.
   - __tags__: str or List[str], optional, list of tags,
         it will override the tags in the operation if provided.
-  - __content__: str or Dict or V1Operation, optional.
+  - __content__: str or Dict or V1Polyaxonfile, optional.
   - __is_managed__: bool, flag to create a managed run.
   - __managed_by__: ManagedBy, optional, service that manages the operation.
   - __pending__: str, to specify if the run is pending approval (requires human validation) or pending upload.
   - __meta_info__: dict, meta info to create the run with.
+  - __image__: str, optional, shortcut for `container: {image: ...}`.
+  - __cmd__: str or List[str], optional, shortcut for `cmd`,
+        the lines run as one /bin/sh script with `set -e`.
+  - __env__: Dict[str, str], optional, shortcut for `env`.
+  - __cpu__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.cpu`, e.g. `500m..1`.
+  - __memory__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
+  - __gpu__: str or int, optional, count or `request..limit`,
+        shortcut for `resources.gpu`.
+  - __ports__: List[int], optional, shortcut for `ports`,
+        a run without a runtime becomes a service.
 
 - __Returns__:
   V1Run, run instance from the response.
@@ -204,7 +224,7 @@ This is a generic create function, you can check other methods for creating runs
 
 
 ```python
-create_from_polyaxonfile(self, polyaxonfile, name=None, description=None, tags=None, params=None, matrix=None, presets=None, queue=None, namespace=None, nocache=None, cache=None, approved=None)
+create_from_polyaxonfile(self, polyaxonfile, name=None, description=None, tags=None, params=None, matrix=None, presets=None, queue=None, namespace=None, nocache=None, cache=None, approved=None, *, image=None, cmd=None, env=None, cpu=None, memory=None, gpu=None, ports=None)
 ```
 
 
@@ -213,6 +233,10 @@ Creates a new run based on a polyaxonfile.
 
 N.B. Create methods are only useful if you want to create a run programmatically,
 if you run a component/operation from the CLI/UI an instance will be created automatically.
+
+Shortcuts (`image`, `cmd`, `env`, `cpu`, `memory`, `gpu`, `ports`) are the
+`polyaxon run` inline options, applied as the final overlay;
+only `None` omits a value.
 
 [Run API](/docs/references/api/#operation/CreateRun)
 
@@ -251,6 +275,18 @@ if you run a component/operation from the CLI/UI an instance will be created aut
         [manual approval](/docs/scheduling/scheduling-strategies/manual-approval/).
         Can be used with yes/no, y/n, false/true, f/t, 1/0. "
         "e.g. `approved=1`, `approved='yes'`, `approved=False`, `approved='t'`, ..."
+  - __image__: str, optional, shortcut for `container: {image: ...}`.
+  - __cmd__: str or List[str], optional, shortcut for `cmd`,
+        the lines run as one /bin/sh script with `set -e`.
+  - __env__: Dict[str, str], optional, shortcut for `env`.
+  - __cpu__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.cpu`, e.g. `500m..1`.
+  - __memory__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
+  - __gpu__: str or int, optional, count or `request..limit`,
+        shortcut for `resources.gpu`.
+  - __ports__: List[int], optional, shortcut for `ports`,
+        a run without a runtime becomes a service.
 
 - __Returns__:
   V1Run, run instance from the response.
@@ -263,7 +299,7 @@ if you run a component/operation from the CLI/UI an instance will be created aut
 
 
 ```python
-create_from_url(self, url, name=None, description=None, tags=None, params=None, matrix=None, presets=None, queue=None, namespace=None, nocache=None, cache=None, approved=None)
+create_from_url(self, url, name=None, description=None, tags=None, params=None, matrix=None, presets=None, queue=None, namespace=None, nocache=None, cache=None, approved=None, *, image=None, cmd=None, env=None, cpu=None, memory=None, gpu=None, ports=None)
 ```
 
 
@@ -272,6 +308,10 @@ Creates a new run from a url containing a Polyaxonfile specification.
 
 N.B. Create methods are only useful if you want to create a run programmatically,
 if you run a component/operation from the CLI/UI an instance will be created automatically.
+
+Shortcuts (`image`, `cmd`, `env`, `cpu`, `memory`, `gpu`, `ports`) are the
+`polyaxon run` inline options, applied as the final overlay;
+only `None` omits a value.
 
 [Run API](/docs/references/api/#operation/CreateRun)
 
@@ -309,6 +349,18 @@ if you run a component/operation from the CLI/UI an instance will be created aut
         [manual approval](/docs/scheduling/scheduling-strategies/manual-approval/).
         Can be used with yes/no, y/n, false/true, f/t, 1/0. "
         "e.g. `approved=1`, `approved='yes'`, `approved=False`, `approved='t'`, ..."
+  - __image__: str, optional, shortcut for `container: {image: ...}`.
+  - __cmd__: str or List[str], optional, shortcut for `cmd`,
+        the lines run as one /bin/sh script with `set -e`.
+  - __env__: Dict[str, str], optional, shortcut for `env`.
+  - __cpu__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.cpu`, e.g. `500m..1`.
+  - __memory__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
+  - __gpu__: str or int, optional, count or `request..limit`,
+        shortcut for `resources.gpu`.
+  - __ports__: List[int], optional, shortcut for `ports`,
+        a run without a runtime becomes a service.
 
 - __Returns__:
   V1Run, run instance from the response.
@@ -321,7 +373,7 @@ if you run a component/operation from the CLI/UI an instance will be created aut
 
 
 ```python
-create_from_hub(self, component, name=None, description=None, tags=None, params=None, matrix=None, presets=None, queue=None, namespace=None, nocache=None, cache=None, approved=None)
+create_from_hub(self, component, name=None, description=None, tags=None, params=None, matrix=None, presets=None, queue=None, namespace=None, nocache=None, cache=None, approved=None, *, image=None, cmd=None, env=None, cpu=None, memory=None, gpu=None, ports=None)
 ```
 
 
@@ -330,6 +382,10 @@ Creates a new run from the hub based on the component name.
 
 N.B. Create methods are only useful if you want to create a run programmatically,
 if you run a component/operation from the CLI/UI an instance will be created automatically.
+
+Shortcuts (`image`, `cmd`, `env`, `cpu`, `memory`, `gpu`, `ports`) are the
+`polyaxon run` inline options, applied as the final overlay;
+only `None` omits a value.
 
 If the component has required inputs, you should pass the params.
 
@@ -366,6 +422,18 @@ If the component has required inputs, you should pass the params.
         [manual approval](/docs/scheduling/scheduling-strategies/manual-approval/).
         Can be used with yes/no, y/n, false/true, f/t, 1/0. "
         "e.g. `approved=1`, `approved='yes'`, `approved=False`, `approved='t'`, ..."
+  - __image__: str, optional, shortcut for `container: {image: ...}`.
+  - __cmd__: str or List[str], optional, shortcut for `cmd`,
+        the lines run as one /bin/sh script with `set -e`.
+  - __env__: Dict[str, str], optional, shortcut for `env`.
+  - __cpu__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.cpu`, e.g. `500m..1`.
+  - __memory__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
+  - __gpu__: str or int, optional, count or `request..limit`,
+        shortcut for `resources.gpu`.
+  - __ports__: List[int], optional, shortcut for `ports`,
+        a run without a runtime becomes a service.
 
 - __Returns__:
   V1Run, run instance from the response.
@@ -769,8 +837,9 @@ Uploads multiple artifacts to the run's artifacts store path.
   - __agent__: str, optional, uuid reference of an agent to use.
   - __ignore_agent_host__: bool, optional, flag to ignore agent host
   - __ignore_store__: bool, optional, flag to ignore the ignore store and upload all files under the dirpath.
-  - __dereference__: bool, materialize symlink targets in the archive. Defaults to `False`.
-  - __recursive__: bool, include directory descendants. Defaults to `True`. Directory uploads disable archive recursion after selecting files with their ignore and symlink policies.
+  - __dereference__: bool, materialize symlink targets in the archive.
+  - __recursive__: bool, include directory descendants. Directory uploads disable
+  recursion after selecting files with their ignore and symlink policies.
 - __Returns__:
   Upload response.
 
@@ -792,31 +861,17 @@ Uploads a full directory to the run's artifacts store path.
 > This function crawls all files to upload and uses `upload_artifacts`,
 > it also respects `.polyaxonignore` file if it exists or the default ignore pattern.
 
-The default `skip` mode omits file and directory symlinks and warns with a bounded
-report. `resolve-safe` uploads target contents only within `dirpath`; `resolve-all`
-also includes external targets. Both resolving modes reject broken targets and
-directory cycles. `error` rejects any selected symlink before upload. The API never
-prompts. Ignored links are excluded before applying the mode.
+Directory uploads skip file and directory symlinks by default and warn.
+Previously, file symlinks were archived as links and directory symlinks
+were omitted silently. Use resolve-safe to upload internal target contents,
+or resolve-all to include external targets. Both resolving modes reject
+broken targets and directory cycles. Ignored links are excluded first.
 
-This changes the previous default, which archived file symlinks as links and omitted
-directory symlinks silently. Direct single-file uploads and the default archive
-behavior of `upload_artifacts` are unchanged.
-
-When an existing directory has no selected files, the method returns
-`UPLOAD_SKIPPED` without making an upload request. Import this result from
-`polyaxon.client` and compare it by identity:
-
-```python
-from polyaxon.client import UPLOAD_SKIPPED
-
-result = client.upload_artifacts_dir("./code")
-if result is UPLOAD_SKIPPED:
-    print("No files selected; upload skipped.")
-```
-
-The method does not update the run status. The CLI treats this result as a failure
-with reason `UploadEmpty` when `--sync-failure` is enabled, including for `run -u`
-and mount uploads. Otherwise, it reports a skipped upload.
+If an existing directory has no selected files, no upload request is made.
+The result is UPLOAD_SKIPPED, which can be imported from polyaxon.client
+and compared by identity. The CLI reports a skipped upload unless
+sync_failure is enabled, as it is for run uploads and mounts. In that
+case, it marks the run failed with reason UploadEmpty.
 
 - __Args__:
   - __dirpath__: str, the dirpath to upload.
@@ -827,10 +882,13 @@ and mount uploads. Otherwise, it reports a skipped upload.
   - __agent__: str, optional, uuid reference of an agent to use.
   - __ignore_agent_host__: bool, optional, flag to ignore agent host
   - __ignore_store__: bool, optional, flag to ignore the ignore store and upload all files under the dirpath.
-  - __symlink_mode__: str, one of `skip`, `resolve-safe`, `resolve-all`, or `error`. Defaults to `skip`.
-  - __symlink_report_limit__: int, maximum links listed in a report. Defaults to 20. Use 0 for totals only.
+  - __symlink_mode__: str, resolve-safe materializes internal targets; skip omits
+  links; error rejects links; resolve-all also materializes external
+  targets. Defaults to skip, with a warning listing skipped links.
+  - __symlink_report_limit__: int, maximum number of links listed in a report.
 - __Returns__:
-  Upload response, or `UPLOAD_SKIPPED` when an existing directory has no selected files.
+  Upload response, or UPLOAD_SKIPPED when an existing directory has no
+  selected files. No upload request is made in that case.
 
 
 

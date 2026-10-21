@@ -7,7 +7,7 @@ description: "A Component is a discrete, repeatable, and self-contained action."
 ## V1Component
 
 ```python
-polyaxon._flow.component.component.V1Component()
+polyaxon._flow.polyaxonfile.V1Component()
 ```
 
 
@@ -35,6 +35,7 @@ with default queues, container resources requirements, node scheduling, ...
   - __description__: str, optional
   - __tags__: List[str], optional
   - __presets__: List[str], optional
+  - __strict_params__: bool, optional, effective default is false
   - __queue__: str, optional
   - __namespace__: str, optional
   - __cache__: [V1Cache](/docs/references/polyaxonfile/helpers/cache/), optional
@@ -58,6 +59,7 @@ component:
   description:
   tags:
   presets:
+  strictParams:
   queue:
   namespace:
   cache:
@@ -85,6 +87,7 @@ component = V1Component(
     description="test",
     tags=["test"],
     presets=["test"],
+    strict_params=True,
     queue="test",
     namespace="test",
     cache=V1Cache(...),
@@ -103,7 +106,9 @@ component = V1Component(
 
 ### version
 
-The optional Polyaxonfile version. Starting in v2.18, Polyaxon retains a supplied value but does not use it to select a validation schema. Older CLI and server versions may require `version: 1.1`.
+The optional Polyaxonfile version. Supplied values are retained for compatibility
+but do not select a validation schema. Older CLI and server versions may require
+- __`version__: 1.1`.
 
 ```yaml
 component:
@@ -175,6 +180,27 @@ is passed as an argument to the cli/client.
 component:
   presets: [test]
 ```
+
+### strictParams
+
+> **Note**: Available in Polyaxon 2.18+.
+
+Set to `true` to require params to match declared inputs/outputs unless they
+explicitly set `contextOnly: true`. Declared IO validation always applies.
+With the default permissive policy, undeclared params become context values.
+
+```yaml
+component:
+  strictParams: true
+```
+
+Presets and overrides are applied before the component and operation policies
+are combined. Either can enable strict mode; an operation with
+- __`strictParams__: false` cannot relax a strict component. Omitting the field
+preserves existing policy when patching.
+
+See [params](/docs/references/polyaxonfile/specification/params/) for examples,
+CLI overrides, and version compatibility.
 
 ### queue
 
@@ -383,4 +409,3 @@ it can map directly to the cost of using the environment where the operation is 
 ```yaml
 cost: 2.2
 ```
-

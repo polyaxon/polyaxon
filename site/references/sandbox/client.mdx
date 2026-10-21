@@ -37,20 +37,23 @@ Polyaxon will try to resolve the owner, project, and run uuid from the environme
    a configuration will be available to resolve the values based on that run.
 
 When an online client uses a cached run UUID, accessing `run_uuid` raises
-`PolyaxonClientException` if the cached owner or project is known and conflicts with the client's target.
-The check happens before a request using that UUID, not during construction, so `create()` can
-still create a new sandbox run. A successful `create()` replaces the cached identity with the new run.
+`PolyaxonClientException` if the cached owner or project is known and conflicts
+with the client's target. The check happens before a request using that UUID,
+not during construction, so `create()` can still create a new sandbox run.
+A successful `create()` replaces the cached identity with the new run.
 This also applies to `AsyncSandboxClient`.
 
-Context logging is disabled by default. Set `log_context=True` to log cached owner and
-project values with their cache paths at construction. After validation succeeds, the first
-access to a cached `run_uuid` logs its UUID and cache path once per client. Notices use INFO
-through the `polyaxon.cli` logger, or WARNING when cached run ownership metadata is incomplete.
-An explicit `run_uuid` produces no run-cache notice. Logging uses your existing configuration.
-Set `client.log_context=False` to suppress further notices; cached ownership is still checked
-on every run UUID access.
+Context logging is disabled by default. Set `log_context=True` to log cached
+owner and project values with their cache paths at construction. After
+validation succeeds, the first access to a cached `run_uuid` logs its UUID
+and cache path once per client. Notices use INFO through the `polyaxon.cli`
+logger, or WARNING when cached run ownership metadata is incomplete.
+An explicit `run_uuid` produces no run-cache notice. Logging uses your
+existing configuration. Set `client.log_context=False` to suppress further
+notices; cached ownership is still checked on every run UUID access.
 
-To attach to an existing run explicitly, construct a client with `owner`, `project`, and `run_uuid`.
+To attach to an existing run explicitly, construct a client with `owner`,
+`project`, and `run_uuid`.
 Changing cache files does not update an existing client's identity.
 See [conflicting cached run context](/docs/references/cli/cache/#conflicting-cached-run-context)
 for cache recovery and the limits of this check.
@@ -135,7 +138,7 @@ result = await client.process.exec(command=["python", "-V"])
 
 
 ```python
-client.create(name=None, description=None, tags=None, content=None, managed_by=None, is_managed=None, pending=None, meta_info=None)
+client.create(name=None, description=None, tags=None, content=None, managed_by=None, is_managed=None, pending=None, meta_info=None, *, image=None, cmd=None, env=None, cpu=None, memory=None, gpu=None, ports=None)
 ```
 
 
@@ -147,10 +150,15 @@ regular `kind: service` run with `plugins.sandbox` enabled, then mutates
 this client to point at the returned run. After the run is approved,
 scheduled, and running, the same client can use `process`, `fs`, and `pty`.
 
-If `content` is not provided, the method builds a minimal service
-operation with `plugins.sandbox: true`. If `content` is provided, it
-must be inline service operation content so the client can verify the
-run kind and merge the sandbox plugin before submission.
+Like `polyaxon run --sandbox`. Shortcuts (`image`, `cmd`, `env`, `cpu`,
+`memory`, `gpu`, `ports`) are the `polyaxon run` inline options; only
+`None` omits a value. They are the final overlay of `content`, or the
+whole source without it. A source without a runtime (no `run`, component
+or reference), e.g. `{"plugins": {"ssh": True}}`, is a service
+(`ports: []` unless set). `plugins.sandbox: true` is then set on the
+operation, other literal plugins are kept, and the composed run must be
+a service. Unset plugins stay unset, so presets can still enable `tmux`
+or `ssh`.
 
 - __Example__:
 ```python
@@ -169,12 +177,23 @@ or wait for readiness. After the run reaches `running`, call
   - __name__: str, optional, run name.
   - __description__: str, optional, run description.
   - __tags__: str or List[str], optional, list of tags.
-  - __content__: str or Dict or V1Operation, optional, inline service operation
-        content. When provided, it must define a service component.
+  - __content__: str or Dict or V1Operation, optional, operation content,
+        a string can also be a path or a url.
   - __is_managed__: bool, flag to create a managed run.
   - __managed_by__: ManagedBy, optional, service that manages the operation.
   - __pending__: str, optional, pending state.
   - __meta_info__: dict, optional, meta info to create the run with.
+  - __image__: str, optional, shortcut for `container: {image: ...}`.
+  - __cmd__: str or List[str], optional, shortcut for `cmd`,
+        the lines run as one /bin/sh script with `set -e`.
+  - __env__: Dict[str, str], optional, shortcut for `env`.
+  - __cpu__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.cpu`, e.g. `500m..1`.
+  - __memory__: str or int or float, optional, request or `request..limit`,
+        shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
+  - __gpu__: str or int, optional, count or `request..limit`,
+        shortcut for `resources.gpu`.
+  - __ports__: List[int], optional, shortcut for `ports`.
 
 - __Returns__:
   V1Run, run instance from the response.

@@ -6,25 +6,12 @@ description: "Polyaxonfile Command Line Interface Specification - Run CLI Refere
 
 ### run
 
-Directory uploads through `--upload` and mounts use `--symlink-mode skip` by default.
-File and directory symlinks are omitted with a bounded warning. Use
-`--symlink-mode resolve-safe` to upload internal target contents, or `resolve-all`
-to include external targets. `error` rejects selected links before upload.
-The options apply to each uploaded directory, including mounts from the Polyaxonfile.
-
-If filtering leaves no files in an existing directory, the run is marked failed
-with reason `UploadEmpty` and is not approved to start. The message identifies the
-source folder and suggests checking files, ignore rules, and symlink options.
-Other upload failures also mark the pending upload run failed.
-
-Previously, file symlinks were archived as links and directory symlinks were omitted
-silently. See [directory upload symlinks](/docs/references/cli/ops/#directory-upload-symlinks)
-for mode details and compatibility notes.
-
 ```bash
 Usage: polyaxon run [OPTIONS]
 
   Run polyaxonfile specification.
+
+  Symlink handling: /docs/iterative-process/iterate-with-cli-local-code/#directory-upload-symlinks
 
   Examples:
 
@@ -46,6 +33,19 @@ Usage: polyaxon run [OPTIONS]
 
   $ polyaxon run -p project1 -f file.yaml -P param1=234.2 -P param2=relu
 
+  Run an image without a polyaxonfile
+
+  $ polyaxon run --image busybox:1.36 --cmd 'echo "$MESSAGE"' --env MESSAGE=hello --cpu 500m..1 --memory 512Mi..1Gi
+
+  Change the resources of a polyaxonfile, inline options apply after the files
+
+  $ polyaxon run -f file.yaml --cpu 2 --memory 4Gi
+
+  Start a sandbox service, or enable the sandbox on a service polyaxonfile
+
+  $ polyaxon run --sandbox --image python:3.12
+  $ polyaxon run -f service.yaml --sandbox
+
   If a python file contains a component main, you can run that component
 
   $ polyaxon run -pm path/to/my-component.py
@@ -63,7 +63,8 @@ Usage: polyaxon run [OPTIONS]
 
   $ polyaxon run ... -u -u-from ./code -u-to code
 
-  Uploading internal symlink target contents
+  Uploading the contents of symlinks whose targets are inside the upload
+  directory
 
   $ polyaxon run ... -u --symlink-mode resolve-safe
 
@@ -80,6 +81,35 @@ Options:
   --url TEXT                      The url containing the polyaxonfile to run.
   --hub TEXT                      The Component Hub name containing the
                                   polyaxonfile to run.
+  --image TEXT                    The image to run, shortcut for `container:
+                                  {image: ...}`. Without -f/-pm/--url/--hub,
+                                  the run is defined inline and the default
+                                  polyaxonfile is not read; use `-f
+                                  polyaxonfile.yaml --image ...` to change its
+                                  image. Inline options apply after the files.
+  --cmd TEXT                      A shell line to run, shortcut for `cmd`. Can
+                                  be specified multiple times; the lines run
+                                  as one /bin/sh script with `set -e`.
+  --env NAME=VALUE                An environment variable of the main
+                                  container, shortcut for `env`. Can be
+                                  specified multiple times.
+  --cpu TEXT                      CPU request, or request..limit, shortcut for
+                                  `resources.cpu`, e.g. `500m..1`.
+  --memory TEXT                   Memory request, or request..limit, shortcut
+                                  for `resources.memory`, e.g. `512Mi..1Gi`.
+  --gpu TEXT                      GPU count, or request..limit, shortcut for
+                                  `resources.gpu`, e.g. `1`.
+  --port, --ports TEXT            Ports to expose, shortcut for `ports`; a run
+                                  without a runtime becomes a service. Comma-
+                                  separated values, can be specified multiple
+                                  times, e.g. `--ports 80,443`.
+  --sandbox                       Enable `plugins.sandbox` (exec, filesystem
+                                  and PTY API) on a service run. Without
+                                  -f/-pm/--url/--hub or a default
+                                  polyaxonfile, the inline run is a service;
+                                  other kinds and matrix runs are rejected,
+                                  never converted. It does not change which
+                                  polyaxonfile is read.
   -n, --name TEXT                 Name to give to this run, must be unique
                                   within the project, could be none.
   --tags TEXT                     Tags of this run (comma separated values).
@@ -106,11 +136,16 @@ Options:
                                   without the separator, e.g. `uploads`,
                                   `code`, `dataset/images/values`, ...
   --symlink-mode [resolve-safe|skip|error|resolve-all]
-                                  Symlink handling for directory uploads and
-                                  mounts. [default: skip]
+                                  Directory uploads via --upload or mounts:
+                                  skip omits links; resolve-safe uploads
+                                  internal target contents; resolve-all also
+                                  includes external targets; error rejects
+                                  links. Skipped links are reported in a
+                                  warning.  [default: skip]
   --symlink-report-limit INTEGER RANGE
-                                  Maximum links listed per directory upload.
-                                  Use 0 for totals only. [default: 20; x>=0]
+                                  Maximum symlinks listed per directory
+                                  upload. Use 0 for totals only.  [default:
+                                  20; x>=0]
   -w, --watch                     To start statuses watch loop after
                                   scheduling the run.
   --local                         To start the run locally, with `docker`
@@ -121,6 +156,12 @@ Options:
                                   A parameter to override the default params
                                   of the run, form `-P name=value` or `--param
                                   name=value`.
+  --strict-params / --no-strict-params
+                                  Set the operation's strict parameter policy.
+                                  Strict mode requires undeclared params to
+                                  set contextOnly: true. Defaults to the
+                                  specification's policy; a strict component
+                                  remains strict.
   -HP, --hparams, --hparam NAME=VALUE
                                   A hyper-parameter to override the default
                                   params of the run, form: -HP

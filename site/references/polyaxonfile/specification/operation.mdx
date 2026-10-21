@@ -7,7 +7,7 @@ description: "An operation is how Polyaxon executes a component by passing param
 ## V1Operation
 
 ```python
-polyaxon._flow.operations.operation.V1Operation()
+polyaxon._flow.polyaxonfile.V1Operation()
 ```
 
 
@@ -38,6 +38,7 @@ that will be scheduled on Kubernetes:
   - __description__: str, optional
   - __tags__: List[str], optional
   - __presets__: str, optional
+  - __strict_params__: bool, optional, effective default is false
   - __queue__: str, optional
   - __namespace__: str, optional
   - __cache__: [V1Cache](/docs/references/polyaxonfile/helpers/cache/), optional
@@ -76,6 +77,7 @@ operation:
   description:
   tags:
   presets:
+  strictParams:
   queue:
   namespace:
   cache:
@@ -108,6 +110,7 @@ operation = V1Operation(
     description="test",
     tags=["test"],
     presets=["test"],
+    strict_params=True,
     queue="test",
     namespace="test",
     cache=V1Cache(...),
@@ -126,7 +129,9 @@ operation = V1Operation(
 
 ### version
 
-The optional Polyaxonfile version. Starting in v2.18, Polyaxon retains a supplied value but does not use it to select a validation schema. Older CLI and server versions may require `version: 1.1`.
+The optional Polyaxonfile version. Supplied values are retained for compatibility
+but do not select a validation schema. Older CLI and server versions may require
+- __`version__: 1.1`.
 
 ```yaml
 operation:
@@ -229,6 +234,32 @@ operation:
   presets: [test]
 ```
 
+### strictParams
+
+> **Note**: Available in Polyaxon 2.18+.
+
+Set to `true` to reject undeclared params unless they explicitly set
+- __`contextOnly__: true`. The effective policy is strict if either the component or
+operation is strict after presets and overrides have been applied.
+
+```yaml
+operation:
+  strictParams: true
+```
+
+Setting this field to `false` cannot relax a strict component. Omitting it
+preserves the operation's policy during patching. If neither object enables
+strict mode, undeclared params become context values by default.
+
+`polyaxon run` and `polyaxon check` accept `--strict-params` and
+`--no-strict-params` to set this operation field. Additional `-f` preset files
+retain their existing patch order. The compiled operation stores the effective
+policy, which is preserved for scheduled runs and matrix children. Independently
+defined DAG operations use their own policies.
+
+See [params](/docs/references/polyaxonfile/specification/params/) for examples
+and version compatibility.
+
 ### queue
 
 The [queue](/docs/scheduling/scheduling-strategies/queues/) to use for this operation run,
@@ -305,10 +336,11 @@ operation:
 
 ### params
 
-The [params](/docs/references/polyaxonfile/specification/params/)  to pass to the component,
-they will be validated against the inputs/outputs.
-If a parameter is passed and the component does not define a corresponding inputs/outputs,
-a validation error will be raised unless the param has the `contextOnly` flag enabled.
+The [params](/docs/references/polyaxonfile/specification/params/) to pass to the
+component. Params matching declared inputs/outputs retain their validation.
+In Polyaxon 2.18+, undeclared params become context values by default. With
+- __`strictParams__: true`, they must explicitly set `contextOnly: true`.
+An explicit `contextOnly: false` requires a matching declaration in either mode.
 
 ```yaml
 operation:
@@ -504,4 +536,3 @@ it can map directly to the cost of using the environment where the operation is 
 ```yaml
 cost: 2.2
 ```
-

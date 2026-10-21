@@ -78,7 +78,9 @@ print(result.exit_code, result.stdout, result.stderr)
         Values must be strings. `POLYAXON_*` keys are rejected
         by the server.
   - __workdir__: str, optional, working directory for the command.
-  - __stdin__: str or bytes, optional, data to pass to the command's stdin.
+  - __stdin__: str or bytes-like, optional, data for the command's stdin.
+        Strings are encoded as UTF-8. Bytes, bytearray and memoryview
+        are passed without text conversion.
   - __timeout_ms__: int, optional, server-side execution timeout
         in milliseconds.
 
@@ -125,7 +127,9 @@ with client.process.exec_stream(
   - __command__: List[str], the command and its arguments.
   - __env__: Dict[str, str], optional, environment variables to set.
   - __workdir__: str, optional, working directory for the command.
-  - __stdin__: str or bytes, optional, data to pass to the command's stdin.
+  - __stdin__: str or bytes-like, optional, data for the command's stdin.
+        Strings are encoded as UTF-8. Bytes, bytearray and memoryview
+        are passed without text conversion.
   - __timeout_ms__: int, optional, server-side execution timeout
         in milliseconds.
   - __timeout__: int, optional, client-side request timeout in seconds.
@@ -168,7 +172,9 @@ print(status.state, status.exit_code)
   - __command__: List[str], the command and its arguments.
   - __env__: Dict[str, str], optional, environment variables to set.
   - __workdir__: str, optional, working directory for the command.
-  - __stdin__: str or bytes, optional, data to pass to the command's stdin.
+  - __stdin__: str or bytes-like, optional, data for the command's stdin.
+        Strings are encoded as UTF-8. Bytes, bytearray and memoryview
+        are passed without text conversion.
   - __timeout_ms__: int, optional, server-side execution timeout
         in milliseconds.
   - __tag__: str, optional, a label to filter execs in `list`.
@@ -468,5 +474,3 @@ Alias of `signal` with a default of `SIGTERM`.
 
 - __Args__:
   - __signal__: str, optional, the signal name, default: `SIGTERM`.
-
-
