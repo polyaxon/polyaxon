@@ -10,7 +10,7 @@ Polyaxon integrates with Tensorboard to visualize and debug deep learning models
 
 Polyaxon provides several ways for using Tensorboard, you can check the [component on Polyaxon](https://cloud.polyaxon.com/ui/polyaxon/tensorboard/components) for more details.
 
-> **Note**: The default version `latest` targets a single run, and it has the same component's content as `tensorboard:single-run`. 
+> **Note**: The default version `latest` targets a single run, and it has the same component's content as `tensorboard:single-run`.
 
 ## Create a new tensorboard using the CLI
 
@@ -33,7 +33,7 @@ polyaxon run --hub tensorboard -p project-name
 ```
 
 
-## Viewing the service 
+## Viewing the service
 
 Go to the UI under the `service` tab:
 
@@ -63,10 +63,10 @@ polyaxon ops service --external [-uid] [-p]
 
 ![run-dashboards-tensorboard](/images/dashboard/comparison/tensorboard.png)
 
-![comparison-tensorboard-compare](/images/dashboard/comparison/tensorboard-compare.png)
+![comparison-tensorboard-compare](/images/dashboard/comparison/tensorboard.png)
 
 
-## Queues, presets, node scheduling, custom resources, ... 
+## Queues, presets, node scheduling, custom resources, ...
 
 You can provide more information before scheduling the service, like the queue, presets, ...
 
@@ -94,17 +94,17 @@ runPatch:
     resources:
       requests:
         memory: 300Mi
-``` 
+```
 
 ## Forking and customizing the component
 
-If you need to expose the `tensorboard` component with your predefined configuration without requiring end-users to create operations, 
+If you need to expose the `tensorboard` component with your predefined configuration without requiring end-users to create operations,
 we suggest that you clone the [component](https://cloud.polyaxon.com/ui/polyaxon/tensorboard/components/latest) and customize it.
 
 On Polyaxon CE, you will need to create a new `.yaml` file where you will host the content of the component, and users can either start new sessions using:
 
  * `polyaxon run -f my-custom-tensorboard.yaml`
- * `polyaxon run --url https://path/to/my-custom-tensorboard.yaml` 
+ * `polyaxon run --url https://path/to/my-custom-tensorboard.yaml`
 
 On Polyaxon Cloud or Polyaxon EE, you just need to add a new [component hub](/docs/registry/component-hub/overview/).
 The end users will need to run with `org-name/tensorboard` instead of `tensorboard`:
