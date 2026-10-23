@@ -54,7 +54,7 @@ By using your presets you can create a catalog of machines or environments with 
 
 ![catalog-management](/images/dashboard/instances/catalog-management.png)
 
-To create a new preset, you should go under `organization > settings > presets`:
+Open **Presets** in the organization sidebar to create or manage a preset:
 
  * Name: We suggest that you give an easy name that reflects to the type of the environment/machine/instance, with suffixes about priority and or concurrency, e.g. `large-gpu-max-concurrency-2`, the name could also signal if an instance is an on-demand/spot instance.
  * Description: This field is also visible directly on the presets table and should give your users a clear idea about what the preset does.
@@ -88,7 +88,7 @@ Based on tags and description they can see the definition how to use the preset:
 In some use case project admin might need to configure a default machine/instance/environment to use for a specific project, 
 or to predefine a scheduling preset to be used by default when running operations in the context of a specific project.
 
-Polyaxon provides a configuration under the project's settings to configure the default preset:
+Open **Project Settings > Defaults** and add the machine or environment preset to **Selected Presets**. Multiple default presets apply in their listed order:
 
 ![default-instance](/images/dashboard/instances/default-instance.png)
 

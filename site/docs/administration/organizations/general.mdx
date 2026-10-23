@@ -17,8 +17,7 @@ If you have access you can create a new organization.
 
 ## Selecting an organization
 
-Users can be members of multiple organizations,
-you can visit your organization's dashboard to stay updated on recent activity and keep track of recent changes.
+Open **Search or jump to**, choose **Workspaces**, and select an organization. The example below selects `acme`.
 
 ![organization-select](/images/dashboard/orgs/select.png)
 
@@ -30,21 +29,25 @@ Every organization can manage Projects, a Model Registry, and a Component Hub.
 
 ## Organization settings
 
-The organization settings page provides several tabs to manage the account, members, teams, agents (compute clusters), connections, ...
+Open organization **Settings** to manage the account through **General**, **Billing**, **Defaults**, **Policies**, **Auth**, **Members**, **Teams**, **Service accounts**, **Cloud access**, and **Support**.
 
-![organization-settings-select](/images/dashboard/orgs/settings-select.png)
+![Settings tabs for the acme organization](/images/dashboard/orgs/settings-select.png)
 
-The general settings page lets you change the organization's details
+**General** displays the organization name, visibility, and main owner. The example below uses the `acme` organization.
 
-![organization-settings](/images/dashboard/orgs/settings.png)
+![General settings for the acme organization](/images/dashboard/orgs/settings.png)
 
 ## Organization auth management
 
 By default, users can join your organization by invitation only using username, email, and password.
 
-In order to enable other authentication backends or open your organization for users without an invitation, you can use the auth tab in the settings
+Open **Settings > Auth** to control **Invitation only membership**. The current deployment shows this setting enabled. Disabling it allows users to join with the member role without an invitation.
 
 ![organization-auth-settings](/images/dashboard/orgs/auth-settings.png)
+
+If you have oauth/SSO enabled:
+
+![organization-auth-settings-oauth](/images/dashboard/orgs/oauth-settings.png)
 
 > **Note**: In Polyaxon Cloud, users can only join using a valid invitation.
 

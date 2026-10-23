@@ -7,13 +7,13 @@ description: "Every Project has settings to archive, restrict access, set defaul
 
 ## Project settings
 
-The project settings page provides several tabs to manage accessible members, teams, presets, connections, ...
+Open **Settings** in a project to manage its details, defaults, features, members, and resource access. The tabs include **General**, **Defaults**, **Features**, **Members**, **Teams**, **Projects**, **Agents**, **Queues**, **Namespaces**, **Presets**, and **Connections**.
 
-![project-settings-select](/images/dashboard/projects/settings-select.png)
+![Settings tabs for the acme/demo project](/images/dashboard/projects/settings-select.png)
 
-The general settings page lets you change the project's details
+Use **General** to edit the project's description, tags, visibility, and user attribution. Further down the page, **Project restrictions policy** lets you apply an organization policy.
 
-![project-settings](/images/dashboard/projects/settings.png)
+![General settings and user attribution for acme/demo](/images/dashboard/projects/settings.png)
 
 
 Users can also use the CLI to perform admin operations:
@@ -30,29 +30,29 @@ Deletion
 polyaxon project delete -c ...
 ```
 
-## Default Queue and Preset
+## Default queue and presets [#default-queue-and-preset]
 
-When a project is created, it will use the default organization queue and the default organization preset if defined.
-You can define defaults values that should be used by each project:
+A project inherits the organization default queue and presets unless project defaults are set. Open **Defaults** to choose a queue and move presets from **Available Presets** to **Selected Presets**. Selected presets apply in the listed order.
 
-![project-teams-settings](/images/dashboard/projects/default-settings.png)
+This tab also contains **Archives deletion interval**, which overrides the organization retention interval.
+
+![Project defaults with archive retention, queue, and ordered presets](/images/dashboard/projects/default-settings.png)
 
 
 ## Access settings
 
-When a project is created, it will be accessible to all organization's members following their roles on the organization level.
-In order to restrict teams, connections, profiles, ..., you need to manually define the teams that can access the project and the resources that can be accessed, using the settings tabs.
+By default, organization members access a project according to their organization roles. Use the settings tabs to restrict the teams that can access the project and the agents, queues, namespaces, presets, and connections it can use. If a **Project restrictions policy** is applied, its restrictions are synchronized and cannot be manually overridden.
 
-Example restricting teams access
+Use **Teams** to select which teams can access the project, then click **Save**:
 
-![project-teams-settings](/images/dashboard/projects/teams-settings.png)
-
-
-Example restricting agents (compute clusters)
-
-![project-agents-settings](/images/dashboard/projects/agents-settings.png)
+![Team access controls for acme/demo before selecting restrictions](/images/dashboard/projects/teams-settings.png)
 
 
-Example restricting queues
+Use **Agents** to restrict which compute clusters the project can use:
 
-![project-agents-settings](/images/dashboard/projects/queues-settings.png)
+![Agent access controls for acme/demo](/images/dashboard/projects/agents-settings.png)
+
+
+Use **Queues** to restrict which queues the project can use:
+
+![Queue access controls for acme/demo](/images/dashboard/projects/queues-settings.png)

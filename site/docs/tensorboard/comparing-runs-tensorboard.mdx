@@ -22,7 +22,7 @@ This command will show all runs created under a specific project, it will also s
 We can reduce the information in this list by providing a [query](/docs/references/query-language/overview/) similar to the UI.
 
 ```bash
-polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 5
+polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3
 ```
 
 The flags `--query/-q`, `--sort/s`, and `--limit/-l` allows to restrict the list based on the query specification, order by fields, and a limit.
@@ -30,21 +30,21 @@ The flags `--query/-q`, `--sort/s`, and `--limit/-l` allows to restrict the list
 You may notice that the list does not show important columns like metrics or params, we can add `-io` flag to show all inputs and outputs:
 
 ```bash
-polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 5 -io
+polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3 -io
 ```
 
 Now we have way too many columns, we can do better by providing what columns to show using `-c "column1, column2, ..."`, for instance let's just show the `uuid`, `learning_rate`, `loss` and `accuracy`.
 
 ```bash
-polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 5 -io -c "uuid,in.learning_rate,out.loss,out.accuracy"
+polyaxon ops ls [-p PROJECT_NAME] -q "kind: job, metrics.loss: <0.3" -s "-metrics.loss" -l 3 -io -c "uuid,in.learning_rate,out.loss,out.accuracy"
 ```
 
 ## Starting a Tensorboard for multiple runs
 
-We were able to query, sort, and limit our runs, let's try to start a Tensorboard service for the top 5 experiments based on `loss`. We need to pass the uuid values of those runs to the Tensorboard component:
+We were able to query, sort, and limit our runs. Let's start a Tensorboard service for the top three experiments based on `loss`. Pass the UUID values of those runs to the Tensorboard component:
 
 ```bash
-polyaxon run --hub [-p PROJECT_NAME] tensorboard:multi-run -P uuids=UUID1,UUID2,UUID3,UUID4,UUID5
+polyaxon run --hub [-p PROJECT_NAME] tensorboard:multi-run -P uuids=UUID1,UUID2,UUID3
 ```
 
 You will notice that this command is almost the same as the previous command for starting a single run Tensorboard, the only difference is that we are using a different `tag` for the `tensorboard` component.
@@ -59,7 +59,7 @@ When one or multiple experiments are still running the previous command is not v
 If you deployed Polyaxon with S3/GCS/Volume artifacts store, you can also point the Tensorboard directly to the artifacts store path instead of the Polyaxon's context.
 
 ```bash
-polyaxon run --hub tensorboard:multi-run-storepath -P uuids=UUID1,UUID2,UUID3,UUID4,UUID5
+polyaxon run --hub tensorboard:multi-run-storepath -P uuids=UUID1,UUID2,UUID3
 ```
 
 > **Note**: This component version will not work with Azure or other artifacts store backend, because Tensorboard does not load the outputs natively from those services.

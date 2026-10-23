@@ -13,12 +13,14 @@ Tensorboard is a tool that is used by data scientists to visualize and debug dee
 
 ## Single run
 
+This TensorBoard service loads only the tuned classifier run. Its scalar charts and weight histograms show data from that single run.
+
 ![run-dashboards-tensorboard](/images/dashboard/runs/dashboards-tensorboard.png)
 
 ![run-dashboards-tensorboard-histo](/images/dashboard/runs/dashboards-tensorboard-histo.png)
 
 ## Comparing runs
 
-![run-dashboards-tensorboard](/images/dashboard/comparison/tensorboard.png)
+A separate TensorBoard service loads three runs: baseline, compact, and tuned. Select all three to compare their curves, or expand a chart for a closer view.
 
-![comparison-tensorboard-compare](/images/dashboard/comparison/tensorboard-compare.png)
+![comparison-tensorboard-compare](/images/dashboard/comparison/tensorboard.png)

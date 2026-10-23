@@ -16,7 +16,7 @@ Every agent (compute cluster) comes with a default queue.
 
 ## Create queues
 
-If you have admin access you can create new queues
+Open an agent under **Infra > Agents**, select its **Queues** tab, and choose **New Queue**. Administrators can set the name, description, tags, priority, and concurrency.
 
 ![queue-create](/images/dashboard/queues/create.png)
 
@@ -40,7 +40,7 @@ You can update or delete a queue.
 
 ## Queues viewer
 
-Users without admin or owner rights can view the table of available queues in your organization.
+Open **Infra > Queues** to view available queues across the organization, including their agent, user, priority, and concurrency.
 
 ![queue-viewer](/images/dashboard/queues/viewer.png)
 
@@ -55,13 +55,13 @@ They can also view details on how to use them in their workload.
 
 Managers and Admins of Polyaxon organizations and projects can set a default queue that gets applied to all runs under the organization or the project.
 
-Setting the organization's default queue:
+Setting the organization's default queue under **Settings > Defaults**:
 
-![default-org-preset](/images/dashboard/queues/default-org-queue.png)
+![Default queue in acme organization settings](/images/dashboard/queues/default-org-queue.png)
 
-Setting a project's default queue:
+Setting a project's default queue under **Settings > Defaults**:
 
-![default-project-preset](/images/dashboard/queues/default-project-queue.png) 
+![Default queue in acme/demo project settings](/images/dashboard/queues/default-project-queue.png)
 
 Restricting queues accessible by a project:
 

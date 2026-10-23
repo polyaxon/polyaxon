@@ -14,7 +14,9 @@ A `Model` is a project that manages several versions of a model asset created in
 
 You can version your models in each project or create a project to manage models from multiple projects using the CLI, API, or the UI.
 
-![model-create](/images/dashboard/registry/model-create.png)
+In **acme > Add > New project**, turn on **Enable versioning** and select **model**. For a project dedicated to model versions, turn off **Enable runtimes** and leave the other version types unchecked.
+
+![Create a project with only model versioning enabled](/images/dashboard/registry/model-create.png)
 
 Alternatively you can create a project using the CLI:
 
@@ -22,9 +24,9 @@ Alternatively you can create a project using the CLI:
 polyaxon project create --name OWNER_NAME/MODEL_NAME --description ... --tags tag1,tag2,...
 ```
 
-And then configure the project features using the UI
+For an existing project, open **Settings > Features**, keep **Enable features** on, and select **model**. Turn off **Enable runtimes** if the project only stores versions, then click **Save**. The dedicated `acme/image-classifier` registry uses this configuration.
 
-![model-features](/images/dashboard/registry/model-features.png)
+![Model-only registry features with runtimes disabled](/images/dashboard/registry/model-features.png)
 
 ## Model overview
 
@@ -38,7 +40,9 @@ polyaxon project get -p OWNER_NAME/MODEL_NAME
 
 ### UI
 
-![model-overview](/images/dashboard/registry/model-overview.png)
+This example uses `acme/image-classifier`, which stores trained model releases with runtimes disabled.
+
+![Image-classifier registry overview with four trained releases](/images/dashboard/registry/model-overview.png)
 
 ## Model versions
 

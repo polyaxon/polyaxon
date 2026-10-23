@@ -11,7 +11,7 @@ Every organization comes with a default agent.
 
 ## Create agents
 
-If you have access you can create new agents
+Open **Infra > Agents** and select **New Agent**. Enter a name and, optionally, a hostname, description, and tags.
 
 ![agent-create](/images/dashboard/agents/create.png)
 
@@ -19,28 +19,32 @@ Once you create an agent, you can proceed to deploy it, please check the [agent 
 
 ## Manage agents
 
-You can list, review, and manage all your agents
+The agent table shows status, user, version, and timestamps. Select an agent to review its configuration.
 
 ![agent-manage](/images/dashboard/agents/manage.png)
 
 ## Agent settings
 
-You can update or delete an agent
+Open an agent's **Settings** tab to update its metadata, restart its services, or delete it.
 
 ![agent-settings](/images/dashboard/agents/settings.png)
 
 ## Agent deployment
 
-You can deploy an agent or refresh/regenerate its token using the configure tab
+Open the agent's **Deploy** tab to view deployment configuration and manage its tokens. Deployment configuration is hidden until you select **Show**; the screenshot leaves it hidden.
 
 ![agent-deployment](/images/dashboard/agents/deployment.png)
 
 ## Agent connections
 
-You can view all connections managed by each agent 
+Open **Infra > Agents**, select an agent, and open its **Connections** tab to view the connections it can use.
 
-![agent-connections-viewing](/images/dashboard/agents/connections-viewing.png)
+![Agent Connections tab with eight connection types and the organization sidebar](/images/dashboard/agents/connections-viewing.png)
 
-And you can, optionally, managed the connections from the UI instead of the deployment config file
+To manage configuration through the UI, open **Settings**, select **Enable UI management**, and confirm the change. The screenshot below shows the control before enabling it.
 
 ![agent-connections-management](/images/dashboard/agents/connections-management.png)
+
+Return to **Connections**. The green banner confirms that connections are managed and automatically synced from the UI. Select **Edit** to update the agent’s connections.
+
+![UI-managed agent connections with the green confirmation banner, Edit button, and full sidebar](/images/dashboard/agents/connections-ui-managed.png)

@@ -7,12 +7,11 @@ description: "Polyaxon runs dashboard for Machine learning experiment tracking a
 
 Polyaxon comes with a powerful and uniform logging experience for all runs.
 
-The logging features collects and archives logs for all your containers inside a run, and even from distributed runs, experiments, jobs, notebooks, tensorboards, …
-all runs have a similar logging experience, which helps users detect issues related to why a tensorboard is not loading or a notebook is not accessible.
+Polyaxon collects and archives logs from containers in runs, including distributed jobs, experiments, notebooks, and TensorBoard services. A consistent logging view helps diagnose failed jobs and services that are not accessible.
 
 ## Logs in CLI
 
-You can stream logs from the CLI or from the UI, which will reduce the need to reach out for Kubernetes to check per container issues
+You can stream logs from the CLI or the UI to investigate container issues without querying Kubernetes directly.
 
 ![run-logs-cli](/images/dashboard/runs/logs-cli.png)
 
@@ -22,13 +21,10 @@ You can stream logs in the dashboard as well with support for progress bars, ANS
 
 ![run-logs-dark](/images/dashboard/runs/logs-dark.png)
 
-It’s possible to hide/show information about nodes, pods, and containers,
-this is especially important for distributed runs, or restarts.
+Use the search field to find messages, with optional regular expression and case-sensitive matching. **Containers**, **Pods**, and **Nodes** filter the source of the messages. The example below uses generated documentation logs from `acme/demo`.
 
 ![run-logs-filter](/images/dashboard/runs/logs-filter.png)
 
-And you can sort logs by latest timestamp first and keep streaming new logs to avoid scrolling to the bottom.
-
-![run-logs-sort](/images/dashboard/runs/logs-sort.png)
+Use **Columns** to choose the source fields to display and **Time Format** to change timestamp formatting. The log panel also provides controls to jump to the beginning or end and download the logs.
 
 > It’s also possible to disable logs storage for a specific experiment or based on a specific tag, e.g. users might want to avoid storing logs for debug jobs.

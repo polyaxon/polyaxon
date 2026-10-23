@@ -7,7 +7,9 @@ description: "Polyaxon comes with a powerful and customizable visualization syst
 
 Polyaxon dashboard provides several visualizations and charts based on events logged by the [tracking API](/docs/tracking/logging/overview/).
 
-## Single runs:
+## Single runs [#single-runs]
+
+Open a run's **Dashboards** page to view its logged events. Use **Add Widget** in a section to choose a visualization.
 
 ![run-dashboards](/images/dashboard/runs/dashboards.png)
 
@@ -27,13 +29,15 @@ Polyaxon dashboard provides several visualizations and charts based on events lo
  * Histogram charts
  * Curve charts: PR curves, AUC/ROC curves, custom curves (`<x, y>` arrays)
 
+Log PR curves with `tracking.log_pr_curve` and ROC curves with `tracking.log_roc_auc_curve`. The native widgets display their average precision and AUC annotations in the legend.
+
 ![run-dashboards-pr-curve](/images/dashboard/runs/dashboard-pr-curve.png)
 
 ![run-dashboards-roc-curve](/images/dashboard/runs/dashboards-roc-curve.png)
 
-## Multi-run
+## Multi-run [#multi-run]
 
-For multi-run you can compare metrics and curves from several runs, as well as charts for hyperparameter values and metrics:
+In a project's run list, enable **Events** from **Layout** to compare metrics and curves across the filtered runs. Use **Add Widget** to choose a chart:
 
 ![runs-comparison-new](/images/dashboard/comparison/charts-new.png)
 
@@ -43,9 +47,11 @@ For multi-run you can compare metrics and curves from several runs, as well as c
 
 ![runs-comparison-lines](/images/dashboard/comparison/charts-lines.png)
 
+![Validation accuracy, learning rate, and validation loss histories across four runs](/images/dashboard/comparison/charts-multi.png)
+
  * Bar charts
 
-![runs-comparison-bars](/images/dashboard/comparison/charts-bars.png)
+![Bar charts comparing final validation loss and accuracy across four runs](/images/dashboard/comparison/charts-bars.png)
 
  * Stats charts
 
@@ -64,7 +70,7 @@ For multi-run you can compare metrics and curves from several runs, as well as c
  * Parallel coordinates
  * Contour plots
 
-![runs-comparison-multi](/images/dashboard/comparison/charts-multi.png)
+![runs-comparison-multi](/images/dashboard/comparison/dashboards-parallel-coords.png)
 
 ## Media rendering
 

@@ -4,14 +4,16 @@ description: "Polyaxon runs dashboard for Machine learning experiment tracking a
 ---
 
 Every time you run a component whether it contains a machine learning model training, a tensorboard, a hyperparameter optimization, or a workflow,
-Polyaxon will log that execution as a run and connection any information related to it, e.g. params, artifacts, upstream/downstream runs, ...
+Polyaxon logs that execution as a run and connects related information, such as parameters, artifacts, and upstream or downstream runs.
 
 ## Overview
 
-All runs in Polyaxon has some similar characteristics, based on the [component/operation specification](/docs/references/polyaxonfile/specification/overview/):
+All runs in Polyaxon share some characteristics, based on the [component/operation specification](/docs/references/polyaxonfile/specification/overview/):
    * name, description, and tags
    * inputs/outputs
 
-![run-overview](/images/dashboard/runs/overview1.png)
+The synthetic `acme/demo` example shows run metadata, its promoted model versions, and the **Lineage > Params** tables.
+
+![Run metadata and promoted model versions](/images/dashboard/runs/overview1.png)
 
 ![run-overview](/images/dashboard/runs/overview2.png)

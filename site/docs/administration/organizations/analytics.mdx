@@ -1,6 +1,6 @@
 ---
 title: "Analytics"
-description: "Polyaxon provides a page to drive analytics and insights about your operations."
+description: "Monitor run counts, outcomes, and duration trends across your organization."
 ---
 
 <blockquote className="commercial">This is part of our commercial offering.</blockquote>
@@ -9,21 +9,31 @@ Polyaxon provides tools to drive analytics and insights about your operations, a
 
 > **Note**: advanced searches, drill down capabilities, and large intervals are part of Polyaxon EE.
 
-## Overall counts and stats
+## Overall counts and stats [#overall-counts-and-stats]
 
-The overview tab lets you compare at a glance the statistics of your operations.
+Open the organization's **Info** page to see **Stats** and **Trends**. Stats summarizes runs, compute time, projects, versions, and archived entities. The trend tabs compare these values with the selected comparison period.
 
-![overview-stats](/images/dashboard/analytics-activities/overview-stats.png)
+Select **Statuses** to compare run outcomes with the selected period. Each card shows the current count and its trend; use **Compare to** to change the comparison period.
+
+![Acme organization statistics and status trends with the full navigation sidebar](/images/dashboard/analytics-activities/organization-status-trends.png)
+
+Select **Runs** to compare total, active, archived, and deleted run counts.
+
+![Organization run counts and trends](/images/dashboard/analytics-activities/overview-stats.png)
+
+You can also explore **Compute time**, **Wait time**, **Versions**, and **Resources requested (avg)** to compare execution time, queue delays, version counts, and average resource requests across your organization.
 
 
-## Duration and queue over time
+## Duration series [#duration-series]
 
-The series tab provides the duration and wait time history, which should give you an idea and additional information on how to maximize usage of your resources or managing your queues' concurrency.
+Open **Runs → All**, then use **Layout** to enable **Analytics**. Choose **View: Series** and **Group by: Duration** to plot duration statistics over time. **Trunc by** selects the timestamp to group, and **Frequency** controls the interval.
+
+The screenshots use synthetic documentation history from `acme/demo`, selected with a tag filter. Use **Projects** to select a project, or apply other run filters to focus the charts.
 
 ![series](/images/dashboard/analytics-activities/series.png)
 
-## Histograms
+## Run histograms [#run-histograms]
 
-The histograms tab provides a timeline of runs' creation grouped by minutes, hours, or days.
+In the same **Analytics** section, choose **View: Histograms** to see run counts grouped by status. Use the date filter to select the reporting period and **Frequency** to change the bucket size.
 
 ![histograms](/images/dashboard/analytics-activities/histograms.png)
