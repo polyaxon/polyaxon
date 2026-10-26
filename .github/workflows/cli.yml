@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9, '3.10', '3.11', '3.12', '3.13', '3.14']
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
 
     steps:
     - uses: actions/checkout@v6
@@ -40,8 +40,43 @@ jobs:
     - name: Install dev libraries
       run: |
         cd cli
-        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[dev,k8s_async,fsspec,init,sidecar]"
+        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[dev,k8s,fsspec,init,sidecar]"
     - name: Test with pytest
       run: |
         cd cli/cli
         pytest -vv
+  tests-no-k8s:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, '3.10', '3.11', '3.12', '3.13', '3.14']
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: true
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Upgrade pip
+      run: |
+        which python
+        python -m pip install --upgrade pip
+    - name: Install dependencies
+      run: pip install -r cli/cli/requirements/test.txt
+    - name: traceml
+      run: pip install -e traceml/traceml
+    - name: hypertune
+      run: pip install -e hypertune/hypertune
+    - name: Install dev libraries without the k8s extra
+      run: |
+        cd cli
+        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[dev,fsspec,init,sidecar]"
+    - name: Check the Kubernetes clients are not installed
+      run: |
+        if pip show kubernetes; then exit 1; fi
+    - name: Test with pytest
+      run: |
+        cd cli/cli
+        pytest -vv tests/test_k8s/test_k8s_client_optional.py tests/test_cli/test_startup.py tests/test_client/test_ws_client_transport.py tests/test_polyaxonfile
