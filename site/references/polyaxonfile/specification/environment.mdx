@@ -26,7 +26,7 @@ that will be injected into the pod running on Kubernetes, e.g. the node selector
   - __node_name__: str, optional
   - __service_account_name__: str, optional
   - __host_aliases__: V1HostAlias, optional
-  - __security_context__: V1SecurityContext, optional
+  - __security_context__: V1PodSecurityContext, optional
   - __image_pull_secrets__: List[str], optional
   - __host_network__: bool, optional
   - __host_pid__: bool, optional
@@ -83,7 +83,7 @@ environment = V1Environment(
     node_name="name",
     service_account_name="name",
     host_aliases=k8s_schemas.V1HostAlias(...),
-    security_context=k8s_schemas.V1SecurityContext(...),
+    security_context=k8s_schemas.V1PodSecurityContext(...),
     image_pull_secrets=["secret1", "secret2", ...],
     host_network=False,
     host_pid=False,
@@ -244,12 +244,18 @@ From [Kubernetes docs](https://kubernetes.io/docs/tasks/configure-pod-container/
 
 > A security context defines privilege and access control settings for a Pod or Container.
 
+This is the Pod security context, it applies to all containers of the Pod.
+Container-only settings, such as `privileged`, `capabilities`,
+`allowPrivilegeEscalation` and `readOnlyRootFilesystem`,
+go in the container's `securityContext`.
+
 ```yaml
 environment:
   securityContext:
     runAsUser: 1000
     runAsGroup: 3000
     runAsNonRoot: true
+    fsGroup: 2000
 ```
 
 ### imagePullSecrets

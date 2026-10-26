@@ -176,8 +176,8 @@ polyaxon run -f polyaxonfile.yaml --no-strict-params -P message=hello
 ```
 
 Leaving both flags out preserves the specification's policy. A strict component
-remains strict with `--no-strict-params`.
-The flags apply after every `-f` file and override a `strictParams` set by preset files.
+remains strict with `--no-strict-params`. The flags apply after every `-f` file
+and override a `strictParams` set by preset files.
 
 Python callers can pass `strict_params=True`, `False`, or `None` to
 `check_polyaxonfile` with the same behavior. CLI `-P` values start as strings;

@@ -252,9 +252,10 @@ preserves the operation's policy during patching. If neither object enables
 strict mode, undeclared params become context values by default.
 
 `polyaxon run` and `polyaxon check` accept `--strict-params` and
-`--no-strict-params` to set this operation field. The flags override `-f` preset files.
-The compiled operation stores the effective policy, which is preserved for scheduled runs and matrix children.
-Independently defined DAG operations use their own policies.
+`--no-strict-params` to set this operation field.
+The flags override `-f` preset files. The compiled operation stores the effective
+policy, which is preserved for scheduled runs and matrix children. Independently
+defined DAG operations use their own policies.
 
 See [params](/docs/references/polyaxonfile/specification/params/) for examples
 and version compatibility.
