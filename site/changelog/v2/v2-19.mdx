@@ -1,0 +1,26 @@
+---
+title: "Release notes for v2.19"
+description: "Polyaxon release notes, migrations, and deprecation notes for v2.19.x."
+wip: true
+author: Polyaxon
+---
+
+## V2.19.0
+
+### CLI
+
+ * **New**: Add `polyaxon sbx` as an alias for the `polyaxon sandbox` command group.
+ * **Enhancement**: `pip install polyaxon` no longer installs the Kubernetes Python clients.
+ * **Enhancement**: Support the Kubernetes Python client 37. Polyaxonfile schemas no longer use the client's models, so the `kubernetes<37` pin is removed. Python specs accept `V1Container` and other models built with `kubernetes` 36 or 37.
+ * **Fix**: Apply operation flags such as `-P`, `--queue` and `--presets` after `-f` files and inline options in `polyaxon run` and `polyaxon check`. An overlay file using the default `post_merge` strategy overrode values passed on the command line.
+ * **Fix**: `polyaxon ops shell` and `polyaxon ops exec` through a proxy failed with `'Configuration' object has no attribute 'no_proxy'`.
+ * **Fix**: Ping the `polyaxon ops shell` and `polyaxon ops exec` websocket every 5 seconds instead of on every read.
+
+### Core
+
+ * **Enhancement**: The agent, sidecar, events-handlers and streams use the official `kubernetes.aio` client instead of the `kubernetes_asyncio` fork.
+
+### UI
+
+ * **Enhancement**: Load the Bokeh and Vega scripts only when a page renders a Bokeh or Vega/Altair chart, instead of on every page load.
+ * **Enhancement**: Remove unused legacy charts and charting libraries from the UI bundle to reduces the bundle size.
