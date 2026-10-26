@@ -15,6 +15,8 @@ author: Polyaxon
  * **Fix**: Apply operation flags such as `-P`, `--queue` and `--presets` after `-f` files and inline options in `polyaxon run` and `polyaxon check`. An overlay file using the default `post_merge` strategy overrode values passed on the command line.
  * **Fix**: `polyaxon ops shell` and `polyaxon ops exec` through a proxy failed with `'Configuration' object has no attribute 'no_proxy'`.
  * **Fix**: Ping the `polyaxon ops shell` and `polyaxon ops exec` websocket every 5 seconds instead of on every read.
+ * **Fix**: Pod failure policy rules built with the Kubernetes Python client were not applied.
+ * **Fix**: `environment.securityContext` is now validated as a Pod security context, so `fsGroup`, `supplementalGroups` and `sysctls` work. Container-only fields such as `privileged` and `capabilities` had no effect there and are now rejected; set them in `container.securityContext`. Python specs use `V1PodSecurityContext` instead of `V1SecurityContext`.
 
 ### Core
 
