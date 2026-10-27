@@ -40,7 +40,7 @@ jobs:
     - name: Install dev libraries
       run: |
         cd cli
-        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[dev,k8s,fsspec,init,sidecar]"
+        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[k8s,fsspec,init,sidecar]"
     - name: Test with pytest
       run: |
         cd cli/cli
@@ -72,7 +72,7 @@ jobs:
     - name: Install dev libraries without the k8s extra
       run: |
         cd cli
-        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[dev,fsspec,init,sidecar]"
+        export USE_LOCAL_PACKAGES="true" && pip install --upgrade --editable "cli[fsspec,init,sidecar]"
     - name: Check the Kubernetes clients are not installed
       run: |
         if pip show kubernetes; then exit 1; fi
