@@ -23,8 +23,16 @@ author: Polyaxon
 ### Core
 
  * **Enhancement**: The agent, sidecar, events-handlers and streams use the official `kubernetes.aio` client instead of the `kubernetes_asyncio` fork.
+ * **Fix**: Restrict run exec and shell sessions to the run's own pods and containers.
 
 ### UI
 
  * **Enhancement**: Load the Bokeh and Vega scripts only when a page renders a Bokeh or Vega/Altair chart, instead of on every page load.
  * **Enhancement**: Remove unused legacy charts and charting libraries from the UI bundle to reduces the bundle size.
+ * **Fix**: Render HTML and notebook artifact previews in a sandboxed iframe.
+
+### Commercial
+
+ * **Enhancement**: Improve public projects strict restrictions; prevent read-only or anonymous users access to several run routes to improve security.
+ * **Enhancement**: Improve and harden SSO auth security.
+ * **Enhancement**: Bind exec, sandbox and services access to the run's namespace.
