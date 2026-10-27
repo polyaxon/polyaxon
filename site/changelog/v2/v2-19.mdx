@@ -17,6 +17,8 @@ author: Polyaxon
  * **Fix**: Ping the `polyaxon ops shell` and `polyaxon ops exec` websocket every 5 seconds instead of on every read.
  * **Fix**: Pod failure policy rules built with the Kubernetes Python client were not applied.
  * **Fix**: `environment.securityContext` is now validated as a Pod security context, so `fsGroup`, `supplementalGroups` and `sysctls` work. Container-only fields such as `privileged` and `capabilities` had no effect there and are now rejected; set them in `container.securityContext`. Python specs use `V1PodSecurityContext` instead of `V1SecurityContext`.
+ * **Fix**: Render Polyaxonfile templates in a Jinja sandbox and require Jinja 3.1.6 or later. Templates can no longer read internal attributes such as `__class__`, call `.format()` (use the `format` or `map_format` filters), mutate lists or dicts, or use `cycler`, `joiner`, `lipsum` and `loop.cycle()`. Allowed method calls: string `lower`, `upper`, `strip`, `lstrip`, `rstrip`, `split`, `rsplit`, `replace`, `startswith`, `endswith`, `join`; dict `get`, `items`, `keys`, `values`; date `isoformat`, `strftime`.
+ * **Fix**: Limit integer powers and products to 4,096 bits, sequence repetition to 100,000 items, and nested template rendering to 8 passes. Param values that are themselves templates, such as `"{{ globals.artifacts_path }}/data"`, still resolve.
 
 ### Core
 
