@@ -30,9 +30,8 @@ container:
   image: rocm/pytorch:rocm7.14.1_ubuntu24.04_py3.12_pytorch_release_2.12.0
   command: ["python", "-c"]
   args: ["import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name())"]
-  resources:
-    limits:
-      amd.com/gpu: "1"
+resources:
+  amd.com/gpu: "..1"
 ```
 
 </Tab>

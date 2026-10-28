@@ -34,11 +34,8 @@ container:
   image: us-docker.pkg.dev/cloud-tpu-images/jax-ai-image/tpu:jax0.7.2-rev1
   command: ["python", "-c"]
   args: ["import jax; print(jax.devices())"]
-  resources:
-    requests:
-      google.com/tpu: "4"
-    limits:
-      google.com/tpu: "4"
+resources:
+  google.com/tpu: "4"
 ```
 
 </Tab>
