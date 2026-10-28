@@ -23,6 +23,63 @@ and treat the resulting endpoint as an external OpenAI-compatible service.
 The following component runs the official vLLM OpenAI server image on port `8000`.
 It exposes the model name and the main serving knobs as Polyaxon inputs.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: vllm-openai
+tags: ["vllm", "llm-serving", "openai-compatible"]
+inputs:
+- name: model
+  type: str
+  isOptional: true
+  value: NousResearch/Meta-Llama-3-8B-Instruct
+- name: tensor_parallel_size
+  type: int
+  isOptional: true
+  value: 1
+- name: max_model_len
+  type: int
+  isOptional: true
+  value: 8192
+- name: dtype
+  type: str
+  isOptional: true
+  value: auto
+- name: gpu_memory_utilization
+  type: float
+  isOptional: true
+  value: 0.9
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+container:
+  image: vllm/vllm-openai:latest
+  command: ["vllm", "serve"]
+  args:
+  - "{{ model }}"
+  - "--host"
+  - "0.0.0.0"
+  - "--port"
+  - "8000"
+  - "--tensor-parallel-size"
+  - "{{ tensor_parallel_size }}"
+  - "--max-model-len"
+  - "{{ max_model_len }}"
+  - "--dtype"
+  - "{{ dtype }}"
+  - "--gpu-memory-utilization"
+  - "{{ gpu_memory_utilization }}"
+resources:
+  gpu: "..1"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -74,6 +131,10 @@ run:
       limits:
         nvidia.com/gpu: "1"
 ```
+
+</Tab>
+
+</LangTabs>
 
 For private Hugging Face models, inject `HF_TOKEN` through a Polyaxon connection or
 Kubernetes secret. Do not hard-code tokens in the component.

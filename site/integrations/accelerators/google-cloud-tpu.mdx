@@ -20,6 +20,31 @@ See the [TPUs in GKE](https://cloud.google.com/kubernetes-engine/docs/concepts/t
 
 Select the TPU accelerator and topology exposed by GKE, then request all chips available to the pod on that slice node.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: tpu-readiness
+environment:
+  nodeSelector:
+    cloud.google.com/gke-tpu-accelerator: tpu-v5-lite-podslice
+    cloud.google.com/gke-tpu-topology: 2x2
+container:
+  image: us-docker.pkg.dev/cloud-tpu-images/jax-ai-image/tpu:jax0.7.2-rev1
+  command: ["python", "-c"]
+  args: ["import jax; print(jax.devices())"]
+  resources:
+    requests:
+      google.com/tpu: "4"
+    limits:
+      google.com/tpu: "4"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -40,6 +65,10 @@ run:
       limits:
         google.com/tpu: "4"
 ```
+
+</Tab>
+
+</LangTabs>
 
 TPU labels and valid chip counts depend on GKE version, TPU generation, machine type, and topology. Replace this example with the exact current values for your pool.
 

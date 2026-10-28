@@ -62,6 +62,51 @@ tracking.log_altair_chart(name='altair_chart', figure=chart)
 
 ### Example as an executable component
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: altair-chart
+init:
+  - file:
+      filename: script.py
+      content: |
+        import altair as alt
+        from vega_datasets import data
+
+        from polyaxon import tracking
+
+        tracking.init()
+
+        source = data.cars()
+        brush = alt.selection(type='interval')
+        points = alt.Chart(source).mark_point().encode(
+            x='Horsepower:Q',
+            y='Miles_per_Gallon:Q',
+            color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
+        ).add_selection(
+            brush
+        )
+        bars = alt.Chart(source).mark_bar().encode(
+            y='Origin:N',
+            color='Origin:N',
+            x='count(Origin):Q'
+        ).transform_filter(
+            brush
+        )
+        chart = points & bars
+        tracking.log_altair_chart(name='altair_chart', figure=chart)
+container:
+  image: 'polyaxon/polyaxon-examples:ml'
+  workingDir: '{{ globals.artifacts_path }}'
+  command: [python3, -u, script.py]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -102,6 +147,10 @@ run:
     workingDir: '{{ globals.artifacts_path }}'
     command: [python3, -u, script.py]
 ```
+
+</Tab>
+
+</LangTabs>
 
 ### Result
 

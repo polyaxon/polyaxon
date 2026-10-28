@@ -22,6 +22,49 @@ Use this integration when you want to:
 
 The following component keeps the SGLang H200/FP8/low-latency flags intact and exposes the server on port `30000`.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: sglang-glm-5-2
+tags: ["sglang", "glm", "llm-serving"]
+run:
+  kind: service
+  ports: [30000]
+  rewritePath: true
+container:
+  image: lmsysorg/sglang:latest
+  command: ["python3", "-m", "sglang.launch_server"]
+  args:
+    - "--model-path"
+    - "zai-org/GLM-5.2-FP8"
+    - "--tp"
+    - "8"
+    - "--speculative-algorithm"
+    - "EAGLE"
+    - "--speculative-num-steps"
+    - "5"
+    - "--speculative-eagle-topk"
+    - "1"
+    - "--speculative-num-draft-tokens"
+    - "6"
+    - "--mem-fraction-static"
+    - "0.8"
+    - "--cuda-graph-max-bs"
+    - "32"
+    - "--host"
+    - "0.0.0.0"
+    - "--port"
+    - "30000"
+resources:
+  gpu: "..8"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -60,6 +103,10 @@ run:
         nvidia.com/gpu: "8"
 ```
 
+</Tab>
+
+</LangTabs>
+
 If your cluster has dedicated H200 nodes, add an `environment.nodeSelector` or preset matching your H200 pool. GPU SKU labels are cluster-specific, so use the labels configured by your Kubernetes provider or platform team.
 
 For production, use a model cache backed by local NVMe or a persistent volume. Repeatedly pulling a large checkpoint from shared storage or over the network can dominate service startup time.
@@ -69,11 +116,11 @@ For production, use a model cache backed by local NVMe or a persistent volume. R
 SGLang exposes optional parser flags for GLM reasoning and tool calls:
 
 ```yaml
-    args:
-      - "--reasoning-parser"
-      - "glm45"
-      - "--tool-call-parser"
-      - "glm47"
+  args:
+    - "--reasoning-parser"
+    - "glm45"
+    - "--tool-call-parser"
+    - "glm47"
 ```
 
 Add those flags to the component if your clients need structured reasoning or tool call fields. Otherwise, keep the base recipe unchanged.

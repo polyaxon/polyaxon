@@ -20,6 +20,24 @@ See the [NVIDIA Dynamo model deployment](https://docs.nvidia.com/dynamo/kubernet
 
 Configure a data connection named `dynamo-manifests` that mounts your reviewed DynamoGraphDeployment manifest at `/manifests/dynamo-graph.yaml`. Save the component below as `dynamo-release.yaml`. The release job applies the manifest using a namespace-scoped service account.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: release-dynamo-graph
+connections: [dynamo-manifests]
+environment:
+  serviceAccountName: dynamo-release
+container:
+  image: bitnami/kubectl:latest
+  command: ["kubectl", "apply", "-f", "/manifests/dynamo-graph.yaml"]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -33,6 +51,10 @@ run:
     image: bitnami/kubectl:latest
     command: ["kubectl", "apply", "-f", "/manifests/dynamo-graph.yaml"]
 ```
+
+</Tab>
+
+</LangTabs>
 
 The release operation does not make Polyaxon the Dynamo controller. Pin the kubectl image digest, and keep cleanup and rollback as explicit release or GitOps actions with the same scoped RBAC. See [connections](/docs/setup/connections/overview) to configure the manifest mount. The kubectl image alone does not contain your manifest.
 

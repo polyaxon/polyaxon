@@ -32,6 +32,23 @@ This example uses the [published NVIDIA CUDA image](https://hub.docker.com/r/nvi
 
 Save the following component as `gpu-readiness.yaml`:
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: gpu-readiness
+container:
+  image: nvidia/cuda:12.8.1-base-ubuntu22.04
+  command: ["nvidia-smi"]
+resources:
+  gpu: "..1"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -45,6 +62,10 @@ run:
       limits:
         nvidia.com/gpu: "1"
 ```
+
+</Tab>
+
+</LangTabs>
 
 Submit it to your configured queue, replacing `agent-name/queue-name` with the queue shown in your Polyaxon organization:
 

@@ -20,6 +20,31 @@ See the [NVIDIA NIM documentation](https://docs.nvidia.com/nim/) for the upstrea
 
 Resolve registry and runtime credentials through Polyaxon connections and request the exact GPU count required by the selected NIM profile.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: nvidia-nim
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+connections: [ngc-registry, ngc-api-key, nim-cache]
+container:
+  image: nvcr.io/nim/meta/llama-3.1-8b-instruct:2.0.12
+env:
+  NIM_CACHE_PATH: /opt/nim/.cache
+resources:
+  cpu: "8"
+  memory: 32Gi
+  gpu: "..1"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -41,6 +66,10 @@ run:
       limits:
         nvidia.com/gpu: "1"
 ```
+
+</Tab>
+
+</LangTabs>
 
 This is NVIDIA's documented model-specific NIM image. Confirm the selected tag and hardware profile in NVIDIA's support matrix before deployment.
 

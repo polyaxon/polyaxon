@@ -33,10 +33,7 @@ This is an administrator change. Polyaxon cannot submit the DaskCluster resource
 Save this as dask.yaml. The scheduler and workers use the same image so their Dask and distributed protocol versions stay compatible.
 
 ```yaml
-version: 1.1
-kind: component
 name: dask-cpu-cluster
-
 run:
   kind: daskcluster
   worker:

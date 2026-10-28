@@ -20,6 +20,37 @@ See the [TRL CLI documentation](https://huggingface.co/docs/trl/main/clis) for t
 
 Use TRL's published image and CLI, and expose the model and dataset as component inputs. Save the component as trl.yaml.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: trl-sft
+inputs:
+- name: model
+  type: str
+  value: Qwen/Qwen2.5-0.5B
+- name: dataset
+  type: str
+  value: trl-lib/Capybara
+container:
+  image: huggingface/trl:1.9.2
+  command: ["trl", "sft"]
+  args:
+  - "--model_name_or_path"
+  - "{{ model }}"
+  - "--dataset_name"
+  - "{{ dataset }}"
+  - "--output_dir"
+  - "{{ globals.run_outputs_path }}/qwen2.5-0.5b-sft"
+resources:
+  gpu: "..1"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -47,6 +78,10 @@ run:
       limits:
         nvidia.com/gpu: "1"
 ```
+
+</Tab>
+
+</LangTabs>
 
 This uses Hugging Face's published TRL image and the public model and dataset from its CLI example. Pin the image digest and model and dataset revisions before production.
 

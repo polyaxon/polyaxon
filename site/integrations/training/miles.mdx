@@ -29,6 +29,38 @@ Keep both model formats. The rollout engine and trainer use different checkpoint
 
 Save this as `miles.yaml`. It uses the published `radixark/miles:latest` image and the upstream Qwen launcher. Pin an image digest containing the documented launcher before using this configuration for repeatable runs; do not update the repository or dependencies at startup.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: miles-qwen3-post-training
+plugins:
+  shm: true
+connections: [miles-data]
+container:
+  image: radixark/miles:latest
+  workingDir: /root/miles
+  command: ["python", "scripts/run_qwen3_dense.py"]
+  args:
+  - "--model-name"
+  - "Qwen3-4B"
+  - "--num-gpus-per-node"
+  - "8"
+  - "--model-dir"
+  - "/mnt/miles/models"
+  - "--data-dir"
+  - "/mnt/miles/datasets"
+  - "--output-dir"
+  - "/mnt/miles/runs/{{ globals.uuid }}"
+resources:
+  gpu: "..8"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -57,6 +89,10 @@ run:
       limits:
         nvidia.com/gpu: "8"
 ```
+
+</Tab>
+
+</LangTabs>
 
 Apply CPU and memory requests appropriate to the selected GPU node through the component or a [preset](/docs/scheduling/scheduling-presets/overview). The [shared-memory plugin](/docs/references/polyaxonfile/specification/plugins) mounts `/dev/shm`; shared memory still counts toward the pod's memory usage, so include Ray and NCCL requirements in that budget.
 

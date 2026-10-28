@@ -20,6 +20,25 @@ See the [AMD Kubernetes device plugin](https://instinct.docs.amd.com/projects/k8
 
 Target the AMD pool and request the resource name published by the official Kubernetes device plugin.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: amd-gpu-readiness
+container:
+  image: rocm/pytorch:rocm7.14.1_ubuntu24.04_py3.12_pytorch_release_2.12.0
+  command: ["python", "-c"]
+  args: ["import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name())"]
+  resources:
+    limits:
+      amd.com/gpu: "1"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -34,6 +53,10 @@ run:
       limits:
         amd.com/gpu: "1"
 ```
+
+</Tab>
+
+</LangTabs>
 
 ROCm exposes accelerators through PyTorch's `torch.cuda` API for compatibility; that name does not mean the workload is using CUDA. Select the hardware through your configured queue and preset; no provider-specific node label is required by this example.
 

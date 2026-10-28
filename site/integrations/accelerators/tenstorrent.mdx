@@ -20,6 +20,21 @@ See the [Tenstorrent software documentation](https://docs.tenstorrent.com/) for 
 
 Keep fast-moving resource-claim and device-mount details outside user components; the component declares the workload and diagnostic command.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: tenstorrent-readiness
+container:
+  image: ghcr.io/tenstorrent/tt-metal/tt-metalium-ubuntu-22.04-release-amd64:latest-rc
+  command: ["tt-smi", "-ls"]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -30,6 +45,10 @@ run:
     image: ghcr.io/tenstorrent/tt-metal/tt-metalium-ubuntu-22.04-release-amd64:latest-rc
     command: ["tt-smi", "-ls"]
 ```
+
+</Tab>
+
+</LangTabs>
 
 Apply a platform-owned preset that injects the device claim or mounts required by your installed Tenstorrent integration. There is no universal Kubernetes resource key to put in this portable component; pin the image digest before production. Select the hardware through your configured queue and preset; no provider-specific node label is required by this example.
 

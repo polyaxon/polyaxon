@@ -33,10 +33,7 @@ This is an administrator change. The integration cannot create Ray workloads unt
 Save this as ray.yaml. The same Ray version is used in the runtime field and both container images, which avoids a common source of protocol mismatches.
 
 ```yaml
-version: 1.1
-kind: component
 name: ray-square-numbers
-
 run:
   kind: raycluster
   rayVersion: "2.58.0"

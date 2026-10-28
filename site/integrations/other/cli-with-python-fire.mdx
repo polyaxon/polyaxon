@@ -30,6 +30,30 @@ if __name__ == '__main__':
 
 ## Polyaxon component
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: fire-cli
+inputs:
+- name: number
+  type: int
+  isOptional: true
+  value: 10
+outputs:
+- name: results
+  type: int
+container:
+  image: polyaxon/polyaxon-examples:clis
+  command: ["python", "cli.py", "double"]
+  args: ["{{ number }}"]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -50,7 +74,35 @@ run:
     args: ["{{ number }}"]
 ```
 
+</Tab>
+
+</LangTabs>
+
 or 
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: fire-cli
+inputs:
+- name: number
+  type: int
+  isOptional: true
+  value: 10
+outputs:
+- name: results
+  type: int
+container:
+  image: polyaxon/polyaxon-examples:clis
+  command: ["python", "cli.py", "double"]
+  args: ["{{ params.number.as_arg }}"]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -72,9 +124,56 @@ run:
     args: ["{{ params.number.as_arg }}"]
 ```
 
+</Tab>
+
+</LangTabs>
+
 ### Example as an executable component
 
 > This inline example is intended to make it easy to execute this component without download or cloning any repo, this not intended as production pattern.
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: fire-cli
+inputs:
+- name: number
+  type: int
+  isOptional: true
+  value: 10
+outputs:
+- name: results
+  type: int
+init:
+  - file:
+      filename: cli.py
+      content: |
+        import fire
+        from polyaxon import tracking
+
+        class Calculator:
+            """A simple calculator class."""
+
+            def double(self, number):
+                results = 2 * number
+                tracking.log_outputs(results=results)
+                return results
+
+        if __name__ == '__main__':
+            tracking.init()
+            fire.Fire(Calculator)
+container:
+  image: polyaxon/polyaxon-examples:clis
+  workingDir: "{{ globals.artifacts_path }}"
+  command: ["python", "cli.py", "double"]
+  args: ["{{ number }}"]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -96,15 +195,15 @@ run:
         content: |
           import fire
           from polyaxon import tracking
-          
+
           class Calculator:
               """A simple calculator class."""
-          
+
               def double(self, number):
                   results = 2 * number
                   tracking.log_outputs(results=results)
                   return results
-          
+
           if __name__ == '__main__':
               tracking.init()
               fire.Fire(Calculator)
@@ -114,6 +213,10 @@ run:
     command: ["python", "cli.py", "double"]
     args: ["{{ number }}"]
 ```
+
+</Tab>
+
+</LangTabs>
 
 ## Scheduling the example
 

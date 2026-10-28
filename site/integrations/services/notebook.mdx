@@ -68,6 +68,25 @@ polyaxon run --hub notebook -f path/to/preset.yaml
 
 You can also provide a full operation manifest to customize the environment section, node selector, connections, initializers, resources requirements, ...
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+hubRef: notebook
+init:
+  - git: ...
+connections: [...]
+environment:
+  ...
+resources:
+  memory: 300Mi
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: operation
@@ -82,7 +101,11 @@ runPatch:
     resources:
       requests:
         memory: 300Mi
-``` 
+```
+
+</Tab>
+
+</LangTabs>
 
 ## Forking and customizing the component
 

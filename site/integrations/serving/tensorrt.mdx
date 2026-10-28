@@ -19,6 +19,57 @@ This integration uses `trtexec` for an ONNX image-classification model. For LLM 
 
 Save this component as `tensorrt.yaml`. It downloads the ResNet-50 v2 ONNX model used in [NVIDIA's engine-build tutorial](https://docs.nvidia.com/deeplearning/tensorrt/latest/getting-started/build-your-first-engine.html), builds an engine, and loads that engine for a benchmark on the same GPU.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: tensorrt-resnet50
+container:
+  image: nvcr.io/nvidia/tensorrt:26.08-py3
+  command: ["bash", "-c"]
+  args:
+  - |
+    set -euo pipefail
+    mkdir -p "{{ globals.run_outputs_path }}"
+    cd "{{ globals.run_outputs_path }}"
+
+    python3 - <<'PY'
+    import hashlib
+    from pathlib import Path
+    from urllib.request import urlretrieve
+
+    url = (
+        "https://github.com/onnx/models/raw/main/validated/"
+        "vision/classification/resnet/model/resnet50-v2-7.onnx"
+    )
+    urlretrieve(url, "resnet50.onnx")
+    digest = hashlib.sha256(Path("resnet50.onnx").read_bytes()).hexdigest()
+    Path("resnet50.sha256").write_text(digest + "\n")
+    PY
+
+    nvidia-smi > gpu.txt
+    python3 -c 'import tensorrt; print(tensorrt.__version__)' > tensorrt-version.txt
+
+    trtexec \
+      --onnx=resnet50.onnx \
+      --saveEngine=resnet50.engine \
+      --skipInference 2>&1 | tee build.log
+
+    trtexec \
+      --loadEngine=resnet50.engine \
+      --shapes=data:1x3x224x224 \
+      --duration=10 2>&1 | tee benchmark.log
+resources:
+  cpu: "2"
+  memory: "4Gi"
+  gpu: "..1"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -67,6 +118,10 @@ run:
       limits:
         nvidia.com/gpu: "1"
 ```
+
+</Tab>
+
+</LangTabs>
 
 `data:1x3x224x224` is the input name and batch-one shape for this model. For another ONNX model, inspect its input names and configure the appropriate [dynamic-shape profiles](https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/work-with-dynamic-shapes.html).
 

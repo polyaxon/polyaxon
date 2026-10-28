@@ -20,6 +20,26 @@ See the [Axolotl documentation](https://docs.axolotl.ai/) for the upstream confi
 
 Save the component below as `axolotl.yaml`. Configure a Polyaxon connection named `axolotl-config` that mounts your training configuration at `/workspace/axolotl.yml`. Set its `output_dir` to the persistent path supplied by the `checkpoints` connection.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: axolotl-train
+connections: [axolotl-config, hf-token, training-data, checkpoints]
+container:
+  image: axolotlai/axolotl:0.16.1
+  command: ["axolotl", "train", "/workspace/axolotl.yml"]
+resources:
+  cpu: "16"
+  memory: 96Gi
+  gpu: "..4"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -37,6 +57,10 @@ run:
       limits:
         nvidia.com/gpu: "4"
 ```
+
+</Tab>
+
+</LangTabs>
 
 Four GPUs are an example shape, not a universal requirement. Size the run from the chosen model, precision, context length, and Axolotl strategy. Configure the named connections for your installation; they are not created by this component. See [connections](/docs/setup/connections/overview).
 

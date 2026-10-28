@@ -43,6 +43,27 @@ In order to leverage the service kind in Polyaxon with Flask, the easiest to avo
 
 This is a simple API component, the component can be more complex if it requires to initialize code, artifacts, or if it defines inputs.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: flask-service
+tags: ["flask", "api"]
+run:
+  kind: service
+  ports: [5000]
+  rewritePath: true
+container:
+  image: polyaxon/polyaxon-examples:ml-serving
+  command: ["sh", "-c"]
+  args: ["flask run --host=0.0.0.0"]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -58,7 +79,32 @@ run:
     args: ["flask run --host=0.0.0.0"]
 ```
 
+</Tab>
+
+</LangTabs>
+
 If you need to schedule a more robust API with a production wsgi you can use gunicorn:
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: flask-service
+tags: ["flask", "api"]
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+container:
+  image: polyaxon/polyaxon-examples:ml-serving
+  command: ["sh", "-c"]
+  args: ["gunicorn --preload -t 60 --bind 0.0.0.0:8000 app:app"]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -75,9 +121,50 @@ run:
     args: ["gunicorn --preload -t 60 --bind 0.0.0.0:8000 app:app"]
 ```
 
+</Tab>
+
+</LangTabs>
+
 ### Example as an executable component
 
 > This inline example is intended to make it easy to execute this component without download or cloning any repo, this not intended as production pattern.
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: flask-service
+tags: ["flask", "api"]
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+init:
+  - file:
+      filename: app.py
+      content: |
+        from flask import Flask
+
+        app = Flask(__name__)
+
+        @app.route('/')
+        def index():
+            return 'Index Page'
+
+        @app.route('/hello')
+        def hello():
+            return 'Hello, World'
+container:
+  image: polyaxon/polyaxon-examples:ml-serving
+  workingDir: "{{ globals.artifacts_path }}"
+  command: ["sh", "-c"]
+  args: ["gunicorn --preload -t 60 --bind 0.0.0.0:8000 app:app"]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -95,11 +182,11 @@ run:
           from flask import Flask
 
           app = Flask(__name__)
-          
+
           @app.route('/')
           def index():
               return 'Index Page'
-          
+
           @app.route('/hello')
           def hello():
               return 'Hello, World'
@@ -109,6 +196,10 @@ run:
     command: ["sh", "-c"]
     args: ["gunicorn --preload -t 60 --bind 0.0.0.0:8000 app:app"]
 ```
+
+</Tab>
+
+</LangTabs>
 
 ## Scheduling the example
 

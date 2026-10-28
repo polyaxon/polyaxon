@@ -38,6 +38,28 @@ Please read this introduction to [registry connections](/docs/setup/connections/
 
 ### Using an init `dockerfile`
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+params:
+  destination:
+    connection: CONNECTION_NAME
+    value: image:tag
+init:
+- dockerfile:
+    image: "tensorflow/tensorflow:2.0.1-py3"
+    run:
+    - 'pip3 install --no-cache-dir -U polyaxon'
+    langEnv: 'en_US.UTF-8'
+hubRef: kaniko
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1
 kind: operation
@@ -54,6 +76,10 @@ runPatch:
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko
 ```
+
+</Tab>
+
+</LangTabs>
 
 This operation will initialize a dockerfile automatically under `{{ globals.artifacts_path }}/Dockerfile`, and Kaniko component will build that dockerfile and push it.
 
@@ -80,6 +106,23 @@ polyaxon run -f operation.yaml -u [-p]
 
 The operation should look like this:
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+params:
+  destination:
+    connection: CONNECTION_NAME
+    value: image:tag
+  context: "{{ globals.run_artifacts_path }}/uploads"
+hubRef: kaniko
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: operation
@@ -91,6 +134,10 @@ params:
     value: "{{ globals.run_artifacts_path }}/uploads"
 hubRef: kaniko
 ```
+
+</Tab>
+
+</LangTabs>
 
 Since we are setting the context to the uploads path, Kaniko will look for any file called `Dockerfile` under that path, which should be populated with the uploaded code from local machine.
 
@@ -117,6 +164,26 @@ polyaxon run -f operation.yaml -u [-p]
 
 The operation should look like this:
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+params:
+  destination:
+    connection: CONNECTION_NAME
+    value: image:tag
+  context: "{{ globals.artifacts_path }}/repo-name"
+init:
+  - git:
+      url: "https://github.com/org/repo-name"
+hubRef: kaniko
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: operation
@@ -133,12 +200,39 @@ runPatch:
 hubRef: kaniko
 ```
 
+</Tab>
+
+</LangTabs>
+
 Since we are setting the context to the match where the repo will be initialized, 
 Kaniko will look for any file called `Dockerfile` under that path, which should be populated with the code from git repo.
 
 ## Queues, presets, node scheduling, custom resources, ... 
 
 You can customize the queue, presets, environment section, node selector, connections, initializers, resources requirements, ...
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+params:
+  destination:
+    connection: CONNECTION_NAME
+    value: image:tag
+hubRef: kaniko
+queue: agent-name/queue-name
+presets: [preset1, preset2]
+connections: [...]
+environment:
+  ...
+resources:
+  memory: 300Mi
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -158,7 +252,11 @@ runPatch:
     resources:
       requests:
         memory: 300Mi
-``` 
+```
+
+</Tab>
+
+</LangTabs>
 
 ## Forking and customizing the component
 

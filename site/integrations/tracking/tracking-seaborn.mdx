@@ -55,6 +55,49 @@ tracking.log_mpl_image(f, 'sns_image')
 
 ### Example as an executable component
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: sns-image
+init:
+  - file:
+      content: |
+        import numpy as np
+        import seaborn as sns
+        import matplotlib.pyplot as plt
+        from polyaxon import tracking
+
+        tracking.init()
+
+        sns.set_theme(style="dark")
+        # Simulate data from a bivariate Gaussian
+        n = 10000
+        mean = [0, 0]
+        cov = [(2, .4), (.4, .2)]
+        rng = np.random.RandomState(0)
+        x, y = rng.multivariate_normal(mean, cov, n).T
+
+        # Draw a combo histogram and scatterplot with density contours
+        f, ax = plt.subplots(figsize=(6, 6))
+        sns.scatterplot(x=x, y=y, s=5, color=".15")
+        sns.histplot(x=x, y=y, bins=50, pthresh=.1, cmap="mako")
+        sns.kdeplot(x=x, y=y, levels=5, color="w", linewidths=1)
+
+        tracking.log_mpl_image(f, 'sns_image')
+      filename: script.py
+container:
+  image: polyaxon/polyaxon-examples:artifacts
+  name: polyaxon-main
+  workingDir: '{{ globals.artifacts_path }}'
+  command: [python3, -u, script.py]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -94,6 +137,10 @@ run:
     command: [python3, -u, script.py]
 ```
 
+</Tab>
+
+</LangTabs>
+
 ### Result
 
 In the `dashboards` tab, create a new image widget
@@ -130,6 +177,49 @@ tracking.log_mpl_plotly_chart(name='sns-scatter', figure=plt)
 ```
 
 ### Example as an executable component
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: sns-image
+init:
+  - file:
+      content: |
+        import numpy as np
+        import seaborn as sns
+        import matplotlib.pyplot as plt
+        from polyaxon import tracking
+
+        tracking.init()
+
+        sns.set_theme(style="dark")
+        # Simulate data from a bivariate Gaussian
+        n = 10000
+        mean = [0, 0]
+        cov = [(2, .4), (.4, .2)]
+        rng = np.random.RandomState(0)
+        x, y = rng.multivariate_normal(mean, cov, n).T
+
+        # Draw a combo histogram and scatterplot with density contours
+        f, ax = plt.subplots(figsize=(6, 6))
+        sns.scatterplot(x=x, y=y, s=5, color=".15")
+        sns.histplot(x=x, y=y, bins=50, pthresh=.1, cmap="mako")
+        sns.kdeplot(x=x, y=y, levels=5, color="w", linewidths=1)
+
+        tracking.log_mpl_plotly_chart(name='sns-scatter', figure=plt)
+      filename: script.py
+container:
+  image: polyaxon/polyaxon-examples:artifacts
+  name: polyaxon-main
+  workingDir: '{{ globals.artifacts_path }}'
+  command: [python3, -u, script.py]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -169,6 +259,10 @@ run:
     workingDir: '{{ globals.artifacts_path }}'
     command: [python3, -u, script.py]
 ```
+
+</Tab>
+
+</LangTabs>
 
 ### Result
 

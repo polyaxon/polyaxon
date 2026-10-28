@@ -45,16 +45,8 @@ app = dash.Dash(
  * You can pass the `BASE_URL` as an env var or as an arg:
  
 ```yaml
-...
-run:
-  kind: service
-  ...
-  container:
-  ...
-  env:
-    - name: BASE_URL
-      value: "{{globals.base_url}}"
-...
+env:
+  BASE_URL: "{{globals.base_url}}"
 ```
 
  * Make sure that the app is served with `host=0.0.0.0` instead of the default localhost:
@@ -68,6 +60,27 @@ if __name__ == "__main__":
 ## Polyaxon component to schedule the app
 
 To schedule this app on Polyaxon, we just need to run this [simple component manifest](https://github.com/polyaxon/dash-polyaxon-demo/blob/master/polyaxonfiles/app.yaml): 
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: plotly-dash-app
+tags: [plotly, dash]
+run:
+  kind: service
+  ports: [8050]
+container:
+  image: polyaxon/polyaxon-examples:dash-demo
+  command: [python, app.py]
+env:
+  BASE_URL: "{{globals.base_url}}"
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -85,7 +98,33 @@ run:
       value: "{{globals.base_url}}"
 ```
 
+</Tab>
+
+</LangTabs>
+
 This component runs the default dev server, you can also expose the app using a production wsgi server using this [gunicorn component manifest](https://github.com/polyaxon/dash-polyaxon-demo/blob/master/polyaxonfiles/app-gunicorn.yaml):
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: plotly-dash-app
+tags: [plotly, dash]
+run:
+  kind: service
+  ports: [8000]
+container:
+  image: polyaxon/polyaxon-examples:dash-demo
+  command: ["sh", "-c"]
+  args: ["gunicorn --preload -t 60 --bind 0.0.0.0:8000 app:server"]
+env:
+  BASE_URL: "{{globals.base_url}}"
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -102,7 +141,11 @@ run:
     env:
     - name: BASE_URL
       value: "{{globals.base_url}}"
-``` 
+```
+
+</Tab>
+
+</LangTabs>
 
 To run without cloning the repo:
 
@@ -154,6 +197,27 @@ polyaxon ops service --external [-uid] [-p]
 
 The docker image `polyaxon/polyaxon-examples:dash-demo` was created using this [operation](https://github.com/polyaxon/dash-polyaxon-demo/blob/master/polyaxonfiles/build.yaml):
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: build-dash
+params:
+  destination:
+    connection: CONNECTION_NAME
+    value: polyaxon-examples:dash-demo
+  context: "{{ globals.artifacts_path }}/dash-polyaxon-demo"
+init:
+  - git:
+      url: "https://github.com/polyaxon/dash-polyaxon-demo"
+hubRef: kaniko
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: operation
@@ -170,6 +234,10 @@ runPatch:
         url: "https://github.com/polyaxon/dash-polyaxon-demo"
 hubRef: kaniko
 ```
+
+</Tab>
+
+</LangTabs>
 
 This operation clones the repo (https://github.com/polyaxon/dash-polyaxon-demo), 
 and builds the container using the [Dockerfile](https://github.com/polyaxon/dash-polyaxon-demo/blob/master/Dockerfile) 

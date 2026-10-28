@@ -29,6 +29,31 @@ if __name__ == '__main__':
 
 ## Polyaxon component
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: click-cli
+inputs:
+- name: count
+  type: int
+  isOptional: true
+  value: 1
+- name: name
+  type: str
+  isOptional: true
+  value: World
+container:
+  image: polyaxon/polyaxon-examples:clis
+  command: ["python", "cli.py"]
+  args: ["{{ params.count.as_arg }}", "{{ params.name.as_arg }}"]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -48,12 +73,58 @@ run:
     image: polyaxon/polyaxon-examples:clis
     command: ["python", "cli.py"]
     args: ["{{ params.count.as_arg }}", "{{ params.name.as_arg }}"]
-
 ```
+
+</Tab>
+
+</LangTabs>
 
 ### Example as an executable component
 
 > This inline example is intended to make it easy to execute this component without download or cloning any repo, this not intended as production pattern.
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: click-cli
+inputs:
+- name: count
+  type: int
+  isOptional: true
+  value: 1
+- name: name
+  type: str
+  isOptional: true
+  value: World
+init:
+  - file:
+      filename: cli.py
+      content: |
+        import click
+
+        @click.command()
+        @click.option('--count', default=1, help='Number of greetings.')
+        @click.option('--name', prompt='Your name',
+                      help='The person to greet.')
+        def hello(count, name):
+            """Simple program that greets NAME for a total of COUNT times."""
+            for x in range(count):
+                click.echo(f"Hello {name}!")
+
+        if __name__ == '__main__':
+            hello()
+container:
+  image: polyaxon/polyaxon-examples:clis
+  workingDir: "{{ globals.artifacts_path }}"
+  command: ["python", "cli.py"]
+  args: ["{{ params.count.as_arg }}", "{{ params.name.as_arg }}"]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -75,7 +146,7 @@ run:
         filename: cli.py
         content: |
           import click
-          
+
           @click.command()
           @click.option('--count', default=1, help='Number of greetings.')
           @click.option('--name', prompt='Your name',
@@ -84,7 +155,7 @@ run:
               """Simple program that greets NAME for a total of COUNT times."""
               for x in range(count):
                   click.echo(f"Hello {name}!")
-          
+
           if __name__ == '__main__':
               hello()
   container:
@@ -93,6 +164,10 @@ run:
     command: ["python", "cli.py"]
     args: ["{{ params.count.as_arg }}", "{{ params.name.as_arg }}"]
 ```
+
+</Tab>
+
+</LangTabs>
 
 ## Scheduling the example
 

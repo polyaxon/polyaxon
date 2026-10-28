@@ -63,17 +63,13 @@ You can [deploy/upgrade](/docs/setup/) your Polyaxon CE or Polyaxon Agent deploy
 To expose the connection secret to one of the containers in your jobs or services:
 
 ```yaml
-run:
-  kind: job
-  connections: [azure-dataset1]
+connections: [azure-dataset1]
 ```
 
 Or
 
 ```yaml
-run:
-  kind: job
-  connections: [azure-dataset1, s3-dataset1]
+connections: [azure-dataset1, s3-dataset1]
 ```
 
 ## Use the initializer to load the dataset
@@ -81,11 +77,9 @@ run:
 To use the artifacts initializer to load the dataset
 
 ```yaml
-run:
-  kind: job
-  init:
-   - artifacts: {dirs: [...], files: [...]}
-     connection: "azure-dataset1"
+init:
+- artifacts: {dirs: [...], files: [...]}
+  connection: "azure-dataset1"
 ```
 
 ## Access the dataset programmatically

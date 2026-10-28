@@ -20,6 +20,29 @@ See the [TensorRT-LLM documentation](https://nvidia.github.io/TensorRT-LLM/) for
 
 Keep runtime flags and GPU topology in the Polyaxon component; treat any engine build as a versioned upstream artifact.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: tensorrt-llm-server
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+connections: [hf-token, model-cache]
+container:
+  image: nvcr.io/nvidia/tensorrt-llm/release:1.3.0rc7
+  command: ["trtllm-serve"]
+  args: ["TinyLlama/TinyLlama-1.1B-Chat-v1.0"]
+resources:
+  gpu: "..1"
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -37,6 +60,10 @@ run:
       limits:
         nvidia.com/gpu: "1"
 ```
+
+</Tab>
+
+</LangTabs>
 
 This is NVIDIA's documented quick-start model and published runtime image. Pin the image digest and choose a larger model only after checking its build and hardware requirements.
 

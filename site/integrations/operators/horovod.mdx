@@ -10,6 +10,28 @@ Polyaxon allows to schedule distributed Horovod experiments, and supports tracki
 
 To run experiments on single node with Horovod, you don't need to deploy the MPIOperator, you just need to provide the correct command and args to enable usage of Horovod.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+inputs:
+  - name: gpus
+    isOptional: true
+    type: int
+    value: 2
+container:
+  image: IMAGE_TO_USE
+  resources:
+    limits:
+      nvidia.com/gpu: "{{ gpus }}"
+  command: ["horovodrun", "-np", "{{ gpus }}", "-H", "localhost:{{ gpus }}", "python", "-u", "mnist.py"]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -28,6 +50,10 @@ run:
       command: ["horovodrun", "-np", "{{ gpus }}", "-H", "localhost:{{ gpus }}", "python", "-u", "mnist.py"]
 ```
 
+</Tab>
+
+</LangTabs>
+
 ## Distributed experiments with the MPIJob Operator
 
 Polyaxon provides support for Horovod via the [MPIJob Operator](/integrations/mpijob/). So you will need to deploy the operator first and then provide a valid MPIJob manifest.
@@ -39,8 +65,6 @@ Please check the guide [Running Horovod](https://github.com/horovod/horovod#runn
 Example manifest:
 
 ```yaml
-version: 1.1
-kind: component
 run:
   kind: mpijob
   slotsPerWorker: 1

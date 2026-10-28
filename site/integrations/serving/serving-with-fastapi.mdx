@@ -47,6 +47,27 @@ In order to leverage the service kind in Polyaxon with FastAPI, the easiest to a
 
 This is a simple API component, the component can be more complex if it requires to initialize code, artifacts, or if it defines inputs.
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: fastapi-service
+tags: ["fastapi", "api"]
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+container:
+  image: polyaxon/polyaxon-examples:ml-serving
+  command: ["sh", "-c"]
+  args: ["uvicorn app:app --host 0.0.0.0 --port 8000"]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -62,9 +83,54 @@ run:
     args: ["uvicorn app:app --host 0.0.0.0 --port 8000"]
 ```
 
+</Tab>
+
+</LangTabs>
+
 ### Example as an executable component
 
 > This inline example is intended to make it easy to execute this component without download or cloning any repo, this not intended as production pattern.
+
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: fastapi-service
+tags: ["fastapi", "api"]
+run:
+  kind: service
+  ports: [8000]
+  rewritePath: true
+init:
+  - file:
+      filename: app.py
+      content: |
+        from typing import Optional
+
+        from fastapi import FastAPI
+
+        app = FastAPI()
+
+
+        @app.get("/")
+        def read_root():
+            return {"Hello": "World"}
+
+
+        @app.get("/items/{item_id}")
+        def read_item(item_id: int, q: Optional[str] = None):
+            return {"item_id": item_id, "q": q}
+container:
+  image: polyaxon/polyaxon-examples:ml-serving
+  workingDir: "{{ globals.artifacts_path }}"
+  command: ["sh", "-c"]
+  args: ["uvicorn app:app --host 0.0.0.0 --port 8000"]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -82,15 +148,15 @@ run:
           from typing import Optional
 
           from fastapi import FastAPI
-          
+
           app = FastAPI()
-          
-          
+
+
           @app.get("/")
           def read_root():
               return {"Hello": "World"}
-          
-          
+
+
           @app.get("/items/{item_id}")
           def read_item(item_id: int, q: Optional[str] = None):
               return {"item_id": item_id, "q": q}
@@ -100,6 +166,10 @@ run:
     command: ["sh", "-c"]
     args: ["uvicorn app:app --host 0.0.0.0 --port 8000"]
 ```
+
+</Tab>
+
+</LangTabs>
 
 ## Scheduling the example
 

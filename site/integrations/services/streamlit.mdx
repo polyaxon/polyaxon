@@ -56,6 +56,26 @@ spacy_streamlit.visualize(
 
 To schedule this app on Polyaxon, we just need to run this [simple component manifest](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/polyaxonfiles/app.yaml):
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: spacy-streamlit-app
+tags: [spacy, streamlit]
+run:
+  kind: service
+  ports: [8501]
+  rewritePath: true
+container:
+  image: polyaxon/polyaxon-examples:spacy-streamlit-demo
+  command: [streamlit, run, app.py]
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: component
@@ -69,6 +89,10 @@ run:
     image: polyaxon/polyaxon-examples:spacy-streamlit-demo
     command: [streamlit, run, app.py]
 ```
+
+</Tab>
+
+</LangTabs>
 
 To run without cloning the repo:
 
@@ -121,6 +145,27 @@ Using the dark theme:
 
 The docker image `polyaxon/polyaxon-examples:spacy-streamlit-demo` was created using this [operation](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/polyaxonfiles/build.yaml):
 
+<LangTabs items={["Short", "Full"]}>
+
+<Tab>
+
+```yaml
+name: build-spacy-streamlit
+params:
+  destination:
+    connection: CONNECTION_NAME
+    value: polyaxon-examples:spacy-streamlit-demo
+  context: "{{ globals.artifacts_path }}/spacy-streamlit-polyaxon-demo"
+init:
+  - git:
+      url: "https://github.com/polyaxon/spacy-streamlit-polyaxon-demo"
+hubRef: kaniko
+```
+
+</Tab>
+
+<Tab>
+
 ```yaml
 version: 1.1
 kind: operation
@@ -137,6 +182,10 @@ runPatch:
         url: "https://github.com/polyaxon/spacy-streamlit-polyaxon-demo"
 hubRef: kaniko
 ```
+
+</Tab>
+
+</LangTabs>
 
 This operation clones the repo (https://github.com/polyaxon/spacy-streamlit-polyaxon-demo),
 and builds the container using the [Dockerfile](https://github.com/polyaxon/spacy-streamlit-polyaxon-demo/blob/master/Dockerfile)
