@@ -31,7 +31,7 @@ container:
   command: ["python", "-c"]
   args: ["import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name())"]
 resources:
-  amd.com/gpu: "..1"
+  amd.com/gpu: 1
 ```
 
 </Tab>
