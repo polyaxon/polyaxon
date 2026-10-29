@@ -63,8 +63,7 @@ To schedule this app on Polyaxon, we just need to run this [simple component man
 ```yaml
 name: spacy-streamlit-app
 tags: [spacy, streamlit]
-run:
-  kind: service
+service:
   ports: [8501]
   rewritePath: true
 container:

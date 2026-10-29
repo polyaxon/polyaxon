@@ -29,8 +29,7 @@ The following component keeps the SGLang H200/FP8/low-latency flags intact and e
 ```yaml
 name: sglang-glm-5-2
 tags: ["sglang", "glm", "llm-serving"]
-run:
-  kind: service
+service:
   ports: [30000]
   rewritePath: true
 container:

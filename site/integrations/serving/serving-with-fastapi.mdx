@@ -54,8 +54,7 @@ This is a simple API component, the component can be more complex if it requires
 ```yaml
 name: fastapi-service
 tags: ["fastapi", "api"]
-run:
-  kind: service
+service:
   ports: [8000]
   rewritePath: true
 container:
@@ -98,8 +97,7 @@ run:
 ```yaml
 name: fastapi-service
 tags: ["fastapi", "api"]
-run:
-  kind: service
+service:
   ports: [8000]
   rewritePath: true
 init:

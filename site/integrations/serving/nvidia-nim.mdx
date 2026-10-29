@@ -26,8 +26,7 @@ Resolve registry and runtime credentials through Polyaxon connections and reques
 
 ```yaml
 name: nvidia-nim
-run:
-  kind: service
+service:
   ports: [8000]
   rewritePath: true
 connections: [ngc-registry, ngc-api-key, nim-cache]

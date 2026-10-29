@@ -50,8 +50,7 @@ This is a simple API component, the component can be more complex if it requires
 ```yaml
 name: flask-service
 tags: ["flask", "api"]
-run:
-  kind: service
+service:
   ports: [5000]
   rewritePath: true
 container:
@@ -92,8 +91,7 @@ If you need to schedule a more robust API with a production wsgi you can use gun
 ```yaml
 name: flask-service
 tags: ["flask", "api"]
-run:
-  kind: service
+service:
   ports: [8000]
   rewritePath: true
 container:
@@ -136,8 +134,7 @@ run:
 ```yaml
 name: flask-service
 tags: ["flask", "api"]
-run:
-  kind: service
+service:
   ports: [8000]
   rewritePath: true
 init:

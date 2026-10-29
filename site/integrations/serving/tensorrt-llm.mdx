@@ -26,8 +26,7 @@ Keep runtime flags and GPU topology in the Polyaxon component; treat any engine 
 
 ```yaml
 name: tensorrt-llm-server
-run:
-  kind: service
+service:
   ports: [8000]
   rewritePath: true
 connections: [hf-token, model-cache]
