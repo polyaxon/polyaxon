@@ -103,10 +103,11 @@ Options:
                                   for `resources.memory`, e.g. `512Mi..1Gi`.
   --gpu TEXT                      GPU count, or request..limit, shortcut for
                                   `resources.gpu`, e.g. `1`.
-  --port, --ports TEXT            Ports to expose, shortcut for `ports`; a run
-                                  without a runtime becomes a service. Comma-
-                                  separated values, can be specified multiple
-                                  times, e.g. `--ports 80,443`.
+  --port, --ports TEXT            Ports to expose, shortcut for
+                                  `service.ports`; a run without a runtime
+                                  becomes a service. Comma-separated values,
+                                  can be specified multiple times, e.g.
+                                  `--ports 80,443`.
   --sandbox                       Enable `plugins.sandbox` (exec, filesystem
                                   and PTY API) on a service run. Without
                                   -f/-pm/--url/--hub or a default

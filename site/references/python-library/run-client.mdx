@@ -210,7 +210,7 @@ a `content` string must be a YAML/JSON mapping, it is never read as a path.
         shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
   - __gpu__: str or int, optional, count or `request..limit`,
         shortcut for `resources.gpu`.
-  - __ports__: List[int], optional, shortcut for `ports`,
+  - __ports__: List[int], optional, shortcut for `service.ports`,
         a run without a runtime becomes a service.
 
 - __Returns__:
@@ -285,7 +285,7 @@ only `None` omits a value.
         shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
   - __gpu__: str or int, optional, count or `request..limit`,
         shortcut for `resources.gpu`.
-  - __ports__: List[int], optional, shortcut for `ports`,
+  - __ports__: List[int], optional, shortcut for `service.ports`,
         a run without a runtime becomes a service.
 
 - __Returns__:
@@ -359,7 +359,7 @@ only `None` omits a value.
         shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
   - __gpu__: str or int, optional, count or `request..limit`,
         shortcut for `resources.gpu`.
-  - __ports__: List[int], optional, shortcut for `ports`,
+  - __ports__: List[int], optional, shortcut for `service.ports`,
         a run without a runtime becomes a service.
 
 - __Returns__:
@@ -432,7 +432,7 @@ If the component has required inputs, you should pass the params.
         shortcut for `resources.memory`, e.g. `512Mi..1Gi`.
   - __gpu__: str or int, optional, count or `request..limit`,
         shortcut for `resources.gpu`.
-  - __ports__: List[int], optional, shortcut for `ports`,
+  - __ports__: List[int], optional, shortcut for `service.ports`,
         a run without a runtime becomes a service.
 
 - __Returns__:
