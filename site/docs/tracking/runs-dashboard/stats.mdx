@@ -1,0 +1,21 @@
+---
+title: "Runs Stats"
+description: "Inspect a matrix's concurrency, progress, and child-run counts by status."
+---
+
+## Matrix overview [#matrix-overview]
+
+Open a matrix run and select **Info**. Under **Pipeline information**, you can see its concurrency setting, dependent run kinds, progress, and counts for **Pending**, **Running**, **Succeeded**, **Warning**, **Failed**, and **Stopped** runs.
+
+The example below shows a batch-inference matrix. The **Timeline** block contains the parent run's status and timing; the cards at the bottom summarize its child runs.
+
+![Batch-inference matrix Info page showing workload metadata, timeline, concurrency, progress, and child-run status counts](/images/dashboard/runs/matrix-overview.webp)
+
+## Inspect individual runs [#inspect-individual-runs]
+
+Open **Runs** to inspect the matrix's child runs and filter by status. For failed runs, open the run to read its status and logs. Use **Timeline** to compare start times and durations across the group.
+
+- [Runs comparison](/docs/tracking/runs-dashboard/comparison/)
+- [Runs timeline](/docs/tracking/runs-dashboard/timeline/)
+- [Run logs](/docs/tracking/runs-dashboard/logs/)
+- [Matrix configuration](/docs/references/polyaxonfile/orchestration/matrix/overview/)
