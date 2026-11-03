@@ -510,6 +510,7 @@ ui:
 | Parameter                               | Description                                                                                         | Default
 | --------------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------
 | `enabled`                               | enable security context                                                                             | `false`
+| `applyToRuns`                           | also use this context as the default for run pods                                                   | `false`
 | `runAsUser`                             | security context UID                                                                                | `2222`
 | `runAsGroup`                            | security context GID                                                                                | `2222`
 | `fsGroup`                               | security context FS                                                                                 | `2222`
@@ -517,8 +518,8 @@ ui:
 | `runAsNonRoot`                          | Indicates that the container must run as a non-root user                                            | `true`
 | `fsGroupChangePolicy`                   | defines behavior of changing ownership and permission of the volume before being exposed inside Pod |
 
-Polyaxon runs all containers as root by default, this configuration is often fine for several deployment,
-however, in some use cases it can expose a compliance issue for some teams.
+By default, the agent, API, scheduler, gateway, events handlers and hpsearch images run as `nobody`, the streams, sidecar and init images run as root, and run pods use the user set by their image.
+This configuration is often fine for several deployments, however, in some use cases it can expose a compliance issue for some teams.
 
 Polyaxon provides a simple way to enable a security context for all core components.
 
@@ -527,6 +528,7 @@ Default configuration:
 ```yaml
 securityContext:
   enabled: false
+  applyToRuns: false
   runAsUser: 2222
   runAsGroup: 2222
   fsGroup: 2222
@@ -559,9 +561,21 @@ securityContext:
   fsGroupChangePolicy: OnRootMismatch
 ```
 
-This will enable a security context to run all containers using a UID/GID == 1111/1111.
+This will enable a security context to run the core components using a UID/GID == 1111/1111.
 
 > **N.B.** If you are using a host path or a volume for the artifacts store, make sure to allow the UID/GID to access it.
+
+### Apply the security context to runs
+
+The security context only applies to the core components by default. To use the same user and group for run pods:
+
+```yaml
+securityContext:
+  enabled: true
+  applyToRuns: true
+```
+
+Please check [this section](/docs/scheduling/scheduling-presets/workload-security-context/#chart-default-for-all-runs) for the override rules and the storage setup to do first.
 
 ## Resources' limit
 

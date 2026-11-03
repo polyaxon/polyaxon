@@ -1,6 +1,6 @@
 ---
 title: "Workload Security Context"
-description: "Setting a default workload security context using presets."
+description: "Setting a default workload security context using presets or the Helm chart."
 ---
 
 ## Overview
@@ -46,3 +46,33 @@ Setting the organization's default presets:
 Setting a project's default presets:
 
 ![default-project-preset](/images/dashboard/presets/default-project-preset.png)
+
+## Chart default for all runs
+
+If you deploy with Helm, the chart's [security context](/docs/setup/platform/common-reference/#security-context) can also be the default for run pods, so services and runs share one user and you don't need a preset:
+
+```yaml
+securityContext:
+  enabled: true
+  applyToRuns: true
+```
+
+The agent then adds `runAsUser`, `runAsGroup`, `fsGroup` and `fsGroupChangePolicy` to every job, service, distributed replica and cleaner that doesn't set `environment.securityContext`.
+If the chart leaves `fsGroupChangePolicy` empty, run pods use `OnRootMismatch`, so Kubernetes doesn't walk the whole store each time a run starts.
+
+`applyToRuns` does nothing when `enabled` is `false`.
+Turning it off only affects new pods: running pods and files already in the store stay as they are.
+
+The agent and, on Polyaxon EE, the control plane must run v2.19.1 or later. Older versions reject the setting.
+
+### Overriding the default
+
+A run's or preset's `environment.securityContext` replaces the default, the fields are not merged.
+Workload images have to work under the chosen user, and an image that needs root can set it back:
+
+```yaml
+runPatch:
+  environment:
+    securityContext:
+      runAsUser: 0
+```
