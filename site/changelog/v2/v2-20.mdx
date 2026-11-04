@@ -7,19 +7,19 @@ author: Polyaxon
 
 ## V2.20.0
 
+### CLI
+
+ * **New**: Add a root `dag` section to define DAGs without `run.kind: dag`.
+ * **Breaking**: Drop support for Python 3.8. `polyaxon`, `traceml` and `hypertune` now require Python 3.9 or later.
+ * **Enhancement**: Replace `pytz` with the standard library's `zoneinfo`.
+ * **Fix**: Failed API calls no longer print the client config, which included the auth token. The error shows the API host; with `-v` or `POLYAXON_DEBUG` it also prints the full config with the token masked. `-v` no longer prints raw HTTP request headers, which included the token.
 
 ### Core
 
- * **New**: Add composable Python and TypeScript interfaces to specify logic, hardware, and execution through programmatic primitives.
- * **New**: Allow users to set timezones.
- * **New**: Automatically add name suffixes to hyperparameters children.
- * **New**: Add option to auto-generate run names.
-
-### Traceml
-
- * **New**: Add optional TPU resource monitoring.
- * **Enhancement**: Improve resources monitoring.
-
-### UI
+ * **New**: Add `securityContext.applyToRuns` to the Helm charts to use the chart's security context as the default for run pods. It's off by default, and a run's or preset's `environment.securityContext` still wins. Remove the unused `POLYAXON_SECURITY_CONTEXT_USER` and `POLYAXON_SECURITY_CONTEXT_GROUP` variables.
+ * **Fix**: Remove deleted files from volume claim and host path artifact stores. The sidecar's delete failed silently, so the files stayed in the store and came back when the run resumed.
+ * **Fix**: PQL datetime filters (`<`, `<=`, `>`, `>=` and `..` on `created_at`, `updated_at`, `started_at` and `finished_at`) now parse values in the platform timezone. Comparisons no longer log a naive datetime `RuntimeWarning` on every query, and on deployments with a non-UTC timezone, `..` ranges are no longer shifted by a few minutes.
 
 ### Commercial
+
+ * **Enhancement**: `hubRef`, `modelRef`, `artifactRef` and `lineageRef` now resolve only from projects the run's user can read. A project restricted to teams or users can no longer be read through a run in another project of the same organization; a denied reference fails like a missing one.

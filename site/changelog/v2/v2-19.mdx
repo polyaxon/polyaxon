@@ -4,18 +4,6 @@ description: "Polyaxon release notes, migrations, and deprecation notes for v2.1
 author: Polyaxon
 ---
 
-## V2.19.1
-
-### CLI
-
- * **New**: Add a root `dag` section to define DAGs without `run.kind: dag`.
- * **Fix**: Failed API calls no longer print the client config, which included the auth token. The error shows the API host; with `-v` or `POLYAXON_DEBUG` it also prints the full config with the token masked. `-v` no longer prints raw HTTP request headers, which included the token.
-
-### Core
-
- * **New**: Add `securityContext.applyToRuns` to the Helm charts to use the chart's security context as the default for run pods. It's off by default, and a run's or preset's `environment.securityContext` still wins. Remove the unused `POLYAXON_SECURITY_CONTEXT_USER` and `POLYAXON_SECURITY_CONTEXT_GROUP` variables.
- * **Fix**: Remove deleted files from volume claim and host path artifact stores. The sidecar's delete failed silently, so the files stayed in the store and came back when the run resumed.
-
 ## V2.19.0
 
 ### CLI
