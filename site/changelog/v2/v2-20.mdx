@@ -20,6 +20,10 @@ author: Polyaxon
  * **Fix**: Remove deleted files from volume claim and host path artifact stores. The sidecar's delete failed silently, so the files stayed in the store and came back when the run resumed.
  * **Fix**: PQL datetime filters (`<`, `<=`, `>`, `>=` and `..` on `created_at`, `updated_at`, `started_at` and `finished_at`) now parse values in the platform timezone. Comparisons no longer log a naive datetime `RuntimeWarning` on every query, and on deployments with a non-UTC timezone, `..` ranges are no longer shifted by a few minutes.
 
+### Operator
+
+ * **Fix**: Cap service activity probe responses at 64 KiB and stop following redirects. A service could return a response large enough to run the operator out of memory. A probe that returns a redirect now fails, and the service is not culled.
+
 ### Commercial
 
  * **Enhancement**: `hubRef`, `modelRef`, `artifactRef` and `lineageRef` now resolve only from projects the run's user can read. A project restricted to teams or users can no longer be read through a run in another project of the same organization; a denied reference fails like a missing one.
