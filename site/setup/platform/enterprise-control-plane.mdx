@@ -106,3 +106,35 @@ Remove all configuration related to connections, each agent will be managing its
 artifactsStore: {}
 connections: []
 ```
+
+## Rate limits
+
+The API limits how many requests each user can send, per scope. Organization and agent tokens are counted per token, and anonymous requests per IP.
+To change a limit, set its scope under `gateway.throttle.rates`. Scopes you don't set keep their defaults:
+
+```yaml
+gateway:
+  throttle:
+    rates:
+      run: 600
+      user: 480
+```
+
+| Scope | Default | Unit | Requests |
+|---|---|---|---|
+| `user` | 240 | per minute | API endpoints without a more specific scope |
+| `run` | 300 | per minute | Run detail and run actions, such as stop, restart and archive |
+| `run_status` | 120 | per minute | Run statuses |
+| `run_lineage` | 120 | per minute | Run artifacts lineage |
+| `impersonate` | 500 | per minute | Run impersonation tokens |
+| `agent` | 500 | per minute | Agent sync, reconcile, status and state |
+| `auth` | 20 | per second | Authentication checks for proxied requests |
+| `anon` | 20 | per minute | Unauthenticated requests |
+| `checks` | 10 | per minute | Health and status checks |
+
+Values are numbers of requests, and a scope's unit can't be changed.
+Without the [shared cache](/docs/setup/platform/redis-ha/#shared-cache), each API worker counts requests separately, so the effective limit is the value times the number of workers and replicas.
+
+Changing a value updates the platform config and restarts the API pods.
+
+> Requires Polyaxon v2.20 or later.

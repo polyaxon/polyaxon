@@ -50,6 +50,21 @@ externalServices:
 You can use [Cloud MemoryStore for Redis](https://cloud.google.com/memorystore/) if you are running Polyaxon on GKE,
 please follow this [integration guide](/integrations/setup/memorystore-redis-on-gcp).
 
+## Shared cache
+
+By default, each API worker keeps its own rate-limit counters in memory, so the effective limit grows with the number of workers and replicas.
+To share the counters through Redis on the [control plane](/docs/setup/platform/enterprise-control-plane/), enable:
+
+```yaml
+gateway:
+  cache:
+    enabled: true
+```
+
+If Redis becomes unreachable, the API logs a warning and stops rate limiting until Redis recovers.
+
+> Requires Polyaxon v2.20 or later.
+
 ## Using Redis as broker
 
 You can also use Redis for as async worker broker, please check this section on how to alter the [default broker behavior](/docs/setup/platform/broker/).
