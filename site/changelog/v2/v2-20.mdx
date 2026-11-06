@@ -18,6 +18,9 @@ author: Polyaxon
 
  * **New**: Add `securityContext.applyToRuns` to the Helm charts to use the chart's security context as the default for run pods. It's off by default, and a run's or preset's `environment.securityContext` still wins. Remove the unused `POLYAXON_SECURITY_CONTEXT_USER` and `POLYAXON_SECURITY_CONTEXT_GROUP` variables.
  * **Fix**: Remove deleted files from volume claim and host path artifact stores. The sidecar's delete failed silently, so the files stayed in the store and came back when the run resumed.
+ * **Fix**: Regression in the agent created cleaner pods without their volumes, volume mounts, `envFrom`, `valueFrom` env vars and security context. Deleting a run left its artifacts in the store, and the cleaner still reported success.
+ * **Fix**: `plugins.ssh` now fails with a clear message when the container doesn't have permissions to init the script.
+ * **Fix**: Agent crashed and restarted with up to 5 minutes of backoff when a state request failed, for example during an API restart or when rate limited. It now waits for the next check.
  * **Fix**: PQL datetime filters (`<`, `<=`, `>`, `>=` and `..` on `created_at`, `updated_at`, `started_at` and `finished_at`) now parse values in the platform timezone. Comparisons no longer log a naive datetime `RuntimeWarning` on every query, and on deployments with a non-UTC timezone, `..` ranges are no longer shifted by a few minutes.
 
 ### Operator
@@ -26,4 +29,8 @@ author: Polyaxon
 
 ### Commercial
 
+ * **Enhancement**: Improve `run` throttle scope.
+ * **Enhancement**: Add `gateway.cache.enabled` to the Helm chart to share API rate-limit counters across API workers and replicas through Redis. It's off by default.
+ * **Enhancement**: Add `gateway.throttle.rates` to the Helm chart to set API rate limits per scope.
  * **Enhancement**: `hubRef`, `modelRef`, `artifactRef` and `lineageRef` now resolve only from projects the run's user can read. A project restricted to teams or users can no longer be read through a run in another project of the same organization; a denied reference fails like a missing one.
+ * **Fix**: Regression in `console` and `file` email backends, they write links as plain text again.
