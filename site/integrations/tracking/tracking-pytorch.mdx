@@ -42,6 +42,9 @@ from polyaxon import tracking
 tracking.init(...)
 ```
 
+> In distributed training (`torchrun`, DDP, or a PyTorch job), call `tracking.init()` and the logging methods on rank 0 only.
+> See [Tracking from several processes](/docs/tracking/logging/overview/#tracking-from-several-processes).
+
 ## Manual logging
 
 If you want to have more control and use Polyaxon to log metrics in your custom TensorFlow training loops:

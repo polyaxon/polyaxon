@@ -37,6 +37,35 @@ When you start a run in-cluster you don't need to call several of  the exposed m
 because they are recorded automatically, e.g. you don't need to set a name, description, tags, statuses, code reference
 because they are saved during the creation of the experiment using the UI/CLI.
 
+## Tracking from several processes
+
+If several processes run your training code in the same run, for example with `torchrun --nproc_per_node=4` or in a distributed PyTorch job,
+only global rank 0 should use the tracking module.
+
+Each process that calls `tracking.init()` gets its own writers for the run's events and resources.
+When several processes log the same metric, they write to the same file.
+Their values interleave, the file can get corrupted, and the run can lose that metric's summary and last value.
+
+Call `tracking.init()` and every `log_*` method on rank 0 only:
+
+```python
+import os
+
+from polyaxon import tracking
+
+is_chief = int(os.environ.get("RANK", 0)) == 0
+
+if is_chief:
+    tracking.init()
+
+...
+
+if is_chief:
+    tracking.log_metrics(loss=loss)
+```
+
+`torchrun` and PyTorch jobs set `RANK` for each process. If your launcher doesn't, every process falls back to rank 0 in this snippet.
+With `torch.multiprocessing.spawn`, for example, use the rank passed to your function instead.
 
 ## Tracking references
 
