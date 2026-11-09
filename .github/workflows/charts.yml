@@ -6,7 +6,7 @@ jobs:
   lint-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Fetch history
         run: git fetch --prune --unshallow
       - name: Run chart-testing (lint)
@@ -20,7 +20,7 @@ jobs:
       matrix:
         config: [default, test-config1, test-config2]  # TODO: re-enable test-config3
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           submodules: true
       - uses: azure/setup-helm@v4
@@ -31,7 +31,7 @@ jobs:
           cd charts
           helm dependency build polyaxon
           helm dependency build agent
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: 3.9
       - name: test
