@@ -6,9 +6,24 @@ author: Polyaxon
 
 ## V2.20.2
 
+### CLI
+
+ * **Enhancement**: Improve default `.polyaxonignore` to prevent uploading virtual environments, `node_modules`, and test, coverage and linter caches.
+
 ### Core
 
  * **Fix**: Runs no longer lose the summaries and latest values of all their metrics when one metric file is damaged.
+ * **Fix**: Project stats now update after performing multi-run actions: delete, archive or restore, move runs or versions to another project, or delete a version.
+
+### UI
+
+ * **Fix**: Runs table no longer shows a full-height green bar at the left edge of the page when 3 or more filters are applied.
+
+### Commercial
+
+ * **Enhancement**: Reduce database load from organization stats.
+ * **Enhancement**: Reduce database load from queue and agent stats.
+ * **Enhancement**: Recalculate stats when entities have new activity.
 
 ## V2.20.1
 
