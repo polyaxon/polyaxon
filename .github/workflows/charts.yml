@@ -33,7 +33,7 @@ jobs:
           helm dependency build agent
       - uses: actions/setup-python@v7
         with:
-          python-version: 3.9
+          python-version: '3.12'
       - name: test
         env:
           KUBEBUILDER_CONTROLPLANE_START_TIMEOUT: 600s

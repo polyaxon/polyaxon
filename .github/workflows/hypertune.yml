@@ -12,7 +12,7 @@ jobs:
     - run: |
         pip install -U hypertune
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.python-version == 3.9 && 'ubuntu-24.04' || 'ubuntu-latest' }}  # no python 3.9 build for ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.9, '3.10', '3.11', '3.12', '3.13', '3.14']
