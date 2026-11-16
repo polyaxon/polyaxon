@@ -64,6 +64,19 @@ that will be scheduled on Kubernetes:
   - __component__: [V1Component](/docs/references/polyaxonfile/specification/component/), optional
   - __template__: [V1Template](/docs/references/polyaxonfile/specification/template/), optional
 
+- __Shortcuts__: [reference](/docs/references/polyaxonfile/specification/shortcuts/)
+  - __dag__: Dict, optional
+  - __service__: Dict, optional
+  - __container__: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/), optional
+  - __cmd__: Union[str, List[str]], optional
+  - __env__: Dict[str, str], optional
+  - __resources__: Dict[str, Union[str, int, float]], optional
+  - __environment__: [V1Environment](/docs/references/polyaxonfile/specification/environment/), optional
+  - __init__: List[[V1Init](/docs/references/polyaxonfile/specification/init/)], optional
+  - __connections__: List[str], optional
+  - __sidecars__: List[[sidecar containers](/docs/references/polyaxonfile/specification/sidecars/)], optional
+  - __volumes__: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)], optional
+
 ## YAML usage
 
 ```yaml
@@ -95,6 +108,23 @@ operation:
   pathRef:
   component:
   template:
+```
+
+With [shortcuts](/docs/references/polyaxonfile/specification/shortcuts/):
+
+```yaml
+operation:
+  dag:
+  service:
+  container:
+  cmd:
+  env:
+  resources:
+  environment:
+  init:
+  connections:
+  sidecars:
+  volumes:
 ```
 
 ## Python usage
@@ -200,6 +230,23 @@ the name of the component will be used if it exists.
 operation:
   name: test
 ```
+
+The name can use params and some globals. Polyaxon renders it once,
+when the run is created:
+
+```yaml
+operation:
+  name: train-{{ optimizer }}-{{ lr }}
+  params:
+    optimizer:
+      value: adam
+    lr:
+      value: 0.01
+```
+
+This run is named `train-adam-0_01`. See
+[run names](/docs/references/cli/run-with-different-names/#names-from-params)
+for what the name can use.
 
 ### description
 

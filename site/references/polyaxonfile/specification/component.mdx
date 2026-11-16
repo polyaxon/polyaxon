@@ -49,6 +49,19 @@ with default queues, container resources requirements, node scheduling, ...
   - __run__: Union[[V1Job](/docs/references/polyaxonfile/runtimes/jobs/specification/), [V1Service](/docs/references/polyaxonfile/runtimes/services/specification/), [V1TFJob](/docs/references/polyaxonfile/runtimes/distributed/tf-jobs/), [V1PytorchJob](/docs/references/polyaxonfile/runtimes/distributed/pytorch-jobs/), [V1MPIJob](/docs/references/polyaxonfile/runtimes/distributed/mpi-jobs/), [V1RayCluster](/docs/references/polyaxonfile/runtimes/clusters/ray-clusters/), [V1DaskCluster](/docs/references/polyaxonfile/runtimes/clusters/dask-clusters/), [V1Dag](/docs/references/polyaxonfile/orchestration/dag/specification/)]
   - __template__: [V1Template](/docs/references/polyaxonfile/specification/template/), optional
 
+- __Shortcuts__: [reference](/docs/references/polyaxonfile/specification/shortcuts/)
+  - __dag__: Dict, optional
+  - __service__: Dict, optional
+  - __container__: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/), optional
+  - __cmd__: Union[str, List[str]], optional
+  - __env__: Dict[str, str], optional
+  - __resources__: Dict[str, Union[str, int, float]], optional
+  - __environment__: [V1Environment](/docs/references/polyaxonfile/specification/environment/), optional
+  - __init__: List[[V1Init](/docs/references/polyaxonfile/specification/init/)], optional
+  - __connections__: List[str], optional
+  - __sidecars__: List[[sidecar containers](/docs/references/polyaxonfile/specification/sidecars/)], optional
+  - __volumes__: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)], optional
+
 ## YAML usage
 
 ```yaml
@@ -74,6 +87,23 @@ component:
   run:
   isApproved:
   template:
+```
+
+With [shortcuts](/docs/references/polyaxonfile/specification/shortcuts/):
+
+```yaml
+component:
+  dag:
+  service:
+  container:
+  cmd:
+  env:
+  resources:
+  environment:
+  init:
+  connections:
+  sidecars:
+  volumes:
 ```
 
 ## Python usage
@@ -137,6 +167,10 @@ This name can be a `slug`, a `slug:tag`, `org/slug`, or `org/slug:slug`.
 This name will be passed as the default value to all operations using this component,
 unless the operations override the name or a `--name`
 is passed as an argument to the cli/client.
+
+When used as the run name, it can reference params and some globals,
+e.g. `train-{{ lr }}`. See
+[run names](/docs/references/cli/run-with-different-names/#names-from-params).
 
 ```yaml
 component:

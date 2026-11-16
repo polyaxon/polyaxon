@@ -36,6 +36,9 @@ which makes them compatible with all knowledge used for running other runtimes:
  * They can take advantage of all scheduling strategies to route operations to nodes,
    namespaces, and clusters even within the same DAG.
 
+The root [`dag` shortcut](/docs/references/polyaxonfile/specification/shortcuts/#dag)
+defines a DAG without a `run` section.
+
 - __Args__:
   - __kind__: str, should be equal `dag`
   - __operations__: List[[V1Operation](/docs/references/polyaxonfile/specification/operation/)]
@@ -95,6 +98,8 @@ A list of operations to run with their dependency definition.
 If the operations are defined with no dependencies or no params are
 passed from one operation to another, the operations will be running in parallel following the
 concurrency and other queue priority definitions.
+
+Operation names identify nodes in the DAG, so they cannot use templates.
 
 ```yaml
 run:
