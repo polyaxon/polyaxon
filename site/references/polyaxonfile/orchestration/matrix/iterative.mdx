@@ -25,6 +25,7 @@ running the component.
   - __concurrency__: int, optional
   - __seed__: int, optional
   - __tuner__: [V1Tuner](/docs/references/polyaxonfile/orchestration/matrix/tuner/), optional
+  - __name_suffix__: str, optional
   - __early_stopping__: List[[EarlyStopping](/docs/references/polyaxonfile/helpers/early-stopping)], optional
 
 ## YAML usage
@@ -37,6 +38,7 @@ matrix:
   maxIterations:
   seed:
   tuner:
+  nameSuffix:
   earlyStopping:
 ```
 
@@ -136,6 +138,20 @@ matrix:
   kind: iterative
   seed: 523
 ```
+
+### nameSuffix
+
+An optional suffix for the names of the runs created by the matrix.
+By default each run gets a short id from its uuid, e.g. `train-a1b2c3d4`.
+
+```yaml
+matrix:
+  kind: iterative
+  nameSuffix: "{{ lr }}-{{ batch_size }}"
+```
+
+For more details, please check the
+[run names section](/docs/references/polyaxonfile/orchestration/matrix/overview/#run-names).
 
 ### earlyStopping
 
