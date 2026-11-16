@@ -1,6 +1,6 @@
 ---
 title: "Reading Polyaxonfiles"
-description: "Polyaxon's Python library allows to turn off all API calls and silently pass through all function calls."
+description: "Read and validate Polyaxonfiles from files, dicts, and Python objects."
 ---
 
 ## Overview
@@ -37,7 +37,7 @@ operation = OperationSpecification.read(data)
 ```python
 from polyaxon.polyaxonfile import ComponentSpecification
 
-plx_file = ComponentSpecification.read({'version': 1, 'kind': 'component', 'run': ...})
+plx_file = ComponentSpecification.read({'kind': 'component', 'run': ...})
 ```
 
 ## Reading multiple Python dictionaries
@@ -47,7 +47,9 @@ You can also pass several dictionaries to override a specific section
 ```python
 from polyaxon.polyaxonfile import ComponentSpecification
 
-plx_file = ComponentSpecification.read([group_dict, {'run': {'cmd': 'override_command'}}])
+plx_file = ComponentSpecification.read(
+    [group_dict, {'run': {'container': {'command': ['python', 'train.py']}}}]
+)
 ```
 
 ## Reading a single file
@@ -83,7 +85,12 @@ You can also opt to read a file/files (YAML and Json) and only use a Python dict
 from polyaxon.polyaxonfile import get_specification
 
 plx_file = get_specification(
-    ['path/to/yaml_file.yaml', 'path/to/json_file.json', {'run': {'cmd': 'override_command'}}])
+    [
+        'path/to/yaml_file.yaml',
+        'path/to/json_file.json',
+        {'run': {'container': {'command': ['python', 'train.py']}}},
+    ]
+)
 ```
 
 ## Using PolyaxonFiles
@@ -92,7 +99,6 @@ Once you read the content of Polyaxonfile, you will get a Python class if the fi
 and you will be able to interact with it as any Python object.
 
 ```yaml
-version: 1
 kind: operation
 name: test
 tags: ['foo', 'bar']
@@ -104,17 +110,21 @@ component:
     kind: job
     container:
       image: some-image:version
-      command: some-command
+      command: [python, train.py]
 ```
 
 You can read this file:
 
 ```python
+from polyaxon.k8s import V1Container
+from polyaxon.polyaxonfile import OperationSpecification
+
+spec = OperationSpecification.read("polyaxonfile.yaml")
 assert spec.name == "test"
 component = spec.component
 assert isinstance(component.run.container, V1Container)
 assert component.run.container.image == "some-image:version"
-assert component.run.container.command == "some-command"
+assert component.run.container.command == ["python", "train.py"]
 ```
 
 Please check the [specification docs](/docs/references/polyaxonfile/specification/overview/)

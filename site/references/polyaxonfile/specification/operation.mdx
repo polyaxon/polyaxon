@@ -28,9 +28,14 @@ that will be scheduled on Kubernetes:
 
 ![polyaxonfile operation](/images/references/specification/operation.png)
 
+Since Polyaxon 2.18.0, operations, components, and files without `kind` accept
+the same fields. This page covers the fields an operation usually sets; the
+[component](/docs/references/polyaxonfile/specification/component/) page covers
+`inputs`, `outputs`, and `run`.
+
 - __Args__:
   - __version__: float, optional
-  - __kind__: str, should be equal to `operation`
+  - __kind__: str, optional, `operation` marks the file as the operation to run, see [kind](#kind)
   - __patch_strategy__: str, optional, defaults to post_merge
   - __is_preset__: bool, optional
   - __is_approved__: bool, optional
@@ -170,14 +175,13 @@ operation:
 
 ### kind
 
-The kind signals to the CLI, client, and other tools that this is an operation.
-
-If you are using the python client to create an operation,
-this field is not required and is set by default.
+Optional since Polyaxon 2.18.0. With `kind: operation`, or without `kind`, the file
+is the operation that runs, and `-f` files merge into it.
+Older CLI and server versions require `kind`.
 
 ```yaml
 operation:
-  kind: component
+  kind: operation
 ```
 
 ### patchStrategy

@@ -28,9 +28,14 @@ either by submitting them directly or by referencing them from your operations.
 Components can be used as well to extract as much information and be used as templates
 with default queues, container resources requirements, node scheduling, ...
 
+Since Polyaxon 2.18.0, components, operations, and files without `kind` accept
+the same fields. This page covers the fields a reusable component usually sets;
+the [operation](/docs/references/polyaxonfile/specification/operation/) page covers
+the rest, such as `params`, `matrix`, `schedule`, references, and `runPatch`.
+
 - __Args__:
   - __version__: float, optional
-  - __kind__: str, should be equal to `component`
+  - __kind__: str, optional, `component` marks a reusable component, see [kind](#kind)
   - __name__: str, optional
   - __description__: str, optional
   - __tags__: List[str], optional
@@ -147,11 +152,10 @@ component:
 
 ### kind
 
-The kind signals to the CLI, client, and other tools that this is a component.
-
-If you are using the component inline in an operation or a dag or
-if you are using the python client to create a component,
-this field is not required and is set by default.
+Optional since Polyaxon 2.18.0. `kind: component` marks the file as a reusable
+component. When you run it with the CLI or the Python client, Polyaxon wraps it in
+an operation, so `-f` files and run options apply on top of it.
+Older CLI and server versions require `kind`.
 
 ```yaml
 component:
