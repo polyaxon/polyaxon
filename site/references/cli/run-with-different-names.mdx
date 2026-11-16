@@ -46,12 +46,14 @@ component:
 This run is named `train-adam-0_01`. Polyaxon renders the name once, when the run is created:
 
  * The name can use params with literal values and input defaults.
- * Nothing else is available, including values from another run, a join or the matrix, params whose value is itself a template, and `globals`. Creating the run fails with an error that names the variable.
+ * The name can also use the [globals](/docs/references/polyaxonfile/context/globals/#run-names) that are set when the run is created, such as the project name, the username, the run uuid and the creation date: `name: "{{ globals.project_name }}-{{ globals.created_at.strftime('%Y%m%d') }}-{{ lr }}"`.
+ * Nothing else is available, including values from another run, a join or the matrix, params whose value is itself a template, and globals that are set later such as `globals.namespace`. Creating the run fails with an error that names the variable.
  * Each run of characters other than letters, digits, `_` and `-` becomes one `_`, and leading or trailing `_` and `-` are removed. Creating the run fails if nothing is left. A result longer than 128 characters is cut to fit and ends in `--`.
  * Quote the name when it starts with a template: `name: "{{ lr }}-train"`.
  * `--name` takes precedence and is used as is.
  * Restart, copy, and resume keep the name, even when params change. Pass `--name` to rename the run.
- * Matrix trials and scheduled runs take the parent's name.
+ * Scheduled runs take the parent's name, including any uuid or date rendered in it.
+ * Matrix runs take the parent's name followed by a [suffix](/docs/references/polyaxonfile/orchestration/matrix/overview/#run-names): a short id by default, or your own with `matrix.nameSuffix`.
  * Operation names inside a DAG cannot use templates. The DAG's own name can.
 
 ## Default names

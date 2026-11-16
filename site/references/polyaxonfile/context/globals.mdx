@@ -24,7 +24,7 @@ The following information can be accessed by all Polyaxon sections:
  * `{{ globals.project_unique_name }}`: Unique name of the project `owner.project_name`.
  * `{{ globals.project_uuid }}`: Project uuid.
  * `{{ globals.run_info }}`: `owner.project_name.uuid` unique name of the run.
- * `{{ globals.name }}`: The run name. If the Polyaxonfile name uses params, this is the rendered name; `globals` values cannot be used in the name itself. When a new run has no name, Polyaxon generates a two-word name such as `curious-otter`.
+ * `{{ globals.name }}`: The run name. If the Polyaxonfile name uses params or globals, this is the rendered name. When a new run has no name, Polyaxon generates a two-word name such as `curious-otter`.
  * `{{ globals.uuid }}`: The run uuid.
  * `{{ globals.namespace }}`: The k8s namespace where the operation will be scheduled.
  * `{{ globals.context_path }}`: The context that Polyaxon will share with the main container: `/plx_context`. This context contains all artifacts and other configs.
@@ -38,6 +38,11 @@ The following information can be accessed by all Polyaxon sections:
  * `{{ globals.original_uuid }}`: The original operation's uuid when the current operation was cloned from.
  * `{{ globals.is_independent }}`: A flag that tells id the operation is independent or part of a pipeline.
  * `{{ globals.iteration }}`: The iteration number if the operation is part of an iterative process.
+
+## Run names
+
+A [run name](/docs/references/cli/run-with-different-names/#names-from-params) is rendered when the run is created, so it can only use globals that are already set at that point. The useful ones are
+`owner_name`, `project_name`, `project_unique_name`, `project_uuid`, `username` (if available), `uuid`, `run_info`, and `created_at`.
 
 ## Artifacts store
 

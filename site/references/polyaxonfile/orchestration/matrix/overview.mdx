@@ -54,6 +54,37 @@ Each one of these algorithms has a dedicated subsection to define the required o
 
 All optimization algorithms can leverage the [pipeline helpers](/docs/references/polyaxonfile/helpers/overview/) for managing concurrency, early stopping, caching, ...
 
+## Run names
+
+Each run created by a matrix is named after the matrix run, followed by a suffix.
+By default the suffix is a short id taken from the run's uuid, for example `train-a1b2c3d4`.
+
+Use `nameSuffix` to set your own suffix from the values of each run:
+
+```yaml
+name: train
+matrix:
+  kind: grid
+  nameSuffix: "{{ lr }}-{{ batch_size }}"
+  params:
+    lr:
+      kind: choice
+      value: [0.01, 0.1]
+    batch_size:
+      kind: choice
+      value: [32]
+```
+
+This creates the runs `train-0_01-32` and `train-0_1-32`. The matrix run itself stays `train`.
+
+ * The suffix is rendered once for each run, when the run is created. It can use the run's params and the [globals](/docs/references/polyaxonfile/context/globals/#run-names) that are set at that point, including `globals.iteration`.
+ * Creating the runs fails if the suffix uses an unknown variable.
+ * Each run of characters other than letters, digits, `_` and `-` becomes one `_`. Creating the runs fails if nothing is left.
+ * A plain text suffix works too. Names can repeat; the run's uuid identifies it.
+ * `nameSuffix: ""` turns the suffix off, and every run takes the name of the matrix run.
+ * A name longer than 128 characters is cut to fit, and the suffix is kept.
+ * This applies to all matrix kinds, including mapping.
+
 ## Search Space
 
 In order to define a search space, users must define how to generate the values that will be used to create

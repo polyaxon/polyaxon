@@ -1,0 +1,330 @@
+---
+title: "Shortcuts Specification"
+sidebarTitle: "Shortcuts"
+description: "Root shortcuts set the container, command, environment variables, resources, and other common run fields without a nested run section."
+---
+
+## V1Polyaxonfile
+
+```python
+polyaxon._flow.polyaxonfile.V1Polyaxonfile()
+```
+
+
+Shortcuts are root fields that set the most common `run` fields
+without a nested `run` section.
+
+This file:
+
+```yaml
+container:
+  image: python:3.12-slim
+cmd:
+  - pip install -r requirements.txt
+  - python train.py
+env:
+  LOG_LEVEL: info
+resources:
+  cpu: "1..2"
+  memory: 4Gi
+```
+
+compiles to the same job as:
+
+```yaml
+run:
+  kind: job
+  container:
+    image: python:3.12-slim
+    command: [/bin/sh, -c]
+    args:
+      - |-
+        set -e
+        pip install -r requirements.txt
+        python train.py
+    env:
+      - name: LOG_LEVEL
+        value: info
+    resources:
+      requests: {cpu: "1", memory: 4Gi}
+      limits: {cpu: "2"}
+```
+
+Shortcuts work in components, operations, and files without a `kind`.
+
+## Fields
+
+Shortcuts apply in this order:
+
+| Shortcut | Native path | Since |
+|---|---|---|
+| `dag` | `run.operations`, `components`, `concurrency`, `earlyStopping` | 2.20.0 |
+| `service` | `run.ports`, `rewritePath`, `isExternal`, `replicas` | 2.19.0 |
+| `container` | `run.container` | 2.18.0 |
+| `cmd` | `run.container.command` and `args` | 2.18.0 |
+| `env` | `run.container.env` | 2.18.0 |
+| `resources` | `run.container.resources` | 2.18.0 |
+| `environment`, `init`, `connections`, `sidecars`, `volumes` | `run.<same name>` | 2.18.0 |
+
+### dag
+
+> **Note**: Available in Polyaxon 2.20.0 and later.
+
+A mapping with the [DAG](/docs/references/polyaxonfile/orchestration/dag/specification/)
+fields `operations`, `components`, `concurrency`, and `earlyStopping`, with the same
+types. Other keys are rejected. Fields that other runtimes also have, such as
+`environment`, `connections`, and `volumes`, stay at the root as their own shortcuts.
+
+```yaml
+dag:
+  components:
+    - name: echo
+      container:
+        image: busybox:1.36
+      cmd: echo hello
+  operations:
+    - name: first
+      dagRef: echo
+    - name: second
+      dagRef: echo
+      dependencies: [first]
+  concurrency: 1
+```
+
+Components and operations inside `dag` can use shortcuts too, as `echo` does.
+
+Without a runtime, `dag` selects a DAG; on an existing DAG it patches the given fields.
+Any other runtime is an error. `dag` applies first, so it cannot be combined with
+`service`, in the same file or across layers.
+
+### service
+
+> **Note**: Available in Polyaxon 2.19.0 and later.
+
+A mapping with the [service](/docs/references/polyaxonfile/runtimes/services/specification/)
+fields `ports`, `rewritePath`, `isExternal`, and `replicas`, with the same types.
+Other keys are rejected.
+
+```yaml
+service:
+  ports: [8080]
+container:
+  image: python:3.12-slim
+  command: [python, -m, http.server, "8080"]
+```
+
+Without a runtime, any `service` section selects a service, and `service: {}` selects
+one without setting any field. On an existing service it sets the given fields.
+Any other runtime is an error, even for `service: {}`.
+
+### container
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+A [Kubernetes container](https://kubernetes.io/docs/concepts/containers/) patched
+into `run.container`. Literal values only, see [Limits](#limits).
+
+```yaml
+container:
+  image: python:3.12-slim
+  command: [python, train.py]
+```
+
+### cmd
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+A string or a list of shell lines. The lines run as one `/bin/sh` script with
+`set -e`, so a failing command stops the script, and `cd` and `export` carry over to
+the next lines. The image needs `/bin/sh`.
+
+```yaml
+container:
+  image: python:3.12-slim
+cmd:
+  - pip install -r requirements.txt
+  - python train.py --epochs 3
+```
+
+`cmd` writes the main container's `command` (`[/bin/sh, -c]`) and `args` (the script)
+as a pair, so it never mixes with an inherited command. Use `container.command` and
+`args` when you need an exact argv instead of a shell script. Overrides replace `cmd`
+whole; their lines are never merged with the original ones.
+
+### env
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+A mapping of names to string values for the main container. Unquoted booleans and
+numbers are rejected; quote them.
+
+```yaml
+env:
+  LOG_LEVEL: debug
+  EPOCHS: "3"
+  USE_CACHE: "true"
+```
+
+Entries merge by name with the container's existing `env`, following the layer's
+`patchStrategy`.
+
+### resources
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+A mapping of resource names to values, lowered to the main container's `requests`
+and `limits`. Keys are `cpu`, `memory`, `gpu` (lowered to `nvidia.com/gpu`, which is
+not accepted as a key), or another resource name containing `/`, such as
+`google.com/tpu`.
+
+```yaml
+resources:
+  cpu: "1..2"
+  memory: 4Gi..8Gi
+  gpu: 1
+```
+
+Values take four forms:
+
+ * `N`: a request for `cpu` and `memory`; a request and an equal limit for `gpu`
+   and other accelerators.
+ * `N..`: a request.
+ * `..M`: a limit.
+ * `N..M`: a request and a limit.
+
+Values use Kubernetes units, for example `500m` CPU or `512Mi` memory. Templates and
+other quantities stay in `container.resources`. Under the merge strategies, a request
+or limit you do not set keeps its inherited value.
+
+### environment
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+An [environment](/docs/references/polyaxonfile/specification/environment/) section
+patched into `run.environment`. Literal values only, see [Limits](#limits).
+
+```yaml
+environment:
+  nodeSelector:
+    node-pool: gpu
+  serviceAccountName: trainer
+```
+
+### init
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+A list of [init](/docs/references/polyaxonfile/specification/init/) containers
+patched into `run.init`. Literal values only, see [Limits](#limits).
+
+```yaml
+init:
+  - git:
+      url: https://github.com/org/repo
+```
+
+### connections
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+A list of [connection names](/docs/setup/connections/overview/) patched into
+`run.connections`. Literal values only, see [Limits](#limits).
+
+```yaml
+connections: [dataset-bucket, docker-registry]
+```
+
+### sidecars
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+A list of [sidecar containers](/docs/references/polyaxonfile/specification/sidecars/)
+patched into `run.sidecars`. Literal values only, see [Limits](#limits).
+
+```yaml
+sidecars:
+  - name: proxy
+    image: nginx:1.27
+```
+
+### volumes
+
+> **Note**: Available in Polyaxon 2.18.0 and later.
+
+A list of [Kubernetes volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
+patched into `run.volumes`. Literal values only, see [Limits](#limits).
+
+```yaml
+container:
+  image: python:3.12-slim
+  volumeMounts:
+    - name: data
+      mountPath: /data
+volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: training-data
+```
+
+## How shortcuts apply
+
+A component and each operation that runs it are separate layers, applied from the
+inner component outward. Within a layer, Polyaxon applies the native `run`, then the
+shortcuts in the order of the field table, then `runPatch`, using the layer's
+[patchStrategy](/docs/references/polyaxonfile/specification/operation/#patchstrategy).
+`-f` files merge into their layer before that.
+
+Outer layers win regardless of spelling: an operation's root `resources` overrides
+the `run.container.resources` of the component it references, as
+`runPatch.container.resources` would.
+
+If no runtime exists yet when a layer's shortcuts apply, `dag` selects a DAG, else
+`service` selects a service, else the other shortcuts create a job. A runtime
+inherited from an inner layer never changes kind: `service` on an inherited job is
+an error, and so is a shortcut the runtime does not support, such as `container` on
+a DAG.
+
+## Inline equivalents
+
+`polyaxon run` and the Python client take the most common shortcuts as options:
+
+| File key | `polyaxon run` flag | Python client argument |
+|---|---|---|
+| `container.image` | `--image` | `image` |
+| `cmd` | `--cmd`, repeatable | `cmd` |
+| `env` | `--env NAME=VALUE`, repeatable | `env` |
+| `resources.cpu` | `--cpu` | `cpu` |
+| `resources.memory` | `--memory` | `memory` |
+| `resources.gpu` | `--gpu` | `gpu` |
+| `service.ports` | `--port`, repeatable or comma-separated | `ports` |
+
+```bash
+polyaxon run --image python:3.12-slim --cmd 'python train.py' --cpu 1..2 --gpu 1
+```
+
+```python
+from polyaxon.client import RunClient
+RunClient(project="my-project").create(
+    image="python:3.12-slim", cmd="python train.py", cpu="1..2", gpu=1
+)
+```
+
+The Python arguments are accepted by `RunClient.create`, the `RunClient.create_from_*`
+methods, and `SandboxClient.create`.
+
+Inline options are one more overlay after the `-f` files. Without `-f`, `-pm`,
+`--url`, or `--hub`, `--image` defines the run and the default polyaxonfile is not
+read. Since 2.19.0, `-P`, `--queue`, `--presets`, and the other operation flags apply
+after the files and the inline options.
+
+## Limits
+
+ * `service: null` in an overlay or a restart override keeps the existing section,
+   so it cannot turn a service back into a job.
+ * Whole-field references such as `container: "{{ main }}"` are not supported for
+   `container`, `sidecars`, or `volumes`, at the root or under `run`. Use templates
+   inside the object instead, for example `container: {image: "{{ image }}"}`.
+   For `environment`, `init`, and `connections`, whole-field references stay under
+   `run`.
+ * Sidecars or volumes with the same `name` but different content are both kept;
+   Kubernetes then rejects the duplicate names.
