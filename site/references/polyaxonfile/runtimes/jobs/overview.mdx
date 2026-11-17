@@ -8,7 +8,21 @@ Jobs are used to train machine learning models,
 process a dataset, build container images, execute generic tasks and can be used to perform a variety of functions
 from compiling a model to running an ETL operation.
 
-In order to run a job you will need to create a component with a `kind: job` as a runtime:
+Since Polyaxon 2.18.0, a short Polyaxonfile with root [shortcuts](/docs/references/polyaxonfile/specification/shortcuts/) such as `container` defines a job. The full form declares the component and its `kind: job` runtime, and also works on older versions:
+
+<LangTabs items={["Short Polyaxonfile", "Full Polyaxonfile"]}>
+
+<Tab>
+
+```yaml
+container:
+  image: my-image
+  command: [python, model.py]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 kind: component
@@ -32,6 +46,10 @@ job = V1Job(
 
 component = V1Component(run=job)
 ```
+
+</Tab>
+
+</LangTabs>
 
 ### Specification
 

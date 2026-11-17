@@ -46,7 +46,27 @@ The run command consumes configuration files, also called Polyaxonfile, from dif
 Polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/TypeScript,
 files to check that they can be compiled and executed by Polyaxon.
 
-Let's first look at the content of the url:
+Let's first look at the content of the url, in the Full tab, next to its short equivalent:
+
+<LangTabs items={["Short Polyaxonfile", "Full Polyaxonfile"]}>
+
+<Tab>
+
+```yaml
+name: simple-experiment
+description: Minimum information to run this TF.Keras example
+tags: [examples]
+init:
+- git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
+container:
+  image: polyaxon/polyaxon-quick-start
+  workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start/scheduling"
+  command: [python3, model.py]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -60,11 +80,29 @@ run:
   - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
   container:
     image: polyaxon/polyaxon-quick-start
-    command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/scheduling/model.py"]
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start/scheduling"
+    command: [python3, model.py]
 ```
+
+</Tab>
+
+</LangTabs>
 
 This is a simple Polyaxonfile, the file can be made simpler by removing the optional fields `name`, `description`, and `tags`,
 and if the docker image had an entry point, the file would have looked like this:
+
+<LangTabs items={["Short Polyaxonfile", "Full Polyaxonfile"]}>
+
+<Tab>
+
+```yaml
+container:
+  image: polyaxon/polyaxon-quick-start
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 version: 1.1
@@ -75,7 +113,12 @@ run:
     image: polyaxon/polyaxon-quick-start
 ```
 
-Every Polyaxonfile must have a kind [component](/docs/references/polyaxonfile/specification/component/) or [operation](/docs/references/polyaxonfile/specification/operation/).
+</Tab>
+
+</LangTabs>
+
+Since Polyaxon 2.18.0, `kind` and `version` are optional: the Short tabs use root [shortcuts](/docs/references/polyaxonfile/specification/shortcuts/) and compile to the same job as the Full tabs, which also work on older versions.
+A file that sets `kind` is a [component](/docs/references/polyaxonfile/specification/component/) or an [operation](/docs/references/polyaxonfile/specification/operation/).
 In this section, we will explore the component kind, and in the next part of the tutorial we will dive into the operation kind.
 
 
@@ -94,33 +137,64 @@ In a nutshell, what Polyaxon provides is a simple way to schedule and run contai
 
 Polyaxon schedules your logic in containers. The container section exposes all information of the [Kubernetes container specification](https://kubernetes.io/docs/concepts/containers/).
 
-The container section provides several options, the most important ones are:
+The container section provides several options, the most important ones are below. In a short Polyaxonfile, `cmd` and `resources` are root fields next to `container`.
 
 - **command and args**:
 
 Generally when you use the git initializer you will need to provide the path to the git repo in the container:
 
 ```yaml
-command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/scheduling/model.py"]
+command: [python3, "{{ globals.artifacts_path }}/polyaxon-quick-start/scheduling/model.py"]
 ```
 
 Or you can use the `workingDir`:
 
 ```yaml
-workingDir: "{{ globals.artifacts_path }} + /polyaxon-quick-start/scheduling/"
+workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start/scheduling"
 command: [python3, "model.py"]
 ```
 
 You can use `bash` or `sh` to combine multiple commands:
+
+<LangTabs items={["Short Polyaxonfile", "Full Polyaxonfile"]}>
+
+<Tab>
+
+```yaml
+cmd: ["command one", "command two && command three"]
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 command: ["/bin/sh","-c"]
 args: ["command one; command two && command three"]
 ```
 
+</Tab>
+
+</LangTabs>
+
+The `cmd` lines run as one `/bin/sh` script with `set -e`, so a failing line stops the script.
+
 - **Resources**:
 
 This is how you assign GPUs:
+
+<LangTabs items={["Short Polyaxonfile", "Full Polyaxonfile"]}>
+
+<Tab>
+
+```yaml
+resources:
+  gpu: 1
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 resources:
@@ -128,7 +202,25 @@ resources:
     nvidia.com/gpu: 1
 ```
 
+</Tab>
+
+</LangTabs>
+
 Or limit the container's memory and CPU:
+
+<LangTabs items={["Short Polyaxonfile", "Full Polyaxonfile"]}>
+
+<Tab>
+
+```yaml
+resources:
+  cpu: 100m..500m
+  memory: 50Mi..2000Mi
+```
+
+</Tab>
+
+<Tab>
 
 ```yaml
 resources:
@@ -139,6 +231,10 @@ resources:
     cpu: 100m
     memory: 50Mi
 ```
+
+</Tab>
+
+</LangTabs>
 
 ## Training a model
 
