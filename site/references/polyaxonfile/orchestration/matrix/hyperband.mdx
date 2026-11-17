@@ -280,32 +280,38 @@ matrix:
     activation:
       kind: pchoice
       value: [[relu, 0.1], [sigmoid, 0.8]]
-   early_stopping:
-     - metric: accuracy
-       value: 0.9
-       optimization: maximize
-     - metric: loss
-       value: 0.05
-       optimization: minimize
+  earlyStopping:
+    - kind: metric_early_stopping
+      metric: accuracy
+      value: 0.9
+      optimization: maximize
+    - kind: metric_early_stopping
+      metric: loss
+      value: 0.05
+      optimization: minimize
 component:
   inputs:
     - name: batch_size
       type: int
       isOptional: true
       value: 128
-    - name: logspace
+    - name: lr
       type: float
     - name: dropout
       type: float
-  container:
-    image: image:latest
-    command: [python3, train.py]
-    args: [
-        "--batch-size={{ batch_size }}",
-        "--lr={{ lr }}",
-        "--dropout={{ dropout }}",
-        "--activation={{ activation }}"
-    ]
+    - name: activation
+      type: str
+  run:
+    kind: job
+    container:
+      image: image:latest
+      command: [python3, train.py]
+      args: [
+          "--batch-size={{ batch_size }}",
+          "--lr={{ lr }}",
+          "--dropout={{ dropout }}",
+          "--activation={{ activation }}"
+      ]
 ```
 
 In this example we allocate a maximum resources of `81`,
