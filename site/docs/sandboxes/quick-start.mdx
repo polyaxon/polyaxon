@@ -16,6 +16,56 @@ Before you start, make sure you have:
 - A queue or agent (compute cluster) that can run service workloads.
 - Sandbox support enabled by your Polyaxon deployment or agent administrator.
 
+## Start a Sandbox Without a Polyaxonfile
+
+<Callout type="info">
+
+Requires Polyaxon 2.18.0 or later.
+
+</Callout>
+
+To try a sandbox quickly, start one from an image:
+
+<Tabs items={["Python", "CLI"]}>
+
+<Tab>
+
+```python
+from polyaxon.client import RunClient, SandboxClient
+from polyaxon.schemas import LifeCycle, V1Statuses
+
+sandbox = SandboxClient(project="quick-start")
+run = sandbox.create(image="python:3.12")
+run_client = RunClient(project="quick-start", run_uuid=run.uuid)
+run_client.wait_for_condition(
+    statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES,
+    print_status=True,
+)
+if run_client.status != V1Statuses.RUNNING:
+    raise RuntimeError(f"Run reached {run_client.status} before it started")
+```
+
+`create()` points `sandbox` at the new run.
+
+</Tab>
+
+<Tab>
+
+```bash
+polyaxon run -p quick-start --sandbox --image python:3.12
+```
+
+</Tab>
+</Tabs>
+
+`--sandbox` and `SandboxClient.create` enable `plugins.sandbox` on the run:
+
+- A source without a runtime, such as an image alone, becomes a service.
+- A job is rejected, never converted to a service.
+- `tmux` and `ssh` stay unset unless the source or a preset enables them.
+
+This run has no `/workspace` volume, SSH, or tmux. The health and execute steps below work against it, but the rest of this guide starts the run from the component below, which adds them.
+
 ## Create a Sandbox Component
 
 The quick-start repository includes `sandbox/sandbox.yaml`:

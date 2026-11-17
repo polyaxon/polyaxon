@@ -59,6 +59,18 @@ params:
 hubRef: org/mycomponent:v1.1
 ```
 
+To customize the component's run, set root [shortcuts](/docs/references/polyaxonfile/specification/shortcuts/) such as `resources` (Polyaxon 2.18.0 and later):
+
+```yaml
+hubRef: org/mycomponent:v1.1
+params:
+  ...
+resources:
+  cpu: "1..2"
+  memory: 4Gi
+```
+
+Under the default `post_merge` strategy, values the component sets and you do not, such as a memory limit, are kept. `runPatch` still works and covers run fields that have no shortcut.
 
 Using the client:
 
