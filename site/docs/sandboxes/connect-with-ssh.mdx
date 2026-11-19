@@ -1,14 +1,14 @@
 ---
 title: "Connect with SSH"
 description: "Use Polyaxon SSH commands to connect local terminals, IDEs, and tunnels to service runs."
-label: "v1.16+"
+label: "v2.19+"
 ---
 
 # Connect with SSH
 
 SSH access lets you use regular local developer tools against a service run with `plugins.ssh` enabled. Use it for terminal access, IDE remote development, SFTP, SCP, port forwarding, and rsync when the container image includes it.
 
-This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable. The component created there already enables SSH.
+This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/) and uses its `quick-start` project and `RUN_UUID` variable. The shared sandbox file already enables SSH.
 
 ## Programmatic Access
 
@@ -27,16 +27,11 @@ Use the SSH CLI below for native terminals, IDE connections, SSH configuration, 
 
 ## Enable SSH
 
-Enable the SSH plugin on a service run:
+To enable SSH on another service file, add `ssh: true` to its `plugins` section:
 
 ```yaml
-...
 plugins:
   ssh: true
-
-run:
-  kind: service
-  ...
 ```
 
 ## Prepare SSH Access

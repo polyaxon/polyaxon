@@ -1,7 +1,7 @@
 ---
 title: "Use Notebooks"
 description: "Run notebook services as sandbox-enabled Polyaxon workloads."
-label: "v1.16+"
+label: "v2.19+"
 ---
 
 # Use Notebooks
@@ -51,23 +51,17 @@ See the [Jupyter Notebook integration](/integrations/services/notebook/) for not
 
 ## Add Sandbox Access to a Notebook Service
 
-When authoring a custom notebook component, enable only the plugins you need:
+For a custom notebook service, enable only the plugins you need:
 
 ```yaml
-kind: component
-version: 1.1
-name: notebook-sandbox
-
 plugins:
   sandbox: true
-
-run:
-  kind: service
+service:
   ports:
     - 8888
-  container:
-    image: jupyter/scipy-notebook
-    command: ["start-notebook.py"]
+container:
+  image: jupyter/scipy-notebook
+  command: ["start-notebook.py"]
 ```
 
 Add `plugins.ssh: true` only for native SSH or IDE access, and `plugins.tmux: true` only for reconnectable `polyaxon ops shell` sessions.

@@ -1,7 +1,7 @@
 ---
 title: "Quick Start"
 description: "Start a sandbox-enabled run and connect to it with the Python client or Polyaxon CLI."
-label: "v1.16+"
+label: "v2.19+"
 ---
 
 # Quick Start
@@ -64,37 +64,29 @@ polyaxon run -p quick-start --sandbox --image python:3.12
 - A job is rejected, never converted to a service.
 - `tmux` and `ssh` stay unset unless the source or a preset enables them.
 
-This run has no `/workspace` volume, SSH, or tmux. The health and execute steps below work against it, but the rest of this guide starts the run from the component below, which adds them.
+This run has no `/workspace` volume, SSH, or tmux. The health and execute steps below work against it. For the full walkthrough, use the file below to add those capabilities.
 
-## Create a Sandbox Component
+## Add a workspace, SSH, and tmux
 
-The quick-start repository includes `sandbox/sandbox.yaml`:
+The quick-start repository includes `sandbox/sandbox.yaml`. It uses root shortcuts, available for services in Polyaxon 2.19.0 and later:
 
 ```yaml
-kind: component
-version: 1.1
-name: sandbox-dev
-
 plugins:
   sandbox: true
   ssh: true
   tmux: true
-
-run:
-  kind: service
-  volumes:
+volumes:
+  - name: workspace
+    emptyDir: {}
+container:
+  image: python:3.11
+  workingDir: /workspace
+  volumeMounts:
     - name: workspace
-      emptyDir: {}
-  container:
-    image: python:3.11
-    workingDir: /workspace
-    command: ["sleep", "infinity"]
-    volumeMounts:
-      - name: workspace
-        mountPath: /workspace
+      mountPath: /workspace
 ```
 
-The `emptyDir` volume creates `/workspace` as writable scratch space for the lifetime of the pod. Its contents are lost when the pod is replaced. Save durable results to the run's outputs path before cleanup.
+The `emptyDir` volume creates `/workspace` as writable scratch space for the lifetime of the pod. Its contents are lost when the pod is replaced. Save durable results to the run's outputs path before cleanup. The plugins keep the service running without a separate keepalive command.
 
 ## Start the Run
 

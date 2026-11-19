@@ -1,7 +1,7 @@
 ---
 title: "Network Access"
 description: "Understand service ports, SSH tunnels, and outbound access for sandbox-enabled runs."
-label: "v1.16+"
+label: "v2.19+"
 ---
 
 # Network Access
@@ -14,16 +14,15 @@ Applications and agents can make outbound requests through commands started with
 
 ## Service Ports
 
-Declare `run.ports` for services that expose HTTP applications such as notebooks, dashboards, or custom apps. Sandbox and SSH plugin ports are injected automatically; do not add them to this list:
+Declare `service.ports` for services that expose HTTP applications such as notebooks, dashboards, or custom apps. Sandbox and SSH plugin ports are injected automatically; do not add them to this list:
 
 ```yaml
-run:
-  kind: service
+service:
   ports:
     - 8888
-  container:
-    image: jupyter/scipy-notebook
-    command: ["start-notebook.py"]
+container:
+  image: jupyter/scipy-notebook
+  command: ["start-notebook.py"]
 ```
 
 Polyaxon exposes declared HTTP ports through its authenticated service proxy. By default, the service URL uses `/services/v1/namespace/owner/project/runs/uuid` on the Polyaxon host. If the deployment is available at `polyaxon.DOMAIN.com`, the service uses that host and does not require an SSH tunnel for browser access. Use a tunnel when a local application specifically needs a local TCP port.

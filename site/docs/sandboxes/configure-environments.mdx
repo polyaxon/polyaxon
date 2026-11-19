@@ -1,7 +1,7 @@
 ---
 title: "Configure Environments"
 description: "Choose images, commands, packages, environment variables, and presets for sandbox-enabled runs."
-label: "v1.16+"
+label: "v2.19+"
 ---
 
 # Configure Environments
@@ -12,15 +12,13 @@ This page continues from the [Sandbox Quick Start](/docs/sandboxes/quick-start/)
 
 ## Choose an Image
 
-Start with an image that already has the tools required by your workflow:
+Start with an image that already has the tools required by your workflow. Override the image in the shared sandbox file when launching a new run:
 
-```yaml
-run:
-  kind: service
-  container:
-    image: python:3.11
-    command: ["sleep", "infinity"]
+```bash
+polyaxon run -p quick-start -f sandbox/sandbox.yaml --image python:3.12
 ```
+
+This keeps the file's workspace and access plugins. Use the new run UUID for subsequent commands.
 
 For notebook workflows, use a notebook image. For GPU workflows, use an image with compatible CUDA, framework, and driver expectations.
 
@@ -55,18 +53,20 @@ Promote repeated package changes into a Docker image or preset once the workflow
 
 ## Set Environment Values
 
-Set environment variables under `run.container.env`:
+Add environment variables to `sandbox/sandbox.yaml` with the root `env` shortcut:
 
 ```yaml
-run:
-  kind: service
-  container:
-    image: python:3.11
-    env:
-      - name: EDITOR
-        value: vim
-    command: ["sleep", "infinity"]
+env:
+  EDITOR: vim
 ```
+
+For a single launch, pass the value inline:
+
+```bash
+polyaxon run -p quick-start -f sandbox/sandbox.yaml --env EDITOR=vim
+```
+
+Both options set the value when creating a new run; they do not change an existing sandbox.
 
 For temporary values in an interactive shell:
 
@@ -76,7 +76,7 @@ export EDITOR=vim
 export DEBUG=1
 ```
 
-These values belong to that shell. With `plugins.tmux` enabled, they remain available when you detach and reconnect to the same session. They disappear when the shell exits, the pod restarts, or the run stops, and they do not affect separate `polyaxon sandbox exec` commands. Use `run.container.env` for values that every process needs or that should be reproducible.
+These values belong to that shell. With `plugins.tmux` enabled, they remain available when you detach and reconnect to the same session. They disappear when the shell exits, the pod restarts, or the run stops, and they do not affect separate `polyaxon sandbox exec` commands. Use the root `env` shortcut for values that every process needs or that should be reproducible.
 
 For a value needed by one command, pass it through the process API or prefix the CLI's remote command with `env`:
 
@@ -106,7 +106,7 @@ polyaxon sandbox exec \
 </Tab>
 </Tabs>
 
-The CLI has no `--env` option. In both examples, the value is available only to that command and its child processes.
+`polyaxon sandbox exec` has no `--env` option. In both examples, the value is available only to that command and its child processes.
 
 Use the Polyaxonfile [environment specification](/docs/references/polyaxonfile/specification/environment/) for pod settings such as node selectors, service accounts, security contexts, and DNS. Presets can supply these settings.
 

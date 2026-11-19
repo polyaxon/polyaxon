@@ -2,7 +2,7 @@
 title: "Sandboxes"
 sidebarTitle: "Overview"
 description: "Launch and use sandbox-enabled Polyaxon runs for interactive development, command execution, file access, SSH, notebooks, and debugging."
-label: "v1.16+"
+label: "v2.19+"
 ---
 
 import SandboxOverview from "@/components-mdx/sandbox-overview-gifs.mdx";
@@ -51,21 +51,21 @@ Sandbox-enabled runs can support:
 5. Persist useful outputs to the run's outputs path or commit code changes back to a Git remote.
 6. Stop the service run when the session is done.
 
-## Minimal Polyaxonfile
+## Start a sandbox
 
-```yaml
-kind: component
-version: 1.1
-name: sandbox-dev
+Start directly from an image:
 
-plugins:
-  sandbox: true
-
-run:
-  kind: service
-  container:
-    image: python:3.11
-    command: ["sh", "-lc", "mkdir -p /workspace && exec sleep infinity"]
+```bash
+polyaxon run -p quick-start --sandbox --image python:3.11
 ```
 
-This creates a regular long-running service with sandbox process and file access. Add `plugins.ssh: true` for native SSH access or `plugins.tmux: true` for reconnectable `polyaxon ops shell` sessions. These plugins add capabilities to the service; they do not create a separate sandbox workload.
+If you need a reusable file, the equivalent definition is:
+
+```yaml
+plugins:
+  sandbox: true
+container:
+  image: python:3.11
+```
+
+The sandbox plugin keeps the service running without a keepalive command. Add `plugins.ssh: true` for native SSH access or `plugins.tmux: true` for reconnectable `polyaxon ops shell` sessions. The [quick-start file](/docs/sandboxes/quick-start/#add-a-workspace-ssh-and-tmux) also mounts `/workspace` for the examples in this section.

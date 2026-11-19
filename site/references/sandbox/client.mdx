@@ -153,12 +153,10 @@ scheduled, and running, the same client can use `process`, `fs`, and `pty`.
 Like `polyaxon run --sandbox`. Shortcuts (`image`, `cmd`, `env`, `cpu`,
 `memory`, `gpu`, `ports`) are the `polyaxon run` inline options; only
 `None` omits a value. They are the final overlay of `content`, or the
-whole source without it. A source without a runtime (no `run`, component
-or reference), e.g. `{"plugins": {"ssh": True}}`, is a service
-(`service: {}` unless set). `plugins.sandbox: true` is then set on the
-operation, other literal plugins are kept, and the composed run must be
-a service. Unset plugins stay unset, so presets can still enable `tmux`
-or `ssh`.
+whole source without it. `plugins.sandbox: true` is set on the operation,
+other literal plugins are kept, and the composed run must be a service; a
+source without a runtime, e.g. `{"plugins": {"ssh": True}}`, is one.
+Unset plugins stay unset, so presets can still enable `tmux` or `ssh`.
 
 - __Example__:
 ```python

@@ -54,7 +54,7 @@ This run is named `train-adam-0_01`. Polyaxon renders the name once, when the ru
  * Restart, copy, and resume keep the name, even when params change. Pass `--name` to rename the run.
  * Scheduled runs take the parent's name, including any uuid or date rendered in it.
  * Matrix runs take the parent's name followed by a [suffix](/docs/references/polyaxonfile/orchestration/matrix/overview/#run-names): a short id by default, or your own with `matrix.nameSuffix`.
- * Operation names inside a DAG cannot use templates. The DAG's own name can.
+ * Operation names inside a DAG can use params too, including values the operation gets from the DAG's inputs. Other operations reference it by its name as written, see [DAG operations](/docs/references/polyaxonfile/orchestration/dag/specification/#operations).
 
 ## Default names
 

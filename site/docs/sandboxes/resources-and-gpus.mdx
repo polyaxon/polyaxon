@@ -1,7 +1,7 @@
 ---
 title: "Resources and GPUs"
 description: "Request CPU, memory, GPUs, queues, and node placement for sandbox-enabled runs."
-label: "v1.16+"
+label: "v2.19+"
 ---
 
 # Resources and GPUs
@@ -45,23 +45,22 @@ See [queues](/docs/scheduling/scheduling-strategies/queues/) for scheduling beha
 
 ## Request Resources
 
-Set CPU, memory, and accelerator requests under `run.container.resources`. Presets and cluster policies can patch or constrain these values:
+Add the root `resources` shortcut to `sandbox/sandbox.yaml`. This example requests 1 CPU, 2Gi memory, and 1 GPU, with CPU and memory limits of 2 and 4Gi:
 
 ```yaml
-run:
-  kind: service
-  container:
-    image: python:3.11
-    resources:
-      requests:
-        cpu: "1"
-        memory: 2Gi
-      limits:
-        cpu: "2"
-        memory: 4Gi
-        nvidia.com/gpu: "1"
-    command: ["sleep", "infinity"]
+resources:
+  cpu: "1..2"
+  memory: 2Gi..4Gi
+  gpu: 1
 ```
+
+Or set the same values for one launch:
+
+```bash
+polyaxon run -p quick-start -f sandbox/sandbox.yaml --cpu 1..2 --memory 2Gi..4Gi --gpu 1
+```
+
+Presets and cluster policies can patch or constrain these values.
 
 For reusable sandbox profiles, prefer presets:
 

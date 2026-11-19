@@ -279,10 +279,10 @@ the `run.container.resources` of the component it references, as
 `runPatch.container.resources` would.
 
 If no runtime exists yet when a layer's shortcuts apply, `dag` selects a DAG, else
-`service` selects a service, else the other shortcuts create a job. A runtime
-inherited from an inner layer never changes kind: `service` on an inherited job is
-an error, and so is a shortcut the runtime does not support, such as `container` on
-a DAG.
+`service` or an enabled `plugins.sandbox`/`plugins.ssh` on the same layer selects a
+service, else the other shortcuts create a job. A runtime inherited from an inner
+layer never changes kind: `service` on an inherited job is an error, and so is a
+shortcut the runtime does not support, such as `container` on a DAG.
 
 ## Inline equivalents
 

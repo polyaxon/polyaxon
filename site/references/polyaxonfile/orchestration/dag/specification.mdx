@@ -99,7 +99,7 @@ If the operations are defined with no dependencies or no params are
 passed from one operation to another, the operations will be running in parallel following the
 concurrency and other queue priority definitions.
 
-Operation names identify nodes in the DAG, so they cannot use templates.
+Operation names identify nodes in the DAG and must be unique.
 
 ```yaml
 run:
@@ -121,6 +121,47 @@ run:
           value: outputs.outputName
 
 ```
+
+Operation names can use params. Polyaxon renders the name once, when the operation's run
+is created, from the same values as
+[run names](/docs/references/cli/run-with-different-names/#names-from-params),
+including the values the operation gets from the DAG's inputs.
+The node keeps the name as written, so `dependencies`, `ref: ops.<name>` and events
+reference it with the name as written:
+
+```yaml
+inputs:
+  - {name: model, type: str, value: resnet, isOptional: true}
+run:
+  kind: dag
+  operations:
+    - name: "train-{{ model }}"
+      params:
+        model: {ref: dag, value: inputs.model}
+      component:
+        inputs: [{name: model, type: str}]
+        outputs: [{name: checkpoint, type: str}]
+        run:
+          kind: job
+          container:
+            image: python:3.12
+            command: [python, train.py, --model, "{{ model }}"]
+    - name: evaluate
+      dependencies: ["train-{{ model }}"]
+      params:
+        checkpoint: {ref: "ops.train-{{ model }}", value: outputs.checkpoint}
+      component:
+        inputs: [{name: checkpoint, type: str}]
+        run:
+          kind: job
+          container:
+            image: python:3.12
+            command: [python, evaluate.py, "{{ checkpoint }}"]
+```
+
+The runs are named `train-resnet` and `evaluate`.
+Names must be unique as written, but two names can render to the same run name.
+A node referenced with `ref:` cannot have a `.` in its name.
 
 > **Note**: For more information about managing the execution graph
 > and creating dependencies between operations, please check the
