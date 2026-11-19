@@ -9,25 +9,24 @@ author: Polyaxon
 
 ### Core
 
- * **New**: Add composable Python and TypeScript interfaces to specify logic, hardware, and execution through programmatic primitives.
- * **New**: Allow users to set timezones.
  * **New**: Automatically add name suffixes to hyperparameters children.
  * **New**: Add option to auto-generate run names.
  * **New**: Allow params in run names.
  * **New**: Allow globals such as the project name, username and uuid in run names.
+ * **New**: Allow params in the names of DAG operations.
+ * **Fix**: Git init containers pass each entry in `flags` to git as a separate argument.
 
-### Traceml
-
- * **New**: Add optional TPU resource monitoring.
- * **Enhancement**: Improve resources monitoring.
 
 ### UI
 
- * **Enhancement**: Comparison widgets label runs by name by default; unnamed runs show their short UUID.
- * **Fix**: Comparison widgets add a short UUID to every run that shares a label, including in tooltips.
- * **Enhancement**: Step and media comparison widgets, such as images, histograms and text, can label runs by name, UUID or a param.
- * **Fix**: Curve comparison labels show the run before the AUC or average precision, so it stays visible.
  * **New**: Comparison dashboards and sections can override the trace name of all their widgets, like the x-axis and smoothing.
  * **New**: The run flyout in the runs table has previous and next buttons to open the adjacent runs on the current page.
+ * **Enhancement**: Comparison widgets label runs by name by default; unnamed runs show their short UUID.
+ * **Enhancement**: Step and media comparison widgets, such as images, histograms and text, can label runs by name, UUID or a param.
+ * **Enhancement**: Sandbox runs show Open Shell and the `polyaxon sandbox shell` command in the Service view and the Connect dialog.
+ * **Fix**: Comparison widgets add a short UUID to every run that shares a label, including in tooltips.
+ * **Fix**: Curve comparison labels show the run before the AUC or average precision, so it stays visible.
 
 ### Commercial
+
+ * **Enhancement**: Creating, restarting, resuming and copying runs have their own `run_create` rate limit, so other API requests from the same user no longer block them.
